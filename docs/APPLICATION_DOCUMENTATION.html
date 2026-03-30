@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FalaMadeira - Application Documentation</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --card: #ffffff;
+            --muted: #64748b;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 2.5rem; border-bottom: 3px solid var(--primary); padding-bottom: 0.5rem; }
+        h2 { font-size: 1.8rem; color: var(--primary); margin-top: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.3rem; margin-top: 1.5rem; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        details {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        summary {
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            outline: none;
+            color: var(--primary);
+        }
+        details[open] summary {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: #b91c1c;
+        }
+        pre {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            color: var(--muted);
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .flow-box {
+            background: #e0f2fe;
+            border: 1px solid #7dd3fc;
+            color: #0369a1;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+        .arrow {
+            color: #94a3b8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FalaMadeira - Application Architecture & Data Flow</h1>
+        <p>This document provides a comprehensive, end-to-end overview of the FalaMadeira application. Click on the sections below to drill down into specific logical flows, component placements, and data structures.</p>
+
+        <h2>1. High-Level Architecture</h2>
+        <div class="card">
+            <p>FalaMadeira is a modern React Single Page Application (SPA) built with Vite, utilizing Supabase for backend services (Auth, Database) and Google's Gemini AI for generative language features.</p>
+            
+            <div class="flow-diagram">
+                <div class="flow-box">React Frontend (Vite)</div>
+                <div class="arrow">↔</div>
+                <div class="flow-box">Supabase (PostgreSQL + Auth)</div>
+                <div class="arrow">↔</div>
+                <div class="flow-box">Gemini AI API (@google/genai)</div>
+            </div>
+            <ul>
+                <li><strong>Frontend:</strong> React 18, Tailwind CSS, Framer Motion (animations), Lucide React (icons).</li>
+                <li><strong>Backend/BaaS:</strong> Supabase handles user authentication, data persistence, and Row Level Security (RLS).</li>
+                <li><strong>AI Services:</strong> Gemini 3.1 Flash is used for dynamic chat, lesson generation, and vocabulary corrections.</li>
+            </ul>
+        </div>
+
+        <h2>2. Directory Structure & Element Placement</h2>
+        <div class="card">
+            <p>Where everything sits in the repository:</p>
+            <details>
+                <summary>📁 /src (Frontend Source)</summary>
+                <ul>
+                    <li><code>App.tsx</code>: The monolithic core of the application. Contains routing logic (tabs), main state, static lesson definitions, and the primary UI layouts.</li>
+                    <li><code>main.tsx</code>: React entry point.</li>
+                    <li><code>index.css</code>: Global Tailwind CSS imports and base styles.</li>
+                    <li><code>types.ts</code>: Global TypeScript interfaces (Lesson, UserProfile, ChatMessage, etc.).</li>
+                </ul>
+            </details>
+            <details>
+                <summary>📁 /src/components (UI Components)</summary>
+                <ul>
+                    <li><code>Quiz.tsx</code>: The interactive quiz component used at the end of lessons.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>📁 /src/services (External Integrations)</summary>
+                <ul>
+                    <li><code>geminiService.ts</code>: Encapsulates all calls to the Google Gemini API. Handles chat sessions, prompt engineering, and response parsing.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>📁 /src/lib (Utilities)</summary>
+                <ul>
+                    <li><code>supabase.ts</code>: Initializes and exports the Supabase client.</li>
+                    <li><code>utils.ts</code>: Contains the <code>cn()</code> utility for merging Tailwind classes.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>📁 /supabase (Database & Backend)</summary>
+                <ul>
+                    <li><code>/migrations/00001_initial_schema.sql</code>: The complete SQL script to generate tables, RLS policies, and triggers.</li>
+                </ul>
+            </details>
+            <details>
+                <summary>📁 /docs (Documentation)</summary>
+                <ul>
+                    <li><code>DATABASE_DESIGN.md</code>: Schema documentation.</li>
+                    <li><code>SUPABASE_RLS.md</code>: Security policies documentation.</li>
+                    <li><code>USER_MANUAL.md</code> & <code>TEST_MANUAL.md</code>: Guides for users and QA.</li>
+                </ul>
+            </details>
+        </div>
+
+        <h2>3. Data Flows & Logical Flows</h2>
+        
+        <details>
+            <summary>A. Authentication & Session Flow</summary>
+            <div class="flow-diagram">
+                <div class="flow-box">User Enters Email/Pass</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">Supabase Auth API</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">Trigger: handle_new_user()</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">App.tsx onAuthStateChange</div>
+            </div>
+            <p><strong>Logic:</strong></p>
+            <ol>
+                <li>User signs up or logs in via the UI in <code>App.tsx</code>.</li>
+                <li>Supabase handles the credential verification.</li>
+                <li>If it's a new signup, a PostgreSQL trigger (<code>on_auth_user_created</code>) automatically creates a row in the <code>profiles</code> table.</li>
+                <li>The <code>onAuthStateChange</code> listener in <code>App.tsx</code> detects the session, sets the <code>user</code> state, and fetches the user's profile and custom lessons.</li>
+                <li><strong>Password Recovery:</strong> Handled via OTP. User requests reset -> Supabase sends email -> User enters 6-digit code -> App calls <code>verifyOtp</code> -> User sets new password.</li>
+            </ol>
+        </details>
+
+        <details>
+            <summary>B. Lesson Data Flow (Static vs. Custom)</summary>
+            <p><strong>Static Lessons:</strong></p>
+            <ul>
+                <li><strong>Location:</strong> Hardcoded in <code>App.tsx</code> as the <code>INITIAL_LESSONS</code> array.</li>
+                <li><strong>Audio/Video:</strong> YouTube URLs are embedded using the <code>VideoPlayer</code> component. Audio pronunciations (if added) would rely on browser TTS or external audio files linked in the lesson object.</li>
+                <li><strong>Flow:</strong> Loaded directly into the <code>lessons</code> state on boot.</li>
+            </ul>
+            <p><strong>Custom Lessons:</strong></p>
+            <div class="flow-diagram">
+                <div class="flow-box">User Requests Topic</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">geminiService.generateLesson()</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">Supabase Insert (lessons table)</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">App UI Updates</div>
+            </div>
+            <ul>
+                <li><strong>Location:</strong> Stored in the Supabase <code>lessons</code> table with <code>is_static = false</code>.</li>
+                <li><strong>Flow:</strong> Fetched via <code>fetchCustomLessons()</code> in <code>App.tsx</code> and appended to the static lessons list.</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>C. AI Chat & Tutor Flow</summary>
+            <div class="flow-diagram">
+                <div class="flow-box">User Types Message</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">App.tsx handleSendMessage()</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">geminiService.chat()</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">Gemini API</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">Response Rendered (Markdown)</div>
+            </div>
+            <p><strong>Logic:</strong></p>
+            <ol>
+                <li>The user selects a Tutor (defined in the <code>TUTORS</code> array in <code>App.tsx</code>).</li>
+                <li>The tutor's personality is injected into the Gemini System Prompt via <code>geminiService.ts</code>.</li>
+                <li>Messages are sent to the Gemini API. The chat history is maintained in the <code>chatHistory</code> state to provide context to the AI.</li>
+                <li>Responses are rendered using <code>react-markdown</code> to support formatting.</li>
+            </ol>
+        </details>
+
+        <details>
+            <summary>D. Settings & Offline-First Sync Flow</summary>
+            <div class="flow-diagram">
+                <div class="flow-box">User Changes Setting (e.g., Speed)</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">React State Updates</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">localStorage.setItem()</div>
+                <div class="arrow">→</div>
+                <div class="flow-box">Supabase Update (profiles)</div>
+            </div>
+            <p><strong>Logic:</strong></p>
+            <ul>
+                <li>Configurations like <code>playback_speed</code>, <code>is_sound_enabled</code>, and <code>selected_tutor_id</code> are initialized from <code>localStorage</code> for instant loading.</li>
+                <li>A <code>useEffect</code> hook in <code>App.tsx</code> watches these states. When they change, it immediately updates <code>localStorage</code> and asynchronously updates the Supabase <code>profiles</code> table.</li>
+                <li>When the user logs in on a new device, the profile fetch overwrites the local state, syncing their preferences.</li>
+            </ul>
+        </details>
+
+        <h2>4. Key Configurations & Assets</h2>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Asset / Config</th>
+                        <th>Location / Implementation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Static Lessons</strong></td>
+                        <td><code>src/App.tsx</code> -> <code>INITIAL_LESSONS</code> array.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tutor Personas</strong></td>
+                        <td><code>src/App.tsx</code> -> <code>TUTORS</code> array. Avatars use <code>picsum.photos</code> seeds.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Video Files</strong></td>
+                        <td>Embedded via YouTube URLs in the lesson objects. Rendered by the <code>VideoPlayer</code> component in <code>App.tsx</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Environment Variables</strong></td>
+                        <td><code>.env.example</code> (requires <code>VITE_SUPABASE_URL</code>, <code>VITE_SUPABASE_ANON_KEY</code>, <code>GEMINI_API_KEY</code>).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Database Schema</strong></td>
+                        <td><code>supabase/migrations/00001_initial_schema.sql</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

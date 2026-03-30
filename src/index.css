@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  
+  --color-ios-blue: #007AFF;
+  --color-ios-gray: #8E8E93;
+  --color-ios-bg: #F2F2F7;
+  --color-ios-card: #FFFFFF;
+}
+
+@layer base {
+  body {
+    @apply bg-ios-bg text-black antialiased overflow-hidden;
+    font-family: var(--font-sans);
+  }
+}
+
+.ios-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.ios-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Custom Markdown styles for chat bubbles */
+.markdown-body {
+  line-height: 1.6;
+}
+
+.markdown-body p {
+  margin-bottom: 0.75rem;
+}
+
+.markdown-body p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body blockquote {
+  border-left: 4px solid #007AFF;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0 0.75rem 0;
+  font-style: italic;
+  background: rgba(0, 122, 255, 0.05);
+  border-radius: 4px;
+}
+
+.markdown-body ul, .markdown-body ol {
+  margin-bottom: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.markdown-body li {
+  margin-bottom: 0.25rem;
+}
+
+.markdown-body strong {
+  color: inherit;
+  font-weight: 700;
+}

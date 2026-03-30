@@ -1,0 +1,5 @@
+{
+  "name": "FalaMadeira",
+  "description": "Learn European Portuguese with a focus on the Madeiran dialect through AI-powered conversations and pattern-based lessons.",
+  "requestFramePermissions": ["microphone"]
+}
