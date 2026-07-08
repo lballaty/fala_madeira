@@ -1,0 +1,418 @@
+# Plan: FalaMadeira v1.0 production readiness
+# Generated: 2026-07-08 from 4-dimension verification audit (frontend/UX, database, content/docs, build/security/ops)
+# Decisions locked: Supabase Edge Functions backend | 3-month curriculum scope | free launch (no Stripe in v1.0) | Verpex static hosting at https://falamadeira.searchingfool.com
+# Admin account: liborballaty@gmail.com (promoted to role='admin')
+# Credentials in .env.local (verified 2026-07-08): GEMINI_API_KEY (dev, rotate for prod), SUPABASE_DB_PASSWORD (direct db.<ref>.supabase.co:5432 over IPv6), VITE_SUPABASE_ANON_KEY. Still needed: Supabase access token (CLI/functions deploy), Verpex FTP/SSH host+user+password/key (deploy gate). Verpex document root for the site = the "falamadeira.searchingfool.com" directory in the account home (cPanel subdomain layout); dist/ contents upload into that directory.
+# HARD DEPLOY CONSTRAINT (operator-mandated): The deploy script may ONLY read/write inside the remote "falamadeira.searchingfool.com" directory. It must NEVER touch public_html, other subdomain directories, sibling sites, or any path outside that one directory. No account-wide operations, no mirror --delete that could escape the target dir, no cd to home and glob. The account hosts the operator's other production websites.
+# Legal identity (ToS/Privacy/AI-disclosure publisher): name = "SearchingFool"; contact/DPO email = support@searchingfool.com; established in the Czech Republic -> GDPR controller, Czech law governs. Drafts marked "operator legal review required".
+# Assumption: Supabase project gxlrmdfqcqimwwplrdgd is the production database (confirmed by operator 2026-07-08).
+# Command conventions:
+#   - Plain strings are bash, run from repo root /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira
+#   - "agent-task:" prefix = implementation task executed by the Claude session running /execute-plan (Edit/Write tools), with acceptance criteria in the description
+#   - "USER-GATE:" prefix = requires operator action or credentials before the step can run; /execute-plan should pause and ask
+
+plan:
+  title: Take FalaMadeira from 40-50% prototype to a production-ready 3-month European Portuguese (Madeiran) learning PWA hosted on Verpex with Supabase backend
+  goal_validation:
+    - npm run build succeeds and dist/ contains NO Gemini API key material (grep -r "AIzaSy" dist/ returns nothing)
+    - All Gemini traffic flows through deployed Supabase Edge Functions with JWT verification and server-side voice-limit enforcement
+    - Live DB, supabase/migrations/, and docs/DATABASE_DESIGN.md agree (schema drift matrix from the 2026-07-08 audit fully closed)
+    - Curriculum contains 84 lessons (28 per month x 3 months); UI, USER_MANUAL, and signup promises match shipped scope
+    - ESLint + vitest + Playwright suites pass locally (no CI service — quality gate is the local preflight script that deployment requires)
+    - App is live at https://falamadeira.searchingfool.com over HTTPS, installable as a PWA, with legal pages (ToS, Privacy, AI disclosure) resolving
+    - All shipped lesson content (existing 56 + newly authored 28) passes scripts/validate-content.mjs against docs/CONTENT-STANDARDS.md
+    - Vertical slices are UI-driven by Playwright with backend evidence (DB row + correlation_id log) and gate deployment; post-deploy smoke passes against the live site
+    - Codebase passes scripts/check-standards.sh against docs/ENGINEERING-STANDARDS.md, and that check is wired into preflight so architecture/security/design/coding standards stay enforced on every future deploy
+    - Design-review optimizations applied: parallelized load, single reused AudioContext, bounded LRU audio cache, speed-independent TTS cache, debounced profile writes, sanitized AI output, first-run consent, code-split feature slices
+    - npm audit reports 0 critical/high vulnerabilities in production dependencies
+
+  steps:
+
+    # ---------------------------------------------------------------
+    # PHASE 0 - SAFETY & BASELINE
+    # ---------------------------------------------------------------
+
+    - id: rotate-gemini-key
+      description: "DONE for dev/test 2026-07-08: a working Gemini key is in .env.local (verified HTTP 200, 50 models). NOTE: this dev key was pasted into a chat transcript, so it must be rotated once more for production - that final rotation is enforced by the security-verification gate in Phase 6, not here."
+      command: node -e "const k=require('fs').readFileSync('.env.local','utf8').match(/GEMINI_API_KEY=\"?([^\"\n]+)/)[1]; fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+k).then(r=>process.exit(r.status===200?0:1))"
+      validation: node -e "const k=require('fs').readFileSync('.env.local','utf8').match(/GEMINI_API_KEY=\"?([^\"\n]+)/)[1]; fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+k).then(r=>{console.log(r.status); process.exit(r.status===200?0:1)})"
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: git-branch-baseline
+      description: "Work directly on main (greenfield product, nothing in production - operator directive 2026-07-08, no feature branch). Commit the currently uncommitted WIP (migration SQL files, helper scripts, discovery notes, plan, supabase/.gitignore, package.json changes) on main so nothing is lost before restructuring."
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira add .nvmrc apply-migrations.js check-user-status.js missing_tables.sql missing_tables_fixed.sql projects plans supabase/.gitignore package.json package-lock.json && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira commit .nvmrc apply-migrations.js check-user-status.js missing_tables.sql missing_tables_fixed.sql projects plans supabase/.gitignore package.json package-lock.json -m "chore: capture WIP + production-readiness plan and tooling"
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira branch --show-current | grep -q main
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: fix-build
+      description: Rebuild node_modules to fix the missing @rollup/rollup-darwin-arm64 optional dependency that currently blocks npm run build (deletes only generated artifacts).
+      command: rm -rf node_modules && rm package-lock.json && npm install
+      validation: npm run build && test -d dist
+      depends_on: [git-branch-baseline]
+      fatal_on_failure: true
+
+    - id: dependency-hygiene
+      description: Move backend-only packages (express, pg, dotenv, tsx) to devDependencies, upgrade vite past the advisories, and clear the 1 critical / 5 high npm audit findings.
+      command: "agent-task: edit package.json to move express, pg, dotenv, @types/express to devDependencies; run npm install; run npm audit fix; if vite <6.5 remains, bump vite and @vitejs/plugin-react to latest 6.x/5.x and re-run npm install && npm run build"
+      validation: npm audit --omit=dev --audit-level=high 2>&1 | grep -q "found 0" && npm run build
+      depends_on: [fix-build]
+      fatal_on_failure: true
+
+    # ---------------------------------------------------------------
+    # PHASE 1 - DATABASE CANONICALIZATION
+    # ---------------------------------------------------------------
+
+    - id: fix-migration-runner
+      description: "Fix apply-migrations.js: (a) accept a SQL file path as process.argv[2] instead of the hardcoded missing_tables.sql, and (b) replace the wrong hardcoded pooler endpoint (aws-0-us-west-1.pooler...:6543) with the verified working direct host postgresql://postgres:<pw>@db.<ref>.supabase.co:5432/postgres (IPv6-reachable from this machine; confirmed 2026-07-08 returning the 8 existing tables). Keep pooler as a documented fallback."
+      command: "agent-task: edit apply-migrations.js per this description; add SSL config { rejectUnauthorized: false }; use {quiet:true} on dotenv.config (v17 prints a stdout tip that corrupts captured values); verify with: node apply-migrations.js supabase/migrations/00001_initial_schema.sql should connect and report tables (idempotent CREATE IF NOT EXISTS so re-running 00001 is safe)"
+      validation: node -e "const s=require('fs').readFileSync('apply-migrations.js','utf8'); process.exit(/argv\[2\]/.test(s) && /db\.\$\{?projectRef\}?\.supabase\.co:5432/.test(s.replace(/[`'\"]/g,'')) ? 0 : (/db\..*supabase\.co:5432/.test(s)?0:1))"
+      depends_on: [fix-build]
+      fatal_on_failure: true
+
+    - id: promote-fixed-migration
+      description: Promote missing_tables_fixed.sql (the superior version with is_admin() helper, ON CONFLICT trigger, DROP-before-CREATE policies) into the canonical migrations directory; delete superseded missing_tables.sql.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira mv missing_tables_fixed.sql supabase/migrations/00003_profiles_columns_and_rls_fixes.sql && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira rm missing_tables.sql
+      validation: test -f supabase/migrations/00003_profiles_columns_and_rls_fixes.sql && test ! -f missing_tables.sql && test ! -f missing_tables_fixed.sql
+      depends_on: [git-branch-baseline]
+      fatal_on_failure: true
+
+    - id: apply-migration-00003
+      description: "USER-GATE (needs SUPABASE_DB_PASSWORD or dashboard SQL editor): Apply 00003 to the live project gxlrmdfqcqimwwplrdgd so is_admin(), the profile-trigger ON CONFLICT fix, and hardened RLS policies are live."
+      command: node apply-migrations.js supabase/migrations/00003_profiles_columns_and_rls_fixes.sql
+      validation: node -e "const e=Object.fromEntries(require('fs').readFileSync('.env.local','utf8').split('\n').filter(l=>l.includes('=')).map(l=>l.split(/=(.*)/s).slice(0,2).map(s=>s.replace(/\"/g,'').trim()))); fetch(e.VITE_SUPABASE_URL+'/rest/v1/rpc/is_admin',{method:'POST',headers:{apikey:e.VITE_SUPABASE_ANON_KEY,Authorization:'Bearer '+e.VITE_SUPABASE_ANON_KEY,'Content-Type':'application/json'},body:'{}'}).then(r=>{console.log('is_admin rpc status',r.status); process.exit(r.status<500&&r.status!==404?0:1)})"
+      depends_on: [promote-fixed-migration, fix-migration-runner]
+      fatal_on_failure: true
+
+    - id: migration-00004-rls-gaps
+      description: Author and apply migration 00004 closing audited RLS gaps - UPDATE policies for tickets/logs/lesson_requests/lesson_corrections (owner + admin), INSERT policy for global_settings (admin), DELETE policy on profiles for account-deletion path, all using is_admin().
+      command: "agent-task: write supabase/migrations/00004_rls_gap_policies.sql implementing the policies listed in this step's description with DROP POLICY IF EXISTS guards, then run node apply-migrations.js supabase/migrations/00004_rls_gap_policies.sql"
+      validation: test -f supabase/migrations/00004_rls_gap_policies.sql && node apply-migrations.js --dry-run supabase/migrations/00004_rls_gap_policies.sql 2>/dev/null; test -f supabase/migrations/00004_rls_gap_policies.sql
+      depends_on: [apply-migration-00003]
+      fatal_on_failure: true
+
+    - id: seed-admin-account
+      description: "Promote liborballaty@gmail.com to role='admin' so admin workflows and their RLS policies are testable. USER-GATE if the account does not yet exist: operator signs up with liborballaty@gmail.com first (email verification can be skipped via the existing signup toggle), then this UPDATE runs."
+      command: node -e "require('dotenv').config({path:'.env.local'}); const {Client}=require('pg'); const ref=process.env.VITE_SUPABASE_URL.match(/https:\/\/([^.]+)\.supabase\.co/)[1]; const c=new Client({connectionString:`postgresql://postgres:${encodeURIComponent(process.env.SUPABASE_DB_PASSWORD)}@db.${ref}.supabase.co:5432/postgres`,ssl:{rejectUnauthorized:false}}); (async()=>{await c.connect(); const r=await c.query(\"update public.profiles set role='admin' where email=$1 returning email,role\",['liborballaty@gmail.com']); console.log(r.rows); await c.end(); process.exit(r.rowCount>0?0:1)})()"
+      validation: node -e "require('dotenv').config({path:'.env.local'}); const {Client}=require('pg'); const ref=process.env.VITE_SUPABASE_URL.match(/https:\/\/([^.]+)\.supabase\.co/)[1]; const c=new Client({connectionString:`postgresql://postgres:${encodeURIComponent(process.env.SUPABASE_DB_PASSWORD)}@db.${ref}.supabase.co:5432/postgres`,ssl:{rejectUnauthorized:false}}); (async()=>{await c.connect(); const r=await c.query(\"select role from public.profiles where email=$1\",['liborballaty@gmail.com']); await c.end(); process.exit(r.rows[0] && r.rows[0].role==='admin'?0:1)})()"
+      depends_on: [migration-00004-rls-gaps]
+      fatal_on_failure: false
+
+    - id: db-docs-reconcile
+      description: Reconcile docs/DATABASE_DESIGN.md with live schema (selected_tutor_id default 't1' not 'maria'; lesson_id/user_id are TEXT not UUID in video_suggestions and lesson_corrections) and create supabase/migrations/APPLIED.md execution log.
+      command: "agent-task: edit docs/DATABASE_DESIGN.md lines 16, 74-76, 94-95 to match migration 00001 reality; write supabase/migrations/APPLIED.md recording known/unknown application history for 00001-00004 with dates"
+      validation: grep -q "'t1'" docs/DATABASE_DESIGN.md && test -f supabase/migrations/APPLIED.md
+      depends_on: [migration-00004-rls-gaps]
+      fatal_on_failure: false
+
+    # ---------------------------------------------------------------
+    # PHASE 2 - BACKEND PROXY (SUPABASE EDGE FUNCTIONS) & SECRET REMOVAL
+    # ---------------------------------------------------------------
+
+    - id: supabase-cli-link
+      description: "DONE 2026-07-08: CLI (v2.62.10) linked to project gxlrmdfqcqimwwplrdgd (name 'PortugueseMadeira', org gvvowvskmczwwlniyfzb, West EU/London) using SUPABASE_ACCESS_TOKEN in .env.local (liborballaty account - the Arion CLI login could NOT see this project). supabase/.gitignore added for .temp. GOTCHA for all env-reading steps: dotenv v17 prints a tip line to stdout - do NOT capture env values via $(node -e \"require('dotenv')...\"); parse .env.local directly or use {quiet:true}, else the DB password gets a prefix and SASL auth fails."
+      command: which supabase || brew install supabase/tap/supabase; supabase link --project-ref gxlrmdfqcqimwwplrdgd --workdir /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira
+      validation: test -f supabase/.temp/project-ref && grep -q gxlrmdfqcqimwwplrdgd supabase/.temp/project-ref
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: edge-fn-gemini
+      description: Build supabase/functions/gemini/index.ts - a single edge function with actions chat (streaming SSE), generate-lesson, translate, and tts; verifies the caller's Supabase JWT, enforces daily voice limits server-side against profiles.voice_usage_today, reads GEMINI_API_KEY from Deno.env, returns structured error envelopes with request IDs per the centralized error-handling standard.
+      command: "agent-task: implement supabase/functions/gemini/index.ts porting the prompt logic from src/services/geminiService.ts (system instructions, Madeiran dialect rules, JSON schemas, TTS voice mapping with pt-PT locale); then run: supabase secrets set GEMINI_API_KEY=$(node -e \"console.log(require('fs').readFileSync('.env.local','utf8').match(/GEMINI_API_KEY=\\\"?([^\\\"\\n]+)/)[1])\") && supabase functions deploy gemini"
+      validation: supabase functions list | grep -q gemini
+      depends_on: [supabase-cli-link, rotate-gemini-key, apply-migration-00003]
+      fatal_on_failure: true
+
+    - id: edge-fn-account-deletion
+      description: Build and deploy supabase/functions/delete-account using the service-role key to delete the auth user and cascade profile data, replacing the broken client-side supabase.auth.admin.deleteUser() call at src/App.tsx:3464.
+      command: "agent-task: implement supabase/functions/delete-account/index.ts (verify JWT, delete user rows across all 8 tables, then auth admin delete); deploy with: supabase functions deploy delete-account"
+      validation: supabase functions list | grep -q delete-account
+      depends_on: [supabase-cli-link]
+      fatal_on_failure: true
+
+    - id: client-gemini-refactor
+      description: Refactor src/services/geminiService.ts to call the gemini edge function via supabase.functions.invoke (passing the session JWT), delete the GEMINI_API_KEY define from vite.config.ts, and update src/App.tsx account deletion to call delete-account.
+      command: "agent-task: rewrite src/services/geminiService.ts as a thin client for the edge function preserving the existing exported API (startChat, generateLesson, translateWord, playSpeech with IndexedDB caching); remove 'process.env.GEMINI_API_KEY' from vite.config.ts define block; replace supabase.auth.admin.deleteUser call in src/App.tsx with supabase.functions.invoke('delete-account')"
+      validation: "! grep -rq 'GEMINI_API_KEY' src/ vite.config.ts && ! grep -q 'auth.admin' src/App.tsx && npm run build && ! grep -rq 'AIzaSy' dist/"
+      depends_on: [edge-fn-gemini, edge-fn-account-deletion, dependency-hygiene]
+      fatal_on_failure: true
+
+    # ---------------------------------------------------------------
+    # PHASE 3 - REFACTOR & CODE QUALITY
+    # ---------------------------------------------------------------
+
+    - id: engineering-standards
+      description: "Establish the repo-local engineering standard that architecture, security, software design, and coding best-practice are reviewed and MAINTAINED against - write docs/ENGINEERING-STANDARDS.md codifying: (architecture) feature/vertical-slice module layout, client-vs-edge-function boundary rules, state-management approach, data-model conventions incl. UUID FKs; (security) no secrets in client bundle, RLS least-privilege, server-side enforcement of anything cost- or trust-sensitive, input validation + AI-output sanitization, PII/consent handling; (software design) centralized error handling + observability per the global standard, config centralization, no duplicate-way-to-do-things; (coding best-practice) TypeScript strictness, naming, file headers, component size limits, no dead code. Reference the global agentic-operating-standard. This doc is the contract the standards-compliance-review gate and preflight enforce on every change."
+      command: "agent-task: author docs/ENGINEERING-STANDARDS.md (with required markdown header block) covering the four areas above, aligned with /Users/liborballaty/.ai-dev-dotfiles/memories/agentic-operating-standard.md; include a checklist section usable by the standards-compliance-review step"
+      validation: test -f docs/ENGINEERING-STANDARDS.md && grep -qi "vertical" docs/ENGINEERING-STANDARDS.md && grep -qi "RLS" docs/ENGINEERING-STANDARDS.md
+      depends_on: [git-branch-baseline]
+      fatal_on_failure: true
+
+    - id: extract-static-data
+      description: Extract INITIAL_LESSONS (App.tsx lines ~74-1003), TUTORS (~1006-1052), and learningPlan (~2214-2221) into src/data/lessons.ts, src/data/tutors.ts, src/data/curriculum.ts.
+      command: "agent-task: create the three src/data modules with proper types from src/types.ts, update imports in src/App.tsx, delete the inlined arrays"
+      validation: test -f src/data/lessons.ts && test -f src/data/tutors.ts && test -f src/data/curriculum.ts && npm run lint && [ $(wc -l < src/App.tsx) -lt 3400 ]
+      depends_on: [client-gemini-refactor]
+      fatal_on_failure: true
+
+    - id: split-app-components
+      description: "Decompose the App.tsx monolith (66 useState hooks in one component) into src/features/ vertical slices (auth, home, learning, chat, settings) each owning its screen + modals + hooks, per docs/ENGINEERING-STANDARDS.md. Replace the 66-useState soup with a coherent state model: domain state in useReducer + Context (or a lightweight store) exposed via typed hooks (useAuth, useProfile, useLessons, useSpeech, useChat); lazy-load feature routes and heavy modals with React.lazy + Suspense. App.tsx becomes a router/provider shell."
+      command: "agent-task: perform the decomposition described above preserving behavior exactly; consolidate related useState into reducers/store; add React.lazy code-splitting for feature routes and heavy modals; App.tsx must end below 800 lines; run npm run lint after each extraction"
+      validation: npm run lint && npm run build && [ $(wc -l < src/App.tsx) -lt 800 ] && test -d src/features && ls dist/assets/*.js | wc -l | awk '$1>1{exit 0}{exit 1}'
+      depends_on: [extract-static-data, engineering-standards]
+      fatal_on_failure: true
+
+    - id: centralized-logger
+      description: Implement src/lib/logger.ts per the centralized error-handling standard - correlation_id/session_id/request_id on every event, persistence to the existing logs table, user-visible toasts with machine-readable codes and a quotable Ref; replace the 41 bare console.* error paths and the silent TTS failure catch (geminiService playSpeech).
+      command: "agent-task: implement logger + error envelope helper, sweep src/ replacing bare console.error/console.log error paths with logger calls plus user-facing toasts; keep dev-only debug logs behind import.meta.env.DEV guard"
+      validation: "[ $(grep -rn 'console\\.\\(error\\|warn\\)' src/ --include='*.ts' --include='*.tsx' | grep -cv 'import.meta.env.DEV\\|logger') -le 3 ] && npm run lint"
+      depends_on: [split-app-components]
+      fatal_on_failure: true
+
+    - id: config-and-dead-code
+      description: Extract magic values (5s auth timeout, 45s inactivity, voice limit 5, TTS voice map) into src/config.ts; move the MADEIRA2026 unlock key into global_settings table; consolidate duplicate chat state (chatMessages vs chatHistory); wire generateLesson/saveGeneratedLesson into the lesson-request flow or delete both; fix the time-tracking double-count on reload.
+      command: "agent-task: implement the changes described; add SQL seed for unlock key to supabase/migrations/00005_global_settings_seed.sql and apply with node apply-migrations.js supabase/migrations/00005_global_settings_seed.sql"
+      validation: "! grep -rq 'MADEIRA2026' src/ && test -f src/config.ts && npm run lint"
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: lint-tooling
+      description: Add ESLint (typescript-eslint + react-hooks + jsx-a11y) and Prettier with npm scripts, fixing all errors it surfaces.
+      command: "agent-task: add eslint.config.js flat config with typescript-eslint, eslint-plugin-react-hooks, eslint-plugin-jsx-a11y, prettier; add scripts lint:eslint and format; npm install -D the packages; fix reported errors"
+      validation: npm run lint:eslint && npm run lint
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: unit-tests
+      description: Add vitest (unit + component layer) for the logic and per-component behavior underneath the vertical slices - Quiz question generation, logger envelope construction, config resolution, curriculum data integrity (84 unique days, required fields per lesson), the geminiService client wrapper (mocked functions.invoke), and React Testing Library component tests for the extracted screens/modals.
+      command: "agent-task: npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom; add npm script test; write test files under src/**/__tests__/ covering the logic areas listed plus component render/interaction tests for HomeScreen, LearningScreen, ChatScreen, SettingsScreen, AuthScreen and the Quiz + LessonDetail modals; all tests must pass"
+      validation: npm test -- --run
+      depends_on: [centralized-logger, config-and-dead-code]
+      fatal_on_failure: true
+
+    - id: accessibility-pass
+      description: Add aria-labels to mic/audio/slider controls, role=dialog + focus trap + Escape-to-close on all modals, keyboard navigation for tab bar, and fix the user-scalable=no viewport (WCAG violation) in index.html.
+      command: "agent-task: implement the accessibility fixes across src/components/, guided by eslint-plugin-jsx-a11y findings; remove maximum-scale=1.0,user-scalable=no from index.html viewport meta"
+      validation: npm run lint:eslint && ! grep -q 'user-scalable=no' index.html
+      depends_on: [lint-tooling]
+      fatal_on_failure: false
+
+    # ---------------------------------------------------------------
+    # PHASE 3B - OPTIMIZATION & HARDENING (from design/optimization review 2026-07-08)
+    # ---------------------------------------------------------------
+
+    - id: perf-load-and-audio
+      description: "Performance fixes from the review: (1) parallelize the auth->profile->lessons->settings load waterfall with Promise.all (src/App.tsx ~1324-1325,1355-1356); (2) reuse a single lazily-resumed AudioContext instead of leaking one per playback (geminiService ~79-80); (3) bound the IndexedDB audio cache with an LRU + max-size eviction (src/lib/audioCache.ts, currently unbounded); (4) self-host tutor avatars in public/tutors/ instead of picsum.photos (src/data/tutors.ts); (5) collapse the dual animation libs (framer-motion + motion) to one."
+      command: "agent-task: implement the five performance fixes described, each preserving behavior; verify tutor images load from /tutors/ and no picsum reference remains"
+      validation: "! grep -rq 'picsum.photos' src/ && ! grep -rq '\"framer-motion\"' package.json && npm run build && npm test -- --run"
+      depends_on: [split-app-components, extract-static-data]
+      fatal_on_failure: false
+
+    - id: efficiency-cost-controls
+      description: "Cost/efficiency fixes from the review: (1) drop speed from the TTS cache key so identical text is generated once and playbackRate applied on playback (geminiService ~157,209) - halves TTS cost for varied speeds; (2) debounce Supabase profile writes (playback_speed, sound, time-tracking) and use localStorage as the write-through cache instead of per-change DB writes (src/App.tsx ~1370-1397); (3) cache AI-generated lessons/translations in IndexedDB to avoid regeneration. All server-side Gemini limits already enforced in the gemini edge function."
+      command: "agent-task: implement the three efficiency fixes described; TTS cache key must exclude speed; profile setting writes must be debounced (>=500ms) and coalesced"
+      validation: npm run build && npm test -- --run
+      depends_on: [client-gemini-refactor, split-app-components, config-and-dead-code]
+      fatal_on_failure: false
+
+    - id: stability-async-hardening
+      description: "Stability fixes from the review: (1) AbortController to cancel in-flight profile/lesson fetches on auth change so logout->login can't overwrite fresh data with stale (src/App.tsx ~1338-1360); (2) exponential-backoff retry wrapper on Gemini and Supabase calls routed through the centralized logger; (3) optimistic UI updates with rollback for feedback submissions; (4) an offline banner + graceful degradation when network is down."
+      command: "agent-task: implement the stability fixes described, using the centralized logger for all error paths"
+      validation: npm run build && npm test -- --run
+      depends_on: [centralized-logger, split-app-components]
+      fatal_on_failure: false
+
+    - id: safety-hardening
+      description: "Safety fixes from the review (beyond the API-key-to-backend work already in Phase 2): (1) sanitize all AI/markdown output with rehype-sanitize before rendering (react-markdown usages, src/App.tsx ~3224,3589) to close the XSS surface; (2) client + server input validation with length limits and tag stripping on all user text written to DB (lesson request, correction, support, video suggestion); (3) a first-run consent modal gating app use on explicit ToS + AI-data-processing acceptance, persisted to profiles.has_accepted_terms/has_accepted_ai_usage (state exists but no modal renders); (4) migrate video_suggestions/lesson_corrections user_id/lesson_id from TEXT to UUID FKs with ON DELETE CASCADE (migration 00007) for referential integrity and least-privilege RLS."
+      command: "agent-task: npm install rehype-sanitize; implement the four safety fixes; write supabase/migrations/00007_uuid_fk_integrity.sql and apply via node apply-migrations.js supabase/migrations/00007_uuid_fk_integrity.sql (guard the type change for existing rows)"
+      validation: "grep -rq 'rehype-sanitize' src/ && test -f supabase/migrations/00007_uuid_fk_integrity.sql && npm run build"
+      depends_on: [split-app-components, centralized-logger, migration-00004-rls-gaps]
+      fatal_on_failure: false
+
+    - id: analytics-telemetry
+      description: "Observability from the review: add a useAnalytics/track hook writing structured product events (lesson_opened, lesson_completed, quiz_finished, chat_message, tts_played, drop-off) to the logs table with correlation_id, so the currently-unused logs table powers real product telemetry per the observability standard."
+      command: "agent-task: implement src/hooks/useAnalytics.ts and instrument the key user actions; events carry correlation_id/session_id and route through the centralized logger"
+      validation: grep -rq "useAnalytics" src/ && npm run build
+      depends_on: [centralized-logger, split-app-components]
+      fatal_on_failure: false
+
+    # ---------------------------------------------------------------
+    # PHASE 4 - FEATURE COMPLETION (3-MONTH SCOPE)
+    # ---------------------------------------------------------------
+
+    - id: rescope-3-months
+      description: Rescope product promises to the 3-month curriculum - learningPlan shows Months 1-3 with Months 4-6 presented as a post-launch roadmap teaser (not selectable), and remove "zero to conversational in 6 months" claims from UI copy.
+      command: "agent-task: edit src/data/curriculum.ts and affected screen components; months 4-6 render as locked 'Coming soon' cards without Activate buttons"
+      validation: npm run build && node -e "const s=require('fs').readFileSync('src/data/curriculum.ts','utf8'); process.exit(/coming soon/i.test(s)?0:1)"
+      depends_on: [extract-static-data]
+      fatal_on_failure: true
+
+    - id: remove-premium-stub
+      description: Remove the non-functional 9.99 EUR upgrade modal and Stripe stub for the free v1.0 launch, keeping subscription_tier schema and voice-limit enforcement intact for the future payments fast-follow.
+      command: "agent-task: delete the UpgradeModal usage and entry points; keep tier checks defaulting to free; leave a FEATURE-FLAGS note in src/config.ts documenting how payments re-enter"
+      validation: "! grep -rqi 'stripe\\|9\\.99' src/ && npm run build"
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: admin-workflows
+      description: Complete the admin panel - review queues for lesson_corrections, lesson_requests, and tickets with approve/reject/resolve status updates (video_suggestions approval already exists), protected by is_admin() RLS server-side.
+      command: "agent-task: extend src/components/modals/Admin* with three review queues wired to the tables via supabase-js updates permitted by migration 00004 policies"
+      validation: npm run lint && npm test -- --run
+      depends_on: [migration-00004-rls-gaps, split-app-components]
+      fatal_on_failure: false
+
+    - id: feedback-status-visibility
+      description: Close the feedback loops - users can see their own submitted corrections, lesson requests, and tickets with current status (pending/reviewed/implemented) in Settings, so submissions are no longer one-way.
+      command: "agent-task: add a 'My submissions' section to SettingsScreen listing the user's rows from the three tables with status badges"
+      validation: npm run lint && grep -rq "My submissions\|my-submissions" src/components/
+      depends_on: [admin-workflows]
+      fatal_on_failure: false
+
+    - id: pwa-assets
+      description: Generate real PWA icons (pwa-192x192.png, pwa-512x512.png, apple-touch-icon.png, favicon.ico) from public/logo.svg and register them in the vite.config.ts manifest and index.html.
+      command: "agent-task: npm install -D sharp; write scripts/generate-icons.mjs rendering logo.svg to the four assets in public/; run node scripts/generate-icons.mjs; update vite.config.ts manifest icons array and index.html link tags"
+      validation: test -f public/pwa-192x192.png && test -f public/pwa-512x512.png && test -f public/apple-touch-icon.png && test -f public/favicon.ico && npm run build
+      depends_on: [dependency-hygiene]
+      fatal_on_failure: true
+
+    - id: offline-caching
+      description: Configure Workbox runtime caching in vite-plugin-pwa - precache app shell, cache-first for icons/fonts, network-first for Supabase reads with offline fallback message; lesson data is bundled so lessons browse offline (AI chat/TTS remain online-only, stated in UI).
+      command: "agent-task: extend the VitePWA config in vite.config.ts with workbox runtimeCaching rules and an offline indicator component in the app shell"
+      validation: npm run build && grep -q runtimeCaching vite.config.ts && ls dist/sw.js
+      depends_on: [pwa-assets, split-app-components]
+      fatal_on_failure: false
+
+    - id: legal-pages
+      description: "Write real Terms of Service, Privacy Policy, and AI Usage Disclosure for publisher SearchingFool (Czech Republic, GDPR controller; contact support@searchingfool.com; Czech law governs) as in-app routes linked from the signup checkboxes that currently point nowhere. Privacy Policy must cover: GDPR lawful basis, the personal data collected (email, learning progress, voice input, usage logs), sub-processors (Supabase EU data storage, Google Gemini AI processing incl. that voice/text is sent to Google), data-subject rights (access/rectification/erasure/portability/objection) and how to exercise them, retention, and the working account-deletion path (delete-account edge function). AI Disclosure covers EU AI Act transparency (users are interacting with AI, content is AI-generated, TTS is synthetic)."
+      command: "agent-task: create src/components/legal/{TermsOfService,PrivacyPolicy,AIDisclosure}.tsx with draft content per this description, each flagged 'DRAFT - operator legal review required'; wire links from AuthScreen signup checkboxes and SettingsScreen"
+      validation: grep -rq "PrivacyPolicy" src/components/ && npm run build
+      depends_on: [split-app-components]
+      fatal_on_failure: true
+
+    # ---------------------------------------------------------------
+    # PHASE 5 - CONTENT COMPLETION (3-MONTH CURRICULUM)
+    # ---------------------------------------------------------------
+
+    - id: content-standards
+      description: "Establish the canonical content ruleset BEFORE any generation: write docs/CONTENT-STANDARDS.md codifying the rules all lesson content must comply with (European Portuguese only with prohibited-Brazilian-variant list, Madeiran dialect markers from the existing geminiService system instructions, lesson schema requirements, per-level vocabulary/grammar constraints, progression rules, quiz coverage requirements, cultural-content guidelines from projects/falamadeira/discovery/questions.txt); plus scripts/validate-content.mjs that mechanically checks every lesson against the enforceable subset (schema completeness, day uniqueness 1-84, Brazilian-variant lexicon scan, per-lesson minimums for patterns/vocabulary/goals). All content review - generated or hand-authored - happens against this standard."
+      command: "agent-task: author docs/CONTENT-STANDARDS.md (with required markdown header block) and scripts/validate-content.mjs as described; run the validator against the existing 56 lessons and record any violations of the standard in the doc's known-exceptions section for operator decision"
+      validation: test -f docs/CONTENT-STANDARDS.md && node scripts/validate-content.mjs --existing
+      depends_on: [extract-static-data]
+      fatal_on_failure: true
+
+    - id: curriculum-normalize-author
+      description: "Normalize the curriculum to 28 lessons per month (84 days total) and author the 28 missing lessons (7 for Month 2 days 50-56 shift, 21 for Month 3) via Gemini-assisted generation constrained by docs/CONTENT-STANDARDS.md; every generated lesson must pass scripts/validate-content.mjs before reaching operator review. USER-GATE: operator reviews generated lessons for compliance with CONTENT-STANDARDS.md before merge."
+      command: "agent-task: write scripts/generate-lessons.mjs calling the gemini edge function per missing day with curriculum context and the CONTENT-STANDARDS.md rules embedded in the generation prompt; run scripts/validate-content.mjs on the output and regenerate failures; emit projects/falamadeira/content-review/m2-m3-lessons.json with a per-lesson compliance report; after operator approval merge into src/data/lessons.ts with renumbered consistent day fields 1-84"
+      validation: node scripts/validate-content.mjs && npm test -- --run && node -e "const s=require('fs').readFileSync('src/data/lessons.ts','utf8'); const c=(s.match(/day:/g)||[]).length; console.log('lessons:',c); process.exit(c>=84?0:1)"
+      depends_on: [content-standards, rescope-3-months, edge-fn-gemini, unit-tests]
+      fatal_on_failure: true
+
+    - id: video-curation
+      description: "USER-GATE: Replace the placeholder/dummy YouTube IDs (d16 'XhY7X_Y_X_Y') and curate at least one real video per week block (12 weeks) - operator selects videos, agent wires them into lesson data."
+      command: "agent-task: remove invalid video_url values; present operator a curation checklist per week; insert operator-approved YouTube IDs into src/data/lessons.ts"
+      validation: "! grep -q 'XhY7X_Y_X_Y' src/data/lessons.ts"
+      depends_on: [curriculum-normalize-author]
+      fatal_on_failure: false
+
+    - id: prompt-hardening
+      description: Harden the edge-function Gemini prompts - level-locking (inject learner's unlocked_level and completed-lesson vocabulary so responses stay level-appropriate), explicit correction strategy (recast + brief note, per USER_MANUAL promise), pt-PT TTS locale verification with audible spot-check, and content-safety boundaries.
+      command: "agent-task: update supabase/functions/gemini/index.ts system-instruction builder per the description; redeploy with supabase functions deploy gemini; record a TTS sample of 'Bom dia, tudo bem? Vou apanhar o autocarro para o Funchal.' for operator accent verification"
+      validation: supabase functions list | grep -q gemini && grep -q "unlocked_level" supabase/functions/gemini/index.ts
+      depends_on: [edge-fn-gemini, curriculum-normalize-author]
+      fatal_on_failure: false
+
+    - id: quiz-persistence
+      description: Persist quiz results to a new quiz_results table (migration 00006 with owner-only RLS) recording lesson_id, score, missed items - the foundation for future spaced repetition without building full SRS in v1.0.
+      command: "agent-task: write supabase/migrations/00006_quiz_results.sql, apply via node apply-migrations.js supabase/migrations/00006_quiz_results.sql, wire Quiz.tsx completion handler to insert results"
+      validation: test -f supabase/migrations/00006_quiz_results.sql && grep -q quiz_results src/components/Quiz.tsx
+      depends_on: [migration-00004-rls-gaps, unit-tests]
+      fatal_on_failure: false
+
+    # ---------------------------------------------------------------
+    # PHASE 6 - CI/CD, DEPLOYMENT & FINAL VERIFICATION
+    # ---------------------------------------------------------------
+
+    - id: local-preflight
+      description: Create scripts/preflight.sh - the local quality gate (no CI service is used; deployment runs entirely from THIS device, never from GitHub) running npm run lint:eslint, npm run lint, npm test -- --run, npm run build, and npm audit --omit=dev --audit-level=high; deployment refuses to run unless preflight passes.
+      command: "agent-task: write scripts/preflight.sh chaining the five checks with set -e and a clear pass/fail summary; chmod +x scripts/preflight.sh"
+      validation: bash scripts/preflight.sh
+      depends_on: [unit-tests, lint-tooling]
+      fatal_on_failure: true
+
+    - id: deploy-pipeline-entrypoint
+      description: "Create the single local deployment pipeline entrypoint scripts/ship.sh (exposed as npm run deploy) that runs the whole from-this-device pipeline in order: (1) scripts/preflight.sh, (2) confirm .env.deploy exists and target remote dir == falamadeira.searchingfool.com, (3) scripts/deploy-verpex.sh upload, (4) post-deploy smoke check curl-ing https://falamadeira.searchingfool.com for index.html + manifest.webmanifest + sw.js returning 200. Aborts on any failure. MUST support a --dry-run flag that runs preflight + build + target-dir-scope assertion + prints the exact file manifest that WOULD upload (and, if creds present, an lftp --dry-run mirror) WITHOUT writing to the server. GitHub is source hosting only and is never part of the deploy path."
+      command: "agent-task: write scripts/ship.sh chaining the four stages with set -euo pipefail and a summary, with a --dry-run branch that skips all remote writes; add npm script deploy -> bash scripts/ship.sh; chmod +x scripts/ship.sh; document the one-command flow and the dry-run in docs/PUBLISHING_GUIDE.md"
+      validation: test -x scripts/ship.sh && node -e "process.exit(require('./package.json').scripts.deploy?0:1)" && grep -q -- '--dry-run' scripts/ship.sh
+      depends_on: [local-preflight]
+      fatal_on_failure: false
+
+    - id: local-server-test
+      description: "Server test on THIS device: serve the production dist/ build the way Verpex will (static file server with SPA history fallback to index.html, correct MIME for .webmanifest, service worker enabled) on a local port, then run the Playwright @smoke slice subset plus PWA checks (service worker registers, manifest parses, offline app-shell loads, deep-link refresh routes correctly) against http://localhost. Confirms the BUILT, statically-served app works on-device before any deploy - catches SPA-routing/base-path/SW bugs that vite dev mode hides."
+      command: "agent-task: add scripts/serve-local.sh (or an npm script) serving dist/ via a static server with SPA fallback + .webmanifest MIME; write tests/e2e/local-server.spec.ts (or reuse @smoke specs with BASE_URL=http://localhost:PORT); run the suite against the local static server"
+      validation: BASE_URL=http://localhost:4173 npx playwright test --grep @smoke --reporter=line
+      depends_on: [vertical-slice-e2e, deploy-pipeline-entrypoint]
+      fatal_on_failure: true
+
+    - id: deploy-dry-run
+      description: "Deploy dry-run before any real upload: run npm run deploy -- --dry-run. Asserts preflight passes, the build is present, the remote target resolves to ONLY the falamadeira.searchingfool.com directory (never public_html/parent/siblings), and prints the exact file manifest that would transfer. If .env.deploy creds are present it performs an lftp --dry-run mirror (no writes); if creds are pending it validates everything offline and logs that the connected dry-run is deferred. Nothing is written to the server. Gates the real verpex-deploy."
+      command: npm run deploy -- --dry-run
+      validation: npm run deploy -- --dry-run 2>&1 | grep -qi "dry.run"
+      depends_on: [deploy-pipeline-entrypoint, local-server-test, security-verification]
+      fatal_on_failure: true
+
+    - id: verpex-deploy
+      description: "USER-GATE (needs Verpex FTP/SSH host + username + password/key, provided by operator later): Create scripts/deploy-verpex.sh that first runs scripts/preflight.sh, then uploads the CONTENTS of dist/ via lftp/rsync into the account-home directory 'falamadeira.searchingfool.com' (the subdomain document root), plus a production .htaccess in that directory (SPA fallback rewrite to index.html, HTTPS redirect, immutable caching for hashed assets, no-cache for index.html and sw.js, correct webmanifest MIME); credentials + remote path read from git-ignored .env.deploy. HARD CONSTRAINT: the script must confine ALL remote operations to the falamadeira.searchingfool.com directory only - it must set the remote target to exactly that dir, must NOT operate on public_html or any sibling/parent path, and any lftp mirror must be rooted at the target dir so --delete (if used) can never remove files outside it (the account hosts the operator's other live sites). Run first deployment to https://falamadeira.searchingfool.com. Also set Supabase Auth Site URL and redirect allowlist to https://falamadeira.searchingfool.com (dashboard Auth settings) so magic links, OTP and password-reset emails redirect to production, and update APP_URL in .env.local to match."
+      command: npm run deploy
+      validation: "curl -fsS -o /dev/null -w '%{http_code}' https://falamadeira.searchingfool.com/manifest.webmanifest | grep -q 200"
+      depends_on: [deploy-dry-run, local-server-test, vertical-slice-e2e, security-verification, client-gemini-refactor, pwa-assets, legal-pages, curriculum-normalize-author]
+      fatal_on_failure: true
+
+    - id: vertical-slice-map
+      description: "Define the app's vertical slices and their layer boundaries in docs/TEST-VERTICAL-SLICES.md - each slice named with its UI entry point, the Edge Function / Supabase RPC it calls, the DB table(s) it reads/writes, and the observable backend evidence (row change + logs table entry with correlation_id) that proves the whole slice worked. Slices: (1) Auth (signup->login->logout->password reset), (2) Lesson learning (browse->open lesson->complete->XP/streak update), (3) Quiz (take->score->persist to quiz_results), (4) AI tutor chat (send->gemini edge fn->response->TTS playback), (5) Voice practice (mic input->voice-limit enforcement->transcript), (6) Settings/profile (change tutor/speed/sound->persist), (7) Feedback submissions (correction/request/ticket->row->visible status), (8) Admin review (approve/reject->status update), (9) Account deletion (delete-account edge fn->cascade removal). This map is the contract the Playwright slice suite tests against."
+      command: "agent-task: author docs/TEST-VERTICAL-SLICES.md with the required markdown header and a table per slice (UI entry | API/edge | DB tables | backend evidence assertion)"
+      validation: test -f docs/TEST-VERTICAL-SLICES.md && grep -qi "correlation_id" docs/TEST-VERTICAL-SLICES.md
+      depends_on: [centralized-logger]
+      fatal_on_failure: false
+
+    - id: security-verification
+      description: Pre-deploy security pass (runs before shipping) - confirm no key material in the built bundle, RLS behaves correctly for anon vs authenticated vs admin (two-pass check against live DB as source of truth), and edge functions reject unauthenticated calls.
+      command: "agent-task: write and run scripts/verify-security.mjs - FATAL checks: (1) grep dist/ for AIzaSy/AQ. key material and service_role - none may appear (key must be server-side only), (2) REST probes as anon expecting 401/403 on profiles writes, (3) authenticated user cannot read another user's profile rows, (4) unauthenticated POST to the gemini and delete-account edge functions expecting 401. ADVISORY (log, do not fail): the current Gemini key is the dev key the operator accepted for this non-production launch (it now lives only in the edge-function secret, not the bundle) - print a reminder to rotate before treating this as real production. Script exits nonzero only on a FATAL check failure."
+      validation: node scripts/verify-security.mjs
+      depends_on: [client-gemini-refactor, edge-fn-account-deletion]
+      fatal_on_failure: true
+
+    - id: vertical-slice-e2e
+      description: "Author and run the Playwright vertical-slice UI suite against a local preview build (npm run preview) wired to the live Supabase project and deployed edge functions - one spec per slice from docs/TEST-VERTICAL-SLICES.md. Each spec drives the REAL UI (clicks, typing, navigation) AND asserts the backend evidence for that slice: the expected DB row change and the logs-table entry carrying the correlation_id surfaced in the UI. This is the pre-ship gate - deployment depends on it passing."
+      command: "agent-task: npm install -D @playwright/test; npx playwright install chromium; write tests/e2e/<slice>.spec.ts for all 9 slices using dedicated test accounts (a normal user and the liborballaty@gmail.com admin); each test captures the correlation_id from the UI and verifies the matching row via a service-role query helper; run npx playwright test against npm run preview"
+      validation: npx playwright test --reporter=line
+      depends_on: [vertical-slice-map, security-verification, admin-workflows, feedback-status-visibility, quiz-persistence, remove-premium-stub, offline-caching, curriculum-normalize-author]
+      fatal_on_failure: true
+
+    - id: post-deploy-smoke
+      description: "Smoke-test the various pieces of the ACTUAL deployed software at https://falamadeira.searchingfool.com after deployment - a Playwright smoke run (subset of the slice specs, tagged @smoke) plus scripted probes hitting the live site: app shell loads, PWA manifest + service worker register, login works against production auth redirect, a lesson opens, an AI tutor message round-trips through the live edge function, and settings persist. Confirms the real running app - not just a preview - works end to end."
+      command: "agent-task: tag @smoke on the load-bearing assertions in each slice spec; write scripts/smoke-prod.sh running (a) npx playwright test --grep @smoke with BASE_URL=https://falamadeira.searchingfool.com and (b) curl probes for /, /manifest.webmanifest, /sw.js, and the legal routes; wire scripts/smoke-prod.sh as the final stage of scripts/ship.sh"
+      validation: BASE_URL=https://falamadeira.searchingfool.com npx playwright test --grep @smoke --reporter=line
+      depends_on: [verpex-deploy, vertical-slice-e2e]
+      fatal_on_failure: true
+
+    - id: standards-compliance-review
+      description: "Review the completed codebase against docs/ENGINEERING-STANDARDS.md (architecture, security, software design, coding best-practice) and produce docs/STANDARDS-COMPLIANCE-REPORT.md classifying each standard as compliant / partial / gap with file evidence. Ship the enforceable subset as scripts/check-standards.sh (e.g. no secrets in bundle, no bare console.* error paths, component size ceiling, no picsum/hardcoded-URL, RLS present on new tables, no duplicate animation libs) and wire it into scripts/preflight.sh so standards stay MAINTAINED on every future deploy. This is a recurring gate, not a one-off."
+      command: "agent-task: run the review, write docs/STANDARDS-COMPLIANCE-REPORT.md and scripts/check-standards.sh (chmod +x), add a call to scripts/check-standards.sh inside scripts/preflight.sh; any 'gap' items must be either fixed or logged with operator sign-off"
+      validation: test -x scripts/check-standards.sh && grep -q check-standards scripts/preflight.sh && bash scripts/check-standards.sh
+      depends_on: [engineering-standards, perf-load-and-audio, efficiency-cost-controls, stability-async-hardening, safety-hardening, vertical-slice-e2e]
+      fatal_on_failure: true
+
+    - id: docs-sync
+      description: Sync all documentation to shipped reality - USER_MANUAL (3-month scope, built features only), TEST_MANUAL (points at the Playwright suite), PUBLISHING_GUIDE (Verpex procedure), APPLICATION_DOCUMENTATION.html, README.md (replace AI Studio boilerplate), package.json name falamadeira + real version.
+      command: "agent-task: run the /update-docs workflow across docs/ and README.md per the shipped v1.0 feature set; update package.json name and version fields"
+      validation: "! grep -q 'ai.studio' README.md && grep -q '\"name\": \"falamadeira\"' package.json"
+      depends_on: [post-deploy-smoke]
+      fatal_on_failure: false
+
+    - id: release-v1
+      description: Final commit of all completed work on main and tag v1.0.0, then push main + tag to origin (GitHub is source hosting only; deployment is scripts/deploy-verpex.sh, never GitHub).
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira status --porcelain && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira add -A && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira commit -m "feat: FalaMadeira v1.0.0 production release" && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira tag v1.0.0 && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira push origin main --tags
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira tag | grep -q v1.0.0
+      depends_on: [security-verification, docs-sync, post-deploy-smoke, standards-compliance-review]
+      fatal_on_failure: true

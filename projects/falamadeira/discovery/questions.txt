@@ -1,0 +1,73 @@
+FALAMADEIRA DISCOVERY QUESTIONS
+=================================
+
+Generated: 2026-04-07
+Purpose: Deeply understand the problem FalaMadeira solves, its stakeholders, constraints, and business value
+
+
+1. PROBLEM STATEMENT
+--------------------
+
+1. What specific language learning gap exists for European Portuguese (particularly Madeiran dialect) that mainstream apps like Duolingo or Babbel fail to address?
+
+2. Why is learning the Madeiran dialect specifically valuable to learners, and what happens if they only learn standard European or Brazilian Portuguese instead?
+
+3. Who currently struggles most with finding quality Madeiran Portuguese learning resources, and what pain points do they experience in their learning journey?
+
+4. What is the cost (time, money, frustration, missed opportunities) of NOT having access to FalaMadeira for someone who wants to learn Madeiran Portuguese?
+
+5. How do learners currently attempt to learn Madeiran Portuguese without FalaMadeira, and why are those approaches inadequate or inefficient?
+
+
+2. STAKEHOLDERS
+---------------
+
+6. Who are the primary users of FalaMadeira (tourists planning trips, expats relocating, heritage learners, language enthusiasts), and which segment represents the largest opportunity?
+
+7. Who makes the strategic and product decisions about FalaMadeira's roadmap, feature prioritization, and business model?
+
+8. Are there secondary stakeholders (Portuguese cultural organizations, Madeira tourism boards, language schools) who care about FalaMadeira's success, and how do they influence the project?
+
+9. Who needs to approve major changes to FalaMadeira (technical architecture changes, monetization strategy, curriculum updates), and what are their approval criteria?
+
+10. Are there partnerships or integrations with other platforms (Google AI Studio, Supabase, content creators) that create dependencies or constraints on how FalaMadeira can evolve?
+
+
+3. CONSTRAINTS & CONTEXT
+-------------------------
+
+11. What are the technical limitations of using Gemini AI for the conversational tutor (API costs, rate limits, offline unavailability, response quality), and how do these constrain the user experience?
+
+12. What budget or resource constraints exist for FalaMadeira development (is this a solo project, funded startup, hobby project), and how does this affect feature development velocity?
+
+13. Are there legal or regulatory requirements around data privacy (GDPR for European users), content licensing (video materials), or accessibility (WCAG compliance) that FalaMadeira must satisfy?
+
+14. What problems is FalaMadeira explicitly NOT trying to solve (e.g., not teaching grammar theory, not replacing immersion, not certifying fluency), and why are those boundaries important?
+
+15. What are the competitive constraints (other Portuguese learning apps, YouTube channels, tutors) that influence FalaMadeira's positioning and differentiation strategy?
+
+
+4. SUCCESS METRICS
+------------------
+
+16. How do you measure whether FalaMadeira is successfully teaching Madeiran Portuguese (user progression through curriculum, quiz pass rates, time to conversational fluency, user self-assessment)?
+
+17. What engagement metrics indicate FalaMadeira is creating value (daily active users, streak retention, lesson completion rates, voice practice usage, time spent in AI conversations)?
+
+18. What does "success" look like for a FalaMadeira user after 1 month, 3 months, and 6 months of consistent use, and how is that success measured or validated?
+
+19. What business metrics define FalaMadeira's success (free-to-premium conversion rate, monthly recurring revenue, user acquisition cost, lifetime value, churn rate)?
+
+20. If FalaMadeira achieves its ultimate potential, what concrete outcomes would exist in the world (number of Madeiran Portuguese speakers created, cultural preservation impact, community connections facilitated)?
+
+
+5. BUSINESS VALUE
+-----------------
+
+21. Why does FalaMadeira exist as a product versus simply referring learners to existing resources (YouTube, language exchange apps, traditional textbooks)?
+
+22. What is the strategic importance of FalaMadeira to its creator/owner (passion project, portfolio piece, revenue-generating business, cultural mission, market validation experiment)?
+
+23. What revenue model supports FalaMadeira's sustainability (freemium subscription at $X/month, one-time purchase, ad-supported, sponsorships, donations), and what are the unit economics?
+
+24. How does FalaMadeira create unique value that competitors cannot easily replicate (proprietary curriculum, AI tutor integration, cultural authenticity, community, specific dialect focus)?
