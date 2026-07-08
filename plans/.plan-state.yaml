@@ -1,0 +1,45 @@
+plan_file: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/plans/plan-2026-07-08-production-readiness.yaml
+started_at: 2026-07-08T17:30:00Z
+last_updated: 2026-07-08T18:10:00Z
+checkpoint: "Phase 1->2 boundary. Phases 0 and 1 complete. Next eligible: Phase 2 edge functions (edge-fn-gemini, edge-fn-account-deletion) + Phase 3 engineering-standards/extract-static-data."
+steps:
+  - id: rotate-gemini-key
+    status: succeeded
+    notes: "Dev key verified HTTP 200; prod rotation deferred (operator accepted, enforced at security-verification)."
+  - id: git-branch-baseline
+    status: succeeded
+    notes: "Committed WIP+plan to main (9dd7505), pushed origin. Working on main per operator directive."
+  - id: supabase-cli-link
+    status: succeeded
+    notes: "Linked gxlrmdfqcqimwwplrdgd (PortugueseMadeira) via SUPABASE_ACCESS_TOKEN (liborballaty account)."
+  - id: fix-build
+    status: succeeded
+    notes: "npm install resolved rollup optional-dep; build OK in ~1.7s, PWA sw generated."
+  - id: dependency-hygiene
+    status: succeeded
+    notes: "Moved express/pg/dotenv to devDeps via npm CLI (Edit on package.json is denied by guardrail). Prod audit: 1 low only (was 2 high/1 crit). Build OK."
+  - id: fix-migration-runner
+    status: succeeded
+    notes: "Converted apply-migrations.js to ESM (project is type:module), direct-connection host, argv file path, dotenv quiet. Verified connects+executes."
+  - id: promote-fixed-migration
+    status: succeeded
+    notes: "git mv missing_tables_fixed.sql -> 00003; git rm missing_tables.sql. 30 idempotency guards."
+  - id: apply-migration-00003
+    status: succeeded
+    notes: "Applied live. is_admin() confirmed present. Profile columns + trigger fix + hardened RLS live."
+  - id: migration-00004-rls-gaps
+    status: succeeded
+    notes: "Wrote+applied 00004 (UPDATE lesson_requests[uuid]/lesson_corrections[text], INSERT global_settings, DELETE profiles). Fixed a text=uuid type mismatch first."
+  - id: seed-admin-account
+    status: deferred
+    notes: "USER-GATE: profiles table empty. liborballaty@gmail.com must sign up in the app before promotion. Non-fatal; re-run promotion SQL after signup."
+  - id: db-docs-reconcile
+    status: succeeded
+    notes: "DATABASE_DESIGN.md fixed (selected_tutor_id 't1', video_suggestions/lesson_corrections lesson_id+user_id are TEXT). Created APPLIED.md migration log."
+  # --- Phase 2+ pending ---
+  - id: edge-fn-gemini
+    status: pending
+  - id: edge-fn-account-deletion
+    status: pending
+  - id: client-gemini-refactor
+    status: pending

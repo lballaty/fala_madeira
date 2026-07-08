@@ -13,7 +13,7 @@ Stores user-specific profile information and progress.
 - `unlocked_level`: `integer` (Default: 1)
 - `completed_lessons`: `text[]` (Array of lesson IDs)
 - `last_active`: `timestamp with time zone`
-- `selected_tutor_id`: `text` (Default: 'maria')
+- `selected_tutor_id`: `text` (Default: 't1')
 - `active_month`: `integer` (Default: 1)
 - `total_time_spent`: `integer` (Default: 0, in seconds)
 - `role`: `text` (Default: 'user', can be 'admin')
@@ -72,8 +72,8 @@ Application-wide configurations.
 ### `video_suggestions`
 User-submitted video content suggestions.
 - `id`: `uuid` (Primary Key)
-- `lesson_id`: `uuid`
-- `user_id`: `uuid`
+- `lesson_id`: `text` (NB: TEXT in live DB, not a UUID FK — see migration 00007 plan to migrate)
+- `user_id`: `text` (NB: TEXT in live DB, not a UUID FK)
 - `video_url`: `text`
 - `note`: `text`
 - `status`: `text` ('pending', 'approved', 'rejected')
@@ -91,8 +91,8 @@ Requests for new lesson topics.
 ### `lesson_corrections`
 User-submitted corrections for existing lessons.
 - `id`: `uuid` (Primary Key)
-- `lesson_id`: `uuid`
-- `user_id`: `uuid`
+- `lesson_id`: `text` (NB: TEXT in live DB, not a UUID FK — see migration 00007 plan to migrate)
+- `user_id`: `text` (NB: TEXT in live DB, not a UUID FK)
 - `correction_text`: `text`
 - `status`: `text` ('pending', 'approved', 'rejected')
 - `created_at`: `timestamp with time zone`

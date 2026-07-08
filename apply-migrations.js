@@ -3,12 +3,17 @@
 // Author: Libor Ballaty <libor@arionetworks.com>
 // Created: 2026-04-02
 
-const { Client } = require('pg');
-const fs = require('fs');
-const path = require('path');
+import pg from 'pg';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+const { Client } = pg;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Load environment variables
-require('dotenv').config({ path: '.env.local' });
+dotenv.config({ path: '.env.local', quiet: true });
 
 // Supabase PostgreSQL connection string format:
 // postgresql://postgres:[YOUR-PASSWORD]@db.gxlrmdfqcqimwwplrdgd.supabase.co:5432/postgres
@@ -39,13 +44,16 @@ if (!dbPassword) {
   process.exit(1);
 }
 
-const connectionString = `postgresql://postgres.${projectRef}:${dbPassword}@aws-0-us-west-1.pooler.supabase.com:6543/postgres`;
+// Direct connection (IPv6-reachable from this machine; verified 2026-07-08). The
+// pooler host is region-specific and was wrong for this project (us-west-1 -> tenant not found).
+// Fallback pooler, if ever needed: postgresql://postgres.${projectRef}:<pw>@aws-0-<region>.pooler.supabase.com:6543/postgres
+const connectionString = `postgresql://postgres:${encodeURIComponent(dbPassword)}@db.${projectRef}.supabase.co:5432/postgres`;
 
 async function executeSqlFile(filePath) {
   console.log(`📄 Reading SQL file: ${path.basename(filePath)}`);
 
   const sql = fs.readFileSync(filePath, 'utf8');
-  const client = new Client({ connectionString });
+  const client = new Client({ connectionString, ssl: { rejectUnauthorized: false } });
 
   try {
     console.log('🔌 Connecting to Supabase database...');
@@ -115,11 +123,14 @@ async function verifyTables(client) {
   }
 }
 
-// Main execution
-const sqlFilePath = path.join(__dirname, 'missing_tables.sql');
+// Main execution — accept a SQL file path as the first CLI argument.
+const sqlFilePath = process.argv[2]
+  ? path.resolve(process.argv[2])
+  : path.join(__dirname, 'missing_tables.sql');
 
 if (!fs.existsSync(sqlFilePath)) {
   console.error(`❌ SQL file not found: ${sqlFilePath}`);
+  console.error('Usage: node apply-migrations.js <path-to-sql-file>');
   process.exit(1);
 }
 
