@@ -20,7 +20,7 @@ Follow the global operating standard: `/Users/liborballaty/.ai-dev-dotfiles/memo
 | `docs/REQUIREMENTS-TRACKER.md` | Requirement → plan step → status register |
 | `docs/ENGINEERING-STANDARDS.md` | Detailed architecture/security/design/coding standard (created by the `engineering-standards` plan step) |
 | `docs/CONTENT-STANDARDS.md` | European-Portuguese/Madeiran content rules + validator |
-| `plans/plan-2026-07-08-production-readiness.yaml` | Executable plan; `plans/.plan-state.yaml` = execution state |
+| `plans/plan-2026-07-09-full-product.yaml` | **Authoritative executable plan** (55 steps, content-model-first, voice-first, cross-platform). Supersedes `plan-2026-07-08-production-readiness.yaml`. `plans/.plan-state.yaml` = execution state |
 | `docs/DATABASE_DESIGN.md`, `supabase/migrations/APPLIED.md` | DB schema (reconciled to live) + migration log |
 
 ## 2. Product anti-drift guardrails (from CONTENT-ARCHITECTURE §12)
@@ -63,6 +63,7 @@ Every capability must serve one of **understand · speak · use · belong**. Als
 - **Admin account:** `liborballaty@gmail.com` (role=admin; temp creds in git-ignored `.admin-temp-credentials.txt`).
 - **Deploy target:** Verpex, document root = the `falamadeira.searchingfool.com` directory ONLY. Deploy from THIS device (`npm run deploy` → `scripts/ship.sh`), never GitHub. GitHub = source hosting only.
 - **TTS default (decided):** Azure pt-PT + browser Web Speech fallback, via provider adapters.
+- **Stack:** React 19 + TypeScript ~5.8 + Vite 6 + Tailwind 4 + Supabase + PWA (vite-plugin-pwa). **Cross-platform:** iOS-first then Android via **Capacitor** wrapping the same web codebase; platform-specific capabilities (speech/audio/storage/notifications) live behind a `src/platform/*` adapter layer so the UI never needs a per-platform rewrite. Web ships to Verpex; iOS ships via Xcode/TestFlight.
 
 ## 6. Harness guardrails (work WITH them)
 

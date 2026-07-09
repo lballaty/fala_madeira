@@ -88,6 +88,18 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 | P7 | Local from-device deploy pipeline (Verpex) | deploy-pipeline-entrypoint, verpex-deploy | 🔵 |
 | P8 | PWA assets + offline caching | pwa-assets, offline-caching | 🔵 |
 
+> Authoritative plan (2026-07-09): `plans/plan-2026-07-09-full-product.yaml` (55 steps) SUPERSEDES the 07-08 plan. Content-model-first, voice-first, cross-platform.
+
+## Cross-platform delivery (iOS-first, then Android; minimize recoding)
+| ID | Requirement | Plan step | Status |
+|---|---|---|---|
+| X1 | Stack retained: React 19 + TS + Vite 6 + Tailwind 4 + Supabase + PWA | (baseline) | ✅ |
+| X2 | **Capacitor** wraps the web app → iOS (first) + Android (later) from one codebase | capacitor-setup | ⬜ |
+| X3 | **Platform-adapter layer** (Speech/Audio/Storage/Notifications) — web + native impls behind interfaces; UI is platform-agnostic | platform-adapter-layer | ⬜ |
+| X4 | STT adapter (Web Speech on web, native plugin on iOS/Android, cloud fallback) — iOS Safari Web Speech unreliable | stt-speech-adapter | ⬜ |
+| X5 | iOS build + TestFlight | ios-build | ⬜ |
+| X6 | No UI rewrite required for Android (proven via adapter layer) | (X3 outcome) | ⬜ |
+
 ## Content architecture & navigation (2026-07-09 reframe — see docs/CONTENT-ARCHITECTURE.md)
 | ID | Requirement | Plan step | Status |
 |---|---|---|---|

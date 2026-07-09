@@ -1,0 +1,438 @@
+# Plan: FalaMadeira FULL PRODUCT — content-model-first, voice-first, cross-platform
+# Generated: 2026-07-09. SUPERSEDES plans/plan-2026-07-08-production-readiness.yaml.
+# Authoritative design: docs/PRODUCT-DESIGN-TARGET.md + docs/CONTENT-ARCHITECTURE.md (governs) + AGENTS.md.
+# Requirements register: docs/REQUIREMENTS-TRACKER.md (IDs referenced per step).
+#
+# Decisions locked (2026-07-09): full product (not MVP) | full 6-month Structured Course RETAINED as one
+#   path type + Goal Tracks + Adaptive Guided + Free navigation | no Stripe (architecture retained) |
+#   Azure pt-PT default TTS + browser fallback via adapters | iOS-first then Android via Capacitor +
+#   platform-adapter layer (minimize recoding) | deploy web to Verpex from this device; iOS via Xcode/TestFlight.
+#
+# Command conventions:
+#   - plain bash runs from repo root /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira
+#   - "agent-task:" = implementation by the /execute-plan session (Edit/Write), acceptance in the description
+#   - "USER-GATE:" = needs operator action/credentials; /execute-plan pauses
+#   - package.json changes go through the npm CLI (Edit(**/package.json) is denied); no bulk delete; commit on main, path-form, no co-author trailers (AGENTS.md)
+
+plan:
+  title: Build the complete FalaMadeira — a modular, non-linear, voice-first Madeiran-Portuguese language OS, iOS-first via Capacitor, web via PWA/Verpex
+  goal_validation:
+    - Content is data: Situations/Packs load from DB + bundled defaults; a new pack can be added without code changes and passes scripts/validate-content.mjs
+    - All four path types work over the same content: Structured Course (month-by-month), Goal Track, Adaptive Guided daily session, Free — none hard-gated
+    - Voice-first engines function: Listening, Speaking/Pronunciation, Pattern Builder, Situation Simulator, Missions, Cultural layer, Adaptive Review
+    - Focus/Coach feedback loop surfaces prioritized suggestions from real results, with offline deterministic fallback
+    - Platform-adapter layer lets the SAME React code run as web/PWA and as a native iOS app (Capacitor) with no UI rewrite; Android path proven to require no UI recode
+    - No secret material in any client bundle (web or native); RLS + edge-function auth verified; WCAG 2.2 AA
+    - Offline: cached packs + audio drive listening/shadowing/pattern/vocab/review offline; writes queue and sync on reconnect
+    - iOS build runs on device/TestFlight; web deployed to https://falamadeira.searchingfool.com; both pass smoke tests
+
+  steps:
+
+    # =========================================================================
+    # PHASE A — FOUNDATIONS (already delivered 2026-07-08/09; validated, not re-run)
+    # =========================================================================
+    - id: foundations-done
+      description: "DONE: build fixed, deps hygiene, DB canonical (00001-00004 live), edge functions (gemini+delete-account) deployed & verified, admin seeded, design docs + AGENTS.md committed. This step just re-validates the baseline."
+      command: npm run build
+      validation: test -d dist && test -f supabase/functions/gemini/index.ts && test -f docs/CONTENT-ARCHITECTURE.md
+      depends_on: []
+      fatal_on_failure: true
+
+    # =========================================================================
+    # PHASE B — CROSS-PLATFORM SPINE & CODE ARCHITECTURE
+    # =========================================================================
+    - id: client-gemini-refactor
+      description: "T1: refactor src/services/geminiService.ts to call the edge functions via supabase.functions.invoke (session JWT); remove GEMINI_API_KEY define from vite.config.ts; route account deletion to delete-account fn. Chat becomes history-based (stateless)."
+      command: "agent-task: rewrite geminiService as a thin edge-function client preserving its exported API; remove the key define; verify no key in bundle"
+      validation: "! grep -rq 'GEMINI_API_KEY' src/ vite.config.ts && npm run build && ! grep -rq 'AIzaSy\\|AQ\\.' dist/"
+      depends_on: [foundations-done]
+      fatal_on_failure: true
+
+    - id: platform-adapter-layer
+      description: "Cross-platform capability adapters (minimize recoding): interfaces for Speech-to-text, Audio (record+playback), Storage, Notifications under src/platform/, each with a web impl (Web Speech / Web Audio / IndexedDB) and a stub native impl selected at runtime. UI code depends only on the interfaces."
+      command: "agent-task: create src/platform/{speech,audio,storage,notifications}.ts interfaces + web implementations + a capability resolver; migrate existing Web Speech / audioCache usage behind them"
+      validation: test -d src/platform && npm run build && grep -rq "platform/" src/
+      depends_on: [foundations-done]
+      fatal_on_failure: true
+
+    - id: engineering-standards
+      description: "P1: write docs/ENGINEERING-STANDARDS.md (architecture/security/design/coding) aligned to AGENTS.md + the global standard; the contract standards-compliance-review enforces."
+      command: "agent-task: author docs/ENGINEERING-STANDARDS.md with a checklist section"
+      validation: test -f docs/ENGINEERING-STANDARDS.md
+      depends_on: [foundations-done]
+      fatal_on_failure: true
+
+    - id: extract-static-data
+      description: "Extract INITIAL_LESSONS/TUTORS/learningPlan from App.tsx into src/data/*.ts (interim; becomes seed content in Phase C)."
+      command: "agent-task: create src/data/{lessons,tutors,curriculum}.ts, update imports, delete inlined arrays"
+      validation: test -f src/data/lessons.ts && npm run lint && [ $(wc -l < src/App.tsx) -lt 3400 ]
+      depends_on: [client-gemini-refactor]
+      fatal_on_failure: true
+
+    - id: split-app-components
+      description: "Decompose App.tsx (66 useState) into src/features/* vertical slices (auth/home/learning/practice/tutor/settings) + hooks; reducer/store state model; React.lazy code-splitting; App.tsx < 800 lines shell."
+      command: "agent-task: perform behavior-preserving decomposition; consolidate state; add lazy routes; lint after each extraction"
+      validation: npm run lint && npm run build && [ $(wc -l < src/App.tsx) -lt 800 ] && test -d src/features
+      depends_on: [extract-static-data, engineering-standards, platform-adapter-layer]
+      fatal_on_failure: true
+
+    - id: centralized-logger
+      description: "P2: src/lib/logger.ts per the error-handling standard (correlation/session/request IDs, persist to logs, user code+Ref); replace bare console.* error paths; kill the silent TTS catch."
+      command: "agent-task: implement logger + envelope; sweep src/ error paths; dev-only debug behind import.meta.env.DEV"
+      validation: "[ $(grep -rn 'console\\.\\(error\\|warn\\)' src/ --include='*.ts' --include='*.tsx' | grep -cv 'import.meta.env.DEV\\|logger') -le 3 ] && npm run lint"
+      depends_on: [split-app-components]
+      fatal_on_failure: true
+
+    - id: config-and-flags
+      description: "src/config.ts for magic values (timeouts, voice map, cache limits) + feature flags (payments off); move unlock key to global_settings (00005 seed)."
+      command: "agent-task: implement config + flags; write+apply supabase/migrations/00005_global_settings_seed.sql"
+      validation: "! grep -rq 'MADEIRA2026' src/ && test -f src/config.ts && npm run lint"
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: lint-tooling
+      description: "ESLint (typescript-eslint + react-hooks + jsx-a11y) + Prettier via npm; fix reported errors."
+      command: "agent-task: npm install -D the packages; add eslint.config.js + scripts lint:eslint/format; fix errors"
+      validation: npm run lint:eslint && npm run lint
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: capacitor-setup
+      description: "Cross-platform packaging: add Capacitor, initialize the iOS project (Android later), point webDir at the Vite build. USER-GATE: needs Xcode installed for the iOS build. Native plugins wired into the platform-adapter layer (speech, filesystem, secure storage, push)."
+      command: "agent-task: npm install @capacitor/core @capacitor/cli @capacitor/ios; npx cap init FalaMadeira com.searchingfool.falamadeira --web-dir=dist; npx cap add ios; wire chosen Capacitor plugins into src/platform/* native impls"
+      validation: test -f capacitor.config.ts || test -f capacitor.config.json
+      depends_on: [platform-adapter-layer, split-app-components]
+      fatal_on_failure: false
+
+    # =========================================================================
+    # PHASE C — MODULAR CONTENT MODEL (the new foundation)
+    # =========================================================================
+    - id: content-model-schema
+      description: "A1/A2/A4: define the Situation/Track/Level/Pack schema (TS types + JSON schema) per CONTENT-ARCHITECTURE §2; write scripts/validate-content.mjs (schema completeness, EU-PT/anti-Brazilian scan, level tags, pack integrity)."
+      command: "agent-task: create src/content/schema.ts + docs/CONTENT-STANDARDS.md + scripts/validate-content.mjs"
+      validation: test -f src/content/schema.ts && test -f scripts/validate-content.mjs && test -f docs/CONTENT-STANDARDS.md
+      depends_on: [split-app-components]
+      fatal_on_failure: true
+
+    - id: content-db-migrations
+      description: "A2/A8/E8: migration 00006 for situations, tracks, content_packs, user_track_selection, user_situation_progress, mastery_items (hear/say/retrieve/avoid), missions_log, pronunciation_attempts, writing_submissions — with owner RLS."
+      command: "agent-task: write supabase/migrations/00006_content_model.sql and apply via node apply-migrations.js"
+      validation: test -f supabase/migrations/00006_content_model.sql
+      depends_on: [content-model-schema, foundations-done]
+      fatal_on_failure: true
+
+    - id: content-repository
+      description: "Data-access layer: load Situations/Tracks/Packs from DB with bundled-default fallback; version/checksum aware; feeds engines and paths. Content is data — no hardcoded lessons in components."
+      command: "agent-task: implement src/content/repository.ts (fetch + cache + version check) behind the storage adapter"
+      validation: npm run build && grep -rq "content/repository" src/
+      depends_on: [content-db-migrations, platform-adapter-layer]
+      fatal_on_failure: true
+
+    - id: seed-content-migration
+      description: "A14: convert the existing 56 lessons into Situations (tagged tracks/levels) + assemble the month-by-month Structured Course as the seed Pack; validate; publish."
+      command: "agent-task: write scripts/seed-content.mjs mapping src/data/lessons.ts -> Situations + Structured Course pack; run validator; publish to DB"
+      validation: node scripts/validate-content.mjs && npm run build
+      depends_on: [content-repository, content-model-schema]
+      fatal_on_failure: true
+
+    # =========================================================================
+    # PHASE D — VOICE-FIRST ENGINES (modes = lenses over content)
+    # =========================================================================
+    - id: tts-provider-adapters
+      description: "T2/T3/T5/A13: TtsProvider interface + connectors (browser Web Speech, Azure pt-PT default, Google, ElevenLabs, OpenAI, Polly, Gemini-retry-hardened); server default + fallback chain; multi-voice variety (teacher/local/older/younger/service/phone/noisy). USER-GATE: Azure Speech key."
+      command: "agent-task: implement supabase/functions/_shared/tts/* connectors + router; config default Azure->browser fallback; cache key = provider+voice (no speed)"
+      validation: supabase functions list | grep -qE "gemini|speak"
+      depends_on: [client-gemini-refactor]
+      fatal_on_failure: false
+
+    - id: stt-speech-adapter
+      description: "Speech-to-text via the platform speech adapter: Web Speech (web/PWA), native plugin (iOS/Android via Capacitor), optional cloud-STT fallback. Critical because iOS Safari Web Speech is unreliable."
+      command: "agent-task: implement src/platform/speech.ts web + native (Capacitor) impls + optional cloud STT; expose a uniform recognize() API"
+      validation: npm run build && grep -rq "speech" src/platform/
+      depends_on: [platform-adapter-layer, capacitor-setup]
+      fatal_on_failure: false
+
+    - id: tts-user-choice
+      description: "T4: per-user TTS provider + bring-your-own-key (profiles.tts_provider, tts_byo_key_ref via migration 00007)."
+      command: "agent-task: 00007_tts_prefs.sql + Profile picker + edge-fn honoring user provider/key with fallback"
+      validation: test -f supabase/migrations/00007_tts_prefs.sql && npm run build
+      depends_on: [tts-provider-adapters]
+      fatal_on_failure: false
+
+    - id: engine-listening
+      description: "E1: Listening Engine over dialogues — speeds (slow/normal/natural), multiple voices, noise mode, transcript reveal, word replay, dictation, 'what did you hear?'."
+      command: "agent-task: build src/features/practice/listening/ consuming situation.dialogues via TTS + audio adapter"
+      validation: npm run build && test -d src/features/practice/listening
+      depends_on: [seed-content-migration, tts-provider-adapters]
+      fatal_on_failure: false
+
+    - id: engine-speaking-pronunciation
+      description: "E2/E3: Speaking Coach + Pronunciation Trainer — repeat/shadow, record-and-compare, rhythm/stress feedback, response-speed; stores pronunciation_attempts."
+      command: "agent-task: build src/features/practice/speaking/ using the speech + audio adapters"
+      validation: npm run build && test -d src/features/practice/speaking
+      depends_on: [seed-content-migration, stt-speech-adapter, tts-provider-adapters]
+      fatal_on_failure: false
+
+    - id: engine-pattern-builder
+      description: "E4: Pattern Builder — substitution drills from phrase_patterns (tomorrow->today->Friday->after lunch)."
+      command: "agent-task: build src/features/practice/patterns/ consuming situation.phrase_patterns"
+      validation: npm run build && test -d src/features/practice/patterns
+      depends_on: [seed-content-migration]
+      fatal_on_failure: false
+
+    - id: engine-situation-simulator
+      description: "E5: Situation Simulator — branching roleplay L1 (guided) -> L5 (messy real-life) via the tutor edge fn; the premium experience."
+      command: "agent-task: build src/features/practice/simulator/ consuming situation.roleplay with difficulty levels"
+      validation: npm run build && test -d src/features/practice/simulator
+      depends_on: [seed-content-migration, client-gemini-refactor]
+      fatal_on_failure: false
+
+    - id: engine-missions
+      description: "E6: Real-World Missions — prep phrases + fallback + likely responses + after-action review; drives behavior change; missions_log."
+      command: "agent-task: build src/features/practice/missions/ consuming situation.mission"
+      validation: npm run build && test -d src/features/practice/missions
+      depends_on: [seed-content-migration]
+      fatal_on_failure: false
+
+    - id: cultural-layer-and-phrase-library
+      description: "E7/E10: Cultural Context Layer (social code/register/indirectness explainers) + smart searchable Phrase Library (standard+spoken, when-to-use, formal/informal, audio, variants)."
+      command: "agent-task: build src/features/culture/ and src/features/phrases/ over situation.cultural_notes + vocabulary/patterns"
+      validation: npm run build && test -d src/features/phrases
+      depends_on: [seed-content-migration]
+      fatal_on_failure: false
+
+    - id: prompt-hardening
+      description: "E9/T9: harden tutor prompts — level-lock to learner level+known vocab, correction strategy (recast+note), pt-PT/anti-Brazilian enforcement, AI roles (partner/coach/scenario-gen/error-analyst/context-explainer); redeploy edge fn."
+      command: "agent-task: update supabase/functions/_shared/gemini.ts system-instruction builder; add scenario-generator + error-analyst actions; redeploy"
+      validation: supabase functions list | grep -q gemini && grep -q "unlocked_level\|level" supabase/functions/_shared/gemini.ts
+      depends_on: [client-gemini-refactor, seed-content-migration]
+      fatal_on_failure: false
+
+    # =========================================================================
+    # PHASE E — SEQUENCING, ADAPTIVITY & FEEDBACK
+    # =========================================================================
+    - id: practice-hub-and-navigation
+      description: "M0/A8: Practice hub (choose a mode) + non-linear navigation (any track/level/situation/mode; soft prereqs only, no hard gate). Modes register into the hub."
+      command: "agent-task: build src/features/practice/ hub + registry; nav entry; free navigation with soft-prereq hints"
+      validation: npm run build && test -d src/features/practice
+      depends_on: [seed-content-migration]
+      fatal_on_failure: false
+
+    - id: srs-adaptive-engine
+      description: "E8: 4-dimension adaptive model (hear/say/retrieve/avoid) on SM-2 substrate over mastery_items; due-item selection steers review + recommendations."
+      command: "agent-task: implement src/lib/srs.ts (SM-2 + dimension steering) + due-items hook"
+      validation: npm run build && grep -rq "srs" src/lib/
+      depends_on: [content-db-migrations, split-app-components]
+      fatal_on_failure: false
+
+    - id: mode-vocab-review
+      description: "M5: Vocabulary flashcards + review driven by srs-adaptive-engine; grades update mastery."
+      command: "agent-task: build src/features/practice/vocabulary/ wired to src/lib/srs.ts"
+      validation: npm run build && test -d src/features/practice/vocabulary
+      depends_on: [practice-hub-and-navigation, srs-adaptive-engine]
+      fatal_on_failure: false
+
+    - id: path-types
+      description: "A5/A6/A7/A10: the four path policies over one content base — Structured Course (month-by-month, RETAINED), Goal Track, Adaptive Guided (configurable ~30-min daily session template), Free. Onboarding lets the user choose; switchable anytime; shared progress."
+      command: "agent-task: implement src/paths/{structured-course,goal-track,adaptive-guided}.ts policies + a daily-session composer; path picker in onboarding + settings"
+      validation: npm run build && test -d src/paths
+      depends_on: [practice-hub-and-navigation, srs-adaptive-engine, seed-content-migration]
+      fatal_on_failure: true
+
+    - id: coach-feedback-loop
+      description: "FB1-FB10: Coach/Insights engine — aggregate results (quiz/pronunciation/listening/roleplay + mastery + error-analyst) into ranked focus (severity x goal x urgency x recency/avoidance); Home Focus card + after-session recap + weekly insight + explainable why; deterministic offline, AI narrative online w/ fallback; feeds Adaptive Guided path."
+      command: "agent-task: implement src/lib/coach.ts (deterministic scoring/prioritization) + edge-fn error-analyst narrative; Focus card + recap UI"
+      validation: npm run build && grep -rq "coach\|Focus" src/
+      depends_on: [srs-adaptive-engine, path-types, prompt-hardening]
+      fatal_on_failure: false
+
+    # =========================================================================
+    # PHASE F — UX POLISH, OFFLINE/PWA, PLATFORM
+    # =========================================================================
+    - id: dark-mode-and-typescale
+      description: "U1/U3: dark mode (system pref) + consistent type-scale tokens across all screens."
+      command: "agent-task: theme system + toggle; type scale; migrate off ad-hoc font sizes"
+      validation: npm run build && grep -rq "dark" src/index.css src/ 2>/dev/null
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: responsive-desktop
+      description: "U2: desktop sidebar + multi-column on md+; mobile keeps bottom tab bar; same components."
+      command: "agent-task: responsive breakpoints + sidebar shell reusing feature components"
+      validation: npm run build && grep -rq "md:\|lg:" src/ 2>/dev/null
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: accessibility-pass
+      description: "U4/U5: WCAG 2.2 AA — AA contrast (fix muted gray), aria-labels (mic/audio/sliders), role=dialog+focus-trap+Esc on modals, keyboard nav, remove user-scalable=no, 44-48px targets."
+      command: "agent-task: implement a11y fixes guided by jsx-a11y; fix index.html viewport"
+      validation: npm run lint:eslint && ! grep -q 'user-scalable=no' index.html
+      depends_on: [lint-tooling, dark-mode-and-typescale]
+      fatal_on_failure: false
+
+    - id: onboarding-flow
+      description: "U6/A9/P4: first-run onboarding — path choice (Structured Course vs goal/just-start) + light placement + a 60-sec first win; wire ToS/Privacy/AI consent."
+      command: "agent-task: build src/features/onboarding/ shown first login; persist consent + placement + chosen path"
+      validation: npm run build && test -d src/features/onboarding
+      depends_on: [path-types, legal-pages]
+      fatal_on_failure: false
+
+    - id: home-focus-progress
+      description: "U7/U8/FB4/G1: Home — progress ring + competence line + Review-due + Focus card + streak with streak-freeze grace."
+      command: "agent-task: enhance Home with progress ring, competence summary, review-due + Focus cards, streak-freeze"
+      validation: npm run build && grep -rq "Focus\|progress" src/features/home 2>/dev/null || npm run build
+      depends_on: [coach-feedback-loop, srs-adaptive-engine]
+      fatal_on_failure: false
+
+    - id: admin-and-content-studio
+      description: "A12/admin: admin review queues (corrections/requests/tickets/video) + Content Creation Studio (author/validate/publish Situations, Tracks, Packs)."
+      command: "agent-task: build src/features/admin/ queues + content studio wired to the validator + repository; is_admin() gated"
+      validation: npm run build && test -d src/features/admin
+      depends_on: [content-repository, split-app-components]
+      fatal_on_failure: false
+
+    - id: feedback-status-visibility
+      description: "My submissions: user sees status of their corrections/requests/tickets in Settings."
+      command: "agent-task: add 'My submissions' to settings feature"
+      validation: npm run build && grep -rq "submissions" src/features/settings 2>/dev/null || npm run build
+      depends_on: [admin-and-content-studio]
+      fatal_on_failure: false
+
+    - id: payments-deferred
+      description: "P5: free launch — remove the upgrade/Stripe stub; keep subscription_tier + entitlement seams; document re-entry in config."
+      command: "agent-task: delete UpgradeModal/stub; default tiers to free; keep gating seams; note re-entry in src/config.ts"
+      validation: "! grep -rqi 'stripe\\|9\\.99' src/ && npm run build"
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: legal-pages
+      description: "P4: Terms/Privacy/AI-use pages for SearchingFool (Czech GDPR controller, support@searchingfool.com) wired to signup; drafts marked for legal review."
+      command: "agent-task: src/features/legal/* pages per docs; wire from onboarding + settings"
+      validation: npm run build && grep -rq "Privacy" src/features/legal 2>/dev/null || grep -rq "Privacy" src/
+      depends_on: [split-app-components]
+      fatal_on_failure: true
+
+    - id: pwa-assets
+      description: "P8: real PWA icons (192/512/apple-touch/favicon) from logo.svg; manifest + index.html."
+      command: "agent-task: npm install -D sharp; scripts/generate-icons.mjs; update vite.config.ts manifest + index.html"
+      validation: test -f public/pwa-192x192.png && test -f public/apple-touch-icon.png && npm run build
+      depends_on: [foundations-done]
+      fatal_on_failure: false
+
+    - id: offline-audio-and-download
+      description: "T6/T7/T8/R1/R2: bounded LRU audio cache (key=provider+voice, no speed); Settings offline-audio controls (on/off, size, usage, clear); 'Download track/level for offline' pre-generates multi-voice audio."
+      command: "agent-task: extend storage/audio adapters with LRU+limit+usage; Settings controls; download action with progress"
+      validation: npm run build && grep -rq "offline\|cache" src/platform/ 2>/dev/null || npm run build
+      depends_on: [tts-provider-adapters, split-app-components]
+      fatal_on_failure: false
+
+    - id: offline-sync-queue
+      description: "R3/R4/R5: offline write queue (progress/mastery/missions) with sync-on-reconnect (per-item timestamps, server-side increments for counters); pack checksum + version update; graceful degradation for online-only AI features."
+      command: "agent-task: implement src/lib/sync-queue.ts + reconnect flush; content-pack version/checksum check; degrade AI features with clear UI"
+      validation: npm run build && grep -rq "sync" src/lib/ 2>/dev/null || npm run build
+      depends_on: [content-repository, centralized-logger]
+      fatal_on_failure: false
+
+    - id: offline-pwa-caching
+      description: "P8: Workbox runtime caching — app-shell precache, cache-first assets, network-first Supabase reads with offline fallback; sw.js emitted."
+      command: "agent-task: extend VitePWA config with runtimeCaching + offline indicator"
+      validation: npm run build && grep -q runtimeCaching vite.config.ts && ls dist/sw.js
+      depends_on: [pwa-assets, split-app-components]
+      fatal_on_failure: false
+
+    - id: perf-efficiency-stability-safety
+      description: "Optimization/hardening: parallelize load waterfall; reuse AudioContext; debounce profile writes; sanitize AI markdown (rehype-sanitize, XSS); input validation+limits; retry/backoff+optimistic updates; UUID FK integrity migration."
+      command: "agent-task: apply the review's fixes; npm install rehype-sanitize; write+apply 00008_uuid_fk_integrity.sql"
+      validation: grep -rq 'rehype-sanitize' src/ && npm run build && npm test -- --run
+      depends_on: [split-app-components, centralized-logger, content-db-migrations, unit-tests]
+      fatal_on_failure: false
+
+    # =========================================================================
+    # PHASE G — CONTENT AUTHORING (full curriculum + tracks)
+    # =========================================================================
+    - id: author-tracks-and-curriculum
+      description: "C2/A3/C3/C4: author the Goal Tracks (Survival/Host/Social/Bureaucracy/Work) AND complete the 6-month Structured Course (~168 units) as validated Packs via Gemini-assisted generation constrained by CONTENT-STANDARDS; real video per week; cultural depth; grammar notes. USER-GATE: operator reviews each pack/month before publish."
+      command: "agent-task: scripts/generate-content.mjs -> per-track/per-month Situations; validate+regenerate failures; emit projects/falamadeira/content-review/*.json; publish approved packs"
+      validation: node scripts/validate-content.mjs && npm test -- --run
+      depends_on: [seed-content-migration, admin-and-content-studio, prompt-hardening, unit-tests]
+      fatal_on_failure: true
+
+    # =========================================================================
+    # PHASE H — TESTING, STANDARDS, DEPLOY, RELEASE
+    # =========================================================================
+    - id: unit-tests
+      description: "P6: vitest unit + component tests (schema/validator, srs, coach scoring, path policies, engines' pure logic, screens)."
+      command: "agent-task: npm install -D vitest @testing-library/react jsdom; write tests under src/**/__tests__/; all pass"
+      validation: npm test -- --run
+      depends_on: [content-model-schema, srs-adaptive-engine, path-types]
+      fatal_on_failure: true
+
+    - id: vertical-slice-map
+      description: "P6: docs/TEST-VERTICAL-SLICES.md — each slice (auth, structured-course lesson, goal-track, each engine, adaptive-guided session, coach focus, offline, admin, account-deletion) with UI entry, edge/RPC, DB tables, backend evidence (row + correlation_id)."
+      command: "agent-task: author docs/TEST-VERTICAL-SLICES.md"
+      validation: test -f docs/TEST-VERTICAL-SLICES.md && grep -qi correlation_id docs/TEST-VERTICAL-SLICES.md
+      depends_on: [centralized-logger]
+      fatal_on_failure: false
+
+    - id: security-verification
+      description: "P6: scripts/verify-security.mjs — no key material in web OR native bundle; anon RLS probes 401/403; cross-user profile read blocked; edge fns reject unauth. Advisory: rotate dev Gemini key for prod."
+      command: "agent-task: write+run scripts/verify-security.mjs (fatal checks as described)"
+      validation: node scripts/verify-security.mjs
+      depends_on: [client-gemini-refactor, tts-provider-adapters]
+      fatal_on_failure: true
+
+    - id: vertical-slice-e2e
+      description: "P6: Playwright vertical-slice UI suite vs local preview + live Supabase; drives real UI AND asserts backend evidence (row + correlation_id). Covers all path types + engines + coach + offline. Pre-ship gate."
+      command: "agent-task: npm install -D @playwright/test; npx playwright install chromium; tests/e2e/*.spec.ts per slice; run vs npm run preview"
+      validation: npx playwright test --reporter=line
+      depends_on: [vertical-slice-map, security-verification, path-types, coach-feedback-loop, author-tracks-and-curriculum, unit-tests, lint-tooling]
+      fatal_on_failure: true
+
+    - id: preflight-and-standards
+      description: "P6/P1: scripts/preflight.sh (eslint+tsc+vitest+build+audit) + scripts/check-standards.sh wired into it; docs/STANDARDS-COMPLIANCE-REPORT.md reviewing code vs ENGINEERING-STANDARDS. Recurring gate."
+      command: "agent-task: write preflight.sh + check-standards.sh (chmod +x); author compliance report; wire check into preflight"
+      validation: bash scripts/preflight.sh
+      depends_on: [unit-tests, lint-tooling, engineering-standards]
+      fatal_on_failure: true
+
+    - id: local-server-test
+      description: "P6: serve production dist/ like Verpex (SPA fallback, webmanifest MIME, SW) on this device; run @smoke Playwright + PWA checks vs http://localhost."
+      command: "agent-task: scripts/serve-local.sh + run @smoke vs local static server"
+      validation: BASE_URL=http://localhost:4173 npx playwright test --grep @smoke --reporter=line
+      depends_on: [vertical-slice-e2e, offline-pwa-caching]
+      fatal_on_failure: true
+
+    - id: ios-build
+      description: "iOS-first delivery: npx cap sync ios; open/build in Xcode; run on simulator/device; prepare TestFlight. USER-GATE: Apple Developer account + Xcode + signing."
+      command: "agent-task: npm run build && npx cap sync ios; guide operator through Xcode build/run + TestFlight; verify no secrets in the native bundle"
+      validation: test -d ios && npm run build
+      depends_on: [capacitor-setup, stt-speech-adapter, local-server-test, security-verification]
+      fatal_on_failure: false
+
+    - id: web-deploy-pipeline
+      description: "P7: scripts/preflight.sh -> scripts/deploy-verpex.sh (upload dist/ ONLY into the falamadeira.searchingfool.com dir; SPA .htaccess; --dry-run) via scripts/ship.sh (npm run deploy). Set Supabase Auth Site URL to the domain. USER-GATE: Verpex creds in .env.deploy."
+      command: "agent-task: write ship.sh/deploy-verpex.sh (scoped to the one dir, dry-run supported); npm run deploy -- --dry-run must pass before real deploy"
+      validation: npm run deploy -- --dry-run 2>&1 | grep -qi dry.run
+      depends_on: [preflight-and-standards, local-server-test, author-tracks-and-curriculum, legal-pages]
+      fatal_on_failure: true
+
+    - id: verpex-deploy
+      description: "P7: first web deployment to https://falamadeira.searchingfool.com (from this device). USER-GATE: Verpex creds."
+      command: npm run deploy
+      validation: "curl -fsS -o /dev/null -w '%{http_code}' https://falamadeira.searchingfool.com/manifest.webmanifest | grep -q 200"
+      depends_on: [web-deploy-pipeline]
+      fatal_on_failure: true
+
+    - id: post-deploy-smoke
+      description: "P6: smoke the live web app (@smoke Playwright vs the domain) + curl probes (/, manifest, sw.js, legal) as the final ship stage."
+      command: "agent-task: scripts/smoke-prod.sh; wire as ship.sh final stage"
+      validation: BASE_URL=https://falamadeira.searchingfool.com npx playwright test --grep @smoke --reporter=line
+      depends_on: [verpex-deploy, vertical-slice-e2e]
+      fatal_on_failure: true
+
+    - id: docs-sync-and-release
+      description: "Sync docs to shipped reality (USER_MANUAL/TEST_MANUAL/PUBLISHING_GUIDE/README, package.json name+version); commit on main + tag v1.0.0 + push."
+      command: "agent-task: run /update-docs across docs + README; npm pkg set name/version; then commit path-form on main, tag v1.0.0, push origin main --tags"
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira tag | grep -q v1.0.0
+      depends_on: [post-deploy-smoke, ios-build]
+      fatal_on_failure: true
