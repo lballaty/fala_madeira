@@ -241,18 +241,18 @@ plan:
     # PHASE 4 - FEATURE COMPLETION (3-MONTH SCOPE)
     # ---------------------------------------------------------------
 
-    - id: rescope-3-months
-      description: Rescope product promises to the 3-month curriculum - learningPlan shows Months 1-3 with Months 4-6 presented as a post-launch roadmap teaser (not selectable), and remove "zero to conversational in 6 months" claims from UI copy.
-      command: "agent-task: edit src/data/curriculum.ts and affected screen components; months 4-6 render as locked 'Coming soon' cards without Activate buttons"
-      validation: npm run build && node -e "const s=require('fs').readFileSync('src/data/curriculum.ts','utf8'); process.exit(/coming soon/i.test(s)?0:1)"
+    - id: curriculum-6month-structure
+      description: "FULL PRODUCT (supersedes the earlier 3-month rescope): structure the curriculum as the complete 6-month path (28 lessons/month, ~168 lessons) in src/data/curriculum.ts. All 6 months are real and selectable as content is authored (see curriculum-normalize-author). Keep honest lock states for months whose lessons are not yet authored, but the target is all 6 complete."
+      command: "agent-task: model all 6 months in src/data/curriculum.ts with themes (Foundations, Deepening, Past&Future, Local Slang&Culture, Social Mastery, Full Immersion); a month is selectable once its lessons pass content validation, otherwise shown as 'in preparation' (not a permanent teaser)"
+      validation: npm run build && node -e "const s=require('fs').readFileSync('src/data/curriculum.ts','utf8'); const m=(s.match(/month/gi)||[]).length; process.exit(m>=6?0:1)"
       depends_on: [extract-static-data]
       fatal_on_failure: true
 
-    - id: remove-premium-stub
-      description: Remove the non-functional 9.99 EUR upgrade modal and Stripe stub for the free v1.0 launch, keeping subscription_tier schema and voice-limit enforcement intact for the future payments fast-follow.
-      command: "agent-task: delete the UpgradeModal usage and entry points; keep tier checks defaulting to free; leave a FEATURE-FLAGS note in src/config.ts documenting how payments re-enter"
-      validation: "! grep -rqi 'stripe\\|9\\.99' src/ && npm run build"
-      depends_on: [split-app-components]
+    - id: stripe-payments
+      description: "FULL PRODUCT (supersedes remove-premium-stub): implement working Stripe payments — Checkout + webhook edge function updating profiles.subscription_tier, with server-side entitlement gating (unlimited voice, premium TTS voices, offline downloads, advanced modes). USER-GATE: needs the owner's Stripe account keys."
+      command: "agent-task: build supabase/functions/stripe-webhook + a create-checkout function; wire an Upgrade screen; gate premium features server-side; add STRIPE_* secrets via supabase secrets set; document price IDs in src/config.ts"
+      validation: supabase functions list | grep -q stripe-webhook
+      depends_on: [split-app-components, supabase-cli-link]
       fatal_on_failure: false
 
     - id: admin-workflows
@@ -291,7 +291,145 @@ plan:
       fatal_on_failure: true
 
     # ---------------------------------------------------------------
-    # PHASE 5 - CONTENT COMPLETION (3-MONTH CURRICULUM)
+    # PHASE 4B - FULL-PRODUCT ENHANCEMENTS (target: docs/PRODUCT-DESIGN-TARGET.md)
+    # Learning modes as first-class IA, TTS adapters, SRS, offline, calm-UX polish.
+    # ---------------------------------------------------------------
+
+    - id: mockup-v2
+      description: "Revise docs/ui-mockup/intended-ui-v1.html -> intended-ui-v2.html to reflect the full target: add the Practice hub, onboarding first-run, Home review-due card + progress ring + competence line, AA-contrast fix, streak-freeze, offline-audio controls, voice-provider picker. Operator reviews before dependent build steps."
+      command: "agent-task: produce docs/ui-mockup/intended-ui-v2.html covering all screens incl. the new Practice hub and onboarding, light/dark, mobile+desktop"
+      validation: test -f docs/ui-mockup/intended-ui-v2.html
+      depends_on: [engineering-standards]
+      fatal_on_failure: false
+
+    - id: tts-provider-adapters
+      description: "TTS provider adapter pattern: a TtsProvider interface + connectors (browser Web Speech API, Azure pt-PT, Google Cloud, ElevenLabs, OpenAI, Amazon Polly, Gemini). Server-side config-driven default (Azure pt-PT recommended) with an automatic fallback chain ending at browser Web Speech. Default voices MUST be native European Portuguese. Cache key includes provider+voice, excludes speed."
+      command: "agent-task: implement supabase/functions/_shared/tts/*.ts connectors behind a common interface + a router with fallback; add provider config; update the gemini edge fn tts action (or a new speak fn) to route via the interface; keep the validated Gemini connector as one option"
+      validation: supabase functions list | grep -qE "gemini|speak"
+      depends_on: [client-gemini-refactor, supabase-cli-link]
+      fatal_on_failure: false
+
+    - id: tts-user-provider-choice
+      description: "Per-user TTS provider selection + bring-your-own-key. Profile setting picks a provider; optional encrypted BYO key stored server-side (profiles.tts_provider, tts_byo_key_ref)."
+      command: "agent-task: add migration 00008_tts_prefs.sql (profile columns), a Profile UI picker, and edge-fn support to honor the user's provider/key with safe fallback"
+      validation: test -f supabase/migrations/00008_tts_prefs.sql && npm run build
+      depends_on: [tts-provider-adapters, split-app-components]
+      fatal_on_failure: false
+
+    - id: offline-audio-controls
+      description: "Configurable on-device audio: Settings toggle (offline audio on/off), cache size limit with live usage readout, Clear cache; backed by the bounded LRU cache from perf-load-and-audio."
+      command: "agent-task: extend src/lib/audioCache.ts with usage/limit APIs; add a Settings 'Offline audio' section; persist prefs to profile (offline_audio_enabled, cache_limit_mb)"
+      validation: npm run build && grep -rq "offline_audio\|Offline audio" src/
+      depends_on: [perf-load-and-audio, split-app-components]
+      fatal_on_failure: false
+
+    - id: offline-download
+      description: "Offline download: 'Download this lesson/month' pre-generates and stores all phrases so lessons/vocab/listening work with no signal (AI chat + pronunciation scoring stay online, stated in UI)."
+      command: "agent-task: add a download action that iterates a lesson/month's phrases through the TTS route into the cache with progress UI; mark downloaded content in the Learning UI"
+      validation: npm run build && grep -rq "download" src/features/learning 2>/dev/null || grep -rq "Download" src/
+      depends_on: [offline-audio-controls, tts-provider-adapters]
+      fatal_on_failure: false
+
+    - id: srs-engine
+      description: "Spaced-repetition engine (SM-2): migration 00009_srs.sql (srs_items: ease, interval, next_review), a scheduler lib, and a calm 'Review due' surfacing. Foundation for Vocabulary and Grammar modes."
+      command: "agent-task: write supabase/migrations/00009_srs.sql (owner-RLS) and apply; implement src/lib/srs.ts (SM-2); expose due-items query hook"
+      validation: test -f supabase/migrations/00009_srs.sql && grep -rq "srs" src/lib/
+      depends_on: [migration-00004-rls-gaps, split-app-components]
+      fatal_on_failure: false
+
+    - id: practice-hub
+      description: "Practice hub as first-class IA: a screen/route where the learner chooses a mode (Conversation, Listening, Pronunciation, Vocabulary, Reading, Writing, Grammar, Quiz). Modes register into the hub; hub also entry point for 'Review due'."
+      command: "agent-task: create src/features/practice/ hub with a mode registry and cards; add nav entry; wire existing Conversation/Quiz/Listening as registered modes"
+      validation: npm run build && test -d src/features/practice
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: mode-vocab-srs
+      description: "Vocabulary mode: flashcard review driven by the SRS engine; grades update ease/interval; feeds 'Review due'."
+      command: "agent-task: build src/features/practice/vocabulary/ flashcard UI wired to src/lib/srs.ts and quiz_results"
+      validation: npm run build && test -d src/features/practice/vocabulary
+      depends_on: [practice-hub, srs-engine, quiz-persistence]
+      fatal_on_failure: false
+
+    - id: mode-listening-comprehension
+      description: "Listening-comprehension mode: play a dialogue (TTS), ask what was said/meant, score it."
+      command: "agent-task: build src/features/practice/listening/ comprehension exercises generated from lesson dialogues"
+      validation: npm run build && test -d src/features/practice/listening
+      depends_on: [practice-hub, tts-provider-adapters]
+      fatal_on_failure: false
+
+    - id: mode-pronunciation
+      description: "Pronunciation mode: shadowing + record-and-compare using speech recognition; simple scoring/feedback vs target phrase."
+      command: "agent-task: build src/features/practice/pronunciation/ using Web Speech recognition (pt-PT) to compare learner utterance to target and give feedback; store pronunciation_attempts"
+      validation: npm run build && test -d src/features/practice/pronunciation
+      depends_on: [practice-hub, tts-provider-adapters]
+      fatal_on_failure: false
+
+    - id: mode-reading
+      description: "Reading mode: graded texts / cultural snippets with tap-to-translate (uses translate action)."
+      command: "agent-task: build src/features/practice/reading/ with leveled texts and tap-to-translate; seed a few texts per level"
+      validation: npm run build && test -d src/features/practice/reading
+      depends_on: [practice-hub, client-gemini-refactor]
+      fatal_on_failure: false
+
+    - id: mode-writing
+      description: "Writing mode: composition + dictation with AI feedback via the chat/generate action; stores writing_submissions."
+      command: "agent-task: build src/features/practice/writing/ (prompt -> learner writes -> AI feedback); dictation variant (hear -> type)"
+      validation: npm run build && test -d src/features/practice/writing
+      depends_on: [practice-hub, client-gemini-refactor]
+      fatal_on_failure: false
+
+    - id: mode-grammar-drills
+      description: "Grammar-drill mode: targeted conjugation/pattern practice, SRS-scheduled."
+      command: "agent-task: build src/features/practice/grammar/ drills sourced from lesson grammar points, scheduled via srs"
+      validation: npm run build && test -d src/features/practice/grammar
+      depends_on: [practice-hub, srs-engine]
+      fatal_on_failure: false
+
+    - id: dark-mode
+      description: "Full dark-mode theme respecting system preference, across all screens; consistent type-scale tokens."
+      command: "agent-task: add a theme system (CSS vars / Tailwind dark:) + toggle; define type scale in the theme; migrate components off ad-hoc font sizes"
+      validation: npm run build && grep -rq "dark" src/index.css src/ 2>/dev/null
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: responsive-desktop
+      description: "Desktop-responsive layout: persistent sidebar nav + multi-column content on md+ instead of the 384px-locked mobile column; bottom tab bar stays on mobile."
+      command: "agent-task: add responsive breakpoints; sidebar shell for md+ screens reusing the same feature components"
+      validation: npm run build && grep -rq "md:\|lg:" src/ 2>/dev/null
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: onboarding-flow
+      description: "First-run onboarding: light placement question + one 60-second successful exchange (a win in the first session). Wires the ToS/Privacy/AI consent (currently unrendered) into first run."
+      command: "agent-task: build src/features/onboarding/ shown on first login; persist consent to profile; no feature-tour walls"
+      validation: npm run build && test -d src/features/onboarding
+      depends_on: [split-app-components, legal-pages]
+      fatal_on_failure: false
+
+    - id: home-progress
+      description: "Home: month-progress ring + competence line ('you can now order food, ask directions') + calm 'Review due' card from SRS."
+      command: "agent-task: enhance the Home screen with a progress ring, competence summary derived from completed lessons, and the review-due card"
+      validation: npm run build && grep -rq "progress\|Review due" src/features/home 2>/dev/null || npm run build
+      depends_on: [srs-engine, split-app-components]
+      fatal_on_failure: false
+
+    - id: streak-freeze
+      description: "Streak-freeze / grace so a missed day is non-punitive (calm, honest gamification). profiles.streak_freezes."
+      command: "agent-task: add migration for streak_freezes; implement grace logic in streak calc; surface gently in UI"
+      validation: npm run build
+      depends_on: [split-app-components]
+      fatal_on_failure: false
+
+    - id: loading-states
+      description: "Skeleton loaders and calm empty/error states across screens (perceived speed; calm-UX principle)."
+      command: "agent-task: add skeletons for lesson/quiz/chat loads and friendly empty/error states routed through the logger"
+      validation: npm run build
+      depends_on: [centralized-logger, split-app-components]
+      fatal_on_failure: false
+
+    # ---------------------------------------------------------------
+    # PHASE 5 - CONTENT COMPLETION (FULL 6-MONTH CURRICULUM)
     # ---------------------------------------------------------------
 
     - id: content-standards
@@ -302,10 +440,10 @@ plan:
       fatal_on_failure: true
 
     - id: curriculum-normalize-author
-      description: "Normalize the curriculum to 28 lessons per month (84 days total) and author the 28 missing lessons (7 for Month 2 days 50-56 shift, 21 for Month 3) via Gemini-assisted generation constrained by docs/CONTENT-STANDARDS.md; every generated lesson must pass scripts/validate-content.mjs before reaching operator review. USER-GATE: operator reviews generated lessons for compliance with CONTENT-STANDARDS.md before merge."
-      command: "agent-task: write scripts/generate-lessons.mjs calling the gemini edge function per missing day with curriculum context and the CONTENT-STANDARDS.md rules embedded in the generation prompt; run scripts/validate-content.mjs on the output and regenerate failures; emit projects/falamadeira/content-review/m2-m3-lessons.json with a per-lesson compliance report; after operator approval merge into src/data/lessons.ts with renumbered consistent day fields 1-84"
-      validation: node scripts/validate-content.mjs && npm test -- --run && node -e "const s=require('fs').readFileSync('src/data/lessons.ts','utf8'); const c=(s.match(/day:/g)||[]).length; console.log('lessons:',c); process.exit(c>=84?0:1)"
-      depends_on: [content-standards, rescope-3-months, edge-fn-gemini, unit-tests]
+      description: "FULL 6-MONTH CURRICULUM (~168 lessons, 28/month): author all missing lessons (Month 3 remainder + all of Months 4-6, plus any Month 1-2 gaps) via Gemini-assisted generation constrained by docs/CONTENT-STANDARDS.md; every generated lesson must pass scripts/validate-content.mjs before operator review. Author in month batches so review is manageable. USER-GATE: operator reviews each month's generated lessons before merge."
+      command: "agent-task: write scripts/generate-lessons.mjs calling the gemini edge function per missing day with curriculum context + CONTENT-STANDARDS.md rules embedded; validate + regenerate failures; emit projects/falamadeira/content-review/month-N-lessons.json per month with compliance reports; after per-month operator approval merge into src/data/lessons.ts with consistent day fields 1-168"
+      validation: node scripts/validate-content.mjs && npm test -- --run && node -e "const s=require('fs').readFileSync('src/data/lessons.ts','utf8'); const c=(s.match(/day:/g)||[]).length; console.log('lessons:',c); process.exit(c>=168?0:1)"
+      depends_on: [content-standards, curriculum-6month-structure, edge-fn-gemini, unit-tests]
       fatal_on_failure: true
 
     - id: video-curation
@@ -386,7 +524,7 @@ plan:
       description: "Author and run the Playwright vertical-slice UI suite against a local preview build (npm run preview) wired to the live Supabase project and deployed edge functions - one spec per slice from docs/TEST-VERTICAL-SLICES.md. Each spec drives the REAL UI (clicks, typing, navigation) AND asserts the backend evidence for that slice: the expected DB row change and the logs-table entry carrying the correlation_id surfaced in the UI. This is the pre-ship gate - deployment depends on it passing."
       command: "agent-task: npm install -D @playwright/test; npx playwright install chromium; write tests/e2e/<slice>.spec.ts for all 9 slices using dedicated test accounts (a normal user and the liborballaty@gmail.com admin); each test captures the correlation_id from the UI and verifies the matching row via a service-role query helper; run npx playwright test against npm run preview"
       validation: npx playwright test --reporter=line
-      depends_on: [vertical-slice-map, security-verification, admin-workflows, feedback-status-visibility, quiz-persistence, remove-premium-stub, offline-caching, curriculum-normalize-author]
+      depends_on: [vertical-slice-map, security-verification, admin-workflows, feedback-status-visibility, quiz-persistence, stripe-payments, offline-caching, curriculum-normalize-author, practice-hub, mode-vocab-srs, mode-listening-comprehension, mode-pronunciation, mode-reading, mode-writing, mode-grammar-drills, onboarding-flow, dark-mode, responsive-desktop, tts-provider-adapters]
       fatal_on_failure: true
 
     - id: post-deploy-smoke

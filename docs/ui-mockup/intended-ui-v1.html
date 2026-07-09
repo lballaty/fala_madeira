@@ -1,0 +1,257 @@
+<!doctype html>
+<!--
+  File: docs/ui-mockup/intended-ui-v1.html
+  Description: Intended-UI checkpoint mockup for FalaMadeira v1.0. Grounds the current
+    iOS-style design language (SF Pro, #007AFF, #F2F2F7, white cards, blur, safe-area,
+    mobile-first) and layers the planned v1.0 changes for review BEFORE the App.tsx
+    refactor lands. Static mockup only — not wired to data. Toggle light/dark, top-right.
+  Author: Libor Ballaty (via assistant)
+  Created: 2026-07-09
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FalaMadeira — Intended UI v1.0 (mockup)</title>
+<style>
+  :root{
+    --blue:#007AFF; --gray:#8E8E93; --bg:#F2F2F7; --card:#FFFFFF; --text:#000; --sub:#3C3C43;
+    --line:rgba(60,60,67,.12); --shadow:0 2px 8px rgba(0,0,0,.06); --green:#34C759; --amber:#FF9500;
+  }
+  [data-theme="dark"]{
+    --bg:#000; --card:#1C1C1E; --text:#FFF; --sub:#EBEBF5; --line:rgba(120,120,128,.3);
+    --shadow:0 2px 10px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,Inter,sans-serif;background:#e5e5ea;color:#111;padding:24px}
+  [data-theme="dark"] body{background:#0a0a0a;color:#eee}
+  h1{font-size:22px;margin-bottom:4px}
+  .lead{color:#555;margin-bottom:6px;max-width:900px;line-height:1.5}
+  [data-theme="dark"] .lead{color:#aaa}
+  .toolbar{position:fixed;top:16px;right:16px;z-index:10}
+  .toolbar button{background:var(--blue);color:#fff;border:0;border-radius:20px;padding:8px 16px;font-size:14px;cursor:pointer}
+  .section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin:28px 0 12px}
+  .frames{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start}
+  .label{font-size:12px;color:#888;margin-top:8px;text-align:center;max-width:320px}
+  .note{font-size:12px;color:var(--amber);font-weight:600}
+
+  /* phone frame */
+  .phone{width:320px;height:660px;background:var(--card);border-radius:40px;box-shadow:0 10px 40px rgba(0,0,0,.25);
+    border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;position:relative}
+  .screen{flex:1;background:var(--bg);overflow-y:auto;overflow-x:hidden}
+  .statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:600;color:var(--text)}
+  .pad{padding:16px}
+
+  /* components */
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px;color:var(--text)}
+  .row{display:flex;align-items:center;gap:12px}
+  .between{justify-content:space-between}
+  .h2{font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px}
+  .muted{color:var(--gray);font-size:13px}
+  .pill{background:rgba(0,122,255,.1);color:var(--blue);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:600;display:inline-block}
+  .stat{flex:1;text-align:center}
+  .stat .n{font-size:28px;font-weight:800;color:var(--text)}
+  .cta{background:var(--blue);color:#fff;border-radius:14px;padding:15px;text-align:center;font-weight:700;font-size:16px}
+  .btn2{background:rgba(0,122,255,.1);color:var(--blue);border-radius:12px;padding:12px;text-align:center;font-weight:600;font-size:14px}
+  .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#007AFF,#5AC8FA);flex:none}
+  .avatar.lg{width:64px;height:64px}
+  .check{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+  .lock{width:24px;height:24px;border-radius:50%;background:var(--gray);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+  .tabbar{height:64px;background:var(--card);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-around;
+    backdrop-filter:blur(20px)}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--gray)}
+  .tab.active{color:var(--blue)}
+  .tab .ico{font-size:20px}
+  .bubble{max-width:78%;padding:11px 14px;border-radius:18px;font-size:14px;line-height:1.45;margin-bottom:10px}
+  .bubble.ai{background:var(--card);color:var(--text);border-bottom-left-radius:5px;box-shadow:var(--shadow)}
+  .bubble.me{background:var(--blue);color:#fff;border-bottom-right-radius:5px;margin-left:auto}
+  .speaker{color:var(--blue);font-size:15px}
+  .inbar{display:flex;gap:8px;align-items:center;padding:10px;background:var(--card);border-top:1px solid var(--line)}
+  .inbox{flex:1;background:var(--bg);border-radius:20px;padding:10px 14px;color:var(--gray);font-size:14px}
+  .mic{width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+  .list-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .list-item:last-child{border-bottom:0}
+  .slider{height:4px;background:var(--line);border-radius:2px;position:relative;margin:14px 0}
+  .slider::after{content:"";position:absolute;left:55%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid var(--line)}
+  .month-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .month{background:var(--card);border-radius:12px;padding:12px 8px;text-align:center;font-size:12px;box-shadow:var(--shadow);color:var(--text)}
+  .month.active{background:var(--blue);color:#fff}
+  .month.soon{opacity:.55}
+  .select{background:var(--bg);border-radius:10px;padding:11px 12px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--text)}
+  .desktop{width:100%;max-width:980px;height:600px;background:var(--bg);border-radius:16px;border:1px solid var(--line);overflow:hidden;display:flex;box-shadow:0 10px 40px rgba(0,0,0,.15)}
+  .sidebar{width:230px;background:var(--card);border-right:1px solid var(--line);padding:20px 14px}
+  .sidebar .brand{font-weight:800;font-size:18px;color:var(--blue);margin-bottom:22px;padding:0 8px}
+  .navi{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;font-size:14px;color:var(--sub);margin-bottom:4px}
+  .navi.active{background:rgba(0,122,255,.1);color:var(--blue);font-weight:600}
+  .content{flex:1;padding:26px;overflow-y:auto}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .change{background:rgba(52,199,89,.12);border-left:3px solid var(--green);padding:10px 12px;border-radius:8px;font-size:12px;color:var(--sub);margin-bottom:8px}
+  .legend{max-width:900px;line-height:1.7;font-size:13px;color:#555}
+  [data-theme="dark"] .legend{color:#aaa}
+</style>
+</head>
+<body data-theme="light">
+<div class="toolbar"><button onclick="document.body.dataset.theme=document.body.dataset.theme==='light'?'dark':'light'">Toggle light / dark</button></div>
+
+<h1>FalaMadeira — Intended UI (v1.0 checkpoint)</h1>
+<p class="lead">This is the target the App.tsx refactor should land on: the <b>existing iOS-style design preserved</b>, plus the planned v1.0 changes (dark mode, desktop-responsive layout, 3-month curriculum, TTS-provider picker, "My submissions", legal/consent, premium stub removed). Green call-outs mark what's new vs. the current build. Static mockup — not wired to data.</p>
+
+<div class="section-title">Mobile — the four primary screens</div>
+<div class="frames">
+
+  <!-- HOME -->
+  <div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 100%</span></div>
+    <div class="pad">
+      <div class="muted">Bom dia,</div>
+      <div class="h2">Libor 👋</div>
+      <div class="card row" style="margin-top:14px">
+        <div class="stat"><div class="n">🔥 7</div><div class="muted">day streak</div></div>
+        <div class="stat" style="border-left:1px solid var(--line)"><div class="n">2,340</div><div class="muted">XP</div></div>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg,#007AFF,#5AC8FA);color:#fff">
+        <div style="font-size:12px;opacity:.9">TODAY'S LESSON · MONTH 1 · DAY 8</div>
+        <div style="font-size:19px;font-weight:800;margin:6px 0">Introducing Yourself</div>
+        <div style="font-size:13px;opacity:.9;margin-bottom:12px">Sou o Libro. Sou de…</div>
+        <div style="background:#fff;color:var(--blue);border-radius:12px;padding:12px;text-align:center;font-weight:700">Continue →</div>
+      </div>
+      <div class="section-title" style="margin:18px 0 8px">Recent</div>
+      <div class="card row between"><div><div style="font-weight:600;color:var(--text)">Ordering a Bica</div><div class="muted">Day 2 · Daily life</div></div><div class="check">✓</div></div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active"><span class="ico">􀎟</span>Home</div>
+    <div class="tab"><span class="ico">􀉚</span>Learn</div>
+    <div class="tab"><span class="ico">􀌤</span>Tutor</div>
+    <div class="tab"><span class="ico">􀓋</span>Profile</div>
+  </div></div>
+  <div class="label">Home — greeting, streak/XP, today's lesson CTA, recent activity</div>
+  </div>
+
+  <!-- LEARNING -->
+  <div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 100%</span></div>
+    <div class="pad">
+      <div class="h2">Curriculum</div>
+      <div class="muted" style="margin-bottom:12px">3-month path to conversational</div>
+      <div class="month-grid" style="margin-bottom:16px">
+        <div class="month active">Month 1<br><b>Foundations</b></div>
+        <div class="month">Month 2<br><b>Deepening</b></div>
+        <div class="month">Month 3<br><b>Fluency</b></div>
+        <div class="month soon">M4 🔒<br>Soon</div>
+        <div class="month soon">M5 🔒<br>Soon</div>
+        <div class="month soon">M6 🔒<br>Soon</div>
+      </div>
+      <div class="card">
+        <div class="list-item"><div class="check">✓</div><div><div style="font-weight:600;color:var(--text)">Day 1 · Greetings</div><div class="muted">Bom dia, tudo bem?</div></div></div>
+        <div class="list-item"><div class="check">✓</div><div><div style="font-weight:600;color:var(--text)">Day 2 · Ordering</div><div class="muted">Queria uma bica</div></div></div>
+        <div class="list-item"><div style="width:24px;height:24px;border-radius:50%;border:2px solid var(--blue)"></div><div><div style="font-weight:600;color:var(--text)">Day 3 · Numbers 📹</div><div class="muted">Um, dois, três…</div></div></div>
+        <div class="list-item"><div class="lock">🔒</div><div><div style="font-weight:600;color:var(--gray)">Day 4 · Directions</div><div class="muted">Onde fica…?</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ico">􀎟</span>Home</div>
+    <div class="tab active"><span class="ico">􀉚</span>Learn</div>
+    <div class="tab"><span class="ico">􀌤</span>Tutor</div>
+    <div class="tab"><span class="ico">􀓋</span>Profile</div>
+  </div></div>
+  <div class="label">Learning — <span class="note">3 months active, M4–6 "coming soon" (rescoped)</span></div>
+  </div>
+
+  <!-- AI TUTOR -->
+  <div>
+  <div class="phone"><div class="screen" style="display:flex;flex-direction:column">
+    <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 100%</span></div>
+    <div class="row" style="padding:8px 16px;border-bottom:1px solid var(--line);background:var(--card)">
+      <div class="avatar"></div>
+      <div style="flex:1"><div style="font-weight:700;color:var(--text)">Maria</div><div class="muted" style="color:var(--green)">● online</div></div>
+      <div class="speaker">􀁜 Help</div>
+    </div>
+    <div class="pad" style="flex:1">
+      <div class="bubble ai">Olá! Estás pronto para começar? <span class="speaker">🔊</span></div>
+      <div class="bubble ai">Na Madeira dizemos <b>"bica"</b> p'ra um café. Diz lá tu! <span class="speaker">🔊</span></div>
+      <div class="bubble me">Queria uma bica, se faz favor.</div>
+      <div class="bubble ai">Boa! Pronúncia impecável. 👏 <span class="speaker">🔊</span></div>
+    </div>
+    <div class="inbar"><div class="inbox">Message Maria…</div><div class="mic">🎤</div></div>
+  </div></div>
+  <div class="label">AI Tutor — chat, per-message 🔊 replay, mic input, Help mode</div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:41</span><span>􀙇 􀛨 100%</span></div>
+    <div class="pad">
+      <div class="h2">Profile</div>
+      <div class="card row"><div class="avatar lg"></div><div><div style="font-weight:700;color:var(--text)">libor…@gmail.com</div><div class="muted">Member since Jul 2026 · Admin</div></div></div>
+      <div class="section-title" style="margin:6px 0 8px">Audio</div>
+      <div class="card">
+        <div class="row between"><span style="color:var(--text)">Playback speed</span><span class="pill">1.0×</span></div>
+        <div class="slider"></div>
+        <div class="select" style="margin-top:6px"><span>Voice provider <span class="note">NEW</span></span><span class="muted">Azure (pt-PT) ›</span></div>
+        <div class="select" style="margin-top:8px"><span>Tutor</span><span class="muted">Maria ›</span></div>
+      </div>
+      <div class="section-title" style="margin:6px 0 8px">Account</div>
+      <div class="card">
+        <div class="list-item"><span style="color:var(--text)">My submissions <span class="note">NEW</span></span></div>
+        <div class="list-item"><span style="color:var(--text)">Terms · Privacy · AI use <span class="note">NEW</span></span></div>
+        <div class="list-item"><span style="color:var(--text)">Install app</span></div>
+        <div class="list-item"><span style="color:var(--text)">Change password</span></div>
+        <div class="list-item"><span style="color:#FF3B30">Delete account &amp; data</span></div>
+      </div>
+      <div class="card" style="text-align:center;color:#FF3B30;font-weight:600">Sign out</div>
+    </div>
+  </div>
+  <div class="tabbar">
+    <div class="tab"><span class="ico">􀎟</span>Home</div>
+    <div class="tab"><span class="ico">􀉚</span>Learn</div>
+    <div class="tab"><span class="ico">􀌤</span>Tutor</div>
+    <div class="tab active"><span class="ico">􀓋</span>Profile</div>
+  </div></div>
+  <div class="label">Profile — <span class="note">voice provider, my submissions, legal — premium stub removed</span></div>
+  </div>
+
+</div>
+
+<div class="section-title">Desktop — responsive layout (fixes the 384px-locked mobile view on big screens)</div>
+<div class="desktop">
+  <div class="sidebar">
+    <div class="brand">🗣️ FalaMadeira</div>
+    <div class="navi"><span>􀎟</span> Home</div>
+    <div class="navi active"><span>􀉚</span> Learning</div>
+    <div class="navi"><span>􀌤</span> AI Tutor</div>
+    <div class="navi"><span>􀓋</span> Profile</div>
+    <div style="margin-top:auto;padding-top:20px" class="muted">🔥 7-day streak · 2,340 XP</div>
+  </div>
+  <div class="content">
+    <div class="h2" style="margin-bottom:4px">Month 1 · Foundations</div>
+    <div class="muted" style="margin-bottom:18px">Greetings, ordering, numbers, daily life</div>
+    <div class="grid2">
+      <div class="card"><div class="row"><div class="check">✓</div><b style="color:var(--text)">Day 1 · Greetings</b></div><div class="muted" style="margin-top:6px">Bom dia, tudo bem?</div></div>
+      <div class="card"><div class="row"><div class="check">✓</div><b style="color:var(--text)">Day 2 · Ordering a bica</b></div><div class="muted" style="margin-top:6px">Queria uma bica, se faz favor</div></div>
+      <div class="card"><div class="row"><div style="width:24px;height:24px;border-radius:50%;border:2px solid var(--blue)"></div><b style="color:var(--text)">Day 3 · Numbers 📹</b></div><div class="muted" style="margin-top:6px">Um, dois, três…</div></div>
+      <div class="card"><div class="row"><div class="lock">🔒</div><b style="color:var(--gray)">Day 4 · Directions</b></div><div class="muted" style="margin-top:6px">Onde fica a Sé?</div></div>
+    </div>
+  </div>
+</div>
+<div class="label" style="max-width:980px">Desktop — persistent sidebar nav + multi-column content instead of an empty 384px column. Same components, responsive layout.</div>
+
+<div class="section-title">What changed vs. the current build</div>
+<div class="legend">
+  ✓ <b>Preserved:</b> the iOS look — SF Pro, #007AFF blue, #F2F2F7 background, rounded white cards, blur, bottom tab bar, framer-motion transitions.<br>
+  🟢 <b>Dark mode</b> (toggle top-right) — new, respects system preference.<br>
+  🟢 <b>Desktop responsive</b> — sidebar + multi-column instead of the 384px-locked mobile view.<br>
+  🟢 <b>3-month curriculum</b> — Months 1–3 active, 4–6 shown as "coming soon" (honest scope; no more empty months).<br>
+  🟢 <b>Voice-provider picker</b> in Profile — choose Azure/Google/ElevenLabs/browser, or bring your own key.<br>
+  🟢 <b>My submissions</b> — see status of your corrections / lesson requests / tickets (closes the one-way feedback loop).<br>
+  🟢 <b>Legal + first-run consent</b> — Terms / Privacy / AI-use pages (GDPR), wired to the signup checkboxes.<br>
+  🔴 <b>Removed:</b> the non-functional €9.99 premium upgrade stub (free launch; architecture kept for later).<br>
+  ♿ <b>Accessibility:</b> aria-labels on mic/audio/sliders, focus-trapped modals, keyboard nav, pinch-zoom re-enabled.
+</div>
+
+</body>
+</html>
