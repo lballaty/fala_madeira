@@ -88,6 +88,47 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 | P7 | Local from-device deploy pipeline (Verpex) | deploy-pipeline-entrypoint, verpex-deploy | 🔵 |
 | P8 | PWA assets + offline caching | pwa-assets, offline-caching | 🔵 |
 
+## Content architecture & navigation (2026-07-09 reframe — see docs/CONTENT-ARCHITECTURE.md)
+| ID | Requirement | Plan step | Status |
+|---|---|---|---|
+| A1 | Situation-as-atom content model (data-driven) | NEW content-model-schema | ⬜ |
+| A2 | Content Packs (add curriculum as data, versioned) | NEW content-packs | ⬜ |
+| A3 | Goal Tracks (Survival/Host/Social/Bureaucracy/Work) | NEW goal-tracks | ⬜ |
+| A4 | Practical Levels 0–5 (+ CEFR background) | content-model-schema | ⬜ |
+| A5 | **Structured Course path (month-by-month) retained** | NEW path-structured-course | ⬜ |
+| A6 | Goal-Track path | NEW path-goal-track | ⬜ |
+| A7 | Adaptive Guided daily-session path (app-as-tutor default) | NEW path-adaptive-guided | ⬜ |
+| A8 | Free / self-directed navigation (no hard gating; soft prereqs) | NEW navigation-nonlinear | ⬜ |
+| A9 | Placement question at onboarding sets start level | onboarding-flow | 🔵 |
+| A10 | Daily session template (configurable segments) | path-adaptive-guided | ⬜ |
+| A11 | Core loop Hear→Understand→Repeat→Vary→Respond→Use→Review | (engines) | ⬜ |
+| A12 | Content Creation Studio (admin authoring/validate/publish) | NEW content-studio | ⬜ |
+| A13 | Multi-voice speaker variety (teacher/local/older/younger/service/phone/noisy) | tts-provider-adapters | 🔵 |
+| A14 | Seed the existing 56 lessons into Situations/Structured Course | NEW seed-content-migration | ⬜ |
+
+## Voice-first modules/engines (reframe of "learning modes")
+| ID | Requirement | Plan step | Status |
+|---|---|---|---|
+| E1 | Listening Engine (speeds, multi-voice, noise, transcript, dictation) | mode-listening-comprehension (expand) | ⬜ |
+| E2 | Speaking Coach (repeat/shadow/response-speed) | mode-pronunciation (expand) | ⬜ |
+| E3 | Pronunciation Trainer (record-compare, rhythm/stress) | mode-pronunciation | ⬜ |
+| E4 | Pattern Builder (substitution drills) | NEW mode-pattern-builder | ⬜ |
+| E5 | Situation Simulator (branching roleplay L1–L5) | NEW mode-situation-simulator | ⬜ |
+| E6 | Real-World Missions (prep→do→after-action) | NEW mode-missions | ⬜ |
+| E7 | Cultural Context Layer | NEW cultural-layer | ⬜ |
+| E8 | Adaptive Review — 4-dimension (hear/say/retrieve/avoid) | srs-engine (expand) | ⬜ |
+| E9 | AI roles: partner/coach/scenario-gen/error-analyst/context-explainer | prompt-hardening (expand) | 🔵 |
+| E10 | Phrase Library (smart, searchable) | NEW phrase-library | ⬜ |
+
+## Reliability / resilience / offline (SW design)
+| ID | Requirement | Plan step | Status |
+|---|---|---|---|
+| R1 | Content packs + audio cached per track/level | offline-download (expand) | 🔵 |
+| R2 | Offline practice (listen/shadow/pattern/vocab/review/read) | offline-caching, offline-download | 🔵 |
+| R3 | Offline write queue + sync on reconnect (conflict-safe) | NEW offline-sync-queue | ⬜ |
+| R4 | Graceful degradation for online-only AI features | stability-async-hardening | 🔵 |
+| R5 | Pack integrity (checksum) + content versioning | content-packs | ⬜ |
+
 ## Decisions resolved (2026-07-09)
 - **C2:** Full 6-month curriculum (~168 lessons) — CONFIRMED.
 - **P5:** No payments this build (free launch); premium architecture retained — CONFIRMED.

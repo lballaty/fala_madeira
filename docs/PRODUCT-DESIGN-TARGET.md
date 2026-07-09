@@ -9,6 +9,8 @@
 
 > Scope directive (2026-07-09): the owner is building the **full product**, not an MVP. Where earlier decisions narrowed scope for a faster launch (e.g. 3-month curriculum, free-only, defer SRS/reading/writing), this document supersedes them toward the comprehensive target. Launch sequencing may still stage delivery, but the *target* is the whole thing.
 
+> Reframe (2026-07-09): the product is a **voice-first, situation-driven language operating system for living in Madeira**, not a linear course. Content, practice modes, and sequencing are separated so curriculum is **modular** (added as data "packs") and **non-linear** (user chooses track/level/situation/mode; nothing hard-gated). The month-by-month **Structured Course is retained as one path type** for learners who want strict structure, alongside Goal Tracks, an Adaptive Guided daily session (app-as-tutor default), and Free navigation. The authoritative design for this lives in **docs/CONTENT-ARCHITECTURE.md**; sections 4–5 below are summarized there and that doc governs on any conflict.
+
 ---
 
 ## 1. Vision & positioning
@@ -55,9 +57,10 @@ Learning modes become a **first-class information-architecture concept**: a dedi
 
 **Spaced Repetition System (SRS):** an SM-2-style scheduler tracks per-item ease/interval, surfaces a calm **"Review due"** card on Home, and feeds the Vocabulary and Grammar modes. Backed by `srs_items` + `quiz_results` tables.
 
-## 5. Curriculum & content scope (FULL)
+## 5. Curriculum & content scope (FULL — see docs/CONTENT-ARCHITECTURE.md for the model)
 
-- **Full 6-month curriculum** (28 lessons/month = ~168 lessons), A1 → B2, superseding the earlier 3-month narrowing. Months: (1) Foundations & Daily Life, (2) Deepening Skills, (3) Past & Future / Fluency, (4) Local Slang & Culture, (5) Social Mastery, (6) Full Immersion / Debate.
+- **Modular, non-linear content:** the atom is a **Situation** (real Madeira scenario) bundled into **Packs** (add curriculum as data, not code), organized by **Goal Tracks** (Survival, Property Host, Social, Bureaucracy, Work) and **practical Levels 0–5** (CEFR mapped in background).
+- **Structured Course retained:** the built-in **month-by-month 6-month course** (28 lessons/month ≈ 168 units, A1→B2: Foundations, Deepening, Past&Future/Fluency, Local Slang&Culture, Social Mastery, Full Immersion) remains a first-class **path type** for learners who want strict structure — delivered as an ordered path over the content, not the only way through.
 - **Content standards** enforced by `docs/CONTENT-STANDARDS.md` + `scripts/validate-content.mjs` (European-Portuguese-only, prohibited Brazilian forms, Madeiran markers, per-lesson minimums, day uniqueness).
 - **Per-lesson structure:** context → patterns → vocabulary (with pronunciation) → video → practice (multi-mode) → quiz.
 - **Video:** ≥1 curated real video per week block (all 24 weeks); remove placeholder IDs.
