@@ -248,11 +248,11 @@ plan:
       depends_on: [extract-static-data]
       fatal_on_failure: true
 
-    - id: stripe-payments
-      description: "FULL PRODUCT (supersedes remove-premium-stub): implement working Stripe payments — Checkout + webhook edge function updating profiles.subscription_tier, with server-side entitlement gating (unlimited voice, premium TTS voices, offline downloads, advanced modes). USER-GATE: needs the owner's Stripe account keys."
-      command: "agent-task: build supabase/functions/stripe-webhook + a create-checkout function; wire an Upgrade screen; gate premium features server-side; add STRIPE_* secrets via supabase secrets set; document price IDs in src/config.ts"
-      validation: supabase functions list | grep -q stripe-webhook
-      depends_on: [split-app-components, supabase-cli-link]
+    - id: payments-deferred
+      description: "Decision 2026-07-09: NO payments in this build (free launch). Remove the non-functional 9.99 EUR upgrade stub; KEEP the subscription_tier + voice-limit architecture and server-side entitlement seams intact so Stripe can be added later without rework. Document the re-entry path in src/config.ts (feature-flags note)."
+      command: "agent-task: delete the UpgradeModal usage/entry points; default all tier checks to free; keep gating seams; add a FEATURE-FLAGS/payments-reentry note in src/config.ts"
+      validation: "! grep -rqi 'stripe\\|9\\.99' src/ && npm run build"
+      depends_on: [split-app-components]
       fatal_on_failure: false
 
     - id: admin-workflows
@@ -524,7 +524,7 @@ plan:
       description: "Author and run the Playwright vertical-slice UI suite against a local preview build (npm run preview) wired to the live Supabase project and deployed edge functions - one spec per slice from docs/TEST-VERTICAL-SLICES.md. Each spec drives the REAL UI (clicks, typing, navigation) AND asserts the backend evidence for that slice: the expected DB row change and the logs-table entry carrying the correlation_id surfaced in the UI. This is the pre-ship gate - deployment depends on it passing."
       command: "agent-task: npm install -D @playwright/test; npx playwright install chromium; write tests/e2e/<slice>.spec.ts for all 9 slices using dedicated test accounts (a normal user and the liborballaty@gmail.com admin); each test captures the correlation_id from the UI and verifies the matching row via a service-role query helper; run npx playwright test against npm run preview"
       validation: npx playwright test --reporter=line
-      depends_on: [vertical-slice-map, security-verification, admin-workflows, feedback-status-visibility, quiz-persistence, stripe-payments, offline-caching, curriculum-normalize-author, practice-hub, mode-vocab-srs, mode-listening-comprehension, mode-pronunciation, mode-reading, mode-writing, mode-grammar-drills, onboarding-flow, dark-mode, responsive-desktop, tts-provider-adapters]
+      depends_on: [vertical-slice-map, security-verification, admin-workflows, feedback-status-visibility, quiz-persistence, payments-deferred, offline-caching, curriculum-normalize-author, practice-hub, mode-vocab-srs, mode-listening-comprehension, mode-pronunciation, mode-reading, mode-writing, mode-grammar-drills, onboarding-flow, dark-mode, responsive-desktop, tts-provider-adapters]
       fatal_on_failure: true
 
     - id: post-deploy-smoke

@@ -70,7 +70,7 @@ Learning modes become a **first-class information-architecture concept**: a dedi
 
 - **Connectors:** Browser Web Speech API (free/local), Azure AI Speech (native pt-PT, recommended default), Google Cloud TTS (Chirp3-HD pt-PT), ElevenLabs (premium quality), OpenAI TTS, Amazon Polly, Gemini TTS (current, retry-hardened).
 - **Selection criteria captured:** pt-PT authenticity, voice quality/naturalness, free tier, cost/1M chars, reliability. (See comparison table in session notes / tracker.)
-- **Server-side default** — config-driven; **automatic fallback chain** (primary → secondary → browser Web Speech API last resort).
+- **Default (decided 2026-07-09): Azure AI Speech native pt-PT**, with **browser Web Speech API as the fallback**. Config-driven; **automatic fallback chain** (Azure → … → browser Web Speech API last resort). Needs an Azure Speech key (operator to provide).
 - **Per-user override** — a Profile setting to pick a provider, including **bring-your-own-key** for users with their own Azure/ElevenLabs/etc. account.
 - **Authenticity requirement:** default voices MUST be native European Portuguese (pt-PT), not generic multilingual — this is pedagogical, not cosmetic.
 - **Gemini TTS reliability:** validated + retried (documented intermittent `finishReason=OTHER` empty-audio defect, rate-correlated; see `supabase/functions/_shared/gemini.ts`).
@@ -118,7 +118,7 @@ Learning modes become a **first-class information-architecture concept**: a dedi
 
 ## 11. Monetization (target)
 
-- Free core. Premium tier architecture retained (`subscription_tier`, voice limits). Full-product target **includes working Stripe** (checkout + webhook → entitlements + server-side gating). Premium perks: unlimited voice, premium TTS voices, offline downloads, advanced modes. (Earlier "free-only launch" was an MVP narrowing; superseded for the full target, sequencing TBD.)
+- **Decision 2026-07-09: free launch, NO payments in this build.** The premium-tier *architecture* is retained (`subscription_tier`, voice limits, server-side entitlement seams) so Stripe can be added later without rework, but no Stripe integration ships now. Premium perks reserved for later: unlimited voice, premium TTS voices, offline downloads, advanced modes.
 
 ## 12. Offline / PWA
 

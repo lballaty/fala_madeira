@@ -83,11 +83,16 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 | P2 | Centralized logger/observability | centralized-logger, analytics-telemetry | 🔵 |
 | P3 | UUID FK integrity | safety-hardening (00007) | 🔵 |
 | P4 | Legal + first-run consent (GDPR/EU AI Act) | legal-pages, onboarding-flow | 🔵 |
-| P5 | Stripe payments (full-product target) | NEW stripe-payments (was remove-premium-stub) | ❓ scope change |
+| P5 | Payments deferred — free launch, architecture retained (no Stripe now) | payments-deferred | 🔵 (decided 2026-07-09) |
 | P6 | Vertical-slice + Playwright + smoke testing | vertical-slice-* , post-deploy-smoke | 🔵 |
 | P7 | Local from-device deploy pipeline (Verpex) | deploy-pipeline-entrypoint, verpex-deploy | 🔵 |
 | P8 | PWA assets + offline caching | pwa-assets, offline-caching | 🔵 |
 
-## Open decisions (❓)
-- **C2/P5:** Full 6-month curriculum + working Stripe were narrowed for MVP; the full-product directive reopens them. Confirm inclusion + sequencing.
-- **TTS default provider:** Azure recommended; confirm account/key or start browser-default with adapters.
+## Decisions resolved (2026-07-09)
+- **C2:** Full 6-month curriculum (~168 lessons) — CONFIRMED.
+- **P5:** No payments this build (free launch); premium architecture retained — CONFIRMED.
+- **TTS default:** Azure AI Speech pt-PT default + browser Web Speech fallback — CONFIRMED (needs Azure Speech key from owner).
+
+## Open items
+- Azure Speech key needed before tts-provider-adapters can use Azure as live default (browser fallback works meanwhile).
+- Owner has additional design insight to provide (pending) before further build.
