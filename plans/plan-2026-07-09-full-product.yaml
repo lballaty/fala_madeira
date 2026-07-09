@@ -129,11 +129,18 @@ plan:
       fatal_on_failure: true
 
     - id: seed-content-migration
-      description: "A14: convert the existing 56 lessons into Situations (tagged tracks/levels) + assemble the month-by-month Structured Course as the seed Pack; validate; publish."
-      command: "agent-task: write scripts/seed-content.mjs mapping src/data/lessons.ts -> Situations + Structured Course pack; run validator; publish to DB"
+      description: "A14: REUSE the existing 56 lessons — do NOT regenerate. Map them verbatim into Situations, preserving title/description/level/day/category and (assessed 2026-07-09) all 56 patterns + ~450 vocabulary items + the 11 goals/explanations as cultural_notes. Assemble the month-by-month Structured Course from them as the seed Pack. This is a mechanical field-mapping, not content generation."
+      command: "agent-task: write scripts/seed-content.mjs mapping src/data/lessons.ts -> Situations (verbatim field carry-over) + Structured Course pack; run validator; publish to DB. New voice-first fields (dialogues/roleplay/mission/substitutions) are left empty here and filled by content-enrichment."
       validation: node scripts/validate-content.mjs && npm run build
       depends_on: [content-repository, content-model-schema]
       fatal_on_failure: true
+
+    - id: content-enrichment
+      description: "ENRICH the reused situations with the voice-first layers they lack (assessed 2026-07-09: 0/56 have these): multi-speaker dialogues (Listening), branching roleplays (Simulator), real-world missions, phrase substitution slots (Pattern Builder), structured cultural_notes, pronunciation guides. Gemini-assisted per situation, constrained by CONTENT-STANDARDS; augments existing situations, never overwrites reused patterns/vocab. USER-GATE: operator reviews enrichment per batch."
+      command: "agent-task: scripts/enrich-content.mjs adds the missing voice-first fields to each seeded Situation; validate; emit per-batch review files; publish approved"
+      validation: node scripts/validate-content.mjs
+      depends_on: [seed-content-migration, prompt-hardening]
+      fatal_on_failure: false
 
     # =========================================================================
     # PHASE D — VOICE-FIRST ENGINES (modes = lenses over content)
@@ -351,10 +358,10 @@ plan:
     # PHASE G — CONTENT AUTHORING (full curriculum + tracks)
     # =========================================================================
     - id: author-tracks-and-curriculum
-      description: "C2/A3/C3/C4: author the Goal Tracks (Survival/Host/Social/Bureaucracy/Work) AND complete the 6-month Structured Course (~168 units) as validated Packs via Gemini-assisted generation constrained by CONTENT-STANDARDS; real video per week; cultural depth; grammar notes. USER-GATE: operator reviews each pack/month before publish."
-      command: "agent-task: scripts/generate-content.mjs -> per-track/per-month Situations; validate+regenerate failures; emit projects/falamadeira/content-review/*.json; publish approved packs"
+      description: "C2/A3/C3/C4: author only the NET-NEW content — Months 4-6 of the Structured Course (M1-3 are reused/enriched, not regenerated) AND the Goal Tracks (Survival/Host/Bureaucracy/Work situations like 'the boiler is not working', 'calling Finanças'). Reuse/re-tag existing seeded situations into tracks where they already fit before generating new ones. Gemini-assisted, CONTENT-STANDARDS-constrained; real video per week; cultural depth; grammar notes. USER-GATE: operator reviews each pack/month before publish."
+      command: "agent-task: scripts/generate-content.mjs — FIRST re-tag existing seeded situations into matching tracks; THEN generate only the gaps (M4-6 + track-specific net-new); validate+regenerate failures; emit projects/falamadeira/content-review/*.json; publish approved packs"
       validation: node scripts/validate-content.mjs && npm test -- --run
-      depends_on: [seed-content-migration, admin-and-content-studio, prompt-hardening, unit-tests]
+      depends_on: [seed-content-migration, content-enrichment, admin-and-content-studio, prompt-hardening, unit-tests]
       fatal_on_failure: true
 
     # =========================================================================
