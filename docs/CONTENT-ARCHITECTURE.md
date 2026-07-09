@@ -117,6 +117,30 @@ Track per-item mastery across four dimensions, not just time:
 - **hear** (recognizes it at natural speed) · **say** (pronunciation/fluency) · **retrieve** (recall speed) · **avoid** (situations skipped/abandoned).
 Review and recommendations target the weakest dimension: *review what the learner cannot hear, cannot say, or cannot retrieve quickly.* SM-2 scheduling is the substrate; the dimension model steers selection.
 
+## 6b. Feedback & Focus loop (the Coach)
+
+The user-facing surface of the adaptive model: a closed loop that tells the learner **what to focus on next** and lets them act on it in one tap.
+
+**Loop:** `Signals → Insights model → Prioritized suggestions → One-tap action → new Signals`.
+
+**Two granularities:**
+- **Micro (in-the-moment):** every exercise (quiz item, pronunciation attempt, listening check, roleplay turn) emits a graded result → immediate, forgiving feedback.
+- **Macro (coaching):** the Coach/Insights engine aggregates results across sessions into ranked focus recommendations.
+
+**Signals in:** quiz per-item results; pronunciation scores (problem phonemes); listening misses (couldn't hear at natural speed); roleplay stalls + response latency; SRS mastery across the 4 dimensions (hear/say/retrieve/avoid); Error-Analyst findings (recurring gender/tense/word-order/register); behavior (situations avoided, recency, streak).
+
+**Prioritization:** each candidate focus item ranked by `weakness severity × goal-relevance (active track) × review urgency × recency/avoidance`. Personalized to the learner's track and level.
+
+**Surfaces:**
+- **Home "Focus" card** — top 1–3 suggestions, each a one-tap action ("Practice numbers — missed 4× → Drill").
+- **After-session recap** — strengths + shaky areas + review items added.
+- **Weekly insight** — progress, what improved, next focus.
+- **Explainable** — a "why this?" reveal shows the evidence (calm/honest; never arbitrary).
+
+**Closes the loop:** acting on a suggestion feeds the Adaptive Guided path — the next daily session is built around it — and new results update the model.
+
+**Reliability:** scoring + aggregation + prioritization are **deterministic and run offline** from locally-stored results (always some guidance). The AI narrative/pattern-spotting layer (Error Analyst) is an **online enhancement with graceful fallback** to templated suggestions. Positive, competence-framed tone — "your fastest win today," never scolding.
+
 ## 7. AI roles (specific, not "chat in Portuguese")
 
 Conversation partner · Speaking coach (pronunciation/phrasing/speed) · Scenario generator (turn the user's real need — "tell the cleaner guests arrive at 16:00" — into phrase + audio + variants + roleplay + WhatsApp-ready message) · Error analyst (recurring tense/gender/word-order/register issues) · Local-context explainer. All via the authenticated edge functions.

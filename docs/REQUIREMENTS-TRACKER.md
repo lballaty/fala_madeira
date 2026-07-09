@@ -120,6 +120,20 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 | E9 | AI roles: partner/coach/scenario-gen/error-analyst/context-explainer | prompt-hardening (expand) | 🔵 |
 | E10 | Phrase Library (smart, searchable) | NEW phrase-library | ⬜ |
 
+## Feedback & Focus loop (the Coach)
+| ID | Requirement | Plan step | Status |
+|---|---|---|---|
+| FB1 | Micro feedback: every exercise emits a graded result + immediate forgiving feedback | (per engine) | ⬜ |
+| FB2 | Results capture: quiz/pronunciation/listening/roleplay stored per-item | quiz-persistence, pronunciation/listening/simulator modes | 🔵 |
+| FB3 | Coach/Insights engine: aggregate signals → ranked focus (severity × goal × urgency × recency/avoidance) | NEW coach-insights-engine | ⬜ |
+| FB4 | Home "Focus" card (top 1–3, one-tap action) | home-progress (expand) | ⬜ |
+| FB5 | After-session recap (strengths/shaky/review added) | coach-insights-engine | ⬜ |
+| FB6 | Weekly insight (progress + next focus) | coach-insights-engine | ⬜ |
+| FB7 | Explainable "why this suggestion?" | coach-insights-engine | ⬜ |
+| FB8 | Suggestions feed the Adaptive Guided path (closed loop) | path-adaptive-guided | ⬜ |
+| FB9 | Deterministic offline scoring/prioritization + AI narrative online w/ fallback | coach-insights-engine, stability-async-hardening | ⬜ |
+| FB10 | Positive/competence-framed tone (no scolding) | (design guardrail) | ⬜ |
+
 ## Reliability / resilience / offline (SW design)
 | ID | Requirement | Plan step | Status |
 |---|---|---|---|
