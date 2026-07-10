@@ -16,6 +16,7 @@ import { logger, userMessage } from '../../lib/logger';
 import { config } from '../../config';
 import { audioCache } from '../../lib/audioCache';
 import { downloadForOffline, DownloadScope } from '../../lib/audio-download';
+import { validateText } from '../../lib/validation';
 
 /** Correlation id for tracing a submissions read (mirrors useAdminQueues). */
 const newCorrelationId = (): string =>
@@ -212,54 +213,91 @@ export const useSettings = ({
     }
   }, [isDownloading, refreshCacheUsage, showToast]);
 
-  // Sync settings to localStorage and Supabase
+  // --- Debounced preference persistence (perf/hardening) ---------------------
+  // localStorage mirrors on every change (cheap, local, optimistic). The Supabase write is
+  // debounced by config.settings.prefsWriteDebounceMs so dragging a slider or rapidly toggling
+  // does not spam the DB with a write per frame — only the settled value is persisted. One timer
+  // per preference key; a fresh change resets its window. The final render's value is captured in
+  // a ref so the deferred write always persists the latest value even if the effect closure is
+  // stale. Any write failure routes through the logger (never silent).
+  const debounceTimersRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  const scheduleProfileWrite = useCallback(
+    // `write` returns a Supabase PostgREST builder, which is a PromiseLike (thenable) resolving
+    // to { error }, not a real Promise — typed as PromiseLike so `await` accepts it directly.
+    (key: string, write: () => PromiseLike<{ error: unknown }>) => {
+      const timers = debounceTimersRef.current;
+      if (timers[key]) clearTimeout(timers[key]);
+      timers[key] = setTimeout(() => {
+        void (async () => {
+          try {
+            const result = await write();
+            const error = result ? result.error : null;
+            if (error) {
+              logger.error('PREF_WRITE_FAILED', `debounced preference write failed for ${key}`, {
+                category: 'DATA_PROCESSING',
+                error,
+                details: { key },
+              });
+            }
+          } catch (error) {
+            logger.error('PREF_WRITE_FAILED', `debounced preference write threw for ${key}`, {
+              category: 'DATA_PROCESSING',
+              error,
+              details: { key },
+            });
+          }
+        })();
+      }, config.settings.prefsWriteDebounceMs);
+    },
+    [],
+  );
+
+  // Flush pending debounced writes on unmount so a fast navigate-away does not drop the last edit.
+  useEffect(() => {
+    const timers = debounceTimersRef.current;
+    return () => {
+      for (const key of Object.keys(timers)) clearTimeout(timers[key]);
+    };
+  }, []);
+
+  // Sync settings to localStorage (immediate/optimistic) and Supabase (debounced).
   useEffect(() => {
     localStorage.setItem('playback_speed', playbackSpeed.toString());
-    if (user && profile) {
-      const updateProfile = async () => {
-        if (!supabase) return;
-        await supabase
-          .from('profiles')
-          .update({ playback_speed: playbackSpeed })
-          .eq('id', user.id);
-      };
-      updateProfile();
+    if (user && profile && supabase) {
+      const uid = user.id;
+      scheduleProfileWrite('playback_speed', () =>
+        supabase.from('profiles').update({ playback_speed: playbackSpeed }).eq('id', uid),
+      );
     }
     // supabase is a per-session singleton (getSupabase) and intentionally omitted.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- stable singleton omitted
-  }, [playbackSpeed, user, profile]);
+  }, [playbackSpeed, user, profile, scheduleProfileWrite]);
 
   useEffect(() => {
     localStorage.setItem('is_sound_enabled', isSoundEnabled.toString());
-    if (user && profile) {
-      const updateProfile = async () => {
-        if (!supabase) return;
-        await supabase
-          .from('profiles')
-          .update({ is_sound_enabled: isSoundEnabled })
-          .eq('id', user.id);
-      };
-      updateProfile();
+    if (user && profile && supabase) {
+      const uid = user.id;
+      scheduleProfileWrite('is_sound_enabled', () =>
+        supabase.from('profiles').update({ is_sound_enabled: isSoundEnabled }).eq('id', uid),
+      );
     }
     // supabase is a per-session singleton (getSupabase) and intentionally omitted.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- stable singleton omitted
-  }, [isSoundEnabled, user, profile]);
+  }, [isSoundEnabled, user, profile, scheduleProfileWrite]);
 
   useEffect(() => {
     localStorage.setItem('global_voice_limit', globalVoiceLimit.toString());
-    if (profile?.role === 'admin') {
-      const updateGlobalSettings = async () => {
-        if (!supabase) return;
-        // Try to update global settings table if it exists
-        await supabase
+    if (profile?.role === 'admin' && supabase) {
+      scheduleProfileWrite('global_voice_limit', () =>
+        supabase
           .from('global_settings')
-          .upsert({ key: config.globalSettingsKeys.voiceLimit, value: globalVoiceLimit.toString() });
-      };
-      updateGlobalSettings();
+          .upsert({ key: config.globalSettingsKeys.voiceLimit, value: globalVoiceLimit.toString() }),
+      );
     }
     // supabase is a per-session singleton (getSupabase) and intentionally omitted.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- stable singleton omitted
-  }, [globalVoiceLimit, profile]);
+  }, [globalVoiceLimit, profile, scheduleProfileWrite]);
 
   // Fetch global settings on mount
   useEffect(() => {
@@ -347,10 +385,11 @@ export const useSettings = ({
 
   const handleOpenTicket = async () => {
     if (!supabase || !user) return;
-    if (!supportSubject || !supportDescription) {
-      showToast("Please fill in all fields", "error");
-      return;
-    }
+    // Validate + limit before persisting (ENGINEERING-STANDARDS §4).
+    const subjectCheck = validateText(supportSubject, 'Subject', config.limits.ticketSubjectMax);
+    if (!subjectCheck.ok) { showToast(subjectCheck.reason, 'error'); return; }
+    const descCheck = validateText(supportDescription, 'Description', config.limits.ticketDescriptionMax);
+    if (!descCheck.ok) { showToast(descCheck.reason, 'error'); return; }
 
     setIsSubmittingSupport(true);
     try {
@@ -358,8 +397,8 @@ export const useSettings = ({
         .from('tickets')
         .insert({
           user_id: user.id,
-          subject: supportSubject,
-          description: supportDescription,
+          subject: subjectCheck.value,
+          description: descCheck.value,
           status: 'open',
           priority: 'medium',
           created_at: new Date().toISOString()

@@ -13,6 +13,7 @@ import { getSupabase } from "../lib/supabase";
 import { logger, userMessage } from "../lib/logger";
 import { platform } from "../platform";
 import { config } from "../config";
+import { withRetry } from "../lib/retry";
 
 interface ChatTurn {
   role: 'user' | 'model';
@@ -66,10 +67,37 @@ const invokeEdgeFunction = async <T = unknown>(
     );
   }
 
-  const { data, error } = await supabase.functions.invoke(name, { body });
+  // Transport-level retry (ENGINEERING-STANDARDS §5): re-attempt on transient failures
+  // (network drop, 5xx) with bounded backoff, but NOT on 4xx (bad input / auth / rate-limit) —
+  // those are deterministic and retrying only delays the user's error. The envelope is unwrapped
+  // once, after the retry budget resolves, so error logging/Ref surfacing is unchanged.
+  const httpStatus = (err: unknown): number | undefined => {
+    const ctx = (err as { context?: { status?: number } })?.context;
+    return typeof ctx?.status === 'number' ? ctx.status : undefined;
+  };
+  const { data, error } = await withRetry(
+    async () => {
+      const res = await supabase.functions.invoke(name, { body });
+      if (res.error) throw res.error; // throw so withRetry can decide to retry/give up
+      return res;
+    },
+    {
+      label: `edge:${name}${body?.action ? `:${body.action}` : ''}`,
+      shouldRetry: (err) => {
+        const status = httpStatus(err);
+        // No status = transport/network error (retry). 5xx = server transient (retry).
+        // 4xx = client-side/deterministic (do not retry).
+        return status === undefined || status >= 500;
+      },
+    },
+  ).then(
+    (res) => ({ data: res.data as unknown, error: null as unknown }),
+    (err) => ({ data: null as unknown, error: err }),
+  );
 
   if (error) {
-    let serverMessage = error.message || "The AI service failed. Please try again.";
+    const errMessage = (error as { message?: string }).message;
+    let serverMessage = errMessage || "The AI service failed. Please try again.";
     let serverCode = 'EDGE_FN_ERROR';
     let serverRequestId: string | undefined;
     // FunctionsHttpError exposes the raw Response as error.context; read the
@@ -100,7 +128,7 @@ const invokeEdgeFunction = async <T = unknown>(
     throw new Error(userMessage(serverCode, serverMessage, serverRequestId ?? event.request_id));
   }
 
-  return data;
+  return data as T;
 };
 
 // Server TTS returns raw PCM at 24kHz mono s16le; playback goes through the

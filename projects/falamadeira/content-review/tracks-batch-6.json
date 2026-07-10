@@ -1,0 +1,2603 @@
+{
+  "batch": 6,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T09:09:17.068Z",
+  "retag_mapping": {
+    "track-survival": [
+      "sit-d1-greetings-presence",
+      "sit-d2-ordering-in-a-cafe",
+      "sit-d3-numbers-1-10-connectors",
+      "sit-d4-confusion-clarification",
+      "sit-d5-locations-directions",
+      "sit-d8-self-introduction",
+      "sit-d9-time-days-hours",
+      "sit-d10-numbers-11-100-prices",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d27-numbers-100-years",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m6w1-telling-a-story",
+      "sit-host-guest-checkin-handover",
+      "sit-host-reporting-a-water-leak",
+      "sit-bureau-registering-health-centre",
+      "sit-work-scheduling-site-visit",
+      "sit-work-introductions-networking",
+      "sit-survival-buying-sim-and-bus"
+    ],
+    "track-host": [
+      "sit-d12-adjectives-ser-estar",
+      "sit-d13-daily-routines",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d22-the-imperfect-tense",
+      "sit-d26-describing-your-home",
+      "sit-d32-telephone-formal-messages",
+      "sit-d36-the-present-perfect",
+      "sit-d47-formal-writing-funchal",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-host-boiler-not-working",
+      "sit-host-briefing-the-cleaner",
+      "sit-bureau-utilities-setup",
+      "sit-social-dinner-invitation"
+    ],
+    "track-social": [
+      "sit-d1-greetings-presence",
+      "sit-d4-confusion-clarification",
+      "sit-d6-opinions-preferences",
+      "sit-d7-week-1-stress-test",
+      "sit-d8-self-introduction",
+      "sit-d12-adjectives-ser-estar",
+      "sit-d14-week-2-stress-test",
+      "sit-d15-talking-about-others",
+      "sit-d17-poder-polite-requests",
+      "sit-d20-stronger-connectors",
+      "sit-d21-week-3-stress-test",
+      "sit-d24-wishes-conditionals-polite-requests",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d28-week-4-stress-test",
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d33-opinions-agreeing-disagreeing",
+      "sit-d34-collaborative-future",
+      "sit-d35-week-5-stress-test",
+      "sit-d38-emotions-empathy-comfort",
+      "sit-d39-madeiran-geography-culture",
+      "sit-d41-giving-explanations",
+      "sit-d42-week-6-stress-test",
+      "sit-d43-voces-addressing-groups",
+      "sit-d47-formal-writing-funchal",
+      "sit-d49-week-7-stress-test",
+      "sit-d52-register-social-fluency",
+      "sit-d54-madeira-in-depth",
+      "sit-d56-the-grand-stress-test",
+      "sit-m4w1-neighbourhood-small-talk",
+      "sit-m4w2-festival-arraial",
+      "sit-m4w3-madeiran-expressions",
+      "sit-m4w4-month4-stress-test",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-m5w4-month5-stress-test",
+      "sit-m6w1-telling-a-story",
+      "sit-m6w2-formal-email-office",
+      "sit-m6w3-debating-opinions",
+      "sit-m6w4-final-immersion-test",
+      "sit-host-reporting-a-water-leak",
+      "sit-bureau-registering-health-centre",
+      "sit-work-scope-escalation",
+      "sit-work-chasing-an-invoice",
+      "sit-social-dinner-invitation"
+    ],
+    "track-bureaucracy": [
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d32-telephone-formal-messages",
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d47-formal-writing-funchal",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office",
+      "sit-work-introductions-networking",
+      "sit-survival-taxi-from-airport"
+    ],
+    "track-work": [
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office",
+      "sit-host-boiler-not-working",
+      "sit-work-scope-escalation",
+      "sit-work-quoting-a-job",
+      "sit-work-introductions-networking"
+    ]
+  },
+  "video_results": [
+    {
+      "situationId": "sit-d1-greetings-presence",
+      "url": "https://www.youtube.com/watch?v=pgC1ofHxm7s",
+      "id": "pgC1ofHxm7s",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-d15-talking-about-others",
+      "url": "https://www.youtube.com/watch?v=6F1ld7zv7yM",
+      "id": "6F1ld7zv7yM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-m4w2-festival-arraial",
+      "url": "https://www.youtube.com/watch?v=dd_NTKErny8",
+      "id": "dd_NTKErny8",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 6,
+  "situations": [
+    {
+      "id": "sit-work-quoting-a-job",
+      "kind": "track",
+      "title": "Quoting a Job",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-work",
+        "track-host"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-work-quoting-a-job",
+        "title": "Quoting a Job",
+        "summary": "Giving or asking for a quote (um orçamento): what is included, when it can be done, and how payment works.",
+        "tracks": [
+          "track-structured-course",
+          "track-work"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-work-quoting-a-job-1",
+            "base": "Gostaria de pedir um orçamento para {job}.",
+            "translation": "I would like to ask for a quote for {job}.",
+            "slots": [
+              {
+                "name": "job",
+                "description": "type of job",
+                "options": [
+                  "pintar o quarto",
+                  "arranjar a canalização",
+                  "montar um móvel",
+                  "reparar a máquina de lavar"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-quoting-a-job-2",
+            "base": "O que é que está incluído no {item}?",
+            "translation": "What is included in the {item}?",
+            "slots": [
+              {
+                "name": "item",
+                "description": "item to clarify",
+                "options": [
+                  "preço",
+                  "orçamento",
+                  "serviço"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "O orçamento inclui o quê?",
+                "translation": "What does the quote include?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-quoting-a-job-3",
+            "base": "Quando é que poderia fazer o {service_type}?",
+            "translation": "When could you do the {service_type}?",
+            "slots": [
+              {
+                "name": "service_type",
+                "description": "the type of service/job",
+                "options": [
+                  "trabalho",
+                  "serviço",
+                  "arranjo"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Para quando é que tem disponibilidade?",
+                "translation": "When are you available?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-quoting-a-job-4",
+            "base": "Como é que funciona o pagamento?",
+            "translation": "How does payment work?",
+            "variants": [
+              {
+                "text": "Aceita pagamento por {method}?",
+                "translation": "Do you accept payment by {method}?",
+                "register": "neutral",
+                "note": "Use this variant with a slot for payment method."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-quoting-a-job-5",
+            "base": "Então, fico à espera do {document_type}.",
+            "translation": "So, I'll wait for the {document_type}.",
+            "slots": [
+              {
+                "name": "document_type",
+                "description": "type of document",
+                "options": [
+                  "orçamento",
+                  "email",
+                  "contacto"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "orçamento",
+            "translation": "quote, estimate",
+            "pronunciation": "OR-sah-MEN-toh",
+            "register": "neutral"
+          },
+          {
+            "word": "serviço",
+            "translation": "service, job",
+            "pronunciation": "ser-VEE-soo",
+            "register": "neutral"
+          },
+          {
+            "word": "canalização",
+            "translation": "plumbing",
+            "pronunciation": "kah-nah-lee-zah-SOW",
+            "register": "neutral"
+          },
+          {
+            "word": "mão de obra",
+            "translation": "labour (cost)",
+            "pronunciation": "MAO-dee-OB-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "prazo",
+            "translation": "timeframe, deadline",
+            "pronunciation": "PRAH-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "adiantamento",
+            "translation": "advance payment",
+            "pronunciation": "ah-dee-an-tah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "recibo",
+            "translation": "receipt",
+            "pronunciation": "re-SEE-boo",
+            "register": "neutral"
+          },
+          {
+            "word": "arranjo",
+            "translation": "repair",
+            "pronunciation": "ah-RRAHN-zhoh",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-work-quoting-a-job-1",
+            "title": "Painting a Room",
+            "context": "A neighbour, Dona Laura, asks a local painter, Sr. Manuel, for a quote to paint a room in her house.",
+            "lines": [
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "local",
+                "text": "Bom dia, Sr. Manuel. Tudo bem?",
+                "translation": "Good morning, Mr. Manuel. How are you?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "service",
+                "text": "Bom dia, Dona Laura! Tudo bem, obrigado. Em que posso ajudar?",
+                "translation": "Good morning, Dona Laura! I'm fine, thank you. How can I help?"
+              },
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "local",
+                "text": "Olhe, gostava de pedir um orçamento para pintar o quarto das visitas. É um bocado grande.",
+                "translation": "Look, I'd like to ask for a quote to paint the guest room. It's a bit big."
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "service",
+                "text": "Ah, sim. E já tem as tintas, ou é para eu tratar de tudo?",
+                "translation": "Ah, yes. And do you already have the paints, or should I take care of everything?"
+              },
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "local",
+                "text": "Não, não. Seria para incluir tudo, p'ra ser mais fácil. E o que é que está incluído no orçamento?",
+                "translation": "No, no. It would be to include everything, to make it easier. And what's included in the quote?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "service",
+                "text": "Inclui a preparação das paredes, a pintura, e a limpeza no final. A mão de obra e o material, claro.",
+                "translation": "It includes wall preparation, painting, and cleaning at the end. Labour and materials, of course."
+              },
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "local",
+                "text": "Pois, faz sentido. E para quando é que teria disponibilidade para fazer o trabalho?",
+                "translation": "Yes, that makes sense. And when would you be available to do the job?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "service",
+                "text": "Consigo ir lá na próxima semana, talvez na terça ou quarta. Tenho de ver a minha agenda.",
+                "translation": "I can go there next week, maybe Tuesday or Wednesday. I need to check my schedule."
+              },
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "local",
+                "text": "Certo. E como é que funciona o pagamento? É no final?",
+                "translation": "Right. And how does payment work? Is it at the end?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "service",
+                "text": "Normalmente peço um adiantamento de vinte por cento para o material, e o restante no final, depois de o serviço estar concluído.",
+                "translation": "Normally I ask for a twenty percent advance for materials, and the rest at the end, after the service is completed."
+              },
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "local",
+                "text": "Ah, ok. Percebi. Então, fico à espera do seu contacto com os detalhes. Obrigada!",
+                "translation": "Ah, okay. I understand. So, I'll wait for your contact with the details. Thank you!"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "service",
+                "text": "De nada, Dona Laura. Eu ligo-lhe amanhã, sem falta. Até já!",
+                "translation": "You're welcome, Dona Laura. I'll call you tomorrow, without fail. See you!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Asking for a Quote",
+            "body": "In Portugal, it is very common and expected to ask for a quote ('orçamento') before committing to a service or purchase, especially for home repairs, renovations, or custom work. Don't hesitate to ask for details on what is included (materials, labour, taxes) and the timeframe."
+          },
+          {
+            "title": "Payment Methods",
+            "body": "While cash is still widely accepted, MBWay is a popular mobile payment system used by many individuals and small businesses in Portugal for quick and easy transfers. For larger sums, bank transfers ('transferência bancária') are common. It's also normal for service providers to ask for an advance payment ('adiantamento') for materials, with the rest paid upon completion of the service."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need a handyman to fix a leaky tap in your bathroom. You call a local number you got from a neighbour.",
+          "difficulty": 3,
+          "entry_node": "rp-sit-work-quoting-a-job-start",
+          "nodes": [
+            {
+              "id": "rp-sit-work-quoting-a-job-start",
+              "npc_text": "Olá! Fala o Zé, o canalizador. Em que posso ajudar?",
+              "npc_translation": "Hello! Zé, the plumber, speaking. How can I help?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Olá, Sr. Zé. Gostaria de pedir um orçamento para um arranjo.",
+                  "translation": "Hello, Mr. Zé. I'd like to ask for a quote for a repair.",
+                  "feedback": "Good start! You clearly state your intention.",
+                  "next": "rp-sit-work-quoting-a-job-problem"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-quoting-a-job-problem",
+              "npc_text": "Pois não. Qual é o problema?",
+              "npc_translation": "Yes, of course. What's the problem?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Tenho uma torneira a pingar na casa de banho.",
+                  "translation": "I have a tap dripping in the bathroom.",
+                  "feedback": "Clear and concise description of the problem.",
+                  "next": "rp-sit-work-quoting-a-job-details"
+                },
+                {
+                  "text": "É uma fuga de água na canalização da cozinha.",
+                  "translation": "It's a water leak in the kitchen plumbing.",
+                  "feedback": "Good alternative, describing a different common plumbing issue.",
+                  "next": "rp-sit-work-quoting-a-job-details"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-quoting-a-job-details",
+              "npc_text": "Uma torneira a pingar, hum... Isso é um arranjo simples, mas tenho de ver. Quando é que estaria disponível para eu ir lá ver?",
+              "npc_translation": "A dripping tap, hmm... That's a simple repair, but I need to see it. When would you be available for me to go there and take a look?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Para quando é que tem disponibilidade? Eu tenho flexibilidade.",
+                  "translation": "When are you available? I have flexibility.",
+                  "feedback": "Good, you're asking about his availability.",
+                  "next": "rp-sit-work-quoting-a-job-timing"
+                },
+                {
+                  "text": "Poderia vir amanhã de manhã?",
+                  "translation": "Could you come tomorrow morning?",
+                  "feedback": "Directly proposing a time is also an option.",
+                  "next": "rp-sit-work-quoting-a-job-timing"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-quoting-a-job-timing",
+              "npc_text": "Amanhã de manhã está um bocado complicado. Quinta-feira à tarde, por exemplo? Ou sexta de manhã?",
+              "npc_translation": "Tomorrow morning is a bit complicated. Thursday afternoon, for example? Or Friday morning?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Quinta-feira à tarde é perfeito para mim. Quanto é que custa a visita?",
+                  "translation": "Thursday afternoon is perfect for me. How much does the visit cost?",
+                  "feedback": "Excellent, you confirm the time and ask about the cost of the visit.",
+                  "next": "rp-sit-work-quoting-a-job-cost"
+                },
+                {
+                  "text": "Sexta-feira de manhã dá-me jeito. A visita para o orçamento tem algum custo?",
+                  "translation": "Friday morning suits me. Does the visit for the quote have a cost?",
+                  "feedback": "Good, you confirm the time and ask about the cost of the quote visit.",
+                  "next": "rp-sit-work-quoting-a-job-cost"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-quoting-a-job-cost",
+              "npc_text": "Não, não, a visita para o orçamento não tem custo. Só se o arranjo for feito no momento, claro. Então, fica para quinta à tarde?",
+              "npc_translation": "No, no, the visit for the quote has no cost. Only if the repair is done on the spot, of course. So, it's set for Thursday afternoon?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Sim, fica combinado. Quinta-feira à tarde. Obrigada!",
+                  "translation": "Yes, it's agreed. Thursday afternoon. Thank you!",
+                  "feedback": "You successfully arranged the visit for a quote!"
+                },
+                {
+                  "text": "Perfeito. Fico à espera. Até quinta!",
+                  "translation": "Perfect. I'll be waiting. See you Thursday!",
+                  "feedback": "You've confirmed the appointment. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Arrange a Plumber's Visit for a Quote",
+          "prep": [
+            "Review vocabulary for common repairs and quoting terms.",
+            "Practice asking for a quote and describing a simple problem.",
+            "Rehearse asking about availability and cost of a visit/quote."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "Um momento, por favor.",
+            "Pode falar um bocado mais devagar?"
+          ],
+          "likely_responses": [
+            "Qual é o problema?",
+            "Quando é que posso ir lá ver?",
+            "O orçamento não tem custo.",
+            "Fica combinado."
+          ]
+        },
+        "goals": [
+          "Successfully ask for a service quote for a home repair.",
+          "Clearly describe a simple problem to a service provider.",
+          "Inquire about the service provider's availability and the cost of a visit/quote.",
+          "Understand common terms related to home services and payments in a Madeiran context."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-work-quoting-a-job-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to ask for a quote for {job}.",
+            "answer": "Gostaria de pedir um orçamento para {job}.",
+            "source_ref": "pp-sit-work-quoting-a-job-1"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is included in the {item}?",
+            "answer": "O que é que está incluído no {item}?",
+            "source_ref": "pp-sit-work-quoting-a-job-2"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: When could you do the {service_type}?",
+            "answer": "Quando é que poderia fazer o {service_type}?",
+            "source_ref": "pp-sit-work-quoting-a-job-3"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How does payment work?",
+            "answer": "Como é que funciona o pagamento?",
+            "source_ref": "pp-sit-work-quoting-a-job-4"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: quote, estimate",
+            "answer": "orçamento",
+            "source_ref": "orçamento"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: service, job",
+            "answer": "serviço",
+            "source_ref": "serviço"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: plumbing",
+            "answer": "canalização",
+            "source_ref": "canalização"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: labour (cost)",
+            "answer": "mão de obra",
+            "source_ref": "mão de obra"
+          },
+          {
+            "id": "rv-sit-work-quoting-a-job-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-work-quoting-a-job-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-work-chasing-an-invoice",
+      "kind": "track",
+      "title": "Chasing an Unpaid Invoice",
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-work"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-work-chasing-an-invoice",
+        "title": "Chasing an Unpaid Invoice",
+        "summary": "Politely but firmly following up on an invoice that has not been paid: reminding, restating the amount, and agreeing a date to settle.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-work-chasing-an-invoice-1",
+            "base": "Gostaria de saber sobre a fatura número {invoice_number}.",
+            "translation": "I'd like to ask about invoice number {invoice_number}.",
+            "slots": [
+              {
+                "name": "invoice_number",
+                "description": "The invoice number",
+                "options": [
+                  "12345",
+                  "2024/007",
+                  "F1098"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Estou a ligar sobre a fatura {invoice_number}.",
+                "translation": "I'm calling about invoice {invoice_number}.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-chasing-an-invoice-2",
+            "base": "O pagamento da fatura {invoice_number} ainda não foi efetuado.",
+            "translation": "The payment for invoice {invoice_number} has not been made yet.",
+            "slots": [
+              {
+                "name": "invoice_number",
+                "description": "The invoice number",
+                "options": [
+                  "12345",
+                  "2024/007"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-chasing-an-invoice-3",
+            "base": "O valor em dívida é de {amount} euros.",
+            "translation": "The outstanding amount is {amount} euros.",
+            "slots": [
+              {
+                "name": "amount",
+                "description": "The amount in euros",
+                "options": [
+                  "cento e cinquenta",
+                  "trezentos e vinte e cinco",
+                  "setenta e oito"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Ainda temos {amount} euros por liquidar.",
+                "translation": "We still have {amount} euros to settle.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-chasing-an-invoice-4",
+            "base": "Quando é que podemos contar com o pagamento?",
+            "translation": "When can we expect the payment?",
+            "variants": [
+              {
+                "text": "Pode dar-me uma data para o pagamento?",
+                "translation": "Can you give me a date for the payment?",
+                "register": "neutral"
+              },
+              {
+                "text": "Quando é que pensa liquidar a fatura?",
+                "translation": "When do you plan to settle the invoice?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "fatura",
+            "translation": "invoice",
+            "pronunciation": "fah-TOO-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "pagamento",
+            "translation": "payment",
+            "pronunciation": "pah-gah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "em dívida",
+            "translation": "outstanding, due",
+            "pronunciation": "en DEE-vee-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "liquidar",
+            "translation": "to settle, to pay off",
+            "pronunciation": "lee-kee-DAR",
+            "register": "neutral"
+          },
+          {
+            "word": "prazo",
+            "translation": "deadline, term",
+            "pronunciation": "PRAH-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "transferência bancária",
+            "translation": "bank transfer",
+            "pronunciation": "trans-feh-REN-see-ah ban-KAH-ree-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "contabilista",
+            "translation": "accountant",
+            "pronunciation": "kon-tah-bee-LEESH-tah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-work-chasing-an-invoice-1",
+            "title": "Chasing Payment by Phone",
+            "context": "A small business owner in Funchal calls a client about an overdue invoice.",
+            "lines": [
+              {
+                "speaker": "Empresário",
+                "voice_type": "service",
+                "text": "Bom dia, senhor Silva. É da Loja do Zé. Estou a ligar sobre a fatura 2024/007.",
+                "translation": "Good morning, Mr. Silva. It's from Zé's Shop. I'm calling about invoice 2024/007."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "phone",
+                "text": "Ah, pois é! A fatura! Peço imensa desculpa, esqueci-me completamente. Tive uns dias complicados.",
+                "translation": "Ah, that's right! The invoice! I'm so sorry, I completely forgot. I've had a complicated few days."
+              },
+              {
+                "speaker": "Empresário",
+                "voice_type": "service",
+                "text": "Não há problema. O valor em dívida é de cento e cinquenta euros. Quando é que pensa liquidar?",
+                "translation": "No problem. The outstanding amount is one hundred and fifty euros. When do you plan to settle it?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "phone",
+                "text": "Hum... consigo fazer a transferência na próxima terça-feira, dia vinte e três. Serve?",
+                "translation": "Hmm... I can make the transfer next Tuesday, the twenty-third. Does that work?"
+              },
+              {
+                "speaker": "Empresário",
+                "voice_type": "service",
+                "text": "Sim, terça-feira, dia vinte e três, está ótimo. Agradeço a sua atenção, senhor Silva.",
+                "translation": "Yes, Tuesday, the twenty-third, is perfect. Thank you for your attention, Mr. Silva."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "phone",
+                "text": "P'ra já! Até breve.",
+                "translation": "You're welcome! See you soon."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Business Communication",
+            "body": "In Portugal, even when chasing payment, it's important to maintain a polite and respectful tone, especially when addressing someone formally (using 'o senhor'/'a senhora'). Direct confrontation is generally avoided. Phrases like 'Gostaria de saber sobre...' (I would like to know about...) or 'Estou a ligar sobre...' (I am calling about...) are good ways to introduce the topic indirectly before stating the problem."
+          },
+          {
+            "title": "Handling Delays and Excuses",
+            "body": "It's common for clients to offer an excuse for late payment. Acknowledge their apology briefly ('Não há problema' - No problem) but then steer the conversation back to the payment itself, focusing on agreeing a new date. Avoid getting drawn into lengthy discussions about their reasons."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a client, 'Sr. Fernandes', about an invoice (invoice number 12345) for 250 euros that is two weeks overdue. You need to politely remind him and agree on a new payment date.",
+          "difficulty": 4,
+          "entry_node": "rp-invoice-start",
+          "nodes": [
+            {
+              "id": "rp-invoice-start",
+              "npc_text": "Olá, sou o Sr. Fernandes. Diga!",
+              "npc_translation": "Hello, I'm Mr. Fernandes. Speak!",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Bom dia, senhor Fernandes. É da [Nome da Sua Empresa]. Estou a ligar sobre a fatura 12345.",
+                  "translation": "Good morning, Mr. Fernandes. It's from [Your Company Name]. I'm calling about invoice 12345.",
+                  "feedback": "Excellent, polite and clear. Remember to state your company name for context.",
+                  "next": "rp-invoice-apology"
+                },
+                {
+                  "text": "Onde está o pagamento da fatura 12345?",
+                  "translation": "Where is the payment for invoice 12345?",
+                  "feedback": "A bit too direct for a first approach in Portuguese business culture. Try being more polite.",
+                  "next": "rp-invoice-too-direct"
+                }
+              ]
+            },
+            {
+              "id": "rp-invoice-apology",
+              "npc_text": "Ah, a fatura 12345! Peço desculpa, esqueci-me completamente. Tive uma semana muito atarefada.",
+              "npc_translation": "Ah, invoice 12345! I apologize, I completely forgot. I've had a very busy week.",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Não há problema, senhor Fernandes. O valor em dívida é de duzentos e cinquenta euros. Quando é que pensa liquidar?",
+                  "translation": "No problem, Mr. Fernandes. The outstanding amount is two hundred and fifty euros. When do you plan to settle it?",
+                  "feedback": "Well done, you acknowledged his apology but immediately moved to the core issue and the amount.",
+                  "next": "rp-invoice-suggest-date"
+                },
+                {
+                  "text": "Sim, eu sei. Mas preciso do dinheiro.",
+                  "translation": "Yes, I know. But I need the money.",
+                  "feedback": "This is still a bit confrontational. Try to be more collaborative in finding a solution.",
+                  "next": "rp-invoice-too-direct"
+                }
+              ]
+            },
+            {
+              "id": "rp-invoice-suggest-date",
+              "npc_text": "Hmm... consigo pagar no final da próxima semana, talvez sexta-feira, dia vinte e seis. Pode ser?",
+              "npc_translation": "Hmm... I can pay by the end of next week, maybe Friday, the twenty-sixth. Is that okay?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Sim, sexta-feira, dia vinte e seis, está ótimo. Agradeço a sua colaboração, senhor Fernandes.",
+                  "translation": "Yes, Friday, the twenty-sixth, is great. I appreciate your cooperation, Mr. Fernandes.",
+                  "feedback": "Perfect! You confirmed the date and ended the call politely.",
+                  "next": "rp-invoice-end-success"
+                },
+                {
+                  "text": "Não, preciso que pague amanhã.",
+                  "translation": "No, I need you to pay tomorrow.",
+                  "feedback": "This is unrealistic and too demanding. Try to be flexible and find a mutually agreeable date.",
+                  "next": "rp-invoice-end-fail"
+                }
+              ]
+            },
+            {
+              "id": "rp-invoice-too-direct",
+              "npc_text": "Compreendo, mas não gostei do seu tom. Não posso ajudar agora. Ligo mais tarde.",
+              "npc_translation": "I understand, but I didn't like your tone. I can't help now. I'll call later.",
+              "npc_voice_type": "phone",
+              "options": []
+            },
+            {
+              "id": "rp-invoice-end-success",
+              "npc_text": "De nada! Até breve.",
+              "npc_translation": "You're welcome! See you soon.",
+              "npc_voice_type": "phone",
+              "options": []
+            },
+            {
+              "id": "rp-invoice-end-fail",
+              "npc_text": "Isso não é possível. Lamento, mas terei de adiar o pagamento sem uma data definida.",
+              "npc_translation": "That's not possible. I'm sorry, but I'll have to postpone the payment indefinitely.",
+              "npc_voice_type": "phone",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Secure Payment for Overdue Invoice",
+          "prep": [
+            "Review the invoice details: number, amount, and original due date.",
+            "Practice polite opening phrases to state your purpose without being aggressive.",
+            "Be ready to state the exact outstanding amount clearly.",
+            "Prepare to suggest or confirm a new specific payment date."
+          ],
+          "fallback_phrases": [
+            "Lamento o incómodo, mas é importante resolver isto.",
+            "Podemos encontrar uma solução juntos?",
+            "Qual é a melhor data para o senhor?"
+          ],
+          "likely_responses": [
+            "Ah, sim, já me esquecia!",
+            "Tive um problema esta semana.",
+            "Posso pagar na próxima semana.",
+            "Não consigo pagar agora, mas posso pagar uma parte.",
+            "Pode enviar-me os dados bancários novamente?"
+          ]
+        },
+        "goals": [
+          "Politely remind a client about an unpaid invoice.",
+          "Clearly state the outstanding amount.",
+          "Agree on a new, specific payment date with the client.",
+          "Maintain a professional and respectful tone throughout the conversation."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-work-chasing-an-invoice-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to ask about invoice number {invoice_number}.",
+            "answer": "Gostaria de saber sobre a fatura número {invoice_number}.",
+            "source_ref": "pp-sit-work-chasing-an-invoice-1"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The payment for invoice {invoice_number} has not been made yet.",
+            "answer": "O pagamento da fatura {invoice_number} ainda não foi efetuado.",
+            "source_ref": "pp-sit-work-chasing-an-invoice-2"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The outstanding amount is {amount} euros.",
+            "answer": "O valor em dívida é de {amount} euros.",
+            "source_ref": "pp-sit-work-chasing-an-invoice-3"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: When can we expect the payment?",
+            "answer": "Quando é que podemos contar com o pagamento?",
+            "source_ref": "pp-sit-work-chasing-an-invoice-4"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: invoice",
+            "answer": "fatura",
+            "source_ref": "fatura"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: payment",
+            "answer": "pagamento",
+            "source_ref": "pagamento"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: outstanding, due",
+            "answer": "em dívida",
+            "source_ref": "em dívida"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to settle, to pay off",
+            "answer": "liquidar",
+            "source_ref": "liquidar"
+          },
+          {
+            "id": "rv-sit-work-chasing-an-invoice-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-work-chasing-an-invoice-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-work-introductions-networking",
+      "kind": "track",
+      "title": "Professional Introductions",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-work",
+        "track-social"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-work-introductions-networking",
+        "title": "Professional Introductions",
+        "summary": "Introducing yourself and your work at a meeting or a networking event: your role, what you do, and asking about theirs.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-bureaucracy",
+          "track-work"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-work-introductions-networking-1",
+            "base": "Olá, sou o/a {nome}.",
+            "translation": "Hello, I'm {name}.",
+            "slots": [
+              {
+                "name": "nome",
+                "description": "Your first name",
+                "options": [
+                  "João",
+                  "Ana",
+                  "Miguel",
+                  "Sofia"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Prazer, sou o/a {nome}.",
+                "translation": "Pleasure, I'm {name}.",
+                "register": "neutral"
+              },
+              {
+                "text": "Muito prazer, o meu nome é {nome}.",
+                "translation": "Nice to meet you, my name is {name}.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-introductions-networking-2",
+            "base": "Trabalho na área de {área}.",
+            "translation": "I work in the {area} field.",
+            "slots": [
+              {
+                "name": "área",
+                "description": "Your professional field",
+                "options": [
+                  "tecnologia",
+                  "turismo",
+                  "saúde",
+                  "educação",
+                  "marketing",
+                  "construção"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Sou {profissão}.",
+                "translation": "I'm a {profession}.",
+                "register": "neutral",
+                "note": "Use 'o' for masculine, 'a' for feminine professions."
+              },
+              {
+                "text": "A minha área é {área}.",
+                "translation": "My field is {area}.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-introductions-networking-3",
+            "base": "E tu, o que fazes?",
+            "translation": "And you, what do you do?",
+            "variants": [
+              {
+                "text": "E o senhor/a senhora, o que faz?",
+                "translation": "And you, sir/madam, what do you do?",
+                "register": "formal"
+              },
+              {
+                "text": "Qual é a tua área?",
+                "translation": "What's your field?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-introductions-networking-4",
+            "base": "É um prazer conhecê-lo/a.",
+            "translation": "It's a pleasure to meet you.",
+            "variants": [
+              {
+                "text": "Prazer.",
+                "translation": "Pleasure.",
+                "register": "informal"
+              },
+              {
+                "text": "Muito prazer.",
+                "translation": "Very nice to meet you.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "networking",
+            "translation": "networking",
+            "pronunciation": "NET-wor-king",
+            "register": "neutral",
+            "note": "Often used directly from English in Portuguese."
+          },
+          {
+            "word": "área",
+            "translation": "field, area",
+            "pronunciation": "AH-reh-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "colega",
+            "translation": "colleague",
+            "pronunciation": "koh-LEH-gah",
+            "register": "neutral"
+          },
+          {
+            "word": "projeto",
+            "translation": "project",
+            "pronunciation": "proh-ZHEH-toh",
+            "register": "neutral"
+          },
+          {
+            "word": "encontro",
+            "translation": "meeting, encounter",
+            "pronunciation": "en-KOHN-troh",
+            "register": "neutral"
+          },
+          {
+            "word": "prazer",
+            "translation": "pleasure",
+            "pronunciation": "prah-ZEHR",
+            "register": "neutral"
+          },
+          {
+            "word": "cartão de visita",
+            "translation": "business card",
+            "pronunciation": "kar-TAUM jee vee-ZEE-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "informal",
+            "note": "Common term for espresso in Portugal, including Madeira."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-work-introductions-networking-1",
+            "title": "Networking Event Introduction",
+            "context": "Ana, an event organizer, meets Miguel, a new attendee, at a business networking event in a Funchal hotel.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "service",
+                "text": "Olá! Bem-vindo ao nosso evento. Sou a Ana, organizadora.",
+                "translation": "Hello! Welcome to our event. I'm Ana, the organizer."
+              },
+              {
+                "speaker": "Miguel",
+                "voice_type": "local",
+                "text": "Olá Ana! Muito prazer. Sou o Miguel. É o meu primeiro evento aqui.",
+                "translation": "Hello Ana! Nice to meet you. I'm Miguel. It's my first event here."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "service",
+                "text": "Ah, que bom! Espero que gostes. E o que fazes, Miguel? Qual é a tua área?",
+                "translation": "Ah, great! I hope you like it. And what do you do, Miguel? What's your field?"
+              },
+              {
+                "speaker": "Miguel",
+                "voice_type": "local",
+                "text": "Pois, eu trabalho na área de tecnologia, com desenvolvimento de software. E tu, Ana, como organizadora, qual é o teu foco?",
+                "translation": "Well, I work in technology, with software development. And you, Ana, as an organizer, what's your focus?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "service",
+                "text": "O meu foco é no turismo, em eventos na Madeira. Estamos sempre à procura de novas parcerias.",
+                "translation": "My focus is on tourism, on events in Madeira. We're always looking for new partnerships."
+              },
+              {
+                "speaker": "Miguel",
+                "voice_type": "local",
+                "text": "Interessante! Quem sabe não há alguma ligação com tecnologia.",
+                "translation": "Interesting! Who knows, maybe there's a connection with technology."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Formality in Professional Introductions",
+            "body": "In professional networking contexts in Portugal, especially among peers or at less formal events, using 'tu' (informal 'you') is common. However, with older individuals, in very formal settings, or when addressing someone in a position of authority, 'o senhor/a senhora' (formal 'you') is used to show respect. Pay attention to the context and the other person's lead."
+          },
+          {
+            "title": "Asking About Work",
+            "body": "It's perfectly normal and expected to ask 'O que fazes?' (What do you do?) or 'Qual é a tua área?' (What's your field?) early in an introduction at professional events. This is a standard way to start a conversation and understand common ground for networking."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at a networking event in Funchal. You just got a bica and someone approaches you to introduce themselves.",
+          "difficulty": 3,
+          "entry_node": "rp-sit-work-introductions-networking-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-work-introductions-networking-node-1",
+              "npc_text": "Olá! Tudo bem? Não te conheço daqui. Sou o Ricardo.",
+              "npc_translation": "Hello! All good? I don't know you from here. I'm Ricardo.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Olá Ricardo, tudo bem! Sou o/a [O SEU NOME]. Trabalho na área de [A SUA ÁREA PROFISSIONAL].",
+                  "translation": "Hello Ricardo, all good! I'm [YOUR NAME]. I work in the [YOUR PROFESSIONAL FIELD] field.",
+                  "feedback": "Great start! Remember to use 'o' for male names and 'a' for female names after 'sou' if applicable.",
+                  "next": "rp-sit-work-introductions-networking-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-introductions-networking-node-2",
+              "npc_text": "Ah, que interessante! [A SUA ÁREA PROFISSIONAL], pois... E o que fazes exatamente nessa área?",
+              "npc_translation": "Ah, how interesting! [YOUR PROFESSIONAL FIELD], well... And what exactly do you do in that field?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Eu sou [A SUA PROFISSÃO] e trabalho com [TAREFA ESPECÍFICA/PROJETO]. E tu, Ricardo, qual é a tua área?",
+                  "translation": "I am [YOUR PROFESSION] and I work with [SPECIFIC TASK/PROJECT]. And you, Ricardo, what's your field?",
+                  "feedback": "Good job explaining your role and turning the question back to Ricardo. Be specific about your work!",
+                  "next": "rp-sit-work-introductions-networking-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-introductions-networking-node-3",
+              "npc_text": "Pois, eu trabalho aqui na Madeira, numa empresa de turismo, como gestor de projetos. Estamos a desenvolver umas novas experiências digitais.",
+              "npc_translation": "Well, I work here in Madeira, for a tourism company, as a project manager. We're developing some new digital experiences.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Que interessante! Talvez possamos encontrar uma forma de colaborar no futuro. Tens um cartão de visita?",
+                  "translation": "How interesting! Perhaps we can find a way to collaborate in the future. Do you have a business card?",
+                  "feedback": "Excellent! Expressing interest and asking for a business card is a natural next step in networking.",
+                  "next": "rp-sit-work-introductions-networking-node-4"
+                },
+                {
+                  "text": "Ah, ok. Fico contente por te conhecer. Obrigado!",
+                  "translation": "Ah, okay. Nice to meet you. Thanks!",
+                  "feedback": "A polite way to end the conversation, though perhaps a missed opportunity for further networking.",
+                  "next": "rp-sit-work-introductions-networking-node-end-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-introductions-networking-node-4",
+              "npc_text": "Sim, claro! Aqui tens. Fico à espera do teu contacto. Foi um prazer!",
+              "npc_translation": "Yes, of course! Here you go. I look forward to your contact. It was a pleasure!",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "rp-sit-work-introductions-networking-node-end-1",
+              "npc_text": "Igualmente! Até já!",
+              "npc_translation": "Likewise! See you!",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Network Like a Madeirense!",
+          "prep": [
+            "Practice introducing yourself with your name and professional field: 'Olá, sou o/a [Nome]. Trabalho na área de [Área].'",
+            "Rehearse asking about someone's work: 'E tu, o que fazes?' or 'Qual é a tua área?'",
+            "Prepare a short, simple description of your work or a project you're involved in, in Portuguese."
+          ],
+          "fallback_phrases": [
+            "Desculpa, não percebi.",
+            "Podes repetir, por favor?",
+            "É um assunto interessante."
+          ],
+          "likely_responses": [
+            "Muito prazer!",
+            "Que bom!",
+            "Interessante!",
+            "E o que fazes exatamente?"
+          ]
+        },
+        "goals": [
+          "Introduce yourself and your professional area clearly in Portuguese.",
+          "Ask about another person's work and professional field using appropriate phrases.",
+          "Engage in a short, polite professional conversation at a networking event.",
+          "Understand common phrases and cultural nuances used during professional introductions in Madeira."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-work-introductions-networking-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Hello, I'm {name}.",
+            "answer": "Olá, sou o/a {nome}.",
+            "source_ref": "pp-sit-work-introductions-networking-1"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I work in the {area} field.",
+            "answer": "Trabalho na área de {área}.",
+            "source_ref": "pp-sit-work-introductions-networking-2"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: And you, what do you do?",
+            "answer": "E tu, o que fazes?",
+            "source_ref": "pp-sit-work-introductions-networking-3"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's a pleasure to meet you.",
+            "answer": "É um prazer conhecê-lo/a.",
+            "source_ref": "pp-sit-work-introductions-networking-4"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: networking",
+            "answer": "networking",
+            "source_ref": "networking"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: field, area",
+            "answer": "área",
+            "source_ref": "área"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: colleague",
+            "answer": "colega",
+            "source_ref": "colega"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: project",
+            "answer": "projeto",
+            "source_ref": "projeto"
+          },
+          {
+            "id": "rv-sit-work-introductions-networking-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-work-introductions-networking-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-survival-taxi-from-airport",
+      "kind": "track",
+      "title": "A Taxi from the Airport",
+      "level": 0,
+      "cefr": "A1",
+      "tracks": [
+        "track-survival"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-survival-taxi-from-airport",
+        "title": "A Taxi from the Airport",
+        "summary": "Taking a taxi from Madeira airport into Funchal: giving the address, asking the fare, and paying.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy"
+        ],
+        "level": 0,
+        "cefr": "A1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-survival-taxi-from-airport-1",
+            "base": "Olá, queria ir para {address}, por favor.",
+            "translation": "Hello, I'd like to go to {address}, please.",
+            "slots": [
+              {
+                "name": "address",
+                "description": "A street or place in Funchal",
+                "options": [
+                  "a Rua de Santa Maria",
+                  "o Lido",
+                  "o centro do Funchal",
+                  "o hotel {hotel_name}"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-survival-taxi-from-airport-2",
+            "base": "Quanto é, por favor?",
+            "translation": "How much is it, please?",
+            "variants": [
+              {
+                "text": "Quanto custa, por favor?",
+                "translation": "How much does it cost, please?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-survival-taxi-from-airport-3",
+            "base": "Está bom, obrigado.",
+            "translation": "Okay, thank you.",
+            "variants": [
+              {
+                "text": "Certo, obrigado.",
+                "translation": "Right, thank you.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-survival-taxi-from-airport-4",
+            "base": "Pode levar-me a {address}?",
+            "translation": "Can you take me to {address}?",
+            "slots": [
+              {
+                "name": "address",
+                "description": "A street or place in Funchal",
+                "options": [
+                  "a Rua de Santa Maria",
+                  "o Lido",
+                  "o centro do Funchal"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "táxi",
+            "translation": "taxi",
+            "pronunciation": "TAH-shee",
+            "register": "neutral"
+          },
+          {
+            "word": "motorista",
+            "translation": "driver",
+            "pronunciation": "mo-toh-REESH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "morada",
+            "translation": "address",
+            "pronunciation": "mo-RAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "quanto",
+            "translation": "how much",
+            "pronunciation": "KWAN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "obrigado / obrigada",
+            "translation": "thank you (masc/fem)",
+            "pronunciation": "oh-bree-GAH-doo / oh-bree-GAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "por favor",
+            "translation": "please",
+            "pronunciation": "poor fah-VOR",
+            "register": "neutral"
+          },
+          {
+            "word": "euro",
+            "translation": "euro",
+            "pronunciation": "EH-roo",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-survival-taxi-from-airport-1",
+            "title": "Airport Taxi Ride",
+            "context": "A tourist is taking a taxi from Madeira airport to a hotel in Funchal.",
+            "lines": [
+              {
+                "speaker": "Motorista",
+                "voice_type": "local",
+                "text": "Boa tarde! Para onde, o senhor?",
+                "translation": "Good afternoon! Where to, sir?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Boa tarde. Queria ir para a Rua de Santa Maria, por favor.",
+                "translation": "Good afternoon. I'd like to go to Santa Maria Street, please."
+              },
+              {
+                "speaker": "Motorista",
+                "voice_type": "local",
+                "text": "Rua de Santa Maria. Certo. São uns vinte e cinco minutos.",
+                "translation": "Santa Maria Street. Right. It's about twenty-five minutes."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "E quanto é, por favor?",
+                "translation": "And how much is it, please?"
+              },
+              {
+                "speaker": "Motorista",
+                "voice_type": "local",
+                "text": "Deve ser uns trinta e cinco euros.",
+                "translation": "It should be about thirty-five euros."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Está bom, obrigado.",
+                "translation": "Okay, thank you."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Addressing the Taxi Driver",
+            "body": "In Portugal, it's common and polite to address service staff, including taxi drivers, using 'o senhor' (the sir) or 'a senhora' (the madam) rather than 'você' (you), which can sound overly direct or even distancing. A simple 'Boa tarde' or 'Olá' followed by your request is a good start."
+          },
+          {
+            "title": "Confirming the Fare",
+            "body": "It's always a good idea to ask 'Quanto é?' (How much is it?) or 'Quanto custa?' (How much does it cost?) before or shortly after stating your destination, especially for longer trips like from the airport. Tipping is not mandatory but appreciated for good service; rounding up the fare is a common practice."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You've just landed at Madeira Airport and need a taxi to your hotel in Funchal. The taxi driver greets you.",
+          "difficulty": 2,
+          "entry_node": "rp-taxi-airport-start",
+          "nodes": [
+            {
+              "id": "rp-taxi-airport-start",
+              "npc_text": "Olá! Para onde, o senhor?",
+              "npc_translation": "Hello! Where to, sir?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Olá. Queria ir para o hotel {hotel_name}, por favor.",
+                  "translation": "Hello. I'd like to go to the {hotel_name} hotel, please.",
+                  "feedback": "Good! You gave your destination politely. Now the driver might confirm or tell you the time.",
+                  "next": "rp-taxi-airport-address-given"
+                },
+                {
+                  "text": "Quanto é para o Funchal?",
+                  "translation": "How much is it to Funchal?",
+                  "feedback": "You can ask about the price, but it's more common to state your destination first.",
+                  "next": "rp-taxi-airport-price-first"
+                },
+                {
+                  "text": "Não percebo. Pode repetir?",
+                  "translation": "I don't understand. Can you repeat?",
+                  "feedback": "It's okay to ask for repetition if you didn't catch it. Good use of a fallback phrase!",
+                  "next": "rp-taxi-airport-repeat"
+                }
+              ]
+            },
+            {
+              "id": "rp-taxi-airport-repeat",
+              "npc_text": "Pergunto para onde quer ir. Qual é a sua morada?",
+              "npc_translation": "I'm asking where you want to go. What's your address?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, queria ir para a Rua de Santa Maria, por favor.",
+                  "translation": "Ah, I'd like to go to Santa Maria Street, please.",
+                  "feedback": "Excellent, you understood and gave the address.",
+                  "next": "rp-taxi-airport-address-given"
+                }
+              ]
+            },
+            {
+              "id": "rp-taxi-airport-address-given",
+              "npc_text": "Certo. Para a Rua de Santa Maria. Deve ser uns trinta e sete euros.",
+              "npc_translation": "Right. To Santa Maria Street. It should be about thirty-seven euros.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Está bom, obrigado.",
+                  "translation": "Okay, thank you.",
+                  "feedback": "Perfect! You've confirmed the price and are ready to go.",
+                  "next": "rp-taxi-airport-end"
+                },
+                {
+                  "text": "Trinta e sete euros? É muito.",
+                  "translation": "Thirty-seven euros? That's a lot.",
+                  "feedback": "You can try to express surprise, but taxi prices are usually fixed. This might not get you a discount.",
+                  "next": "rp-taxi-airport-bargain"
+                }
+              ]
+            },
+            {
+              "id": "rp-taxi-airport-price-first",
+              "npc_text": "Para o Funchal? Depende da morada, mas deve ser entre trinta e quarenta euros.",
+              "npc_translation": "To Funchal? It depends on the address, but it should be between thirty and forty euros.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Okay. Queria ir para o Lido, por favor.",
+                  "translation": "Okay. I'd like to go to the Lido, please.",
+                  "feedback": "Good, you clarified your specific destination.",
+                  "next": "rp-taxi-airport-address-given-lido"
+                }
+              ]
+            },
+            {
+              "id": "rp-taxi-airport-address-given-lido",
+              "npc_text": "Para o Lido, sim. São trinta e cinco euros.",
+              "npc_translation": "To the Lido, yes. It's thirty-five euros.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Está bom, obrigado.",
+                  "translation": "Okay, thank you.",
+                  "feedback": "Excellent, you've accepted the fare and are ready.",
+                  "next": "rp-taxi-airport-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-taxi-airport-bargain",
+              "npc_text": "Sim, é o preço normal do aeroporto para o Funchal. A tabela é esta.",
+              "npc_translation": "Yes, it's the normal price from the airport to Funchal. The price list is this.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Está bom, obrigado.",
+                  "translation": "Okay, thank you.",
+                  "feedback": "You tried, but it's best to accept the standard fare. Good recovery.",
+                  "next": "rp-taxi-airport-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-taxi-airport-end",
+              "npc_text": "P'ra já! Vamos a isso.",
+              "npc_translation": "Right away! Let's go.",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Get a Taxi from the Airport to Funchal",
+          "prep": [
+            "Practice saying your hotel's address or a general area like 'o centro do Funchal'.",
+            "Rehearse 'Quanto é, por favor?' to ask the price.",
+            "Be ready to say 'Está bom, obrigado' to confirm."
+          ],
+          "fallback_phrases": [
+            "Não percebo.",
+            "Pode repetir, por favor?",
+            "Desculpe."
+          ],
+          "likely_responses": [
+            "Para onde, o senhor?",
+            "Qual é a morada?",
+            "São X euros.",
+            "Certo, vamos a isso."
+          ]
+        },
+        "goals": [
+          "Greet a taxi driver politely.",
+          "State your destination clearly.",
+          "Ask for the fare.",
+          "Confirm the agreement to proceed."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-survival-taxi-from-airport-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Hello, I'd like to go to {address}, please.",
+            "answer": "Olá, queria ir para {address}, por favor.",
+            "source_ref": "pp-sit-survival-taxi-from-airport-1"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much is it, please?",
+            "answer": "Quanto é, por favor?",
+            "source_ref": "pp-sit-survival-taxi-from-airport-2"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Okay, thank you.",
+            "answer": "Está bom, obrigado.",
+            "source_ref": "pp-sit-survival-taxi-from-airport-3"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you take me to {address}?",
+            "answer": "Pode levar-me a {address}?",
+            "source_ref": "pp-sit-survival-taxi-from-airport-4"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: taxi",
+            "answer": "táxi",
+            "source_ref": "táxi"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: driver",
+            "answer": "motorista",
+            "source_ref": "motorista"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: address",
+            "answer": "morada",
+            "source_ref": "morada"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: how much",
+            "answer": "quanto",
+            "source_ref": "quanto"
+          },
+          {
+            "id": "rv-sit-survival-taxi-from-airport-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-survival-taxi-from-airport-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-survival-buying-sim-and-bus",
+      "kind": "track",
+      "title": "SIM Card & Bus Ticket",
+      "level": 1,
+      "cefr": "A2",
+      "tracks": [
+        "track-survival"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-survival-buying-sim-and-bus",
+        "title": "SIM Card & Bus Ticket",
+        "summary": "Getting a phone SIM (cartão) and a bus (autocarro) ticket: asking for what you need, understanding the price, and topping up.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival"
+        ],
+        "level": 1,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-survival-buying-sim-and-bus-1",
+            "base": "Queria um {item}, por favor.",
+            "translation": "I would like a {item}, please.",
+            "slots": [
+              {
+                "name": "item",
+                "description": "item to buy",
+                "options": [
+                  "cartão SIM",
+                  "bilhete de autocarro"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-survival-buying-sim-and-bus-2",
+            "base": "Pode carregar o meu cartão com {amount} euros?",
+            "translation": "Can you top up my card with {amount} euros?",
+            "slots": [
+              {
+                "name": "amount",
+                "description": "amount in euros",
+                "options": [
+                  "5",
+                  "10",
+                  "15",
+                  "20"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-survival-buying-sim-and-bus-3",
+            "base": "Um bilhete para a {zone}, se faz favor.",
+            "translation": "A ticket for {zone}, please.",
+            "slots": [
+              {
+                "name": "zone",
+                "description": "bus zone number",
+                "options": [
+                  "zona 1",
+                  "zona 2",
+                  "zona 3",
+                  "zona 4"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-survival-buying-sim-and-bus-4",
+            "base": "Quanto é que custa?",
+            "translation": "How much does it cost?",
+            "variants": [
+              {
+                "text": "É quanto?",
+                "translation": "How much is it?",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "cartão SIM",
+            "translation": "SIM card",
+            "pronunciation": "kar-TOW SEEM",
+            "register": "neutral"
+          },
+          {
+            "word": "carregar",
+            "translation": "to top up (a phone/card)",
+            "pronunciation": "ka-rhe-GAR",
+            "register": "neutral"
+          },
+          {
+            "word": "bilhete",
+            "translation": "ticket",
+            "pronunciation": "bee-LYEH-teh",
+            "register": "neutral"
+          },
+          {
+            "word": "autocarro",
+            "translation": "bus",
+            "pronunciation": "ow-toh-KA-rroo",
+            "register": "neutral"
+          },
+          {
+            "word": "saldo",
+            "translation": "balance (phone credit)",
+            "pronunciation": "SAL-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "rede",
+            "translation": "network (phone)",
+            "pronunciation": "RREH-deh",
+            "register": "neutral"
+          },
+          {
+            "word": "operadora",
+            "translation": "provider (phone company)",
+            "pronunciation": "oh-peh-ra-DOH-ra",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-survival-buying-sim-and-bus-1",
+            "title": "Buying a SIM Card",
+            "context": "At a phone shop in Funchal, a customer is buying a SIM card.",
+            "lines": [
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Bom dia! Posso ajudar?",
+                "translation": "Good morning! Can I help you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Bom dia. Queria um cartão SIM, por favor.",
+                "translation": "Good morning. I would like a SIM card, please."
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Claro. Qual operadora prefere? MEO, Vodafone ou NOS?",
+                "translation": "Of course. Which provider do you prefer? MEO, Vodafone or NOS?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Qual é a melhor rede aqui na Madeira?",
+                "translation": "Which is the best network here in Madeira?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "A MEO e a Vodafone têm boa cobertura. A MEO tem bons planos de dados.",
+                "translation": "MEO and Vodafone have good coverage. MEO has good data plans."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Ok, então MEO, por favor. E quanto é que custa?",
+                "translation": "Okay, MEO then, please. And how much does it cost?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "O cartão custa cinco euros e pode carregar com o saldo que quiser. Sugiro dez euros.",
+                "translation": "The card costs five euros and you can top it up with the balance you want. I suggest ten euros."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Sim, pode carregar com dez euros, por favor. São quinze euros no total, não é?",
+                "translation": "Yes, you can top it up with ten euros, please. That's fifteen euros in total, isn't it?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Isso mesmo. É com multibanco ou em dinheiro?",
+                "translation": "That's right. Is it by card or in cash?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Com multibanco, por favor.",
+                "translation": "By card, please."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-survival-buying-sim-and-bus-2",
+            "title": "Buying a Bus Ticket",
+            "context": "At a bus stop in Funchal, buying a ticket from the driver.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria um bilhete para a zona dois, se faz favor.",
+                "translation": "Good morning. I'd like a ticket for zone two, please."
+              },
+              {
+                "speaker": "Motorista",
+                "voice_type": "service",
+                "text": "Zona dois. São dois euros e vinte.",
+                "translation": "Zone two. That's two euros and twenty."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Aqui tem. Obrigado.",
+                "translation": "Here you go. Thank you."
+              },
+              {
+                "speaker": "Motorista",
+                "voice_type": "service",
+                "text": "Obrigado. Próxima paragem, por favor.",
+                "translation": "Thank you. Next stop, please."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Service Interactions",
+            "body": "In Portugal, 'Queria...' (I would like...) is often preferred over 'Eu quero...' (I want...) when making a request, as it sounds more polite and less demanding. Adding 'por favor' or 'se faz favor' (please) is also essential for polite interactions in shops, cafés, and with service staff."
+          },
+          {
+            "title": "Madeira Bus Zones (Horários do Funchal)",
+            "body": "Public transport in Funchal (operated by Horários do Funchal) uses a zone system. When buying a ticket on the bus, you'll need to specify which zone you're travelling to. The price increases with the number of zones. If you plan to use the bus frequently, consider buying a 'Giro' card and topping it up at a Horários do Funchal kiosk."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a small shop in Funchal, trying to buy a new SIM card for your phone.",
+          "difficulty": 2,
+          "entry_node": "sim_rp_start",
+          "nodes": [
+            {
+              "id": "sim_rp_start",
+              "npc_text": "Bom dia! Posso ajudar?",
+              "npc_translation": "Good morning! Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria um cartão SIM, por favor.",
+                  "translation": "Good morning. I would like a SIM card, please.",
+                  "feedback": "Excellent start! Polite and clear.",
+                  "next": "sim_rp_operator_choice"
+                },
+                {
+                  "text": "Olá. Cartão SIM, por favor.",
+                  "translation": "Hello. SIM card, please.",
+                  "feedback": "Good, but 'Bom dia' is more appropriate for morning greetings. Adding 'queria um' is more polite.",
+                  "next": "sim_rp_operator_choice"
+                }
+              ]
+            },
+            {
+              "id": "sim_rp_operator_choice",
+              "npc_text": "Claro. Qual operadora prefere? MEO, Vodafone ou NOS?",
+              "npc_translation": "Of course. Which provider do you prefer? MEO, Vodafone or NOS?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Qual é a melhor rede aqui na Madeira?",
+                  "translation": "Which is the best network here in Madeira?",
+                  "feedback": "Good question to get advice if you're unsure.",
+                  "next": "sim_rp_network_advice"
+                },
+                {
+                  "text": "MEO, por favor.",
+                  "translation": "MEO, please.",
+                  "feedback": "Direct and clear. Good.",
+                  "next": "sim_rp_price_query"
+                }
+              ]
+            },
+            {
+              "id": "sim_rp_network_advice",
+              "npc_text": "A MEO e a Vodafone têm boa cobertura. A MEO tem bons planos de dados.",
+              "npc_translation": "MEO and Vodafone have good coverage. MEO has good data plans.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ok, então MEO, por favor. E quanto é que custa?",
+                  "translation": "Okay, MEO then, please. And how much does it cost?",
+                  "feedback": "Perfect! You've made your choice and asked about the price.",
+                  "next": "sim_rp_price_query"
+                }
+              ]
+            },
+            {
+              "id": "sim_rp_price_query",
+              "npc_text": "O cartão custa cinco euros. Quer carregar com algum saldo?",
+              "npc_translation": "The card costs five euros. Do you want to top it up with any balance?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, pode carregar com dez euros, por favor.",
+                  "translation": "Yes, can you top it up with ten euros, please?",
+                  "feedback": "Excellent, clear request for topping up.",
+                  "next": "sim_rp_payment"
+                },
+                {
+                  "text": "Não, só o cartão, obrigado.",
+                  "translation": "No, just the card, thank you.",
+                  "feedback": "Also a valid choice! You're specifying exactly what you want.",
+                  "next": "sim_rp_payment"
+                }
+              ]
+            },
+            {
+              "id": "sim_rp_payment",
+              "npc_text": "Certo. São dezasseis euros no total. É com multibanco ou em dinheiro?",
+              "npc_translation": "Alright. That's sixteen euros in total. Is it by card or in cash?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Com multibanco, por favor.",
+                  "translation": "By card, please.",
+                  "feedback": "Great! You successfully completed your purchase."
+                },
+                {
+                  "text": "Em dinheiro, por favor.",
+                  "translation": "In cash, please.",
+                  "feedback": "Perfect! You've successfully completed your transaction."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Buy a SIM Card and Bus Ticket in Funchal",
+          "prep": [
+            "Review the phrase patterns for asking for a SIM card and bus ticket.",
+            "Practice asking 'Quanto é que custa?' and specifying amounts for topping up.",
+            "Familiarize yourself with the main phone providers (MEO, Vodafone, NOS) and the concept of bus zones."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Fala inglês?"
+          ],
+          "likely_responses": [
+            "Posso ajudar?",
+            "Qual operadora?",
+            "Quanto saldo?",
+            "São X euros.",
+            "Com multibanco ou dinheiro?"
+          ]
+        },
+        "goals": [
+          "Successfully ask for a SIM card and choose a provider.",
+          "Understand the price of a SIM card and how to top it up.",
+          "Ask for a bus ticket to a specific zone and understand the cost.",
+          "Handle basic payment questions (card or cash)."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like a {item}, please.",
+            "answer": "Queria um {item}, por favor.",
+            "source_ref": "pp-sit-survival-buying-sim-and-bus-1"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you top up my card with {amount} euros?",
+            "answer": "Pode carregar o meu cartão com {amount} euros?",
+            "source_ref": "pp-sit-survival-buying-sim-and-bus-2"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: A ticket for {zone}, please.",
+            "answer": "Um bilhete para a {zone}, se faz favor.",
+            "source_ref": "pp-sit-survival-buying-sim-and-bus-3"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much does it cost?",
+            "answer": "Quanto é que custa?",
+            "source_ref": "pp-sit-survival-buying-sim-and-bus-4"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: SIM card",
+            "answer": "cartão SIM",
+            "source_ref": "cartão SIM"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to top up (a phone/card)",
+            "answer": "carregar",
+            "source_ref": "carregar"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: ticket",
+            "answer": "bilhete",
+            "source_ref": "bilhete"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: bus",
+            "answer": "autocarro",
+            "source_ref": "autocarro"
+          },
+          {
+            "id": "rv-sit-survival-buying-sim-and-bus-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-survival-buying-sim-and-bus-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-social-dinner-invitation",
+      "kind": "track",
+      "title": "A Dinner Invitation",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-social"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-social-dinner-invitation",
+        "title": "A Dinner Invitation",
+        "summary": "Being invited to a neighbour’s or friend’s home for dinner: accepting, asking what to bring, and the table small talk once there.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-host"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-social-dinner-invitation-1",
+            "base": "Queres vir jantar cá a casa {dia}?",
+            "translation": "Do you want to come have dinner at our place {day}?",
+            "slots": [
+              {
+                "name": "dia",
+                "description": "Day of the week",
+                "options": [
+                  "no sábado",
+                  "no domingo",
+                  "na sexta-feira",
+                  "na segunda-feira"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-dinner-invitation-2",
+            "base": "Obrigado/a pelo convite!",
+            "translation": "Thanks for the invitation!",
+            "variants": [
+              {
+                "text": "Muito obrigado/a pelo convite!",
+                "translation": "Thank you very much for the invitation!",
+                "register": "neutral"
+              },
+              {
+                "text": "Adorava ir, obrigado/a!",
+                "translation": "I'd love to go, thanks!",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-dinner-invitation-3",
+            "base": "Posso levar alguma coisa?",
+            "translation": "Can I bring something?",
+            "variants": [
+              {
+                "text": "Precisa de ajuda com alguma coisa?",
+                "translation": "Do you need help with anything?",
+                "register": "neutral",
+                "note": "More formal, but common."
+              },
+              {
+                "text": "Devo levar alguma coisa?",
+                "translation": "Should I bring something?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-dinner-invitation-4",
+            "base": "Está tudo muito bom!",
+            "translation": "Everything is very good!",
+            "variants": [
+              {
+                "text": "Está tudo delicioso!",
+                "translation": "Everything is delicious!",
+                "register": "neutral"
+              },
+              {
+                "text": "A comida está ótima!",
+                "translation": "The food is great!",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-dinner-invitation-5",
+            "base": "Estou a gostar imenso da {coisa}.",
+            "translation": "I'm really enjoying the {thing}.",
+            "slots": [
+              {
+                "name": "coisa",
+                "description": "Specific item or aspect",
+                "options": [
+                  "comida",
+                  "conversa",
+                  "poncha",
+                  "sobremesa"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "jantar",
+            "translation": "dinner / to have dinner",
+            "pronunciation": "zhan-TAR",
+            "register": "neutral"
+          },
+          {
+            "word": "convite",
+            "translation": "invitation",
+            "pronunciation": "con-VEE-tuh",
+            "register": "neutral"
+          },
+          {
+            "word": "levar",
+            "translation": "to bring / to take",
+            "pronunciation": "luh-VAR",
+            "register": "neutral"
+          },
+          {
+            "word": "sobremesa",
+            "translation": "dessert",
+            "pronunciation": "so-bruh-MEH-zah",
+            "register": "neutral"
+          },
+          {
+            "word": "anfitrião / anfitriã",
+            "translation": "host / hostess",
+            "pronunciation": "an-fee-tree-OWN / an-fee-tree-AH",
+            "register": "neutral"
+          },
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "suh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeiran regionalism"
+          },
+          {
+            "word": "poncha",
+            "translation": "poncha (traditional Madeiran drink)",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Madeiran regionalism"
+          },
+          {
+            "word": "bolo do caco",
+            "translation": "bolo do caco (traditional Madeiran bread)",
+            "pronunciation": "BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "Madeiran regionalism"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-social-dinner-invitation-1",
+            "title": "Invitation and Acceptance",
+            "context": "A neighbour invites you for dinner in the street.",
+            "lines": [
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Olá! Tudo bem? Queríamos convidar-te para jantar cá a casa no sábado. Podes vir?",
+                "translation": "Hi! All good? We wanted to invite you for dinner at our place on Saturday. Can you come?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Olá, Dona Fátima! Sim, tudo bem, obrigado/a! Adorava! A que horas?",
+                "translation": "Hi, Dona Fátima! Yes, all good, thanks! I'd love to! At what time?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "P'ra aí às oito e meia. Não é preciso trazer nada, só a tua boa disposição!",
+                "translation": "Around half past eight. No need to bring anything, just your good mood!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Ah, pois é! Mas posso levar uma sobremesa ou um vinho?",
+                "translation": "Oh, right! But can I bring a dessert or a wine?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Um vinho é sempre bem-vindo, se quiseres. Mas não te preocupes!",
+                "translation": "A wine is always welcome, if you want. But don't worry!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-social-dinner-invitation-2",
+            "title": "Small Talk at Dinner",
+            "context": "You are at your neighbour's house for dinner, complimenting the food.",
+            "lines": [
+              {
+                "speaker": "Senhor Manuel",
+                "voice_type": "service",
+                "text": "Então, o que é que estás a achar do nosso peixe-espada?",
+                "translation": "So, what do you think of our black scabbardfish?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "younger",
+                "text": "Está delicioso! E as semilhas, ui, que boas!",
+                "translation": "It's delicious! And the potatoes, oh, how good!"
+              },
+              {
+                "speaker": "Senhor Manuel",
+                "voice_type": "service",
+                "text": "Pois é, são fresquinhas! Queres mais um bocado?",
+                "translation": "Yes, they're fresh! Do you want a little more?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "younger",
+                "text": "Sim, por favor! Está tudo ótimo. Estou a gostar imenso.",
+                "translation": "Yes, please! Everything is great. I'm enjoying it immensely."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Bringing a Gift",
+            "body": "When invited to someone's home for dinner in Madeira (and Portugal generally), it's customary to bring a small gift for the hosts. This could be a bottle of wine, a dessert, a box of chocolates, or flowers. Even if the host says 'não é preciso' (it's not necessary), it's a polite gesture to still bring something modest. It shows appreciation for their hospitality."
+          },
+          {
+            "title": "Table Compliments",
+            "body": "It's common and appreciated to compliment the food, the host's cooking, and the overall atmosphere. Phrases like 'Está tudo delicioso!', 'A comida está ótima!', or 'Estou a gostar imenso da noite!' (I'm really enjoying the evening!) are well-received. You might also ask about a specific dish or ingredient, showing genuine interest."
+          }
+        ],
+        "roleplay": {
+          "scenario": "Your neighbour, Dona Fátima, stops you in the street and invites you for dinner. Later, you are at her house, making small talk.",
+          "difficulty": 3,
+          "entry_node": "rp-sit-social-dinner-invitation-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-social-dinner-invitation-node-1",
+              "npc_text": "Olá! Tudo bem? Queríamos convidar-te para jantar cá a casa no sábado. Podes vir?",
+              "npc_translation": "Hi! All good? We wanted to invite you for dinner at our place on Saturday. Can you come?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Dona Fátima! Sim, tudo bem! Adorava ir. A que horas?",
+                  "translation": "Hi, Dona Fátima! Yes, all good! I'd love to go. At what time?",
+                  "feedback": "Great start! You accepted and asked for the time politely.",
+                  "next": "rp-sit-social-dinner-invitation-node-2"
+                },
+                {
+                  "text": "Sim, claro! Muito obrigado/a pelo convite! Posso levar alguma coisa?",
+                  "translation": "Yes, of course! Thank you very much for the invitation! Can I bring something?",
+                  "feedback": "Excellent! You accepted and immediately offered to contribute, which is very polite.",
+                  "next": "rp-sit-social-dinner-invitation-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-social-dinner-invitation-node-2",
+              "npc_text": "Que bom! P'ra aí às oito e meia. Não é preciso trazer nada, só a tua boa disposição!",
+              "npc_translation": "Great! Around half past eight. No need to bring anything, just your good mood!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ah, pois é! Mas posso levar uma sobremesa ou um vinho?",
+                  "translation": "Oh, right! But can I bring a dessert or a wine?",
+                  "feedback": "Good persistence! It's polite to insist a little.",
+                  "next": "rp-sit-social-dinner-invitation-node-3"
+                },
+                {
+                  "text": "Ok, obrigado/a! Até sábado!",
+                  "translation": "Okay, thanks! See you Saturday!",
+                  "feedback": "Perfectly acceptable. Sometimes it's best to respect their wish not to bring anything.",
+                  "next": "rp-sit-social-dinner-invitation-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-social-dinner-invitation-node-3",
+              "npc_text": "Ah, se insistes, podes trazer um vinho ou uma sobremesa. Mas não te preocupes, a sério!",
+              "npc_translation": "Ah, if you insist, you can bring a wine or a dessert. But don't worry, seriously!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Perfeito, levo um vinho. Até sábado!",
+                  "translation": "Perfect, I'll bring a wine. See you Saturday!",
+                  "feedback": "Great! You confirmed what you'll bring and said goodbye.",
+                  "next": "rp-sit-social-dinner-invitation-node-4"
+                },
+                {
+                  "text": "Muito obrigado/a, Dona Fátima! Até sábado!",
+                  "translation": "Thank you very much, Dona Fátima! See you Saturday!",
+                  "feedback": "Good! You thanked her and confirmed. You can choose not to bring anything if she insists.",
+                  "next": "rp-sit-social-dinner-invitation-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-social-dinner-invitation-node-4",
+              "npc_text": "(Later, at dinner) Então, o que é que achas do nosso bolo do caco com manteiga de alho? É uma especialidade daqui.",
+              "npc_translation": "(Later, at dinner) So, what do you think of our bolo do caco with garlic butter? It's a specialty from here.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Está delicioso, Dona Fátima! E as semilhas, ui, que boas!",
+                  "translation": "It's delicious, Dona Fátima! And the potatoes, oh, how good!",
+                  "feedback": "Excellent! You gave a specific compliment and even added a Madeiran touch with 'semilhas'.",
+                  "next": "rp-sit-social-dinner-invitation-node-5"
+                },
+                {
+                  "text": "Está tudo muito bom! Que refeição fantástica!",
+                  "translation": "Everything is very good! What a fantastic meal!",
+                  "feedback": "Good general compliment. You expressed your enjoyment clearly.",
+                  "next": "rp-sit-social-dinner-invitation-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-social-dinner-invitation-node-5",
+              "npc_text": "Que bom que gostas! É uma receita antiga da minha avó. Queres mais um bocado de poncha?",
+              "npc_translation": "Good that you like it! It's an old recipe from my grandmother. Do you want a little more poncha?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, por favor! Está tudo ótimo, muito obrigado/a!",
+                  "translation": "Yes, please! Everything is great, thank you very much!",
+                  "feedback": "Perfect way to end the conversation, accepting the offer and thanking them again."
+                },
+                {
+                  "text": "Não, obrigado/a. Mas estou a gostar imenso da conversa e da companhia!",
+                  "translation": "No, thank you. But I'm really enjoying the conversation and the company!",
+                  "feedback": "Polite refusal and a lovely compliment about the company. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Say Yes to Dinner!",
+          "prep": [
+            "Practice accepting an invitation politely.",
+            "Rehearse asking if you can bring something, even if they say no.",
+            "Prepare a few phrases to compliment the food and the hosts."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Está tudo ótimo!"
+          ],
+          "likely_responses": [
+            "Sim, claro!",
+            "Não é preciso, só a tua boa disposição!",
+            "Que bom que gostas!",
+            "Queres mais um bocado?"
+          ]
+        },
+        "goals": [
+          "Accept a dinner invitation from a neighbour or friend.",
+          "Politely offer to bring something for the meal.",
+          "Compliment the food and the host during dinner.",
+          "Engage in simple, friendly table conversation."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-social-dinner-invitation-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do you want to come have dinner at our place {day}?",
+            "answer": "Queres vir jantar cá a casa {dia}?",
+            "source_ref": "pp-sit-social-dinner-invitation-1"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Thanks for the invitation!",
+            "answer": "Obrigado/a pelo convite!",
+            "source_ref": "pp-sit-social-dinner-invitation-2"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can I bring something?",
+            "answer": "Posso levar alguma coisa?",
+            "source_ref": "pp-sit-social-dinner-invitation-3"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Everything is very good!",
+            "answer": "Está tudo muito bom!",
+            "source_ref": "pp-sit-social-dinner-invitation-4"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: dinner / to have dinner",
+            "answer": "jantar",
+            "source_ref": "jantar"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: invitation",
+            "answer": "convite",
+            "source_ref": "convite"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to bring / to take",
+            "answer": "levar",
+            "source_ref": "levar"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: dessert",
+            "answer": "sobremesa",
+            "source_ref": "sobremesa"
+          },
+          {
+            "id": "rv-sit-social-dinner-invitation-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-social-dinner-invitation-1"
+          }
+        ]
+      }
+    }
+  ]
+}

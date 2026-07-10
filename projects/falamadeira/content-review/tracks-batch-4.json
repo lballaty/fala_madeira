@@ -1,0 +1,2567 @@
+{
+  "batch": 4,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T09:03:37.203Z",
+  "retag_mapping": {
+    "track-survival": [
+      "sit-d1-greetings-presence",
+      "sit-d2-ordering-in-a-cafe",
+      "sit-d3-numbers-1-10-connectors",
+      "sit-d4-confusion-clarification",
+      "sit-d5-locations-directions",
+      "sit-d8-self-introduction",
+      "sit-d9-time-days-hours",
+      "sit-d10-numbers-11-100-prices",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d27-numbers-100-years",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m6w1-telling-a-story",
+      "sit-host-guest-checkin-handover",
+      "sit-host-reporting-a-water-leak"
+    ],
+    "track-host": [
+      "sit-d12-adjectives-ser-estar",
+      "sit-d13-daily-routines",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d22-the-imperfect-tense",
+      "sit-d26-describing-your-home",
+      "sit-d32-telephone-formal-messages",
+      "sit-d36-the-present-perfect",
+      "sit-d47-formal-writing-funchal",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-host-boiler-not-working",
+      "sit-host-briefing-the-cleaner"
+    ],
+    "track-social": [
+      "sit-d1-greetings-presence",
+      "sit-d4-confusion-clarification",
+      "sit-d6-opinions-preferences",
+      "sit-d7-week-1-stress-test",
+      "sit-d8-self-introduction",
+      "sit-d12-adjectives-ser-estar",
+      "sit-d14-week-2-stress-test",
+      "sit-d15-talking-about-others",
+      "sit-d17-poder-polite-requests",
+      "sit-d20-stronger-connectors",
+      "sit-d21-week-3-stress-test",
+      "sit-d24-wishes-conditionals-polite-requests",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d28-week-4-stress-test",
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d33-opinions-agreeing-disagreeing",
+      "sit-d34-collaborative-future",
+      "sit-d35-week-5-stress-test",
+      "sit-d38-emotions-empathy-comfort",
+      "sit-d39-madeiran-geography-culture",
+      "sit-d41-giving-explanations",
+      "sit-d42-week-6-stress-test",
+      "sit-d43-voces-addressing-groups",
+      "sit-d47-formal-writing-funchal",
+      "sit-d49-week-7-stress-test",
+      "sit-d52-register-social-fluency",
+      "sit-d54-madeira-in-depth",
+      "sit-d56-the-grand-stress-test",
+      "sit-m4w1-neighbourhood-small-talk",
+      "sit-m4w2-festival-arraial",
+      "sit-m4w3-madeiran-expressions",
+      "sit-m4w4-month4-stress-test",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-m5w4-month5-stress-test",
+      "sit-m6w1-telling-a-story",
+      "sit-m6w2-formal-email-office",
+      "sit-m6w3-debating-opinions",
+      "sit-m6w4-final-immersion-test",
+      "sit-host-reporting-a-water-leak"
+    ],
+    "track-bureaucracy": [
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d32-telephone-formal-messages",
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d47-formal-writing-funchal",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office"
+    ],
+    "track-work": [
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office",
+      "sit-host-boiler-not-working"
+    ]
+  },
+  "video_results": [
+    {
+      "situationId": "sit-d1-greetings-presence",
+      "url": "https://www.youtube.com/watch?v=pgC1ofHxm7s",
+      "id": "pgC1ofHxm7s",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-d15-talking-about-others",
+      "url": "https://www.youtube.com/watch?v=6F1ld7zv7yM",
+      "id": "6F1ld7zv7yM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-m4w2-festival-arraial",
+      "url": "https://www.youtube.com/watch?v=dd_NTKErny8",
+      "id": "dd_NTKErny8",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 6,
+  "situations": [
+    {
+      "id": "sit-host-boiler-not-working",
+      "kind": "track",
+      "title": "The Boiler Is Not Working",
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-host"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-host-boiler-not-working",
+        "title": "The Boiler Is Not Working",
+        "summary": "Phoning a technician because the boiler / water heater (esquentador) has stopped and there is no hot water for guests — describing the fault, arranging a visit.",
+        "tracks": [
+          "track-structured-course",
+          "track-work",
+          "track-host"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-host-boiler-not-working-1",
+            "base": "Olá, o {aparelho} não está a funcionar.",
+            "translation": "Hello, the {appliance} isn't working.",
+            "slots": [
+              {
+                "name": "aparelho",
+                "description": "appliance",
+                "options": [
+                  "esquentador",
+                  "frigorífico",
+                  "forno"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-boiler-not-working-2",
+            "base": "Não há água quente.",
+            "translation": "There's no hot water."
+          },
+          {
+            "id": "pp-sit-host-boiler-not-working-3",
+            "base": "Preciso de um técnico para {o_quê}.",
+            "translation": "I need a technician to {what}.",
+            "slots": [
+              {
+                "name": "o_quê",
+                "description": "what",
+                "options": [
+                  "reparar o esquentador",
+                  "ver a avaria",
+                  "resolver o problema"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-boiler-not-working-4",
+            "base": "Pode vir {quando}?",
+            "translation": "Can you come {when}?",
+            "slots": [
+              {
+                "name": "quando",
+                "description": "when",
+                "options": [
+                  "hoje",
+                  "amanhã de manhã",
+                  "hoje à tarde"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "esquentador",
+            "translation": "water heater / boiler",
+            "pronunciation": "esh-ken-tah-DOR",
+            "register": "neutral"
+          },
+          {
+            "word": "água quente",
+            "translation": "hot water",
+            "pronunciation": "AH-gwah KEN-teh",
+            "register": "neutral"
+          },
+          {
+            "word": "técnico",
+            "translation": "technician",
+            "pronunciation": "TEK-nee-koo",
+            "register": "neutral"
+          },
+          {
+            "word": "reparar",
+            "translation": "to repair",
+            "pronunciation": "reh-pah-RAR",
+            "register": "neutral"
+          },
+          {
+            "word": "avaria",
+            "translation": "fault / breakdown",
+            "pronunciation": "ah-vah-REE-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "urgente",
+            "translation": "urgent",
+            "pronunciation": "oor-ZHEN-teh",
+            "register": "neutral"
+          },
+          {
+            "word": "morada",
+            "translation": "address",
+            "pronunciation": "moo-RAH-dah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-host-boiler-not-working-1",
+            "title": "Calling for a Boiler Repair",
+            "context": "A guest house owner is calling a repair service because the boiler isn't working and guests have no hot water.",
+            "lines": [
+              {
+                "speaker": "Service",
+                "voice_type": "service",
+                "text": "Bom dia, assistência técnica. Diga!",
+                "translation": "Good morning, technical assistance. How can I help?"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "local",
+                "text": "Olá, bom dia. O meu esquentador não está a funcionar. Não há água quente nenhuma.",
+                "translation": "Hello, good morning. My water heater isn't working. There's no hot water at all."
+              },
+              {
+                "speaker": "Service",
+                "voice_type": "service",
+                "text": "Pois não. Qual é a sua morada, por favor?",
+                "translation": "Oh, I see. What's your address, please?"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "local",
+                "text": "É na Rua do Castanheiro, número quinze. É urgente, tenho hóspedes.",
+                "translation": "It's on Rua do Castanheiro, number fifteen. It's urgent, I have guests."
+              },
+              {
+                "speaker": "Service",
+                "voice_type": "service",
+                "text": "Certo. Podemos enviar um técnico hoje à tarde, entre as duas e as quatro. Serve?",
+                "translation": "Understood. We can send a technician this afternoon, between two and four. Does that work?"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "local",
+                "text": "Sim, serve perfeitamente. Muito obrigada!",
+                "translation": "Yes, that works perfectly. Thank you very much!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Addressing Service Professionals",
+            "body": "In Portugal, when speaking to service professionals (like technicians, shop assistants, or receptionists), it's common to use 'o senhor' / 'a senhora' or simply use the third person verb conjugation as a polite form of address, rather than 'você'. Starting with 'Olá, bom dia' and ending with 'Muito obrigada' is standard polite practice."
+          },
+          {
+            "title": "Expressing Urgency",
+            "body": "If a situation is time-sensitive, like having guests without hot water, it's appropriate to state 'É urgente' (It's urgent) or explain the reason for the urgency. This helps the service provider understand the priority."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a local company in Madeira because the boiler in your rental property is not working and there is no hot water for your guests. You need to explain the problem and arrange for a technician to visit.",
+          "difficulty": 2,
+          "entry_node": "rp-boiler-start",
+          "nodes": [
+            {
+              "id": "rp-boiler-start",
+              "npc_text": "Bom dia, empresa de assistência técnica. Diga!",
+              "npc_translation": "Good morning, technical assistance company. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Olá, bom dia. O meu esquentador não está a funcionar.",
+                  "translation": "Hello, good morning. My water heater isn't working.",
+                  "feedback": "A good clear start, stating the problem directly.",
+                  "next": "rp-boiler-problem-details"
+                },
+                {
+                  "text": "Preciso de um técnico para o esquentador.",
+                  "translation": "I need a technician for the water heater.",
+                  "feedback": "Also good, but slightly less detailed than the first option.",
+                  "next": "rp-boiler-problem-details"
+                }
+              ]
+            },
+            {
+              "id": "rp-boiler-problem-details",
+              "npc_text": "Pois não. E qual é a avaria exatamente? Não tem água quente?",
+              "npc_translation": "Oh, I see. And what's the fault exactly? You don't have hot water?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Exatamente, não há água quente nenhuma.",
+                  "translation": "Exactly, there's no hot water at all.",
+                  "feedback": "Clear confirmation of the problem.",
+                  "next": "rp-boiler-address"
+                },
+                {
+                  "text": "Sim, não sai água quente da torneira.",
+                  "translation": "Yes, no hot water comes out of the tap.",
+                  "feedback": "A good alternative, adding a bit more detail.",
+                  "next": "rp-boiler-address"
+                }
+              ]
+            },
+            {
+              "id": "rp-boiler-address",
+              "npc_text": "Certo. E qual é a sua morada, por favor?",
+              "npc_translation": "Understood. And what's your address, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É na Rua das Flores, número vinte e cinco.",
+                  "translation": "It's on Rua das Flores, number twenty-five.",
+                  "feedback": "Providing the address clearly is key.",
+                  "next": "rp-boiler-time-offer"
+                },
+                {
+                  "text": "A morada é Rua das Flores, vinte e cinco.",
+                  "translation": "The address is Rua das Flores, twenty-five.",
+                  "feedback": "A slightly more concise way to give the address.",
+                  "next": "rp-boiler-time-offer"
+                }
+              ]
+            },
+            {
+              "id": "rp-boiler-time-offer",
+              "npc_text": "Obrigado. Temos um técnico disponível hoje à tarde, entre as três e as cinco. Serve?",
+              "npc_translation": "Thank you. We have a technician available this afternoon, between three and five. Does that work?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, serve perfeitamente. Muito obrigada!",
+                  "translation": "Yes, that works perfectly. Thank you very much!",
+                  "feedback": "Confirming the appointment is a great way to finish the call."
+                },
+                {
+                  "text": "Hoje à tarde é um bocado difícil. Não pode ser amanhã de manhã?",
+                  "translation": "This afternoon is a bit difficult. Can it not be tomorrow morning?",
+                  "feedback": "It's good to negotiate if the time doesn't suit, but be polite.",
+                  "next": "rp-boiler-negotiate-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-boiler-negotiate-time",
+              "npc_text": "Amanhã de manhã temos um espaço entre as nove e as onze. Está bem?",
+              "npc_translation": "Tomorrow morning we have a slot between nine and eleven. Is that okay?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, está ótimo. Muito obrigada!",
+                  "translation": "Yes, that's great. Thank you very much!",
+                  "feedback": "Excellent, you've successfully arranged a new time."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Call a Technician for the Boiler",
+          "prep": [
+            "Review the vocabulary for household appliances and faults.",
+            "Practice stating your address clearly in Portuguese.",
+            "Rehearse asking for a technician and explaining 'no hot water'."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi bem."
+          ],
+          "likely_responses": [
+            "Bom dia, diga!",
+            "Qual é a avaria?",
+            "Qual é a sua morada?",
+            "Quando é que pode ser?",
+            "Entre as três e as cinco, serve?"
+          ]
+        },
+        "goals": [
+          "Report a broken appliance over the phone.",
+          "Describe the specific fault (no hot water).",
+          "Provide your address clearly.",
+          "Arrange a time for a technician to visit."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-host-boiler-not-working-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Hello, the {appliance} isn't working.",
+            "answer": "Olá, o {aparelho} não está a funcionar.",
+            "source_ref": "pp-sit-host-boiler-not-working-1"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: There's no hot water.",
+            "answer": "Não há água quente.",
+            "source_ref": "pp-sit-host-boiler-not-working-2"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need a technician to {what}.",
+            "answer": "Preciso de um técnico para {o_quê}.",
+            "source_ref": "pp-sit-host-boiler-not-working-3"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you come {when}?",
+            "answer": "Pode vir {quando}?",
+            "source_ref": "pp-sit-host-boiler-not-working-4"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: water heater / boiler",
+            "answer": "esquentador",
+            "source_ref": "esquentador"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: hot water",
+            "answer": "água quente",
+            "source_ref": "água quente"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: technician",
+            "answer": "técnico",
+            "source_ref": "técnico"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to repair",
+            "answer": "reparar",
+            "source_ref": "reparar"
+          },
+          {
+            "id": "rv-sit-host-boiler-not-working-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-host-boiler-not-working-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-host-guest-noise-complaint",
+      "kind": "track",
+      "title": "Guest Complaint About Noise",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-host",
+        "track-social"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-host-guest-noise-complaint",
+        "title": "Guest Complaint About Noise",
+        "summary": "Handling a guest complaining about noise from neighbours or the street, apologising, and speaking to a neighbour to ask them to keep it down.",
+        "tracks": [
+          "track-structured-course"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-host-guest-noise-complaint-1",
+            "base": "Lamento imenso o {problema} com o barulho.",
+            "translation": "I'm very sorry about the problem with the noise.",
+            "slots": [
+              {
+                "name": "problema",
+                "description": "type of issue",
+                "options": [
+                  "problema",
+                  "incómodo"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Peço imensa desculpa pelo barulho.",
+                "translation": "I'm very sorry for the noise.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-guest-noise-complaint-2",
+            "base": "De onde é que {vem} o barulho?",
+            "translation": "Where does the noise come from?",
+            "slots": [
+              {
+                "name": "vem",
+                "description": "verb for 'come'",
+                "options": [
+                  "vem",
+                  "está a vir"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Qual é a origem do barulho?",
+                "translation": "What is the source of the noise?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-guest-noise-complaint-3",
+            "base": "Vou {falar} com os vizinhos sobre isso.",
+            "translation": "I'll talk to the neighbours about it.",
+            "slots": [
+              {
+                "name": "falar",
+                "description": "verb for 'talk'",
+                "options": [
+                  "falar",
+                  "verificar"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Vou tentar resolver a situação.",
+                "translation": "I'll try to resolve the situation.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-guest-noise-complaint-4",
+            "base": "Será que podiam {fazer} um bocado menos de barulho?",
+            "translation": "Could you please make a bit less noise?",
+            "slots": [
+              {
+                "name": "fazer",
+                "description": "verb for 'make'",
+                "options": [
+                  "fazer",
+                  "ter mais cuidado com"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Podiam, por favor, ter mais atenção ao barulho?",
+                "translation": "Could you please pay more attention to the noise?",
+                "register": "neutral",
+                "note": "More polite and indirect."
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "barulho",
+            "translation": "noise",
+            "pronunciation": "bah-ROO-lyoo",
+            "register": "neutral"
+          },
+          {
+            "word": "vizinho/vizinha",
+            "translation": "neighbour (m/f)",
+            "pronunciation": "vee-ZEE-nyoo/vee-ZEE-nyah",
+            "register": "neutral"
+          },
+          {
+            "word": "queixa",
+            "translation": "complaint",
+            "pronunciation": "KAY-shah",
+            "register": "neutral"
+          },
+          {
+            "word": "incomodar",
+            "translation": "to bother, to disturb",
+            "pronunciation": "een-koh-moh-DAHR",
+            "register": "neutral"
+          },
+          {
+            "word": "silêncio",
+            "translation": "silence",
+            "pronunciation": "see-LEN-syoo",
+            "register": "neutral"
+          },
+          {
+            "word": "alto",
+            "translation": "loud",
+            "pronunciation": "AHL-too",
+            "register": "neutral"
+          },
+          {
+            "word": "pedir",
+            "translation": "to ask for",
+            "pronunciation": "peh-DEER",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-host-guest-noise-complaint-1",
+            "title": "Guest Complaint",
+            "context": "A guest at an accommodation in Madeira complains to the host about noise from outside.",
+            "lines": [
+              {
+                "speaker": "Hóspede",
+                "voice_type": "older",
+                "text": "Desculpe, mas está um bocado barulhento aqui à noite.",
+                "translation": "Excuse me, but it's a bit noisy here at night."
+              },
+              {
+                "speaker": "Anfitrião",
+                "voice_type": "service",
+                "text": "Oh, lamento imenso ouvir isso! De onde é que vem o barulho?",
+                "translation": "Oh, I'm very sorry to hear that! Where does the noise come from?"
+              },
+              {
+                "speaker": "Hóspede",
+                "voice_type": "older",
+                "text": "Parece que é da rua, ou talvez do café ali ao lado. Música e pessoas a falar alto.",
+                "translation": "It seems to be from the street, or maybe the café next door. Music and people talking loudly."
+              },
+              {
+                "speaker": "Anfitrião",
+                "voice_type": "local",
+                "text": "Pois é, às vezes acontece. Vou lá dar um salto, p'ra ver se consigo que façam um bocadinho menos de barulho. P'ra já, peço desculpa pelo incómodo.",
+                "translation": "Yes, it happens sometimes. I'll pop over there to see if I can get them to make a little less noise. For now, I apologize for the inconvenience."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-host-guest-noise-complaint-2",
+            "title": "Host Speaks to Neighbour",
+            "context": "The host approaches a neighbour (a café owner) to ask them to reduce noise.",
+            "lines": [
+              {
+                "speaker": "Anfitrião",
+                "voice_type": "local",
+                "text": "Olá, boa noite! Tudo bem? Desculpe incomodar a esta hora...",
+                "translation": "Hello, good evening! All well? Sorry to bother you at this hour..."
+              },
+              {
+                "speaker": "Dono do Café",
+                "voice_type": "noisy",
+                "text": "Olá! Pois é, tudo a correr. Diga lá!",
+                "translation": "Hello! Yes, everything's going well. Tell me!"
+              },
+              {
+                "speaker": "Anfitrião",
+                "voice_type": "local",
+                "text": "É que tenho uns hóspedes ali ao lado e estão-se a queixar do barulho. Será que podiam fazer um bocado menos de barulho, por favor? Principalmente com a música.",
+                "translation": "It's just that I have some guests next door and they're complaining about the noise. Could you please make a bit less noise, please? Especially with the music."
+              },
+              {
+                "speaker": "Dono do Café",
+                "voice_type": "noisy",
+                "text": "Ah, pois, claro. Desculpe lá. Vamos ter mais atenção, sem problema. Obrigado por avisar.",
+                "translation": "Ah, yes, of course. Sorry about that. We'll be more careful, no problem. Thanks for letting us know."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Indirectness in Complaints",
+            "body": "In Portugal, especially when dealing with neighbours or local businesses, direct complaints are often softened with apologies or indirect phrasing. Starting with 'Desculpe incomodar...' (Sorry to bother you...) or 'É que tenho uns hóspedes...' (It's just that I have some guests...) helps maintain good relations. A direct 'Faça menos barulho!' (Make less noise!) would be considered impolite."
+          },
+          {
+            "title": "The Role of 'Pois'",
+            "body": "'Pois' and 'Pois é' are very common interjections in European Portuguese. They often mean 'indeed', 'that's right', or 'well'. In conversations, they can signal agreement, understanding, or simply acknowledge what the other person has said before responding. It's a natural filler that adds to the flow of conversation."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are the host of a small guesthouse in Madeira. A guest approaches you to complain about noise late at night. You need to understand the problem, apologize, and offer a solution.",
+          "difficulty": 3,
+          "entry_node": "rp-noise-start",
+          "nodes": [
+            {
+              "id": "rp-noise-start",
+              "npc_text": "Bom dia! Desculpe incomodar, mas tive uma noite um bocado difícil com o barulho.",
+              "npc_translation": "Good morning! Sorry to bother you, but I had a bit of a difficult night with the noise.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Oh, lamento imenso! De onde é que vinha o barulho?",
+                  "translation": "Oh, I'm so sorry! Where was the noise coming from?",
+                  "feedback": "Excellent start! You apologized and asked for details.",
+                  "next": "rp-noise-source"
+                },
+                {
+                  "text": "Barulho? Que barulho?",
+                  "translation": "Noise? What noise?",
+                  "feedback": "It's better to apologize first, even if you don't know the source. This might sound a bit dismissive.",
+                  "next": "rp-noise-source"
+                }
+              ]
+            },
+            {
+              "id": "rp-noise-source",
+              "npc_text": "Parece que era da rua, daquele café ali em baixo. Música e pessoas a rir muito alto, até tarde.",
+              "npc_translation": "It seems it was from the street, from that café down there. Music and people laughing very loudly, until late.",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Pois é, às vezes acontece. Vou lá dar um salto e peço-lhes para terem mais atenção.",
+                  "translation": "Yes, it happens sometimes. I'll pop over there and ask them to be more careful.",
+                  "feedback": "Good, you acknowledged the problem and offered a concrete step.",
+                  "next": "rp-noise-solution"
+                },
+                {
+                  "text": "Não posso fazer nada, é a vida noturna da cidade.",
+                  "translation": "I can't do anything, it's city nightlife.",
+                  "feedback": "This response is unhelpful and might upset your guest. Try to offer a solution or show empathy.",
+                  "next": "rp-noise-end-bad"
+                }
+              ]
+            },
+            {
+              "id": "rp-noise-solution",
+              "npc_text": "Muito obrigado! Agradeço imenso a sua ajuda. É que preciso de descansar bem.",
+              "npc_translation": "Thank you very much! I really appreciate your help. It's just that I need to rest well.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não se preocupe, vou resolver isso. Peço desculpa pelo incómodo.",
+                  "translation": "Don't worry, I'll sort it out. I apologize for the inconvenience.",
+                  "feedback": "Perfect! You reassured the guest and apologized again.",
+                  "next": "rp-noise-end-good"
+                }
+              ]
+            },
+            {
+              "id": "rp-noise-end-good",
+              "npc_text": "Muito obrigado! Assim já me sinto mais tranquilo.",
+              "npc_translation": "Thank you very much! Now I feel more at ease.",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-noise-end-bad",
+              "npc_text": "Ah... pois. Entendo. Que pena.",
+              "npc_translation": "Ah... well. I understand. What a pity.",
+              "npc_voice_type": "younger",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Resolving a Noise Complaint",
+          "prep": [
+            "Practice apologizing sincerely in Portuguese.",
+            "Rehearse asking 'De onde é que vem o barulho?' (Where does the noise come from?)",
+            "Prepare a polite phrase to ask neighbours to reduce noise, e.g., 'Será que podiam fazer um bocado menos de barulho?'",
+            "Think about how to reassure the guest after speaking to the neighbour."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "Um momento, por favor.",
+            "Vou ver o que posso fazer."
+          ],
+          "likely_responses": [
+            "Sim, claro, sem problema.",
+            "Vamos ter mais atenção.",
+            "Desculpe lá, não nos apercebemos.",
+            "Obrigado por avisar."
+          ]
+        },
+        "goals": [
+          "Apologize effectively to a guest about noise.",
+          "Understand the source and nature of the noise complaint.",
+          "Politely ask a neighbour or business to reduce noise.",
+          "Reassure the guest that the issue is being addressed."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-host-guest-noise-complaint-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'm very sorry about the problem with the noise.",
+            "answer": "Lamento imenso o {problema} com o barulho.",
+            "source_ref": "pp-sit-host-guest-noise-complaint-1"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Where does the noise come from?",
+            "answer": "De onde é que {vem} o barulho?",
+            "source_ref": "pp-sit-host-guest-noise-complaint-2"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'll talk to the neighbours about it.",
+            "answer": "Vou {falar} com os vizinhos sobre isso.",
+            "source_ref": "pp-sit-host-guest-noise-complaint-3"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Could you please make a bit less noise?",
+            "answer": "Será que podiam {fazer} um bocado menos de barulho?",
+            "source_ref": "pp-sit-host-guest-noise-complaint-4"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: noise",
+            "answer": "barulho",
+            "source_ref": "barulho"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: neighbour (m/f)",
+            "answer": "vizinho/vizinha",
+            "source_ref": "vizinho/vizinha"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: complaint",
+            "answer": "queixa",
+            "source_ref": "queixa"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to bother, to disturb",
+            "answer": "incomodar",
+            "source_ref": "incomodar"
+          },
+          {
+            "id": "rv-sit-host-guest-noise-complaint-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-host-guest-noise-complaint-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-host-guest-checkin-handover",
+      "kind": "track",
+      "title": "Guest Check-in & Key Handover",
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-host"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-host-guest-checkin-handover",
+        "title": "Guest Check-in & Key Handover",
+        "summary": "Meeting a guest to hand over keys: explaining the flat, wifi, rubbish days, and what to do in an emergency.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-host-guest-checkin-handover-1",
+            "base": "Bem-vindo(a) ao apartamento!",
+            "translation": "Welcome to the apartment!",
+            "variants": [
+              {
+                "text": "Bem-vindo ao apartamento!",
+                "translation": "Welcome to the apartment! (male guest)",
+                "register": "neutral"
+              },
+              {
+                "text": "Bem-vinda ao apartamento!",
+                "translation": "Welcome to the apartment! (female guest)",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-guest-checkin-handover-2",
+            "base": "Aqui estão as chaves.",
+            "translation": "Here are the keys.",
+            "variants": [
+              {
+                "text": "Aqui tem as chaves.",
+                "translation": "Here are the keys. (formal 'o senhor' implicit)",
+                "register": "formal"
+              },
+              {
+                "text": "As chaves estão aqui.",
+                "translation": "The keys are here.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-guest-checkin-handover-3",
+            "base": "O Wi-Fi é {rede} e a palavra-passe é {passe}.",
+            "translation": "The Wi-Fi is {network} and the password is {password}.",
+            "slots": [
+              {
+                "name": "rede",
+                "description": "Wi-Fi network name",
+                "options": [
+                  "CasaMadeira",
+                  "AlojamentoFunchal",
+                  "WiFiHóspedes"
+                ]
+              },
+              {
+                "name": "passe",
+                "description": "Wi-Fi password",
+                "options": [
+                  "poncha123",
+                  "BananaMadeira",
+                  "VisitFunchal"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-guest-checkin-handover-4",
+            "base": "O lixo é para pôr {quando}.",
+            "translation": "The rubbish is to be put out {when}.",
+            "slots": [
+              {
+                "name": "quando",
+                "description": "When to put out the rubbish",
+                "options": [
+                  "às terças e sextas-feiras",
+                  "todas as noites",
+                  "no contentor lá fora"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-guest-checkin-handover-5",
+            "base": "Em caso de emergência, ligue para {numero}.",
+            "translation": "In case of emergency, call {number}.",
+            "slots": [
+              {
+                "name": "numero",
+                "description": "Emergency contact number",
+                "options": [
+                  "o meu telemóvel",
+                  "o 112",
+                  "o número que está no frigorífico"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "chaves",
+            "translation": "keys",
+            "pronunciation": "SHAH-vesh",
+            "register": "neutral"
+          },
+          {
+            "word": "apartamento",
+            "translation": "apartment / flat",
+            "pronunciation": "ah-par-tah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "palavra-passe",
+            "translation": "password",
+            "pronunciation": "pah-LAH-vrah PAH-seh",
+            "register": "neutral"
+          },
+          {
+            "word": "lixo",
+            "translation": "rubbish / trash",
+            "pronunciation": "LEE-shoo",
+            "register": "neutral"
+          },
+          {
+            "word": "emergência",
+            "translation": "emergency",
+            "pronunciation": "eh-mer-JENN-see-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "frigorífico",
+            "translation": "fridge",
+            "pronunciation": "free-go-REE-fee-koo",
+            "register": "neutral",
+            "note": "Standard Portuguese word for 'refrigerator'."
+          },
+          {
+            "word": "contentor",
+            "translation": "bin / container (for rubbish)",
+            "pronunciation": "kon-ten-TOR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-host-guest-checkin-handover-1",
+            "title": "Guest Arrival",
+            "context": "A local host, Maria, meets a guest, Alex, outside the apartment to hand over keys and explain the basics.",
+            "lines": [
+              {
+                "speaker": "Maria (Host)",
+                "voice_type": "local",
+                "text": "Olá, Alex! Bem-vindo ao apartamento. Eu sou a Maria.",
+                "translation": "Hello, Alex! Welcome to the apartment. I'm Maria."
+              },
+              {
+                "speaker": "Alex (Guest)",
+                "voice_type": "teacher",
+                "text": "Olá, Maria! Muito obrigado por vir.",
+                "translation": "Hello, Maria! Thank you very much for coming."
+              },
+              {
+                "speaker": "Maria (Host)",
+                "voice_type": "local",
+                "text": "Pois, nada. Aqui estão as chaves. É um prazer tê-lo cá.",
+                "translation": "Oh, you're welcome. Here are the keys. It's a pleasure to have you here."
+              },
+              {
+                "speaker": "Alex (Guest)",
+                "voice_type": "teacher",
+                "text": "Obrigado! É um apartamento muito bonito.",
+                "translation": "Thank you! It's a very beautiful apartment."
+              },
+              {
+                "speaker": "Maria (Host)",
+                "voice_type": "local",
+                "text": "Obrigada! Então, o Wi-Fi é 'CasaMadeira' e a palavra-passe é 'poncha123'. Está tudo escrito ali na mesa.",
+                "translation": "Thanks! So, the Wi-Fi is 'CasaMadeira' and the password is 'poncha123'. It's all written there on the table."
+              },
+              {
+                "speaker": "Alex (Guest)",
+                "voice_type": "teacher",
+                "text": "Ok, perfeito. E o lixo?",
+                "translation": "Okay, perfect. And the rubbish?"
+              },
+              {
+                "speaker": "Maria (Host)",
+                "voice_type": "local",
+                "text": "O lixo é para pôr no contentor lá fora, às terças e sextas-feiras à noite.",
+                "translation": "The rubbish is to be put in the bin outside, on Tuesday and Friday evenings."
+              },
+              {
+                "speaker": "Alex (Guest)",
+                "voice_type": "teacher",
+                "text": "Certo. E se houver algum problema urgente?",
+                "translation": "Understood. And if there's an urgent problem?"
+              },
+              {
+                "speaker": "Maria (Host)",
+                "voice_type": "local",
+                "text": "Em caso de emergência, ligue para o meu telemóvel, por favor. O número está no frigorífico.",
+                "translation": "In case of emergency, please call my mobile. The number is on the fridge."
+              },
+              {
+                "speaker": "Alex (Guest)",
+                "voice_type": "teacher",
+                "text": "Muito obrigado, Maria! Tenha um bom dia.",
+                "translation": "Thank you very much, Maria! Have a good day."
+              },
+              {
+                "speaker": "Maria (Host)",
+                "voice_type": "local",
+                "text": "De nada! Uma boa estadia!",
+                "translation": "You're welcome! Have a good stay!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Rubbish Collection in Madeira",
+            "body": "In Madeira, as in much of Portugal, rubbish collection often follows a specific schedule. It's common for residents to place their household waste in designated street containers (contentores) only on certain days or evenings, rather than daily. Always check the local schedule or with your host to avoid fines or inconvenience."
+          },
+          {
+            "title": "Directness and Politeness",
+            "body": "Portuguese communication is generally direct, but politeness is always appreciated. When handing over keys or explaining rules, a friendly, clear tone is best. Using 'por favor' (please) and 'obrigado/a' (thank you) is essential. For private rentals, 'tu' (informal 'you') is often used between host and guest, especially if the host is younger or wants to establish a friendly rapport."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are a guest arriving at an apartment in Funchal, Madeira. The host, Senhor Costa, is meeting you to hand over the keys and explain a few things about the flat.",
+          "difficulty": 2,
+          "entry_node": "rp-host-intro",
+          "nodes": [
+            {
+              "id": "rp-host-intro",
+              "npc_text": "Olá! Bem-vindo ao apartamento. Eu sou o Senhor Costa. Aqui estão as chaves.",
+              "npc_translation": "Hello! Welcome to the apartment. I'm Mr. Costa. Here are the keys.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado, Senhor Costa!",
+                  "translation": "Thank you very much, Mr. Costa!",
+                  "feedback": "A good polite start. Now you can ask about the Wi-Fi.",
+                  "next": "rp-host-wifi"
+                },
+                {
+                  "text": "As chaves, obrigado.",
+                  "translation": "The keys, thank you.",
+                  "feedback": "A bit brief, but acceptable. Try to be a little more enthusiastic next time.",
+                  "next": "rp-host-wifi"
+                }
+              ]
+            },
+            {
+              "id": "rp-host-wifi",
+              "npc_text": "De nada. Então, sobre a internet, o Wi-Fi é 'HóspedesFunchal' e a palavra-passe é 'solmadeira'.",
+              "npc_translation": "You're welcome. So, about the internet, the Wi-Fi is 'HóspedesFunchal' and the password is 'solmadeira'.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ok, entendi. E o lixo, quando é para pôr?",
+                  "translation": "Okay, I understand. And the rubbish, when is it to be put out?",
+                  "feedback": "Good, you understood and moved on to the next important question.",
+                  "next": "rp-host-rubbish"
+                },
+                {
+                  "text": "Pode repetir a palavra-passe, por favor?",
+                  "translation": "Can you repeat the password, please?",
+                  "feedback": "It's fine to ask for repetition if you didn't catch it. Always use 'por favor'.",
+                  "next": "rp-host-wifi-repeat"
+                }
+              ]
+            },
+            {
+              "id": "rp-host-wifi-repeat",
+              "npc_text": "Claro. A palavra-passe é 'solmadeira', tudo em minúsculas.",
+              "npc_translation": "Of course. The password is 'solmadeira', all lowercase.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado! Agora, o lixo. Quando é que é para pôr?",
+                  "translation": "Thank you! Now, the rubbish. When is it to be put out?",
+                  "feedback": "Excellent, you got the information and moved on.",
+                  "next": "rp-host-rubbish"
+                }
+              ]
+            },
+            {
+              "id": "rp-host-rubbish",
+              "npc_text": "O lixo é para pôr no contentor cá fora, na rua, às segundas e quintas-feiras à noite.",
+              "npc_translation": "The rubbish is to be put in the bin outside, on the street, on Monday and Thursday evenings.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Certo. E se tiver uma emergência?",
+                  "translation": "Understood. And if I have an emergency?",
+                  "feedback": "Good question, important to know about emergencies.",
+                  "next": "rp-host-emergency"
+                },
+                {
+                  "text": "Ok. Mais alguma coisa importante?",
+                  "translation": "Okay. Anything else important?",
+                  "feedback": "A good general question. The host will likely cover emergencies next.",
+                  "next": "rp-host-emergency"
+                }
+              ]
+            },
+            {
+              "id": "rp-host-emergency",
+              "npc_text": "Em caso de emergência, ligue para o 112, ou para o meu telemóvel. O número está no frigorífico.",
+              "npc_translation": "In case of emergency, call 112, or my mobile. The number is on the fridge.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado por toda a informação, Senhor Costa! Tenha um bom dia.",
+                  "translation": "Thank you very much for all the information, Mr. Costa! Have a good day.",
+                  "feedback": "Perfect closing! You've covered all the main points politely."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Explaining the Apartment Basics",
+          "prep": [
+            "Review the vocabulary for 'keys', 'Wi-Fi', 'password', 'rubbish', and 'emergency'.",
+            "Practice asking 'Quando é para pôr o lixo?' and 'Em caso de emergência, o que faço?'.",
+            "Mentally rehearse how you would thank the host and say goodbye."
+          ],
+          "fallback_phrases": [
+            "Não percebi.",
+            "Pode repetir, por favor?",
+            "Obrigado."
+          ],
+          "likely_responses": [
+            "De nada.",
+            "Claro.",
+            "Uma boa estadia!"
+          ]
+        },
+        "goals": [
+          "Understand and explain basic apartment information (Wi-Fi, rubbish, emergencies).",
+          "Ask polite questions about household management.",
+          "Engage in a short, practical conversation with a local host."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-host-guest-checkin-handover-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Welcome to the apartment!",
+            "answer": "Bem-vindo(a) ao apartamento!",
+            "source_ref": "pp-sit-host-guest-checkin-handover-1"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Here are the keys.",
+            "answer": "Aqui estão as chaves.",
+            "source_ref": "pp-sit-host-guest-checkin-handover-2"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The Wi-Fi is {network} and the password is {password}.",
+            "answer": "O Wi-Fi é {rede} e a palavra-passe é {passe}.",
+            "source_ref": "pp-sit-host-guest-checkin-handover-3"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The rubbish is to be put out {when}.",
+            "answer": "O lixo é para pôr {quando}.",
+            "source_ref": "pp-sit-host-guest-checkin-handover-4"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: keys",
+            "answer": "chaves",
+            "source_ref": "chaves"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: apartment / flat",
+            "answer": "apartamento",
+            "source_ref": "apartamento"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: password",
+            "answer": "palavra-passe",
+            "source_ref": "palavra-passe"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: rubbish / trash",
+            "answer": "lixo",
+            "source_ref": "lixo"
+          },
+          {
+            "id": "rv-sit-host-guest-checkin-handover-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-host-guest-checkin-handover-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-host-briefing-the-cleaner",
+      "kind": "track",
+      "title": "Briefing the Cleaner",
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-host",
+        "track-work"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-host-briefing-the-cleaner",
+        "title": "Briefing the Cleaner",
+        "summary": "Telling the cleaner (a senhora da limpeza) what to do before the next check-in: turnaround, laundry, what to restock and when to come.",
+        "tracks": [
+          "track-structured-course",
+          "track-host"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-host-briefing-the-cleaner-1",
+            "base": "Preciso que limpe {area}.",
+            "translation": "I need you to clean {area}.",
+            "slots": [
+              {
+                "name": "area",
+                "description": "Area to be cleaned",
+                "options": [
+                  "a cozinha",
+                  "as casas de banho",
+                  "o quarto principal",
+                  "a sala"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-briefing-the-cleaner-2",
+            "base": "Pode repor {item}?",
+            "translation": "Can you restock {item}?",
+            "slots": [
+              {
+                "name": "item",
+                "description": "Item to be restocked",
+                "options": [
+                  "o sabonete",
+                  "o papel higiénico",
+                  "os sacos do lixo",
+                  "o detergente da loiça"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-briefing-the_cleaner-3",
+            "base": "A roupa da cama e as toalhas estão {location}.",
+            "translation": "The bed linen and towels are {location}.",
+            "slots": [
+              {
+                "name": "location",
+                "description": "Location of laundry",
+                "options": [
+                  "na máquina",
+                  "no cesto",
+                  "na casa de banho"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-briefing-the_cleaner-4",
+            "base": "É p'ra vir na {day}?",
+            "translation": "Is it for you to come on {day}?",
+            "slots": [
+              {
+                "name": "day",
+                "description": "Day of the week",
+                "options": [
+                  "terça-feira",
+                  "quarta-feira",
+                  "quinta-feira",
+                  "sexta-feira"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Pode vir na {day}?",
+                "translation": "Can you come on {day}?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "limpar",
+            "translation": "to clean",
+            "pronunciation": "leem-PAR",
+            "register": "neutral"
+          },
+          {
+            "word": "repor",
+            "translation": "to restock, replenish",
+            "pronunciation": "reh-POR",
+            "register": "neutral"
+          },
+          {
+            "word": "roupa de cama",
+            "translation": "bed linen",
+            "pronunciation": "RROH-pah deh KAH-mah",
+            "register": "neutral"
+          },
+          {
+            "word": "toalhas",
+            "translation": "towels",
+            "pronunciation": "too-AH-lyash",
+            "register": "neutral"
+          },
+          {
+            "word": "check-in",
+            "translation": "check-in",
+            "pronunciation": "CHECK-in",
+            "register": "neutral",
+            "note": "Common English loanword in tourism"
+          },
+          {
+            "word": "produtos de limpeza",
+            "translation": "cleaning products",
+            "pronunciation": "pro-DOO-toosh deh leem-PEH-zah",
+            "register": "neutral"
+          },
+          {
+            "word": "cesto da roupa suja",
+            "translation": "laundry basket",
+            "pronunciation": "SESH-too dah RROH-pah SOO-zhah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-host-briefing-the-cleaner-1",
+            "title": "Briefing D. Maria",
+            "context": "A host gives instructions to the cleaner, D. Maria, for the next guest check-in.",
+            "lines": [
+              {
+                "speaker": "Host",
+                "voice_type": "service",
+                "text": "Olá, D. Maria! Tudo bem?",
+                "translation": "Hello, D. Maria! How are you?"
+              },
+              {
+                "speaker": "Cleaner",
+                "voice_type": "older",
+                "text": "Olá, sim, obrigada. E a senhora?",
+                "translation": "Hello, yes, thank you. And you?"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "service",
+                "text": "Tudo bem, obrigada. Olhe, preciso de um favor p'ra o próximo check-in.",
+                "translation": "All good, thank you. Look, I need a favor for the next check-in."
+              },
+              {
+                "speaker": "Cleaner",
+                "voice_type": "local",
+                "text": "Pois, diga!",
+                "translation": "Right, tell me!"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "service",
+                "text": "É preciso limpar a casa toda, como sempre. E repor o papel higiénico e o sabonete nas casas de banho.",
+                "translation": "The whole house needs cleaning, as always. And restock the toilet paper and soap in the bathrooms."
+              },
+              {
+                "speaker": "Cleaner",
+                "voice_type": "older",
+                "text": "Certo. E a roupa da cama, está na máquina?",
+                "translation": "Right. And the bed linen, is it in the machine?"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "service",
+                "text": "Sim, está na máquina. E as toalhas sujas estão no cesto na casa de banho principal.",
+                "translation": "Yes, it's in the machine. And the dirty towels are in the basket in the main bathroom."
+              },
+              {
+                "speaker": "Cleaner",
+                "voice_type": "older",
+                "text": "Ok. Posso vir na quarta-feira de manhã?",
+                "translation": "Okay. Can I come on Wednesday morning?"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "service",
+                "text": "Sim, quarta-feira é perfeito. O check-in é só à tarde.",
+                "translation": "Yes, Wednesday is perfect. The check-in is only in the afternoon."
+              },
+              {
+                "speaker": "Cleaner",
+                "voice_type": "older",
+                "text": "Combinado, então. Até quarta!",
+                "translation": "Agreed, then. See you Wednesday!"
+              },
+              {
+                "speaker": "Host",
+                "voice_type": "service",
+                "text": "Até quarta, D. Maria. Muito obrigada!",
+                "translation": "See you Wednesday, D. Maria. Thank you very much!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Addressing Service Professionals",
+            "body": "In Portugal, it's common and polite to address cleaners, shopkeepers, or other service providers, especially older women, with 'Dona' (D.) followed by their first name (e.g., 'D. Maria'). Alternatively, 'a senhora' (the lady) is a respectful way to refer to them or address them directly."
+          },
+          {
+            "title": "Clarity in Instructions",
+            "body": "When giving instructions, especially for tasks like cleaning, be clear and specific. Portuguese people appreciate directness in these situations. Use phrases like 'Preciso que...' (I need you to...) or 'É preciso...' (It's necessary to...) followed by the action."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are briefing D. Maria, the cleaner, about what needs to be done for the upcoming guest check-in.",
+          "difficulty": 2,
+          "entry_node": "briefing-cleaner-start",
+          "nodes": [
+            {
+              "id": "briefing-cleaner-start",
+              "npc_text": "Bom dia! Então, o que é que é preciso fazer hoje?",
+              "npc_translation": "Good morning! So, what needs to be done today?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia, D. Maria. Preciso que limpe o apartamento todo.",
+                  "translation": "Good morning, D. Maria. I need you to clean the whole apartment.",
+                  "feedback": "Excellent, a clear and polite instruction.",
+                  "next": "briefing-cleaner-task1"
+                },
+                {
+                  "text": "Olá! Pode limpar a casa para o check-in de amanhã?",
+                  "translation": "Hello! Can you clean the house for tomorrow's check-in?",
+                  "feedback": "Good, you've stated the main task and the reason.",
+                  "next": "briefing-cleaner-task1"
+                }
+              ]
+            },
+            {
+              "id": "briefing-cleaner-task1",
+              "npc_text": "Claro. E alguma coisa em especial?",
+              "npc_translation": "Of course. And anything specific?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, é importante repor o sabonete e o papel higiénico.",
+                  "translation": "Yes, it's important to restock the soap and toilet paper.",
+                  "feedback": "Well done, specific items for restocking.",
+                  "next": "briefing-cleaner-laundry"
+                },
+                {
+                  "text": "Sim, por favor, reponha os produtos nas casas de banho.",
+                  "translation": "Yes, please, restock the products in the bathrooms.",
+                  "feedback": "Good, a general instruction for bathroom products.",
+                  "next": "briefing-cleaner-laundry"
+                }
+              ]
+            },
+            {
+              "id": "briefing-cleaner-laundry",
+              "npc_text": "Entendido. E a roupa da cama e as toalhas, onde estão?",
+              "npc_translation": "Understood. And the bed linen and towels, where are they?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Estão no cesto da roupa suja, na casa de banho principal.",
+                  "translation": "They are in the laundry basket, in the main bathroom.",
+                  "feedback": "Perfect, clear location for the dirty laundry.",
+                  "next": "briefing-cleaner-timing"
+                },
+                {
+                  "text": "Já as meti na máquina de lavar.",
+                  "translation": "I've already put them in the washing machine.",
+                  "feedback": "Good, you've informed her about the laundry status.",
+                  "next": "briefing-cleaner-timing"
+                }
+              ]
+            },
+            {
+              "id": "briefing-cleaner-timing",
+              "npc_text": "Ótimo. E quando é que é p'ra vir?",
+              "npc_translation": "Great. And when should I come?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pode vir amanhã de manhã, por favor.",
+                  "translation": "You can come tomorrow morning, please.",
+                  "feedback": "Clear and polite, specifying the time.",
+                  "next": "briefing-cleaner-end"
+                },
+                {
+                  "text": "O check-in é só à tarde, então pode vir de manhã.",
+                  "translation": "The check-in is only in the afternoon, so you can come in the morning.",
+                  "feedback": "Excellent, providing context for the timing.",
+                  "next": "briefing-cleaner-end"
+                }
+              ]
+            },
+            {
+              "id": "briefing-cleaner-end",
+              "npc_text": "Combinado! Então, até amanhã de manhã.",
+              "npc_translation": "Agreed! So, see you tomorrow morning.",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Brief the Cleaner for Guest Turnaround",
+          "prep": [
+            "Review the phrase patterns for giving cleaning instructions.",
+            "Practice asking about restocking specific items.",
+            "Prepare to state where the laundry is located.",
+            "Be ready to confirm the cleaning schedule and timing."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi, pode explicar melhor?",
+            "Pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Sim, claro.",
+            "Onde estão as coisas?",
+            "Quando é que quer que eu venha?",
+            "Mais alguma coisa?"
+          ]
+        },
+        "goals": [
+          "Give clear instructions for cleaning specific areas of an accommodation.",
+          "Request the restocking of essential items like soap and toilet paper.",
+          "Inform the cleaner about the location of dirty laundry.",
+          "Confirm the best time for the cleaning to take place.",
+          "Politely interact with a service professional in Portuguese."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need you to clean {area}.",
+            "answer": "Preciso que limpe {area}.",
+            "source_ref": "pp-sit-host-briefing-the-cleaner-1"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you restock {item}?",
+            "answer": "Pode repor {item}?",
+            "source_ref": "pp-sit-host-briefing-the-cleaner-2"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The bed linen and towels are {location}.",
+            "answer": "A roupa da cama e as toalhas estão {location}.",
+            "source_ref": "pp-sit-host-briefing-the_cleaner-3"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is it for you to come on {day}?",
+            "answer": "É p'ra vir na {day}?",
+            "source_ref": "pp-sit-host-briefing-the_cleaner-4"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to clean",
+            "answer": "limpar",
+            "source_ref": "limpar"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to restock, replenish",
+            "answer": "repor",
+            "source_ref": "repor"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: bed linen",
+            "answer": "roupa de cama",
+            "source_ref": "roupa de cama"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: towels",
+            "answer": "toalhas",
+            "source_ref": "toalhas"
+          },
+          {
+            "id": "rv-sit-host-briefing-the-cleaner-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-host-briefing-the-cleaner-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-host-reporting-a-water-leak",
+      "kind": "track",
+      "title": "Reporting a Water Leak",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-host"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-host-reporting-a-water-leak",
+        "title": "Reporting a Water Leak",
+        "summary": "Calling a plumber (canalizador) about a leak: locating it, urgency, agreeing a price and a time to come.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-host-reporting-a-water-leak-1",
+            "base": "Tenho uma fuga de água.",
+            "translation": "I have a water leak.",
+            "variants": [
+              {
+                "text": "Estou com uma fuga de água.",
+                "translation": "I have a water leak (lit. I am with a water leak).",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-reporting-a-water-leak-2",
+            "base": "A fuga é {location}.",
+            "translation": "The leak is {location}.",
+            "slots": [
+              {
+                "name": "location",
+                "description": "where the leak is located",
+                "options": [
+                  "na casa de banho",
+                  "na cozinha",
+                  "debaixo do lavatório",
+                  "na parede",
+                  "no teto"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-reporting-a-water-leak-3",
+            "base": "É urgente?",
+            "translation": "Is it urgent?",
+            "variants": [
+              {
+                "text": "Isto é urgente?",
+                "translation": "Is this urgent?",
+                "register": "neutral"
+              },
+              {
+                "text": "É uma situação urgente?",
+                "translation": "Is it an urgent situation?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-reporting-a-water-leak-4",
+            "base": "Consegue vir {when}?",
+            "translation": "Can you come {when}?",
+            "slots": [
+              {
+                "name": "when",
+                "description": "when the plumber can come",
+                "options": [
+                  "hoje à tarde",
+                  "amanhã de manhã",
+                  "o mais rápido possível"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-host-reporting-a-water-leak-5",
+            "base": "Quanto custa a visita?",
+            "translation": "How much does the visit cost?",
+            "variants": [
+              {
+                "text": "Qual é o preço da visita?",
+                "translation": "What is the price of the visit?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "fuga de água",
+            "translation": "water leak",
+            "pronunciation": "FOO-gah d'AH-gwah",
+            "register": "neutral"
+          },
+          {
+            "word": "canalizador",
+            "translation": "plumber",
+            "pronunciation": "kah-nah-lee-zah-DOR",
+            "register": "neutral",
+            "note": "Common term in Portugal for a plumber."
+          },
+          {
+            "word": "torneira",
+            "translation": "tap, faucet",
+            "pronunciation": "tor-NAY-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "lavatório",
+            "translation": "sink (bathroom)",
+            "pronunciation": "lah-vah-TOH-ryoo",
+            "register": "neutral"
+          },
+          {
+            "word": "pingar",
+            "translation": "to drip",
+            "pronunciation": "peen-GAR",
+            "register": "neutral"
+          },
+          {
+            "word": "orçamento",
+            "translation": "quote, estimate",
+            "pronunciation": "or-sah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "o mais rápido possível",
+            "translation": "as soon as possible",
+            "pronunciation": "oo MYSH HRAH-pee-doo poh-SEE-vel",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-host-reporting-a-water-leak-1",
+            "title": "Calling the Plumber",
+            "context": "You are calling a local plumber in Funchal to report a water leak in your apartment.",
+            "lines": [
+              {
+                "speaker": "Plumber (Phone)",
+                "voice_type": "phone",
+                "text": "Bom dia, Canalizações Funchal, diga!",
+                "translation": "Good morning, Funchal Plumbing, speak!"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Bom dia, sou o/a {your name}. Tenho uma fuga de água aqui em casa.",
+                "translation": "Good morning, I'm {your name}. I have a water leak here at home."
+              },
+              {
+                "speaker": "Plumber (Phone)",
+                "voice_type": "phone",
+                "text": "Pois, senhora/senhor. Onde é a fuga? É urgente?",
+                "translation": "Right, madam/sir. Where is the leak? Is it urgent?"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "É na casa de banho, debaixo do lavatório. Está a pingar um bocado, sim, é urgente.",
+                "translation": "It's in the bathroom, under the sink. It's dripping quite a bit, yes, it's urgent."
+              },
+              {
+                "speaker": "Plumber (Phone)",
+                "voice_type": "phone",
+                "text": "Percebo. Consigo ir aí hoje à tarde, p'ra aí às três. Serve?",
+                "translation": "I understand. I can go there this afternoon, around three. Does that work?"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Ótimo! E quanto é a visita? Já inclui o arranjo?",
+                "translation": "Great! And how much is the visit? Does it already include the repair?"
+              },
+              {
+                "speaker": "Plumber (Phone)",
+                "voice_type": "phone",
+                "text": "A visita são 25 euros, p'ra ver o problema. Depois o arranjo é à parte, dou-lhe um orçamento.",
+                "translation": "The visit is 25 euros, to see the problem. Then the repair is separate, I'll give you a quote."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Pois, está bem. Então, até às três!",
+                "translation": "Right, that's fine. So, see you at three!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Professional Courtesy and Pricing",
+            "body": "When calling a service professional in Portugal, it's common to be direct but polite. Always address them as 'o senhor' or 'a senhora' unless they explicitly invite you to use 'tu'. It's also standard practice to ask about the cost of the visit ('quanto custa a visita?') and whether it includes the repair or if you'll receive a separate quote ('orçamento') for the work itself. Don't be shy about asking for this information upfront."
+          },
+          {
+            "title": "Indicating Urgency",
+            "body": "To convey urgency, you can use phrases like 'é urgente' (it's urgent) or 'está a pingar bastante' (it's dripping a lot). Madeirans often use 'um bocado' (a bit) in conversation, even to emphasize, as in 'preocupado um bocado' (quite worried), which adds a natural, less dramatic tone than 'muito' (very) in some contexts."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a plumber in Madeira to report a water leak. You need to explain where it is, how urgent it is, and ask about the cost and availability.",
+          "difficulty": 3,
+          "entry_node": "rp-sit-host-reporting-a-water-leak-1",
+          "nodes": [
+            {
+              "id": "rp-sit-host-reporting-a-water-leak-1",
+              "npc_text": "Bom dia, Canalizações Funchal, diga!",
+              "npc_translation": "Good morning, Funchal Plumbing, speak!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Tenho uma fuga de água em casa.",
+                  "translation": "Good morning. I have a water leak at home.",
+                  "feedback": "Good start! Clear and direct.",
+                  "next": "rp-sit-host-reporting-a-water-leak-2"
+                },
+                {
+                  "text": "Olá, preciso de um canalizador, tenho um problema com água.",
+                  "translation": "Hello, I need a plumber, I have a problem with water.",
+                  "feedback": "You're getting there, but 'fuga de água' is more precise.",
+                  "next": "rp-sit-host-reporting-a-water-leak-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-host-reporting-a-water-leak-2",
+              "npc_text": "Pois, senhora/senhor. Onde é a fuga? É urgente?",
+              "npc_translation": "Right, madam/sir. Where is the leak? Is it urgent?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É na cozinha, debaixo da banca. Está a pingar bastante, sim, é urgente.",
+                  "translation": "It's in the kitchen, under the counter. It's dripping quite a lot, yes, it's urgent.",
+                  "feedback": "Excellent! You've located it and conveyed urgency.",
+                  "next": "rp-sit-host-reporting-a-water-leak-3"
+                },
+                {
+                  "text": "É na casa de banho. Não sei se é urgente.",
+                  "translation": "It's in the bathroom. I don't know if it's urgent.",
+                  "feedback": "Good, but try to give more detail about the urgency next time. 'Está a pingar muito' (it's dripping a lot) helps.",
+                  "next": "rp-sit-host-reporting-a-water-leak-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-host-reporting-a-water-leak-3",
+              "npc_text": "Percebo. Consigo ir aí hoje à tarde, p'ra aí às quatro. Serve?",
+              "npc_translation": "I understand. I can go there this afternoon, around four. Does that work?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, perfeito! Quatro horas está ótimo. E quanto custa a visita?",
+                  "translation": "Yes, perfect! Four o'clock is great. And how much does the visit cost?",
+                  "feedback": "Perfect! You confirmed the time and moved on to the next important question.",
+                  "next": "rp-sit-host-reporting-a-water-leak-4"
+                },
+                {
+                  "text": "Hoje à tarde é um bocado difícil. Consegue vir amanhã de manhã?",
+                  "translation": "This afternoon is a bit difficult. Can you come tomorrow morning?",
+                  "feedback": "Good job negotiating the time. Now, remember to ask about the price.",
+                  "next": "rp-sit-host-reporting-a-water-leak-3b"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-host-reporting-a-water-leak-3b",
+              "npc_text": "Amanhã de manhã consigo, p'ra aí às dez. E quanto à visita, são 25 euros.",
+              "npc_translation": "Tomorrow morning I can, around ten. And regarding the visit, it's 25 euros.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ótimo, então amanhã às dez. O arranjo é à parte, certo?",
+                  "translation": "Great, so tomorrow at ten. The repair is separate, right?",
+                  "feedback": "Good confirmation and clarification about the repair cost.",
+                  "next": "rp-sit-host-reporting-a-water-leak-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-host-reporting-a-water-leak-4",
+              "npc_text": "A visita são 25 euros, para ver o problema e dar um orçamento. O arranjo é à parte.",
+              "npc_translation": "The visit is 25 euros, to see the problem and give a quote. The repair is separate.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Está bem, percebo. Então ficamos para as quatro. Muito obrigada!",
+                  "translation": "Okay, I understand. So, we'll keep it for four o'clock. Thank you very much!",
+                  "feedback": "Excellent! You've successfully arranged the visit and understood the pricing. Conversation complete."
+                },
+                {
+                  "text": "Pois, está bem. E o orçamento é gratuito?",
+                  "translation": "Right, okay. And is the quote free?",
+                  "feedback": "Good question for clarification, but the plumber already mentioned it's for 'ver o problema e dar um orçamento'. You've confirmed the price; it's time to conclude."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Call a Plumber in Madeira",
+          "prep": [
+            "Review phrases for describing a leak and asking about urgency.",
+            "Practice asking about the cost of a service visit.",
+            "Be ready to confirm a time for the plumber to come."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir?",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, a minha língua portuguesa ainda não é muito boa."
+          ],
+          "likely_responses": [
+            "Onde é a fuga?",
+            "É urgente?",
+            "Quando é que consegue vir?",
+            "Quanto custa a visita?",
+            "A visita é X euros, o arranjo é à parte."
+          ]
+        },
+        "goals": [
+          "Successfully report a water leak to a plumber.",
+          "Describe the location and urgency of the leak.",
+          "Ask about the plumber's availability and the cost of the visit.",
+          "Confirm an appointment time."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have a water leak.",
+            "answer": "Tenho uma fuga de água.",
+            "source_ref": "pp-sit-host-reporting-a-water-leak-1"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The leak is {location}.",
+            "answer": "A fuga é {location}.",
+            "source_ref": "pp-sit-host-reporting-a-water-leak-2"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is it urgent?",
+            "answer": "É urgente?",
+            "source_ref": "pp-sit-host-reporting-a-water-leak-3"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you come {when}?",
+            "answer": "Consegue vir {when}?",
+            "source_ref": "pp-sit-host-reporting-a-water-leak-4"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: water leak",
+            "answer": "fuga de água",
+            "source_ref": "fuga de água"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: plumber",
+            "answer": "canalizador",
+            "source_ref": "canalizador"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: tap, faucet",
+            "answer": "torneira",
+            "source_ref": "torneira"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: sink (bathroom)",
+            "answer": "lavatório",
+            "source_ref": "lavatório"
+          },
+          {
+            "id": "rv-sit-host-reporting-a-water-leak-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-host-reporting-a-water-leak-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-bureau-calling-financas",
+      "kind": "track",
+      "title": "Calling Finanças",
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-bureaucracy"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-bureau-calling-financas",
+        "title": "Calling Finanças",
+        "summary": "Phoning the tax office (Finanças) about your NIF or a tax matter: waiting, explaining your situation, and understanding what document you must bring.",
+        "tracks": [
+          "track-structured-course"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-bureau-calling-financas-1",
+            "base": "Estou a ligar sobre o meu {assunto}.",
+            "translation": "I'm calling about my {topic}.",
+            "slots": [
+              {
+                "name": "assunto",
+                "description": "Topic of the call",
+                "options": [
+                  "NIF",
+                  "registo",
+                  "declaração de IRS"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Ligo para saber sobre o meu {assunto}.",
+                "translation": "I'm calling to find out about my {topic}.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-calling-financas-2",
+            "base": "Preciso de saber que documentos preciso de trazer.",
+            "translation": "I need to know what documents I need to bring.",
+            "variants": [
+              {
+                "text": "Que documentos são necessários?",
+                "translation": "What documents are necessary?",
+                "register": "neutral"
+              },
+              {
+                "text": "Pode dizer-me quais documentos são precisos?",
+                "translation": "Can you tell me which documents are needed?",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-calling-financas-3",
+            "base": "Tenho um problema com a minha {situação}.",
+            "translation": "I have a problem with my {situation}.",
+            "slots": [
+              {
+                "name": "situação",
+                "description": "Type of problem",
+                "options": [
+                  "morada fiscal",
+                  "declaração",
+                  "inscrição"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-calling-financas-4",
+            "base": "É sobre o meu NIF, está {estado} ou não consigo {ação}.",
+            "translation": "It's about my NIF, it's {state} or I can't {action}.",
+            "slots": [
+              {
+                "name": "estado",
+                "description": "State of the NIF",
+                "options": [
+                  "inativo",
+                  "incorreto"
+                ]
+              },
+              {
+                "name": "ação",
+                "description": "Action not possible",
+                "options": [
+                  "aceder",
+                  "utilizar"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "Finanças",
+            "translation": "Tax office / Finance Department",
+            "pronunciation": "fee-NAN-sas",
+            "register": "neutral",
+            "note": "Common name for Autoridade Tributária e Aduaneira"
+          },
+          {
+            "word": "NIF",
+            "translation": "Tax Identification Number",
+            "pronunciation": "NIF",
+            "register": "neutral",
+            "note": "Número de Identificação Fiscal, essential for everything in Portugal"
+          },
+          {
+            "word": "Balcão",
+            "translation": "Counter / Service desk",
+            "pronunciation": "bal-KOW",
+            "register": "neutral"
+          },
+          {
+            "word": "Agendamento",
+            "translation": "Appointment",
+            "pronunciation": "ah-jen-dah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "Comprovativo de morada",
+            "translation": "Proof of address",
+            "pronunciation": "kom-proh-vah-TEE-voo dee moh-RAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "Cartão de Cidadão",
+            "translation": "Citizen Card",
+            "pronunciation": "kar-TOWN dee see-dah-DOW",
+            "register": "neutral",
+            "note": "Portuguese national ID card"
+          },
+          {
+            "word": "Declaração de IRS",
+            "translation": "Income Tax Declaration",
+            "pronunciation": "deh-klah-rah-SOWN dee EE-err-es",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-bureau-calling-financas-1",
+            "title": "Initial Call to Finanças",
+            "context": "You're calling the Finanças (tax office) in Madeira because you have an issue with your NIF.",
+            "lines": [
+              {
+                "speaker": "Atendimento Finanças",
+                "voice_type": "service",
+                "text": "Autoridade Tributária e Aduaneira, boa tarde. Em que posso ajudar?",
+                "translation": "Tax and Customs Authority, good afternoon. How can I help?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Boa tarde. Ligo sobre o meu NIF. Está inativo e preciso de o ativar.",
+                "translation": "Good afternoon. I'm calling about my NIF. It's inactive and I need to activate it."
+              },
+              {
+                "speaker": "Atendimento Finanças",
+                "voice_type": "service",
+                "text": "Pois, entendo. Para ativação de NIF, terá mesmo de se dirigir a um balcão de atendimento. Não conseguimos fazer isso por telefone.",
+                "translation": "Right, I understand. For NIF activation, you'll really have to go to a service desk. We can't do that over the phone."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Ah, pois. E que documentos preciso de levar?",
+                "translation": "Ah, right. And what documents do I need to bring?"
+              },
+              {
+                "speaker": "Atendimento Finanças",
+                "voice_type": "service",
+                "text": "Precisa do seu Cartão de Cidadão ou passaporte, e um comprovativo de morada recente. E, se for o caso, a declaração de início de atividade.",
+                "translation": "You need your Citizen Card or passport, and a recent proof of address. And, if applicable, your business registration statement."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Certo. Muito obrigado pela informação.",
+                "translation": "Okay. Thank you very much for the information."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-bureau-calling-financas-2",
+            "title": "Clarifying a Tax Declaration Issue",
+            "context": "You're calling Finanças again, this time about a problem with your tax declaration.",
+            "lines": [
+              {
+                "speaker": "Atendimento Finanças",
+                "voice_type": "phone",
+                "text": "Finanças, diga.",
+                "translation": "Finanças, speak."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "older",
+                "text": "Boa tarde. Tenho um problema com a minha declaração de IRS do ano passado. Acho que há um erro.",
+                "translation": "Good afternoon. I have a problem with my IRS declaration from last year. I think there's an error."
+              },
+              {
+                "speaker": "Atendimento Finanças",
+                "voice_type": "service",
+                "text": "Pois, para questões de retificação de declarações, é algo que normalmente se resolve online no Portal das Finanças. Já tentou por lá?",
+                "translation": "Right, for declaration rectification issues, it's something usually resolved online on the Finanças Portal. Have you tried there?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "older",
+                "text": "Já tentei, mas não consigo. É um bocado complicado p'ra mim. Será que posso agendar um atendimento presencial?",
+                "translation": "I've tried, but I can't. It's a bit complicated for me. Can I schedule an in-person appointment?"
+              },
+              {
+                "speaker": "Atendimento Finanças",
+                "voice_type": "local",
+                "text": "Sim, claro. Tem de aceder ao Portal das Finanças e procurar por 'Agendamento'. Lá pode escolher o balcão e a hora que lhe der mais jeito.",
+                "translation": "Yes, of course. You have to access the Finanças Portal and look for 'Appointment'. There you can choose the office and time that suits you best."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "older",
+                "text": "Ah, muito bem. Então vou tentar fazer isso. Obrigada.",
+                "translation": "Ah, very good. So I'll try to do that. Thank you."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Patience with Bureaucracy",
+            "body": "Dealing with government offices (like Finanças) in Portugal often requires patience. Phone lines can be busy, and some issues require an in-person visit. Always be prepared to wait a bit or be redirected. It's common to be told to resolve issues online first."
+          },
+          {
+            "title": "The Importance of NIF",
+            "body": "The NIF (Número de Identificação Fiscal) is your tax identification number and is absolutely crucial for almost all transactions in Portugal, from opening a bank account to buying groceries (if you want to add it to a receipt for tax purposes). Keep it handy and know its status."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling the Finanças office in Funchal, Madeira, because your NIF seems to be inactive or incorrect, and you cannot use it for an important transaction. You need to understand how to fix it and what documents to bring.",
+          "difficulty": 4,
+          "entry_node": "rp-financas-start",
+          "nodes": [
+            {
+              "id": "rp-financas-start",
+              "npc_text": "Autoridade Tributária e Aduaneira, boa tarde. Em que posso ajudar?",
+              "npc_translation": "Tax and Customs Authority, good afternoon. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Ligo sobre um problema com o meu NIF.",
+                  "translation": "Good afternoon. I'm calling about a problem with my NIF.",
+                  "feedback": "A good, direct start. 'Ligo sobre' is perfect for stating the reason for your call.",
+                  "next": "rp-financas-explain-issue"
+                },
+                {
+                  "text": "Diga. O meu NIF não está a funcionar.",
+                  "translation": "Speak. My NIF isn't working.",
+                  "feedback": "A bit informal with 'Diga' for a first contact with a service, but acceptable. Make sure to be polite next time.",
+                  "next": "rp-financas-explain-issue"
+                }
+              ]
+            },
+            {
+              "id": "rp-financas-explain-issue",
+              "npc_text": "Pois não. Qual é o problema específico com o seu NIF?",
+              "npc_translation": "Right. What is the specific problem with your NIF?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Parece que está inativo. Não consigo utilizá-lo para nada.",
+                  "translation": "It seems to be inactive. I can't use it for anything.",
+                  "feedback": "Clearly stating the problem helps the agent direct you correctly.",
+                  "next": "rp-financas-inperson"
+                },
+                {
+                  "text": "Não sei, está incorreto ou algo do género.",
+                  "translation": "I don't know, it's incorrect or something like that.",
+                  "feedback": "Try to be more specific if you can, but this is understandable. The agent will likely ask for more details.",
+                  "next": "rp-financas-inperson"
+                }
+              ]
+            },
+            {
+              "id": "rp-financas-inperson",
+              "npc_text": "Compreendo. Para resolver problemas de NIF inativo ou incorreto, terá de se dirigir pessoalmente a um balcão de atendimento. Não é possível fazer isso por telefone.",
+              "npc_translation": "I understand. To resolve issues with an inactive or incorrect NIF, you will need to go in person to a service desk. It's not possible to do that over the phone.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ah, pois. E que documentos preciso de levar comigo?",
+                  "translation": "Ah, right. And what documents do I need to bring with me?",
+                  "feedback": "Excellent follow-up question. Always ask what to bring before going to a government office.",
+                  "next": "rp-financas-documents"
+                },
+                {
+                  "text": "Certo. Tenho de ir lá. Obrigada.",
+                  "translation": "Okay. I have to go there. Thank you.",
+                  "feedback": "This ends the call, but you missed an opportunity to ask about the required documents. You'll need to call again or risk a wasted trip."
+                }
+              ]
+            },
+            {
+              "id": "rp-financas-documents",
+              "npc_text": "Para ativar ou corrigir o NIF, precisará do seu Cartão de Cidadão ou passaporte, e um comprovativo de morada recente. Leve os originais, por favor.",
+              "npc_translation": "To activate or correct your NIF, you will need your Citizen Card or passport, and a recent proof of address. Please bring the originals.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Certo. Cartão de Cidadão e comprovativo de morada. Muito obrigada pela ajuda.",
+                  "translation": "Okay. Citizen Card and proof of address. Thank you very much for your help.",
+                  "feedback": "Confirming the information is a good way to ensure you understood correctly.",
+                  "next": "rp-financas-end"
+                },
+                {
+                  "text": "Só o Cartão de Cidadão? Não preciso de mais nada?",
+                  "translation": "Only the Citizen Card? I don't need anything else?",
+                  "feedback": "It's good to clarify, but the agent did mention 'comprovativo de morada'. Listen carefully.",
+                  "next": "rp-financas-documents-clarify"
+                }
+              ]
+            },
+            {
+              "id": "rp-financas-documents-clarify",
+              "npc_text": "Não, como referi, precisa do Cartão de Cidadão E um comprovativo de morada. São os dois documentos essenciais. E os originais, sim.",
+              "npc_translation": "No, as I mentioned, you need your Citizen Card AND a proof of address. Those are the two essential documents. And the originals, yes.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Peço desculpa, entendi mal. Muito obrigada por esclarecer.",
+                  "translation": "I apologize, I misunderstood. Thank you very much for clarifying.",
+                  "feedback": "Apologizing when you've misunderstood is polite and appropriate.",
+                  "next": "rp-financas-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-financas-end",
+              "npc_text": "De nada. Tenha um bom dia.",
+              "npc_translation": "You're welcome. Have a good day.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Prepare for a Finanças Visit",
+          "prep": [
+            "Review the key vocabulary for Finanças and documents.",
+            "Practice asking about the required documents.",
+            "Mentally prepare for the possibility of needing to visit the office in person."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi bem. Pode explicar de novo?",
+            "O que significa 'comprovativo'?"
+          ],
+          "likely_responses": [
+            "Terá de se dirigir a um balcão.",
+            "Precisa do seu Cartão de Cidadão e comprovativo de morada.",
+            "Não é possível fazer isso por telefone."
+          ]
+        },
+        "goals": [
+          "Successfully initiate a call to Finanças and explain your NIF issue.",
+          "Understand when an in-person visit is required for tax matters.",
+          "Clearly ask for and comprehend the list of necessary documents for an official procedure."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-bureau-calling-financas-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'm calling about my {topic}.",
+            "answer": "Estou a ligar sobre o meu {assunto}.",
+            "source_ref": "pp-sit-bureau-calling-financas-1"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need to know what documents I need to bring.",
+            "answer": "Preciso de saber que documentos preciso de trazer.",
+            "source_ref": "pp-sit-bureau-calling-financas-2"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have a problem with my {situation}.",
+            "answer": "Tenho um problema com a minha {situação}.",
+            "source_ref": "pp-sit-bureau-calling-financas-3"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's about my NIF, it's {state} or I can't {action}.",
+            "answer": "É sobre o meu NIF, está {estado} ou não consigo {ação}.",
+            "source_ref": "pp-sit-bureau-calling-financas-4"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Tax office / Finance Department",
+            "answer": "Finanças",
+            "source_ref": "Finanças"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Tax Identification Number",
+            "answer": "NIF",
+            "source_ref": "NIF"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Counter / Service desk",
+            "answer": "Balcão",
+            "source_ref": "Balcão"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Appointment",
+            "answer": "Agendamento",
+            "source_ref": "Agendamento"
+          },
+          {
+            "id": "rv-sit-bureau-calling-financas-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-bureau-calling-financas-1"
+          }
+        ]
+      }
+    }
+  ]
+}

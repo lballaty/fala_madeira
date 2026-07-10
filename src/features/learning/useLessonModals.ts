@@ -13,6 +13,8 @@ import { geminiService } from '../../services/geminiService';
 import { TUTORS } from '../../data/tutors';
 import { ShowToast } from '../../hooks/useToast';
 import { logger, userMessage } from '../../lib/logger';
+import { config } from '../../config';
+import { validateText, validateUrl } from '../../lib/validation';
 
 interface LessonModalsDeps {
   supabase: SupabaseClient | null;
@@ -51,13 +53,17 @@ export const useLessonModals = ({
 
   const handleRequestLesson = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!requestTheme.trim() || !requestDesc.trim()) return;
+    // Validate + limit before persisting (ENGINEERING-STANDARDS §4): trim, reject-empty, cap length.
+    const themeCheck = validateText(requestTheme, 'Theme', config.limits.requestThemeMax);
+    if (!themeCheck.ok) { showToast(themeCheck.reason, 'error'); return; }
+    const descCheck = validateText(requestDesc, 'Description', config.limits.requestDescMax);
+    if (!descCheck.ok) { showToast(descCheck.reason, 'error'); return; }
 
     if (supabase && user) {
       const { error } = await supabase.from('lesson_requests').insert({
         user_id: user.id,
-        theme: requestTheme,
-        description: requestDesc,
+        theme: themeCheck.value,
+        description: descCheck.value,
         status: 'pending'
       });
 
@@ -77,13 +83,21 @@ export const useLessonModals = ({
   };
 
   const handleSuggestVideo = async () => {
-    if (!selectedLesson || !suggestionUrl.trim() || !supabase || !user) return;
+    if (!selectedLesson || !supabase || !user) return;
+    // Validate the URL (must be a real http(s) link) and cap the optional note.
+    const urlCheck = validateUrl(suggestionUrl, 'Video link');
+    if (!urlCheck.ok) { showToast(urlCheck.reason, 'error'); return; }
+    const note = suggestionNote.trim();
+    if (note.length > config.limits.suggestionNoteMax) {
+      showToast(`Note is too long (max ${config.limits.suggestionNoteMax} characters).`, 'error');
+      return;
+    }
 
     const newSuggestion = {
       lesson_id: selectedLesson.id,
       user_id: user.id,
-      video_url: suggestionUrl,
-      note: suggestionNote,
+      video_url: urlCheck.value,
+      note,
       status: 'pending'
     };
 
@@ -108,14 +122,16 @@ export const useLessonModals = ({
 
   const handleSubmitCorrection = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!correctionText.trim() || !selectedLesson || isCorrectionLoading) return;
+    if (!selectedLesson || isCorrectionLoading) return;
+    const check = validateText(correctionText, 'Correction', config.limits.correctionTextMax);
+    if (!check.ok) { showToast(check.reason, 'error'); return; }
 
     setIsCorrectionLoading(true);
     if (supabase && user) {
       const { error } = await supabase.from('lesson_corrections').insert({
         lesson_id: selectedLesson.id,
         user_id: user.id,
-        correction_text: correctionText,
+        correction_text: check.value,
         status: 'pending'
       });
 
@@ -136,13 +152,15 @@ export const useLessonModals = ({
 
   const handleVocabLookup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!vocabQuery.trim() || isVocabLoading) return;
+    if (isVocabLoading) return;
+    const check = validateText(vocabQuery, 'Word', config.limits.vocabQueryMax);
+    if (!check.ok) { showToast(check.reason, 'error'); return; }
 
     setIsVocabLoading(true);
     setVocabResult(null);
     try {
       const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
-      const result = await geminiService.translateWord(vocabQuery, tutor);
+      const result = await geminiService.translateWord(check.value, tutor);
       setVocabResult(result ?? null);
     } catch (err) {
       const event = logger.error('vocab_lookup_failed', 'Vocab lookup error', { category: 'AI_DECISION', error: err });

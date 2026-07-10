@@ -15,6 +15,7 @@ import { ChevronDown, ChevronRight, RefreshCw } from 'lucide-react';
 import { contentRepository, PRACTICAL_LEVELS, PracticalLevel, Situation, Track } from '../../content';
 import { logger, userMessage, errorMessage } from '../../lib/logger';
 import { PRACTICE_MODES, practiceConfig } from './registry';
+import { VideoPlayer } from '../../components/VideoPlayer';
 
 /** Product-facing names for the practical levels (CONTENT-ARCHITECTURE §4). */
 const LEVEL_NAMES: Record<PracticalLevel, string> = {
@@ -234,6 +235,9 @@ export const SituationPicker = ({ onPick }: SituationPickerProps) => {
                 </button>
                 {isExpanded && (
                   <div className="px-4 pb-4 space-y-2">
+                    {situation.media?.find((m) => m.type === 'video') && (
+                      <VideoPlayer url={situation.media.find((m) => m.type === 'video')!.url} />
+                    )}
                     <p className="text-[10px] font-bold text-ios-gray uppercase">Practice this with…</p>
                     <div className="flex flex-wrap gap-2">
                       {PRACTICE_MODES.map((mode) => (

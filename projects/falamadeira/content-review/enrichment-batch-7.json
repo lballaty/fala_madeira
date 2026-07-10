@@ -1,0 +1,2456 @@
+{
+  "batch": 7,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T08:42:51.284Z",
+  "count": 8,
+  "situations": [
+    {
+      "id": "sit-d49-week-7-stress-test",
+      "title": "Week 7 Stress Test",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 0,
+        "extra_cultural_notes": 2,
+        "review_items": 2,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d49-1",
+            "title": "Leaky Tap",
+            "context": "A resident calls a plumber because of a leaky tap in the kitchen.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Bom dia, é da canalização 'Rápido & Bom'?",
+                "translation": "Good morning, is this 'Rápido & Bom' plumbing?"
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Sim, pois não. Em que posso ajudar?",
+                "translation": "Yes, how can I help you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Tenho uma torneira a pingar na cozinha. Preciso de um canalizador.",
+                "translation": "I have a tap dripping in the kitchen. I need a plumber."
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "local",
+                "text": "Ah, pois. Uma torneira a pingar. É urgente? Temos um técnico livre p'ra amanhã de manhã.",
+                "translation": "Ah, right. A dripping tap. Is it urgent? We have a technician free for tomorrow morning."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Amanhã de manhã está ótimo. É possível entre as nove e as dez?",
+                "translation": "Tomorrow morning is great. Is it possible between nine and ten?"
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Sim, posso agendar. Qual é a sua morada e o seu nome, por favor?",
+                "translation": "Yes, I can schedule that. What is your address and name, please?"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d49-2",
+            "title": "Missing Delivery",
+            "context": "A neighbour asks about a package, but it seems to be missing.",
+            "lines": [
+              {
+                "speaker": "Vizinha",
+                "voice_type": "older",
+                "text": "Bom dia, Inês. Recebeste alguma encomenda p'ra mim?",
+                "translation": "Good morning, Inês. Did you receive any package for me?"
+              },
+              {
+                "speaker": "Inês",
+                "voice_type": "younger",
+                "text": "Bom dia, Dona Maria! Não, não recebi nada. Porquê?",
+                "translation": "Good morning, Dona Maria! No, I didn't receive anything. Why?"
+              },
+              {
+                "speaker": "Vizinha",
+                "voice_type": "older",
+                "text": "Pois é que a transportadora diz que entregou ontem. Era um livro.",
+                "translation": "Well, the delivery company says they delivered it yesterday. It was a book."
+              },
+              {
+                "speaker": "Inês",
+                "voice_type": "local",
+                "text": "Ontem? Não vi ninguém da transportadora. Estive cá o dia todo. Que estranho!",
+                "translation": "Yesterday? I didn't see anyone from the delivery company. I was here all day. How strange!"
+              },
+              {
+                "speaker": "Vizinha",
+                "voice_type": "older",
+                "text": "Pois é. Vou ter de ligar p'ra eles. Obrigada na mesma, querida.",
+                "translation": "Indeed. I'll have to call them. Thanks anyway, dear."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling the electricity company because your last bill is much higher than usual, and you think there's a mistake. You need to explain the problem and ask them to check it.",
+          "difficulty": 3,
+          "entry_node": "rp-d49-node-1",
+          "nodes": [
+            {
+              "id": "rp-d49-node-1",
+              "npc_text": "Boa tarde, EDP. Em que posso ajudar?",
+              "npc_translation": "Good afternoon, EDP. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. A minha fatura da eletricidade está muito alta.",
+                  "translation": "Good afternoon. My electricity bill is very high.",
+                  "feedback": "Good start! You clearly state the problem.",
+                  "next": "rp-d49-node-2"
+                },
+                {
+                  "text": "Olá. Queria falar sobre a minha conta.",
+                  "translation": "Hello. I wanted to talk about my account.",
+                  "feedback": "A bit vague, but acceptable. Try to be more specific next time.",
+                  "next": "rp-d49-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d49-node-2",
+              "npc_text": "Compreendo. Qual é o seu número de cliente, por favor?",
+              "npc_translation": "I understand. What is your client number, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É 123456789.",
+                  "translation": "It's 123456789.",
+                  "feedback": "Direct and correct. Now explain the issue with the bill.",
+                  "next": "rp-d49-node-3"
+                },
+                {
+                  "text": "O meu número de cliente está na fatura. É 123456789.",
+                  "translation": "My client number is on the bill. It's 123456789.",
+                  "feedback": "Excellent, you're giving the information clearly.",
+                  "next": "rp-d49-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d49-node-3",
+              "npc_text": "Obrigada. Pode explicar qual é o problema com a fatura?",
+              "npc_translation": "Thank you. Can you explain what the problem is with the bill?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim. Normalmente pago 30 euros, mas esta fatura é de 80 euros. Acho que há um erro.",
+                  "translation": "Yes. I usually pay 30 euros, but this bill is 80 euros. I think there's a mistake.",
+                  "feedback": "Very clear explanation, comparing with your usual bill.",
+                  "next": "rp-d49-node-4"
+                },
+                {
+                  "text": "É muito mais alta do que o normal. Não percebo porquê.",
+                  "translation": "It's much higher than normal. I don't understand why.",
+                  "feedback": "Good, but try to be more specific if you can (e.g., give numbers).",
+                  "next": "rp-d49-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d49-node-4",
+              "npc_text": "Certo. Vou verificar aqui no sistema. Um momento, por favor.",
+              "npc_translation": "Okay. I'll check here in the system. One moment, please.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois não. Obrigada.",
+                  "translation": "Of course. Thank you.",
+                  "feedback": "Polite and appropriate response while waiting.",
+                  "next": "rp-d49-node-5"
+                },
+                {
+                  "text": "Está bem.",
+                  "translation": "Okay.",
+                  "feedback": "Simple and correct.",
+                  "next": "rp-d49-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d49-node-5",
+              "npc_text": "Senhor/a, parece que houve uma leitura estimada que foi muito alta. Posso fazer um acerto ou enviar um técnico para verificar o contador.",
+              "npc_translation": "Sir/Madam, it seems there was an estimated reading that was too high. I can make an adjustment or send a technician to check the meter.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Por favor, pode fazer o acerto. Não preciso de um técnico.",
+                  "translation": "Please, can you make the adjustment. I don't need a technician.",
+                  "feedback": "Good, you chose the simpler solution."
+                },
+                {
+                  "text": "Prefiro que um técnico venha verificar o contador, por favor.",
+                  "translation": "I prefer that a technician comes to check the meter, please.",
+                  "feedback": "Good, you're asking for a more thorough check."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Call the electricity company about an incorrect bill",
+          "prep": [
+            "Find your client number on a previous bill.",
+            "Note down the amount of the current bill and your usual average bill.",
+            "Be ready to explain why you think the bill is wrong."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, não entendi.",
+            "Qual é o meu número de cliente?"
+          ],
+          "likely_responses": [
+            "Bom dia/Boa tarde, em que posso ajudar?",
+            "Qual é o seu número de cliente?",
+            "Qual é o problema com a fatura?",
+            "Um momento, por favor.",
+            "Vamos verificar a situação.",
+            "Posso agendar uma visita técnica."
+          ]
+        },
+        "phrase_patterns_enriched": [],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Service Interactions",
+            "body": "When interacting with service staff (e.g., plumbers, utility company representatives), it's customary to use polite forms like 'por favor' (please) and 'obrigado/a' (thank you). Even when expressing dissatisfaction, maintaining a polite tone is important for a smooth interaction. Avoid overly direct or demanding language."
+          },
+          {
+            "title": "'Pois Não' - A Versatile Response",
+            "body": "In Portugal, 'Pois não' is a very common and versatile phrase, especially in service contexts. It can mean 'Yes, how can I help you?' when answering the phone, or 'Of course' / 'Go ahead' when someone asks for permission or indicates they are about to do something for you. It conveys readiness and willingness to assist."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d49-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Full Week 7 Review\"",
+            "answer": "Full Week 7 Review",
+            "source_ref": "pp-d49-1"
+          },
+          {
+            "id": "rv-d49-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d49-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d50-speed-automaticity",
+      "title": "Speed & Automaticity",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d50-1",
+            "title": "Morning Coffee Order",
+            "context": "At a café counter in Funchal, a local ordering coffee.",
+            "lines": [
+              {
+                "speaker": "Customer",
+                "voice_type": "local",
+                "text": "Bom dia! Queria uma bica e um bolo do caco, se faz favor.",
+                "translation": "Good morning! I'd like an espresso and a 'bolo do caco' (Madeiran flatbread), please."
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Pois não. É p'ra já!",
+                "translation": "Of course. Coming right up!"
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "local",
+                "text": "Obrigado. E a conta, é dezasseis euros?",
+                "translation": "Thank you. And the bill, is it sixteen euros?"
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Não, é catorze euros e cinquenta cêntimos.",
+                "translation": "No, it's fourteen euros and fifty cents."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d50-2",
+            "title": "Calling for a Delivery",
+            "context": "A person calling a store about a furniture delivery.",
+            "lines": [
+              {
+                "speaker": "Customer",
+                "voice_type": "younger",
+                "text": "Bom dia. Chamo-me Ana Silva. Ligava sobre a minha entrega. É p'ra hoje?",
+                "translation": "Good morning. My name is Ana Silva. I'm calling about my delivery. Is it for today?"
+              },
+              {
+                "speaker": "Shop Assistant",
+                "voice_type": "phone",
+                "text": "Diga, Ana. Qual é o seu número de encomenda, por favor?",
+                "translation": "Yes, Ana. What is your order number, please?"
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "younger",
+                "text": "É 2023-dezasseis-cinco-quatro. Comprei uma mesa.",
+                "translation": "It's 2023-sixteen-five-four. I bought a table."
+              },
+              {
+                "speaker": "Shop Assistant",
+                "voice_type": "phone",
+                "text": "Ah, sim. A entrega está prevista p'ra amanhã de manhã. Entre as nove e o meio-dia.",
+                "translation": "Ah, yes. The delivery is scheduled for tomorrow morning. Between nine and midday."
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "younger",
+                "text": "Pois, está bem. Obrigado.",
+                "translation": "Okay, that's fine. Thank you."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need to call a plumber because your kitchen sink is blocked. You need to explain the problem and arrange a time for them to come.",
+          "difficulty": 3,
+          "entry_node": "rp-d50-start",
+          "nodes": [
+            {
+              "id": "rp-d50-start",
+              "npc_text": "Bom dia, canalizador Silva, diga!",
+              "npc_translation": "Good morning, Plumber Silva, speak!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Chamo-me [o seu nome]. A minha banca da cozinha está entupida.",
+                  "translation": "Good morning. My name is [your name]. My kitchen sink is blocked.",
+                  "feedback": "Great start, clearly state your name and the issue.",
+                  "next": "rp-d50-problem"
+                },
+                {
+                  "text": "Olá. Tenho um problema com a água.",
+                  "translation": "Hello. I have a problem with the water.",
+                  "feedback": "Good attempt, but be more specific about the problem and introduce yourself.",
+                  "next": "rp-d50-vague"
+                }
+              ]
+            },
+            {
+              "id": "rp-d50-vague",
+              "npc_text": "Um problema com a água? Pode ser mais específico, por favor? E como se chama?",
+              "npc_translation": "A problem with the water? Can you be more specific, please? And what's your name?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, a banca da cozinha está entupida. Chamo-me [o seu nome].",
+                  "translation": "Yes, the kitchen sink is blocked. My name is [your name].",
+                  "feedback": "Good recovery, now the plumber knows what's wrong.",
+                  "next": "rp-d50-problem"
+                }
+              ]
+            },
+            {
+              "id": "rp-d50-problem",
+              "npc_text": "Ah, a banca entupida. Pois, é um problema comum. Onde é a sua morada?",
+              "npc_translation": "Ah, the blocked sink. Yes, that's a common problem. What's your address?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É na Rua [nome da rua], número dezasseis.",
+                  "translation": "It's on [street name] Street, number sixteen.",
+                  "feedback": "Excellent, providing the full address is essential.",
+                  "next": "rp-d50-address"
+                }
+              ]
+            },
+            {
+              "id": "rp-d50-address",
+              "npc_text": "Rua [nome da rua], dezasseis. Certo. Quando é que está em casa p'ra eu ir lá?",
+              "npc_translation": "[Street name] Street, sixteen. Right. When will you be home for me to go there?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Posso estar em casa amanhã, depois das catorze horas.",
+                  "translation": "I can be home tomorrow, after two PM.",
+                  "feedback": "Perfect, giving a clear time frame is very helpful.",
+                  "next": "rp-d50-confirm"
+                },
+                {
+                  "text": "Estou em casa de manhã, às sete.",
+                  "translation": "I'm home in the morning, at seven.",
+                  "feedback": "You've given a time, but consider if 'seven' is a practical time for a plumber.",
+                  "next": "rp-d50-early"
+                }
+              ]
+            },
+            {
+              "id": "rp-d50-early",
+              "npc_text": "Às sete da manhã é um bocado cedo. Pode ser amanhã às nove e meia?",
+              "npc_translation": "Seven in the morning is a bit early. Can it be tomorrow at half past nine?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, às nove e meia está ótimo. Obrigado.",
+                  "translation": "Yes, half past nine is great. Thank you.",
+                  "feedback": "Great, you've confirmed the appointment."
+                }
+              ]
+            },
+            {
+              "id": "rp-d50-confirm",
+              "npc_text": "Amanhã, depois das catorze horas. Está bem. Eu vou lá. Obrigado.",
+              "npc_translation": "Tomorrow, after two PM. Okay. I'll go there. Thank you.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado eu. Até amanhã.",
+                  "translation": "Thank you. See you tomorrow.",
+                  "feedback": "Excellent, you've successfully arranged the visit!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Calling the Electricity Company",
+          "prep": [
+            "Mentally rehearse introducing yourself and stating your reason for calling.",
+            "Practice saying your address and a few different times for an appointment.",
+            "Be ready to ask about a bill or a technical issue."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi.",
+            "Desculpe, pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Bom dia, EDP, diga!",
+            "Qual é o seu número de cliente?",
+            "Pode confirmar a sua morada?",
+            "Qual é o problema?",
+            "Quando é que está em casa?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d50-1",
+            "base": "Bom dia! Queria uma bica.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Boa tarde! Queria um garoto, por favor.",
+                "translation": "Good afternoon! I'd like a 'garoto' (coffee with a drop of milk), please.",
+                "register": "neutral"
+              },
+              {
+                "text": "Bom dia! Um café, se faz favor.",
+                "translation": "Good morning! A coffee, please.",
+                "register": "neutral"
+              },
+              {
+                "text": "Boa noite! Queria um descafeinado.",
+                "translation": "Good evening! I'd like a decaf.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d50-2",
+            "base": "Chamo-me... Sou de...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Como se chama? Eu chamo-me Sofia. Sou de Lisboa.",
+                "translation": "What's your name? My name is Sofia. I'm from Lisbon.",
+                "register": "informal"
+              },
+              {
+                "text": "De onde é o senhor? Chamo-me João e sou do Funchal.",
+                "translation": "Where are you from, sir? My name is João and I'm from Funchal.",
+                "register": "formal"
+              },
+              {
+                "text": "Sou a Maria, sou do Caniço.",
+                "translation": "I'm Maria, I'm from Caniço.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d50-3",
+            "base": "Levanto-me às sete.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tomo o pequeno-almoço às oito e meia.",
+                "translation": "I have breakfast at half past eight.",
+                "register": "neutral"
+              },
+              {
+                "text": "Saio de casa às nove.",
+                "translation": "I leave home at nine.",
+                "register": "neutral"
+              },
+              {
+                "text": "Vou trabalhar às dez.",
+                "translation": "I go to work at ten.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Service Interactions",
+            "body": "In Portugal, politeness is highly valued in service interactions. Always use 'por favor' or 'se faz favor' when asking for something. When addressing service staff or officials, 'o senhor'/'a senhora' (sir/madam) is generally preferred over 'você' to show respect, especially if you don't know the person. A simple 'bom dia' or 'boa tarde' to start the conversation is also crucial."
+          },
+          {
+            "title": "The Versatility of 'Pois'",
+            "body": "'Pois' and 'pois é' are very common interjections in European Portuguese, especially in Madeira. They can mean 'yes', 'indeed', 'that's right', 'of course', or simply acknowledge what the other person has said. It's a natural filler that helps conversations flow and shows you are listening, but it's not a direct translation of 'yes' in all contexts."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d50-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Bom dia! Queria uma bica.\"",
+            "answer": "Bom dia! Queria uma bica.",
+            "source_ref": "pp-d50-1"
+          },
+          {
+            "id": "rv-d50-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Chamo-me... Sou de...\"",
+            "answer": "Chamo-me... Sou de...",
+            "source_ref": "pp-d50-2"
+          },
+          {
+            "id": "rv-d50-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Levanto-me às sete.\"",
+            "answer": "Levanto-me às sete.",
+            "source_ref": "pp-d50-3"
+          },
+          {
+            "id": "rv-d50-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: breakfast",
+            "answer": "pequeno-almoço",
+            "source_ref": "pequeno-almoço"
+          },
+          {
+            "id": "rv-d50-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: sixteen",
+            "answer": "dezasseis",
+            "source_ref": "dezasseis"
+          },
+          {
+            "id": "rv-d50-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fourteen",
+            "answer": "catorze",
+            "source_ref": "catorze"
+          },
+          {
+            "id": "rv-d50-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d50-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d51-tense-system-mastery",
+      "title": "Tense System Mastery",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 1,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d51-1",
+            "title": "New Neighbour Chat",
+            "context": "A new neighbour is chatting with an older local resident about their past and present life in Madeira.",
+            "lines": [
+              {
+                "speaker": "Vizinho (mais velho)",
+                "voice_type": "older",
+                "text": "Então, mudou-se para cá há muito tempo?",
+                "translation": "So, did you move here a long time ago?"
+              },
+              {
+                "speaker": "Novo Vizinho",
+                "voice_type": "local",
+                "text": "Mudei-me no ano passado. Antes trabalhava no Funchal, mas agora estou a gostar imenso da calma aqui.",
+                "translation": "I moved last year. Before, I worked in Funchal, but now I'm really enjoying the calm here."
+              },
+              {
+                "speaker": "Vizinho (mais velho)",
+                "voice_type": "older",
+                "text": "Pois é, aqui é bom. Eu estive sempre por estas bandas.",
+                "translation": "That's right, it's good here. I've always been around these parts."
+              },
+              {
+                "speaker": "Novo Vizinho",
+                "voice_type": "local",
+                "text": "Tenho adorado a ilha, é tão bonita. Se estivesse a viver noutro sítio, estaria a sentir falta disto.",
+                "translation": "I've been loving the island, it's so beautiful. If I were living somewhere else, I would be missing this."
+              },
+              {
+                "speaker": "Vizinho (mais velho)",
+                "voice_type": "older",
+                "text": "É verdade. E o que é que fazia antes de se mudar?",
+                "translation": "It's true. And what did you do before moving?"
+              },
+              {
+                "speaker": "Novo Vizinho",
+                "voice_type": "local",
+                "text": "Antes trabalhava como cozinheiro num hotel. Era fixe, mas a vida aqui é melhor.",
+                "translation": "Before, I worked as a cook in a hotel. It was cool, but life here is better."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a local handyman to fix a leaking tap in your kitchen. You need to explain the problem and arrange a time.",
+          "difficulty": 2,
+          "entry_node": "rp-d51-1",
+          "nodes": [
+            {
+              "id": "rp-d51-1",
+              "npc_text": "Bom dia, 'O Faz Tudo', diga!",
+              "npc_translation": "Good morning, 'The Handyman', speak!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria marcar uma reparação, por favor.",
+                  "translation": "Good morning. I'd like to schedule a repair, please.",
+                  "feedback": "Good start, clear and polite.",
+                  "next": "rp-d51-2"
+                },
+                {
+                  "text": "Olá. A minha torneira está a pingar.",
+                  "translation": "Hello. My tap is dripping.",
+                  "feedback": "You got straight to the point, but 'queria marcar uma reparação' is more direct for scheduling.",
+                  "next": "rp-d51-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d51-2",
+              "npc_text": "Claro. Qual é o problema?",
+              "npc_translation": "Of course. What's the problem?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "A torneira da cozinha está a pingar. Já estava assim há uns dias.",
+                  "translation": "The kitchen tap is dripping. It's been like this for a few days.",
+                  "feedback": "Excellent, you used 'estava' for a past ongoing state.",
+                  "next": "rp-d51-3"
+                },
+                {
+                  "text": "A torneira da cozinha pingou e continua a pingar.",
+                  "translation": "The kitchen tap dripped and continues to drip.",
+                  "feedback": "Good, but 'já estava assim há uns dias' sounds more natural for an ongoing issue.",
+                  "next": "rp-d51-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d51-3",
+              "npc_text": "Percebo. Quando estaria disponível para eu ir lá ver?",
+              "npc_translation": "I understand. When would you be available for me to go there and see?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Eu estaria em casa amanhã de manhã.",
+                  "translation": "I would be home tomorrow morning.",
+                  "feedback": "Perfect use of the conditional for hypothetical availability.",
+                  "next": "rp-d51-4"
+                },
+                {
+                  "text": "Posso estar em casa amanhã de manhã.",
+                  "translation": "I can be home tomorrow morning.",
+                  "feedback": "This works, but 'estaria' directly answers his conditional question.",
+                  "next": "rp-d51-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d51-4",
+              "npc_text": "Amanhã de manhã, então. Estive a pensar que talvez às 9h seria bom. Serve-lhe?",
+              "npc_translation": "Tomorrow morning, then. I was thinking that maybe 9 am would be good. Does that suit you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, às 9h estaria ótimo. Muito obrigado!",
+                  "translation": "Yes, 9 am would be great. Thank you very much!",
+                  "feedback": "Excellent, polite and confirms the time."
+                },
+                {
+                  "text": "Pois, às 9h está bom.",
+                  "translation": "Yes, 9 am is good.",
+                  "feedback": "Good, but 'estaria ótimo' is a bit more enthusiastic and reinforces the conditional tense."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Agendar uma Limpeza",
+          "prep": [
+            "Pense num problema que tem em casa que precise de limpeza.",
+            "Decida quando gostaria que a pessoa viesse.",
+            "Relembre-se de como explicaria o problema usando diferentes tempos verbais."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi.",
+            "Como disse?",
+            "Um momento, por favor."
+          ],
+          "likely_responses": [
+            "Bom dia, diga!",
+            "Qual é o problema?",
+            "Quando gostaria que fosse?",
+            "Estaria disponível de manhã ou à tarde?",
+            "Sim, pode ser."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d51-1",
+            "base": "Antes trabalhava...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Antes trabalhava num restaurante no Funchal.",
+                "translation": "Before, I worked in a restaurant in Funchal.",
+                "register": "informal"
+              },
+              {
+                "text": "Antes trabalhava como professor em Machico.",
+                "translation": "Before, I worked as a teacher in Machico.",
+                "register": "neutral"
+              },
+              {
+                "text": "Antes trabalhava com o meu pai aqui perto.",
+                "translation": "Before, I worked with my father nearby.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d51-2",
+            "base": "Mudei-me...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Mudei-me para cá no ano passado.",
+                "translation": "I moved here last year.",
+                "register": "informal"
+              },
+              {
+                "text": "Mudei-me para um apartamento maior há uns meses.",
+                "translation": "I moved to a bigger apartment a few months ago.",
+                "register": "neutral"
+              },
+              {
+                "text": "Mudei-me para esta zona há pouco tempo.",
+                "translation": "I moved to this area recently.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d51-3",
+            "base": "Tenho adorado...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tenho adorado a ilha.",
+                "translation": "I've been loving the island.",
+                "register": "informal"
+              },
+              {
+                "text": "Tenho adorado a vida aqui.",
+                "translation": "I've been loving life here.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tenho adorado as pessoas e a comida.",
+                "translation": "I've been loving the people and the food.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Versatility of 'Pois'",
+            "body": "'Pois' and 'pois é' are extremely common interjections in European Portuguese, especially in Madeira. They can mean 'yes', 'indeed', 'that's right', 'of course', or simply acknowledge what the other person said, often showing agreement or understanding. It's a natural filler that helps conversations flow."
+          },
+          {
+            "title": "Tense for Hypotheticals: The Conditional",
+            "body": "The conditional tense ('estaria', 'gostaria') is frequently used in Portuguese for polite requests, hypothetical situations, or to express what 'would' happen. It's a key tense for sounding natural when making plans or discussing possibilities, as seen in the roleplay when asking about availability."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d51-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Antes trabalhava...\"",
+            "answer": "Antes trabalhava...",
+            "source_ref": "pp-d51-1"
+          },
+          {
+            "id": "rv-d51-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Mudei-me...\"",
+            "answer": "Mudei-me...",
+            "source_ref": "pp-d51-2"
+          },
+          {
+            "id": "rv-d51-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tenho adorado...\"",
+            "answer": "Tenho adorado...",
+            "source_ref": "pp-d51-3"
+          },
+          {
+            "id": "rv-d51-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: was (imperfect)",
+            "answer": "estava",
+            "source_ref": "estava"
+          },
+          {
+            "id": "rv-d51-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: was (preterite)",
+            "answer": "estive",
+            "source_ref": "estive"
+          },
+          {
+            "id": "rv-d51-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: would be (conditional)",
+            "answer": "estaria",
+            "source_ref": "estaria"
+          },
+          {
+            "id": "rv-d51-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d51-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d52-register-social-fluency",
+      "title": "Register & Social Fluency",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d52-1",
+            "title": "Meeting a neighbour",
+            "context": "You meet your neighbour, Maria, on the street in Funchal.",
+            "lines": [
+              {
+                "speaker": "You",
+                "voice_type": "younger",
+                "text": "Olá, Maria! Como estás?",
+                "translation": "Hi, Maria! How are you?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Olá! Estou bem, obrigada, e tu? Tudo em ordem?",
+                "translation": "Hi! I'm fine, thanks, and you? All good?"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "younger",
+                "text": "Pois, tá-se bem. A trabalhar um bocado, como sempre.",
+                "translation": "Yeah, it's okay. Working a bit, as always."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d52-2",
+            "title": "At the market stall",
+            "context": "You are at a fruit stall at the Mercado dos Lavradores, talking to the vendor.",
+            "lines": [
+              {
+                "speaker": "Vendor",
+                "voice_type": "service",
+                "text": "Bom dia! Em que posso ajudar o senhor/a senhora?",
+                "translation": "Good morning! How can I help you sir/madam?"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "teacher",
+                "text": "Bom dia. Queria umas bananas da Madeira, por favor.",
+                "translation": "Good morning. I'd like some Madeiran bananas, please."
+              },
+              {
+                "speaker": "Vendor",
+                "voice_type": "local",
+                "text": "Claro! Quantas é que deseja? São para si ou para mais alguém?",
+                "translation": "Of course! How many would you like? Are they for you or for someone else?"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "teacher",
+                "text": "São para mim e para os meus amigos. Umas seis, se faz favor.",
+                "translation": "They're for me and my friends. About six, please."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local café in Câmara de Lobos. You need to order a coffee from the barista, and then you see an old friend, Miguel, at another table.",
+          "difficulty": 2,
+          "entry_node": "rp-d52-cafe-start",
+          "nodes": [
+            {
+              "id": "rp-d52-cafe-start",
+              "npc_text": "Bom dia! Em que posso ajudar?",
+              "npc_translation": "Good morning! How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia, queria uma bica, por favor.",
+                  "translation": "Good morning, I'd like an espresso, please.",
+                  "feedback": "Correct! You used the polite 'queria' and 'bica' (espresso in Portugal).",
+                  "next": "rp-d52-cafe-order-success"
+                },
+                {
+                  "text": "Olá! Dá-me um café!",
+                  "translation": "Hi! Give me a coffee!",
+                  "feedback": "This is too informal and direct for a service interaction. Try to be more polite.",
+                  "next": "rp-d52-cafe-start"
+                }
+              ]
+            },
+            {
+              "id": "rp-d52-cafe-order-success",
+              "npc_text": "Pois, aqui está. Mais alguma coisa? Ah, o Miguel está ali, se o quiser cumprimentar.",
+              "npc_translation": "Here you go. Anything else? Oh, Miguel is over there, if you want to greet him.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado! Olá Miguel! Como estás?",
+                  "translation": "Thanks! Hi Miguel! How are you?",
+                  "feedback": "Excellent! You switched to the informal 'tu' for your friend.",
+                  "next": "rp-d52-friend-greet-success"
+                },
+                {
+                  "text": "Obrigado! Olá Miguel! Como está?",
+                  "translation": "Thanks! Hi Miguel! How are you?",
+                  "feedback": "Miguel is your old friend. 'Como está?' is too formal here. Try using 'tu'.",
+                  "next": "rp-d52-cafe-order-success"
+                }
+              ]
+            },
+            {
+              "id": "rp-d52-friend-greet-success",
+              "npc_text": "Olá! Tudo bem, e tu? Há quanto tempo!",
+              "npc_translation": "Hi! All good, and you? Long time no see!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pois é! Tudo ótimo, obrigado!",
+                  "translation": "That's right! All great, thanks!",
+                  "feedback": "Perfect! You've navigated both registers successfully."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order a coffee and greet a friend",
+          "prep": [
+            "Practice ordering a coffee politely using 'queria' and 'por favor'.",
+            "Rehearse informal greetings like 'Olá, como estás?' for friends.",
+            "Think about when to use 'o senhor/a senhora' (for service people) and 'tu' (for friends)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Em que posso ajudar?",
+            "Aqui está.",
+            "Olá! Tudo bem?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d52-1",
+            "base": "Como estás? (tu)",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Olá, tudo bem?",
+                "translation": "Hi, all good?",
+                "register": "informal"
+              },
+              {
+                "text": "Então, como é que é?",
+                "translation": "So, how's it going?",
+                "register": "informal"
+              },
+              {
+                "text": "Que tal, como estás?",
+                "translation": "What's up, how are you?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d52-2",
+            "base": "Como está? (você)",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Bom dia, como está?",
+                "translation": "Good morning, how are you?",
+                "register": "formal"
+              },
+              {
+                "text": "Boa tarde, está tudo bem?",
+                "translation": "Good afternoon, is everything okay?",
+                "register": "formal"
+              },
+              {
+                "text": "Olá, como vai o senhor/a senhora?",
+                "translation": "Hello, how are you sir/madam?",
+                "register": "formal",
+                "note": "Use 'o senhor' for men, 'a senhora' for women."
+              }
+            ]
+          },
+          {
+            "id": "pp-d52-3",
+            "base": "Vocês querem...?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Precisam de ajuda?",
+                "translation": "Do you all need help?",
+                "register": "neutral"
+              },
+              {
+                "text": "O que é que desejam?",
+                "translation": "What do you all wish for?",
+                "register": "formal"
+              },
+              {
+                "text": "Vocês querem um café?",
+                "translation": "Do you all want a coffee?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Nuance of 'Você' in Portugal",
+            "body": "While 'você' technically means 'you (formal)', in Portugal, it's often avoided in direct address. Using 'o senhor' (for men) or 'a senhora' (for women) is the standard polite way to address strangers, elders, or people in service roles. 'Você' can sometimes sound distancing or even slightly impolite, especially if used with someone you don't know well. Stick to 'o senhor/a senhora' for politeness, or simply use the third person verb conjugation without the pronoun (e.g., 'Como está?' instead of 'Como está você?')."
+          },
+          {
+            "title": "Plural Address: 'Vocês' vs. 'Os senhores/As senhoras'",
+            "body": "When addressing a group, 'vocês' is the common plural 'you'. It's generally neutral and can be used in most situations. However, in very formal contexts, or when addressing a group of respected individuals, 'os senhores' (for men or mixed groups) or 'as senhoras' (for women) might be used for heightened politeness, though this is less common in everyday interactions compared to the singular forms."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d52-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Como estás? (tu)\"",
+            "answer": "Como estás? (tu)",
+            "source_ref": "pp-d52-1"
+          },
+          {
+            "id": "rv-d52-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Como está? (você)\"",
+            "answer": "Como está? (você)",
+            "source_ref": "pp-d52-2"
+          },
+          {
+            "id": "rv-d52-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Vocês querem...?\"",
+            "answer": "Vocês querem...?",
+            "source_ref": "pp-d52-3"
+          },
+          {
+            "id": "rv-d52-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: you (informal)",
+            "answer": "tu",
+            "source_ref": "tu"
+          },
+          {
+            "id": "rv-d52-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: you (formal)",
+            "answer": "você",
+            "source_ref": "você"
+          },
+          {
+            "id": "rv-d52-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: you all (plural)",
+            "answer": "vocês",
+            "source_ref": "vocês"
+          },
+          {
+            "id": "rv-d52-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d52-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d53-professional-formal",
+      "title": "Professional & Formal",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 7,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d53-1",
+            "title": "Calling a Plumber",
+            "context": "A customer calls a plumbing service because of a leak in their kitchen.",
+            "lines": [
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Bom dia, é da canalização?",
+                "translation": "Good morning, is this the plumbing service?"
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Bom dia, sim, diga! Em que posso ajudar?",
+                "translation": "Good morning, yes, speak! How can I help?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Preciso de um canalizador, tenho uma fuga de água na cozinha.",
+                "translation": "I need a plumber, I have a water leak in the kitchen."
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Pois, percebo. Onde é a sua morada?",
+                "translation": "Right, I understand. What's your address?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "É na Rua da Calçada, número vinte e cinco.",
+                "translation": "It's on Rua da Calçada, number twenty-five."
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Certo. Um momento, por favor. Posso enviar alguém hoje à tarde, entre as duas e as quatro?",
+                "translation": "Okay. One moment, please. Can I send someone this afternoon, between two and four?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Sim, pode ser. Muito obrigada.",
+                "translation": "Yes, that can be. Thank you very much."
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "De nada. Até já!",
+                "translation": "You're welcome. See you soon!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d53-2",
+            "title": "Discussing a Career Change",
+            "context": "Two friends/neighbours in Madeira discuss a recent life change over coffee.",
+            "lines": [
+              {
+                "speaker": "Sofia",
+                "voice_type": "local",
+                "text": "Então, Mário, como é que tem corrido o novo trabalho?",
+                "translation": "So, Mário, how's the new job been going?"
+              },
+              {
+                "speaker": "Mário",
+                "voice_type": "local",
+                "text": "Ah, Sofia, muito melhor! Decidi mudar de vida, sabes? O trabalho anterior dava-me esgotamento.",
+                "translation": "Ah, Sofia, much better! I decided to change my life, you know? The previous job gave me burnout."
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "local",
+                "text": "Pois, imagino. E agora, o que é que fazes?",
+                "translation": "Right, I can imagine. And now, what do you do?"
+              },
+              {
+                "speaker": "Mário",
+                "voice_type": "local",
+                "text": "Agora trabalho por conta própria, faço consultoria para pequenas empresas. É o meu objectivo, ter mais liberdade.",
+                "translation": "Now I work for myself, I do consultancy for small businesses. It's my goal to have more freedom."
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "local",
+                "text": "Que bom! Fico contente por ti.",
+                "translation": "How good! I'm happy for you."
+              },
+              {
+                "speaker": "Mário",
+                "voice_type": "local",
+                "text": "Obrigado! É um bocado assustador, mas estou a gostar imenso.",
+                "translation": "Thanks! It's a bit scary, but I'm enjoying it immensely."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need to call a cleaning service for your apartment in Funchal.",
+          "difficulty": 2,
+          "entry_node": "rp-d53-start",
+          "nodes": [
+            {
+              "id": "rp-d53-start",
+              "npc_text": "Limpezas Rápidas, bom dia! Diga, em que posso ajudar?",
+              "npc_translation": "Quick Cleaners, good morning! Speak, how can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia, preciso de uma limpeza para o meu apartamento.",
+                  "translation": "Good morning, I need a cleaning for my apartment.",
+                  "feedback": "Good start, you stated your need clearly.",
+                  "next": "rp-d53-details"
+                },
+                {
+                  "text": "Olá, queria saber os vossos preços.",
+                  "translation": "Hello, I wanted to know your prices.",
+                  "feedback": "You can ask about prices, but they might need more information first.",
+                  "next": "rp-d53-prices"
+                },
+                {
+                  "text": "Desculpe, enganei-me no número.",
+                  "translation": "Sorry, I dialed the wrong number.",
+                  "feedback": "That's how you'd end a call if you made a mistake!"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-details",
+              "npc_text": "Certo. É uma limpeza regular ou uma limpeza mais profunda? E onde é a morada?",
+              "npc_translation": "Right. Is it a regular cleaning or a deeper cleaning? And what's the address?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É uma limpeza regular, na Rua da Levada, número dez.",
+                  "translation": "It's a regular cleaning, on Levada Street, number ten.",
+                  "feedback": "Excellent, you provided all the requested information.",
+                  "next": "rp-d53-schedule"
+                },
+                {
+                  "text": "É uma limpeza profunda, no Funchal.",
+                  "translation": "It's a deep cleaning, in Funchal.",
+                  "feedback": "You specified the type of cleaning and location. Good.",
+                  "next": "rp-d53-schedule"
+                },
+                {
+                  "text": "Não percebi. Pode repetir?",
+                  "translation": "I didn't understand. Can you repeat?",
+                  "feedback": "It's always good to ask for clarification if you don't understand.",
+                  "next": "rp-d53-details"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-prices",
+              "npc_text": "Os preços dependem do tipo de limpeza e do tamanho do apartamento. Quantos quartos tem?",
+              "npc_translation": "Prices depend on the type of cleaning and the size of the apartment. How many bedrooms does it have?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É um T2, dois quartos.",
+                  "translation": "It's a two-bedroom apartment, two bedrooms.",
+                  "feedback": "Good, 'T2' is a common way to refer to a two-bedroom apartment.",
+                  "next": "rp-d53-quote"
+                },
+                {
+                  "text": "Não sei. Pode dar-me uma estimativa?",
+                  "translation": "I don't know. Can you give me an estimate?",
+                  "feedback": "Asking for an estimate is a good way to get an idea of the cost.",
+                  "next": "rp-d53-quote"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-quote",
+              "npc_text": "Para um T2, uma limpeza regular custa cerca de quarenta euros. Uma limpeza profunda é mais cara.",
+              "npc_translation": "For a two-bedroom apartment, a regular cleaning costs about forty euros. A deep cleaning is more expensive.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Certo, quero marcar uma limpeza regular.",
+                  "translation": "Okay, I want to book a regular cleaning.",
+                  "feedback": "You've decided on the service and are ready to book.",
+                  "next": "rp-d53-schedule"
+                },
+                {
+                  "text": "Obrigado/a, vou pensar e ligo mais tarde.",
+                  "translation": "Thank you, I'll think about it and call later.",
+                  "feedback": "It's fine to take time to decide. Remember to say 'obrigado' if you're male, 'obrigada' if female."
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-schedule",
+              "npc_text": "Muito bem. Temos disponibilidade para a próxima terça-feira de manhã, às nove. Serve-lhe?",
+              "npc_translation": "Very well. We have availability for next Tuesday morning, at nine. Does that suit you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, terça-feira às nove está bem.",
+                  "translation": "Yes, Tuesday at nine is fine.",
+                  "feedback": "You confirmed the appointment time.",
+                  "next": "rp-d53-confirm"
+                },
+                {
+                  "text": "Não, prefiro na quarta-feira.",
+                  "translation": "No, I prefer Wednesday.",
+                  "feedback": "It's good to state your preference if the first offer doesn't work.",
+                  "next": "rp-d53-alt_schedule"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-alt_schedule",
+              "npc_text": "Quarta-feira, sim. Às dez da manhã?",
+              "npc_translation": "Wednesday, yes. At ten in the morning?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, perfeito.",
+                  "translation": "Yes, perfect.",
+                  "feedback": "Perfect! You've found a suitable time.",
+                  "next": "rp-d53-confirm"
+                },
+                {
+                  "text": "Não, prefiro à tarde.",
+                  "translation": "No, I prefer in the afternoon.",
+                  "feedback": "Keep negotiating until you find a time that works for you.",
+                  "next": "rp-d53-final_offer"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-final_offer",
+              "npc_text": "À tarde na quarta-feira, temos às duas. É a nossa última vaga para essa semana.",
+              "npc_translation": "Wednesday afternoon, we have at two. It's our last slot for that week.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Está ótimo, às duas na quarta.",
+                  "translation": "That's great, at two on Wednesday.",
+                  "feedback": "You've accepted the final offer. Good job!",
+                  "next": "rp-d53-confirm"
+                },
+                {
+                  "text": "Não, obrigado/a. Vou procurar noutro sítio.",
+                  "translation": "No, thank you. I'll look elsewhere.",
+                  "feedback": "It's okay to decline if the options don't suit you."
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-confirm",
+              "npc_text": "Confirmado então! A limpeza será na sua morada. Alguma questão?",
+              "npc_translation": "Confirmed then! The cleaning will be at your address. Any questions?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, está tudo bem. Obrigado/a.",
+                  "translation": "No, everything is fine. Thank you.",
+                  "feedback": "You've successfully booked the service!"
+                },
+                {
+                  "text": "Quanto tempo demora a limpeza?",
+                  "translation": "How long does the cleaning take?",
+                  "feedback": "It's good to ask about the duration.",
+                  "next": "rp-d53-duration"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-duration",
+              "npc_text": "Para uma limpeza regular de um T2, cerca de duas a três horas.",
+              "npc_translation": "For a regular cleaning of a two-bedroom apartment, about two to three hours.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Certo. Muito obrigado/a!",
+                  "translation": "Okay. Thank you very much!",
+                  "feedback": "You have all the information you need. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Scheduling a Cleaning Service",
+          "prep": [
+            "Practice asking for a cleaning service for your apartment.",
+            "Be ready to provide your address and preferred time/day.",
+            "Ask about the cost of the service."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Qual é a sua morada?",
+            "Quando é que gostaria da limpeza?",
+            "É uma limpeza regular ou profunda?",
+            "Quantos quartos tem o apartamento?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d53-1",
+            "base": "Venho por este meio...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Venho por este meio informar da minha disponibilidade.",
+                "translation": "I hereby inform you of my availability.",
+                "register": "formal"
+              },
+              {
+                "text": "Venho por este meio solicitar um orçamento.",
+                "translation": "I hereby request a quote.",
+                "register": "formal"
+              },
+              {
+                "text": "Venho por este meio agradecer a sua atenção.",
+                "translation": "I hereby thank you for your attention.",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d53-2",
+            "base": "Trabalho por conta própria.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Sou trabalhador independente.",
+                "translation": "I am a self-employed worker.",
+                "register": "neutral"
+              },
+              {
+                "text": "Sou freelancer.",
+                "translation": "I am a freelancer.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d53-3",
+            "base": "Decidi mudar de vida.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Decidi mudar de vida recentemente.",
+                "translation": "I recently decided to change my life.",
+                "register": "neutral"
+              },
+              {
+                "text": "Decidi mudar de vida por causa do esgotamento.",
+                "translation": "I decided to change my life because of burnout.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Answering the Phone in Portugal",
+            "body": "When answering the phone in Portugal, especially for businesses, you'll often hear 'Diga!' (Speak!) or 'Estou!' (I am!). As a caller, you typically start with 'Bom dia'/'Boa tarde' and state your purpose directly, often using a polite address like 'o senhor' or 'a senhora' if you don't know the person."
+          },
+          {
+            "title": "Politeness with Service Workers",
+            "body": "When speaking to service workers (e.g., cleaners, plumbers, shop assistants), it is common and polite to use 'o senhor' / 'a senhora' even if they don't use it with you. This shows respect and maintains a formal-polite register. Avoid 'você' as a default polite address in these contexts, as it can sometimes sound distancing or overly direct in Portugal."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d53-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Venho por este meio...\"",
+            "answer": "Venho por este meio...",
+            "source_ref": "pp-d53-1"
+          },
+          {
+            "id": "rv-d53-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Trabalho por conta própria.\"",
+            "answer": "Trabalho por conta própria.",
+            "source_ref": "pp-d53-2"
+          },
+          {
+            "id": "rv-d53-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Decidi mudar de vida.\"",
+            "answer": "Decidi mudar de vida.",
+            "source_ref": "pp-d53-3"
+          },
+          {
+            "id": "rv-d53-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: burnout",
+            "answer": "esgotamento",
+            "source_ref": "esgotamento"
+          },
+          {
+            "id": "rv-d53-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: goal",
+            "answer": "objectivo",
+            "source_ref": "objectivo"
+          },
+          {
+            "id": "rv-d53-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: consultancy",
+            "answer": "consultoria",
+            "source_ref": "consultoria"
+          },
+          {
+            "id": "rv-d53-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d53-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d54-madeira-in-depth",
+      "title": "Madeira in Depth",
+      "level": 3,
+      "cefr": "B1",
+      "added": {
+        "dialogues": 1,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d54-1",
+            "title": "Memories of Madeira",
+            "context": "Two neighbours, Maria and João, are chatting about their favourite spots on the island.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Então, João, estiveste no Pico outro dia, não foi?",
+                "translation": "So, João, you were at Pico the other day, weren't you?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Pois, Maria! E a vista do Pico é mesmo de cortar a respiração, sabes?",
+                "translation": "Indeed, Maria! And the view from Pico is really breathtaking, you know?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Ah, pois é! Fiquei sem palavras da última vez que lá fui.",
+                "translation": "Oh, that's right! I was speechless the last time I went there."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "É inesquecível, não é? E a Laurissilva... é UNESCO, uma maravilha.",
+                "translation": "It's unforgettable, isn't it? And the Laurisilva... it's UNESCO, a marvel."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Um orgulho para o nosso arquipélago, sem dúvida.",
+                "translation": "A pride for our archipelago, no doubt."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local café in Funchal, and the owner, a friendly Madeiran, asks you about your favourite places on the island.",
+          "difficulty": 3,
+          "entry_node": "rp-d54-start",
+          "nodes": [
+            {
+              "id": "rp-d54-start",
+              "npc_text": "Então, e tu? O que é que mais gostas aqui na Madeira? Já tens algum sítio preferido?",
+              "npc_translation": "So, what about you? What do you like most here in Madeira? Do you already have a favourite place?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Gosto muito da floresta laurissilva.",
+                  "translation": "I really like the Laurisilva forest.",
+                  "feedback": "Good start! You expressed a preference clearly.",
+                  "next": "rp-d54-laurissilva"
+                },
+                {
+                  "text": "A vista do Pico é de cortar a respiração.",
+                  "translation": "The view from Pico is breathtaking.",
+                  "feedback": "Excellent use of the phrase 'de cortar a respiração'!",
+                  "next": "rp-d54-pico"
+                },
+                {
+                  "text": "Sinto muita saudade quando não estou cá.",
+                  "translation": "I feel a lot of longing when I'm not here.",
+                  "feedback": "Nice, you used 'saudade' to express your feeling for the island.",
+                  "next": "rp-d54-saudade"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-laurissilva",
+              "npc_text": "Ah, a Laurissilva! É mesmo especial, não é? É Património Mundial, sabes. O que é que te atrai mais nela?",
+              "npc_translation": "Ah, the Laurisilva! It's really special, isn't it? It's a World Heritage Site, you know. What attracts you most to it?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "É uma floresta única no mundo.",
+                  "translation": "It's a unique forest in the world.",
+                  "feedback": "You reinforced its uniqueness effectively.",
+                  "next": "rp-d54-end-laurissilva"
+                },
+                {
+                  "text": "Gosto da paz e do verde.",
+                  "translation": "I like the peace and the green.",
+                  "feedback": "Simple and clear, expressing your personal connection.",
+                  "next": "rp-d54-end-laurissilva"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-pico",
+              "npc_text": "Pois é, o Pico! É inesquecível. Fiquei sem palavras da última vez que subi. Já foste lá muitas vezes?",
+              "npc_translation": "That's right, Pico! It's unforgettable. I was speechless the last time I went up. Have you been there many times?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ainda não, mas quero voltar.",
+                  "translation": "Not yet, but I want to go back.",
+                  "feedback": "A natural and honest response.",
+                  "next": "rp-d54-end-pico"
+                },
+                {
+                  "text": "Sim, e cada vez é melhor.",
+                  "translation": "Yes, and each time it's better.",
+                  "feedback": "You conveyed enthusiasm well.",
+                  "next": "rp-d54-end-pico"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-saudade",
+              "npc_text": "Ah, a saudade... Essa é uma palavra bem portuguesa! É bom saber que a Madeira te toca assim. O que é que te faz sentir mais saudade?",
+              "npc_translation": "Ah, 'saudade'... That's a very Portuguese word! It's good to know Madeira touches you like that. What makes you feel the most 'saudade'?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Das pessoas e da comida.",
+                  "translation": "Of the people and the food.",
+                  "feedback": "You identified specific aspects, making your answer more personal.",
+                  "next": "rp-d54-end-saudade"
+                },
+                {
+                  "text": "Da beleza do arquipélago.",
+                  "translation": "Of the beauty of the archipelago.",
+                  "feedback": "Good use of 'arquipélago' and a general appreciation.",
+                  "next": "rp-d54-end-saudade"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-end-laurissilva",
+              "npc_text": "É verdade, a Laurissilva é mesmo um sítio para relaxar e apreciar a natureza. Fico contente que gostes tanto!",
+              "npc_translation": "It's true, the Laurisilva is really a place to relax and appreciate nature. I'm glad you like it so much!",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d54-end-pico",
+              "npc_text": "Sim, é um lugar que nos faz sentir pequenos perante tanta grandeza. Voltar é sempre bom. Obrigado!",
+              "npc_translation": "Yes, it's a place that makes us feel small before such grandeur. Going back is always good. Thank you!",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d54-end-saudade",
+              "npc_text": "Pois é, a Madeira tem esse efeito nas pessoas. É um prazer ter-te por cá. Volta sempre!",
+              "npc_translation": "That's right, Madeira has that effect on people. It's a pleasure to have you here. Come back always!",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Share Your Madeiran Love",
+          "prep": [
+            "Think about your absolute favourite spot or experience in Madeira.",
+            "Practice describing it using phrases like 'é de cortar a respiração' or 'é inesquecível'.",
+            "Prepare to explain *why* it's your favourite, perhaps mentioning its unique beauty or feeling."
+          ],
+          "fallback_phrases": [
+            "É difícil escolher só um!",
+            "Gosto de tudo aqui.",
+            "Ainda estou a descobrir."
+          ],
+          "likely_responses": [
+            "Ah, sim, esse sítio é lindo!",
+            "Concordo plenamente.",
+            "Nunca lá fui, mas quero ir."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d54-1",
+            "base": "A floresta laurissilva é UNESCO.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "A floresta laurissilva é Património Mundial.",
+                "translation": "The Laurisilva forest is a World Heritage Site.",
+                "register": "neutral"
+              },
+              {
+                "text": "A Laurissilva é única no mundo, sabes?",
+                "translation": "The Laurisilva is unique in the world, you know?",
+                "register": "informal"
+              },
+              {
+                "text": "É um tesouro, a nossa floresta laurissilva.",
+                "translation": "It's a treasure, our Laurisilva forest.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d54-2",
+            "base": "O Pico é de cortar a respiração.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "A vista do Pico é de cortar a respiração, sim!",
+                "translation": "The view from Pico is breathtaking, yes!",
+                "register": "informal"
+              },
+              {
+                "text": "A paisagem lá em cima é de cortar a respiração.",
+                "translation": "The landscape up there is breathtaking.",
+                "register": "neutral"
+              },
+              {
+                "text": "Uhm, a beleza do Pico é de cortar a respiração!",
+                "translation": "Uhm, the beauty of Pico is breathtaking!",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d54-3",
+            "base": "Fiquei sem palavras.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Fiquei sem palavras com tanta beleza!",
+                "translation": "I was speechless with so much beauty!",
+                "register": "informal"
+              },
+              {
+                "text": "Pois é, fiquei sem palavras com o que vi.",
+                "translation": "That's right, I was speechless with what I saw.",
+                "register": "informal"
+              },
+              {
+                "text": "Com aquela paisagem, fiquei sem palavras.",
+                "translation": "With that landscape, I was speechless.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Expressing Madeiran Pride",
+            "body": "Locals in Madeira often have a strong sense of pride in their island's natural beauty and unique culture. When you express genuine admiration for places like the Laurisilva forest or Pico do Areeiro, it's often met with warmth and agreement. Using phrases like 'Património Mundial' or 'única no mundo' shows you appreciate the island's special status."
+          },
+          {
+            "title": "The Nuance of 'Pois' and 'Pois é'",
+            "body": "'Pois' and 'Pois é' are very common interjections in European Portuguese, especially in informal conversation. They don't always translate directly but often convey agreement, understanding, or a simple 'indeed'/'that's right'. In Madeira, they are frequently used to acknowledge what someone has said or to show you're following the conversation, adding to the natural flow of dialogue."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d54-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"A floresta laurissilva é UNESCO.\"",
+            "answer": "A floresta laurissilva é UNESCO.",
+            "source_ref": "pp-d54-1"
+          },
+          {
+            "id": "rv-d54-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"O Pico é de cortar a respiração.\"",
+            "answer": "O Pico é de cortar a respiração.",
+            "source_ref": "pp-d54-2"
+          },
+          {
+            "id": "rv-d54-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Fiquei sem palavras.\"",
+            "answer": "Fiquei sem palavras.",
+            "source_ref": "pp-d54-3"
+          },
+          {
+            "id": "rv-d54-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: unforgettable",
+            "answer": "inesquecível",
+            "source_ref": "inesquecível"
+          },
+          {
+            "id": "rv-d54-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: longing/nostalgia",
+            "answer": "saudade",
+            "source_ref": "saudade"
+          },
+          {
+            "id": "rv-d54-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: archipelago",
+            "answer": "arquipélago",
+            "source_ref": "arquipélago"
+          },
+          {
+            "id": "rv-d54-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d54-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d55-complex-structures",
+      "title": "Complex Structures",
+      "level": 3,
+      "cefr": "B1",
+      "added": {
+        "dialogues": 1,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d55-1",
+            "title": "Plans for a friend's visit",
+            "context": "Two neighbours, Maria and João, are chatting outside their homes in Madeira about a friend coming to visit.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Olá, João! Então, como é que vai? A sua amiga vem para a semana, certo?",
+                "translation": "Hello, João! So, how are you? Your friend is coming next week, right?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Olá, Maria! Pois é, vem sim. Estou a planear o que fazer enquanto ela estiver cá.",
+                "translation": "Hello, Maria! That's right, she is. I'm planning what to do while she's here."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Ah, que bom! E já sabe onde a vai levar? É uma ilha que tem tanto para ver!",
+                "translation": "Oh, that's good! And do you know where you'll take her? It's an island that has so much to see!"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Sim, quando ela vier, quero levá-la às levadas. Ela gosta muito de natureza, sabe?",
+                "translation": "Yes, when she comes, I want to take her to the levadas. She really likes nature, you know?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Pois, é uma excelente ideia! Tenho a certeza que ela vai adorar, onde quer que a leve.",
+                "translation": "That's a great idea! I'm sure she'll love it, wherever you take her."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "Your neighbour, Dona Laura, is asking about your plans for the weekend, especially since you mentioned you wanted to explore more of the island.",
+          "difficulty": 2,
+          "entry_node": "rp-d55-start",
+          "nodes": [
+            {
+              "id": "rp-d55-start",
+              "npc_text": "Bom dia! Então, como é que vai? Já tem planos para o fim de semana? Dizia que queria conhecer mais da ilha.",
+              "npc_translation": "Good morning! So, how are you? Do you have plans for the weekend? You said you wanted to get to know more of the island.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia, Dona Laura! Sim, estou a pensar que, enquanto o tempo estiver bom, vou à Ponta de São Lourenço.",
+                  "translation": "Good morning, Dona Laura! Yes, I'm thinking that, while the weather is good, I'll go to Ponta de São Lourenço.",
+                  "feedback": "Great use of 'enquanto' for a temporal clause!",
+                  "next": "rp-d55-ponta"
+                },
+                {
+                  "text": "Olá, Dona Laura! Ainda não tenho nada planeado, mas queria ir a um sítio que nunca visitei.",
+                  "translation": "Hello, Dona Laura! I don't have anything planned yet, but I wanted to go to a place I've never visited.",
+                  "feedback": "Good use of a relative clause. Now try to add a temporal element or a subjunctive.",
+                  "next": "rp-d55-nao-sei"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-ponta",
+              "npc_text": "Ah, a Ponta de São Lourenço! É lindo lá. Quando lá chegar, vai ver paisagens incríveis. E depois?",
+              "npc_translation": "Ah, Ponta de São Lourenço! It's beautiful there. When you get there, you'll see incredible landscapes. And then?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Depois, se o tempo permitir, quero ir a um restaurante onde sirvam bolo do caco fresco.",
+                  "translation": "Afterwards, if the weather permits, I want to go to a restaurant where they serve fresh bolo do caco.",
+                  "feedback": "Excellent! You used 'se' for a conditional, and 'onde' with a subjunctive verb for a specific kind of place.",
+                  "next": "rp-d55-bolo-caco"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-nao-sei",
+              "npc_text": "Pois é. Há tantos sítios bons. Se eu fosse a si, ia a um sítio que tivesse uma boa vista para o mar. O que acha?",
+              "npc_translation": "That's right. There are so many good places. If I were you, I'd go to a place that had a good sea view. What do you think?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, é uma boa ideia. Talvez vá à Ribeira Brava, onde o pôr do sol é maravilhoso.",
+                  "translation": "Yes, that's a good idea. Maybe I'll go to Ribeira Brava, where the sunset is wonderful.",
+                  "feedback": "Very good! You've used 'onde' to specify a location with a descriptive clause.",
+                  "next": "rp-d55-end-good"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-bolo-caco",
+              "npc_text": "Hummm, bolo do caco! Que delícia! Espero que encontre um bom. E depois, quando voltar, diga-me como correu a sua aventura.",
+              "npc_translation": "Mmm, bolo do caco! How delicious! I hope you find a good one. And then, when you come back, tell me how your adventure went.",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d55-end-good",
+              "npc_text": "Ah, sim! A Ribeira Brava é linda. Tenho a certeza que vai gostar. Aproveite bem!",
+              "npc_translation": "Oh, yes! Ribeira Brava is beautiful. I'm sure you'll like it. Enjoy!",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Describe a favourite Madeiran place",
+          "prep": [
+            "Think of your favourite place in Madeira.",
+            "Consider what makes it special and why you like it.",
+            "Prepare to use 'que' or 'onde' to describe it.",
+            "Think about when you first visited it, using 'desde que' or 'quando'."
+          ],
+          "fallback_phrases": [
+            "É um sítio que adoro, mas é difícil de descrever.",
+            "Não sei bem como explicar, mas é um lugar especial para mim."
+          ],
+          "likely_responses": [
+            "Ah, sim, esse sítio é lindo!",
+            "Nunca lá fui, mas parece ser muito bom.",
+            "Pois, é um dos meus preferidos também."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d55-1",
+            "base": "É uma ilha que me apaixonou.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "É uma cidade que me cativou.",
+                "translation": "It's a city that captivated me.",
+                "register": "neutral"
+              },
+              {
+                "text": "É um lugar que me surpreendeu imenso.",
+                "translation": "It's a place that surprised me a lot.",
+                "register": "informal"
+              },
+              {
+                "text": "Foi uma paisagem que me encantou.",
+                "translation": "It was a landscape that enchanted me.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d55-2",
+            "base": "Desde que vim...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Desde que cheguei, a vida é diferente.",
+                "translation": "Since I arrived, life is different.",
+                "register": "neutral"
+              },
+              {
+                "text": "Desde que me mudei para cá, tudo é melhor.",
+                "translation": "Since I moved here, everything is better.",
+                "register": "informal"
+              },
+              {
+                "text": "Desde que estou aqui, sinto-me em casa.",
+                "translation": "Since I've been here, I feel at home.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d55-3",
+            "base": "Quando vier, vai adorar.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Quando puder vir, vai gostar imenso.",
+                "translation": "When you can come, you'll like it a lot.",
+                "register": "neutral"
+              },
+              {
+                "text": "Quando visitar, vai ficar encantado com a ilha.",
+                "translation": "When you visit, you'll be enchanted by the island.",
+                "register": "neutral"
+              },
+              {
+                "text": "Quando tiver tempo, vai querer voltar, de certeza.",
+                "translation": "When you have time, you'll want to come back, for sure.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The versatility of 'Pois'",
+            "body": "In Portuguese, especially in Portugal and Madeira, 'pois' (and 'pois é') is a very common interjection. It can mean 'yes', 'indeed', 'of course', 'well', or simply serve as a filler to acknowledge what someone has said, indicating you've heard them and are processing. It's often used to agree or confirm, or to start a response, making conversations flow more naturally. It's less of a direct translation and more of a conversational lubricant."
+          },
+          {
+            "title": "Expressing Future Plans with 'Quando' + Subjunctive",
+            "body": "When discussing future events that are not yet certain or are conditional, Portuguese often uses 'quando' (when) followed by the future subjunctive. This is a key structure at this level. For example, 'Quando ele vier' (When he comes) implies the coming is a future event, rather than a certainty or a habitual action. This contrasts with 'Quando ele vem' (When he comes, as in, regularly or certainly)."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d55-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"É uma ilha que me apaixonou.\"",
+            "answer": "É uma ilha que me apaixonou.",
+            "source_ref": "pp-d55-1"
+          },
+          {
+            "id": "rv-d55-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Desde que vim...\"",
+            "answer": "Desde que vim...",
+            "source_ref": "pp-d55-2"
+          },
+          {
+            "id": "rv-d55-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Quando vier, vai adorar.\"",
+            "answer": "Quando vier, vai adorar.",
+            "source_ref": "pp-d55-3"
+          },
+          {
+            "id": "rv-d55-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: that/which",
+            "answer": "que",
+            "source_ref": "que"
+          },
+          {
+            "id": "rv-d55-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: where",
+            "answer": "onde",
+            "source_ref": "onde"
+          },
+          {
+            "id": "rv-d55-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: while",
+            "answer": "enquanto",
+            "source_ref": "enquanto"
+          },
+          {
+            "id": "rv-d55-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d55-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d56-the-grand-stress-test",
+      "title": "The Grand Stress Test",
+      "level": 3,
+      "cefr": "B1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 0,
+        "extra_cultural_notes": 2,
+        "review_items": 2,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d56-1",
+            "title": "Weekend Plans",
+            "context": "Two neighbours, Maria and João, chat on the street about their weekend plans.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Olá, João! Então, como é que tá tudo? Muito trabalho?",
+                "translation": "Hello, João! So, how is everything? A lot of work?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Olá, Maria! Pois, tá um bocado. Mas este fim de semana vou p'ra serra, p'ra relaxar.",
+                "translation": "Hello, Maria! Well, it's a bit much. But this weekend I'm going to the mountains, to relax."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Ah, que bom! P'ra onde é que vais? Alguma levada?",
+                "translation": "Oh, that's good! Where are you going? To a levada?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Não sei bem, talvez a do Caldeirão Verde. E a senhora, tem planos?",
+                "translation": "I don't really know, maybe Caldeirão Verde. And you (polite), do you have plans?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Eu? Não, vou ficar por casa. Talvez vá ao mercado no sábado, comprar umas semilhas.",
+                "translation": "Me? No, I'll stay home. Maybe I'll go to the market on Saturday, to buy some potatoes."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Pois é, o mercado é sempre bom. Então, até breve!",
+                "translation": "That's right, the market is always good. So, see you soon!"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Até, João! Cuidado na serra!",
+                "translation": "Bye, João! Be careful in the mountains!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d56-2",
+            "title": "A Quick Coffee",
+            "context": "A customer orders a coffee and a snack at a busy café in Funchal.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Diga, está muito barulho aqui, não é?",
+                "translation": "Tell me, it's very noisy here, isn't it?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Pois é, senhor. Hoje tá cheio. Quer um café ou uma bica?",
+                "translation": "That's right, sir. Today it's full. Do you want a coffee or an espresso?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Uma bica, por favor. E um bolo do caco com manteiga.",
+                "translation": "An espresso, please. And a bolo do caco with butter."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "P'ra já! Quer ler o jornal?",
+                "translation": "Coming right up! Do you want to read the newspaper?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Não, obrigado. Só a bica.",
+                "translation": "No, thank you. Just the espresso."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Ok, já vem.",
+                "translation": "Okay, it's coming."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "Your neighbour, Dona Fátima, stops you in the street to chat about your recent activities and plans.",
+          "difficulty": 3,
+          "entry_node": "rp-d56-1",
+          "nodes": [
+            {
+              "id": "rp-d56-1",
+              "npc_text": "Olá! Então, como é que tem corrido? Muitas novidades por aí?",
+              "npc_translation": "Hello! So, how has it been going? Many news around?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Dona Fátima! Tudo bem, obrigada. Tenho estado um bocado ocupado/a.",
+                  "translation": "Hello, Dona Fátima! All good, thank you. I've been a bit busy.",
+                  "feedback": "Great start, acknowledging her and giving a common reason for being busy.",
+                  "next": "rp-d56-2"
+                },
+                {
+                  "text": "Olá! Pois, tem sido bom. E a senhora, tudo bem?",
+                  "translation": "Hello! Well, it's been good. And you (polite), all good?",
+                  "feedback": "Good, you returned the question politely. 'Pois' is a natural interjection.",
+                  "next": "rp-d56-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d56-2",
+              "npc_text": "Ah, pois é. E o que é que tem feito de interessante? Algum passeio?",
+              "npc_translation": "Ah, that's right. And what interesting things have you been doing? Any walks?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Fui à levada das 25 Fontes no fim de semana, foi lindo!",
+                  "translation": "I went to the 25 Fontes levada on the weekend, it was beautiful!",
+                  "feedback": "Excellent, you shared a specific, local experience. 'Foi lindo!' adds a nice touch.",
+                  "next": "rp-d56-4"
+                },
+                {
+                  "text": "Tenho estado a trabalhar imenso, mas no sábado vou ao mercado comprar fruta.",
+                  "translation": "I've been working a lot, but on Saturday I'm going to the market to buy fruit.",
+                  "feedback": "Good, you balanced work with a concrete, common plan.",
+                  "next": "rp-d56-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d56-3",
+              "npc_text": "Comigo, tudo na mesma, graças a Deus. Mas o tempo tá a melhorar, não é? Ótimo p'ra dar um passeio.",
+              "npc_translation": "With me, same as always, thank God. But the weather is improving, isn't it? Great for a walk.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, concordo! Gosto muito de ir à beira-mar, é relaxante.",
+                  "translation": "Yes, I agree! I really like to go to the seafront, it's relaxing.",
+                  "feedback": "Perfect, you agreed and shared a pleasant, common activity.",
+                  "next": "rp-d56-4"
+                },
+                {
+                  "text": "Pois é. Estou a planear ir à serra este fim de semana, se o tempo ajudar.",
+                  "translation": "That's right. I'm planning to go to the mountains this weekend, if the weather helps.",
+                  "feedback": "Good, you acknowledged her point and shared a future plan, adding a condition.",
+                  "next": "rp-d56-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d56-4",
+              "npc_text": "Ah, que bom! É tão importante aproveitar a nossa ilha. Fico contente que esteja a gostar!",
+              "npc_translation": "Oh, that's good! It's so important to enjoy our island. I'm happy you're enjoying it!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d56-5",
+              "npc_text": "Pois é, a vida é assim. Mas o mercado é sempre bom, não é? Encontra-se de tudo.",
+              "npc_translation": "That's right, life is like that. But the market is always good, isn't it? You find everything there.",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Chatting with a Neighbour",
+          "prep": [
+            "Think of 2-3 things you've done recently (e.g., 'Fui à levada...', 'Estive a trabalhar imenso...').",
+            "Prepare 2-3 plans you have for the near future (e.g., 'Vou ao mercado...', 'Estou a planear ir à serra...').",
+            "Practice asking 'E a senhora?' or 'E consigo?' to return the question politely."
+          ],
+          "fallback_phrases": [
+            "Não sei bem o que dizer.",
+            "Pode repetir, por favor?",
+            "Desculpe, não percebi."
+          ],
+          "likely_responses": [
+            "Tudo bem, obrigado/a.",
+            "Tenho estado ocupado/a.",
+            "Sim, o tempo está ótimo.",
+            "Vou ficar por casa.",
+            "Estou a planear ir a..."
+          ]
+        },
+        "phrase_patterns_enriched": [],
+        "cultural_notes": [
+          {
+            "title": "Directness in Madeiran Conversation",
+            "body": "In Madeira, conversations among neighbours can be quite direct and to the point. While politeness is valued, there's often less 'small talk' before getting to the substance. Asking about someone's day, work, or plans is a common and natural way to engage."
+          },
+          {
+            "title": "Common Conversation Starters",
+            "body": "Topics like the weather ('o tempo'), family ('a família'), recent activities ('o que tem feito'), or upcoming plans ('planos para o fim de semana') are very common and safe conversation starters with neighbours or acquaintances. Locals also appreciate when you mention local landmarks or activities like 'levadas' or 'o mercado'."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d56-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Full Months 1 & 2 Review\"",
+            "answer": "Full Months 1 & 2 Review",
+            "source_ref": "pp-d56-1"
+          },
+          {
+            "id": "rv-d56-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d56-1"
+          }
+        ],
+        "media": []
+      }
+    }
+  ]
+}

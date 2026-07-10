@@ -1,0 +1,2461 @@
+{
+  "batch": 5,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T08:35:16.167Z",
+  "count": 8,
+  "situations": [
+    {
+      "id": "sit-d33-opinions-agreeing-disagreeing",
+      "title": "Opinions: Agreeing & Disagreeing",
+      "level": 1,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d33-1",
+            "title": "Planning a trip",
+            "context": "Two friends, Ana and Rui, are discussing plans for a weekend trip to the north of the island.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Acho que ir p'ra Santana no sábado é a melhor opção. O tempo lá é sempre bom.",
+                "translation": "I think going to Santana on Saturday is the best option. The weather there is always good."
+              },
+              {
+                "speaker": "Rui",
+                "voice_type": "younger",
+                "text": "Hum... Acho que não é bem assim. No sábado, pode estar nublado lá. Tens razão sobre a beleza, mas o tempo...",
+                "translation": "Hmm... I don't think that's quite right. On Saturday, it might be cloudy there. You're right about the beauty, but the weather..."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Pois, depende. Mas no domingo não é melhor. Concordo totalmente que o tempo é importante, mas o sábado é mais livre.",
+                "translation": "Well, it depends. But Sunday isn't better. I totally agree that the weather is important, but Saturday is freer."
+              },
+              {
+                "speaker": "Rui",
+                "voice_type": "younger",
+                "text": "Exatamente! O tempo lá em Santana é imprevisível. Que tal Porto Moniz?",
+                "translation": "Exactly! The weather there in Santana is unpredictable. How about Porto Moniz?"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d33-2",
+            "title": "Coffee and opinions",
+            "context": "Two neighbours, Dona Rosa and Senhor Manuel, are having a coffee at a local café.",
+            "lines": [
+              {
+                "speaker": "Dona Rosa",
+                "voice_type": "older",
+                "text": "Este café está mesmo bom hoje. Acho que é o melhor da zona.",
+                "translation": "This coffee is really good today. I think it's the best in the area."
+              },
+              {
+                "speaker": "Senhor Manuel",
+                "voice_type": "older",
+                "text": "Tens razão, Dona Rosa. Concordo totalmente. O rapaz novo faz o café muito bem.",
+                "translation": "You're right, Dona Rosa. I totally agree. The new boy makes the coffee very well."
+              },
+              {
+                "speaker": "Dona Rosa",
+                "voice_type": "older",
+                "text": "Sim, mas os preços estão a subir, não estão? Acho que não é bem assim, subir tanto.",
+                "translation": "Yes, but the prices are going up, aren't they? I don't think it's quite right, to go up so much."
+              },
+              {
+                "speaker": "Senhor Manuel",
+                "voice_type": "older",
+                "text": "Ah, pois, depende. A vida está mais cara para todos. Mas o café é bom, isso é o que importa.",
+                "translation": "Ah, well, it depends. Life is more expensive for everyone. But the coffee is good, that's what matters."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local market in Funchal, talking to a seller about the quality of some fruit.",
+          "difficulty": 2,
+          "entry_node": "rp-d33-start",
+          "nodes": [
+            {
+              "id": "rp-d33-start",
+              "npc_text": "Bom dia! Estas bananas são as melhores da ilha, garanto-lhe. Fresquinhas, acabadas de colher!",
+              "npc_translation": "Good morning! These bananas are the best on the island, I guarantee you. Fresh, just picked!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Concordo totalmente, parecem ótimas!",
+                  "translation": "I totally agree, they look great!",
+                  "feedback": "Great! You agreed enthusiastically and politely.",
+                  "next": "rp-d33-agree"
+                },
+                {
+                  "text": "Acho que não é bem assim, as outras também são boas.",
+                  "translation": "I don't think that's quite right, the others are good too.",
+                  "feedback": "You've politely disagreed. See what the seller says next.",
+                  "next": "rp-d33-disagree"
+                },
+                {
+                  "text": "Depende, não é?",
+                  "translation": "It depends, doesn't it?",
+                  "feedback": "A good way to express a nuanced view. Let's hear the seller's response.",
+                  "next": "rp-d33-nuance"
+                }
+              ]
+            },
+            {
+              "id": "rp-d33-agree",
+              "npc_text": "Pois é! Leve um cacho, não se vai arrepender! Quer mais alguma coisa?",
+              "npc_translation": "That's right! Take a bunch, you won't regret it! Do you want anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. Só as bananas, por favor.",
+                  "translation": "No, thank you. Just the bananas, please.",
+                  "feedback": "You've completed the interaction, buying the bananas."
+                }
+              ]
+            },
+            {
+              "id": "rp-d33-disagree",
+              "npc_text": "Ah, pois, mas estas são biológicas e mais doces! Não há comparação, digo eu.",
+              "npc_translation": "Ah, well, but these are organic and sweeter! There's no comparison, I say.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Tens razão, talvez. Vou levar umas.",
+                  "translation": "You're right, maybe. I'll take some.",
+                  "feedback": "You've acknowledged their point and decided to buy.",
+                  "next": "rp-d33-agree-soft"
+                },
+                {
+                  "text": "Acho que não é bem assim. Vou ver as outras bancas.",
+                  "translation": "I don't think that's quite right. I'll check the other stalls.",
+                  "feedback": "You've decided to look elsewhere. A polite way to end the conversation."
+                }
+              ]
+            },
+            {
+              "id": "rp-d33-nuance",
+              "npc_text": "Depende do quê? Da estação? Do sol? Estas são sempre boas!",
+              "npc_translation": "Depends on what? The season? The sun? These are always good!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Depende do gosto de cada um, não é? Mas parecem boas.",
+                  "translation": "It depends on everyone's taste, doesn't it? But they look good.",
+                  "feedback": "You explained your nuanced view and still showed interest.",
+                  "next": "rp-d33-agree-soft"
+                },
+                {
+                  "text": "Tens razão, talvez. Vou levar umas para experimentar.",
+                  "translation": "You're right, maybe. I'll take some to try.",
+                  "feedback": "You've decided to give them a try.",
+                  "next": "rp-d33-agree-soft"
+                }
+              ]
+            },
+            {
+              "id": "rp-d33-agree-soft",
+              "npc_text": "Muito bem! Não se vai arrepender! Quer mais alguma coisa?",
+              "npc_translation": "Very good! You won't regret it! Do you want anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. Só as bananas.",
+                  "translation": "No, thank you. Just the bananas.",
+                  "feedback": "You've successfully completed the purchase."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Discuss a local event",
+          "prep": [
+            "Think of a recent local event or news item in Madeira (e.g., a festival, a new shop, weather).",
+            "Practice saying 'Concordo totalmente' and 'Acho que não é bem assim' with different tones.",
+            "Prepare to ask a simple opinion question, like 'O que acha disto?' (What do you think of this?)"
+          ],
+          "fallback_phrases": [
+            "Não percebi.",
+            "Pode repetir, por favor?",
+            "Desculpe."
+          ],
+          "likely_responses": [
+            "Pois é, é mesmo assim.",
+            "Não sei, depende.",
+            "Não concordo muito, porquê?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d33-1",
+            "base": "Tens razão.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tem razão.",
+                "translation": "You are right. (formal)",
+                "register": "formal"
+              },
+              {
+                "text": "Tem toda a razão.",
+                "translation": "You are completely right. (formal)",
+                "register": "formal"
+              },
+              {
+                "text": "Tens toda a razão.",
+                "translation": "You are completely right. (informal)",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d33-2",
+            "base": "Concordo totalmente.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Concordo plenamente.",
+                "translation": "I fully agree.",
+                "register": "neutral"
+              },
+              {
+                "text": "Concordo.",
+                "translation": "I agree.",
+                "register": "neutral"
+              },
+              {
+                "text": "Exatamente!",
+                "translation": "Exactly!",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d33-3",
+            "base": "Acho que não é bem assim.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Não me parece bem assim.",
+                "translation": "It doesn't seem quite right to me.",
+                "register": "neutral"
+              },
+              {
+                "text": "Não concordo muito.",
+                "translation": "I don't agree much.",
+                "register": "neutral"
+              },
+              {
+                "text": "Depende.",
+                "translation": "It depends.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Disagreement",
+            "body": "In Portugal, direct disagreement can sometimes be seen as impolite, especially with strangers or in formal settings. Phrases like 'Acho que não é bem assim' (I don't think it's quite like that) or 'Não me parece' (It doesn't seem so to me) are softer ways to express a different opinion without being confrontational. 'Depende' (It depends) is also a very common and polite way to avoid taking a strong stance."
+          },
+          {
+            "title": "Using 'Pois' for Agreement and Nuance",
+            "body": "The word 'Pois' is extremely common in Portuguese and can mean 'indeed', 'well', or 'that's right'. It's often used to acknowledge what someone has said, often indicating agreement ('Pois é!') or to introduce a nuanced point after someone has spoken. It's a versatile interjection that adds a natural flow to conversations, especially in Madeira."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d33-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tens razão.\"",
+            "answer": "Tens razão.",
+            "source_ref": "pp-d33-1"
+          },
+          {
+            "id": "rv-d33-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Concordo totalmente.\"",
+            "answer": "Concordo totalmente.",
+            "source_ref": "pp-d33-2"
+          },
+          {
+            "id": "rv-d33-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Acho que não é bem assim.\"",
+            "answer": "Acho que não é bem assim.",
+            "source_ref": "pp-d33-3"
+          },
+          {
+            "id": "rv-d33-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: I agree",
+            "answer": "Concordo",
+            "source_ref": "Concordo"
+          },
+          {
+            "id": "rv-d33-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Exactly",
+            "answer": "Exatamente",
+            "source_ref": "Exatamente"
+          },
+          {
+            "id": "rv-d33-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: It depends",
+            "answer": "Depende",
+            "source_ref": "Depende"
+          },
+          {
+            "id": "rv-d33-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d33-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d34-collaborative-future",
+      "title": "Collaborative Future",
+      "level": 1,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d34-1",
+            "title": "Planning to meet at the market",
+            "context": "Two neighbours, Maria and João, are chatting outside their homes in Funchal.",
+            "lines": [
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Olá, Maria! Que tal ir ao mercado amanhã de manhã?",
+                "translation": "Hi, Maria! How about going to the market tomorrow morning?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Ah, João! Boa ideia! Preciso de fruta fresca.",
+                "translation": "Ah, João! Good idea! I need fresh fruit."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Pois. Vamos juntos às nove e meia?",
+                "translation": "Right. Shall we go together at half past nine?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Às nove e meia? Sim, combinado! Encontramo-nos à entrada.",
+                "translation": "At half past nine? Yes, agreed! We'll meet at the entrance."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d34-2",
+            "title": "Suggesting a coffee break",
+            "context": "Two colleagues, Ana and Pedro, are finishing work in a Funchal office.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "younger",
+                "text": "Uff, finalmente! Que tal ir beber uma bica antes de ir p'ra casa?",
+                "translation": "Ugh, finally! How about going for an espresso before going home?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "service",
+                "text": "Uma bica? Boa ideia, Ana! Estou com sede.",
+                "translation": "An espresso? Good idea, Ana! I'm thirsty."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "younger",
+                "text": "Vamos ao café ali na rua, então?",
+                "translation": "Shall we go to the café down the street, then?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "service",
+                "text": "Sim, combinado! Tanto faz o café, desde que tenha bica.",
+                "translation": "Yes, agreed! Any café is fine, as long as it has espresso."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You want to make plans with a friend to go to the beach or a levada walk. Your friend suggests a time, and you need to agree or suggest an alternative.",
+          "difficulty": 2,
+          "entry_node": "rp-d34-start",
+          "nodes": [
+            {
+              "id": "rp-d34-start",
+              "npc_text": "Olá! Que tal ir à praia no sábado?",
+              "npc_translation": "Hi! How about going to the beach on Saturday?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Boa ideia!",
+                  "translation": "Good idea!",
+                  "feedback": "You agreed with the suggestion. Now you need to discuss the time.",
+                  "next": "rp-d34-time-suggestion"
+                },
+                {
+                  "text": "Hum, à praia? Não sei. Que tal ir à levada?",
+                  "translation": "Hmm, to the beach? I don't know. How about going to the levada?",
+                  "feedback": "You suggested an alternative activity. Good negotiation!",
+                  "next": "rp-d34-levada-suggestion"
+                }
+              ]
+            },
+            {
+              "id": "rp-d34-time-suggestion",
+              "npc_text": "Ótimo! Às dez da manhã, combinado?",
+              "npc_translation": "Great! At ten in the morning, agreed?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, combinado!",
+                  "translation": "Yes, agreed!",
+                  "feedback": "Perfect! You've made plans."
+                },
+                {
+                  "text": "Às dez? Não posso. Que tal às onze?",
+                  "translation": "At ten? I can't. How about at eleven?",
+                  "feedback": "You couldn't make that time and suggested an alternative. Well done!",
+                  "next": "rp-d34-alternative-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-d34-levada-suggestion",
+              "npc_text": "À levada? Boa ideia também! Gosto de caminhar. A que horas?",
+              "npc_translation": "To the levada? Good idea too! I like walking. At what time?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Que tal às nove?",
+                  "translation": "How about at nine?",
+                  "feedback": "You suggested a time for the alternative activity.",
+                  "next": "rp-d34-agree-levada-time"
+                },
+                {
+                  "text": "Tanto faz, tu escolhes.",
+                  "translation": "It doesn't matter, you choose.",
+                  "feedback": "You left the choice to your friend, using a known phrase.",
+                  "next": "rp-d34-friend-chooses-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-d34-alternative-time",
+              "npc_text": "Às onze? Sim, pode ser. Combinado!",
+              "npc_translation": "At eleven? Yes, that works. Agreed!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Até sábado, então!",
+                  "translation": "See you Saturday, then!",
+                  "feedback": "You confirmed the plan. Excellent!"
+                }
+              ]
+            },
+            {
+              "id": "rp-d34-agree-levada-time",
+              "npc_text": "Às nove? Sim, combinado. Encontramo-nos no início da levada.",
+              "npc_translation": "At nine? Yes, agreed. We'll meet at the start of the levada.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Perfeito! Até lá.",
+                  "translation": "Perfect! See you then.",
+                  "feedback": "You've successfully made plans for the levada walk."
+                }
+              ]
+            },
+            {
+              "id": "rp-d34-friend-chooses-time",
+              "npc_text": "Então, às dez e meia? É bom p'ra mim.",
+              "npc_translation": "So, at half past ten? That's good for me.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, combinado!",
+                  "translation": "Yes, agreed!",
+                  "feedback": "You agreed to your friend's chosen time. Good job!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Plan a Coffee Break with a Colleague",
+          "prep": [
+            "Think about a good time to suggest for a coffee break.",
+            "Practice suggesting 'Que tal ir beber uma bica?'",
+            "Be ready to agree with 'Combinado!' or suggest an alternative time if needed."
+          ],
+          "fallback_phrases": [
+            "Não sei.",
+            "Talvez noutra altura.",
+            "Preciso de pensar um bocado."
+          ],
+          "likely_responses": [
+            "Boa ideia!",
+            "Não posso hoje.",
+            "Que horas?",
+            "Sim, combinado!"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d34-1",
+            "base": "Vamos juntos?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Vamos juntos, então?",
+                "translation": "Shall we go together, then?",
+                "register": "informal"
+              },
+              {
+                "text": "Vamos juntos, se calhar?",
+                "translation": "Maybe we go together?",
+                "register": "informal",
+                "note": "Adds a touch of hesitancy or suggestion."
+              },
+              {
+                "text": "Quer ir juntos?",
+                "translation": "Do you want to go together?",
+                "register": "neutral",
+                "note": "More polite, using 'quer' (3rd person singular)."
+              }
+            ]
+          },
+          {
+            "id": "pp-d34-2",
+            "base": "Que tal ir ao...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Que tal irmos ao café?",
+                "translation": "How about we go to the café?",
+                "register": "informal"
+              },
+              {
+                "text": "Que tal irmos ver a levada?",
+                "translation": "How about we go see the levada?",
+                "register": "informal"
+              },
+              {
+                "text": "E que tal ir ao mercado?",
+                "translation": "And how about going to the market?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d34-3",
+            "base": "Combinado!",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Combinado, então!",
+                "translation": "Agreed, then!",
+                "register": "informal"
+              },
+              {
+                "text": "Combinado, boa ideia!",
+                "translation": "Agreed, good idea!",
+                "register": "informal"
+              },
+              {
+                "text": "Perfeito, combinado!",
+                "translation": "Perfect, agreed!",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Importance of 'Bica'",
+            "body": "In Portugal, 'bica' is the most common way to order an espresso coffee. It's a daily ritual for many, often enjoyed quickly at the counter of a 'café' (coffee shop). Suggesting 'ir beber uma bica' is a very common and friendly way to invite someone for a quick social break."
+          },
+          {
+            "title": "Politeness in Refusal",
+            "body": "When you need to refuse a suggestion or an invitation, it's polite to offer a brief reason or an alternative, rather than a direct 'Não'. Phrases like 'Não posso, mas que tal...' (I can't, but how about...) or 'Não posso a essa hora' (I can't at that time) are common and soften the refusal."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d34-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Vamos juntos?\"",
+            "answer": "Vamos juntos?",
+            "source_ref": "pp-d34-1"
+          },
+          {
+            "id": "rv-d34-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Que tal ir ao...\"",
+            "answer": "Que tal ir ao...",
+            "source_ref": "pp-d34-2"
+          },
+          {
+            "id": "rv-d34-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Combinado!\"",
+            "answer": "Combinado!",
+            "source_ref": "pp-d34-3"
+          },
+          {
+            "id": "rv-d34-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Agreed / Deal",
+            "answer": "Combinado",
+            "source_ref": "Combinado"
+          },
+          {
+            "id": "rv-d34-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Good idea",
+            "answer": "Boa ideia",
+            "source_ref": "Boa ideia"
+          },
+          {
+            "id": "rv-d34-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: It doesn't matter",
+            "answer": "Tanto faz",
+            "source_ref": "Tanto faz"
+          },
+          {
+            "id": "rv-d34-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d34-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d35-week-5-stress-test",
+      "title": "Week 5 Stress Test",
+      "level": 1,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 0,
+        "extra_cultural_notes": 2,
+        "review_items": 2,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d35-1",
+            "title": "At the Café",
+            "context": "A customer is ordering breakfast at a typical Madeiran café.",
+            "lines": [
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Bom dia! Diga, o que deseja?",
+                "translation": "Good morning! Tell me, what would you like?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria uma bica e um bolo do caco, por favor.",
+                "translation": "Good morning. I'd like an espresso and a bolo do caco, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Uma bica e um bolo do caco. Mais alguma coisa?",
+                "translation": "An espresso and a bolo do caco. Anything else?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Não, obrigada. Quanto é?",
+                "translation": "No, thank you. How much is it?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "São três euros e vinte cêntimos. P'ra já!",
+                "translation": "It's three euros and twenty cents. Coming right up!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d35-2",
+            "title": "At the Market Stall",
+            "context": "A customer is buying vegetables at a market stall in Funchal.",
+            "lines": [
+              {
+                "speaker": "Vendedor",
+                "voice_type": "older",
+                "text": "Olá! Posso ajudar?",
+                "translation": "Hello! Can I help you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Olá. Tem semilhas? Queria um quilo, por favor.",
+                "translation": "Hello. Do you have potatoes? I'd like a kilo, please."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "older",
+                "text": "Tenho sim. Aqui está. Mais alguma coisa?",
+                "translation": "Yes, I do. Here you go. Anything else?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Não, só as semilhas. Quanto custa?",
+                "translation": "No, just the potatoes. How much is it?"
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "older",
+                "text": "Fica a um euro e cinquenta. Obrigada!",
+                "translation": "It's one euro fifty. Thank you!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a fruit stall in a local market in Madeira, buying some fruit.",
+          "difficulty": 2,
+          "entry_node": "rp-d35-start",
+          "nodes": [
+            {
+              "id": "rp-d35-start",
+              "npc_text": "Bom dia! O que vai ser hoje?",
+              "npc_translation": "Good morning! What will it be today?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia. Queria umas bananas, por favor.",
+                  "translation": "Good morning. I'd like some bananas, please.",
+                  "feedback": "A good start, clearly stating what you want.",
+                  "next": "rp-d35-bananas-choice"
+                },
+                {
+                  "text": "Olá. O que é que tem de bom?",
+                  "translation": "Hello. What do you have that's good?",
+                  "feedback": "This is a polite way to ask for recommendations.",
+                  "next": "rp-d35-ask-good"
+                }
+              ]
+            },
+            {
+              "id": "rp-d35-bananas-choice",
+              "npc_text": "Bananas, claro! Quantas quer?",
+              "npc_translation": "Bananas, of course! How many do you want?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Umas cinco, se faz favor.",
+                  "translation": "About five, please.",
+                  "feedback": "Specify the quantity clearly.",
+                  "next": "rp-d35-add-fruit"
+                },
+                {
+                  "text": "Um quilo, por favor.",
+                  "translation": "A kilo, please.",
+                  "feedback": "Using 'quilo' is common for fruit.",
+                  "next": "rp-d35-add-fruit"
+                }
+              ]
+            },
+            {
+              "id": "rp-d35-ask-good",
+              "npc_text": "Temos umas anonas ótimas hoje, e as peras também estão muito boas!",
+              "npc_translation": "We have some great custard apples today, and the pears are also very good!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ah, sim? Queria umas anonas então.",
+                  "translation": "Oh, really? I'd like some custard apples then.",
+                  "feedback": "Accepting the recommendation is natural.",
+                  "next": "rp-d35-anonas-quant"
+                },
+                {
+                  "text": "Obrigado, mas queria umas maçãs, por favor.",
+                  "translation": "Thank you, but I'd like some apples, please.",
+                  "feedback": "It's fine to politely decline and ask for something else.",
+                  "next": "rp-d35-maças-quant"
+                }
+              ]
+            },
+            {
+              "id": "rp-d35-anonas-quant",
+              "npc_text": "Quantas anonas?",
+              "npc_translation": "How many custard apples?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Duas, por favor.",
+                  "translation": "Two, please.",
+                  "feedback": "State the quantity.",
+                  "next": "rp-d35-add-fruit"
+                }
+              ]
+            },
+            {
+              "id": "rp-d35-maças-quant",
+              "npc_text": "Maçãs, pois. Quantas?",
+              "npc_translation": "Apples, right. How many?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Três, por favor.",
+                  "translation": "Three, please.",
+                  "feedback": "State the quantity.",
+                  "next": "rp-d35-add-fruit"
+                }
+              ]
+            },
+            {
+              "id": "rp-d35-add-fruit",
+              "npc_text": "Certo. Mais alguma coisa?",
+              "npc_translation": "Right. Anything else?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não, é tudo. Quanto é?",
+                  "translation": "No, that's all. How much is it?",
+                  "feedback": "Time to ask for the total.",
+                  "next": "rp-d35-pay"
+                },
+                {
+                  "text": "Sim, queria também um quilo de laranjas.",
+                  "translation": "Yes, I'd also like a kilo of oranges.",
+                  "feedback": "You can add more items to your purchase.",
+                  "next": "rp-d35-pay"
+                }
+              ]
+            },
+            {
+              "id": "rp-d35-pay",
+              "npc_text": "Então, fica a cinco euros e dez cêntimos. Obrigado!",
+              "npc_translation": "So, it's five euros and ten cents. Thank you!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Aqui tem. Obrigada!",
+                  "translation": "Here you go. Thank you!",
+                  "feedback": "A polite way to complete the transaction."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order Your Coffee and Cake",
+          "prep": [
+            "Practice ordering a 'bica' and a 'bolo do caco'.",
+            "Rehearse asking 'Quanto é?' or 'Quanto custa?' for the price.",
+            "Prepare to say 'Não, obrigada' if asked 'Mais alguma coisa?'."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebo."
+          ],
+          "likely_responses": [
+            "Bom dia! Diga!",
+            "Mais alguma coisa?",
+            "São X euros e Y cêntimos.",
+            "P'ra já!"
+          ]
+        },
+        "phrase_patterns_enriched": [],
+        "cultural_notes": [
+          {
+            "title": "Bica vs. Café",
+            "body": "In mainland Portugal and Madeira, the most common way to order an espresso is to ask for a 'bica'. While 'café' is understood, 'bica' is the local and more natural term. It's a small, strong coffee, usually served quickly at the counter."
+          },
+          {
+            "title": "The Versatile 'Pois'",
+            "body": "'Pois' is a very common and versatile interjection in Portuguese. It can mean 'yes', 'indeed', 'of course', or simply acknowledge what someone has said. It's often used to express agreement or confirmation, similar to 'right' or 'exactly' in English. For example, 'Pois é!' means 'That's right!' or 'Indeed!'"
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d35-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Full Week 5 Review\"",
+            "answer": "Full Week 5 Review",
+            "source_ref": "pp-d35-1"
+          },
+          {
+            "id": "rv-d35-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d35-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d36-the-present-perfect",
+      "title": "The Present Perfect",
+      "level": 1,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 12,
+        "extra_cultural_notes": 2,
+        "review_items": 8,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d36-1",
+            "title": "Recent Activities",
+            "context": "Two friends chatting in a café about their week.",
+            "lines": [
+              {
+                "speaker": "Sofia",
+                "voice_type": "younger",
+                "text": "Olá, Joana! Como tem passado?",
+                "translation": "Hi, Joana! How have you been?"
+              },
+              {
+                "speaker": "Joana",
+                "voice_type": "younger",
+                "text": "Olá, Sofia! Tenho estado bem, obrigada. Tenho trabalhado muito, mas também tenho visto alguns filmes bons.",
+                "translation": "Hi, Sofia! I've been well, thanks. I've worked a lot, but I've also seen some good movies."
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "younger",
+                "text": "Ah, pois. Eu tenho adorado estar cá na Madeira, mas ainda não tenho ido ao mercado novo.",
+                "translation": "Oh, right. I've loved being here in Madeira, but I still haven't gone to the new market."
+              },
+              {
+                "speaker": "Joana",
+                "voice_type": "younger",
+                "text": "Pois é! É muito bom. Tens de ir!",
+                "translation": "That's right! It's very good. You have to go!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d36-2",
+            "title": "Checking on Tasks",
+            "context": "A colleague asks about a pending task at the office.",
+            "lines": [
+              {
+                "speaker": "Chefe",
+                "voice_type": "teacher",
+                "text": "Olá, Pedro. Já tens falado com o cliente?",
+                "translation": "Hello, Pedro. Have you already spoken with the client?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "service",
+                "text": "Olá, chefe. Ainda não tenho falado com ele. Ele não tem atendido o telemóvel.",
+                "translation": "Hello, boss. I still haven't spoken with him. He hasn't answered the phone."
+              },
+              {
+                "speaker": "Chefe",
+                "voice_type": "teacher",
+                "text": "Ok. E já tens feito o relatório?",
+                "translation": "Okay. And have you already done the report?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "service",
+                "text": "Sim, já tenho feito. Tenho-o enviado por email.",
+                "translation": "Yes, I've already done it. I've sent it by email."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're talking to a local Madeiran in a café. They ask what you've done or haven't done yet on the island.",
+          "difficulty": 2,
+          "entry_node": "rp-d36-1",
+          "nodes": [
+            {
+              "id": "rp-d36-1",
+              "npc_text": "Olá! Então, já tens gostado da Madeira? Tens visto muitas coisas?",
+              "npc_translation": "Hello! So, have you liked Madeira? Have you seen many things?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, tenho adorado! Tenho visto sítios incríveis.",
+                  "translation": "Yes, I've loved it! I've seen incredible places.",
+                  "feedback": "Great start! You've used 'adorado' and 'visto' correctly.",
+                  "next": "rp-d36-2"
+                },
+                {
+                  "text": "Tenho gostado, mas ainda não tenho visto muito.",
+                  "translation": "I've liked it, but I still haven't seen much.",
+                  "feedback": "Good use of 'ainda não tenho visto' to express something not yet done.",
+                  "next": "rp-d36-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d36-2",
+              "npc_text": "Que bom! E já tens provado a poncha, ou ainda não?",
+              "npc_translation": "That's good! And have you already tried poncha, or not yet?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, já tenho provado! É muito boa.",
+                  "translation": "Yes, I've already tried it! It's very good.",
+                  "feedback": "Excellent! You used 'já tenho provado' for a completed action.",
+                  "next": "rp-d36-4"
+                },
+                {
+                  "text": "Ainda não tenho provado a poncha. Quero provar!",
+                  "translation": "I still haven't tried poncha. I want to try it!",
+                  "feedback": "Perfect use of 'ainda não tenho provado' and expressing desire.",
+                  "next": "rp-d36-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d36-3",
+              "npc_text": "Ah, entendo. E tens feito alguma levada? Ou ainda não tens tido tempo?",
+              "npc_translation": "Ah, I understand. And have you done any levada? Or haven't you had time yet?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ainda não tenho feito nenhuma. Tenho estado ocupado.",
+                  "translation": "I still haven't done any. I've been busy.",
+                  "feedback": "Good, you've explained why you haven't done it using 'tenho estado'."
+                },
+                {
+                  "text": "Sim, já tenho feito uma! Foi lindo.",
+                  "translation": "Yes, I've already done one! It was beautiful.",
+                  "feedback": "Well done! You used 'já tenho feito' for a completed action."
+                }
+              ]
+            },
+            {
+              "id": "rp-d36-4",
+              "npc_text": "Pois é, a poncha é famosa! E já tens visitado o Mercado dos Lavradores?",
+              "npc_translation": "That's right, poncha is famous! And have you already visited the Farmers' Market?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, já tenho visitado. Tenho comprado muitas frutas.",
+                  "translation": "Yes, I've already visited. I've bought many fruits.",
+                  "feedback": "Fantastic! You used 'já tenho visitado' and 'tenho comprado' correctly."
+                },
+                {
+                  "text": "Ainda não tenho ido, mas quero ir amanhã.",
+                  "translation": "I still haven't gone, but I want to go tomorrow.",
+                  "feedback": "Excellent, 'ainda não tenho ido' is perfect here, and you added a future plan."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Describe Your Recent Experiences in Madeira",
+          "prep": [
+            "Think about 2-3 things you have done recently in Madeira.",
+            "Think about 1-2 things you haven't done yet but want to.",
+            "Practice saying 'Tenho adorado estar cá.'",
+            "Practice saying 'Tenho visto coisas incríveis.'",
+            "Practice saying 'Ainda não tenho ido ao...' or 'Ainda não tenho feito...'"
+          ],
+          "fallback_phrases": [
+            "Desculpe, não entendi bem.",
+            "Pode repetir, por favor?",
+            "Um momento, por favor."
+          ],
+          "likely_responses": [
+            "Que bom!",
+            "Pois é!",
+            "Tens de ir!",
+            "Ainda não?",
+            "Experimenta!"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d36-1",
+            "base": "Tenho adorado estar cá.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tenho gostado de estar cá.",
+                "translation": "I've liked being here.",
+                "register": "informal"
+              },
+              {
+                "text": "Tenho aprendido muito na Madeira.",
+                "translation": "I've learned a lot in Madeira.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tenho trabalhado imenso aqui.",
+                "translation": "I've worked a lot here.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tenho relaxado bastante com vocês.",
+                "translation": "I've relaxed a lot with you all.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d36-2",
+            "base": "Tenho visto coisas incríveis.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tenho feito muitas coisas.",
+                "translation": "I've done many things.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tenho comido bolo do caco.",
+                "translation": "I've eaten bolo do caco.",
+                "register": "informal"
+              },
+              {
+                "text": "Tenho comprado bons preços.",
+                "translation": "I've bought good deals.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tenho visitado alguns sítios novos.",
+                "translation": "I've visited some new places.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d36-3",
+            "base": "Ainda não tenho ido.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Ainda não tenho comido a poncha.",
+                "translation": "I still haven't eaten the poncha.",
+                "register": "informal",
+                "note": "While 'poncha' is drunk, 'comer' can be used informally for 'to consume'."
+              },
+              {
+                "text": "Ainda não tenho falado com o João.",
+                "translation": "I still haven't spoken with João.",
+                "register": "neutral"
+              },
+              {
+                "text": "Ainda não tenho comprado as lembranças.",
+                "translation": "I still haven't bought the souvenirs.",
+                "register": "neutral"
+              },
+              {
+                "text": "Ainda não tenho visto o Pico Ruivo.",
+                "translation": "I still haven't seen Pico Ruivo.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Versatility of 'Pois'",
+            "body": "'Pois' and 'Pois é' are very common interjections in Portugal, especially in informal conversation. They can mean 'yes, that's right', 'indeed', 'of course', or simply acknowledge what the other person has said, showing active listening. It's often used to agree or confirm a statement, much like 'right' or 'exactly' in English."
+          },
+          {
+            "title": "Directness in Conversation",
+            "body": "Portuguese communication, especially in Madeira, tends to be quite direct. While politeness is valued, people are generally straightforward in their questions and statements. Don't be surprised by direct questions about your plans or experiences; it's usually a sign of friendly interest, not rudeness."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d36-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tenho adorado estar cá.\"",
+            "answer": "Tenho adorado estar cá.",
+            "source_ref": "pp-d36-1"
+          },
+          {
+            "id": "rv-d36-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tenho visto coisas incríveis.\"",
+            "answer": "Tenho visto coisas incríveis.",
+            "source_ref": "pp-d36-2"
+          },
+          {
+            "id": "rv-d36-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Ainda não tenho ido.\"",
+            "answer": "Ainda não tenho ido.",
+            "source_ref": "pp-d36-3"
+          },
+          {
+            "id": "rv-d36-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: done/made",
+            "answer": "feito",
+            "source_ref": "feito"
+          },
+          {
+            "id": "rv-d36-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: seen",
+            "answer": "visto",
+            "source_ref": "visto"
+          },
+          {
+            "id": "rv-d36-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: come",
+            "answer": "vindo",
+            "source_ref": "vindo"
+          },
+          {
+            "id": "rv-d36-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: said",
+            "answer": "dito",
+            "source_ref": "dito"
+          },
+          {
+            "id": "rv-d36-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d36-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d37-reflexive-verbs-all-persons",
+      "title": "Reflexive Verbs All Persons",
+      "level": 1,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d37-1",
+            "title": "Daily Routine Chat",
+            "context": "Two friends, Ana and Carlos, are talking over coffee in a café.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Então, Carlos, já te habituaste aos horários daqui?",
+                "translation": "So, Carlos, have you already gotten used to the schedules here?"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "younger",
+                "text": "Sim, já me sinto em casa! Mas às vezes esqueço-me de algumas coisas, como as horas dos autocarros.",
+                "translation": "Yes, I already feel at home! But sometimes I forget some things, like the bus times."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Pois é, é preciso lembrar-se bem! Eu levanto-me sempre cedo para não me atrasar.",
+                "translation": "Indeed, you really need to remember! I always get up early so I don't get late."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "younger",
+                "text": "Eu também me levanto cedo, mas ontem levantei-me um bocado tarde. Não te preocupes, hoje não me esqueço!",
+                "translation": "I also get up early, but yesterday I got up a bit late. Don't worry, today I won't forget!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d37-2",
+            "title": "Feeling Settled",
+            "context": "A tourist, Maria, is talking to a hotel receptionist, João, on the phone.",
+            "lines": [
+              {
+                "speaker": "João",
+                "voice_type": "phone",
+                "text": "Bom dia, Dona Maria. Como se sente hoje?",
+                "translation": "Good morning, Ms. Maria. How are you feeling today?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Bom dia, João. Sinto-me muito bem, obrigada! Já me habituei ao fuso horário.",
+                "translation": "Good morning, João. I feel very well, thank you! I've already gotten used to the time zone."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "phone",
+                "text": "Que bom! Não se esqueça da excursão às levadas hoje à tarde.",
+                "translation": "That's good! Don't forget about the levada excursion this afternoon."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Não me esqueço! Já me lembro de tudo. Obrigada!",
+                "translation": "I won't forget! I already remember everything. Thank you!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're chatting with a local Madeiran neighbour about daily life and getting settled in. They are friendly and curious.",
+          "difficulty": 2,
+          "entry_node": "rp-d37-start",
+          "nodes": [
+            {
+              "id": "rp-d37-start",
+              "npc_text": "Olá! Já te sentes bem aqui na Madeira?",
+              "npc_translation": "Hello! Do you already feel good here in Madeira?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, já me sinto em casa, obrigada!",
+                  "translation": "Yes, I already feel at home, thank you!",
+                  "feedback": "Great start, using 'sentir-se' correctly!",
+                  "next": "rp-d37-habituar"
+                },
+                {
+                  "text": "Ainda não me sinto muito bem.",
+                  "translation": "I still don't feel very good.",
+                  "feedback": "Good, you used 'sentir-se' in the negative. Let's see what the neighbour says.",
+                  "next": "rp-d37-habituar"
+                }
+              ]
+            },
+            {
+              "id": "rp-d37-habituar",
+              "npc_text": "Percebo. E já te habituaste ao ritmo da ilha?",
+              "npc_translation": "I understand. And have you already gotten used to the island's pace?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, já me habituei, é mais calmo.",
+                  "translation": "Yes, I've already gotten used to it, it's calmer.",
+                  "feedback": "Excellent use of 'habituar-se' in the past tense!",
+                  "next": "rp-d37-lembrar"
+                },
+                {
+                  "text": "Ainda me estou a habituar, é um bocado diferente.",
+                  "translation": "I'm still getting used to it, it's a bit different.",
+                  "feedback": "Good, 'estar a habituar-se' for ongoing action.",
+                  "next": "rp-d37-lembrar"
+                }
+              ]
+            },
+            {
+              "id": "rp-d37-lembrar",
+              "npc_text": "Pois é. E lembras-te de levar sempre um casaco? O tempo muda rápido!",
+              "npc_translation": "Indeed. And do you remember to always take a jacket? The weather changes quickly!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, lembro-me sempre! É importante.",
+                  "translation": "Yes, I always remember! It's important.",
+                  "feedback": "Perfect! 'Lembrar-se' in the present.",
+                  "next": "rp-d37-end-positive"
+                },
+                {
+                  "text": "Às vezes esqueço-me, mas tento lembrar-me.",
+                  "translation": "Sometimes I forget, but I try to remember.",
+                  "feedback": "Good, you used both 'esquecer-se' and 'lembrar-se'!",
+                  "next": "rp-d37-end-neutral"
+                }
+              ]
+            },
+            {
+              "id": "rp-d37-end-positive",
+              "npc_text": "Muito bem! Fico feliz por te sentires bem aqui. Se precisares de algo, não te preocupes em perguntar.",
+              "npc_translation": "Very good! I'm happy you feel good here. If you need anything, don't worry about asking.",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "rp-d37-end-neutral",
+              "npc_text": "Não te preocupes, é normal no início. Vais habituar-te!",
+              "npc_translation": "Don't worry, it's normal at first. You'll get used to it!",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Chatting About Your Day",
+          "prep": [
+            "Practice describing your morning routine using reflexive verbs: 'Levanto-me às...', 'Visto-me...', 'Lavo-me...'.",
+            "Think about something you often forget or remember to do.",
+            "Be ready to ask someone about their routine or how they are feeling."
+          ],
+          "fallback_phrases": [
+            "Não percebo, pode repetir?",
+            "Como se diz...?",
+            "Pode falar mais devagar, por favor?"
+          ],
+          "likely_responses": [
+            "Eu levanto-me sempre cedo/tarde.",
+            "Não me esqueço de nada.",
+            "Sinto-me bem/cansado.",
+            "Já me habituei."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d37-1",
+            "base": "Levanto-me às sete.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Levanto-me sempre às sete.",
+                "translation": "I always get up at seven.",
+                "register": "informal"
+              },
+              {
+                "text": "Tu levantas-te cedo?",
+                "translation": "Do you get up early?",
+                "register": "informal"
+              },
+              {
+                "text": "Eles levantam-se tarde ao fim de semana.",
+                "translation": "They get up late on the weekend.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d37-2",
+            "base": "Já me sinto em casa.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Já te sentes feliz aqui?",
+                "translation": "Do you already feel happy here?",
+                "register": "informal"
+              },
+              {
+                "text": "Ela sente-se um bocado cansada.",
+                "translation": "She feels a bit tired.",
+                "register": "neutral"
+              },
+              {
+                "text": "Nós sentimo-nos bem na Madeira.",
+                "translation": "We feel good in Madeira.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d37-3",
+            "base": "Não te preocupes.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Não se preocupe, está tudo bem.",
+                "translation": "Don't worry, everything is fine.",
+                "register": "formal"
+              },
+              {
+                "text": "Não nos preocupemos com os exames.",
+                "translation": "Let's not worry about the exams.",
+                "register": "neutral"
+              },
+              {
+                "text": "Não se preocupem com a viagem.",
+                "translation": "Don't worry about the trip.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Versatility of 'Pois'",
+            "body": "'Pois' and 'pois é' are very common interjections in Portuguese. They can mean 'yes', 'indeed', 'of course', or simply acknowledge what someone said. It's often used to show agreement or understanding in a conversation, much like 'right' or 'yeah' in English. It can also be used to prompt someone to continue speaking."
+          },
+          {
+            "title": "Addressing People: 'Tu' vs. 'O Senhor/A Senhora'",
+            "body": "In Portugal, the informal 'tu' is generally used with friends, family, and people your own age or younger. For people older than you, in service situations, or with strangers you want to show respect to, use 'o senhor' (for a man) or 'a senhora' (for a woman) with the third person verb form. Using 'você' can sometimes sound a bit distant or even impolite, so it's best to avoid it as a default polite form."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d37-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Levanto-me às sete.\"",
+            "answer": "Levanto-me às sete.",
+            "source_ref": "pp-d37-1"
+          },
+          {
+            "id": "rv-d37-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Já me sinto em casa.\"",
+            "answer": "Já me sinto em casa.",
+            "source_ref": "pp-d37-2"
+          },
+          {
+            "id": "rv-d37-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Não te preocupes.\"",
+            "answer": "Não te preocupes.",
+            "source_ref": "pp-d37-3"
+          },
+          {
+            "id": "rv-d37-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to remember",
+            "answer": "lembrar-se",
+            "source_ref": "lembrar-se"
+          },
+          {
+            "id": "rv-d37-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to forget",
+            "answer": "esquecer-se",
+            "source_ref": "esquecer-se"
+          },
+          {
+            "id": "rv-d37-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to get used to",
+            "answer": "habituar-se",
+            "source_ref": "habituar-se"
+          },
+          {
+            "id": "rv-d37-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d37-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d38-emotions-empathy-comfort",
+      "title": "Emotions, Empathy & Comfort",
+      "level": 1,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 1,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 8,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d38-1",
+            "title": "Missing a Friend",
+            "context": "Two friends, Ana and Marco, are talking in a café about a friend who moved away.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Então, o João já foi para Lisboa, não foi?",
+                "translation": "So, João already went to Lisbon, didn't he?"
+              },
+              {
+                "speaker": "Marco",
+                "voice_type": "younger",
+                "text": "Pois é, foi ontem. Já estou com saudade dele, sabes?",
+                "translation": "Yes, he went yesterday. I already miss him, you know?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Ai, que pena! Ficamos todos um bocado tristes, pois é.",
+                "translation": "Oh, what a pity! We all feel a bit sad, don't we."
+              },
+              {
+                "speaker": "Marco",
+                "voice_type": "younger",
+                "text": "Sim, mas ele estava feliz por ir. Eu estou emocionado por ele.",
+                "translation": "Yes, but he was happy to go. I'm emotional for him."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "Your friend, Marta, tells you she's sad because her pet is sick.",
+          "difficulty": 2,
+          "entry_node": "rp-d38-start",
+          "nodes": [
+            {
+              "id": "rp-d38-start",
+              "npc_text": "Olá! Não estou muito feliz hoje, sabes? O meu gato está doente.",
+              "npc_translation": "Hi! I'm not very happy today, you know? My cat is sick.",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Ai, que pena! Sinto muito.",
+                  "translation": "Oh, what a pity! I'm so sorry.",
+                  "feedback": "A good empathetic start.",
+                  "next": "rp-d38-sad"
+                },
+                {
+                  "text": "Ah, não digas isso! O que se passa?",
+                  "translation": "Oh, don't say that! What's happening?",
+                  "feedback": "A natural way to ask for more information.",
+                  "next": "rp-d38-sad"
+                }
+              ]
+            },
+            {
+              "id": "rp-d38-sad",
+              "npc_text": "Pois é. Levei-o ao veterinário, mas ele está um bocado triste e não come.",
+              "npc_translation": "That's it. I took him to the vet, but he's a bit sad and not eating.",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Fiquei sem palavras! Espero que ele melhore.",
+                  "translation": "I'm speechless! I hope he gets better.",
+                  "feedback": "Expresses strong empathy and hope.",
+                  "next": "rp-d38-comfort"
+                },
+                {
+                  "text": "Estou com saudade de o ver bem. É mesmo triste.",
+                  "translation": "I miss seeing him well. It's really sad.",
+                  "feedback": "Shows you understand her emotional connection to the pet.",
+                  "next": "rp-d38-comfort"
+                }
+              ]
+            },
+            {
+              "id": "rp-d38-comfort",
+              "npc_text": "Obrigada por ouvires. É bom falar contigo.",
+              "npc_translation": "Thanks for listening. It's good to talk to you.",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "De nada. Se precisares de alguma coisa, diz.",
+                  "translation": "You're welcome. If you need anything, just say.",
+                  "feedback": "Offers practical support and ends the conversation positively."
+                },
+                {
+                  "text": "Não faz mal. Espero que tudo corra bem.",
+                  "translation": "It's nothing. I hope everything goes well.",
+                  "feedback": "Reassures her and offers a simple wish."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Comfort a Friend",
+          "prep": [
+            "Listen carefully to what your friend is saying.",
+            "Use 'Que pena!' or 'Sinto muito' to show empathy.",
+            "If appropriate, use 'Estou com saudade' to express missing something/someone, or 'triste' to acknowledge sadness."
+          ],
+          "fallback_phrases": [
+            "Não sei o que dizer.",
+            "É uma situação difícil."
+          ],
+          "likely_responses": [
+            "Obrigado/a por ouvires.",
+            "Pois é, é mesmo difícil.",
+            "Sinto-me um bocado melhor agora."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d38-1",
+            "base": "Estou com saudade.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Estou com imensa saudade.",
+                "translation": "I'm feeling immense longing.",
+                "register": "informal"
+              },
+              {
+                "text": "Temos saudades de casa.",
+                "translation": "We miss home.",
+                "register": "neutral"
+              },
+              {
+                "text": "Ele está com saudade da família.",
+                "translation": "He misses his family.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d38-2",
+            "base": "Que pena!",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Que grande pena!",
+                "translation": "What a great pity!",
+                "register": "informal"
+              },
+              {
+                "text": "É uma pena, pois é.",
+                "translation": "It's a pity, indeed.",
+                "register": "neutral"
+              },
+              {
+                "text": "Que pena, mesmo.",
+                "translation": "What a real pity.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d38-3",
+            "base": "Fiquei sem palavras!",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Fiquei mesmo sem palavras!",
+                "translation": "I was truly speechless!",
+                "register": "informal"
+              },
+              {
+                "text": "Não tive palavras.",
+                "translation": "I had no words.",
+                "register": "neutral"
+              },
+              {
+                "text": "Isso deixou-me sem palavras.",
+                "translation": "That left me speechless.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The unique meaning of 'Saudade'",
+            "body": "The word 'saudade' is often considered untranslatable and embodies a deep emotional state of nostalgic longing for something or someone absent. It can refer to a person, a place, a moment, or even a feeling. It implies that the object of longing may never return, or that the joy of reunion is uncertain. It's a very cherished and understood emotion in Portuguese culture."
+          },
+          {
+            "title": "Expressing Empathy Directly",
+            "body": "In Portugal, it's common and appreciated to express empathy directly when someone shares a difficult feeling or situation. Phrases like 'Que pena!' (What a pity!) or 'Sinto muito' (I'm very sorry) are common and show you are listening and care. Don't be afraid to acknowledge sadness or difficulty."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d38-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Estou com saudade.\"",
+            "answer": "Estou com saudade.",
+            "source_ref": "pp-d38-1"
+          },
+          {
+            "id": "rv-d38-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Que pena!\"",
+            "answer": "Que pena!",
+            "source_ref": "pp-d38-2"
+          },
+          {
+            "id": "rv-d38-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Fiquei sem palavras!\"",
+            "answer": "Fiquei sem palavras!",
+            "source_ref": "pp-d38-3"
+          },
+          {
+            "id": "rv-d38-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: longing/nostalgia",
+            "answer": "saudade",
+            "source_ref": "saudade"
+          },
+          {
+            "id": "rv-d38-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: happy",
+            "answer": "feliz",
+            "source_ref": "feliz"
+          },
+          {
+            "id": "rv-d38-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: sad",
+            "answer": "triste",
+            "source_ref": "triste"
+          },
+          {
+            "id": "rv-d38-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: moved/emotional",
+            "answer": "emocionado",
+            "source_ref": "emocionado"
+          },
+          {
+            "id": "rv-d38-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d38-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d39-madeiran-geography-culture",
+      "title": "Madeiran Geography & Culture",
+      "level": 1,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 1,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 8,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d39-1",
+            "title": "Asking about Madeira's nature",
+            "context": "A tourist asks a local at an information point about the island's natural beauty.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Olá! Queria saber mais sobre a natureza da Madeira.",
+                "translation": "Hello! I wanted to know more about Madeira's nature."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois, a natureza aqui é incrível. Temos a Laurissilva, por exemplo.",
+                "translation": "Well, the nature here is incredible. We have the Laurel Forest, for example."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Ah, sim! A Laurissilva. É uma floresta antiga, certo?",
+                "translation": "Ah, yes! The Laurel Forest. It's an ancient forest, right?"
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "local",
+                "text": "Exato! É Património Mundial. E as levadas? Já conhece?",
+                "translation": "Exactly! It's a World Heritage Site. And the levadas? Do you know them already?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Sim, sei que as levadas atravessam a ilha. São boas para caminhar?",
+                "translation": "Yes, I know the levadas cross the island. Are they good for walking?"
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "São ótimas! E a paisagem é de cortar a respiração.",
+                "translation": "They are great! And the landscape is breathtaking."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are asking a local for a recommendation for a viewpoint (miradouro) to see the island's beauty.",
+          "difficulty": 2,
+          "entry_node": "rp-d39-start",
+          "nodes": [
+            {
+              "id": "rp-d39-start",
+              "npc_text": "Bom dia! Posso ajudar?",
+              "npc_translation": "Good morning! Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia! Queria ver um miradouro com uma vista bonita.",
+                  "translation": "Good morning! I wanted to see a viewpoint with a beautiful view.",
+                  "feedback": "Great start, you asked directly for a viewpoint with a nice view.",
+                  "next": "rp-d39-ask-miradouro"
+                },
+                {
+                  "text": "Olá. Onde é a Laurissilva?",
+                  "translation": "Hello. Where is the Laurel Forest?",
+                  "feedback": "You asked about the Laurel Forest, which is good, but the initial goal was a viewpoint. Let's try to get back on track.",
+                  "next": "rp-d39-laurissilva-wrong_path"
+                }
+              ]
+            },
+            {
+              "id": "rp-d39-laurissilva-wrong_path",
+              "npc_text": "A Laurissilva fica mais para o interior da ilha. Mas se quer uma vista, posso sugerir outra coisa.",
+              "npc_translation": "The Laurel Forest is more in the interior of the island. But if you want a view, I can suggest something else.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ah, sim. Um miradouro, por favor.",
+                  "translation": "Ah, yes. A viewpoint, please.",
+                  "feedback": "Good recovery, you redirected to the original goal.",
+                  "next": "rp-d39-ask-miradouro"
+                }
+              ]
+            },
+            {
+              "id": "rp-d39-ask-miradouro",
+              "npc_text": "Claro! O Miradouro do Cabo Girão tem uma paisagem de cortar a respiração. Já ouviu falar?",
+              "npc_translation": "Of course! The Cabo Girão Viewpoint has a breathtaking landscape. Have you heard of it?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Não, não conheço. É longe daqui?",
+                  "translation": "No, I don't know it. Is it far from here?",
+                  "feedback": "Good follow-up question about the location.",
+                  "next": "rp-d39-distance"
+                },
+                {
+                  "text": "Sim, parece ótimo! Obrigado.",
+                  "translation": "Yes, it sounds great! Thank you.",
+                  "feedback": "You accepted the suggestion and thanked them. Good, but you could ask for more details.",
+                  "next": "rp-d39-end-thankyou"
+                }
+              ]
+            },
+            {
+              "id": "rp-d39-distance",
+              "npc_text": "É um bocado longe, precisa de autocarro ou táxi. Mas vale a pena, a vista é única!",
+              "npc_translation": "It's a bit far, you need a bus or taxi. But it's worth it, the view is unique!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Percebo. Muito obrigado pela ajuda!",
+                  "translation": "I understand. Thank you very much for your help!",
+                  "feedback": "Excellent, you understood and thanked them politely.",
+                  "next": "rp-d39-end-thankyou"
+                }
+              ]
+            },
+            {
+              "id": "rp-d39-end-thankyou",
+              "npc_text": "De nada! Tenha um bom dia na nossa ilha.",
+              "npc_translation": "You're welcome! Have a good day on our island.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Ask for a recommendation for a scenic walk",
+          "prep": [
+            "Practice asking: 'Queria fazer uma caminhada bonita.' (I wanted to do a beautiful walk.)",
+            "Practice asking about levadas: 'As levadas são boas para caminhar, certo?' (The levadas are good for walking, right?)"
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir?",
+            "Pode falar mais devagar, por favor?"
+          ],
+          "likely_responses": [
+            "Sim, as levadas são ótimas.",
+            "Há muitas levadas boas, por exemplo a do Caldeirão Verde.",
+            "A paisagem é linda.",
+            "Precisa de sapatos confortáveis."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d39-1",
+            "base": "É uma ilha única no mundo.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "É uma ilha muito bonita, sim.",
+                "translation": "It's a very beautiful island, yes.",
+                "register": "neutral"
+              },
+              {
+                "text": "É uma ilha especial no Atlântico.",
+                "translation": "It's a special island in the Atlantic.",
+                "register": "neutral"
+              },
+              {
+                "text": "É uma ilha fantástica, de facto.",
+                "translation": "It's a fantastic island, indeed.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d39-2",
+            "base": "A paisagem é de cortar a respiração.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "A vista é de cortar a respiração, não é?",
+                "translation": "The view is breathtaking, isn't it?",
+                "register": "neutral"
+              },
+              {
+                "text": "A natureza aqui é incrível.",
+                "translation": "The nature here is incredible.",
+                "register": "neutral"
+              },
+              {
+                "text": "Sim, a paisagem é maravilhosa.",
+                "translation": "Yes, the landscape is wonderful.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d39-3",
+            "base": "As levadas atravessam a ilha.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "As levadas percorrem quase toda a ilha.",
+                "translation": "The levadas go through almost the entire island.",
+                "register": "neutral"
+              },
+              {
+                "text": "As levadas passam por muitas zonas da ilha.",
+                "translation": "The levadas pass through many areas of the island.",
+                "register": "neutral"
+              },
+              {
+                "text": "Sim, as levadas atravessam a ilha toda.",
+                "translation": "Yes, the levadas cross the whole island.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Using 'Pois' for agreement",
+            "body": "In Portugal, 'Pois' or 'Pois é' is commonly used to express agreement, affirmation, or understanding, similar to 'Indeed,' 'That's right,' or 'Well.' It's a very natural and frequent interjection in daily conversation, especially in Madeira."
+          },
+          {
+            "title": "The Importance of Levadas",
+            "body": "Levadas are unique irrigation channels found on the island of Madeira. They were built to distribute water from the wet north and northwest of the island to the drier south. Today, many of these levadas also serve as walking paths, offering stunning views and a chance to experience the island's unique flora, including the Laurissilva forest."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d39-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"É uma ilha única no mundo.\"",
+            "answer": "É uma ilha única no mundo.",
+            "source_ref": "pp-d39-1"
+          },
+          {
+            "id": "rv-d39-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"A paisagem é de cortar a respiração.\"",
+            "answer": "A paisagem é de cortar a respiração.",
+            "source_ref": "pp-d39-2"
+          },
+          {
+            "id": "rv-d39-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"As levadas atravessam a ilha.\"",
+            "answer": "As levadas atravessam a ilha.",
+            "source_ref": "pp-d39-3"
+          },
+          {
+            "id": "rv-d39-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: island",
+            "answer": "ilha",
+            "source_ref": "ilha"
+          },
+          {
+            "id": "rv-d39-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: laurel forest",
+            "answer": "laurissilva",
+            "source_ref": "laurissilva"
+          },
+          {
+            "id": "rv-d39-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: viewpoint",
+            "answer": "miradouro",
+            "source_ref": "miradouro"
+          },
+          {
+            "id": "rv-d39-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: embroidery",
+            "answer": "bordado",
+            "source_ref": "bordado"
+          },
+          {
+            "id": "rv-d39-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d39-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d40-complex-sentences",
+      "title": "Complex Sentences",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 6,
+        "extra_cultural_notes": 2,
+        "review_items": 8,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d40-1",
+            "title": "Booking a cleaning service",
+            "context": "A person is calling a cleaning service to book an appointment.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia! Gostaria de marcar uma limpeza para a minha casa, que fica perto do Funchal.",
+                "translation": "Good morning! I'd like to book a cleaning for my house, which is near Funchal."
+              },
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Bom dia! Pois, claro. Para quando seria?",
+                "translation": "Good morning! Yes, of course. For when would it be?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Gostaria que fosse para a próxima semana, se possível. Como não sabia a vossa disponibilidade, liguei a perguntar.",
+                "translation": "I'd like it to be next week, if possible. As I didn't know your availability, I called to ask."
+              },
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Pois é. Temos vagas na quarta-feira. É um dia que lhe dá jeito?",
+                "translation": "Indeed. We have openings on Wednesday. Is that a day that suits you?"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d40-2",
+            "title": "Asking about a new shop",
+            "context": "Two neighbours are talking about a new shop that opened.",
+            "lines": [
+              {
+                "speaker": "Vizinho A",
+                "voice_type": "older",
+                "text": "Olhe, sabe onde é a nova loja que abriu? Aquela que vende bolos do caco.",
+                "translation": "Look, do you know where the new shop that opened is? The one that sells bolo do caco."
+              },
+              {
+                "speaker": "Vizinho B",
+                "voice_type": "local",
+                "text": "Ah, sim! É uma loja que fica na rua principal, perto do mercado. Desde que abriu, está sempre cheia.",
+                "translation": "Ah, yes! It's a shop that's on the main street, near the market. Since it opened, it's always full."
+              },
+              {
+                "speaker": "Vizinho A",
+                "voice_type": "older",
+                "text": "Pois, como não sabia onde era, nunca fui lá.",
+                "translation": "Right, as I didn't know where it was, I never went there."
+              },
+              {
+                "speaker": "Vizinho B",
+                "voice_type": "local",
+                "text": "Tem de ir! É um sítio onde se come muito bem. E é barato.",
+                "translation": "You have to go! It's a place where one eats very well. And it's cheap."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a plumber because your kitchen sink is blocked. You need to explain the problem and ask for an appointment.",
+          "difficulty": 2,
+          "entry_node": "rp-d40-start",
+          "nodes": [
+            {
+              "id": "rp-d40-start",
+              "npc_text": "Bom dia, canalizador Silva. Diga!",
+              "npc_translation": "Good morning, plumber Silva. Speak!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Tenho um problema na cozinha que preciso de resolver.",
+                  "translation": "Good morning. I have a problem in the kitchen that I need to solve.",
+                  "feedback": "Good start, clearly stating you have a problem.",
+                  "next": "rp-d40-problem"
+                }
+              ]
+            },
+            {
+              "id": "rp-d40-problem",
+              "npc_text": "Pois, diga lá qual é o problema.",
+              "npc_translation": "Right, tell me what the problem is.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É o lava-loiça que está entupido. Desde ontem que não corre a água.",
+                  "translation": "It's the sink that's blocked. Since yesterday, the water hasn't been draining.",
+                  "feedback": "Excellent, you've explained the specific issue and when it started using 'desde que'.",
+                  "next": "rp-d40-quando"
+                },
+                {
+                  "text": "A água não está a ir embora no lava-loiça.",
+                  "translation": "The water isn't going down in the sink.",
+                  "feedback": "This is okay, but try to add more detail next time, like when it started.",
+                  "next": "rp-d40-problem-less-detail"
+                }
+              ]
+            },
+            {
+              "id": "rp-d40-problem-less-detail",
+              "npc_text": "Ah, está entupido, então. E desde quando?",
+              "npc_translation": "Ah, it's blocked then. And since when?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Desde que cheguei a casa ontem. Como não sabia o que fazer, liguei para si.",
+                  "translation": "Since I got home yesterday. As I didn't know what to do, I called you.",
+                  "feedback": "Good recovery, you used 'desde que' and 'como não sabia' well.",
+                  "next": "rp-d40-quando"
+                }
+              ]
+            },
+            {
+              "id": "rp-d40-quando",
+              "npc_text": "Certo. Para quando gostaria de marcar a visita? Tenho uma vaga amanhã de manhã.",
+              "npc_translation": "Right. For when would you like to schedule the visit? I have an opening tomorrow morning.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Amanhã de manhã é perfeito. Onde é que fica a sua loja, já agora?",
+                  "translation": "Tomorrow morning is perfect. Where is your shop, by the way?",
+                  "feedback": "You've confirmed the appointment and asked a relevant follow-up question using 'onde'.",
+                  "next": "rp-d40-final"
+                },
+                {
+                  "text": "Sim, amanhã de manhã está bem. Obrigado.",
+                  "translation": "Yes, tomorrow morning is fine. Thank you.",
+                  "feedback": "A polite and clear response. Good job.",
+                  "next": "rp-d40-final"
+                }
+              ]
+            },
+            {
+              "id": "rp-d40-final",
+              "npc_text": "A minha loja fica na Rua dos Ferreiros, mas vou diretamente à sua casa. Até amanhã!",
+              "npc_translation": "My shop is on Rua dos Ferreiros, but I'll go directly to your house. See you tomorrow!",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Report a household issue by phone",
+          "prep": [
+            "Practice describing a common household problem (e.g., a broken appliance, a leak, no hot water) using a relative clause: 'Tenho um problema com o frigorífico, que não está a arrefecer.'",
+            "Rehearse explaining when the problem started using 'desde que': 'Desde que cheguei a casa, não tenho água quente.'",
+            "Prepare to ask for a visit or appointment using 'gostaria de marcar uma visita'."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi bem.",
+            "Como?",
+            "Um momento, por favor."
+          ],
+          "likely_responses": [
+            "Diga!",
+            "Qual é o problema?",
+            "Para quando gostaria de marcar?",
+            "Onde é a sua morada?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d40-1",
+            "base": "É um café que fica perto.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "É uma loja que tem bons preços.",
+                "translation": "It's a shop that has good prices.",
+                "register": "neutral"
+              },
+              {
+                "text": "É um restaurante onde se come bem.",
+                "translation": "It's a restaurant where one eats well.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d40-2",
+            "base": "Desde que vim, gosto imenso.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Desde que cheguei, adoro o clima.",
+                "translation": "Since I arrived, I love the weather.",
+                "register": "neutral"
+              },
+              {
+                "text": "Desde que me mudei, estou mais calmo.",
+                "translation": "Since I moved, I'm calmer.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d40-3",
+            "base": "Como não sabia, perguntei.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Como não tinha a certeza, liguei para lá.",
+                "translation": "As I wasn't sure, I called them.",
+                "register": "neutral"
+              },
+              {
+                "text": "Como não percebi, pedi para repetir.",
+                "translation": "As I didn't understand, I asked them to repeat.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Using 'Pois' in Conversation",
+            "body": "'Pois' and 'Pois é' are very common interjections in Portuguese, especially in Madeira. They can mean 'indeed', 'that's right', 'I see', or simply acknowledge what the other person has said, showing you are listening and understanding. It's often used to agree or confirm information, as seen in the dialogues."
+          },
+          {
+            "title": "Directness in Requests",
+            "body": "While Portuguese can be direct, using 'Gostaria de...' (I would like to...) or 'Podia...?' (Could you...?) is a polite way to make requests, especially when speaking to service providers or people you don't know well. Avoid overly blunt commands, particularly in formal or service interactions."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d40-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"É um café que fica perto.\"",
+            "answer": "É um café que fica perto.",
+            "source_ref": "pp-d40-1"
+          },
+          {
+            "id": "rv-d40-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Desde que vim, gosto imenso.\"",
+            "answer": "Desde que vim, gosto imenso.",
+            "source_ref": "pp-d40-2"
+          },
+          {
+            "id": "rv-d40-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Como não sabia, perguntei.\"",
+            "answer": "Como não sabia, perguntei.",
+            "source_ref": "pp-d40-3"
+          },
+          {
+            "id": "rv-d40-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: that/which",
+            "answer": "que",
+            "source_ref": "que"
+          },
+          {
+            "id": "rv-d40-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: where",
+            "answer": "onde",
+            "source_ref": "onde"
+          },
+          {
+            "id": "rv-d40-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: when",
+            "answer": "quando",
+            "source_ref": "quando"
+          },
+          {
+            "id": "rv-d40-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: since",
+            "answer": "desde que",
+            "source_ref": "desde que"
+          },
+          {
+            "id": "rv-d40-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d40-1"
+          }
+        ],
+        "media": []
+      }
+    }
+  ]
+}

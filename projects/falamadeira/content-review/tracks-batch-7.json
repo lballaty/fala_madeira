@@ -1,0 +1,585 @@
+{
+  "batch": 7,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T09:09:47.399Z",
+  "retag_mapping": {
+    "track-survival": [
+      "sit-d1-greetings-presence",
+      "sit-d2-ordering-in-a-cafe",
+      "sit-d3-numbers-1-10-connectors",
+      "sit-d4-confusion-clarification",
+      "sit-d5-locations-directions",
+      "sit-d8-self-introduction",
+      "sit-d9-time-days-hours",
+      "sit-d10-numbers-11-100-prices",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d27-numbers-100-years",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m6w1-telling-a-story",
+      "sit-host-guest-checkin-handover",
+      "sit-host-reporting-a-water-leak",
+      "sit-bureau-registering-health-centre",
+      "sit-work-scheduling-site-visit",
+      "sit-work-introductions-networking",
+      "sit-survival-buying-sim-and-bus"
+    ],
+    "track-host": [
+      "sit-d12-adjectives-ser-estar",
+      "sit-d13-daily-routines",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d22-the-imperfect-tense",
+      "sit-d26-describing-your-home",
+      "sit-d32-telephone-formal-messages",
+      "sit-d36-the-present-perfect",
+      "sit-d47-formal-writing-funchal",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-host-boiler-not-working",
+      "sit-host-briefing-the-cleaner",
+      "sit-bureau-utilities-setup",
+      "sit-social-dinner-invitation",
+      "sit-social-making-plans-weekend"
+    ],
+    "track-social": [
+      "sit-d1-greetings-presence",
+      "sit-d4-confusion-clarification",
+      "sit-d6-opinions-preferences",
+      "sit-d7-week-1-stress-test",
+      "sit-d8-self-introduction",
+      "sit-d12-adjectives-ser-estar",
+      "sit-d14-week-2-stress-test",
+      "sit-d15-talking-about-others",
+      "sit-d17-poder-polite-requests",
+      "sit-d20-stronger-connectors",
+      "sit-d21-week-3-stress-test",
+      "sit-d24-wishes-conditionals-polite-requests",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d28-week-4-stress-test",
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d33-opinions-agreeing-disagreeing",
+      "sit-d34-collaborative-future",
+      "sit-d35-week-5-stress-test",
+      "sit-d38-emotions-empathy-comfort",
+      "sit-d39-madeiran-geography-culture",
+      "sit-d41-giving-explanations",
+      "sit-d42-week-6-stress-test",
+      "sit-d43-voces-addressing-groups",
+      "sit-d47-formal-writing-funchal",
+      "sit-d49-week-7-stress-test",
+      "sit-d52-register-social-fluency",
+      "sit-d54-madeira-in-depth",
+      "sit-d56-the-grand-stress-test",
+      "sit-m4w1-neighbourhood-small-talk",
+      "sit-m4w2-festival-arraial",
+      "sit-m4w3-madeiran-expressions",
+      "sit-m4w4-month4-stress-test",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-m5w4-month5-stress-test",
+      "sit-m6w1-telling-a-story",
+      "sit-m6w2-formal-email-office",
+      "sit-m6w3-debating-opinions",
+      "sit-m6w4-final-immersion-test",
+      "sit-host-reporting-a-water-leak",
+      "sit-bureau-registering-health-centre",
+      "sit-work-scope-escalation",
+      "sit-work-chasing-an-invoice",
+      "sit-social-dinner-invitation",
+      "sit-social-making-plans-weekend"
+    ],
+    "track-bureaucracy": [
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d32-telephone-formal-messages",
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d47-formal-writing-funchal",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office",
+      "sit-work-introductions-networking",
+      "sit-survival-taxi-from-airport",
+      "sit-social-making-plans-weekend"
+    ],
+    "track-work": [
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office",
+      "sit-host-boiler-not-working",
+      "sit-work-scope-escalation",
+      "sit-work-quoting-a-job",
+      "sit-work-introductions-networking"
+    ]
+  },
+  "video_results": [
+    {
+      "situationId": "sit-d1-greetings-presence",
+      "url": "https://www.youtube.com/watch?v=pgC1ofHxm7s",
+      "id": "pgC1ofHxm7s",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-d15-talking-about-others",
+      "url": "https://www.youtube.com/watch?v=6F1ld7zv7yM",
+      "id": "6F1ld7zv7yM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-m4w2-festival-arraial",
+      "url": "https://www.youtube.com/watch?v=dd_NTKErny8",
+      "id": "dd_NTKErny8",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 1,
+  "situations": [
+    {
+      "id": "sit-social-making-plans-weekend",
+      "kind": "track",
+      "title": "Making Weekend Plans",
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-social"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-social-making-plans-weekend",
+        "title": "Making Weekend Plans",
+        "summary": "Arranging to meet up: suggesting a levada walk or a coffee, agreeing a time and place, and confirming by message.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-bureaucracy",
+          "track-host"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-social-making-plans-weekend-1",
+            "base": "O que é que te apetece fazer {time_frame}?",
+            "translation": "What do you feel like doing {time_frame}?",
+            "slots": [
+              {
+                "name": "time_frame",
+                "description": "When?",
+                "options": [
+                  "este fim de semana",
+                  "no sábado",
+                  "no domingo"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Apetece-te ir dar um passeio?",
+                "translation": "Do you feel like going for a walk?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-making-plans-weekend-2",
+            "base": "Que tal {activity}?",
+            "translation": "How about {activity}?",
+            "slots": [
+              {
+                "name": "activity",
+                "description": "An activity",
+                "options": [
+                  "irmos beber um café",
+                  "irmos a uma levada",
+                  "irmos ao mercado"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-making-plans-weekend-3",
+            "base": "Pode ser {time}?",
+            "translation": "Can it be {time}?",
+            "slots": [
+              {
+                "name": "time",
+                "description": "A specific time or day part",
+                "options": [
+                  "sábado de manhã",
+                  "domingo à tarde",
+                  "às dez",
+                  "pelas três"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Que horas te dão jeito?",
+                "translation": "What time suits you?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-making-plans-weekend-4",
+            "base": "Encontramo-nos {place}?",
+            "translation": "Shall we meet {place}?",
+            "slots": [
+              {
+                "name": "place",
+                "description": "A specific place",
+                "options": [
+                  "no café",
+                  "à entrada da levada",
+                  "em frente ao mercado"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-social-making-plans-weekend-5",
+            "base": "Depois mando mensagem a confirmar.",
+            "translation": "I'll send a message to confirm later."
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "levada",
+            "translation": "levada (irrigation channel/walking path)",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Madeira regionalism"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Portugal regionalism"
+          },
+          {
+            "word": "fim de semana",
+            "translation": "weekend",
+            "pronunciation": "feem jee seh-MAH-nah",
+            "register": "neutral"
+          },
+          {
+            "word": "apetece-me",
+            "translation": "I feel like / I fancy",
+            "pronunciation": "ah-peh-TEH-seh-meh",
+            "register": "informal"
+          },
+          {
+            "word": "dar jeito",
+            "translation": "to suit / to be convenient",
+            "pronunciation": "dahr ZHEH-ee-too",
+            "register": "neutral"
+          },
+          {
+            "word": "combinar",
+            "translation": "to arrange / to agree on",
+            "pronunciation": "kohm-bee-NAHR",
+            "register": "neutral"
+          },
+          {
+            "word": "encontrarmo-nos",
+            "translation": "to meet up (us)",
+            "pronunciation": "ehn-kohn-TRAHR-moh-noosh",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-social-making-plans-weekend-1",
+            "title": "Planning a Levada Walk",
+            "context": "Two friends, Maria and João, are chatting casually, planning something for the weekend in Madeira.",
+            "lines": [
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Então, Maria, o que é que te apetece fazer este fim de semana?",
+                "translation": "So, Maria, what do you feel like doing this weekend?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "younger",
+                "text": "Hmm... Apetece-me ir dar um passeio. Que tal uma levada?",
+                "translation": "Hmm... I feel like going for a walk. How about a levada?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Boa ideia! A da Ribeira da Janela, talvez? É bonita.",
+                "translation": "Good idea! The one at Ribeira da Janela, maybe? It's beautiful."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "younger",
+                "text": "Sim, pode ser. Sábado de manhã, às nove e meia?",
+                "translation": "Yes, that can be. Saturday morning, at half past nine?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "P'ra mim, tá ótimo! Encontramo-nos lá à entrada?",
+                "translation": "For me, that's great! Shall we meet there at the entrance?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "younger",
+                "text": "Combinado! Depois mando mensagem a confirmar tudo.",
+                "translation": "Agreed! I'll send a message to confirm everything later."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Levadas: Madeira's Unique Footpaths",
+            "body": "Levadas are ancient irrigation channels unique to Madeira, originally built to carry water from the north to the drier south of the island. Today, many have become popular walking trails, offering stunning views and a chance to experience Madeira's natural beauty. When suggesting activities, a 'levada walk' is a very common and appreciated option."
+          },
+          {
+            "title": "Informal Planning with 'Tu'",
+            "body": "When making plans with friends or peers in Portugal, it's very common and natural to use the informal 'tu' form. Expressions like 'apetece-te' (do you feel like), 'que horas te dão jeito' (what time suits you), and 'encontramo-nos' (shall we meet) are standard for casual arrangements. Confirming via message ('mando mensagem a confirmar') is also typical after a phone call."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a friend in Madeira to make plans for the upcoming weekend. You want to suggest either going for coffee or a walk.",
+          "difficulty": 2,
+          "entry_node": "rp-weekend-start",
+          "nodes": [
+            {
+              "id": "rp-weekend-start",
+              "npc_text": "Olá! Tudo bem? O que é que se passa?",
+              "npc_translation": "Hi! All good? What's up?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Queria combinar qualquer coisa para o fim de semana.",
+                  "translation": "I wanted to arrange something for the weekend.",
+                  "feedback": "Good, you've stated your intention clearly.",
+                  "next": "rp-weekend-suggest-activity"
+                },
+                {
+                  "text": "Estava a pensar no que fazer no sábado.",
+                  "translation": "I was thinking about what to do on Saturday.",
+                  "feedback": "This is also good, specifying the day.",
+                  "next": "rp-weekend-suggest-activity"
+                }
+              ]
+            },
+            {
+              "id": "rp-weekend-suggest-activity",
+              "npc_text": "Ah, boa! O que é que te apetece?",
+              "npc_translation": "Oh, good! What do you feel like doing?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Que tal irmos beber um café?",
+                  "translation": "How about we go for a coffee?",
+                  "feedback": "A simple and common suggestion. 'Irmos' is the correct informal form.",
+                  "next": "rp-weekend-agree-coffee"
+                },
+                {
+                  "text": "Apetece-me ir dar um passeio, talvez uma levada.",
+                  "translation": "I feel like going for a walk, maybe a levada.",
+                  "feedback": "Excellent, a very Madeiran suggestion!",
+                  "next": "rp-weekend-agree-walk"
+                }
+              ]
+            },
+            {
+              "id": "rp-weekend-agree-coffee",
+              "npc_text": "Sim, pode ser! Que horas te dão jeito?",
+              "npc_translation": "Yes, that can be! What time suits you?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Sábado de manhã, às dez?",
+                  "translation": "Saturday morning, at ten?",
+                  "feedback": "Good, clear suggestion of day and time.",
+                  "next": "rp-weekend-suggest-place-coffee"
+                },
+                {
+                  "text": "Domingo à tarde, pelas quatro?",
+                  "translation": "Sunday afternoon, around four?",
+                  "feedback": "Another good option, using 'pelas' for 'around'.",
+                  "next": "rp-weekend-suggest-place-coffee"
+                }
+              ]
+            },
+            {
+              "id": "rp-weekend-agree-walk",
+              "npc_text": "Sim, adoro as levadas! Quando é que podíamos ir?",
+              "npc_translation": "Yes, I love the levadas! When could we go?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Que tal sábado de manhã, bem cedo?",
+                  "translation": "How about Saturday morning, quite early?",
+                  "feedback": "Good, 'bem cedo' is a natural way to say 'quite early'.",
+                  "next": "rp-weekend-suggest-place-walk"
+                },
+                {
+                  "text": "Domingo à tarde, se não estiver muito calor?",
+                  "translation": "Sunday afternoon, if it's not too hot?",
+                  "feedback": "Excellent, adding a condition makes it very natural.",
+                  "next": "rp-weekend-suggest-place-walk"
+                }
+              ]
+            },
+            {
+              "id": "rp-weekend-suggest-place-coffee",
+              "npc_text": "Sim, essa hora é perfeita. Onde é que nos encontramos?",
+              "npc_translation": "Yes, that time is perfect. Where shall we meet?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "No café perto do mercado?",
+                  "translation": "At the café near the market?",
+                  "feedback": "Clear suggestion for a meeting point.",
+                  "next": "rp-weekend-confirm"
+                },
+                {
+                  "text": "Naquela pastelaria nova?",
+                  "translation": "At that new pastry shop?",
+                  "feedback": "Good, using 'naquela' to refer to a known place.",
+                  "next": "rp-weekend-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-weekend-suggest-place-walk",
+              "npc_text": "Sim, ótimo! Onde é que nos encontramos?",
+              "npc_translation": "Yes, great! Where shall we meet?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "À entrada da levada, como da última vez?",
+                  "translation": "At the entrance to the levada, like last time?",
+                  "feedback": "Good, referencing a previous meeting is natural.",
+                  "next": "rp-weekend-confirm"
+                },
+                {
+                  "text": "Podíamos ir no meu carro. Eu apanho-te em casa.",
+                  "translation": "We could go in my car. I'll pick you up at home.",
+                  "feedback": "A practical suggestion, showing initiative.",
+                  "next": "rp-weekend-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-weekend-confirm",
+              "npc_text": "Perfeito! Então está combinado.",
+              "npc_translation": "Perfect! So it's arranged.",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Está combinado! Depois mando mensagem a confirmar.",
+                  "translation": "It's arranged! I'll send a message to confirm later.",
+                  "feedback": "Great, you've confirmed and mentioned the follow-up message."
+                },
+                {
+                  "text": "Pois é! Até lá.",
+                  "translation": "Indeed! See you then.",
+                  "feedback": "A simple and friendly way to end the call."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Call a friend to make weekend plans",
+          "prep": [
+            "Practice suggesting activities like 'ir a uma levada' or 'beber um café'.",
+            "Rehearse asking and suggesting times: 'Que horas te dão jeito?' and 'Pode ser às dez?'",
+            "Prepare to suggest meeting places: 'Encontramo-nos no café?' or 'À entrada da levada?'",
+            "Remember to confirm the plans: 'Está combinado!' and 'Depois mando mensagem a confirmar.'"
+          ],
+          "fallback_phrases": [
+            "Desculpa, não percebi.",
+            "Podes repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Sim, pode ser!",
+            "Que tal...?",
+            "Onde é que nos encontramos?",
+            "Que horas te dão jeito?"
+          ]
+        },
+        "goals": [
+          "Suggest activities for the weekend in a natural way.",
+          "Propose a specific time and place to meet.",
+          "Agree on plans and confirm them with a friend."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-social-making-plans-weekend-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What do you feel like doing {time_frame}?",
+            "answer": "O que é que te apetece fazer {time_frame}?",
+            "source_ref": "pp-sit-social-making-plans-weekend-1"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How about {activity}?",
+            "answer": "Que tal {activity}?",
+            "source_ref": "pp-sit-social-making-plans-weekend-2"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can it be {time}?",
+            "answer": "Pode ser {time}?",
+            "source_ref": "pp-sit-social-making-plans-weekend-3"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Shall we meet {place}?",
+            "answer": "Encontramo-nos {place}?",
+            "source_ref": "pp-sit-social-making-plans-weekend-4"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: levada (irrigation channel/walking path)",
+            "answer": "levada",
+            "source_ref": "levada"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: weekend",
+            "answer": "fim de semana",
+            "source_ref": "fim de semana"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: I feel like / I fancy",
+            "answer": "apetece-me",
+            "source_ref": "apetece-me"
+          },
+          {
+            "id": "rv-sit-social-making-plans-weekend-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-social-making-plans-weekend-1"
+          }
+        ]
+      }
+    }
+  ]
+}

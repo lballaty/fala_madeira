@@ -18,6 +18,7 @@ import { ChatMessage, Lesson, UserProfile } from '../../types';
 import { ShowToast } from '../../hooks/useToast';
 import { errorMessage, logger, userMessage } from '../../lib/logger';
 import { config } from '../../config';
+import { validateText } from '../../lib/validation';
 
 type HistoryMessage = { role: 'user' | 'model', text: string };
 
@@ -141,10 +142,13 @@ export const useTutorSession = ({
     if (user && profile) {
       initChat();
     }
-    // Intentionally re-inits the chat only when the user or selected tutor changes, not
-    // on every profile mutation (streak/xp updates would needlessly reset the session).
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed to user/tutor only
-  }, [user, profile?.selected_tutor_id]);
+    // Re-inits the chat when the user changes, when the profile first becomes available
+    // (profile?.id: undefined -> id on session restore — without this, a restored session
+    // whose profile has no selected_tutor_id would never initialize free-chat), and when the
+    // selected tutor changes. profile?.id is stable across streak/xp mutations, so those
+    // don't needlessly reset the session.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed to user/profile-presence/tutor only
+  }, [user, profile?.id, profile?.selected_tutor_id]);
 
   // Wire the platform speech adapter's callbacks to this component. Re-registered
   // on every toggle so the handlers always close over fresh profile/session state
@@ -365,9 +369,12 @@ export const useTutorSession = ({
 
   const handleAIPractice = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!aiMessage.trim() || isAiLoading || !chatSession) return;
+    if (isAiLoading || !chatSession) return;
+    // Validate + cap the practice-modal input before sending to the edge function (§4).
+    const check = validateText(aiMessage, 'Message', config.limits.tutorMessageMax);
+    if (!check.ok) { showToast(check.reason, 'error'); return; }
 
-    const userMsg = aiMessage;
+    const userMsg = check.value;
     setAiMessage('');
     dispatch({ type: 'APPEND_HISTORY', message: { role: 'user', text: userMsg } });
     dispatch({ type: 'SET_AI_LOADING', isAiLoading: true });
@@ -401,15 +408,18 @@ export const useTutorSession = ({
   };
 
   const handleSendMessage = async () => {
-    if (!inputText.trim() || !chatSession) return;
+    if (!chatSession) return;
+    // Validate + cap the free-chat input before sending to the edge function (§4).
+    const check = validateText(inputText, 'Message', config.limits.tutorMessageMax);
+    if (!check.ok) { showToast(check.reason, 'error'); return; }
 
-    const userMsg: ChatMessage = { role: 'user', text: inputText, timestamp: Date.now() };
+    const userMsg: ChatMessage = { role: 'user', text: check.value, timestamp: Date.now() };
     setChatMessages(prev => [...prev, userMsg]);
     setInputText('');
     setIsTyping(true);
 
     try {
-      const result = await chatSession.sendMessage({ message: inputText });
+      const result = await chatSession.sendMessage({ message: check.value });
       const modelMsg: ChatMessage = { role: 'model', text: result.text, timestamp: Date.now() };
       setChatMessages(prev => [...prev, modelMsg]);
     } catch (error) {

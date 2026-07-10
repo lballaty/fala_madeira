@@ -45,6 +45,56 @@ export const config = {
     cacheLimitOptionsBytes: [25 * 1024 * 1024, 50 * 1024 * 1024, 100 * 1024 * 1024, 200 * 1024 * 1024],
   },
 
+  net: {
+    // Bounded exponential-backoff-with-jitter policy for network/AI calls that lack their own
+    // retry (ENGINEERING-STANDARDS §5). Applied by src/lib/retry.ts to the edge-function choke
+    // point (geminiService.invokeEdgeFunction) — the sync queue and content repository run their
+    // own tick-driven retry and are intentionally left to it (no double retry).
+    /** Max attempts (1 = the initial try, no retry). 3 = initial + 2 retries. */
+    maxAttempts: 3,
+    /** Base delay before the first retry (ms); doubles each subsequent attempt. */
+    baseDelayMs: 400,
+    /** Hard ceiling on any single backoff wait (ms) so a long chain never stalls the UI. */
+    maxDelayMs: 4000,
+    /** Full-jitter fraction (0..1): actual wait = backoff * (1 - jitter*random). */
+    jitterRatio: 0.5,
+  },
+
+  settings: {
+    /**
+     * Debounce window (ms) for persisting a slider/toggle preference to Supabase
+     * (useSettings). Dragging a slider updates local state instantly (optimistic) but
+     * only writes the DB once the value settles for this long — one write, not a spam
+     * of writes per drag frame. localStorage still mirrors on every change (cheap, local).
+     */
+    prefsWriteDebounceMs: 600,
+  },
+
+  limits: {
+    // Length/shape limits for user-submitted free text (ENGINEERING-STANDARDS §4 — validate
+    // inputs before they hit the DB / edge functions). Enforced client-side by
+    // src/lib/validation.ts and mirrored by server-side edge-function validation. Trim +
+    // reject-empty + max-length; never silently truncate a submission the user can't see.
+    /** Tutor/chat message the learner types (free chat + practice modal input). */
+    tutorMessageMax: 2000,
+    /** Correction report text (learning → correction modal). */
+    correctionTextMax: 2000,
+    /** Lesson-request theme (short one-liner). */
+    requestThemeMax: 200,
+    /** Lesson-request description. */
+    requestDescMax: 2000,
+    /** Support-ticket subject. */
+    ticketSubjectMax: 200,
+    /** Support-ticket description. */
+    ticketDescriptionMax: 4000,
+    /** Video-suggestion note. */
+    suggestionNoteMax: 1000,
+    /** Video-suggestion / any URL field. */
+    urlMax: 2048,
+    /** Vocabulary lookup query (single word / short phrase). */
+    vocabQueryMax: 100,
+  },
+
   offline: {
     /** localStorage key: whether TTS clips are saved on device ("Save audio on device"). */
     saveAudioKey: 'offline_save_audio',

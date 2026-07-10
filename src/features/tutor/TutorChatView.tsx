@@ -8,7 +8,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Mic, Play, Send, Settings, Sparkles, Volume2 } from 'lucide-react';
-import Markdown from 'react-markdown';
+import { SafeMarkdown } from '../../components/SafeMarkdown';
 import { cn } from '../../lib/utils';
 import { TUTORS } from '../../data/tutors';
 import { ChatMessage, Lesson, UserProfile } from '../../types';
@@ -158,7 +158,7 @@ export const TutorChatView = ({
                 : "bg-card ios-shadow rounded-tl-none"
             )}>
               <div className="prose prose-sm max-w-none">
-                <Markdown>{msg.text}</Markdown>
+                <SafeMarkdown>{msg.text}</SafeMarkdown>
               </div>
               {msg.role === 'model' && (
                 <div className="flex space-x-2 mt-2">

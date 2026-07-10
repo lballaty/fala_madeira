@@ -1,0 +1,2638 @@
+{
+  "batch": 3,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T09:01:12.727Z",
+  "retag_mapping": {
+    "track-survival": [
+      "sit-d1-greetings-presence",
+      "sit-d2-ordering-in-a-cafe",
+      "sit-d3-numbers-1-10-connectors",
+      "sit-d4-confusion-clarification",
+      "sit-d5-locations-directions",
+      "sit-d8-self-introduction",
+      "sit-d9-time-days-hours",
+      "sit-d10-numbers-11-100-prices",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d27-numbers-100-years",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m6w1-telling-a-story"
+    ],
+    "track-host": [
+      "sit-d12-adjectives-ser-estar",
+      "sit-d13-daily-routines",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d22-the-imperfect-tense",
+      "sit-d26-describing-your-home",
+      "sit-d32-telephone-formal-messages",
+      "sit-d36-the-present-perfect",
+      "sit-d47-formal-writing-funchal",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w3-misunderstandings-repair"
+    ],
+    "track-social": [
+      "sit-d1-greetings-presence",
+      "sit-d4-confusion-clarification",
+      "sit-d6-opinions-preferences",
+      "sit-d7-week-1-stress-test",
+      "sit-d8-self-introduction",
+      "sit-d12-adjectives-ser-estar",
+      "sit-d14-week-2-stress-test",
+      "sit-d15-talking-about-others",
+      "sit-d17-poder-polite-requests",
+      "sit-d20-stronger-connectors",
+      "sit-d21-week-3-stress-test",
+      "sit-d24-wishes-conditionals-polite-requests",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d28-week-4-stress-test",
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d33-opinions-agreeing-disagreeing",
+      "sit-d34-collaborative-future",
+      "sit-d35-week-5-stress-test",
+      "sit-d38-emotions-empathy-comfort",
+      "sit-d39-madeiran-geography-culture",
+      "sit-d41-giving-explanations",
+      "sit-d42-week-6-stress-test",
+      "sit-d43-voces-addressing-groups",
+      "sit-d47-formal-writing-funchal",
+      "sit-d49-week-7-stress-test",
+      "sit-d52-register-social-fluency",
+      "sit-d54-madeira-in-depth",
+      "sit-d56-the-grand-stress-test",
+      "sit-m4w1-neighbourhood-small-talk",
+      "sit-m4w2-festival-arraial",
+      "sit-m4w3-madeiran-expressions",
+      "sit-m4w4-month4-stress-test",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-m5w4-month5-stress-test",
+      "sit-m6w1-telling-a-story",
+      "sit-m6w2-formal-email-office",
+      "sit-m6w3-debating-opinions",
+      "sit-m6w4-final-immersion-test"
+    ],
+    "track-bureaucracy": [
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d32-telephone-formal-messages",
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d47-formal-writing-funchal",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office"
+    ],
+    "track-work": [
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office"
+    ]
+  },
+  "video_results": [
+    {
+      "situationId": "sit-d1-greetings-presence",
+      "url": "https://www.youtube.com/watch?v=pgC1ofHxm7s",
+      "id": "pgC1ofHxm7s",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-d15-talking-about-others",
+      "url": "https://www.youtube.com/watch?v=6F1ld7zv7yM",
+      "id": "6F1ld7zv7yM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-m4w2-festival-arraial",
+      "url": "https://www.youtube.com/watch?v=dd_NTKErny8",
+      "id": "dd_NTKErny8",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 6,
+  "situations": [
+    {
+      "id": "sit-m5w3-misunderstandings-repair",
+      "kind": "course",
+      "title": "Repairing Misunderstandings",
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "course": {
+        "month": 5,
+        "day": 99,
+        "category": "social"
+      },
+      "situation": {
+        "id": "sit-m5w3-misunderstandings-repair",
+        "title": "Repairing Misunderstandings",
+        "summary": "When something is misheard or goes wrong mid-conversation: clarifying, apologising, and getting back on track.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-host"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-m5w3-misunderstandings-repair-1",
+            "base": "Desculpe, não percebi.",
+            "translation": "Sorry, I didn't understand.",
+            "variants": [
+              {
+                "text": "Desculpe, não ouvi bem.",
+                "translation": "Sorry, I didn't hear well.",
+                "register": "neutral"
+              },
+              {
+                "text": "Não percebi, desculpe.",
+                "translation": "I didn't understand, sorry.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m5w3-misunderstandings-repair-2",
+            "base": "Pode repetir, por favor?",
+            "translation": "Can you repeat, please?",
+            "variants": [
+              {
+                "text": "Pode dizer outra vez, por favor?",
+                "translation": "Can you say it again, please?",
+                "register": "neutral"
+              },
+              {
+                "text": "Repete, por favor?",
+                "translation": "Repeat, please?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m5w3-misunderstandings-repair-3",
+            "base": "Quis dizer {item}?",
+            "translation": "Did you mean {item}?",
+            "slots": [
+              {
+                "name": "item",
+                "description": "the item or concept being clarified",
+                "options": [
+                  "o autocarro das dez",
+                  "dois cafés",
+                  "a rua da Levada",
+                  "que está fechado"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m5w3-misunderstandings-repair-4",
+            "base": "Ah, agora percebo. Obrigado/a.",
+            "translation": "Ah, now I understand. Thank you.",
+            "variants": [
+              {
+                "text": "Pois, agora faz sentido. Obrigado/a.",
+                "translation": "Right, now it makes sense. Thank you.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m5w3-misunderstandings-repair-5",
+            "base": "Peço desculpa, enganei-me.",
+            "translation": "I apologize, I made a mistake.",
+            "variants": [
+              {
+                "text": "Desculpe, foi um engano meu.",
+                "translation": "Sorry, it was my mistake.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "perceber",
+            "translation": "to understand",
+            "pronunciation": "per-seh-BER",
+            "register": "neutral"
+          },
+          {
+            "word": "repetir",
+            "translation": "to repeat",
+            "pronunciation": "reh-peh-TEER",
+            "register": "neutral"
+          },
+          {
+            "word": "engano",
+            "translation": "mistake, error",
+            "pronunciation": "en-GAH-noo",
+            "register": "neutral"
+          },
+          {
+            "word": "mal-entendido",
+            "translation": "misunderstanding",
+            "pronunciation": "mal-en-ten-DEE-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "clarificar",
+            "translation": "to clarify",
+            "pronunciation": "kla-ree-fee-KAR",
+            "register": "neutral"
+          },
+          {
+            "word": "pois",
+            "translation": "indeed, right, well (agreement/filler)",
+            "pronunciation": "POYSH",
+            "register": "neutral",
+            "note": "Common interjection in Portugal"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso coffee",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common in Portugal, especially Lisbon/Madeira"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-m5w3-misunderstandings-repair-1",
+            "title": "At the Market Stall",
+            "context": "A tourist is buying vegetables at a market stall in Funchal. There's a slight misunderstanding about the quantity.",
+            "lines": [
+              {
+                "speaker": "Vendedor",
+                "voice_type": "local",
+                "text": "Diga! Precisa de ajuda?",
+                "translation": "Yes! Do you need help?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Sim, por favor. Queria dois quilos de semilhas.",
+                "translation": "Yes, please. I'd like two kilos of potatoes."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "local",
+                "text": "Dois quilos de cenouras, certo?",
+                "translation": "Two kilos of carrots, right?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Desculpe, não percebi. Quis dizer semilhas, não cenouras.",
+                "translation": "Sorry, I didn't understand. I meant potatoes, not carrots."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "local",
+                "text": "Ah, pois, semilhas! Entendido. P'ra já!",
+                "translation": "Ah, right, potatoes! Understood. Coming right up!"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Obrigado.",
+                "translation": "Thank you."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness and Clarification",
+            "body": "When clarifying a misunderstanding in Portuguese, it's always polite to start with 'Desculpe' (Sorry/Excuse me) or 'Peço desculpa' (I apologize). Phrases like 'Não percebi' (I didn't understand) or 'Pode repetir?' (Can you repeat?) are direct but softened by 'por favor' (please). It's common to use 'Pois' or 'Ah, pois' to acknowledge understanding after a clarification, indicating agreement or realization."
+          },
+          {
+            "title": "Madeiran Localisms",
+            "body": "In Madeira, 'semilhas' is the common word for potatoes, whereas in mainland Portugal, 'batatas' is more prevalent. Using local vocabulary like this shows respect for the local culture and will be appreciated. Also, 'P'ra já!' (short for 'Para já!') is a common, quick way for service staff to say 'Coming right up!' or 'Immediately!'."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local pastelaria (pastry shop) in Funchal. You want to order a coffee and a typical Madeiran pastry, but the server mishears part of your order.",
+          "difficulty": 4,
+          "entry_node": "rp-sit-m5w3-misunderstandings-repair-start",
+          "nodes": [
+            {
+              "id": "rp-sit-m5w3-misunderstandings-repair-start",
+              "npc_text": "Bom dia! O que vai ser?",
+              "npc_translation": "Good morning! What will it be?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria uma bica e um bolo de mel.",
+                  "translation": "Good morning. I'd like an espresso and a honey cake.",
+                  "feedback": "Good clear start to your order. Remember 'bica' is common in Madeira.",
+                  "next": "rp-sit-m5w3-misunderstandings-repair-mishear"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m5w3-misunderstandings-repair-mishear",
+              "npc_text": "Uma bica e dois bolos de mel. É isso?",
+              "npc_translation": "An espresso and two honey cakes. Is that right?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Desculpe, não percebi bem. Quis dizer 'um' bolo de mel, não 'dois'.",
+                  "translation": "Sorry, I didn't understand well. I meant 'one' honey cake, not 'two'.",
+                  "feedback": "Excellent! You used 'Desculpe, não percebi bem' and clarified the number directly.",
+                  "next": "rp-sit-m5w3-misunderstandings-repair-clarified"
+                },
+                {
+                  "text": "Não, não. Só um bolo de mel.",
+                  "translation": "No, no. Only one honey cake.",
+                  "feedback": "This works, but 'Desculpe' or 'Peço desculpa' would make it more polite.",
+                  "next": "rp-sit-m5w3-misunderstandings-repair-clarified"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m5w3-misunderstandings-repair-clarified",
+              "npc_text": "Ah, pois! Um bolo de mel. Entendido! Já vai.",
+              "npc_translation": "Ah, right! One honey cake. Understood! Coming up.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado/a.",
+                  "translation": "Thank you.",
+                  "feedback": "Simple and polite ending. You successfully corrected the order.",
+                  "next": "rp-sit-m5w3-misunderstandings-repair-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m5w3-misunderstandings-repair-end",
+              "npc_text": "De nada! Aqui está.",
+              "npc_translation": "You're welcome! Here it is.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Correcting Your Order",
+          "prep": [
+            "Review phrases for asking for repetition and clarifying specific details.",
+            "Practice saying 'Desculpe, não percebi' and 'Quis dizer...?' clearly.",
+            "Mentally prepare for a common misunderstanding, such as a number or a specific item."
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode falar mais devagar?",
+            "Como se diz...?",
+            "Pode escrever, por favor?"
+          ],
+          "likely_responses": [
+            "Ah, sim, entendi.",
+            "Desculpe, foi um engano meu.",
+            "Pois, agora percebo."
+          ]
+        },
+        "goals": [
+          "To effectively ask for repetition and clarification when you don't understand something.",
+          "To politely correct a misunderstanding in a conversation or transaction.",
+          "To use appropriate apologies and acknowledgements in Portuguese."
+        ],
+        "course": {
+          "month": 5,
+          "day": 99,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Sorry, I didn't understand.",
+            "answer": "Desculpe, não percebi.",
+            "source_ref": "pp-sit-m5w3-misunderstandings-repair-1"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you repeat, please?",
+            "answer": "Pode repetir, por favor?",
+            "source_ref": "pp-sit-m5w3-misunderstandings-repair-2"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Did you mean {item}?",
+            "answer": "Quis dizer {item}?",
+            "source_ref": "pp-sit-m5w3-misunderstandings-repair-3"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Ah, now I understand. Thank you.",
+            "answer": "Ah, agora percebo. Obrigado/a.",
+            "source_ref": "pp-sit-m5w3-misunderstandings-repair-4"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to understand",
+            "answer": "perceber",
+            "source_ref": "perceber"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to repeat",
+            "answer": "repetir",
+            "source_ref": "repetir"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: mistake, error",
+            "answer": "engano",
+            "source_ref": "engano"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: misunderstanding",
+            "answer": "mal-entendido",
+            "source_ref": "mal-entendido"
+          },
+          {
+            "id": "rv-sit-m5w3-misunderstandings-repair-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-m5w3-misunderstandings-repair-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-m5w4-month5-stress-test",
+      "kind": "course",
+      "title": "Month 5 Stress Test",
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "course": {
+        "month": 5,
+        "day": 106,
+        "category": "social"
+      },
+      "situation": {
+        "id": "sit-m5w4-month5-stress-test",
+        "title": "Month 5 Stress Test",
+        "summary": "Problem-solving under pressure: complaints, negotiation and misunderstandings combined in messy real-life exchanges.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-m5w4-month5-stress-test-1",
+            "base": "Houve um engano com {o_meu_assunto}.",
+            "translation": "There was a mistake with {my_matter}.",
+            "slots": [
+              {
+                "name": "o_meu_assunto",
+                "description": "the specific item with a mistake",
+                "options": [
+                  "a minha conta",
+                  "o meu registo",
+                  "o meu pedido",
+                  "a minha fatura"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Parece que houve um engano com a minha conta.",
+                "translation": "It seems there was a mistake with my bill.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m5w4-month5-stress-test-2",
+            "base": "Não estou a perceber o que se {passa}.",
+            "translation": "I'm not understanding what's {happening}.",
+            "slots": [
+              {
+                "name": "passa",
+                "description": "the verb for 'to happen'",
+                "options": [
+                  "está a passar",
+                  "passou",
+                  "aconteceu"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não estou a perceber o que se está a passar com esta situação.",
+                "translation": "I'm not understanding what's happening with this situation.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m5w4-month5-stress-test-3",
+            "base": "Gostaria de {resolver} esta situação.",
+            "translation": "I would like to {resolve} this situation.",
+            "slots": [
+              {
+                "name": "resolver",
+                "description": "the action to take",
+                "options": [
+                  "clarificar",
+                  "perceber",
+                  "encontrar uma solução para"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Gostaria de resolver esta situação o mais rápido possível.",
+                "translation": "I'd like to resolve this situation as quickly as possible.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m5w4-month5-stress-test-4",
+            "base": "Será que podemos encontrar uma {solução}?",
+            "translation": "Can we find a {solution}?",
+            "slots": [
+              {
+                "name": "solução",
+                "description": "the desired outcome",
+                "options": [
+                  "alternativa",
+                  "maneira de resolver isto"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "burocracia",
+            "translation": "bureaucracy",
+            "pronunciation": "boo-roh-krah-SEE-uh",
+            "register": "neutral"
+          },
+          {
+            "word": "reclamação",
+            "translation": "complaint",
+            "pronunciation": "reh-klah-mah-SOWM",
+            "register": "neutral"
+          },
+          {
+            "word": "documentação",
+            "translation": "documentation",
+            "pronunciation": "doo-koo-men-tah-SOWM",
+            "register": "neutral"
+          },
+          {
+            "word": "resolver",
+            "translation": "to resolve",
+            "pronunciation": "reh-zohl-VER",
+            "register": "neutral"
+          },
+          {
+            "word": "situação",
+            "translation": "situation",
+            "pronunciation": "see-too-ah-SOWM",
+            "register": "neutral"
+          },
+          {
+            "word": "engano",
+            "translation": "mistake",
+            "pronunciation": "ehn-GAH-noo",
+            "register": "neutral"
+          },
+          {
+            "word": "validar",
+            "translation": "to validate",
+            "pronunciation": "vah-lee-DAR",
+            "register": "neutral"
+          },
+          {
+            "word": "contribuinte",
+            "translation": "taxpayer / taxpayer number",
+            "pronunciation": "kohn-tree-BWEEN-tuh",
+            "register": "neutral",
+            "note": "Commonly used in Portugal and Madeira to refer to one's tax identification number."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-m5w4-month5-stress-test-1",
+            "title": "High Water Bill",
+            "context": "At the Águas da Madeira (Water Company) office, a customer is trying to understand an unusually high water bill.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Bom dia. Diga, em que posso ajudar?",
+                "translation": "Good morning. Tell me, how can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. É sobre a minha fatura da água. Recebi esta aqui, e o valor está muito mais alto do que o normal. Não estou a perceber o que se passa.",
+                "translation": "Good morning. It's about my water bill. I received this one here, and the amount is much higher than usual. I'm not understanding what's happening."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois, entendo. Pode dar-me o seu número de cliente, por favor?",
+                "translation": "Right, I understand. Can you give me your client number, please?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, claro. É o 123456789. Eu costumo pagar tipo 20 euros, e esta veio a 80! Houve algum engano?",
+                "translation": "Yes, of course. It's 123456789. I usually pay around 20 euros, and this one came to 80! Was there some mistake?"
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Deixe-me verificar... Ah, sim. Pelos registos, parece que houve um consumo bastante elevado neste mês. O contador foi lido no dia 15.",
+                "translation": "Let me check... Ah, yes. According to the records, it seems there was a very high consumption this month. The meter was read on the 15th."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Consumo elevado? Mas não estivemos a usar mais água do que o normal. Será que a leitura está correta? Gostaria de resolver esta situação.",
+                "translation": "High consumption? But we weren't using more water than usual. Is the reading correct? I'd like to resolve this situation."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Posso abrir um processo de verificação da leitura ou podemos agendar a visita de um técnico para inspecionar o contador. Qual prefere?",
+                "translation": "I can open a process to verify the reading, or we can schedule a technician's visit to inspect the meter. Which do you prefer?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Complaints",
+            "body": "When making a complaint or raising an issue in Portugal, especially in official settings, it's crucial to maintain a polite and respectful tone. Using phrases like 'Gostaria de...' (I would like to...), 'Será que podemos...' (Can we...), and 'Por favor' (Please) softens your request and is more likely to yield a positive response than an aggressive or demanding approach. Even if you're frustrated, a calm demeanor is always preferred."
+          },
+          {
+            "title": "Patience with Bureaucracy",
+            "body": "Dealing with bureaucracy in Portugal can sometimes be a slow process. It's common for things to take longer than expected, and you might need to visit an office multiple times or wait for documents. Patience and persistence, combined with politeness, are key. Avoid expecting immediate resolutions, and be prepared to follow up if necessary."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You've received an electricity bill from EEM (Empresa de Eletricidade da Madeira) that seems unusually high, even though your consumption habits haven't changed. You go to their customer service office to clarify and hopefully resolve the issue.",
+          "difficulty": 4,
+          "entry_node": "rp-sit-m5w4-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-m5w4-node-1",
+              "npc_text": "Bom dia. Diga, em que posso ajudar hoje?",
+              "npc_translation": "Good morning. Tell me, how can I help today?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. É sobre a minha fatura da eletricidade. Parece que houve um engano com o valor.",
+                  "translation": "Good morning. It's about my electricity bill. It seems there was a mistake with the amount.",
+                  "feedback": "Excellent start! You clearly state the purpose of your visit while remaining polite.",
+                  "next": "rp-sit-m5w4-node-2"
+                },
+                {
+                  "text": "A minha conta da luz está errada. O que se passa?",
+                  "translation": "My electricity bill is wrong. What's happening?",
+                  "feedback": "This is direct, but a bit abrupt. Remember to use more polite phrasing for official complaints.",
+                  "next": "rp-sit-m5w4-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m5w4-node-2",
+              "npc_text": "Pois, entendo. Pode dar-me o seu número de cliente ou o número da fatura, por favor?",
+              "npc_translation": "Right, I understand. Can you give me your client number or the invoice number, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, claro. O número de cliente é o 987654321 e o da fatura é este.",
+                  "translation": "Yes, of course. The client number is 987654321 and the invoice number is this one.",
+                  "feedback": "Good, providing the requested information promptly helps move the process along.",
+                  "next": "rp-sit-m5w4-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m5w4-node-3",
+              "npc_text": "Obrigado. Deixe-me verificar... Ah, sim. Vejo que a fatura de este mês é de 120 euros. Pelos nossos registos, o consumo parece estar correto, com base na leitura do contador.",
+              "npc_translation": "Thank you. Let me check... Ah, yes. I see this month's bill is 120 euros. According to our records, the consumption seems correct, based on the meter reading.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Mas isso não é possível! O meu consumo nunca foi tão alto. Não estou a perceber o que se passa.",
+                  "translation": "But that's not possible! My consumption has never been so high. I'm not understanding what's happening.",
+                  "feedback": "Good, you're expressing doubt and asking for clarification, which is key in a misunderstanding.",
+                  "next": "rp-sit-m5w4-node-4"
+                },
+                {
+                  "text": "Será que a leitura do contador pode estar errada? Gostaria de resolver esta situação.",
+                  "translation": "Could the meter reading be wrong? I'd like to resolve this situation.",
+                  "feedback": "Excellent, you're politely questioning the data and stating your intention to resolve it.",
+                  "next": "rp-sit-m5w4-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m5w4-node-4",
+              "npc_text": "Pois, os nossos técnicos fizeram a leitura no dia 20. Por vezes, um eletrodoméstico avariado ou uma fuga podem causar um aumento. Será que podemos agendar uma visita técnica para verificar o contador e a instalação?",
+              "npc_translation": "Well, our technicians took the reading on the 20th. Sometimes, a faulty appliance or a leak can cause an increase. Can we schedule a technician's visit to check the meter and the installation?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor. Isso seria ótimo. E se o problema não for meu, o que acontece?",
+                  "translation": "Yes, please. That would be great. And if the problem isn't mine, what happens?",
+                  "feedback": "You're accepting the proposed solution and also thinking ahead about potential outcomes.",
+                  "next": "rp-sit-m5w4-node-5"
+                },
+                {
+                  "text": "Não tenho a certeza. Será que podemos encontrar uma solução sem ter de agendar uma visita?",
+                  "translation": "I'm not sure. Can we find a solution without having to schedule a visit?",
+                  "feedback": "You're trying to negotiate, which is good for L4. The agent might insist on the visit for verification.",
+                  "next": "rp-sit-m5w4-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m5w4-node-5",
+              "npc_text": "Se o técnico verificar que o contador está avariado ou a leitura foi incorreta, faremos o acerto na sua próxima fatura. Se for um problema na sua instalação, ele poderá aconselhá-lo sobre o que fazer. Qual é a sua disponibilidade para a visita?",
+              "npc_translation": "If the technician verifies that the meter is faulty or the reading was incorrect, we will adjust your next bill. If it's a problem with your installation, he can advise you on what to do. What is your availability for the visit?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "P'ra já, preciso de ver a minha agenda. Posso ligar mais tarde para agendar?",
+                  "translation": "For now, I need to check my schedule. Can I call back later to schedule?",
+                  "feedback": "A practical response. You're taking control of the next step."
+                },
+                {
+                  "text": "Entendido. Muito obrigado pela sua ajuda. Vou aguardar a visita.",
+                  "translation": "Understood. Thank you very much for your help. I will await the visit.",
+                  "feedback": "A polite and conclusive response, showing you've understood the process."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Contesting an Incorrect Electricity Bill",
+          "prep": [
+            "Review phrases for expressing a problem, asking for clarification, and suggesting solutions.",
+            "Practice explaining the situation clearly and politely, even if you are frustrated.",
+            "Mentally prepare for the possibility of needing to provide documentation or schedule a follow-up."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode explicar isso de outra forma?",
+            "O que posso fazer agora?"
+          ],
+          "likely_responses": [
+            "O seu número de cliente, por favor?",
+            "De acordo com os nossos registos, está correto.",
+            "Não podemos fazer nada sem uma verificação.",
+            "Podemos enviar um técnico para verificar."
+          ]
+        },
+        "goals": [
+          "Successfully explain a problem with a bill or service.",
+          "Ask for clarification and express misunderstanding politely.",
+          "Negotiate or accept a proposed solution to a bureaucratic issue.",
+          "Maintain a polite and persistent tone when dealing with service providers."
+        ],
+        "course": {
+          "month": 5,
+          "day": 106,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: There was a mistake with {my_matter}.",
+            "answer": "Houve um engano com {o_meu_assunto}.",
+            "source_ref": "pp-sit-m5w4-month5-stress-test-1"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'm not understanding what's {happening}.",
+            "answer": "Não estou a perceber o que se {passa}.",
+            "source_ref": "pp-sit-m5w4-month5-stress-test-2"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to {resolve} this situation.",
+            "answer": "Gostaria de {resolver} esta situação.",
+            "source_ref": "pp-sit-m5w4-month5-stress-test-3"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can we find a {solution}?",
+            "answer": "Será que podemos encontrar uma {solução}?",
+            "source_ref": "pp-sit-m5w4-month5-stress-test-4"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: bureaucracy",
+            "answer": "burocracia",
+            "source_ref": "burocracia"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: complaint",
+            "answer": "reclamação",
+            "source_ref": "reclamação"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: documentation",
+            "answer": "documentação",
+            "source_ref": "documentação"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to resolve",
+            "answer": "resolver",
+            "source_ref": "resolver"
+          },
+          {
+            "id": "rv-sit-m5w4-month5-stress-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-m5w4-month5-stress-test-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-m6w1-telling-a-story",
+      "kind": "course",
+      "title": "Telling a Story",
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "course": {
+        "month": 6,
+        "day": 113,
+        "category": "social"
+      },
+      "situation": {
+        "id": "sit-m6w1-telling-a-story",
+        "title": "Telling a Story",
+        "summary": "Holding the floor: recounting something that happened with tenses, connectors and colour, and reacting to others’ stories.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-social"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-m6w1-telling-a-story-1",
+            "base": "Não vais acreditar no que me aconteceu {location}!",
+            "translation": "You won't believe what happened to me {location}!",
+            "slots": [
+              {
+                "name": "location",
+                "description": "where the event happened",
+                "options": [
+                  "na levada",
+                  "no mercado",
+                  "na baixa",
+                  "no autocarro"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não vai acreditar no que me aconteceu!",
+                "translation": "You won't believe what happened to me!",
+                "register": "formal",
+                "note": "Polite address"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w1-telling-a-story-2",
+            "base": "Eu estava a {activity} quando de repente {event}.",
+            "translation": "I was {activity} when suddenly {event}.",
+            "slots": [
+              {
+                "name": "activity",
+                "description": "an ongoing action",
+                "options": [
+                  "fazer compras",
+                  "beber uma bica",
+                  "caminhar",
+                  "esperar pelo autocarro"
+                ]
+              },
+              {
+                "name": "event",
+                "description": "a sudden occurrence",
+                "options": [
+                  "vi um amigo antigo",
+                  "o meu telemóvel tocou",
+                  "começou a chover imenso",
+                  "ouvi um barulho estranho"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w1-telling-a-story-3",
+            "base": "Foi uma situação um bocado {adjective}, mas no fim tudo se resolveu.",
+            "translation": "It was a bit of a {adjective} situation, but in the end everything was resolved.",
+            "slots": [
+              {
+                "name": "adjective",
+                "description": "describing the situation",
+                "options": [
+                  "complicada",
+                  "hilariante",
+                  "inesperada",
+                  "embaraçosa"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w1-telling-a-story-4",
+            "base": "E tu, tens alguma história {type} para contar?",
+            "translation": "And you, do you have any {type} story to tell?",
+            "slots": [
+              {
+                "name": "type",
+                "description": "type of story",
+                "options": [
+                  "engraçada",
+                  "curiosa",
+                  "recente",
+                  "inesperada"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "acontecimento",
+            "translation": "event, occurrence",
+            "pronunciation": "ah-kon-teh-see-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "inesperado",
+            "translation": "unexpected",
+            "pronunciation": "ee-nesh-peh-RAH-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "por acaso",
+            "translation": "by chance, incidentally",
+            "pronunciation": "por ah-KAH-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "resolver-se",
+            "translation": "to be resolved, to sort itself out",
+            "pronunciation": "reh-zol-VER-seh",
+            "register": "neutral"
+          },
+          {
+            "word": "dar-se bem com",
+            "translation": "to get along well with",
+            "pronunciation": "dar-seh ben kon",
+            "register": "informal"
+          },
+          {
+            "word": "ficar sem palavras",
+            "translation": "to be speechless",
+            "pronunciation": "fee-KAR sen pah-LAH-vrahsh",
+            "register": "neutral"
+          },
+          {
+            "word": "imenso",
+            "translation": "a lot, immensely",
+            "pronunciation": "ee-MEN-soo",
+            "register": "neutral",
+            "note": "Common in Portugal/Madeira, often replaces 'muito'"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-m6w1-telling-a-story-1",
+            "title": "A Story from the Market",
+            "context": "Friends catching up at a café in Funchal, one recounts an unusual experience at the market.",
+            "lines": [
+              {
+                "speaker": "Sofia",
+                "voice_type": "local",
+                "text": "Olá, Joana! Como é que é? Não vais acreditar no que me aconteceu no Mercado dos Lavradores no outro dia!",
+                "translation": "Hi, Joana! How are things? You won't believe what happened to me at the Farmers' Market the other day!"
+              },
+              {
+                "speaker": "Joana",
+                "voice_type": "younger",
+                "text": "Diz lá! Estou curiosa. Alguma coisa daquelas que só acontecem contigo?",
+                "translation": "Tell me! I'm curious. Something like those things that only happen to you?"
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "local",
+                "text": "Pois é! Eu estava a escolher umas flores, distraída, quando de repente sinto um puxão na mala. Virei-me e era um macaquinho que tinha fugido de um senhor que vendia fruta lá perto!",
+                "translation": "Exactly! I was choosing some flowers, distracted, when suddenly I felt a tug on my bag. I turned around and it was a little monkey that had escaped from a man selling fruit nearby!"
+              },
+              {
+                "speaker": "Joana",
+                "voice_type": "younger",
+                "text": "Um macaquinho? Estás a brincar! E o que é que ele queria?",
+                "translation": "A little monkey? You're kidding! And what did he want?"
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "local",
+                "text": "Ele agarrou numa banana que eu tinha acabado de comprar! O senhor veio a correr, envergonhado, a pedir desculpa. Foi uma situação um bocado hilariante, mas no fim tudo se resolveu. O macaquinho devolveu a banana depois de uma dentada!",
+                "translation": "He grabbed a banana I had just bought! The man came running, embarrassed, apologizing. It was a bit of a hilarious situation, but in the end everything was resolved. The little monkey returned the banana after a bite!"
+              },
+              {
+                "speaker": "Joana",
+                "voice_type": "younger",
+                "text": "Ahaha, imagino a cena! Fico sem palavras! Só mesmo contigo! E o senhor, ficou muito chateado?",
+                "translation": "Haha, I can imagine the scene! I'm speechless! Only with you! And the man, was he very upset?"
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "local",
+                "text": "Não, ele acabou por rir também. Disse que o macaquinho era um artista e que já não era a primeira vez. Ofereceu-me umas semilhas para compensar. Pois, foi um dia diferente!",
+                "translation": "No, he ended up laughing too. He said the little monkey was an artist and it wasn't the first time. He offered me some potatoes to compensate. Well, it was a different day!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Art of Storytelling in Portugal",
+            "body": "Portuguese conversations often involve recounting personal anecdotes. When telling a story, it's common to use vivid descriptions, express emotions, and build anticipation. Listeners are expected to interject with expressions of surprise, agreement, or curiosity ('Pois!', 'Não me digas!', 'A sério?'). This interaction is a key part of showing engagement and making the story more dynamic."
+          },
+          {
+            "title": "Using Past Tenses for Narrative",
+            "body": "To tell a story effectively in Portuguese, you'll primarily use the 'pretérito imperfeito' (imperfect) for background, ongoing actions, and descriptions in the past ('Eu estava a fazer...', 'Era um dia bonito...'), and the 'pretérito perfeito simples' (simple past) for specific, completed actions that drive the narrative forward ('Senti um puxão', 'Virei-me', 'Ele agarrou'). Mastering the distinction between these two is crucial for recounting events clearly."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at a casual get-together with friends in Funchal. Your friend, Miguel, asks if anything interesting has happened to you recently. You need to tell him a story about an unexpected encounter.",
+          "difficulty": 5,
+          "entry_node": "rp-sit-m6w1-telling-a-story-start",
+          "nodes": [
+            {
+              "id": "rp-sit-m6w1-telling-a-story-start",
+              "npc_text": "Então, como é que é, [Your Name]? Tens novidades? Alguma coisa engraçada ou inesperada que te tenha acontecido ultimamente?",
+              "npc_translation": "So, how are things, [Your Name]? Any news? Anything funny or unexpected that's happened to you lately?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pois, Miguel, não vais acreditar no que me aconteceu na levada no fim de semana!",
+                  "translation": "Well, Miguel, you won't believe what happened to me on the levada this weekend!",
+                  "feedback": "Great start! You've grabbed his attention and set the scene for an unexpected story.",
+                  "next": "rp-sit-m6w1-telling-a-story-node1"
+                },
+                {
+                  "text": "Hmm, deixa-me pensar... Ah, sim, tenho uma história curiosa de quando fui ao Funchal.",
+                  "translation": "Hmm, let me think... Oh, yes, I have a curious story from when I went to Funchal.",
+                  "feedback": "Good, you've acknowledged the question and are preparing to tell a story.",
+                  "next": "rp-sit-m6w1-telling-a-story-node1"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w1-telling-a-story-node1",
+              "npc_text": "Conta lá! Estou a ficar curioso. O que é que se passou?",
+              "npc_translation": "Tell me! I'm getting curious. What happened?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Eu estava a caminhar tranquilamente pela levada, a apreciar a vista, quando de repente ouvi um barulho estranho atrás de mim.",
+                  "translation": "I was walking peacefully along the levada, enjoying the view, when suddenly I heard a strange noise behind me.",
+                  "feedback": "Excellent use of the imperfect for background and simple past for the sudden event. Very descriptive!",
+                  "next": "rp-sit-m6w1-telling-a-story-node2"
+                },
+                {
+                  "text": "Estava na cidade, a comprar um bolo do caco, e de repente uma senhora começou a falar comigo como se me conhecesse.",
+                  "translation": "I was in the city, buying a bolo do caco, and suddenly a lady started talking to me as if she knew me.",
+                  "feedback": "Good, you've set up an intriguing scenario. Keep it going!",
+                  "next": "rp-sit-m6w1-telling-a-story-node2"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w1-telling-a-story-node2",
+              "npc_text": "Um barulho estranho? Ou uma senhora? Não me digas! E então?",
+              "npc_translation": "A strange noise? Or a lady? Don't tell me! And then?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Virei-me e era um cão enorme, mas muito simpático, que me tinha seguido. O dono dele apareceu depois, a rir, a dizer que ele era um 'explorador'.",
+                  "translation": "I turned around and it was a huge, but very friendly, dog that had followed me. His owner appeared afterwards, laughing, saying he was an 'explorer'.",
+                  "feedback": "You've resolved the mystery and added a touch of humor. Good detail with the owner's comment.",
+                  "next": "rp-sit-m6w1-telling-a-story-node3"
+                },
+                {
+                  "text": "A senhora insistia que éramos colegas de escola, mas eu nunca a tinha visto na vida! Foi um bocado embaraçoso, mas ela era tão simpática que acabei por rir.",
+                  "translation": "The lady insisted we were schoolmates, but I had never seen her in my life! It was a bit embarrassing, but she was so nice that I ended up laughing.",
+                  "feedback": "Excellent description of an awkward but ultimately pleasant situation. Good use of 'um bocado'.",
+                  "next": "rp-sit-m6w1-telling-a-story-node3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w1-telling-a-story-node3",
+              "npc_text": "Que história! Imagino a tua cara! Foi uma situação um bocado inesperada, não foi?",
+              "npc_translation": "What a story! I can imagine your face! It was a bit of an unexpected situation, wasn't it?",
+              "npc_voice_type": "younger",
+              "options": [
+                {
+                  "text": "Sim, foi mesmo! Mas foi engraçado. E tu, Miguel, tens alguma história curiosa para contar dos teus dias?",
+                  "translation": "Yes, it really was! But it was funny. And you, Miguel, do you have any curious story to tell from your days?",
+                  "feedback": "Perfect! You've concluded your story and skillfully invited him to share his own, showing good conversational flow.",
+                  "next": "rp-sit-m6w1-telling-a-story-end"
+                },
+                {
+                  "text": "Pois é! Fiquei sem palavras por um momento. Mas agora é uma boa história para contar, não achas?",
+                  "translation": "Exactly! I was speechless for a moment. But now it's a good story to tell, don't you think?",
+                  "feedback": "You've summarized your feelings and invited his agreement, which is a good way to wrap up. Now, let him talk!",
+                  "next": "rp-sit-m6w1-telling-a-story-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w1-telling-a-story-end",
+              "npc_text": "Pois é, é uma ótima história! Por acaso, agora que falas nisso, lembrei-me de uma coisa que me aconteceu na semana passada...",
+              "npc_translation": "Indeed, it's a great story! By the way, now that you mention it, I remembered something that happened to me last week...",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Share Your Tale",
+          "prep": [
+            "Think of a short, interesting, or funny real-life story that happened to you recently in Madeira.",
+            "Practice starting your story with phrases like 'Não vais acreditar no que me aconteceu...' or 'Tenho uma história para te contar...'",
+            "Rehearse using the 'pretérito imperfeito' for background details and the 'pretérito perfeito simples' for key events.",
+            "Think about how you'll invite others to share their stories after yours."
+          ],
+          "fallback_phrases": [
+            "Não sei bem como começar...",
+            "Estou a tentar lembrar-me dos detalhes...",
+            "É um bocado difícil de explicar, mas vou tentar."
+          ],
+          "likely_responses": [
+            "Conta lá!",
+            "Estou a ficar curioso!",
+            "E o que aconteceu depois?",
+            "Não me digas!",
+            "A sério?",
+            "Que história!"
+          ]
+        },
+        "goals": [
+          "Initiate a story about a personal experience using appropriate opening phrases.",
+          "Narrate past events clearly, distinguishing between ongoing actions (imperfect) and completed actions (simple past).",
+          "Use connectors and descriptive language to add detail and color to your story.",
+          "React to interjections and questions from your listener.",
+          "Conclude your story and invite others to share their own experiences."
+        ],
+        "course": {
+          "month": 6,
+          "day": 113,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-m6w1-telling-a-story-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: You won't believe what happened to me {location}!",
+            "answer": "Não vais acreditar no que me aconteceu {location}!",
+            "source_ref": "pp-sit-m6w1-telling-a-story-1"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I was {activity} when suddenly {event}.",
+            "answer": "Eu estava a {activity} quando de repente {event}.",
+            "source_ref": "pp-sit-m6w1-telling-a-story-2"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It was a bit of a {adjective} situation, but in the end everything was resolved.",
+            "answer": "Foi uma situação um bocado {adjective}, mas no fim tudo se resolveu.",
+            "source_ref": "pp-sit-m6w1-telling-a-story-3"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: And you, do you have any {type} story to tell?",
+            "answer": "E tu, tens alguma história {type} para contar?",
+            "source_ref": "pp-sit-m6w1-telling-a-story-4"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: event, occurrence",
+            "answer": "acontecimento",
+            "source_ref": "acontecimento"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: unexpected",
+            "answer": "inesperado",
+            "source_ref": "inesperado"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: by chance, incidentally",
+            "answer": "por acaso",
+            "source_ref": "por acaso"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to be resolved, to sort itself out",
+            "answer": "resolver-se",
+            "source_ref": "resolver-se"
+          },
+          {
+            "id": "rv-sit-m6w1-telling-a-story-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-m6w1-telling-a-story-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-m6w2-formal-email-office",
+      "kind": "course",
+      "title": "Formal Email & Office Portuguese",
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-work",
+        "track-bureaucracy"
+      ],
+      "course": {
+        "month": 6,
+        "day": 120,
+        "category": "work"
+      },
+      "situation": {
+        "id": "sit-m6w2-formal-email-office",
+        "title": "Formal Email & Office Portuguese",
+        "summary": "Writing and speaking formally: a well-structured email, a professional phone call, resident-level register.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-bureaucracy",
+          "track-work"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-m6w2-formal-email-office-1",
+            "base": "Gostaria de {action}.",
+            "translation": "I would like to {action}.",
+            "slots": [
+              {
+                "name": "action",
+                "description": "a formal action",
+                "options": [
+                  "agendar uma reunião",
+                  "solicitar um documento",
+                  "confirmar a minha presença",
+                  "apresentar uma sugestão"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Queria {action}.",
+                "translation": "I wanted to {action}.",
+                "register": "neutral",
+                "note": "Slightly less formal, but still polite."
+              },
+              {
+                "text": "Poderia {action}?",
+                "translation": "Could I {action}?",
+                "register": "formal",
+                "note": "A polite question form."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w2-formal-email-office-2",
+            "base": "Agradeço desde já a sua {cooperation_type}.",
+            "translation": "I thank you in advance for your {cooperation_type}.",
+            "slots": [
+              {
+                "name": "cooperation_type",
+                "description": "type of cooperation or attention",
+                "options": [
+                  "atenção",
+                  "compreensão",
+                  "colaboração",
+                  "pronta resposta"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w2-formal-email-office-3",
+            "base": "Em relação a {topic}, venho por este meio informar que...",
+            "translation": "Regarding {topic}, I hereby inform that...",
+            "slots": [
+              {
+                "name": "topic",
+                "description": "the subject of the communication",
+                "options": [
+                  "a reunião de amanhã",
+                  "o projeto X",
+                  "o meu pedido",
+                  "a situação atual"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w2-formal-email-office-4",
+            "base": "Com os melhores cumprimentos,",
+            "translation": "With best regards,"
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "assunto",
+            "translation": "subject (of an email/discussion)",
+            "pronunciation": "ah-SOON-too",
+            "register": "neutral"
+          },
+          {
+            "word": "anexo",
+            "translation": "attachment",
+            "pronunciation": "ah-NEH-shoo",
+            "register": "neutral"
+          },
+          {
+            "word": "agendar",
+            "translation": "to schedule",
+            "pronunciation": "ah-zheh-NDAR",
+            "register": "neutral"
+          },
+          {
+            "word": "urgente",
+            "translation": "urgent",
+            "pronunciation": "oor-ZHEN-teh",
+            "register": "neutral"
+          },
+          {
+            "word": "disponibilidade",
+            "translation": "availability",
+            "pronunciation": "dees-poh-nee-bee-lee-DAH-deh",
+            "register": "neutral"
+          },
+          {
+            "word": "atenciosamente",
+            "translation": "sincerely (formal closing)",
+            "pronunciation": "ah-ten-see-oh-zah-MEN-teh",
+            "register": "formal"
+          },
+          {
+            "word": "reunião",
+            "translation": "meeting",
+            "pronunciation": "reh-oo-nee-OWN",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-m6w2-formal-email-office-1",
+            "title": "Scheduling a Meeting by Phone",
+            "context": "A new resident calls an administrative office in Funchal to schedule a follow-up meeting about a document.",
+            "lines": [
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Serviço de Atendimento da Câmara Municipal do Funchal. Diga!",
+                "translation": "Funchal City Council Customer Service. Yes, tell me!"
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "teacher",
+                "text": "Bom dia. O meu nome é [Nome do Utente] e gostaria de agendar uma reunião com o Dr. Silva, por favor.",
+                "translation": "Good morning. My name is [User Name] and I would like to schedule a meeting with Dr. Silva, please."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Dr. Silva... Um momento, por favor. Qual é o assunto?",
+                "translation": "Dr. Silva... One moment, please. What is the subject?"
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "teacher",
+                "text": "É sobre o processo do meu registo de residência, que ficou pendente.",
+                "translation": "It's about my residence registration process, which was pending."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Ah, sim. O Dr. Silva tem disponibilidade na próxima terça-feira, às dez da manhã, ou quinta-feira, às três da tarde. Qual prefere?",
+                "translation": "Ah, yes. Dr. Silva has availability next Tuesday, at ten in the morning, or Thursday, at three in the afternoon. Which do you prefer?"
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "teacher",
+                "text": "Terça-feira, às dez, seria perfeito. Muito obrigado!",
+                "translation": "Tuesday, at ten, would be perfect. Thank you very much!"
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "local",
+                "text": "P'ra já! Fica agendado. Tenha um bom dia.",
+                "translation": "You're welcome! It's scheduled. Have a good day."
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "teacher",
+                "text": "Igualmente.",
+                "translation": "You too."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Addressing Officials and Formalities",
+            "body": "In Portuguese formal settings, especially with public services or higher-ranking professionals, it's common to use 'o Dr.' or 'a Dra.' (Doctor) even if the person is not a medical doctor, but holds a university degree (e.g., lawyer, engineer, manager). Always use 'o senhor' or 'a senhora' when addressing someone formally, and 'por favor' and 'muito obrigado/a' frequently. Email closings like 'Com os melhores cumprimentos' or 'Atenciosamente' are standard."
+          },
+          {
+            "title": "Phone Etiquette in Offices",
+            "body": "When calling an office in Portugal, expect a direct 'Diga!' (Tell me!) or 'Sim?' (Yes?) from the person answering, which is not rude but a standard way to invite you to speak. Be ready to state your name and purpose clearly. Don't be surprised by quick speech; it's common, but they will usually slow down if you ask. Always end with a polite closing like 'Obrigado/a' and 'Tenha um bom dia'."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need to send a formal email to your building administrator (o administrador do condomínio) about a recurring issue with the building's main entrance door not closing properly. You also want to suggest a time for a meeting.",
+          "difficulty": 5,
+          "entry_node": "rp-sit-m6w2-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-m6w2-node-1",
+              "npc_text": "Olá! Já tens o rascunho do email para o administrador? Deixa-me ver se está tudo bem formal e claro.",
+              "npc_translation": "Hi! Do you have the draft email for the administrator? Let me see if it's all formal and clear.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, aqui está: 'Caro Sr. Administrador, a porta está avariada. Precisa de reparação. Obrigado.'",
+                  "translation": "Yes, here it is: 'Dear Mr. Administrator, the door is broken. It needs repair. Thanks.'",
+                  "feedback": "Hum... é um bocado direto. Talvez pudesses ser mais formal e explicar melhor a situação. E o tratamento? Ele é 'Dr.' ou 'Exmo. Senhor'?",
+                  "next": "rp-sit-m6w2-node-2"
+                },
+                {
+                  "text": "Sim, tenho aqui. Pensei em começar com: 'Exmo. Senhor Administrador, venho por este meio comunicar uma anomalia na porta de entrada do edifício.'",
+                  "translation": "Yes, I have it here. I thought of starting with: 'Dear Sir Administrator, I hereby wish to communicate an anomaly with the building's entrance door.'",
+                  "feedback": "Muito bem! Excelente início. Agora, como é que vais descrever o problema e sugerir uma solução?",
+                  "next": "rp-sit-m6w2-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w2-node-2",
+              "npc_text": "Ok, vamos tentar de novo. Como é que farias o pedido de forma mais formal e completa, sem ser demasiado abrupto?",
+              "npc_translation": "Okay, let's try again. How would you make the request more formal and complete, without being too abrupt?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Exmo. Senhor Administrador, venho por este meio comunicar uma anomalia na porta de entrada do edifício, que não está a fechar devidamente.",
+                  "translation": "Dear Sir Administrator, I hereby wish to communicate an anomaly with the building's entrance door, which is not closing properly.",
+                  "feedback": "Perfeito! Muito mais adequado. Agora, o que sugeres para resolver e como propões uma reunião?",
+                  "next": "rp-sit-m6w2-node-3"
+                },
+                {
+                  "text": "Olá, a porta continua estragada. Quando é que a vão arranjar?",
+                  "translation": "Hi, the door is still broken. When are they going to fix it?",
+                  "feedback": "Ainda não está lá. Lembra-te que é uma comunicação formal, para o administrador do condomínio. Precisas de usar um registo mais elevado.",
+                  "next": "rp-sit-m6w2-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w2-node-3",
+              "npc_text": "Excelente. Agora, como é que descreves o problema de forma clara e sugere uma possível reunião para discutir a reparação, sem impor a tua agenda?",
+              "npc_translation": "Excellent. Now, how do you describe the problem clearly and suggest a possible meeting to discuss the repair, without imposing your agenda?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Esta situação está a causar transtornos e gostaríamos de agendar uma reunião consigo para debater a solução o mais rapidamente possível.",
+                  "translation": "This situation is causing inconvenience and we would like to schedule a meeting with you to discuss the solution as soon as possible.",
+                  "feedback": "Quase lá! 'Gostaríamos' é bom, mas talvez pudesses ser um pouco mais flexível com o agendamento. E a despedida?",
+                  "next": "rp-sit-m6w2-node-4"
+                },
+                {
+                  "text": "A porta não fecha e é preciso arranjar. Podemos falar na terça-feira?",
+                  "translation": "The door doesn't close and needs fixing. Can we talk on Tuesday?",
+                  "feedback": "Ainda não. Lembra-te da formalidade. Tenta usar 'gostaria de' ou 'seria possível' e uma despedida formal.",
+                  "next": "rp-sit-m6w2-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w2-node-4",
+              "npc_text": "Muito bem. Agora, como podes sugerir a reunião de forma mais diplomática e fechar o email formalmente?",
+              "npc_translation": "Very good. Now, how can you suggest the meeting more diplomatically and close the email formally?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Agradeço a sua atenção para este assunto e gostaria de saber da sua disponibilidade para uma breve reunião, a fim de discutir as opções de reparação. Com os melhores cumprimentos,",
+                  "translation": "I thank you for your attention to this matter and would like to know your availability for a brief meeting, in order to discuss repair options. With best regards,",
+                  "feedback": "Perfeito! É um email muito profissional e cortês. Ele vai apreciar a clareza e o tom. Podes enviar!",
+                  "next": "rp-sit-m6w2-node-end-success"
+                },
+                {
+                  "text": "Espero que a porta seja arranjada. Fico à espera. Abraço,",
+                  "translation": "I hope the door gets fixed. I'll wait. Hug,",
+                  "feedback": "Não, não, 'abraço' é demasiado informal para um administrador! E o tom ainda é um pouco exigente. Tenta ser mais colaborativo e usa uma despedida formal.",
+                  "next": "rp-sit-m6w2-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w2-node-end-success",
+              "npc_text": "Excelente! Este email está impecável. Tenho a certeza que o administrador vai dar a devida atenção. Bom trabalho!",
+              "npc_translation": "Excellent! This email is impeccable. I'm sure the administrator will give it due attention. Good job!",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Write a Formal Email to an Official",
+          "prep": [
+            "Review the formal email phrase patterns and vocabulary.",
+            "Think about the structure of a formal email: greeting, purpose, details, call to action (if any), closing.",
+            "Practice using 'Exmo. Senhor/Senhora' and 'Com os melhores cumprimentos.'"
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode repetir, por favor?",
+            "Não percebi bem, pode explicar de outra forma?",
+            "Estou a tentar ser o mais formal possível."
+          ],
+          "likely_responses": [
+            "Aguardamos o seu contacto.",
+            "Tomamos nota do seu pedido.",
+            "Entraremos em contacto brevemente.",
+            "Agradecemos a sua comunicação."
+          ]
+        },
+        "goals": [
+          "Draft a formal email using appropriate register and vocabulary.",
+          "Understand and use formal greetings and closings in written communication.",
+          "Practice making polite requests and suggestions in a formal context.",
+          "Identify and correct overly informal language in professional settings."
+        ],
+        "course": {
+          "month": 6,
+          "day": 120,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-m6w2-formal-email-office-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to {action}.",
+            "answer": "Gostaria de {action}.",
+            "source_ref": "pp-sit-m6w2-formal-email-office-1"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I thank you in advance for your {cooperation_type}.",
+            "answer": "Agradeço desde já a sua {cooperation_type}.",
+            "source_ref": "pp-sit-m6w2-formal-email-office-2"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Regarding {topic}, I hereby inform that...",
+            "answer": "Em relação a {topic}, venho por este meio informar que...",
+            "source_ref": "pp-sit-m6w2-formal-email-office-3"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: With best regards,",
+            "answer": "Com os melhores cumprimentos,",
+            "source_ref": "pp-sit-m6w2-formal-email-office-4"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: subject (of an email/discussion)",
+            "answer": "assunto",
+            "source_ref": "assunto"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: attachment",
+            "answer": "anexo",
+            "source_ref": "anexo"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to schedule",
+            "answer": "agendar",
+            "source_ref": "agendar"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: urgent",
+            "answer": "urgente",
+            "source_ref": "urgente"
+          },
+          {
+            "id": "rv-sit-m6w2-formal-email-office-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-m6w2-formal-email-office-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-m6w3-debating-opinions",
+      "kind": "course",
+      "title": "Debating & Defending Opinions",
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "course": {
+        "month": 6,
+        "day": 127,
+        "category": "social"
+      },
+      "situation": {
+        "id": "sit-m6w3-debating-opinions",
+        "title": "Debating & Defending Opinions",
+        "summary": "Discussing a real topic with a Madeiran: agreeing, disagreeing, conceding and holding your ground with nuance.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-m6w3-debating-opinions-1",
+            "base": "Na minha opinião, {topic} é {adjective}.",
+            "translation": "In my opinion, {topic} is {adjective}.",
+            "slots": [
+              {
+                "name": "topic",
+                "description": "the subject of the opinion",
+                "options": [
+                  "o turismo na ilha",
+                  "esta situação",
+                  "o novo projeto",
+                  "a proposta"
+                ]
+              },
+              {
+                "name": "adjective",
+                "description": "the quality of the topic",
+                "options": [
+                  "essencial",
+                  "complicado",
+                  "benéfico",
+                  "prejudicial",
+                  "controverso"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Acho que {topic} é {adjective}.",
+                "translation": "I think {topic} is {adjective}.",
+                "register": "informal",
+                "note": "A softer way to express an opinion."
+              },
+              {
+                "text": "Pelo que vejo, {topic} é {adjective}.",
+                "translation": "From what I see, {topic} is {adjective}.",
+                "register": "neutral",
+                "note": "Indicates an opinion based on observation."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w3-debating-opinions-2",
+            "base": "Concordo em parte, mas {point}.",
+            "translation": "I agree in part, but {point}.",
+            "variants": [
+              {
+                "text": "Até percebo o seu lado, mas não me parece que seja assim tão simples.",
+                "translation": "I even understand your side, but it doesn't seem that simple to me.",
+                "register": "neutral"
+              },
+              {
+                "text": "Sim, é verdade, mas por outro lado...",
+                "translation": "Yes, it's true, but on the other hand...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w3-debating-opinions-3",
+            "base": "Tem razão nesse ponto, {detail}.",
+            "translation": "You are right on that point, {detail}.",
+            "slots": [
+              {
+                "name": "detail",
+                "description": "the specific detail being conceded",
+                "options": [
+                  "não tinha pensado nisso",
+                  "é uma preocupação válida",
+                  "é um argumento forte"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Pois, isso é verdade, não tinha pensado nisso.",
+                "translation": "Well, that's true, I hadn't thought of that.",
+                "register": "informal"
+              },
+              {
+                "text": "Admito que o seu argumento é forte.",
+                "translation": "I admit your argument is strong.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w3-debating-opinions-4",
+            "base": "Ainda assim, penso que {counter_argument}.",
+            "translation": "Even so, I think that {counter_argument}.",
+            "slots": [
+              {
+                "name": "counter_argument",
+                "description": "the argument being presented in opposition",
+                "options": [
+                  "os benefícios superam os riscos",
+                  "não podemos ignorar os impactos negativos",
+                  "é preciso um equilíbrio"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Mesmo assim, não mudo a minha opinião sobre {topic}.",
+                "translation": "Even so, I'm not changing my opinion about {topic}.",
+                "register": "informal"
+              },
+              {
+                "text": "Por outro lado, não podemos ignorar que {fact}.",
+                "translation": "On the other hand, we cannot ignore that {fact}.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w3-debating-opinions-5",
+            "base": "Não tenho a certeza se {statement}.",
+            "translation": "I'm not sure if {statement}.",
+            "slots": [
+              {
+                "name": "statement",
+                "description": "the statement being questioned",
+                "options": [
+                  "isso é a melhor solução",
+                  "vai resolver o problema",
+                  "é assim tão simples"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não estou convencido de que {statement}.",
+                "translation": "I'm not convinced that {statement}.",
+                "register": "neutral"
+              },
+              {
+                "text": "Será que {statement} é realmente a melhor solução?",
+                "translation": "Is {statement} really the best solution?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "ponto de vista",
+            "translation": "point of view",
+            "pronunciation": "PON-too dee VEESH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "argumento",
+            "translation": "argument",
+            "pronunciation": "ar-goo-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "perspetiva",
+            "translation": "perspective",
+            "pronunciation": "per-shpe-TEE-vah",
+            "register": "neutral"
+          },
+          {
+            "word": "conceder",
+            "translation": "to concede",
+            "pronunciation": "kon-se-DER",
+            "register": "neutral"
+          },
+          {
+            "word": "discordar",
+            "translation": "to disagree",
+            "pronunciation": "deesh-kor-DAR",
+            "register": "neutral"
+          },
+          {
+            "word": "controversa",
+            "translation": "controversial (f.)",
+            "pronunciation": "kon-tro-VER-sah",
+            "register": "neutral"
+          },
+          {
+            "word": "prejudicial",
+            "translation": "detrimental, harmful",
+            "pronunciation": "pre-joo-dee-see-AL",
+            "register": "neutral"
+          },
+          {
+            "word": "nuance",
+            "translation": "nuance",
+            "pronunciation": "noo-AHN-seh",
+            "register": "neutral"
+          },
+          {
+            "word": "equilíbrio",
+            "translation": "balance",
+            "pronunciation": "eh-kee-LEE-bree-oo",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-m6w3-debating-opinions-1",
+            "title": "Cruise Terminal Expansion",
+            "context": "Ana and Carlos, neighbours in Funchal, are discussing the proposed expansion of the cruise terminal and its impact on the island.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Então, Carlos, o que achas da expansão do terminal de cruzeiros? Parece-me que vai trazer imensos benefícios para a ilha.",
+                "translation": "So, Carlos, what do you think of the cruise terminal expansion? It seems to me it will bring immense benefits to the island."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "older",
+                "text": "Pois, Ana, benefícios... Não tenho a certeza. Já temos turistas a mais em certas alturas, e isto pode ser prejudicial para os locais.",
+                "translation": "Well, Ana, benefits... I'm not sure. We already have too many tourists at certain times, and this could be detrimental to locals."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Prejudicial? Mas pensa no emprego, no comércio! É um investimento enorme que gera riqueza. A meu ver, é essencial para a nossa economia.",
+                "translation": "Detrimental? But think about jobs, about trade! It's a huge investment that generates wealth. In my view, it's essential for our economy."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "older",
+                "text": "Concordo que cria empregos, sim, mas a que custo? Os preços das casas sobem, as ruas ficam cheias. A qualidade de vida dos residentes pode piorar, não achas?",
+                "translation": "I agree it creates jobs, yes, but at what cost? House prices go up, the streets get crowded. Residents' quality of life could worsen, don't you think?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Percebo o teu ponto de vista sobre os preços, é uma preocupação válida. No entanto, com um bom planeamento, podemos gerir isso. Não podemos fechar a porta ao progresso.",
+                "translation": "I understand your point of view about prices, it's a valid concern. However, with good planning, we can manage that. We can't close the door to progress."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "older",
+                "text": "Progresso, sim, mas com cabeça. Ainda assim, penso que devíamos focar-nos mais em diversificar a economia, não depender tanto só do turismo. É uma perspetiva que defendo há anos.",
+                "translation": "Progress, yes, but with thought. Even so, I think we should focus more on diversifying the economy, not depending so much only on tourism. It's a perspective I've defended for years."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Admito que diversificar é importante. Mas o turismo já é uma realidade forte. Acho que temos de otimizar o que já temos e melhorar as infraestruturas. É a minha opinião.",
+                "translation": "I admit that diversifying is important. But tourism is already a strong reality. I think we have to optimize what we already have and improve the infrastructure. That's my opinion."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "older",
+                "text": "Pois, Ana, vamos ver. Espero que tenhas razão e que não nos arrependamos daqui a uns anos.",
+                "translation": "Well, Ana, we'll see. I hope you're right and we don't regret it in a few years."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Expressing Nuance in Madeiran Discussions",
+            "body": "In Madeira, as in mainland Portugal, discussions can be lively and passionate, but it's often valued to express nuance rather than taking extreme stances. Phrases like 'Concordo em parte,' 'Até percebo o seu ponto de vista,' or 'No entanto...' are common to show you've considered the other person's argument even if you ultimately disagree. Direct, aggressive confrontation is generally avoided in casual settings; instead, people tend to 'hold their ground' with polite but firm counter-arguments."
+          },
+          {
+            "title": "The Role of 'Pois' and 'Pois é'",
+            "body": "The words 'Pois' or 'Pois é' are incredibly versatile in Portuguese. In a debate, they can indicate partial agreement ('Pois, é verdade'), reluctant concession ('Pois, tem razão'), or even a 'let's agree to disagree' sentiment ('Pois, vamos ver'). They often serve as a conversational filler that acknowledges what the other person said without necessarily endorsing it fully, allowing for a smoother transition to your own counter-argument."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at your local 'café' in a Madeiran neighbourhood, talking to a neighbour, D.ª Emília, about the controversial proposal to build a new large hotel near a natural reserve.",
+          "difficulty": 5,
+          "entry_node": "rp-sit-m6w3-debating-opinions-start",
+          "nodes": [
+            {
+              "id": "rp-sit-m6w3-debating-opinions-start",
+              "npc_text": "Bom dia! Então, já soube daquela ideia de construir um hotel enorme perto da Reserva Natural? Na minha opinião, é um disparate completo, vai estragar tudo!",
+              "npc_translation": "Good morning! So, have you heard about that idea to build a huge hotel near the Natural Reserve? In my opinion, it's complete nonsense, it will ruin everything!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Concordo plenamente, D.ª Emília. Aquela zona devia ser protegida.",
+                  "translation": "I fully agree, D.ª Emília. That area should be protected.",
+                  "feedback": "You've clearly expressed agreement and reinforced her point. Good start!",
+                  "next": "rp-sit-m6w3-debating-opinions-agree"
+                },
+                {
+                  "text": "Não tenho a certeza se concordo. Talvez traga benefícios para a economia local?",
+                  "translation": "I'm not sure if I agree. Maybe it will bring benefits to the local economy?",
+                  "feedback": "You've politely expressed disagreement and offered a potential counter-argument. Well done for challenging her view respectfully.",
+                  "next": "rp-sit-m6w3-debating-opinions-disagree"
+                },
+                {
+                  "text": "Não estou a par. O que é que dizem sobre o projeto?",
+                  "translation": "I'm not aware. What are they saying about the project?",
+                  "feedback": "Asking for more information is a good way to gather context before forming your opinion. Neutral and effective.",
+                  "next": "rp-sit-m6w3-debating-opinions-clarify"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w3-debating-opinions-agree",
+              "npc_text": "Pois é, não sou só eu que penso assim! É uma vergonha. Aquela zona é tão bonita, devia ser protegida, não achas?",
+              "npc_translation": "That's right, I'm not the only one who thinks so! It's a shame. That area is so beautiful, it should be protected, don't you think?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Exatamente! E os impactos ambientais seriam enormes, sem dúvida.",
+                  "translation": "Exactly! And the environmental impacts would be huge, no doubt.",
+                  "feedback": "You've reinforced your agreement with a strong argument. This leads to a shared conclusion.",
+                  "next": "rp-sit-m6w3-debating-opinions-end-agree"
+                },
+                {
+                  "text": "Sim, mas ao mesmo tempo, o turismo é importante para a ilha. Não há um meio-termo?",
+                  "translation": "Yes, but at the same time, tourism is important for the island. Isn't there a middle ground?",
+                  "feedback": "You've introduced nuance by acknowledging the other side while still holding your ground on protection. Good for L5!",
+                  "next": "rp-sit-m6w3-debating-opinions-compromise"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w3-debating-opinions-disagree",
+              "npc_text": "Ah, não concorda? Mas como é que pode ser bom? Acha que não vai ter impacto no ambiente? É que eu não consigo ver os benefícios.",
+              "npc_translation": "Oh, you don't agree? But how can it be good? Do you think it won't have an impact on the environment? Because I can't see the benefits.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Percebo a sua preocupação, mas o hotel criaria muitos postos de trabalho para os locais.",
+                  "translation": "I understand your concern, but the hotel would create many jobs for locals.",
+                  "feedback": "You've acknowledged her concern before presenting your counter-argument, showing respect while defending your view.",
+                  "next": "rp-sit-m6w3-debating-opinions-compromise"
+                },
+                {
+                  "text": "Ainda assim, penso que com um bom planeamento, os impactos podem ser minimizados.",
+                  "translation": "Even so, I think that with good planning, the impacts can be minimized.",
+                  "feedback": "You're holding your ground and offering a solution. This shows confidence in your opinion.",
+                  "next": "rp-sit-m6w3-debating-opinions-compromise"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w3-debating-opinions-clarify",
+              "npc_text": "Ora, dizem que é para o turismo, para criar empregos. Mas a que preço? É a única reserva que temos ali perto, e já está cheia de gente. Que mais quer saber?",
+              "npc_translation": "Well, they say it's for tourism, to create jobs. But at what cost? It's the only reserve we have nearby, and it's already full of people. What else do you want to know?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Na minha opinião, a proteção ambiental devia vir primeiro que os lucros.",
+                  "translation": "In my opinion, environmental protection should come before profits.",
+                  "feedback": "You've now clearly stated your opinion, aligning with D.ª Emília's initial stance.",
+                  "next": "rp-sit-m6w3-debating-opinions-agree"
+                },
+                {
+                  "text": "Compreendo, mas os empregos são importantes. Talvez haja um equilíbrio possível?",
+                  "translation": "I understand, but jobs are important. Maybe there's a possible balance?",
+                  "feedback": "You're trying to find a middle ground, acknowledging both sides of the argument. This shows good negotiation skills.",
+                  "next": "rp-sit-m6w3-debating-opinions-compromise"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w3-debating-opinions-compromise",
+              "npc_text": "Hum... Percebo o seu ponto de vista, que é preciso um equilíbrio. Mas é difícil encontrar esse equilíbrio quando se fala em lucros tão grandes. Não tenho a certeza que seja possível.",
+              "npc_translation": "Hmm... I understand your point of view, that a balance is needed. But it's difficult to find that balance when talking about such large profits. I'm not sure it's possible.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Admito que é um desafio, mas é essencial tentar. Não podemos desistir de proteger a ilha.",
+                  "translation": "I admit it's a challenge, but it's essential to try. We can't give up on protecting the island.",
+                  "feedback": "You've acknowledged the difficulty but firmly reiterated your core value. This is a good way to conclude with a shared sentiment.",
+                  "next": "rp-sit-m6w3-debating-opinions-end-agree"
+                },
+                {
+                  "text": "Pois, vamos ver o que acontece. Cada um tem a sua perspetiva, não é?",
+                  "translation": "Well, we'll see what happens. Everyone has their own perspective, don't they?",
+                  "feedback": "You've chosen to agree to disagree, acknowledging different perspectives. A common and polite way to end a debate.",
+                  "next": "rp-sit-m6w3-debating-opinions-end-disagree"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w3-debating-opinions-end-agree",
+              "npc_text": "Pois, no fundo, acho que estamos de acordo que é uma situação complicada. Espero que as autoridades pensem bem nisto.",
+              "npc_translation": "Well, deep down, I think we agree that it's a complicated situation. I hope the authorities think carefully about this.",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-sit-m6w3-debating-opinions-end-disagree",
+              "npc_text": "Bem, cada um tem a sua opinião, não é? Vamos ver o que acontece. Mas eu não vou mudar a minha ideia!",
+              "npc_translation": "Well, everyone has their own opinion, don't they? We'll see what happens. But I'm not changing my mind!",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Debate a local issue with a Madeiran",
+          "prep": [
+            "Choose a controversial local topic that interests you (e.g., tourism, environment, urban development).",
+            "Think of three arguments for and three against your own opinion on the topic.",
+            "Practice the phrases for agreeing, disagreeing, and conceding points with nuance."
+          ],
+          "fallback_phrases": [
+            "É um assunto complicado, preciso de pensar mais sobre isso.",
+            "Não tenho uma opinião completamente formada, mas...",
+            "Percebo o que quer dizer, mas é difícil."
+          ],
+          "likely_responses": [
+            "Pois, mas não concordo nada.",
+            "Até pode ser, mas o que é que fazemos com...?",
+            "Tem razão, isso é um bom ponto."
+          ]
+        },
+        "goals": [
+          "Express your opinion clearly and with justification.",
+          "Agree and disagree with nuance, using appropriate expressions.",
+          "Defend your point of view and respond to counter-arguments respectfully."
+        ],
+        "course": {
+          "month": 6,
+          "day": 127,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-m6w3-debating-opinions-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: In my opinion, {topic} is {adjective}.",
+            "answer": "Na minha opinião, {topic} é {adjective}.",
+            "source_ref": "pp-sit-m6w3-debating-opinions-1"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I agree in part, but {point}.",
+            "answer": "Concordo em parte, mas {point}.",
+            "source_ref": "pp-sit-m6w3-debating-opinions-2"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: You are right on that point, {detail}.",
+            "answer": "Tem razão nesse ponto, {detail}.",
+            "source_ref": "pp-sit-m6w3-debating-opinions-3"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Even so, I think that {counter_argument}.",
+            "answer": "Ainda assim, penso que {counter_argument}.",
+            "source_ref": "pp-sit-m6w3-debating-opinions-4"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: point of view",
+            "answer": "ponto de vista",
+            "source_ref": "ponto de vista"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: argument",
+            "answer": "argumento",
+            "source_ref": "argumento"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: perspective",
+            "answer": "perspetiva",
+            "source_ref": "perspetiva"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to concede",
+            "answer": "conceder",
+            "source_ref": "conceder"
+          },
+          {
+            "id": "rv-sit-m6w3-debating-opinions-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-m6w3-debating-opinions-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-m6w4-final-immersion-test",
+      "kind": "course",
+      "title": "Full Immersion Final Test",
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "course": {
+        "month": 6,
+        "day": 134,
+        "category": "social"
+      },
+      "situation": {
+        "id": "sit-m6w4-final-immersion-test",
+        "title": "Full Immersion Final Test",
+        "summary": "The graduation exchange: an unscripted, multi-topic conversation drawing on everything — the integrated-resident test.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-m6w4-final-immersion-test-1",
+            "base": "O que é que achas sobre {topic}?",
+            "translation": "What do you think about {topic}?",
+            "slots": [
+              {
+                "name": "topic",
+                "description": "A subject for discussion",
+                "options": [
+                  "o turismo na ilha",
+                  "a vida noturna no Funchal",
+                  "os novos transportes públicos",
+                  "a cultura madeirense"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Qual é a sua opinião sobre {topic}?",
+                "translation": "What is your opinion on {topic}?",
+                "register": "formal"
+              },
+              {
+                "text": "E tu, o que dizes sobre {topic}?",
+                "translation": "And you, what do you say about {topic}?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w4-final-immersion-test-2",
+            "base": "Pois é, concordo contigo, {reason}.",
+            "translation": "That's right, I agree with you, {reason}.",
+            "slots": [
+              {
+                "name": "reason",
+                "description": "The justification for agreement",
+                "options": [
+                  "faz todo o sentido",
+                  "é uma perspetiva interessante",
+                  "nunca tinha pensado nisso",
+                  "é o que sinto também"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w4-final-immersion-test-3",
+            "base": "Olha, por acaso, nunca tinha pensado nisso dessa forma.",
+            "translation": "Look, actually, I had never thought about it that way.",
+            "variants": [
+              {
+                "text": "É uma perspetiva diferente, não tinha considerado.",
+                "translation": "It's a different perspective, I hadn't considered it.",
+                "register": "neutral"
+              },
+              {
+                "text": "Pois, é um bom ponto. Não tinha visto por esse lado.",
+                "translation": "Right, that's a good point. I hadn't seen it from that angle.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-m6w4-final-immersion-test-4",
+            "base": "Há sempre prós e contras, não é verdade?",
+            "translation": "There are always pros and cons, aren't there?",
+            "variants": [
+              {
+                "text": "Cada situação tem os seus aspetos positivos e negativos.",
+                "translation": "Every situation has its positive and negative aspects.",
+                "register": "formal",
+                "note": "More formal and explicit"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "bica",
+            "translation": "espresso coffee",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common in Portugal for a small coffee"
+          },
+          {
+            "word": "levada",
+            "translation": "irrigation channel; walking trail alongside an irrigation channel",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Specific to Madeira"
+          },
+          {
+            "word": "poncha",
+            "translation": "traditional Madeiran alcoholic drink",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Specific to Madeira"
+          },
+          {
+            "word": "gerir",
+            "translation": "to manage, to run",
+            "pronunciation": "zheh-REER",
+            "register": "neutral"
+          },
+          {
+            "word": "autocarro",
+            "translation": "bus",
+            "pronunciation": "ow-toh-CAH-rroo",
+            "register": "neutral",
+            "note": "Standard pt-PT term"
+          },
+          {
+            "word": "perspetiva",
+            "translation": "perspective, viewpoint",
+            "pronunciation": "per-shpeh-TEE-vah",
+            "register": "neutral"
+          },
+          {
+            "word": "imenso",
+            "translation": "a lot, immensely",
+            "pronunciation": "ee-MEN-soo",
+            "register": "informal",
+            "note": "Common in spoken pt-PT"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-m6w4-final-immersion-test-1",
+            "title": "A Chat at the Café",
+            "context": "You're having a coffee with a local acquaintance, discussing daily life in Funchal.",
+            "lines": [
+              {
+                "speaker": "Marta",
+                "voice_type": "local",
+                "text": "Então, como é que tem corrido a tua estadia cá na Madeira? Já te sentes mesmo em casa?",
+                "translation": "So, how has your stay here in Madeira been going? Do you really feel at home yet?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, sinto-me muito bem, Marta. Adoro a ilha e as pessoas. Há sempre algo novo para descobrir.",
+                "translation": "Yes, I feel very good, Marta. I love the island and the people. There's always something new to discover."
+              },
+              {
+                "speaker": "Marta",
+                "voice_type": "local",
+                "text": "Pois é, a Madeira é especial. Mas olha, o que é que achas do aumento do turismo? Achas que é bom para a ilha?",
+                "translation": "That's right, Madeira is special. But look, what do you think about the increase in tourism? Do you think it's good for the island?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Há sempre prós e contras, não é verdade? Por um lado, traz imensa receita, mas por outro, o Funchal está cada vez mais cheio.",
+                "translation": "There are always pros and cons, aren't there? On one hand, it brings a lot of revenue, but on the other, Funchal is getting more and more crowded."
+              },
+              {
+                "speaker": "Marta",
+                "voice_type": "local",
+                "text": "Exatamente! É um bocado complicado gerir tudo isso. Mas pronto, faz parte.",
+                "translation": "Exactly! It's a bit complicated to manage all that. But well, it's part of it."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Nuance and Indirectness in Conversation",
+            "body": "At L5, conversations often involve discussing topics with multiple facets, like the pros and cons of tourism. Portuguese speakers, especially in informal settings, may express opinions with a degree of nuance or indirectness rather than stark, direct statements. Phrases like 'Há sempre prós e contras' (There are always pros and cons) or 'É um bocado complicado' (It's a bit complicated) allow for a balanced perspective without sounding overly critical or confrontational. Agreement is often signaled with 'Pois é' or 'Exatamente'."
+          },
+          {
+            "title": "The Role of 'Tu' vs. 'O Senhor/A Senhora'",
+            "body": "In Madeira and Portugal, the choice between informal 'tu' and formal 'o senhor/a senhora' is crucial. With peers, friends, or younger people, 'tu' is standard. However, when addressing someone older, in a service context, or in a more formal professional setting, 'o senhor/a senhora' is preferred. Using 'você' with strangers or elders can sound distancing or even impolite. This situation uses 'tu' as it's an informal acquaintance, but the roleplay might introduce a slightly more formal interaction."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local market in Funchal, buying some fruit. The vendor, an older woman, starts a conversation with you about how things have changed on the island.",
+          "difficulty": 5,
+          "entry_node": "rp-sit-m6w4-final-immersion-test-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-m6w4-final-immersion-test-node-1",
+              "npc_text": "Bom dia! Que frutas bonitas que escolheu. Já cá vive há muito tempo, não é? Como é que vê a Madeira a mudar com tanta gente nova e o turismo?",
+              "npc_translation": "Good morning! What beautiful fruits you've chosen. You've been living here for a long time, haven't you? How do you see Madeira changing with so many new people and tourism?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia! Sim, já estou cá há uns anos. Acho que o turismo traz muita coisa boa, mas também desafios.",
+                  "translation": "Good morning! Yes, I've been here for a few years. I think tourism brings a lot of good things, but also challenges.",
+                  "feedback": "Excellent, a balanced and polite response. You acknowledge both sides.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-2"
+                },
+                {
+                  "text": "Bom dia! Pois, a ilha está diferente. Para ser sincera, sinto falta da calma de antigamente.",
+                  "translation": "Good morning! Well, the island is different. To be honest, I miss the calm of the old days.",
+                  "feedback": "Good, you're expressing an honest opinion. Be prepared for the NPC to elaborate on that sentiment.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-3"
+                },
+                {
+                  "text": "Ah, bom dia! A Madeira está sempre a melhorar, não é? É bom ver o progresso.",
+                  "translation": "Ah, good morning! Madeira is always improving, isn't it? It's good to see the progress.",
+                  "feedback": "A positive and slightly less nuanced response. The NPC might probe further.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w4-final-immersion-test-node-2",
+              "npc_text": "Pois é, desafios. Por exemplo, os preços das casas, estão um absurdo! E o trânsito no Funchal, nem se fala. Mas pronto, os turistas também compram as minhas frutas, não é?",
+              "npc_translation": "That's right, challenges. For example, house prices, they're absurd! And the traffic in Funchal, don't even get me started. But well, tourists also buy my fruits, don't they?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "É verdade, os preços são um problema. Mas talvez haja formas de gerir melhor o desenvolvimento.",
+                  "translation": "It's true, prices are a problem. But perhaps there are ways to better manage development.",
+                  "feedback": "Very good, you're offering a constructive thought without sounding preachy.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-5"
+                },
+                {
+                  "text": "Sim, é uma questão complicada. Mas a beleza da ilha continua a ser única.",
+                  "translation": "Yes, it's a complicated issue. But the island's beauty remains unique.",
+                  "feedback": "A good way to acknowledge the problem while shifting to a positive aspect.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w4-final-immersion-test-node-3",
+              "npc_text": "Ah, sim, a calma... Lembro-me de quando o Funchal era mais sossegado. Agora é um corropio! Mas pronto, também há mais coisas para fazer, mais restaurantes...",
+              "npc_translation": "Ah, yes, the calm... I remember when Funchal was quieter. Now it's a hustle and bustle! But well, there are also more things to do, more restaurants...",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "É um equilíbrio difícil, entre o progresso e a tradição. O que é que a senhora mais valoriza na Madeira de hoje?",
+                  "translation": "It's a difficult balance between progress and tradition. What do you value most about Madeira today?",
+                  "feedback": "Excellent, you're asking an open-ended question that invites the NPC to share more personal thoughts.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-7"
+                },
+                {
+                  "text": "Pois é, há mais vida, mas também mais confusão. Mas os mercados como este continuam a ter o seu encanto.",
+                  "translation": "That's right, there's more life, but also more confusion. But markets like this still have their charm.",
+                  "feedback": "Good, you're acknowledging her point and bringing it back to the immediate context.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w4-final-immersion-test-node-4",
+              "npc_text": "Progresso, sim. Mas às vezes parece que esquecem as nossas raízes. Os jovens já não falam a sério sobre as levadas, é só telemóveis e internet. Mas pronto, é o mundo moderno, não é?",
+              "npc_translation": "Progress, yes. But sometimes it seems they forget our roots. Young people don't talk seriously about the levadas anymore, it's just mobile phones and the internet. But well, it's the modern world, isn't it?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "É verdade que as tradições são importantes. Mas talvez as novas gerações encontrem novas formas de as manter vivas?",
+                  "translation": "It's true that traditions are important. But perhaps new generations will find new ways to keep them alive?",
+                  "feedback": "A thoughtful and optimistic response that encourages further discussion.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-7"
+                },
+                {
+                  "text": "Sim, os tempos mudam. Mas as levadas e a natureza da Madeira continuam a ser um grande atrativo, mesmo para os mais novos.",
+                  "translation": "Yes, times change. But the levadas and Madeira's nature continue to be a big attraction, even for the younger ones.",
+                  "feedback": "Good, you're highlighting a persistent positive aspect.",
+                  "next": "rp-sit-m6w4-final-immersion-test-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-m6w4-final-immersion-test-node-5",
+              "npc_text": "Gerir... Pois, isso é que é o problema. Mas quem é que sabe gerir isto tudo? Os políticos? Ai, ai... Mas enfim, obrigada pela conversa e pelas suas compras. Volte sempre!",
+              "npc_translation": "Manage... Well, that's the problem. But who knows how to manage all this? The politicians? Oh dear... But anyway, thank you for the conversation and your purchases. Come back always!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-sit-m6w4-final-immersion-test-node-6",
+              "npc_text": "Ah, sim, a beleza da ilha é inegável. É por isso que tanta gente vem cá, não é? E os nossos mercados, cheios de cor! Obrigada e volte sempre!",
+              "npc_translation": "Ah, yes, the island's beauty is undeniable. That's why so many people come here, isn't it? And our markets, full of color! Thank you and come back always!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-sit-m6w4-final-immersion-test-node-7",
+              "npc_text": "O que mais valorizo? A nossa gente, a nossa forma de ser. Apesar de tudo, somos um povo acolhedor e isso não muda. Obrigada pela conversa, menina. Volte sempre!",
+              "npc_translation": "What I value most? Our people, our way of being. Despite everything, we are a welcoming people and that doesn't change. Thank you for the conversation, dear. Come back always!",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Navigate a Multi-Topic Conversation with a Local",
+          "prep": [
+            "Review vocabulary related to daily life, tourism, and local culture.",
+            "Practice expressing agreement, disagreement, and nuanced opinions politely.",
+            "Rehearse asking follow-up questions to keep a conversation flowing.",
+            "Pay attention to the use of 'o senhor/a senhora' for polite address."
+          ],
+          "fallback_phrases": [
+            "Ah, sim, entendo o que quer dizer.",
+            "É uma boa questão, nunca tinha pensado nisso.",
+            "Pois, é um assunto complexo, não é?",
+            "Obrigada pela sua perspetiva."
+          ],
+          "likely_responses": [
+            "Exatamente, é o que eu penso também.",
+            "Pois, mas também há o outro lado da moeda...",
+            "Ah, sim, mas ainda assim gosto muito da ilha.",
+            "É verdade, os tempos mudam."
+          ]
+        },
+        "goals": [
+          "Engage in an unscripted conversation on multiple topics relevant to Madeiran life.",
+          "Express personal opinions and nuanced views on social and cultural changes.",
+          "Maintain conversational flow by asking relevant follow-up questions.",
+          "Demonstrate appropriate register and politeness with an older local."
+        ],
+        "course": {
+          "month": 6,
+          "day": 134,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What do you think about {topic}?",
+            "answer": "O que é que achas sobre {topic}?",
+            "source_ref": "pp-sit-m6w4-final-immersion-test-1"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: That's right, I agree with you, {reason}.",
+            "answer": "Pois é, concordo contigo, {reason}.",
+            "source_ref": "pp-sit-m6w4-final-immersion-test-2"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Look, actually, I had never thought about it that way.",
+            "answer": "Olha, por acaso, nunca tinha pensado nisso dessa forma.",
+            "source_ref": "pp-sit-m6w4-final-immersion-test-3"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: There are always pros and cons, aren't there?",
+            "answer": "Há sempre prós e contras, não é verdade?",
+            "source_ref": "pp-sit-m6w4-final-immersion-test-4"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso coffee",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: irrigation channel; walking trail alongside an irrigation channel",
+            "answer": "levada",
+            "source_ref": "levada"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: traditional Madeiran alcoholic drink",
+            "answer": "poncha",
+            "source_ref": "poncha"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to manage, to run",
+            "answer": "gerir",
+            "source_ref": "gerir"
+          },
+          {
+            "id": "rv-sit-m6w4-final-immersion-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-m6w4-final-immersion-test-1"
+          }
+        ]
+      }
+    }
+  ]
+}

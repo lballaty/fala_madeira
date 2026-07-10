@@ -1,0 +1,230 @@
+{
+  "done": {
+    "sit-d1-greetings-presence": {
+      "at": "2026-07-10T08:19:15.078Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d2-ordering-in-a-cafe": {
+      "at": "2026-07-10T08:19:46.292Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d3-numbers-1-10-connectors": {
+      "at": "2026-07-10T08:20:07.609Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d4-confusion-clarification": {
+      "at": "2026-07-10T08:20:30.008Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d5-locations-directions": {
+      "at": "2026-07-10T08:20:51.409Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d6-opinions-preferences": {
+      "at": "2026-07-10T08:21:13.224Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d7-week-1-stress-test": {
+      "at": "2026-07-10T08:21:36.440Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d8-self-introduction": {
+      "at": "2026-07-10T08:21:57.395Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d9-time-days-hours": {
+      "at": "2026-07-10T08:22:45.734Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d10-numbers-11-100-prices": {
+      "at": "2026-07-10T08:23:06.644Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d11-first-past-tense": {
+      "at": "2026-07-10T08:23:24.466Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d12-adjectives-ser-estar": {
+      "at": "2026-07-10T08:23:46.486Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d13-daily-routines": {
+      "at": "2026-07-10T08:24:07.603Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d14-week-2-stress-test": {
+      "at": "2026-07-10T08:24:26.938Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d15-talking-about-others": {
+      "at": "2026-07-10T08:24:52.767Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d16-ter-have-need-feel": {
+      "at": "2026-07-10T08:25:18.702Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d17-poder-polite-requests": {
+      "at": "2026-07-10T08:25:55.160Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d18-shopping-clothes-colours": {
+      "at": "2026-07-10T08:26:32.051Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d19-health-pharmacy": {
+      "at": "2026-07-10T08:26:54.755Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d20-stronger-connectors": {
+      "at": "2026-07-10T08:27:18.727Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d21-week-3-stress-test": {
+      "at": "2026-07-10T08:27:43.759Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d22-the-imperfect-tense": {
+      "at": "2026-07-10T08:28:06.986Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d23-the-future-going-to-will": {
+      "at": "2026-07-10T08:28:35.900Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d24-wishes-conditionals-polite-requests": {
+      "at": "2026-07-10T08:28:59.017Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d25-restaurant-ordering-a-full-meal": {
+      "at": "2026-07-10T08:29:29.299Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d26-describing-your-home": {
+      "at": "2026-07-10T08:29:50.680Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d27-numbers-100-years": {
+      "at": "2026-07-10T08:30:12.917Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d28-week-4-stress-test": {
+      "at": "2026-07-10T08:30:52.836Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d29-tu-vs-voce-informal-formal": {
+      "at": "2026-07-10T08:31:12.581Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d30-all-persons-complete-present-tense": {
+      "at": "2026-07-10T08:31:33.007Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d31-all-persons-preterite-imperfect": {
+      "at": "2026-07-10T08:31:53.715Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d32-telephone-formal-messages": {
+      "at": "2026-07-10T08:32:12.218Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d33-opinions-agreeing-disagreeing": {
+      "at": "2026-07-10T08:32:33.493Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d34-collaborative-future": {
+      "at": "2026-07-10T08:33:08.315Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d35-week-5-stress-test": {
+      "at": "2026-07-10T08:33:31.005Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d36-the-present-perfect": {
+      "at": "2026-07-10T08:33:54.992Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d37-reflexive-verbs-all-persons": {
+      "at": "2026-07-10T08:34:16.822Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d38-emotions-empathy-comfort": {
+      "at": "2026-07-10T08:34:34.839Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d39-madeiran-geography-culture": {
+      "at": "2026-07-10T08:34:55.076Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d40-complex-sentences": {
+      "at": "2026-07-10T08:35:16.167Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d41-giving-explanations": {
+      "at": "2026-07-10T08:35:44.004Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d42-week-6-stress-test": {
+      "at": "2026-07-10T08:36:21.358Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d43-voces-addressing-groups": {
+      "at": "2026-07-10T08:36:53.757Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d44-future-subjunctive": {
+      "at": "2026-07-10T08:37:15.757Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d45-the-personal-infinitive": {
+      "at": "2026-07-10T08:37:52.277Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d46-abstract-topics-work-decisions": {
+      "at": "2026-07-10T08:38:20.755Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d47-formal-writing-funchal": {
+      "at": "2026-07-10T08:38:47.765Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d48-local-beaches-hiking": {
+      "at": "2026-07-10T08:39:24.575Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d49-week-7-stress-test": {
+      "at": "2026-07-10T08:39:58.553Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d50-speed-automaticity": {
+      "at": "2026-07-10T08:40:21.986Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d51-tense-system-mastery": {
+      "at": "2026-07-10T08:40:42.213Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d52-register-social-fluency": {
+      "at": "2026-07-10T08:41:03.634Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d53-professional-formal": {
+      "at": "2026-07-10T08:41:37.526Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d54-madeira-in-depth": {
+      "at": "2026-07-10T08:42:00.632Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d55-complex-structures": {
+      "at": "2026-07-10T08:42:21.828Z",
+      "model": "gemini-2.5-flash"
+    },
+    "sit-d56-the-grand-stress-test": {
+      "at": "2026-07-10T08:42:51.284Z",
+      "model": "gemini-2.5-flash"
+    }
+  },
+  "failed": {},
+  "batches": 7
+}

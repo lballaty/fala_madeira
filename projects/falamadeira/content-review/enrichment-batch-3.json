@@ -1,0 +1,2938 @@
+{
+  "batch": 3,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T08:28:59.017Z",
+  "count": 8,
+  "situations": [
+    {
+      "id": "sit-d17-poder-polite-requests",
+      "title": "PODER & Polite Requests",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 11,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d17-1",
+            "title": "At the Café",
+            "context": "A learner wants to sit at a busy café in Funchal and order a coffee.",
+            "lines": [
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Com licença. Posso sentar aqui?",
+                "translation": "Excuse me. May I sit here?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Pois, claro! Pode sentar-se. O que vai ser?",
+                "translation": "Yes, of course! You can sit. What will it be?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Pode trazer-me uma bica, por favor?",
+                "translation": "Can you bring me a bica, please?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "local",
+                "text": "Uma bica? P'ra já!",
+                "translation": "A bica? Coming right up!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "E pode ajudar-me com o Wi-Fi?",
+                "translation": "And can you help me with the Wi-Fi?"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d17-2",
+            "title": "At the Market",
+            "context": "A learner is at a market in Funchal, looking for specific fruit.",
+            "lines": [
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Bom dia. Pode ajudar-me a encontrar maracujás?",
+                "translation": "Good morning. Can you help me find passion fruit?"
+              },
+              {
+                "speaker": "Vendedora",
+                "voice_type": "older",
+                "text": "Maracujás? Temos ali, fresquinhos, da terra!",
+                "translation": "Passion fruit? We have them over there, fresh, from the island!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Desculpe, pode repetir? Não ouvi bem.",
+                "translation": "Sorry, can you repeat? I didn't hear well."
+              },
+              {
+                "speaker": "Vendedora",
+                "voice_type": "local",
+                "text": "Pois, disse que estão ali, ao lado dos dióspiros. Quer provar?",
+                "translation": "Yes, I said they are over there, next to the persimmons. Do you want to try?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, posso provar um?",
+                "translation": "Yes, may I try one?"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are in a small local shop in a Madeiran village, looking for 'bolo do caco'. You need to ask the shopkeeper for help.",
+          "difficulty": 2,
+          "entry_node": "rp-d17-start",
+          "nodes": [
+            {
+              "id": "rp-d17-start",
+              "npc_text": "Bom dia! Posso ajudar?",
+              "npc_translation": "Good morning! Can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, pode ajudar-me a encontrar bolo do caco?",
+                  "translation": "Yes, can you help me find bolo do caco?",
+                  "feedback": "Excellent, direct and polite request!",
+                  "next": "rp-d17-found"
+                },
+                {
+                  "text": "Não consigo encontrar bolo do caco.",
+                  "translation": "I can't find bolo do caco.",
+                  "feedback": "Good, but 'Pode ajudar-me?' is more polite for a request.",
+                  "next": "rp-d17-found_direct"
+                }
+              ]
+            },
+            {
+              "id": "rp-d17-found",
+              "npc_text": "Claro, o bolo do caco está ali, ao fundo, perto dos queijos.",
+              "npc_translation": "Of course, the bolo do caco is over there, at the back, near the cheeses.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Obrigado! Posso pegar um?",
+                  "translation": "Thank you! May I take one?",
+                  "feedback": "Good, asking for permission before taking.",
+                  "next": "rp-d17-end_offer"
+                },
+                {
+                  "text": "Pode repetir, por favor?",
+                  "translation": "Can you repeat, please?",
+                  "feedback": "Smart move if you didn't understand the directions!",
+                  "next": "rp-d17-repeat_path"
+                }
+              ]
+            },
+            {
+              "id": "rp-d17-found_direct",
+              "npc_text": "Ah, sim, está ali, ao fundo. Quer que eu mostre?",
+              "npc_translation": "Ah, yes, it's over there, at the back. Do you want me to show you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor. Pode mostrar-me?",
+                  "translation": "Yes, please. Can you show me?",
+                  "feedback": "Good, accepting the offer politely.",
+                  "next": "rp-d17-end_showing"
+                }
+              ]
+            },
+            {
+              "id": "rp-d17-repeat_path",
+              "npc_text": "Disse que está ao fundo, perto dos queijos. É fácil de ver.",
+              "npc_translation": "I said it's at the back, near the cheeses. It's easy to see.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ah, sim, agora consigo ver. Obrigado!",
+                  "translation": "Ah, yes, now I can see. Thank you!",
+                  "feedback": "Perfect, you understood and thanked them.",
+                  "next": "rp-d17-end_thanks"
+                }
+              ]
+            },
+            {
+              "id": "rp-d17-end_offer",
+              "npc_text": "Pode, claro. Quantos quer?",
+              "npc_translation": "You may, of course. How many do you want?",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d17-end_showing",
+              "npc_text": "Pronto, é aqui. Quer mais alguma coisa?",
+              "npc_translation": "There you go, it's here. Do you want anything else?",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d17-end_thanks",
+              "npc_text": "De nada! Volte sempre.",
+              "npc_translation": "You're welcome! Come back anytime.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Ask for help in a shop",
+          "prep": [
+            "Imagine you are in a shop and need to find a specific item (e.g., 'sumo de maracujá' - passion fruit juice, or 'semilhas' - potatoes).",
+            "Practice asking: 'Pode ajudar-me a encontrar [item]?'",
+            "Prepare to ask for repetition if you don't understand the directions: 'Pode repetir, por favor?'"
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebo.",
+            "Pode falar mais devagar, por favor?",
+            "Pode falar inglês?"
+          ],
+          "likely_responses": [
+            "Sim, claro! O que procura?",
+            "Está ali, ao fundo.",
+            "Não temos isso hoje.",
+            "É por aqui."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d17-1",
+            "base": "Posso sentar aqui?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Posso sentar-me?",
+                "translation": "May I sit?",
+                "register": "neutral"
+              },
+              {
+                "text": "Pode sentar-se aqui.",
+                "translation": "You can sit here.",
+                "register": "formal",
+                "note": "Offer to a stranger"
+              },
+              {
+                "text": "Podes sentar-te aqui.",
+                "translation": "You can sit here.",
+                "register": "informal",
+                "note": "Offer to a friend"
+              },
+              {
+                "text": "Posso sentar-me ao seu lado?",
+                "translation": "May I sit next to you?",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d17-2",
+            "base": "Pode ajudar-me?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Posso ajudar?",
+                "translation": "Can I help?",
+                "register": "neutral",
+                "note": "Offering help"
+              },
+              {
+                "text": "Posso ajudar a senhora?",
+                "translation": "Can I help you (madam)?",
+                "register": "formal",
+                "note": "Offering help politely"
+              },
+              {
+                "text": "Pode ajudar-nos?",
+                "translation": "Can you help us?",
+                "register": "neutral"
+              },
+              {
+                "text": "Pode dar-me uma bica?",
+                "translation": "Can you give me a bica (espresso)?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d17-3",
+            "base": "Pode repetir?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Pode repetir, por favor?",
+                "translation": "Can you repeat, please?",
+                "register": "neutral"
+              },
+              {
+                "text": "Pode dizer outra vez?",
+                "translation": "Can you say it again?",
+                "register": "neutral"
+              },
+              {
+                "text": "Pode falar mais devagar?",
+                "translation": "Can you speak more slowly?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "PODER & Polite Requests",
+            "body": "\"Pode\" is the standard polite way to ask for things in Portugal. It is not rude; it is the engine of politeness."
+          },
+          {
+            "title": "The importance of 'por favor' and 'com licença'",
+            "body": "In Portugal, especially in service interactions, adding 'por favor' (please) to requests is essential for politeness. 'Com licença' (excuse me) is used to get someone's attention before making a request or asking for permission, particularly if they are busy or if you are interrupting."
+          },
+          {
+            "title": "Addressing others with 'Pode' (formal) vs. 'Podes' (informal)",
+            "body": "When using 'poder' for requests, 'Pode' (you can/may, formal) is the standard for addressing strangers, shopkeepers, or anyone you'd show respect to. If you are speaking to a friend or someone you know well, you would use 'Podes' (you can/may, informal). At L1, focusing on 'Pode' is generally safer for polite requests."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d17-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Posso sentar aqui?\"",
+            "answer": "Posso sentar aqui?",
+            "source_ref": "pp-d17-1"
+          },
+          {
+            "id": "rv-d17-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Pode ajudar-me?\"",
+            "answer": "Pode ajudar-me?",
+            "source_ref": "pp-d17-2"
+          },
+          {
+            "id": "rv-d17-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Pode repetir?\"",
+            "answer": "Pode repetir?",
+            "source_ref": "pp-d17-3"
+          },
+          {
+            "id": "rv-d17-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Não consigo.\"",
+            "answer": "Não consigo.",
+            "source_ref": "pp-d17-4"
+          },
+          {
+            "id": "rv-d17-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: I can / may",
+            "answer": "Posso",
+            "source_ref": "Posso"
+          },
+          {
+            "id": "rv-d17-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: He/She/You can / may",
+            "answer": "Pode",
+            "source_ref": "Pode"
+          },
+          {
+            "id": "rv-d17-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: To help",
+            "answer": "Ajudar",
+            "source_ref": "Ajudar"
+          },
+          {
+            "id": "rv-d17-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: To sit",
+            "answer": "Sentar",
+            "source_ref": "Sentar"
+          },
+          {
+            "id": "rv-d17-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d17-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d18-shopping-clothes-colours",
+      "title": "Shopping: Clothes & Colours",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 17,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d18-1",
+            "title": "Asking for an item and colour",
+            "context": "A customer in a clothes shop asks a shop assistant for a jumper in a specific colour and size, then asks to try it on.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia! Diga, tem camisolas em azul?",
+                "translation": "Good morning! Tell me, do you have jumpers in blue?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Bom dia! Sim, temos. Qual tamanho procura?",
+                "translation": "Good morning! Yes, we do. What size are you looking for?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Um tamanho M, por favor.",
+                "translation": "A size M, please."
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Temos esta aqui. Quer experimentar?",
+                "translation": "We have this one here. Would you like to try it on?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, posso experimentar. Onde é o provador?",
+                "translation": "Yes, I can try it on. Where is the fitting room?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "É por ali, à direita.",
+                "translation": "It's over there, to the right."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d18-2",
+            "title": "Trying on and comparing",
+            "context": "A customer is trying on a jacket and asks a friend for their opinion, then compares it to another one.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Então, o que achas? Fica-me bem este casaco?",
+                "translation": "So, what do you think? Does this jacket suit me?"
+              },
+              {
+                "speaker": "Amigo/a",
+                "voice_type": "younger",
+                "text": "Hmm, fica-te bem, mas talvez um tamanho mais pequeno?",
+                "translation": "Hmm, it suits you, but maybe a smaller size?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Pois, também acho. E este vermelho? É mais bonito do que o azul?",
+                "translation": "Yeah, I think so too. And this red one? Is it prettier than the blue one?"
+              },
+              {
+                "speaker": "Amigo/a",
+                "voice_type": "younger",
+                "text": "Sim, o vermelho é mais giro. Mas o azul é mais barato, não é?",
+                "translation": "Yes, the red one is nicer. But the blue one is cheaper, isn't it?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "É um bocado. Mas acho que vou levar o vermelho.",
+                "translation": "A little bit. But I think I'll take the red one."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are in a clothes shop looking for a new jumper. A shop assistant approaches you.",
+          "difficulty": 2,
+          "entry_node": "start_rp",
+          "nodes": [
+            {
+              "id": "start_rp",
+              "npc_text": "Boa tarde! Posso ajudar?",
+              "npc_translation": "Good afternoon! Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, procuro uma camisola.",
+                  "translation": "Yes, I'm looking for a jumper.",
+                  "feedback": "Good, you stated what you're looking for.",
+                  "next": "ask_colour"
+                },
+                {
+                  "text": "Tem camisolas em preto?",
+                  "translation": "Do you have jumpers in black?",
+                  "feedback": "Direct and clear, you asked about the item and colour at once.",
+                  "next": "ask_size"
+                }
+              ]
+            },
+            {
+              "id": "ask_colour",
+              "npc_text": "Certo. Que cor procura?",
+              "npc_translation": "Alright. What colour are you looking for?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria uma em azul.",
+                  "translation": "I'd like one in blue.",
+                  "feedback": "Good, you specified the colour.",
+                  "next": "ask_size"
+                },
+                {
+                  "text": "Tem em vermelho?",
+                  "translation": "Do you have it in red?",
+                  "feedback": "Good, you asked about another colour option.",
+                  "next": "ask_size"
+                }
+              ]
+            },
+            {
+              "id": "ask_size",
+              "npc_text": "Temos esta. Qual é o seu tamanho?",
+              "npc_translation": "We have this one. What is your size?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Um tamanho M, por favor.",
+                  "translation": "A size M, please.",
+                  "feedback": "Excellent, you stated your size clearly.",
+                  "next": "offer_try"
+                },
+                {
+                  "text": "Tem um tamanho maior?",
+                  "translation": "Do you have a bigger size?",
+                  "feedback": "Good, you asked for a larger size.",
+                  "next": "offer_try_larger"
+                },
+                {
+                  "text": "Tem um tamanho mais pequeno?",
+                  "translation": "Do you have a smaller size?",
+                  "feedback": "Good, you asked for a smaller size.",
+                  "next": "offer_try_smaller"
+                }
+              ]
+            },
+            {
+              "id": "offer_try",
+              "npc_text": "Aqui está. Quer experimentar?",
+              "npc_translation": "Here it is. Would you like to try it on?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, posso experimentar. Onde é o provador?",
+                  "translation": "Yes, I can try it on. Where is the fitting room?",
+                  "feedback": "Perfect, you asked to try it on and for the fitting room.",
+                  "next": "fitting_room"
+                },
+                {
+                  "text": "Vou pensar. Obrigado/a.",
+                  "translation": "I'll think about it. Thank you.",
+                  "feedback": "It's okay to decline, but you might miss out on a purchase!",
+                  "next": "end_no_purchase"
+                }
+              ]
+            },
+            {
+              "id": "offer_try_larger",
+              "npc_text": "Sim, aqui tem um tamanho maior. Quer experimentar?",
+              "npc_translation": "Yes, here is a larger size. Would you like to try it on?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "Good, you accepted the offer to try it on.",
+                  "next": "fitting_room"
+                },
+                {
+                  "text": "Não, obrigado/a.",
+                  "translation": "No, thank you.",
+                  "feedback": "You declined, but you can always ask for something else.",
+                  "next": "end_no_purchase"
+                }
+              ]
+            },
+            {
+              "id": "offer_try_smaller",
+              "npc_text": "Sim, aqui tem um tamanho mais pequeno. Quer experimentar?",
+              "npc_translation": "Yes, here is a smaller size. Would you like to try it on?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "Good, you accepted the offer to try it on.",
+                  "next": "fitting_room"
+                },
+                {
+                  "text": "Não, obrigado/a.",
+                  "translation": "No, thank you.",
+                  "feedback": "You declined, but you can always ask for something else.",
+                  "next": "end_no_purchase"
+                }
+              ]
+            },
+            {
+              "id": "fitting_room",
+              "npc_text": "O provador é por ali, à direita.",
+              "npc_translation": "The fitting room is over there, to the right.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado/a.",
+                  "translation": "Thank you.",
+                  "feedback": "Polite and ready to try it on.",
+                  "next": "after_try"
+                }
+              ]
+            },
+            {
+              "id": "after_try",
+              "npc_text": "Então, como fica? Fica-lhe bem?",
+              "npc_translation": "So, how is it? Does it suit you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, fica-me bem. Vou levar!",
+                  "translation": "Yes, it suits me. I'll take it!",
+                  "feedback": "Great! You made a decision to buy it.",
+                  "next": "confirm_purchase"
+                },
+                {
+                  "text": "Não me fica bem. É um bocado grande.",
+                  "translation": "It doesn't suit me. It's a bit big.",
+                  "feedback": "Good, you explained why it doesn't fit.",
+                  "next": "ask_smaller_again"
+                },
+                {
+                  "text": "Não me fica bem. É um bocado pequeno.",
+                  "translation": "It doesn't suit me. It's a bit small.",
+                  "feedback": "Good, you explained why it doesn't fit.",
+                  "next": "ask_larger_again"
+                },
+                {
+                  "text": "Não gosto. Não vou levar.",
+                  "translation": "I don't like it. I won't take it.",
+                  "feedback": "It's fine to decide not to buy it.",
+                  "next": "end_no_purchase"
+                }
+              ]
+            },
+            {
+              "id": "ask_smaller_again",
+              "npc_text": "Ah, ok. Quer experimentar um tamanho mais pequeno?",
+              "npc_translation": "Oh, okay. Would you like to try a smaller size?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "Good, you're giving it another try.",
+                  "next": "offer_try_smaller"
+                },
+                {
+                  "text": "Não, não faz mal. Obrigado/a.",
+                  "translation": "No, never mind. Thank you.",
+                  "feedback": "You politely declined further help.",
+                  "next": "end_no_purchase"
+                }
+              ]
+            },
+            {
+              "id": "ask_larger_again",
+              "npc_text": "Ah, ok. Quer experimentar um tamanho maior?",
+              "npc_translation": "Oh, okay. Would you like to try a larger size?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "Good, you're giving it another try.",
+                  "next": "offer_try_larger"
+                },
+                {
+                  "text": "Não, não faz mal. Obrigado/a.",
+                  "translation": "No, never mind. Thank you.",
+                  "feedback": "You politely declined further help.",
+                  "next": "end_no_purchase"
+                }
+              ]
+            },
+            {
+              "id": "confirm_purchase",
+              "npc_text": "Excelente! Vai levar então. Quer pagar aqui?",
+              "npc_translation": "Excellent! You'll take it then. Would you like to pay here?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "You confirmed your purchase.",
+                  "next": "end_goodbye"
+                }
+              ]
+            },
+            {
+              "id": "end_goodbye",
+              "npc_text": "Muito obrigado/a e volte sempre!",
+              "npc_translation": "Thank you very much and come back anytime!",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "end_no_purchase",
+              "npc_text": "Ok, sem problema. Se precisar de mais alguma coisa, diga.",
+              "npc_translation": "Okay, no problem. If you need anything else, just say.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Buy a new jacket",
+          "prep": [
+            "Memorize the names of clothing items: casaco, camisola, calças, sapatos.",
+            "Practice the colours: azul, vermelho, preto, branco, verde, amarelo.",
+            "Prepare to ask for your size: 'Um tamanho M, por favor.'",
+            "Think about how you'll ask to try something on: 'Posso experimentar?'"
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir?",
+            "Pode falar mais devagar, por favor?",
+            "Quanto custa?"
+          ],
+          "likely_responses": [
+            "Claro, qual tamanho procura?",
+            "O provador é por ali.",
+            "Fica-lhe muito bem!",
+            "É este o que quer?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d18-1",
+            "base": "Tem esta camisola em azul?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tem estas calças em preto?",
+                "translation": "Do you have these trousers in black?",
+                "register": "neutral"
+              },
+              {
+                "text": "Tem este casaco em verde?",
+                "translation": "Do you have this jacket in green?",
+                "register": "neutral"
+              },
+              {
+                "text": "Tem estes sapatos em branco?",
+                "translation": "Do you have these shoes in white?",
+                "register": "neutral"
+              },
+              {
+                "text": "Tem esta em vermelho?",
+                "translation": "Do you have this one in red?",
+                "register": "neutral",
+                "note": "Referring to an implicit item like 'camisola'"
+              },
+              {
+                "text": "Não tem em amarelo?",
+                "translation": "Don't you have it in yellow?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d18-2",
+            "base": "Posso experimentar?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Posso experimentar estas calças?",
+                "translation": "Can I try on these trousers?",
+                "register": "neutral"
+              },
+              {
+                "text": "Onde é o provador?",
+                "translation": "Where is the fitting room?",
+                "register": "neutral"
+              },
+              {
+                "text": "Queria experimentar, por favor.",
+                "translation": "I'd like to try it on, please.",
+                "register": "neutral"
+              },
+              {
+                "text": "Posso ir ao provador?",
+                "translation": "Can I go to the fitting room?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d18-3",
+            "base": "Fica-me bem.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Não me fica bem.",
+                "translation": "It doesn't suit me.",
+                "register": "neutral"
+              },
+              {
+                "text": "Fica-lhe bem.",
+                "translation": "It suits you.",
+                "register": "neutral",
+                "note": "Polite form, often said by a shop assistant"
+              },
+              {
+                "text": "Acha que me fica bem?",
+                "translation": "Do you think it suits me?",
+                "register": "neutral"
+              },
+              {
+                "text": "Não me serve.",
+                "translation": "It doesn't fit me.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d18-4",
+            "base": "Mais barato do que...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "É mais caro do que pensava.",
+                "translation": "It's more expensive than I thought.",
+                "register": "neutral"
+              },
+              {
+                "text": "Este é mais pequeno do que o outro.",
+                "translation": "This one is smaller than the other one.",
+                "register": "neutral"
+              },
+              {
+                "text": "Estas calças são mais bonitas.",
+                "translation": "These trousers are prettier.",
+                "register": "neutral"
+              },
+              {
+                "text": "Prefiro o mais barato.",
+                "translation": "I prefer the cheaper one.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Shopping: Clothes & Colours",
+            "body": "Colours must agree with the gender of the noun. \"Uma camisola vermelha\" but \"Um casaco vermelho\"."
+          },
+          {
+            "title": "Asking for help in shops",
+            "body": "In Portugal, to get a shop assistant's attention, you can say 'Diga!' (Tell me!) or 'Faz favor!' (Please!). When addressing them, it's common to use the null subject (implying 'you' politely) or 'o senhor / a senhora' rather than 'você', which can sound too direct or even distancing in some contexts. For example, 'Precisa de ajuda?' (Do you need help?) is more common than 'Você precisa de ajuda?'."
+          },
+          {
+            "title": "Trying on clothes",
+            "body": "When shopping for clothes, if you want to try something on, you'll ask for 'o provador' (the fitting room). It's expected that you use the designated changing areas rather than trying things on in the open shop floor."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d18-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tem esta camisola em azul?\"",
+            "answer": "Tem esta camisola em azul?",
+            "source_ref": "pp-d18-1"
+          },
+          {
+            "id": "rv-d18-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Posso experimentar?\"",
+            "answer": "Posso experimentar?",
+            "source_ref": "pp-d18-2"
+          },
+          {
+            "id": "rv-d18-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Fica-me bem.\"",
+            "answer": "Fica-me bem.",
+            "source_ref": "pp-d18-3"
+          },
+          {
+            "id": "rv-d18-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Mais barato do que...\"",
+            "answer": "Mais barato do que...",
+            "source_ref": "pp-d18-4"
+          },
+          {
+            "id": "rv-d18-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Jumper / Sweatshirt",
+            "answer": "Camisola",
+            "source_ref": "Camisola"
+          },
+          {
+            "id": "rv-d18-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Trousers",
+            "answer": "Calças",
+            "source_ref": "Calças"
+          },
+          {
+            "id": "rv-d18-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Jacket / Coat",
+            "answer": "Casaco",
+            "source_ref": "Casaco"
+          },
+          {
+            "id": "rv-d18-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Shoes",
+            "answer": "Sapatos",
+            "source_ref": "Sapatos"
+          },
+          {
+            "id": "rv-d18-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d18-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d19-health-pharmacy",
+      "title": "Health & Pharmacy",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d19-1",
+            "title": "At the Pharmacy for a Sore Throat",
+            "context": "A person goes to a pharmacy in Madeira to get something for a sore throat.",
+            "lines": [
+              {
+                "speaker": "Farmacêutico",
+                "voice_type": "service",
+                "text": "Boa tarde! Em que posso ajudar?",
+                "translation": "Good afternoon! How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde. Dói-me a garganta, um bocado.",
+                "translation": "Good afternoon. My throat hurts, a little."
+              },
+              {
+                "speaker": "Farmacêutico",
+                "voice_type": "service",
+                "text": "Pois, e tem mais algum sintoma? Febre, tosse?",
+                "translation": "Right, and do you have any other symptoms? Fever, cough?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Não, só a garganta. E tenho um bocado de tosse, sim.",
+                "translation": "No, just my throat. And I have a bit of a cough, yes."
+              },
+              {
+                "speaker": "Farmacêutico",
+                "voice_type": "service",
+                "text": "OK. Tenho aqui um spray e uns comprimidos para a garganta. Quer ver?",
+                "translation": "Okay. I have a spray and some throat lozenges here. Would you like to see?"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d19-2",
+            "title": "Understanding Medication Instructions",
+            "context": "A customer is asking a pharmacist about how to take a new medication.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Desculpe, este comprimido, quantas vezes por dia devo tomar?",
+                "translation": "Excuse me, this tablet, how many times a day should I take it?"
+              },
+              {
+                "speaker": "Farmacêutico",
+                "voice_type": "teacher",
+                "text": "Deve tomar um comprimido, duas vezes por dia.",
+                "translation": "You should take one tablet, twice a day."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "E é antes ou depois das refeições?",
+                "translation": "And is it before or after meals?"
+              },
+              {
+                "speaker": "Farmacêutico",
+                "voice_type": "teacher",
+                "text": "É depois das refeições, com um copo de água.",
+                "translation": "It's after meals, with a glass of water."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Pois, obrigada!",
+                "translation": "Right, thank you!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a pharmacy in Funchal. You need to buy something for a headache and tell the pharmacist about your allergy.",
+          "difficulty": 2,
+          "entry_node": "rp-d19-start",
+          "nodes": [
+            {
+              "id": "rp-d19-start",
+              "npc_text": "Boa tarde! Diga, em que posso ajudar?",
+              "npc_translation": "Good afternoon! Tell me, how can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Dói-me a cabeça.",
+                  "translation": "Good afternoon. My head hurts.",
+                  "feedback": "You clearly stated your symptom. Good start!",
+                  "next": "rp-d19-symptom"
+                },
+                {
+                  "text": "Tenho uma dor de cabeça.",
+                  "translation": "I have a headache.",
+                  "feedback": "Correctly described your pain. Well done.",
+                  "next": "rp-d19-symptom"
+                }
+              ]
+            },
+            {
+              "id": "rp-d19-symptom",
+              "npc_text": "Pois, e tem mais alguma coisa? Febre?",
+              "npc_translation": "Right, and do you have anything else? Fever?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, só a cabeça.",
+                  "translation": "No, just my head.",
+                  "feedback": "Simple and direct. Good!",
+                  "next": "rp-d19-allergy_ask"
+                },
+                {
+                  "text": "Só me dói a cabeça.",
+                  "translation": "Only my head hurts.",
+                  "feedback": "Clear and concise. Perfect.",
+                  "next": "rp-d19-allergy_ask"
+                }
+              ]
+            },
+            {
+              "id": "rp-d19-allergy_ask",
+              "npc_text": "OK. Tenho aqui um bom comprimido para a dor de cabeça. Tem alguma alergia?",
+              "npc_translation": "Okay. I have a good tablet here for headaches. Do you have any allergies?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, tenho alergia a aspirina.",
+                  "translation": "Yes, I have an allergy to aspirin.",
+                  "feedback": "You correctly stated your allergy using the known phrase.",
+                  "next": "rp-d19-allergy_given"
+                },
+                {
+                  "text": "Sou alérgico a aspirina.",
+                  "translation": "I am allergic to aspirin.",
+                  "feedback": "Another good way to state your allergy. Excellent.",
+                  "next": "rp-d19-allergy_given"
+                }
+              ]
+            },
+            {
+              "id": "rp-d19-allergy_given",
+              "npc_text": "Ah, OK. Então, este é melhor. É um comprimido. Quer levar?",
+              "npc_translation": "Ah, okay. So, this one is better. It's a tablet. Do you want it?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor. Quantas vezes por dia?",
+                  "translation": "Yes, please. How many times a day?",
+                  "feedback": "You asked for the dosage, which is important. Good job.",
+                  "next": "rp-d19-dosage_clarify"
+                }
+              ]
+            },
+            {
+              "id": "rp-d19-dosage_clarify",
+              "npc_text": "Tome um comprimido, duas vezes por dia, depois das refeições.",
+              "npc_translation": "Take one tablet, twice a day, after meals.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois, obrigada!",
+                  "translation": "Right, thank you!",
+                  "feedback": "You understood the instructions and thanked the pharmacist. Mission accomplished!"
+                },
+                {
+                  "text": "Depois das refeições, certo? Obrigada.",
+                  "translation": "After meals, right? Thank you.",
+                  "feedback": "You confirmed the instructions, showing good comprehension."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Pharmacy Visit: Headache & Allergy",
+          "prep": [
+            "Practice saying 'Dói-me a cabeça' (My head hurts).",
+            "Rehearse 'Tenho alergia a aspirina' (I have an allergy to aspirin).",
+            "Learn to ask 'Quantas vezes por dia?' (How many times a day?)"
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi.",
+            "Mais devagar, por favor."
+          ],
+          "likely_responses": [
+            "Em que posso ajudar?",
+            "O que sente?",
+            "Tem mais algum sintoma?",
+            "Tem alguma alergia?",
+            "Quantas vezes por dia?",
+            "Antes ou depois das refeições?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d19-1",
+            "base": "Dói-me a garganta.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Dói-me um bocado a garganta.",
+                "translation": "My throat hurts a little.",
+                "register": "neutral"
+              },
+              {
+                "text": "A garganta dói-me imenso.",
+                "translation": "My throat hurts a lot.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tenho dores na garganta.",
+                "translation": "I have pain in my throat.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d19-2",
+            "base": "Tenho alergia a...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Sou alérgico a penicilina.",
+                "translation": "I am allergic to penicillin.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tenho uma alergia a pólen.",
+                "translation": "I have an allergy to pollen.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d19-3",
+            "base": "Quantas vezes por dia?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Com que frequência devo tomar?",
+                "translation": "How often should I take it?",
+                "register": "neutral"
+              },
+              {
+                "text": "Quantas vezes por dia devo tomar?",
+                "translation": "How many times a day should I take it?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d19-4",
+            "base": "Antes das refeições.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Depois das refeições.",
+                "translation": "After meals.",
+                "register": "neutral"
+              },
+              {
+                "text": "Com as refeições.",
+                "translation": "With meals.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Health & Pharmacy",
+            "body": "\"Dói-me a cabeça\" literally means \"the head hurts me\". This is the most natural way to express pain in Portuguese."
+          },
+          {
+            "title": "Pharmacies as a First Stop",
+            "body": "In Portugal, pharmacies often serve as a first point of contact for minor health issues. Pharmacists are highly trained and can provide advice and over-the-counter medication for common ailments, sometimes even suggesting a doctor's visit if necessary. It's common to describe your symptoms directly to the pharmacist."
+          },
+          {
+            "title": "Politeness in Service Interactions",
+            "body": "When interacting with service staff, like a pharmacist, it's polite to use 'o senhor'/'a senhora' (the formal 'you') or simply use the third person singular with verbs (e.g., 'Em que posso ajudar?' meaning 'How can I help?' rather than 'How can I help you?'). Always start with a 'Bom dia'/'Boa tarde' and end with an 'Obrigado/a'."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d19-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Dói-me a garganta.\"",
+            "answer": "Dói-me a garganta.",
+            "source_ref": "pp-d19-1"
+          },
+          {
+            "id": "rv-d19-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tenho alergia a...\"",
+            "answer": "Tenho alergia a...",
+            "source_ref": "pp-d19-2"
+          },
+          {
+            "id": "rv-d19-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Quantas vezes por dia?\"",
+            "answer": "Quantas vezes por dia?",
+            "source_ref": "pp-d19-3"
+          },
+          {
+            "id": "rv-d19-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Antes das refeições.\"",
+            "answer": "Antes das refeições.",
+            "source_ref": "pp-d19-4"
+          },
+          {
+            "id": "rv-d19-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Throat",
+            "answer": "Garganta",
+            "source_ref": "Garganta"
+          },
+          {
+            "id": "rv-d19-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Stomach",
+            "answer": "Estômago",
+            "source_ref": "Estômago"
+          },
+          {
+            "id": "rv-d19-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Back",
+            "answer": "Costas",
+            "source_ref": "Costas"
+          },
+          {
+            "id": "rv-d19-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Prescription",
+            "answer": "Receita",
+            "source_ref": "Receita"
+          },
+          {
+            "id": "rv-d19-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d19-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d20-stronger-connectors",
+      "title": "Stronger Connectors",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 12,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d20-1",
+            "title": "Shopping for bread",
+            "context": "Two friends, Ana and Carlos, are talking about buying bread at the local bakery.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Fui à padaria buscar pão, mas já não havia.",
+                "translation": "I went to the bakery to get bread, but there wasn't any left."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "younger",
+                "text": "Pois é, acontece. Então, o que fizeste?",
+                "translation": "Yeah, it happens. So, what did you do?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Portanto fui a outra, mais à frente. Aliás, é o melhor pão de lá!",
+                "translation": "So I went to another one, further down. Actually, they have the best bread there!"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "younger",
+                "text": "Ah, bom saber! E afinal, conseguiste pão fresco?",
+                "translation": "Oh, good to know! And in the end, did you get fresh bread?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Sim, fresquinho. Mesmo assim gostei da caminhada.",
+                "translation": "Yes, very fresh. Even so, I enjoyed the walk."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d20-2",
+            "title": "A trip to the market",
+            "context": "A tourist is asking a local about the market.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Bom dia! O mercado está aberto hoje?",
+                "translation": "Good morning! Is the market open today?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "service",
+                "text": "Bom dia! Sim, está. Mas afinal, o que procura?",
+                "translation": "Good morning! Yes, it is. But after all, what are you looking for?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Queria comprar umas frutas. Pensei em ir ao mercado velho.",
+                "translation": "I wanted to buy some fruit. I thought about going to the old market."
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "service",
+                "text": "Ah, o mercado dos Lavradores. Aliás, é o mais bonito!",
+                "translation": "Ah, the Lavradores market. Actually, it's the most beautiful one!"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Portanto, devo ir lá?",
+                "translation": "So, I should go there?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "service",
+                "text": "Sim, claro. Mesmo assim, prepare-se para as escadas!",
+                "translation": "Yes, of course. Even so, prepare for the stairs!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a café in Funchal. You wanted a 'bica' (espresso), but they only have 'café cheio' (full espresso). You decide to try it anyway.",
+          "difficulty": 2,
+          "entry_node": "cafe_start",
+          "nodes": [
+            {
+              "id": "cafe_start",
+              "npc_text": "Bom dia! O que vai ser?",
+              "npc_translation": "Good morning! What will it be?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria uma bica, por favor.",
+                  "translation": "Good morning. I'd like an espresso, please.",
+                  "feedback": "Good polite start!",
+                  "next": "bica_not_available"
+                }
+              ]
+            },
+            {
+              "id": "bica_not_available",
+              "npc_text": "Uma bica? Desculpe, só temos café cheio.",
+              "npc_translation": "An espresso? Sorry, we only have full espresso.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, entendi. Portanto, vou querer um café cheio.",
+                  "translation": "Ah, I see. So, I'll have a full espresso.",
+                  "feedback": "You understood the situation and used 'portanto' to express your decision.",
+                  "next": "try_cafe_cheio"
+                },
+                {
+                  "text": "Afinal, não vou querer nada. Obrigada.",
+                  "translation": "In the end, I won't want anything. Thank you.",
+                  "feedback": "You changed your mind. 'Afinal' works well here, but maybe you could have tried the 'café cheio'?"
+                }
+              ]
+            },
+            {
+              "id": "try_cafe_cheio",
+              "npc_text": "Muito bem! Aqui está. Espero que goste.",
+              "npc_translation": "Very good! Here it is. I hope you like it.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigada! É um bocado diferente, mas mesmo assim gostei.",
+                  "translation": "Thank you! It's a bit different, but even so I liked it.",
+                  "feedback": "Excellent! You used 'mesmo assim' to express your enjoyment despite the difference."
+                },
+                {
+                  "text": "Obrigada! Aliás, é muito bom!",
+                  "translation": "Thank you! Actually, it's very good!",
+                  "feedback": "Great! 'Aliás' adds emphasis to your positive surprise. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Your Day's Plan: Market and Pharmacy",
+          "prep": [
+            "Mentally plan your route to the market and then to the pharmacy.",
+            "Think about what you'd say if the market was closed or didn't have what you needed.",
+            "Practice asking for directions and then changing your plan using 'portanto', 'aliás', or 'afinal'."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Está fechado hoje.",
+            "Não temos isso.",
+            "É um bocado longe.",
+            "Pode ir a outro."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d20-1",
+            "base": "Portanto fui a outro.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "A loja estava fechada, portanto fui a outro.",
+                "translation": "The shop was closed, so I went to another.",
+                "register": "neutral"
+              },
+              {
+                "text": "Não tinham pão, portanto tive de esperar.",
+                "translation": "They didn't have bread, so I had to wait.",
+                "register": "neutral"
+              },
+              {
+                "text": "Era muito caro, portanto comprei outro.",
+                "translation": "It was very expensive, so I bought another.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d20-2",
+            "base": "Aliás, é o melhor!",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Este bolo de mel é ótimo. Aliás, é o melhor da ilha!",
+                "translation": "This honey cake is great. Actually, it's the best on the island!",
+                "register": "informal"
+              },
+              {
+                "text": "Não é caro. Aliás, é o mais barato que encontrei.",
+                "translation": "It's not expensive. In fact, it's the cheapest I found.",
+                "register": "neutral"
+              },
+              {
+                "text": "Não é longe. Aliás, está mesmo aqui ao lado.",
+                "translation": "It's not far. Actually, it's right next door.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d20-3",
+            "base": "Afinal não fui.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Pensei que precisava de ir, mas afinal não era preciso.",
+                "translation": "I thought I needed to go, but in the end it wasn't necessary.",
+                "register": "neutral"
+              },
+              {
+                "text": "Ele disse que vinha, mas afinal não veio.",
+                "translation": "He said he was coming, but after all he didn't.",
+                "register": "neutral"
+              },
+              {
+                "text": "Queria ir ao mercado, mas afinal estava fechado.",
+                "translation": "I wanted to go to the market, but in the end it was closed.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d20-4",
+            "base": "Mesmo assim gostei.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Estava a chover, mas mesmo assim gostei do passeio.",
+                "translation": "It was raining, but even so I enjoyed the walk.",
+                "register": "neutral"
+              },
+              {
+                "text": "Era um bocado caro, mas mesmo assim comprei.",
+                "translation": "It was a bit expensive, but even so I bought it.",
+                "register": "neutral"
+              },
+              {
+                "text": "Demorou um bocado, mas mesmo assim valeu a pena.",
+                "translation": "It took a while, but even so it was worth it.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Stronger Connectors",
+            "body": "\"Portanto\" is used constantly in Madeira, often as a filler or thinking pause, similar to \"so\" in English."
+          },
+          {
+            "title": "The Versatility of 'Pois'",
+            "body": "In Portugal, 'pois' and 'pois é' are extremely common interjections. They can mean 'yes', 'that's right', 'indeed', or simply acknowledge what someone has said, often with a slight pause or a thoughtful tone. It's a very natural way to show you're listening and engaged in a conversation, without necessarily agreeing strongly. It can also be used to prompt someone to continue speaking, much like 'go on...' in English. For example, if someone says 'Fui ao mercado...', you might hear 'Pois...' as an invitation for them to elaborate."
+          },
+          {
+            "title": "Café Culture in Madeira",
+            "body": "Coffee is a fundamental part of daily life in Madeira. When ordering, 'bica' is the common term for a standard espresso, while 'café cheio' is an espresso with more water, making it slightly longer. Knowing these terms and how to use them will make your café experience much smoother and more authentic. Don't be afraid to try different types, like 'garoto' (espresso with a splash of milk) or 'galão' (a larger milk coffee)."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d20-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Portanto fui a outro.\"",
+            "answer": "Portanto fui a outro.",
+            "source_ref": "pp-d20-1"
+          },
+          {
+            "id": "rv-d20-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Aliás, é o melhor!\"",
+            "answer": "Aliás, é o melhor!",
+            "source_ref": "pp-d20-2"
+          },
+          {
+            "id": "rv-d20-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Afinal não fui.\"",
+            "answer": "Afinal não fui.",
+            "source_ref": "pp-d20-3"
+          },
+          {
+            "id": "rv-d20-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Mesmo assim gostei.\"",
+            "answer": "Mesmo assim gostei.",
+            "source_ref": "pp-d20-4"
+          },
+          {
+            "id": "rv-d20-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: So / Therefore",
+            "answer": "Portanto",
+            "source_ref": "Portanto"
+          },
+          {
+            "id": "rv-d20-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Actually / In fact",
+            "answer": "Aliás",
+            "source_ref": "Aliás"
+          },
+          {
+            "id": "rv-d20-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: After all / In the end",
+            "answer": "Afinal",
+            "source_ref": "Afinal"
+          },
+          {
+            "id": "rv-d20-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Even so",
+            "answer": "Mesmo assim",
+            "source_ref": "Mesmo assim"
+          },
+          {
+            "id": "rv-d20-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d20-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d21-week-3-stress-test",
+      "title": "Week 3 Stress Test",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 0,
+        "extra_cultural_notes": 2,
+        "review_items": 2,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d21-1",
+            "title": "Ordering at a Café",
+            "context": "At a small café in Funchal, ordering coffee and a pastry.",
+            "lines": [
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Bom dia! Queria um café, por favor.",
+                "translation": "Good morning! I'd like a coffee, please."
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Um café? Mais alguma coisa?",
+                "translation": "A coffee? Anything else?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, e um bolo do caco, se faz favor.",
+                "translation": "Yes, and a bolo do caco, please."
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Pois, tá bem. É para comer aqui ou levar?",
+                "translation": "Okay, alright. Is it to eat here or take away?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "É para comer aqui, obrigado.",
+                "translation": "It's to eat here, thank you."
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "São três euros e cinquenta.",
+                "translation": "It's three euros and fifty cents."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d21-2",
+            "title": "Buying Vegetables at the Market",
+            "context": "At the Mercado dos Lavradores in Funchal, buying vegetables.",
+            "lines": [
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Olá! Tem semilhas hoje?",
+                "translation": "Hello! Do you have potatoes today?"
+              },
+              {
+                "speaker": "Vendor",
+                "voice_type": "local",
+                "text": "Bom dia! Tenho sim, claro. Quantos quilos quer?",
+                "translation": "Good morning! Yes, I do, of course. How many kilos do you want?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Queria um quilo, por favor.",
+                "translation": "I'd like one kilo, please."
+              },
+              {
+                "speaker": "Vendor",
+                "voice_type": "local",
+                "text": "Um quilo. Mais alguma coisa? Maçãs, talvez?",
+                "translation": "One kilo. Anything else? Apples, perhaps?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Não, obrigado. É só isso. Quanto é?",
+                "translation": "No, thank you. That's all. How much is it?"
+              },
+              {
+                "speaker": "Vendor",
+                "voice_type": "service",
+                "text": "Fica a dois euros e vinte.",
+                "translation": "It's two euros and twenty cents."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a small pastelaria (pastry shop) in Funchal, wanting to buy some pastries and a drink.",
+          "difficulty": 2,
+          "entry_node": "start",
+          "nodes": [
+            {
+              "id": "start",
+              "npc_text": "Bom dia! Posso ajudar?",
+              "npc_translation": "Good morning! Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, queria dois pastéis de nata, por favor.",
+                  "translation": "Yes, I'd like two custard tarts, please.",
+                  "feedback": "Great start! You clearly stated your order.",
+                  "next": "order_nata"
+                },
+                {
+                  "text": "Olá! Quanto custa um pastel de nata?",
+                  "translation": "Hello! How much does a custard tart cost?",
+                  "feedback": "Good job asking for the price first.",
+                  "next": "ask_price"
+                }
+              ]
+            },
+            {
+              "id": "order_nata",
+              "npc_text": "Aqui estão. Mais alguma coisa?",
+              "npc_translation": "Here they are. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. É só isso.",
+                  "translation": "No, thank you. That's all.",
+                  "feedback": "Perfect, you're ready to pay.",
+                  "next": "pay_nata"
+                },
+                {
+                  "text": "Sim, e um sumo de laranja, se faz favor.",
+                  "translation": "Yes, and an orange juice, please.",
+                  "feedback": "Excellent, adding another item to your order.",
+                  "next": "order_juice"
+                }
+              ]
+            },
+            {
+              "id": "ask_price",
+              "npc_text": "É um euro e vinte cada.",
+              "npc_translation": "It's one euro and twenty cents each.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, ok. Então, queria três, por favor.",
+                  "translation": "Ah, okay. So, I'd like three, please.",
+                  "feedback": "Good, you decided to order a quantity after knowing the price.",
+                  "next": "order_three_nata"
+                },
+                {
+                  "text": "Um bocado caro. Não, obrigado.",
+                  "translation": "A bit expensive. No, thank you.",
+                  "feedback": "It's okay to change your mind! You politely declined.",
+                  "next": "leave"
+                }
+              ]
+            },
+            {
+              "id": "pay_nata",
+              "npc_text": "São dois euros e quarenta. Obrigado!",
+              "npc_translation": "It's two euros and forty cents. Thank you!",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "order_juice",
+              "npc_text": "Um sumo de laranja. Algo mais?",
+              "npc_translation": "An orange juice. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. É só isso.",
+                  "translation": "No, thank you. That's all.",
+                  "feedback": "You've completed your order and are ready to pay.",
+                  "next": "pay_nata_juice"
+                }
+              ]
+            },
+            {
+              "id": "order_three_nata",
+              "npc_text": "Aqui estão os três. Mais alguma coisa?",
+              "npc_translation": "Here are the three. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. É só isso.",
+                  "translation": "No, thank you. That's all.",
+                  "feedback": "You're done with your order.",
+                  "next": "pay_three_nata"
+                },
+                {
+                  "text": "Sim, e um café, por favor.",
+                  "translation": "Yes, and a coffee, please.",
+                  "feedback": "Adding a coffee, good request!",
+                  "next": "order_coffee"
+                }
+              ]
+            },
+            {
+              "id": "leave",
+              "npc_text": "Pois, tá bem. Bom dia!",
+              "npc_translation": "Okay, alright. Good day!",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "pay_nata_juice",
+              "npc_text": "Fica a quatro euros e setenta. Obrigado!",
+              "npc_translation": "It's four euros and seventy cents. Thank you!",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "pay_three_nata",
+              "npc_text": "São três euros e sessenta. Obrigado!",
+              "npc_translation": "It's three euros and sixty cents. Thank you!",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "order_coffee",
+              "npc_text": "Um café. Algo mais?",
+              "npc_translation": "A coffee. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. É só isso.",
+                  "translation": "No, thank you. That's all.",
+                  "feedback": "Your order is complete.",
+                  "next": "pay_three_nata_coffee"
+                }
+              ]
+            },
+            {
+              "id": "pay_three_nata_coffee",
+              "npc_text": "Fica a quatro euros e oitenta. Obrigado!",
+              "npc_translation": "It's four euros and eighty cents. Thank you!",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order and Pay at a Café",
+          "prep": [
+            "Practice ordering a coffee and a pastry.",
+            "Rehearse asking 'Quanto é?' or 'Quanto custa?'.",
+            "Be ready to say 'É para comer aqui' (to eat here) or 'É para levar' (to take away)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode repetir?",
+            "Não percebi.",
+            "Mais devagar, por favor."
+          ],
+          "likely_responses": [
+            "Bom dia! O que deseja?",
+            "É para comer aqui ou levar?",
+            "Mais alguma coisa?",
+            "São X euros e Y cêntimos."
+          ]
+        },
+        "phrase_patterns_enriched": [],
+        "cultural_notes": [
+          {
+            "title": "Week 3 Stress Test",
+            "body": "You can now hold a sophisticated 3-minute conversation on any everyday topic. Parabéns!"
+          },
+          {
+            "title": "Addressing Service Staff",
+            "body": "In Portugal, especially in service situations, it's common to use 'o senhor' or 'a senhora' when addressing staff, even if they are younger than you. While 'tu' is widely used among peers, defaulting to the polite form is a safe bet when unsure, or when the interaction is purely transactional. Avoid 'você' unless you're explicitly trying to create distance."
+          },
+          {
+            "title": "'Pois' and Agreement",
+            "body": "The word 'pois' is very versatile in Portuguese. In Madeira, you'll often hear it, or 'pois é', used to express agreement, affirmation, or simply to acknowledge what someone has said, similar to 'yes, indeed' or 'that's right'. It can also mean 'of course' or 'well'."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d21-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Full Week 3 Review\"",
+            "answer": "Full Week 3 Review",
+            "source_ref": "pp-d21-1"
+          },
+          {
+            "id": "rv-d21-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d21-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d22-the-imperfect-tense",
+      "title": "The Imperfect Tense",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 8,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d22-1",
+            "title": "Old Habits",
+            "context": "Two friends, Ana and Carlos, are talking about their past routines in a café.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "teacher",
+                "text": "Então, Carlos, como era a tua vida antes de vires p'ra Madeira?",
+                "translation": "So, Carlos, what was your life like before you came to Madeira?"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "Ah, era diferente. Antes, trabalhava num escritório e ia de autocarro todos os dias.",
+                "translation": "Ah, it was different. Before, I worked in an office and went by bus every day."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "teacher",
+                "text": "Pois, e o que fazias nos fins de semana?",
+                "translation": "Right, and what did you do on the weekends?"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "Geralmente, ficava em casa a ler ou visitava os meus pais. Não havia tanto sol como aqui!",
+                "translation": "Generally, I stayed at home reading or visited my parents. There wasn't as much sun as here!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d22-2",
+            "title": "A Rainy Day Memory",
+            "context": "Maria and João are remembering a past event.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "younger",
+                "text": "Lembram-te daquela vez que estávamos na levada e começou a chover?",
+                "translation": "Do you remember that time we were on the levada and it started to rain?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "older",
+                "text": "Claro! Eu estava a tirar fotografias quando a chuva caiu forte. Foi uma aventura!",
+                "translation": "Of course! I was taking photos when the rain fell heavily. It was an adventure!"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "younger",
+                "text": "Sim, e tu estavas com um chapéu-de-chuva, mas não serviu de nada!",
+                "translation": "Yes, and you had an umbrella, but it was no use!"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "older",
+                "text": "Pois é! Ficámos os dois molhados. Mas era divertido, não era?",
+                "translation": "That's right! We both got soaked. But it was fun, wasn't it?"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are talking to a new neighbor in Madeira, who is asking about your life before moving here.",
+          "difficulty": 2,
+          "entry_node": "rp-d22-1",
+          "nodes": [
+            {
+              "id": "rp-d22-1",
+              "npc_text": "Olá! Então, antes de vires p'ra Madeira, onde moravas?",
+              "npc_translation": "Hello! So, before you came to Madeira, where did you live?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Morava no Porto.",
+                  "translation": "I lived in Porto.",
+                  "feedback": "Good use of 'morava' for a past habitual state.",
+                  "next": "rp-d22-2"
+                },
+                {
+                  "text": "Estava no Porto.",
+                  "translation": "I was in Porto.",
+                  "feedback": "Correct, but 'morava' is more specific for 'lived'.",
+                  "next": "rp-d22-2a"
+                }
+              ]
+            },
+            {
+              "id": "rp-d22-2",
+              "npc_text": "Ah, Porto! E o que fazias lá? Trabalhavas ou estudavas?",
+              "npc_translation": "Ah, Porto! And what did you do there? Did you work or study?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Trabalhava num banco.",
+                  "translation": "I worked in a bank.",
+                  "feedback": "Excellent! 'Trabalhava' for habitual past action.",
+                  "next": "rp-d22-3"
+                },
+                {
+                  "text": "Estudava na universidade.",
+                  "translation": "I studied at the university.",
+                  "feedback": "Perfect! 'Estudava' for a past ongoing activity.",
+                  "next": "rp-d22-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d22-2a",
+              "npc_text": "Pois. E o que fazias no Porto? Qual era a tua rotina?",
+              "npc_translation": "Right. And what did you do in Porto? What was your routine?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Trabalhava num banco e ia ao ginásio.",
+                  "translation": "I worked in a bank and went to the gym.",
+                  "feedback": "Very good! You used two imperfect verbs for past habits.",
+                  "next": "rp-d22-3"
+                },
+                {
+                  "text": "Estudava e saía com amigos.",
+                  "translation": "I studied and went out with friends.",
+                  "feedback": "Well done! 'Estudava' and 'saía' describe past routines.",
+                  "next": "rp-d22-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d22-3",
+              "npc_text": "Interessante! E havia muitos turistas no Porto, não havia?",
+              "npc_translation": "Interesting! And there were a lot of tourists in Porto, weren't there?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, havia sempre muitos.",
+                  "translation": "Yes, there were always many.",
+                  "feedback": "Correct use of 'havia' for 'there was/were' in the past."
+                },
+                {
+                  "text": "Não, não havia tantos como agora.",
+                  "translation": "No, there weren't as many as now.",
+                  "feedback": "Good job with the negative form of 'havia'."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Share a Past Memory",
+          "prep": [
+            "Think of a simple past memory from your childhood or a previous place you lived.",
+            "Practice describing a habitual action or state using the imperfect tense (e.g., 'Eu brincava...', 'Havia...', 'Era...').",
+            "Practice describing an ongoing action interrupted by another event (e.g., 'Eu estava a fazer... quando...')."
+          ],
+          "fallback_phrases": [
+            "Não sei como dizer.",
+            "Pode repetir, por favor?",
+            "Desculpe, não percebi."
+          ],
+          "likely_responses": [
+            "Ah, que interessante!",
+            "Pois é, a vida era diferente.",
+            "E o que aconteceu depois?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d22-1",
+            "base": "Estava muito cansado quando cheguei.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Estava com fome quando cheguei.",
+                "translation": "I was hungry when I arrived.",
+                "register": "informal"
+              },
+              {
+                "text": "Estava muito feliz quando te vi.",
+                "translation": "I was very happy when I saw you.",
+                "register": "informal"
+              },
+              {
+                "text": "Estava com sono quando o filme acabou.",
+                "translation": "I was sleepy when the movie ended.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d22-2",
+            "base": "Antes trabalhava em Londres.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Antes morava no Funchal.",
+                "translation": "Before, I lived in Funchal.",
+                "register": "informal"
+              },
+              {
+                "text": "Antes ia à praia todos os dias.",
+                "translation": "Before, I used to go to the beach every day.",
+                "register": "neutral"
+              },
+              {
+                "text": "Antes estudava muito.",
+                "translation": "Before, I used to study a lot.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d22-3",
+            "base": "Estava a ler quando o telefone tocou.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Estava a cozinhar quando chegaste.",
+                "translation": "I was cooking when you arrived.",
+                "register": "informal"
+              },
+              {
+                "text": "Estava a ver televisão quando começou a chover.",
+                "translation": "I was watching TV when it started to rain.",
+                "register": "neutral"
+              },
+              {
+                "text": "Estava a dormir quando ele ligou.",
+                "translation": "I was sleeping when he called.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Imperfect Tense",
+            "body": "The imperfect describes ongoing past states or habits. Contrast it with the preterite (specific events)."
+          },
+          {
+            "title": "Using 'Pois' in Conversation",
+            "body": "'Pois' and 'Pois é' are common interjections in Portuguese, especially in Madeira. They can mean 'indeed', 'that's right', 'I see', or simply acknowledge what the other person said, showing you're listening. It's a very natural way to participate in a conversation without necessarily adding new information."
+          },
+          {
+            "title": "Describing the Weather in the Past",
+            "body": "When talking about past weather, the imperfect tense is almost always used. For example, 'Estava sol' (It was sunny), 'Chovia muito' (It was raining a lot), 'Fazia frio' (It was cold). This describes the general conditions rather than a specific, completed event."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d22-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Estava muito cansado quando cheguei.\"",
+            "answer": "Estava muito cansado quando cheguei.",
+            "source_ref": "pp-d22-1"
+          },
+          {
+            "id": "rv-d22-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Antes trabalhava em Londres.\"",
+            "answer": "Antes trabalhava em Londres.",
+            "source_ref": "pp-d22-2"
+          },
+          {
+            "id": "rv-d22-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Estava a ler quando o telefone tocou.\"",
+            "answer": "Estava a ler quando o telefone tocou.",
+            "source_ref": "pp-d22-3"
+          },
+          {
+            "id": "rv-d22-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: was",
+            "answer": "era",
+            "source_ref": "era"
+          },
+          {
+            "id": "rv-d22-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: was (temp)",
+            "answer": "estava",
+            "source_ref": "estava"
+          },
+          {
+            "id": "rv-d22-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: had",
+            "answer": "tinha",
+            "source_ref": "tinha"
+          },
+          {
+            "id": "rv-d22-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: there was",
+            "answer": "havia",
+            "source_ref": "havia"
+          },
+          {
+            "id": "rv-d22-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d22-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d23-the-future-going-to-will",
+      "title": "The Future: Going To & Will",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d23-1",
+            "title": "Market Plans",
+            "context": "Two neighbours, Maria and Ana, meet in the street and discuss plans for the market.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Olá, Maria! Vais ao mercado amanhã?",
+                "translation": "Hi, Maria! Are you going to the market tomorrow?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Pois é, vou sim. Preciso de fruta e semilhas.",
+                "translation": "Yes, I am. I need fruit and potatoes."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Eu também irei. Encontramo-nos lá?",
+                "translation": "I will go too. Shall we meet there?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Combinado! Até amanhã!",
+                "translation": "Agreed! See you tomorrow!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d23-2",
+            "title": "Evening Plans",
+            "context": "Two friends, Pedro and João, chat about their evening plans at a café.",
+            "lines": [
+              {
+                "speaker": "Pedro",
+                "voice_type": "younger",
+                "text": "Então, o que vais fazer logo?",
+                "translation": "So, what are you going to do later?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Logo, irei estudar um bocado. E tu?",
+                "translation": "Later, I'll study a bit. And you?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "younger",
+                "text": "Eu vou ver a bola com os meus amigos. Depois, talvez uma poncha.",
+                "translation": "I'm going to watch the football with my friends. Afterwards, maybe a poncha."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Ah, boa! Diverte-te!",
+                "translation": "Ah, good! Have fun!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're having a bica (coffee) at a café in Funchal, and a friend asks about your plans for tomorrow.",
+          "difficulty": 2,
+          "entry_node": "rp-d23-1",
+          "nodes": [
+            {
+              "id": "rp-d23-1",
+              "npc_text": "Olá! Então, o que vais fazer amanhã?",
+              "npc_translation": "Hi! So, what are you going to do tomorrow?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Amanhã vou ao mercado.",
+                  "translation": "Tomorrow I'm going to the market.",
+                  "feedback": "Great use of 'ir + infinitive' to state a plan.",
+                  "next": "rp-d23-2"
+                },
+                {
+                  "text": "Não sei bem, vou descansar um bocado.",
+                  "translation": "I don't really know, I'm going to rest a bit.",
+                  "feedback": "A natural way to express uncertainty and a simple future action.",
+                  "next": "rp-d23-3"
+                },
+                {
+                  "text": "Tenciono aprender português.",
+                  "translation": "I intend to learn Portuguese.",
+                  "feedback": "Good use of 'tencionar' for an intention.",
+                  "next": "rp-d23-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d23-2",
+              "npc_text": "Ah, que bom! Eu também preciso de ir. Encontramo-nos lá, talvez para uma bica?",
+              "npc_translation": "Oh, how good! I also need to go. Shall we meet there, maybe for a coffee?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, claro! Amanhã de manhã.",
+                  "translation": "Yes, of course! Tomorrow morning.",
+                  "feedback": "Perfect! You've agreed to meet."
+                },
+                {
+                  "text": "Não, obrigado. Prefiro ir sozinho.",
+                  "translation": "No, thank you. I prefer to go alone.",
+                  "feedback": "Polite refusal, well done."
+                }
+              ]
+            },
+            {
+              "id": "rp-d23-3",
+              "npc_text": "Pois é, às vezes é preciso. Eu vou trabalhar, infelizmente.",
+              "npc_translation": "Indeed, sometimes it's necessary. I'm going to work, unfortunately.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Que pena! Bom trabalho!",
+                  "translation": "What a pity! Good work!",
+                  "feedback": "A sympathetic and common phrase."
+                },
+                {
+                  "text": "Eu farei isso logo, depois de arrumar a casa.",
+                  "translation": "I will do that later, after tidying the house.",
+                  "feedback": "Good use of the simple future and 'logo'."
+                }
+              ]
+            },
+            {
+              "id": "rp-d23-4",
+              "npc_text": "Excelente! É uma língua muito bonita. Vais gostar, pois é um desafio!",
+              "npc_translation": "Excellent! It's a very beautiful language. You will like it, as it's a challenge!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pois é. Estou entusiasmado.",
+                  "translation": "Indeed. I'm excited.",
+                  "feedback": "A natural and positive response."
+                },
+                {
+                  "text": "Sim, e tenciono praticar imenso.",
+                  "translation": "Yes, and I intend to practice a lot.",
+                  "feedback": "Good use of 'tencionar' and 'imenso' (a lot)."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Share Your Plans",
+          "prep": [
+            "Think of two things you will do this week.",
+            "Practice saying 'Vou...' and 'Farei...' for these plans.",
+            "Imagine someone asking you 'O que vais fazer...?'"
+          ],
+          "fallback_phrases": [
+            "Não sei bem ainda.",
+            "Vou ver."
+          ],
+          "likely_responses": [
+            "Ah, que bom!",
+            "Boa ideia!",
+            "Diverte-te!",
+            "Pois é!"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d23-1",
+            "base": "Amanhã vou ao mercado.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Amanhã vamos ao mercado.",
+                "translation": "Tomorrow we're going to the market.",
+                "register": "informal"
+              },
+              {
+                "text": "Logo vou ao café.",
+                "translation": "Later I'm going to the café.",
+                "register": "informal"
+              },
+              {
+                "text": "Em breve vou a casa.",
+                "translation": "Soon I'm going home.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d23-2",
+            "base": "Farei isso amanhã.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Faremos isso amanhã.",
+                "translation": "We will do that tomorrow.",
+                "register": "neutral"
+              },
+              {
+                "text": "Farás o jantar logo?",
+                "translation": "Will you make dinner later?",
+                "register": "informal"
+              },
+              {
+                "text": "Farei as compras mais tarde.",
+                "translation": "I will do the shopping later.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d23-3",
+            "base": "Tenciono aprender português.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tencionamos aprender português este ano.",
+                "translation": "We intend to learn Portuguese this year.",
+                "register": "neutral"
+              },
+              {
+                "text": "Tencionas nadar logo?",
+                "translation": "Do you intend to swim later?",
+                "register": "informal"
+              },
+              {
+                "text": "Tenciono fazer desporto em breve.",
+                "translation": "I intend to do sports soon.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Future Tense Usage in Madeira",
+            "body": "In daily conversation in Madeira, and Portugal in general, the construction 'ir + infinitive' (e.g., 'vou fazer', 'I'm going to do') is very common for expressing future plans or intentions, especially for the near future. While the simple future tense (e.g., 'farei', 'I will do') is grammatically correct and used, it can sometimes sound a bit more formal or literary in casual speech. Both are understood and correct, but 'ir + infinitive' often feels more natural in informal contexts."
+          },
+          {
+            "title": "The Art of Planning in Madeira",
+            "body": "Discussions about future plans are a common part of social interactions in Madeira, often happening over a 'bica' (espresso) or a meal. Plans can be made quite casually, and it's common to agree to meet 'depois' (later) or 'amanhã' (tomorrow) without always setting a very rigid time. Flexibility is often appreciated."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d23-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Amanhã vou ao mercado.\"",
+            "answer": "Amanhã vou ao mercado.",
+            "source_ref": "pp-d23-1"
+          },
+          {
+            "id": "rv-d23-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Farei isso amanhã.\"",
+            "answer": "Farei isso amanhã.",
+            "source_ref": "pp-d23-2"
+          },
+          {
+            "id": "rv-d23-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tenciono aprender português.\"",
+            "answer": "Tenciono aprender português.",
+            "source_ref": "pp-d23-3"
+          },
+          {
+            "id": "rv-d23-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: tomorrow",
+            "answer": "amanhã",
+            "source_ref": "amanhã"
+          },
+          {
+            "id": "rv-d23-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: soon",
+            "answer": "em breve",
+            "source_ref": "em breve"
+          },
+          {
+            "id": "rv-d23-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: later/soon",
+            "answer": "logo",
+            "source_ref": "logo"
+          },
+          {
+            "id": "rv-d23-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d23-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d24-wishes-conditionals-polite-requests",
+      "title": "Wishes, Conditionals & Polite Requests",
+      "level": 1,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d24-1",
+            "title": "At the Café",
+            "context": "A tourist is ordering food and expressing a wish at a café in Funchal.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Olá! Gostava de um café e um bolo do caco, se faz favor.",
+                "translation": "Hello! I'd like a coffee and a bolo do caco, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Pois, claro! É para comer aqui?",
+                "translation": "Of course! Is it to eat here?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Sim, é para aqui. E gostava de ter mais tempo p'ra ficar em Madeira!",
+                "translation": "Yes, it's for here. And I'd like to have more time to stay in Madeira!"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Oxalá que sim! A ilha é linda.",
+                "translation": "I hope so! The island is beautiful."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d24-2",
+            "title": "Talking about Plans",
+            "context": "Two friends are discussing their weekend plans, expressing wishes.",
+            "lines": [
+              {
+                "speaker": "Amigo 1",
+                "voice_type": "local",
+                "text": "Estou a planear ir às levadas no fim de semana.",
+                "translation": "I'm planning to go to the levadas this weekend."
+              },
+              {
+                "speaker": "Amigo 2",
+                "voice_type": "younger",
+                "text": "Ah, que bom! Eu gostava de ir também.",
+                "translation": "Oh, how nice! I'd like to go too."
+              },
+              {
+                "speaker": "Amigo 1",
+                "voice_type": "local",
+                "text": "Pois, se tivesse um carro, era mais fácil.",
+                "translation": "Well, if I had a car, it would be easier."
+              },
+              {
+                "speaker": "Amigo 2",
+                "voice_type": "younger",
+                "text": "Quem dera! Oxalá que consigas ir.",
+                "translation": "If only! I hope you manage to go."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a market stall in Funchal. The vendor asks if you need help. You want to express a wish or a polite request.",
+          "difficulty": 2,
+          "entry_node": "rp-d24-1",
+          "nodes": [
+            {
+              "id": "rp-d24-1",
+              "npc_text": "Diga, posso ajudar?",
+              "npc_translation": "Tell me, can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, gostava de umas bananas, se faz favor.",
+                  "translation": "Yes, I'd like some bananas, please.",
+                  "feedback": "A good polite request for an item.",
+                  "next": "rp-d24-2"
+                },
+                {
+                  "text": "Gostava de ficar mais tempo aqui no mercado.",
+                  "translation": "I'd like to stay longer here at the market.",
+                  "feedback": "A nice way to express a wish using 'gostava de'.",
+                  "next": "rp-d24-3"
+                },
+                {
+                  "text": "Se tivesse mais dinheiro, comprava tudo!",
+                  "translation": "If I had more money, I'd buy everything!",
+                  "feedback": "This uses a conditional to express a wish.",
+                  "next": "rp-d24-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d24-2",
+              "npc_text": "Claro! Quantas quer?",
+              "npc_translation": "Of course! How many do you want?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Três, por favor.",
+                  "translation": "Three, please.",
+                  "feedback": "Good, you specified the quantity."
+                },
+                {
+                  "text": "Só uma, obrigado/a.",
+                  "translation": "Just one, thank you.",
+                  "feedback": "Correctly specified quantity and thanked the vendor."
+                }
+              ]
+            },
+            {
+              "id": "rp-d24-3",
+              "npc_text": "Pois, é um sítio bonito! Oxalá que sim, que possa ficar.",
+              "npc_translation": "Well, it's a beautiful place! I hope so, that you can stay.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Oxalá!",
+                  "translation": "I hope so!",
+                  "feedback": "A short and common way to agree and express hope."
+                },
+                {
+                  "text": "É verdade. Obrigado/a!",
+                  "translation": "It's true. Thank you!",
+                  "feedback": "A polite and natural response."
+                }
+              ]
+            },
+            {
+              "id": "rp-d24-4",
+              "npc_text": "Quem dera a todos nós! Mas temos coisas boas e baratas.",
+              "npc_translation": "If only for all of us! But we have good and cheap things.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pois é. Gostava de ver o bolo de mel.",
+                  "translation": "That's right. I'd like to see the honey cake.",
+                  "feedback": "You've acknowledged their point and made a new polite request.",
+                  "next": "rp-d24-5"
+                },
+                {
+                  "text": "Tomara! Vou só ver, obrigado/a.",
+                  "translation": "I wish! I'll just look, thank you.",
+                  "feedback": "You've used 'Tomara' correctly and politely declined for now."
+                }
+              ]
+            },
+            {
+              "id": "rp-d24-5",
+              "npc_text": "Aqui está! Quer provar um pedacinho?",
+              "npc_translation": "Here it is! Do you want to try a small piece?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, gostava muito.",
+                  "translation": "Yes, I'd love to.",
+                  "feedback": "A polite and enthusiastic acceptance."
+                },
+                {
+                  "text": "Não, obrigado/a. Só a ver.",
+                  "translation": "No, thank you. Just looking.",
+                  "feedback": "A polite refusal."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Expressing Wishes and Polite Requests",
+          "prep": [
+            "Practice using 'Gostava de...' for polite requests.",
+            "Practice using 'Se tivesse...' to express hypothetical situations.",
+            "Practice using 'Oxalá!', 'Tomara!', and 'Quem dera!' to express wishes and hopes."
+          ],
+          "fallback_phrases": [
+            "Não percebo.",
+            "Pode repetir, se faz favor?",
+            "Desculpe."
+          ],
+          "likely_responses": [
+            "Pois é.",
+            "Claro!",
+            "Oxalá que sim!",
+            "Quem dera!"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d24-1",
+            "base": "Gostava de ficar em Madeira.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Gostava de comer um bolo do caco.",
+                "translation": "I would like to eat a bolo do caco.",
+                "register": "neutral"
+              },
+              {
+                "text": "Gostava de beber uma poncha.",
+                "translation": "I would like to drink a poncha.",
+                "register": "neutral"
+              },
+              {
+                "text": "Gostava de ir ao mercado.",
+                "translation": "I would like to go to the market.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d24-2",
+            "base": "Se tivesse mais tempo...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Se tivesse dinheiro...",
+                "translation": "If I had money...",
+                "register": "neutral"
+              },
+              {
+                "text": "Se tivesse um carro...",
+                "translation": "If I had a car...",
+                "register": "neutral"
+              },
+              {
+                "text": "Se tivesse férias...",
+                "translation": "If I had holidays...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d24-3",
+            "base": "Oxalá que sim!",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Oxalá!",
+                "translation": "I hope so!",
+                "register": "neutral"
+              },
+              {
+                "text": "Tomara!",
+                "translation": "I wish!",
+                "register": "neutral"
+              },
+              {
+                "text": "Quem dera!",
+                "translation": "If only!",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness with 'Gostava de...'",
+            "body": "In Portugal, 'Gostava de...' (literally 'I would like to...') is a very common and polite way to express a wish or make a request, much like 'I would like' or 'I'd like' in English. It is generally preferred over 'Queria...' ('I wanted...') which can sound a bit more direct or demanding in some contexts, especially when ordering."
+          },
+          {
+            "title": "The Versatile 'Pois'",
+            "body": "'Pois' is a very common and versatile word in Portuguese, especially in Portugal. It can mean 'well', 'so', 'indeed', or 'that's right'. Often, 'Pois é' is used to agree with someone or acknowledge what they've said, similar to 'That's true' or 'Yeah' in English. It adds a natural, conversational flow to dialogue."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d24-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Gostava de ficar em Madeira.\"",
+            "answer": "Gostava de ficar em Madeira.",
+            "source_ref": "pp-d24-1"
+          },
+          {
+            "id": "rv-d24-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Se tivesse mais tempo...\"",
+            "answer": "Se tivesse mais tempo...",
+            "source_ref": "pp-d24-2"
+          },
+          {
+            "id": "rv-d24-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Oxalá que sim!\"",
+            "answer": "Oxalá que sim!",
+            "source_ref": "pp-d24-3"
+          },
+          {
+            "id": "rv-d24-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: I hope so / God willing",
+            "answer": "Oxalá",
+            "source_ref": "Oxalá"
+          },
+          {
+            "id": "rv-d24-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: I wish / I hope so",
+            "answer": "Tomara",
+            "source_ref": "Tomara"
+          },
+          {
+            "id": "rv-d24-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: I wish / If only",
+            "answer": "Quem dera",
+            "source_ref": "Quem dera"
+          },
+          {
+            "id": "rv-d24-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d24-1"
+          }
+        ],
+        "media": []
+      }
+    }
+  ]
+}

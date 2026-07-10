@@ -9,7 +9,7 @@
 import { useId, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, Mic, Send as SendIcon, Sparkles, Volume2, X } from 'lucide-react';
-import Markdown from 'react-markdown';
+import { SafeMarkdown } from '../../components/SafeMarkdown';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { TUTORS } from '../../data/tutors';
@@ -150,7 +150,7 @@ export const TutorPracticeModal = ({
                     currentlySpeakingIndex === i && msg.role === 'model' ? "ring-2 ring-ios-blue ring-offset-2 scale-[1.02] shadow-lg" : ""
                   )}>
                     <div className="markdown-body">
-                      <Markdown>{msg.text}</Markdown>
+                      <SafeMarkdown>{msg.text}</SafeMarkdown>
                     </div>
                     {msg.role === 'model' && (
                       <button

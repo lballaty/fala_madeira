@@ -1,0 +1,2735 @@
+{
+  "batch": 1,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T08:21:57.395Z",
+  "count": 8,
+  "situations": [
+    {
+      "id": "sit-d1-greetings-presence",
+      "title": "Greetings & Presence",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 11,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 1
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d1-1",
+            "title": "Morning Coffee Greeting",
+            "context": "At a small café in Funchal, a customer greets the barista.",
+            "lines": [
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Bom dia! Tudo bem?",
+                "translation": "Good morning! Everything OK?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia! Tudo bem, obrigado. E você?",
+                "translation": "Good morning! Everything OK, thank you. And you?"
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Tudo bem, sim. P'ra já!",
+                "translation": "Everything OK, yes. Right away!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d1-2",
+            "title": "Neighbours Meeting",
+            "context": "Two neighbours meet in the street in the afternoon.",
+            "lines": [
+              {
+                "speaker": "Vizinha A",
+                "voice_type": "older",
+                "text": "Boa tarde, Maria! Tudo bem?",
+                "translation": "Good afternoon, Maria! Everything OK?"
+              },
+              {
+                "speaker": "Vizinha B",
+                "voice_type": "local",
+                "text": "Boa tarde, Dona Fátima! Tudo bem, pois é. E a senhora?",
+                "translation": "Good afternoon, Mrs. Fátima! Everything OK, indeed. And you?"
+              },
+              {
+                "speaker": "Vizinha A",
+                "voice_type": "older",
+                "text": "Tudo bem, querida. Tenha uma boa tarde!",
+                "translation": "Everything OK, dear. Have a good afternoon!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You enter a small shop in Madeira to buy something. The shopkeeper greets you.",
+          "difficulty": 1,
+          "entry_node": "rp-d1-start",
+          "nodes": [
+            {
+              "id": "rp-d1-start",
+              "npc_text": "Bom dia! Tudo bem?",
+              "npc_translation": "Good morning! Everything OK?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia! Tudo bem, obrigado. E o senhor?",
+                  "translation": "Good morning! Everything OK, thank you. And you?",
+                  "feedback": "Excellent! You used a polite greeting and asked back.",
+                  "next": "rp-d1-polite-response"
+                },
+                {
+                  "text": "Olá! Tudo bem.",
+                  "translation": "Hello! Everything OK.",
+                  "feedback": "Good, but a bit informal for a first greeting in a shop. You could also ask how they are.",
+                  "next": "rp-d1-informal-response"
+                },
+                {
+                  "text": "Tenha um bom dia!",
+                  "translation": "Have a good day!",
+                  "feedback": "That's a goodbye! You need to respond to their 'Tudo bem?' first.",
+                  "next": "rp-d1-early-exit"
+                }
+              ]
+            },
+            {
+              "id": "rp-d1-polite-response",
+              "npc_text": "Tudo bem, obrigado. Em que posso ajudar?",
+              "npc_translation": "Everything OK, thank you. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado.",
+                  "translation": "Thank you.",
+                  "feedback": "You successfully completed the greeting loop! Now you can ask for what you need."
+                }
+              ]
+            },
+            {
+              "id": "rp-d1-informal-response",
+              "npc_text": "Ah, tudo bem. Em que posso ajudar?",
+              "npc_translation": "Ah, everything OK. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado.",
+                  "translation": "Thank you.",
+                  "feedback": "You've responded, but next time try to ask back 'E o senhor?' to be more polite."
+                }
+              ]
+            },
+            {
+              "id": "rp-d1-early-exit",
+              "npc_text": "Ah... Bom dia para si também.",
+              "npc_translation": "Ah... Good morning to you too.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Desculpe.",
+                  "translation": "Sorry.",
+                  "feedback": "It's okay! Remember to respond to 'Tudo bem?' before saying goodbye."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Greet a Local",
+          "prep": [
+            "Practice saying 'Bom dia! Tudo bem?'",
+            "Practice responding with 'Tudo bem, obrigado. E o senhor/a senhora?'",
+            "Practice saying 'Tenha um bom dia!'"
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir?"
+          ],
+          "likely_responses": [
+            "Tudo bem, obrigado.",
+            "Sim, tudo bem.",
+            "E o senhor/a senhora?",
+            "Bom dia para si também!"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d1-1",
+            "base": "Bom dia! Tudo bem?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Olá! Tudo bem?",
+                "translation": "Hello! Everything OK?",
+                "register": "informal"
+              },
+              {
+                "text": "Olá! Como está?",
+                "translation": "Hello! How are you?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d1-2",
+            "base": "Tudo bem, obrigado.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Tudo bem, obrigada.",
+                "translation": "Everything OK, thank you. (female speaker)",
+                "register": "neutral"
+              },
+              {
+                "text": "Sim, tudo bem.",
+                "translation": "Yes, everything's fine.",
+                "register": "neutral"
+              },
+              {
+                "text": "Está tudo bem.",
+                "translation": "Everything is fine.",
+                "register": "neutral"
+              },
+              {
+                "text": "Pois é, tudo bem.",
+                "translation": "Yes, it's all good.",
+                "note": "A common Madeiran way to agree."
+              }
+            ]
+          },
+          {
+            "id": "pp-d1-3",
+            "base": "E você?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "E o senhor?",
+                "translation": "And you? (to a man, polite)",
+                "register": "formal"
+              },
+              {
+                "text": "E a senhora?",
+                "translation": "And you? (to a woman, polite)",
+                "register": "formal"
+              },
+              {
+                "text": "E tu?",
+                "translation": "And you? (informal)",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d1-4",
+            "base": "Tenha um bom dia!",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Até já!",
+                "translation": "See you soon!",
+                "register": "neutral"
+              },
+              {
+                "text": "Adeus!",
+                "translation": "Goodbye!",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Greetings & Presence",
+            "body": "In Madeira, greetings are more than just words; they are a social ritual. Always respond to \"Tudo bem?\" with \"Tudo bem, obrigado/a\" before asking back."
+          },
+          {
+            "title": "The Importance of Greetings",
+            "body": "In Madeira, as in most of Portugal, a proper greeting is essential before starting any interaction, even a quick one. It's considered polite to always say 'Bom dia', 'Boa tarde', or 'Boa noite' when entering a shop, restaurant, or even just passing someone on a path. Skipping this step can be seen as impolite or abrupt."
+          },
+          {
+            "title": "'Tudo bem?' as a Common Check-in",
+            "body": "The phrase 'Tudo bem?' (Everything OK?) is more than just a question; it's a common social ritual. It's often used as part of a greeting and is usually responded to positively, even if things aren't perfectly 'bem'. It shows care and acknowledgment, and it's polite to always ask it back to the other person."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d1-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Bom dia! Tudo bem?\"",
+            "answer": "Bom dia! Tudo bem?",
+            "source_ref": "pp-d1-1"
+          },
+          {
+            "id": "rv-d1-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tudo bem, obrigado.\"",
+            "answer": "Tudo bem, obrigado.",
+            "source_ref": "pp-d1-2"
+          },
+          {
+            "id": "rv-d1-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"E você?\"",
+            "answer": "E você?",
+            "source_ref": "pp-d1-3"
+          },
+          {
+            "id": "rv-d1-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Tenha um bom dia!\"",
+            "answer": "Tenha um bom dia!",
+            "source_ref": "pp-d1-4"
+          },
+          {
+            "id": "rv-d1-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Good morning",
+            "answer": "Bom dia",
+            "source_ref": "Bom dia"
+          },
+          {
+            "id": "rv-d1-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Good afternoon",
+            "answer": "Boa tarde",
+            "source_ref": "Boa tarde"
+          },
+          {
+            "id": "rv-d1-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Good evening/night",
+            "answer": "Boa noite",
+            "source_ref": "Boa noite"
+          },
+          {
+            "id": "rv-d1-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Everything OK?",
+            "answer": "Tudo bem?",
+            "source_ref": "Tudo bem?"
+          },
+          {
+            "id": "rv-d1-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d1-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=S2_YmG_l-p4"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d2-ordering-in-a-cafe",
+      "title": "Ordering in a Café",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 7,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d2-1",
+            "title": "Ordering Coffee and Pastry",
+            "context": "A customer orders an espresso and a pastry at a local café.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Bom dia! Queria uma bica e um pastel de nata, por favor.",
+                "translation": "Good morning! I'd like an espresso and a custard tart, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "local",
+                "text": "Pois, uma bica e um pastel. É p'ra beber aqui?",
+                "translation": "Right, an espresso and a tart. Is it to drink here?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Sim, é p'ra beber aqui, obrigado.",
+                "translation": "Yes, it's to drink here, thank you."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Tá bem. Mais alguma coisa?",
+                "translation": "Okay. Anything else?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Não, obrigado. A conta, por favor.",
+                "translation": "No, thank you. The bill, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "São dois euros e cinquenta.",
+                "translation": "That's two euros and fifty cents."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d2-2",
+            "title": "Ordering Different Drinks",
+            "context": "A customer orders a 'galão' and an orange juice.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Olá. Queria um galão e um sumo de laranja, por favor.",
+                "translation": "Hello. I'd like a 'galão' and an orange juice, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Um galão e um sumo. P'ra já!",
+                "translation": "A 'galão' and a juice. Coming right up!"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Obrigado.",
+                "translation": "Thank you."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Aqui tem.",
+                "translation": "Here you go."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Quanto é?",
+                "translation": "How much is it?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Três euros e vinte.",
+                "translation": "Three euros and twenty cents."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local Madeiran café, ready to order from the counter.",
+          "difficulty": 1,
+          "entry_node": "start_order",
+          "nodes": [
+            {
+              "id": "start_order",
+              "npc_text": "Bom dia! O que vai ser?",
+              "npc_translation": "Good morning! What will it be?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria uma bica, por favor.",
+                  "translation": "I'd like an espresso, please.",
+                  "feedback": "Great start! You asked for an espresso.",
+                  "next": "order_bica"
+                },
+                {
+                  "text": "Queria um pastel de nata, por favor.",
+                  "translation": "I'd like a custard tart, please.",
+                  "feedback": "Good choice! You asked for a pastel de nata.",
+                  "next": "order_nata"
+                },
+                {
+                  "text": "Queria um galão, por favor.",
+                  "translation": "I'd like a 'galão', please.",
+                  "feedback": "Perfect! You ordered a 'galão'.",
+                  "next": "order_galao"
+                }
+              ]
+            },
+            {
+              "id": "order_bica",
+              "npc_text": "Uma bica. Mais alguma coisa?",
+              "npc_translation": "An espresso. Anything else?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, um pastel de nata, por favor.",
+                  "translation": "Yes, a custard tart, please.",
+                  "feedback": "Excellent, adding a pastry to your order.",
+                  "next": "order_bica_nata"
+                },
+                {
+                  "text": "Não, obrigado. Quanto é?",
+                  "translation": "No, thank you. How much is it?",
+                  "feedback": "Good, you asked for the price.",
+                  "next": "ask_price_bica"
+                }
+              ]
+            },
+            {
+              "id": "order_nata",
+              "npc_text": "Um pastel de nata. Mais alguma coisa?",
+              "npc_translation": "A custard tart. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, queria um café, por favor.",
+                  "translation": "Yes, I'd like a coffee, please.",
+                  "feedback": "Well done, you added a coffee to your order.",
+                  "next": "order_nata_cafe"
+                },
+                {
+                  "text": "Não, obrigado. Quanto é?",
+                  "translation": "No, thank you. How much is it?",
+                  "feedback": "Good, you asked for the price.",
+                  "next": "ask_price_nata"
+                }
+              ]
+            },
+            {
+              "id": "order_galao",
+              "npc_text": "Um galão. É p'ra beber aqui?",
+              "npc_translation": "A 'galão'. Is it to drink here?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, é p'ra beber aqui.",
+                  "translation": "Yes, it's to drink here.",
+                  "feedback": "Correct, confirming you want to drink it there.",
+                  "next": "ask_price_galao"
+                }
+              ]
+            },
+            {
+              "id": "order_bica_nata",
+              "npc_text": "Pois, uma bica e um pastel. Fica já.",
+              "npc_translation": "Right, an espresso and a tart. It'll be ready soon.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Quanto é?",
+                  "translation": "How much is it?",
+                  "feedback": "You asked for the total price.",
+                  "next": "ask_price_final_bica_nata"
+                }
+              ]
+            },
+            {
+              "id": "order_nata_cafe",
+              "npc_text": "Um café e um pastel. P'ra já!",
+              "npc_translation": "A coffee and a tart. Coming right up!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "A conta, por favor.",
+                  "translation": "The bill, please.",
+                  "feedback": "You asked for the bill.",
+                  "next": "ask_price_final_nata_cafe"
+                }
+              ]
+            },
+            {
+              "id": "ask_price_bica",
+              "npc_text": "Um euro e vinte, por favor.",
+              "npc_translation": "One euro and twenty cents, please.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "ask_price_nata",
+              "npc_text": "Um euro e trinta, por favor.",
+              "npc_translation": "One euro and thirty cents, please.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "ask_price_galao",
+              "npc_text": "Um euro e oitenta.",
+              "npc_translation": "One euro and eighty cents.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "ask_price_final_bica_nata",
+              "npc_text": "São dois euros e cinquenta.",
+              "npc_translation": "That's two euros and fifty cents.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "ask_price_final_nata_cafe",
+              "npc_text": "São dois euros e vinte.",
+              "npc_translation": "That's two euros and twenty cents.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Your First Café Order",
+          "prep": [
+            "Review the different types of coffee and pastries you might want to order.",
+            "Practice ordering using 'Queria um/uma...' for different items.",
+            "Be ready to ask 'Quanto é?' or 'A conta, por favor?' to pay."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "O que vai ser?",
+            "Mais alguma coisa?",
+            "É p'ra beber aqui?",
+            "Aqui tem.",
+            "P'ra já!"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d2-1",
+            "base": "Queria um café, por favor.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Queria um sumo de laranja, por favor.",
+                "translation": "I'd like an orange juice, please.",
+                "register": "neutral"
+              },
+              {
+                "text": "Queria dois cafés, por favor.",
+                "translation": "I'd like two coffees, please.",
+                "register": "neutral"
+              },
+              {
+                "text": "Queria um chá, por favor.",
+                "translation": "I'd like a tea, please.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d2-2",
+            "base": "Uma bica, se faz favor.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Um galão, se faz favor.",
+                "translation": "A 'galão', please.",
+                "register": "neutral"
+              },
+              {
+                "text": "Duas bicas, se faz favor.",
+                "translation": "Two espressos, please.",
+                "register": "neutral"
+              },
+              {
+                "text": "Uma meia de leite, se faz favor.",
+                "translation": "A 'meia de leite', please.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d2-3",
+            "base": "Quanto é?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Quanto fica?",
+                "translation": "How much is it?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Ordering in a Café",
+            "body": "Ordering coffee in Madeira is specific. A \"bica\" is your standard espresso. If you want a bit of milk, ask for a \"garoto\"."
+          },
+          {
+            "title": "Coffee Names in Portugal",
+            "body": "While 'café' generally refers to an espresso throughout Portugal, in Madeira, locals often use 'bica' instead. Both terms are understood, but using 'bica' will make you sound more local. Other common coffee types include 'meia de leite' (half coffee, half milk) and 'galão' (a larger milk coffee, served in a tall glass)."
+          },
+          {
+            "title": "Politeness in Ordering",
+            "body": "In Portugal, politeness is highly valued. Always remember to use 'por favor' or 'se faz favor' (both meaning 'please') when making a request. 'Obrigado' (if you're male) or 'Obrigada' (if you're female) for 'thank you' is also essential when receiving your order or the bill."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d2-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Queria um café, por favor.\"",
+            "answer": "Queria um café, por favor.",
+            "source_ref": "pp-d2-1"
+          },
+          {
+            "id": "rv-d2-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Uma bica, se faz favor.\"",
+            "answer": "Uma bica, se faz favor.",
+            "source_ref": "pp-d2-2"
+          },
+          {
+            "id": "rv-d2-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Quanto é?\"",
+            "answer": "Quanto é?",
+            "source_ref": "pp-d2-3"
+          },
+          {
+            "id": "rv-d2-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"P'ra já!\"",
+            "answer": "P'ra já!",
+            "source_ref": "pp-d2-4"
+          },
+          {
+            "id": "rv-d2-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Espresso",
+            "answer": "Bica",
+            "source_ref": "Bica"
+          },
+          {
+            "id": "rv-d2-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Breakfast",
+            "answer": "Pequeno-almoço",
+            "source_ref": "Pequeno-almoço"
+          },
+          {
+            "id": "rv-d2-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Custard tart",
+            "answer": "Pastel de nata",
+            "source_ref": "Pastel de nata"
+          },
+          {
+            "id": "rv-d2-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: The bill",
+            "answer": "A conta",
+            "source_ref": "A conta"
+          },
+          {
+            "id": "rv-d2-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d2-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d3-numbers-1-10-connectors",
+      "title": "Numbers 1-10 + Connectors",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 8,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d3-1",
+            "title": "Ordering at the café",
+            "context": "A tourist is ordering coffee and a pastry at a café in Funchal.",
+            "lines": [
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Bom dia! O que deseja?",
+                "translation": "Good morning! What would you like?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Bom dia. Queria dois cafés e um bolo de arroz, por favor.",
+                "translation": "Good morning. I'd like two coffees and a rice cake, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Dois cafés e um bolo de arroz. Mais alguma coisa?",
+                "translation": "Two coffees and a rice cake. Anything else?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Não, só isso. Quanto é?",
+                "translation": "No, just that. How much is it?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "local",
+                "text": "São três euros e um bocado. Quatro euros, no total.",
+                "translation": "It's three euros and a bit. Four euros, in total."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d3-2",
+            "title": "Buying fruit",
+            "context": "A local is buying fruit at the market, asking about prices and quantities.",
+            "lines": [
+              {
+                "speaker": "Vendedor",
+                "voice_type": "noisy",
+                "text": "Diga! Quer o quê?",
+                "translation": "Yes! What do you want?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria cinco bananas, mas não muito grandes.",
+                "translation": "Good morning. I'd like five bananas, but not too big."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "noisy",
+                "text": "Cinco bananas. Certo. E mais alguma coisa?",
+                "translation": "Five bananas. Alright. And anything else?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, e três maçãs, por favor, porque gosto muito de maçãs.",
+                "translation": "Yes, and three apples, please, because I really like apples."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "noisy",
+                "text": "Cinco bananas e três maçãs. São sete euros.",
+                "translation": "Five bananas and three apples. That's seven euros."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a small shop in Madeira, buying some items. You need to ask for quantities and understand prices.",
+          "difficulty": 2,
+          "entry_node": "rp-d3-start",
+          "nodes": [
+            {
+              "id": "rp-d3-start",
+              "npc_text": "Bom dia! O que deseja?",
+              "npc_translation": "Good morning! What would you like?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria um sumo e dois bolos.",
+                  "translation": "Good morning. I'd like one juice and two cakes.",
+                  "feedback": "Great start! You asked for two items using 'e'.",
+                  "next": "rp-d3-sumo-bolos"
+                },
+                {
+                  "text": "Queria três águas, mas pequenas.",
+                  "translation": "I'd like three waters, but small ones.",
+                  "feedback": "Good use of 'mas' to specify.",
+                  "next": "rp-d3-aguas-pequenas"
+                }
+              ]
+            },
+            {
+              "id": "rp-d3-sumo-bolos",
+              "npc_text": "Um sumo e dois bolos. Certo. São cinco euros.",
+              "npc_translation": "One juice and two cakes. Right. That's five euros.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Cinco euros? É um bocado.",
+                  "translation": "Five euros? That's a bit much.",
+                  "feedback": "You expressed surprise about the price using 'um bocado'.",
+                  "next": "rp-d3-caro"
+                },
+                {
+                  "text": "Ok, aqui está. Obrigado.",
+                  "translation": "Okay, here you go. Thank you.",
+                  "feedback": "Polite and direct ending to the transaction."
+                }
+              ]
+            },
+            {
+              "id": "rp-d3-aguas-pequenas",
+              "npc_text": "Três águas pequenas. Ótimo. São quatro euros.",
+              "npc_translation": "Three small waters. Great. That's four euros.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Quatro euros. E queria mais um café, por favor.",
+                  "translation": "Four euros. And I'd like one more coffee, please.",
+                  "feedback": "You added another item using 'e'.",
+                  "next": "rp-d3-mais-cafe"
+                },
+                {
+                  "text": "Então, só as águas. Obrigado.",
+                  "translation": "So, just the waters. Thank you.",
+                  "feedback": "You chose to buy only the initial items."
+                }
+              ]
+            },
+            {
+              "id": "rp-d3-caro",
+              "npc_text": "Pois é. Os preços sobem. Quer só um bolo, então?",
+              "npc_translation": "That's how it is. Prices go up. Do you want just one cake, then?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, só um bolo, porque é mais barato.",
+                  "translation": "Yes, just one cake, because it's cheaper.",
+                  "feedback": "You used 'porque' to explain your choice."
+                },
+                {
+                  "text": "Não, está bem. Dois bolos e um sumo.",
+                  "translation": "No, it's fine. Two cakes and one juice.",
+                  "feedback": "You decided to stick with your original order."
+                }
+              ]
+            },
+            {
+              "id": "rp-d3-mais-cafe",
+              "npc_text": "Mais um café. Então, três águas e um café. São cinco euros e um bocado.",
+              "npc_translation": "One more coffee. So, three waters and one coffee. That's five euros and a bit.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ok, são seis euros. Aqui está.",
+                  "translation": "Okay, that's six euros. Here you go.",
+                  "feedback": "You understood the total and paid."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "A Shopping List in Funchal",
+          "prep": [
+            "Practice counting from one to ten out loud.",
+            "Rehearse ordering two different items using 'e' (e.g., 'dois cafés e um sumo').",
+            "Think of a simple reason to use 'porque' (e.g., 'porque é para duas pessoas').",
+            "Be ready to ask 'Quanto é?' (How much is it?)."
+          ],
+          "fallback_phrases": [
+            "Não percebo, desculpe.",
+            "Mais devagar, por favor.",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Bom dia! O que deseja?",
+            "Mais alguma coisa?",
+            "São X euros.",
+            "Aqui está."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d3-1",
+            "base": "Queria dois cafés.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Queria um café e uma água.",
+                "translation": "I'd like one coffee and one water.",
+                "register": "neutral"
+              },
+              {
+                "text": "Queria três sumos, mas só tenho cinco euros.",
+                "translation": "I'd like three juices, but I only have five euros.",
+                "register": "neutral"
+              },
+              {
+                "text": "Queria quatro bolos, porque gosto muito.",
+                "translation": "I'd like four cakes, because I like them a lot.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d3-2",
+            "base": "Um, dois, três...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Um, dois, três e quatro.",
+                "translation": "One, two, three and four.",
+                "register": "neutral"
+              },
+              {
+                "text": "Cinco, seis, sete, oito.",
+                "translation": "Five, six, seven, eight.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d3-3",
+            "base": "...porque prefiro assim.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "...porque é mais barato.",
+                "translation": "...because it's cheaper.",
+                "register": "neutral"
+              },
+              {
+                "text": "...porque é para duas pessoas.",
+                "translation": "...because it's for two people.",
+                "register": "neutral"
+              },
+              {
+                "text": "...porque não tenho mais dinheiro.",
+                "translation": "...because I don't have more money.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Numbers 1-10 + Connectors",
+            "body": "Numbers are the backbone of daily transactions. Connectors like \"porque\" help you explain your choices, making you sound more natural."
+          },
+          {
+            "title": "Counting with Fingers in Portugal",
+            "body": "When indicating numbers with your fingers in Portugal, especially 1, 2, and 3, it's common to start with your thumb for one, thumb and index for two, and so on. This can sometimes differ from other cultures where the index finger might be 'one'."
+          },
+          {
+            "title": "Using 'e' for 'and'",
+            "body": "The conjunction 'e' (and) is essential for linking items in a list or combining simple ideas. It's often used when ordering multiple items in a shop or café, like 'um café e um bolo' (one coffee and one cake)."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d3-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Queria dois cafés.\"",
+            "answer": "Queria dois cafés.",
+            "source_ref": "pp-d3-1"
+          },
+          {
+            "id": "rv-d3-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Um, dois, três...\"",
+            "answer": "Um, dois, três...",
+            "source_ref": "pp-d3-2"
+          },
+          {
+            "id": "rv-d3-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"...porque prefiro assim.\"",
+            "answer": "...porque prefiro assim.",
+            "source_ref": "pp-d3-3"
+          },
+          {
+            "id": "rv-d3-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Um bocado.\"",
+            "answer": "Um bocado.",
+            "source_ref": "pp-d3-4"
+          },
+          {
+            "id": "rv-d3-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: A little bit",
+            "answer": "Um bocado",
+            "source_ref": "Um bocado"
+          },
+          {
+            "id": "rv-d3-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: So / Then",
+            "answer": "Então",
+            "source_ref": "Então"
+          },
+          {
+            "id": "rv-d3-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: But",
+            "answer": "Mas",
+            "source_ref": "Mas"
+          },
+          {
+            "id": "rv-d3-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Because",
+            "answer": "Porque",
+            "source_ref": "Porque"
+          },
+          {
+            "id": "rv-d3-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d3-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d4-confusion-clarification",
+      "title": "Confusion & Clarification",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 7,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d4-1",
+            "title": "Asking for directions",
+            "context": "A tourist asks a shop assistant for directions to a specific street.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Olá. Onde é a Rua da Carreira?",
+                "translation": "Hello. Where is Carreira Street?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "É aqui à direita, depois segue sempre em frente e vira na segunda à esquerda.",
+                "translation": "It's here to the right, then you go straight ahead and turn on the second left."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Não percebi. Pode repetir?",
+                "translation": "I didn't understand. Can you repeat?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Claro. Vá por aqui, à direita. Depois, siga em frente. Na segunda rua, vira à esquerda.",
+                "translation": "Of course. Go this way, to the right. Then, go straight. On the second street, turn left."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Ah, percebi. Obrigado!",
+                "translation": "Ah, I understood. Thank you!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d4-2",
+            "title": "Ordering a coffee",
+            "context": "A local barista speaks quickly to a tourist trying to order a coffee.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Um café, se faz favor.",
+                "translation": "A coffee, please."
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "local",
+                "text": "É p'ra beber aqui ou p'ra levar? Com açúcar ou sem? Quer um bolo do caco?",
+                "translation": "Is it to drink here or to take away? With sugar or without? Do you want a bolo do caco?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Diz? Mais devagar, se faz favor.",
+                "translation": "Pardon? More slowly, please."
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Ah, desculpe. P'ra beber aqui? Ou p'ra levar?",
+                "translation": "Oh, sorry. To drink here? Or to take away?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "P'ra beber aqui.",
+                "translation": "To drink here."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local market in Funchal, trying to buy some fruit. The vendor speaks a bit fast.",
+          "difficulty": 1,
+          "entry_node": "rp-d4-1",
+          "nodes": [
+            {
+              "id": "rp-d4-1",
+              "npc_text": "Bom dia! Posso ajudar? Temos umas bananas da Madeira ótimas hoje!",
+              "npc_translation": "Good morning! Can I help? We have some great Madeiran bananas today!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Bom dia. Queria um quilo de bananas, se faz favor.",
+                  "translation": "Good morning. I'd like a kilo of bananas, please.",
+                  "feedback": "Great start, polite and clear.",
+                  "next": "rp-d4-2"
+                },
+                {
+                  "text": "Olá. Bananas, por favor.",
+                  "translation": "Hello. Bananas, please.",
+                  "feedback": "A bit direct, but understandable. Try to add 'queria um quilo'.",
+                  "next": "rp-d4-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d4-2",
+              "npc_text": "Um quilo? Ok! Quer também umas maracujás ou umas anonas? Estão fresquinhas!",
+              "npc_translation": "A kilo? Okay! Do you also want some passion fruit or some custard apples? They're very fresh!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Diz? Não percebi.",
+                  "translation": "Pardon? I didn't understand.",
+                  "feedback": "Excellent, using your escape hatch!",
+                  "next": "rp-d4-3"
+                },
+                {
+                  "text": "Mais devagar, se faz favor.",
+                  "translation": "More slowly, please.",
+                  "feedback": "Good, asking for slower speech.",
+                  "next": "rp-d4-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d4-3",
+              "npc_text": "Ah, desculpe! Perguntei se queria maracujás ou anonas. São frutas da ilha.",
+              "npc_translation": "Oh, sorry! I asked if you wanted passion fruit or custard apples. They are island fruits.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. Só as bananas.",
+                  "translation": "No, thank you. Just the bananas.",
+                  "feedback": "Clear and polite refusal.",
+                  "next": "rp-d4-4"
+                },
+                {
+                  "text": "Sim, uma maracujá, se faz favor.",
+                  "translation": "Yes, one passion fruit, please.",
+                  "feedback": "Good, you understood and added to your order.",
+                  "next": "rp-d4-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d4-4",
+              "npc_text": "Muito bem. São três euros e cinquenta. Obrigado e volte sempre!",
+              "npc_translation": "Very good. That's three euros fifty. Thank you and come back often!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado! Adeus.",
+                  "translation": "Thank you! Goodbye.",
+                  "feedback": "Perfect ending to the interaction."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Ask for Repetition at the Market",
+          "prep": [
+            "Imagine you are at a fruit stall in a Madeiran market.",
+            "Practice saying 'Diz?' and 'Mais devagar, se faz favor.'",
+            "Think about what you might want to buy (e.g., 'um quilo de bananas', 'duas maçãs')."
+          ],
+          "fallback_phrases": [
+            "Diz?",
+            "Não percebi.",
+            "Pode repetir, se faz favor?",
+            "Mais devagar, se faz favor."
+          ],
+          "likely_responses": [
+            "Desculpe, disse que...",
+            "Ah, sim. Eu perguntei se...",
+            "Mais devagar? Claro.",
+            "Repetir? Sim. Eu disse..."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d4-1",
+            "base": "Diz?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Como?",
+                "translation": "How? / Pardon?",
+                "register": "neutral"
+              },
+              {
+                "text": "O quê?",
+                "translation": "What?",
+                "register": "informal",
+                "note": "Can sound abrupt if not used carefully."
+              }
+            ]
+          },
+          {
+            "id": "pp-d4-2",
+            "base": "Não percebi.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Não entendi.",
+                "translation": "I didn't understand.",
+                "register": "neutral"
+              },
+              {
+                "text": "Não ouvi bem.",
+                "translation": "I didn't hear well.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d4-3",
+            "base": "Pode repetir?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Pode dizer de novo?",
+                "translation": "Can you say it again?",
+                "register": "neutral"
+              },
+              {
+                "text": "Pode dizer de novo, por favor?",
+                "translation": "Can you say it again, please?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d4-4",
+            "base": "Mais devagar, se faz favor.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Fale mais devagar, se faz favor.",
+                "translation": "Speak more slowly, please.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Asking for Repetition",
+            "body": "While 'Diz?' or 'Como?' are common informal ways to ask for repetition, adding 'se faz favor' or 'por favor' (please) makes the request more polite and is generally appreciated, especially with strangers or in service situations. 'Não percebi' is a very clear and neutral way to indicate lack of understanding."
+          },
+          {
+            "title": "Paciência: A Madeiran Trait",
+            "body": "The word 'Paciência' (patience) is not just a vocabulary item; it reflects a common attitude in Madeira. People are generally understanding if you need them to speak more slowly or repeat themselves, especially with tourists. Don't be afraid to use your 'escape hatch' phrases."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d4-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Diz?\"",
+            "answer": "Diz?",
+            "source_ref": "pp-d4-1"
+          },
+          {
+            "id": "rv-d4-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Não percebi.\"",
+            "answer": "Não percebi.",
+            "source_ref": "pp-d4-2"
+          },
+          {
+            "id": "rv-d4-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Pode repetir?\"",
+            "answer": "Pode repetir?",
+            "source_ref": "pp-d4-3"
+          },
+          {
+            "id": "rv-d4-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Mais devagar, se faz favor.\"",
+            "answer": "Mais devagar, se faz favor.",
+            "source_ref": "pp-d4-4"
+          },
+          {
+            "id": "rv-d4-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: What? / Pardon?",
+            "answer": "Diz?",
+            "source_ref": "Diz?"
+          },
+          {
+            "id": "rv-d4-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Understood",
+            "answer": "Percebi",
+            "source_ref": "Percebi"
+          },
+          {
+            "id": "rv-d4-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Slowly",
+            "answer": "Devagar",
+            "source_ref": "Devagar"
+          },
+          {
+            "id": "rv-d4-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Patience",
+            "answer": "Paciência",
+            "source_ref": "Paciência"
+          },
+          {
+            "id": "rv-d4-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d4-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d5-locations-directions",
+      "title": "Locations & Directions",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 7,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d5-1",
+            "title": "Asking for the market",
+            "context": "A tourist asks a local for directions to the market.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "younger",
+                "text": "Com licença, onde fica o mercado?",
+                "translation": "Excuse me, where is the market?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "O mercado? Pois, é ali. Vire à direita na esquina, depois sempre em frente.",
+                "translation": "The market? Ah, it's there. Turn right at the corner, then straight ahead."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "younger",
+                "text": "Sempre em frente?",
+                "translation": "Straight ahead?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Isso mesmo. É um bocado em baixo.",
+                "translation": "That's right. It's a bit downhill."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d5-2",
+            "title": "Finding a pharmacy",
+            "context": "A tourist asks a shop assistant for a pharmacy.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Bom dia. Desculpe, onde fica a farmácia?",
+                "translation": "Good morning. Excuse me, where is the pharmacy?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Bom dia. A farmácia? Fica em cima, aqui perto.",
+                "translation": "Good morning. The pharmacy? It's uphill, near here."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Em cima?",
+                "translation": "Uphill?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Sim, vire à esquerda, depois é a primeira à direita. É fácil.",
+                "translation": "Yes, turn left, then it's the first on the right. It's easy."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are in Funchal and need to find a bus stop to go to the botanical garden. Ask a local person for directions.",
+          "difficulty": 2,
+          "entry_node": "rp-d5-start",
+          "nodes": [
+            {
+              "id": "rp-d5-start",
+              "npc_text": "Bom dia! Posso ajudar?",
+              "npc_translation": "Good morning! Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Onde fica a paragem de autocarro para o Jardim Botânico?",
+                  "translation": "Where is the bus stop for the Botanical Garden?",
+                  "feedback": "Great start, asking directly for the bus stop!",
+                  "next": "rp-d5-directions"
+                },
+                {
+                  "text": "Onde é o Jardim Botânico?",
+                  "translation": "Where is the Botanical Garden?",
+                  "feedback": "You'll get directions to the garden, but not necessarily the bus stop.",
+                  "next": "rp-d5-garden_direct"
+                }
+              ]
+            },
+            {
+              "id": "rp-d5-directions",
+              "npc_text": "Ah, para o Jardim Botânico... Pois, a paragem fica ali, em cima. Vire à direita, depois sempre em frente, na próxima esquina.",
+              "npc_translation": "Ah, for the Botanical Garden... Well, the stop is there, uphill. Turn right, then straight ahead, at the next corner.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Em cima e à direita?",
+                  "translation": "Uphill and to the right?",
+                  "feedback": "Good job confirming the directions!",
+                  "next": "rp-d5-confirm"
+                },
+                {
+                  "text": "Fica aqui perto?",
+                  "translation": "Is it near here?",
+                  "feedback": "A good question to gauge the walkability.",
+                  "next": "rp-d5-distance"
+                }
+              ]
+            },
+            {
+              "id": "rp-d5-garden_direct",
+              "npc_text": "O Jardim Botânico é um bocado longe, mas o autocarro vai lá. A paragem é ali, em cima.",
+              "npc_translation": "The Botanical Garden is a bit far, but the bus goes there. The stop is there, uphill.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Onde fica a paragem de autocarro?",
+                  "translation": "Where is the bus stop?",
+                  "feedback": "Good, you clarified for the bus stop specifically.",
+                  "next": "rp-d5-directions_recap"
+                }
+              ]
+            },
+            {
+              "id": "rp-d5-confirm",
+              "npc_text": "Isso mesmo. Em cima, à direita, e depois sempre em frente.",
+              "npc_translation": "That's right. Uphill, to the right, and then straight ahead.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado!",
+                  "translation": "Thank you very much!",
+                  "feedback": "Polite ending, well done!"
+                }
+              ]
+            },
+            {
+              "id": "rp-d5-distance",
+              "npc_text": "É um bocado longe para ir a pé, mas de autocarro é rápido.",
+              "npc_translation": "It's a bit far to go on foot, but by bus it's quick.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Muito obrigado!",
+                  "translation": "Thank you very much!",
+                  "feedback": "Polite ending, well done!"
+                }
+              ]
+            },
+            {
+              "id": "rp-d5-directions_recap",
+              "npc_text": "Vire à direita, depois sempre em frente, na próxima esquina. É em cima.",
+              "npc_translation": "Turn right, then straight ahead, at the next corner. It's uphill.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado!",
+                  "translation": "Thank you very much!",
+                  "feedback": "Polite ending, well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Find the nearest pharmacy",
+          "prep": [
+            "Practice asking 'Onde fica a farmácia?'",
+            "Review 'em cima', 'em baixo', 'à esquerda', 'à direita', 'sempre em frente'.",
+            "Remember to say 'Com licença' or 'Desculpe' first."
+          ],
+          "fallback_phrases": [
+            "Não percebi.",
+            "Pode repetir, por favor?",
+            "Mais devagar, por favor."
+          ],
+          "likely_responses": [
+            "Fica ali, à direita.",
+            "É em cima, sempre em frente.",
+            "É um bocado longe, em baixo.",
+            "Vire à esquerda, na esquina."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d5-1",
+            "base": "Onde fica...?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Onde é o mercado?",
+                "translation": "Where is the market?",
+                "register": "neutral"
+              },
+              {
+                "text": "Onde é a farmácia?",
+                "translation": "Where is the pharmacy?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d5-2",
+            "base": "Fica aqui perto?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "É aqui perto?",
+                "translation": "Is it near here?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d5-3",
+            "base": "Sempre em frente.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Siga sempre em frente.",
+                "translation": "Go straight ahead.",
+                "register": "formal",
+                "note": "More formal way to say 'Go straight ahead'."
+              },
+              {
+                "text": "É sempre em frente.",
+                "translation": "It's straight ahead.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d5-4",
+            "base": "Vire à esquerda.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Vira à esquerda.",
+                "translation": "Turn left.",
+                "register": "informal",
+                "note": "Informal version of 'Vire à esquerda'."
+              },
+              {
+                "text": "Vire à direita.",
+                "translation": "Turn right.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Asking for Directions",
+            "body": "In Portugal, it's customary to start your request for directions with a polite phrase like 'Com licença' (Excuse me) or 'Desculpe' (Sorry/Excuse me) before asking your question. This shows respect and acknowledges that you're interrupting someone."
+          },
+          {
+            "title": "Madeiran Directions: Uphill and Downhill",
+            "body": "Given Funchal's hilly landscape, directions often include 'em cima' (uphill) and 'em baixo' (downhill). These aren't just about elevation but often imply a general direction relative to the main road or sea. Pay attention to these terms as they are crucial for navigating the city."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d5-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Onde fica...?\"",
+            "answer": "Onde fica...?",
+            "source_ref": "pp-d5-1"
+          },
+          {
+            "id": "rv-d5-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Fica aqui perto?\"",
+            "answer": "Fica aqui perto?",
+            "source_ref": "pp-d5-2"
+          },
+          {
+            "id": "rv-d5-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Sempre em frente.\"",
+            "answer": "Sempre em frente.",
+            "source_ref": "pp-d5-3"
+          },
+          {
+            "id": "rv-d5-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Vire à esquerda.\"",
+            "answer": "Vire à esquerda.",
+            "source_ref": "pp-d5-4"
+          },
+          {
+            "id": "rv-d5-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Up / Uphill",
+            "answer": "Em cima",
+            "source_ref": "Em cima"
+          },
+          {
+            "id": "rv-d5-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Down / Downhill",
+            "answer": "Em baixo",
+            "source_ref": "Em baixo"
+          },
+          {
+            "id": "rv-d5-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Corner",
+            "answer": "Esquina",
+            "source_ref": "Esquina"
+          },
+          {
+            "id": "rv-d5-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: There",
+            "answer": "Ali",
+            "source_ref": "Ali"
+          },
+          {
+            "id": "rv-d5-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d5-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d6-opinions-preferences",
+      "title": "Opinions & Preferences",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d6-1",
+            "title": "At the café",
+            "context": "A tourist and a local at a café, discussing food and drink.",
+            "lines": [
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Então, gosta da bica?",
+                "translation": "So, do you like the coffee?"
+              },
+              {
+                "speaker": "Tourist",
+                "voice_type": "teacher",
+                "text": "Sim, gosto imenso! É uma maravilha.",
+                "translation": "Yes, I like it very much! It's wonderful."
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Pois é! E o bolo do caco? Acha que é bom?",
+                "translation": "Yes, it is! And the 'bolo do caco'? Do you think it's good?"
+              },
+              {
+                "speaker": "Tourist",
+                "voice_type": "teacher",
+                "text": "Acho que parece ótimo! Quero provar.",
+                "translation": "I think it looks great! I want to try it."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d6-2",
+            "title": "Talking about Madeira",
+            "context": "Two people discussing their impressions of Madeira.",
+            "lines": [
+              {
+                "speaker": "Friend 1",
+                "voice_type": "older",
+                "text": "A Madeira é uma maravilha, não é?",
+                "translation": "Madeira is wonderful, isn't it?"
+              },
+              {
+                "speaker": "Friend 2",
+                "voice_type": "younger",
+                "text": "Pois é, gosto imenso daqui! O tempo parece-me ótimo.",
+                "translation": "Yes, it is, I like it here a lot! The weather seems great to me."
+              },
+              {
+                "speaker": "Friend 1",
+                "voice_type": "older",
+                "text": "Mesmo! Acha que é um bom lugar para viver?",
+                "translation": "Exactly! Do you think it's a good place to live?"
+              },
+              {
+                "speaker": "Friend 2",
+                "voice_type": "younger",
+                "text": "Parece-me que sim. Imenso sol!",
+                "translation": "It seems so to me. Lots of sun!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a fruit stall in a local market in Funchal. The vendor offers you a taste of a local fruit.",
+          "difficulty": 1,
+          "entry_node": "rp-d6-start",
+          "nodes": [
+            {
+              "id": "rp-d6-start",
+              "npc_text": "Bom dia! Quer provar esta fruta? É da Madeira.",
+              "npc_translation": "Good morning! Do you want to try this fruit? It's from Madeira.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "A polite way to accept the offer.",
+                  "next": "rp-d6-taste"
+                }
+              ]
+            },
+            {
+              "id": "rp-d6-taste",
+              "npc_text": "Então, o que achou? É bom?",
+              "npc_translation": "So, what did you think? Is it good?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Gosto imenso!",
+                  "translation": "I like it very much!",
+                  "feedback": "Excellent, you expressed strong liking.",
+                  "next": "rp-d6-like"
+                },
+                {
+                  "text": "Parece-me bem.",
+                  "translation": "It seems good to me.",
+                  "feedback": "Good, a neutral positive opinion.",
+                  "next": "rp-d6-neutral"
+                },
+                {
+                  "text": "Acho que é uma maravilha!",
+                  "translation": "I think it's wonderful!",
+                  "feedback": "Great, a strong positive opinion using 'acho que'.",
+                  "next": "rp-d6-like"
+                }
+              ]
+            },
+            {
+              "id": "rp-d6-like",
+              "npc_text": "Que bom! É uma das nossas melhores. Quer levar um?",
+              "npc_translation": "How good! It's one of our best. Do you want to take one?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "You've successfully made a purchase!"
+                },
+                {
+                  "text": "Não, obrigado/a.",
+                  "translation": "No, thank you.",
+                  "feedback": "Politely declining is also important."
+                }
+              ]
+            },
+            {
+              "id": "rp-d6-neutral",
+              "npc_text": "Acha que sim? Temos outras frutas também. Quer provar outra coisa?",
+              "npc_translation": "Do you think so? We have other fruits too. Do you want to try something else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado/a.",
+                  "translation": "No, thank you.",
+                  "feedback": "You politely declined further offers."
+                },
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "You are open to trying more. Good!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Share your opinion on a local dish",
+          "prep": [
+            "Practice saying 'Gosto imenso!', 'Parece-me bem.', and 'Acho que é uma maravilha!'.",
+            "Think about something you've tried in Madeira (like 'bolo do caco' or 'poncha')."
+          ],
+          "fallback_phrases": [
+            "Não percebo, desculpe.",
+            "Pode repetir, por favor?",
+            "Um momento, por favor."
+          ],
+          "likely_responses": [
+            "Pois é!",
+            "Que bom!",
+            "Sim, é mesmo.",
+            "Acha que sim?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d6-1",
+            "base": "Gosto imenso!",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Gosto imenso da Madeira.",
+                "translation": "I really like Madeira.",
+                "register": "neutral"
+              },
+              {
+                "text": "Gosto imenso do bolo do caco.",
+                "translation": "I really like the 'bolo do caco'.",
+                "register": "neutral"
+              },
+              {
+                "text": "Gosto imenso da vista.",
+                "translation": "I really like the view.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d6-2",
+            "base": "Parece-me bem.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Parece-me ótimo.",
+                "translation": "It seems great to me.",
+                "register": "neutral"
+              },
+              {
+                "text": "Parece-me muito bom.",
+                "translation": "It seems very good to me.",
+                "register": "neutral"
+              },
+              {
+                "text": "Acho que parece bem.",
+                "translation": "I think it looks good.",
+                "register": "neutral",
+                "note": "Using 'acho que' to introduce the opinion."
+              }
+            ]
+          },
+          {
+            "id": "pp-d6-3",
+            "base": "É uma maravilha.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "A vista é uma maravilha.",
+                "translation": "The view is wonderful.",
+                "register": "neutral"
+              },
+              {
+                "text": "O bolo do caco é uma maravilha.",
+                "translation": "The 'bolo do caco' is wonderful.",
+                "register": "neutral"
+              },
+              {
+                "text": "Acho que é uma maravilha.",
+                "translation": "I think it's wonderful.",
+                "register": "neutral",
+                "note": "Using 'acho que' to introduce the opinion."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Softening opinions with 'Parece-me'",
+            "body": "While 'Acho que...' (I think that...) is a direct way to express an opinion, 'Parece-me que...' (It seems to me that...) or simply 'Parece-me bem.' (It seems good to me.) is a slightly softer and often more polite way to share your thoughts, especially when you're not entirely certain or want to be less assertive. It's very common in everyday conversation."
+          },
+          {
+            "title": "The versatility of 'Pois é!'",
+            "body": "'Pois é!' is a very common and versatile interjection in Portuguese. It can mean 'That's right!', 'Exactly!', 'Indeed!', or simply be a way to acknowledge what someone has said, showing agreement or understanding. It's often used to keep a conversation flowing naturally."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d6-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Gosto imenso!\"",
+            "answer": "Gosto imenso!",
+            "source_ref": "pp-d6-1"
+          },
+          {
+            "id": "rv-d6-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Parece-me bem.\"",
+            "answer": "Parece-me bem.",
+            "source_ref": "pp-d6-2"
+          },
+          {
+            "id": "rv-d6-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"É uma maravilha.\"",
+            "answer": "É uma maravilha.",
+            "source_ref": "pp-d6-3"
+          },
+          {
+            "id": "rv-d6-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Pois é!\"",
+            "answer": "Pois é!",
+            "source_ref": "pp-d6-4"
+          },
+          {
+            "id": "rv-d6-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Very much / A lot",
+            "answer": "Imenso",
+            "source_ref": "Imenso"
+          },
+          {
+            "id": "rv-d6-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Great",
+            "answer": "Óptimo",
+            "source_ref": "Óptimo"
+          },
+          {
+            "id": "rv-d6-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Wonderful",
+            "answer": "Maravilha",
+            "source_ref": "Maravilha"
+          },
+          {
+            "id": "rv-d6-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Really / Exactly",
+            "answer": "Mesmo",
+            "source_ref": "Mesmo"
+          },
+          {
+            "id": "rv-d6-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d6-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d7-week-1-stress-test",
+      "title": "Week 1 Stress Test",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 0,
+        "extra_cultural_notes": 2,
+        "review_items": 2,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d7-1",
+            "title": "Ordering at a Café",
+            "context": "You are at a local café in Funchal, ordering your breakfast.",
+            "lines": [
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Olá! Bom dia! O que deseja?",
+                "translation": "Hello! Good morning! What would you like?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "Bom dia. Queria uma bica, por favor.",
+                "translation": "Good morning. I'd like an espresso, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Uma bica. Mais alguma coisa?",
+                "translation": "An espresso. Anything else?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "Sim, e um bolo do caco, por favor.",
+                "translation": "Yes, and a bolo do caco, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Tá bem. É para aqui ou para levar?",
+                "translation": "Okay. Is it for here or to take away?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "É para aqui, obrigado.",
+                "translation": "It's for here, thank you."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Pois. Já vai.",
+                "translation": "Right. Coming up."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "A conta, por favor.",
+                "translation": "The bill, please."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "São três euros e vinte. Obrigado.",
+                "translation": "That's three euros twenty. Thank you."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "Obrigada! Adeus.",
+                "translation": "Thank you! Goodbye."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Adeus. Volte sempre!",
+                "translation": "Goodbye. Come again!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d7-2",
+            "title": "Asking for Directions",
+            "context": "You are on a street in Funchal, trying to find a specific street.",
+            "lines": [
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "Com licença, desculpe. Onde é a Rua da Carreira?",
+                "translation": "Excuse me, sorry. Where is Rua da Carreira?"
+              },
+              {
+                "speaker": "Transeunte",
+                "voice_type": "older",
+                "text": "A Rua da Carreira? Pois... é um bocado para lá.",
+                "translation": "Rua da Carreira? Well... it's a bit over there."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "Ah, tá bem. É muito longe?",
+                "translation": "Ah, okay. Is it very far?"
+              },
+              {
+                "speaker": "Transeunte",
+                "voice_type": "older",
+                "text": "Não, não. Um bocado a pé. Vai por ali, depois vira à direita...",
+                "translation": "No, no. A bit on foot. You go that way, then turn right..."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "local",
+                "text": "Ah, percebi. Muito obrigada! Até já!",
+                "translation": "Ah, I understand. Thank you very much! See you!"
+              },
+              {
+                "speaker": "Transeunte",
+                "voice_type": "older",
+                "text": "De nada! Adeus.",
+                "translation": "You're welcome! Goodbye."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local pastelaria (bakery/café) in Funchal, ready to order a quick snack and a drink.",
+          "difficulty": 2,
+          "entry_node": "rp-d7-1",
+          "nodes": [
+            {
+              "id": "rp-d7-1",
+              "npc_text": "Olá! Bom dia! O que vai ser?",
+              "npc_translation": "Hello! Good morning! What will it be?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria um café, por favor.",
+                  "translation": "Good morning. I'd like a coffee, please.",
+                  "feedback": "A good start, clear and polite.",
+                  "next": "rp-d7-2"
+                },
+                {
+                  "text": "Olá. Um pastel de nata, por favor.",
+                  "translation": "Hello. A pastel de nata, please.",
+                  "feedback": "Directly ordering, also good.",
+                  "next": "rp-d7-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d7-2",
+              "npc_text": "Um café. Mais alguma coisa?",
+              "npc_translation": "A coffee. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, e um bolo do caco, por favor.",
+                  "translation": "Yes, and a bolo do caco, please.",
+                  "feedback": "Adding another item, well done.",
+                  "next": "rp-d7-4"
+                },
+                {
+                  "text": "Não, obrigado/a. Só o café.",
+                  "translation": "No, thank you. Just the coffee.",
+                  "feedback": "Politely declining, simple and effective.",
+                  "next": "rp-d7-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d7-3",
+              "npc_text": "Um pastel de nata. Mais alguma coisa?",
+              "npc_translation": "A pastel de nata. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, e uma bica, por favor.",
+                  "translation": "Yes, and an espresso, please.",
+                  "feedback": "Successfully added a drink.",
+                  "next": "rp-d7-4"
+                },
+                {
+                  "text": "Não, obrigado/a. Só o pastel.",
+                  "translation": "No, thank you. Just the pastry.",
+                  "feedback": "Clear and concise.",
+                  "next": "rp-d7-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d7-4",
+              "npc_text": "Tá bem. É para aqui ou para levar?",
+              "npc_translation": "Okay. Is it for here or to take away?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É para aqui, por favor.",
+                  "translation": "It's for here, please.",
+                  "feedback": "Good, indicating you'll eat in.",
+                  "next": "rp-d7-6"
+                },
+                {
+                  "text": "É para levar, por favor.",
+                  "translation": "It's to take away, please.",
+                  "feedback": "Good, indicating you'll take it to go.",
+                  "next": "rp-d7-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d7-5",
+              "npc_text": "Tá bem. É para aqui ou para levar?",
+              "npc_translation": "Okay. Is it for here or to take away?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Para aqui, por favor.",
+                  "translation": "For here, please.",
+                  "feedback": "Correct response for eating in.",
+                  "next": "rp-d7-6"
+                },
+                {
+                  "text": "Para levar, por favor.",
+                  "translation": "To take away, please.",
+                  "feedback": "Correct response for taking it to go.",
+                  "next": "rp-d7-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d7-6",
+              "npc_text": "Fica dois euros e setenta. Obrigado/a.",
+              "npc_translation": "That's two euros seventy. Thank you.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Aqui está. Muito obrigado/a!",
+                  "translation": "Here you go. Thank you very much!",
+                  "feedback": "Successfully completed the transaction and showed gratitude."
+                },
+                {
+                  "text": "Obrigado/a. Adeus!",
+                  "translation": "Thank you. Goodbye!",
+                  "feedback": "A polite and clear exit."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order and Pay at a Café",
+          "prep": [
+            "Practice greeting the server with 'Bom dia' or 'Olá'.",
+            "Rehearse ordering a coffee ('uma bica') and a pastry ('um pastel de nata' or 'um bolo do caco') using 'Queria... por favor'.",
+            "Practice asking for the bill: 'A conta, por favor'.",
+            "Be ready to say 'Obrigado/a' and 'Adeus' when leaving."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi. Pode repetir, por favor?",
+            "Fala inglês?",
+            "Um momento, por favor."
+          ],
+          "likely_responses": [
+            "O que deseja?",
+            "Mais alguma coisa?",
+            "É para aqui ou para levar?",
+            "A conta?",
+            "São X euros.",
+            "Obrigado/a."
+          ]
+        },
+        "phrase_patterns_enriched": [],
+        "cultural_notes": [
+          {
+            "title": "Bica vs. Café",
+            "body": "In Portugal, especially in Madeira, if you ask for 'um café', you will almost always receive an espresso. Many locals use the term 'uma bica' interchangeably with 'um café' to refer to an espresso. If you want a longer coffee, like an Americano, you'll need to specify 'um abatanado' or 'um café cheio'."
+          },
+          {
+            "title": "Politeness in Transactions",
+            "body": "Politeness is highly valued in daily interactions. Always use 'por favor' (please) when asking for something and 'obrigado/a' (thank you) when receiving. 'Com licença' (excuse me) is used to get someone's attention or to pass by someone in a crowded space. These small words make a big difference."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d7-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Full Week 1 Review\"",
+            "answer": "Full Week 1 Review",
+            "source_ref": "pp-d7-1"
+          },
+          {
+            "id": "rv-d7-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d7-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d8-self-introduction",
+      "title": "Self-Introduction",
+      "level": 0,
+      "cefr": "A1",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 4,
+        "extra_cultural_notes": 2,
+        "review_items": 9,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d8-1",
+            "title": "Meeting a Local",
+            "context": "A tourist introduces themselves to a local person at a café in Funchal.",
+            "lines": [
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Olá! Tudo bem?",
+                "translation": "Hello! All good?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Olá! Sim, tudo bem, obrigado. Chamo-me Sarah.",
+                "translation": "Hello! Yes, all good, thank you. My name is Sarah."
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Muito prazer, Sarah. Eu sou o Manuel. De onde é que é?",
+                "translation": "Nice to meet you, Sarah. I'm Manuel. Where are you from?"
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Sou da Inglaterra. Estou cá há uma semana.",
+                "translation": "I'm from England. I've been here for a week."
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Ah, pois é! Bem-vinda à Madeira!",
+                "translation": "Oh, that's right! Welcome to Madeira!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d8-2",
+            "title": "At the Hotel Reception",
+            "context": "A new guest checks in at a hotel in Funchal.",
+            "lines": [
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Boa tarde. Em que posso ajudar?",
+                "translation": "Good afternoon. How can I help?"
+              },
+              {
+                "speaker": "Hóspede",
+                "voice_type": "teacher",
+                "text": "Boa tarde. Chamo-me Mark. Tenho uma reserva.",
+                "translation": "Good afternoon. My name is Mark. I have a reservation."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Certo, senhor Mark. De onde é o senhor?",
+                "translation": "Right, Mr. Mark. Where are you from?"
+              },
+              {
+                "speaker": "Hóspede",
+                "voice_type": "teacher",
+                "text": "Sou do Canadá. Mudei-me para cá há pouco tempo.",
+                "translation": "I'm from Canada. I moved here recently."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Ah, que bom! Bem-vindo ao nosso hotel.",
+                "translation": "Oh, that's good! Welcome to our hotel."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are meeting a new neighbour in your building in Funchal. Introduce yourself.",
+          "difficulty": 2,
+          "entry_node": "rp-d8-1",
+          "nodes": [
+            {
+              "id": "rp-d8-1",
+              "npc_text": "Olá! É novo por cá, certo? Eu sou a Sofia, a sua vizinha.",
+              "npc_translation": "Hello! You're new here, right? I'm Sofia, your neighbour.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Olá, Sofia. Chamo-me [o seu nome].",
+                  "translation": "Hello, Sofia. My name is [your name].",
+                  "feedback": "Great start! You introduced your name clearly.",
+                  "next": "rp-d8-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d8-2",
+              "npc_text": "Muito prazer, [o seu nome]. De onde é que é?",
+              "npc_translation": "Nice to meet you, [your name]. Where are you from?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sou da [o seu país].",
+                  "translation": "I'm from [your country].",
+                  "feedback": "Good! You stated your origin clearly.",
+                  "next": "rp-d8-3"
+                },
+                {
+                  "text": "Sou de [a sua cidade].",
+                  "translation": "I'm from [your city].",
+                  "feedback": "Perfect! Stating your city is also very natural.",
+                  "next": "rp-d8-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d8-3",
+              "npc_text": "Ah, que interessante! E o que faz cá na Madeira?",
+              "npc_translation": "Oh, how interesting! And what do you do here in Madeira?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Mudei-me para cá há [tempo].",
+                  "translation": "I moved here [time ago].",
+                  "feedback": "Excellent! You explained your reason for being here.",
+                  "next": "rp-d8-4"
+                },
+                {
+                  "text": "Sou reformado/a.",
+                  "translation": "I'm retired.",
+                  "feedback": "Well done! A common reason for being in Madeira.",
+                  "next": "rp-d8-4"
+                },
+                {
+                  "text": "Trabalho cá.",
+                  "translation": "I work here.",
+                  "feedback": "Good! You stated your occupation directly.",
+                  "next": "rp-d8-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d8-4",
+              "npc_text": "Pois é! Que bom tê-lo/a por cá. Se precisar de alguma coisa, diga!",
+              "npc_translation": "That's right! It's good to have you here. If you need anything, just say!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Obrigado/a, Sofia! Igualmente.",
+                  "translation": "Thank you, Sofia! Likewise.",
+                  "feedback": "Great job! You ended the conversation politely."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Introduce Yourself to a Local",
+          "prep": [
+            "Practice saying your name: 'Chamo-me [o seu nome]'.",
+            "Practice saying your origin: 'Sou de [o seu país/cidade]'.",
+            "Practice saying your reason for being in Madeira: 'Estou cá há [tempo]' OR 'Sou reformado/a' OR 'Trabalho cá'."
+          ],
+          "fallback_phrases": [
+            "Não percebo.",
+            "Pode repetir, por favor?",
+            "Desculpe."
+          ],
+          "likely_responses": [
+            "Muito prazer!",
+            "De onde é?",
+            "Bem-vindo/a!",
+            "O que faz cá?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d8-1",
+            "base": "Chamo-me...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "O meu nome é...",
+                "translation": "My name is...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d8-2",
+            "base": "Sou de...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Venho de...",
+                "translation": "I come from...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d8-3",
+            "base": "Estou cá há...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Estou aqui há...",
+                "translation": "I've been here for...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d8-4",
+            "base": "Mudei-me para...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Vim viver para...",
+                "translation": "I came to live in...",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Muito prazer vs. Prazer",
+            "body": "When introduced to someone, 'Muito prazer' (pronounced 'moo-ee-toh pra-ZER') is the polite and common phrase, meaning 'Nice to meet you' or 'Much pleasure'. While 'Prazer' alone is sometimes used, 'Muito prazer' is generally preferred as it is more complete and formal, especially in a first encounter."
+          },
+          {
+            "title": "Addressing People: 'Tu' vs. 'O Senhor / A Senhora'",
+            "body": "In Portugal, 'tu' is used for informal address with friends, family, and peers. For strangers, especially older people or those in service roles (like shopkeepers, receptionists), it's more polite to use the third person singular with 'o senhor' (for a man) or 'a senhora' (for a woman). For example, instead of 'Como te chamas?' (informal), you'd say 'Como se chama o senhor/a senhora?' or simply 'Como se chama?' (using the polite 3rd person form). At L0, it's safer to default to the polite form with strangers until you are invited to use 'tu'."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d8-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Chamo-me...\"",
+            "answer": "Chamo-me...",
+            "source_ref": "pp-d8-1"
+          },
+          {
+            "id": "rv-d8-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Sou de...\"",
+            "answer": "Sou de...",
+            "source_ref": "pp-d8-2"
+          },
+          {
+            "id": "rv-d8-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Estou cá há...\"",
+            "answer": "Estou cá há...",
+            "source_ref": "pp-d8-3"
+          },
+          {
+            "id": "rv-d8-say-4",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Mudei-me para...\"",
+            "answer": "Mudei-me para...",
+            "source_ref": "pp-d8-4"
+          },
+          {
+            "id": "rv-d8-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: My name is",
+            "answer": "Chamo-me",
+            "source_ref": "Chamo-me"
+          },
+          {
+            "id": "rv-d8-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Here (local)",
+            "answer": "Cá",
+            "source_ref": "Cá"
+          },
+          {
+            "id": "rv-d8-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Retired",
+            "answer": "Reformado/a",
+            "source_ref": "Reformado/a"
+          },
+          {
+            "id": "rv-d8-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Work",
+            "answer": "Trabalho",
+            "source_ref": "Trabalho"
+          },
+          {
+            "id": "rv-d8-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d8-1"
+          }
+        ],
+        "media": []
+      }
+    }
+  ]
+}

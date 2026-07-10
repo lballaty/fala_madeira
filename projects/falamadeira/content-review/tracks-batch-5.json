@@ -1,0 +1,2651 @@
+{
+  "batch": 5,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T09:06:22.353Z",
+  "retag_mapping": {
+    "track-survival": [
+      "sit-d1-greetings-presence",
+      "sit-d2-ordering-in-a-cafe",
+      "sit-d3-numbers-1-10-connectors",
+      "sit-d4-confusion-clarification",
+      "sit-d5-locations-directions",
+      "sit-d8-self-introduction",
+      "sit-d9-time-days-hours",
+      "sit-d10-numbers-11-100-prices",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d27-numbers-100-years",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m6w1-telling-a-story",
+      "sit-host-guest-checkin-handover",
+      "sit-host-reporting-a-water-leak",
+      "sit-bureau-registering-health-centre",
+      "sit-work-scheduling-site-visit"
+    ],
+    "track-host": [
+      "sit-d12-adjectives-ser-estar",
+      "sit-d13-daily-routines",
+      "sit-d18-shopping-clothes-colours",
+      "sit-d19-health-pharmacy",
+      "sit-d22-the-imperfect-tense",
+      "sit-d26-describing-your-home",
+      "sit-d32-telephone-formal-messages",
+      "sit-d36-the-present-perfect",
+      "sit-d47-formal-writing-funchal",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-host-boiler-not-working",
+      "sit-host-briefing-the-cleaner",
+      "sit-bureau-utilities-setup"
+    ],
+    "track-social": [
+      "sit-d1-greetings-presence",
+      "sit-d4-confusion-clarification",
+      "sit-d6-opinions-preferences",
+      "sit-d7-week-1-stress-test",
+      "sit-d8-self-introduction",
+      "sit-d12-adjectives-ser-estar",
+      "sit-d14-week-2-stress-test",
+      "sit-d15-talking-about-others",
+      "sit-d17-poder-polite-requests",
+      "sit-d20-stronger-connectors",
+      "sit-d21-week-3-stress-test",
+      "sit-d24-wishes-conditionals-polite-requests",
+      "sit-d25-restaurant-ordering-a-full-meal",
+      "sit-d28-week-4-stress-test",
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d33-opinions-agreeing-disagreeing",
+      "sit-d34-collaborative-future",
+      "sit-d35-week-5-stress-test",
+      "sit-d38-emotions-empathy-comfort",
+      "sit-d39-madeiran-geography-culture",
+      "sit-d41-giving-explanations",
+      "sit-d42-week-6-stress-test",
+      "sit-d43-voces-addressing-groups",
+      "sit-d47-formal-writing-funchal",
+      "sit-d49-week-7-stress-test",
+      "sit-d52-register-social-fluency",
+      "sit-d54-madeira-in-depth",
+      "sit-d56-the-grand-stress-test",
+      "sit-m4w1-neighbourhood-small-talk",
+      "sit-m4w2-festival-arraial",
+      "sit-m4w3-madeiran-expressions",
+      "sit-m4w4-month4-stress-test",
+      "sit-m5w1-complaint-politely",
+      "sit-m5w2-negotiating-arranging",
+      "sit-m5w3-misunderstandings-repair",
+      "sit-m5w4-month5-stress-test",
+      "sit-m6w1-telling-a-story",
+      "sit-m6w2-formal-email-office",
+      "sit-m6w3-debating-opinions",
+      "sit-m6w4-final-immersion-test",
+      "sit-host-reporting-a-water-leak",
+      "sit-bureau-registering-health-centre",
+      "sit-work-scope-escalation"
+    ],
+    "track-bureaucracy": [
+      "sit-d29-tu-vs-voce-informal-formal",
+      "sit-d32-telephone-formal-messages",
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d47-formal-writing-funchal",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office"
+    ],
+    "track-work": [
+      "sit-d46-abstract-topics-work-decisions",
+      "sit-d53-professional-formal",
+      "sit-m6w2-formal-email-office",
+      "sit-host-boiler-not-working",
+      "sit-work-scope-escalation"
+    ]
+  },
+  "video_results": [
+    {
+      "situationId": "sit-d1-greetings-presence",
+      "url": "https://www.youtube.com/watch?v=pgC1ofHxm7s",
+      "id": "pgC1ofHxm7s",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-d15-talking-about-others",
+      "url": "https://www.youtube.com/watch?v=6F1ld7zv7yM",
+      "id": "6F1ld7zv7yM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "situationId": "sit-m4w2-festival-arraial",
+      "url": "https://www.youtube.com/watch?v=dd_NTKErny8",
+      "id": "dd_NTKErny8",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 6,
+  "situations": [
+    {
+      "id": "sit-bureau-registering-health-centre",
+      "kind": "track",
+      "title": "Registering at the Health Centre",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-bureaucracy"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-bureau-registering-health-centre",
+        "title": "Registering at the Health Centre",
+        "summary": "Registering at the centro de saúde and asking to be assigned a family doctor: the counter conversation, the forms, the follow-up.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-bureau-registering-health-centre-1",
+            "base": "Queria registar-me no {local}.",
+            "translation": "I would like to register at the {place}.",
+            "slots": [
+              {
+                "name": "local",
+                "description": "type of health facility",
+                "options": [
+                  "centro de saúde",
+                  "consultório médico"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Gostaria de me registar no centro de saúde.",
+                "translation": "I would like to register at the health centre.",
+                "register": "formal",
+                "note": "Slightly more formal phrasing"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-registering-health-centre-2",
+            "base": "Preciso de um médico de família.",
+            "translation": "I need a family doctor.",
+            "variants": [
+              {
+                "text": "Gostaria de ter um médico de família.",
+                "translation": "I would like to have a family doctor.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-registering-health-centre-3",
+            "base": "Que documentos são necessários para o registo?",
+            "translation": "What documents are needed for registration?",
+            "variants": [
+              {
+                "text": "O que preciso de trazer para me registar?",
+                "translation": "What do I need to bring to register?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-registering-health-centre-4",
+            "base": "Já tenho o meu número de utente.",
+            "translation": "I already have my health service number."
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "centro de saúde",
+            "translation": "health centre (public primary care clinic)",
+            "pronunciation": "SEN-troh dee sah-OOD",
+            "register": "neutral",
+            "note": "Main public health facility for primary care in Portugal"
+          },
+          {
+            "word": "médico de família",
+            "translation": "family doctor / GP",
+            "pronunciation": "MEH-dee-ko dee fah-MEE-lyah",
+            "register": "neutral"
+          },
+          {
+            "word": "utente",
+            "translation": "user of public services (e.g., health, transport)",
+            "pronunciation": "oo-TEN-tuh",
+            "register": "neutral",
+            "note": "Often refers to a patient in the public health system"
+          },
+          {
+            "word": "cartão de cidadão",
+            "translation": "citizen card (ID card)",
+            "pronunciation": "kar-TOWN dee see-dah-DOW",
+            "register": "neutral",
+            "note": "Portuguese national ID card, includes tax and social security numbers"
+          },
+          {
+            "word": "comprovativo de morada",
+            "translation": "proof of address",
+            "pronunciation": "kom-pruh-vah-TEE-vo dee moh-RAH-dah",
+            "register": "neutral",
+            "note": "Utility bill or bank statement often used"
+          },
+          {
+            "word": "número de utente",
+            "translation": "health service user number",
+            "pronunciation": "NOO-meh-ro dee oo-TEN-tuh",
+            "register": "neutral",
+            "note": "Unique identifier for public health services"
+          },
+          {
+            "word": "marcar uma consulta",
+            "translation": "book an appointment",
+            "pronunciation": "mar-KAR OO-mah kon-SOOL-tah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-bureau-registering-health-centre-1",
+            "title": "Registering at the counter",
+            "context": "A new resident is at the reception of a health centre in Madeira, asking to register.",
+            "lines": [
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Bom dia, em que posso ajudar?",
+                "translation": "Good morning, how can I help?"
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria registar-me aqui no centro de saúde.",
+                "translation": "Good morning. I'd like to register here at the health centre."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Certo. Tem o seu cartão de cidadão e um comprovativo de morada?",
+                "translation": "Alright. Do you have your citizen card and proof of address?"
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "local",
+                "text": "Sim, tenho tudo aqui. E precisava também de um médico de família, se for possível.",
+                "translation": "Yes, I have everything here. And I also needed a family doctor, if possible."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Vamos ver o que consigo fazer. Preencha, por favor, este formulário primeiro.",
+                "translation": "Let's see what I can do. Please fill out this form first."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The 'Centro de Saúde' in Portugal",
+            "body": "The 'centro de saúde' is the primary point of contact for public healthcare in Portugal, including Madeira. It's where you register to access the national health service (SNS), get a family doctor, and have routine appointments. It's not typically for emergencies, which go to hospitals."
+          },
+          {
+            "title": "The 'Médico de Família'",
+            "body": "Having a 'médico de família' (family doctor) is central to the Portuguese public health system. They manage your general health, refer you to specialists, and prescribe medication. There can sometimes be a waiting list to be assigned one, especially in more populated areas."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the reception desk of a health centre in Funchal, Madeira. You need to register and ask about getting a family doctor.",
+          "difficulty": 3,
+          "entry_node": "rp-sit-bureau-registering-health-centre-start",
+          "nodes": [
+            {
+              "id": "rp-sit-bureau-registering-health-centre-start",
+              "npc_text": "Bom dia. Em que posso ajudar?",
+              "npc_translation": "Good morning. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria registar-me aqui no centro de saúde.",
+                  "translation": "Good morning. I'd like to register here at the health centre.",
+                  "feedback": "Excellent start! Clear and polite.",
+                  "next": "rp-sit-bureau-registering-health-centre-docs"
+                },
+                {
+                  "text": "Preciso de me inscrever para ter um médico.",
+                  "translation": "I need to sign up to have a doctor.",
+                  "feedback": "Good, but 'registar-me' is more common for initial registration. 'Inscrever-me' is also understood.",
+                  "next": "rp-sit-bureau-registering-health-centre-docs"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-registering-health-centre-docs",
+              "npc_text": "Certo. Tem o seu cartão de cidadão e um comprovativo de morada consigo?",
+              "npc_translation": "Alright. Do you have your citizen card and proof of address with you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, tenho tudo aqui. E também preciso de um médico de família.",
+                  "translation": "Yes, I have everything here. And I also need a family doctor.",
+                  "feedback": "Perfect! You provided the info and added your next request naturally.",
+                  "next": "rp-sit-bureau-registering-health-centre-form"
+                },
+                {
+                  "text": "Tenho o cartão de cidadão, mas não sei o que é um comprovativo de morada.",
+                  "translation": "I have my citizen card, but I don't know what a proof of address is.",
+                  "feedback": "Good, it's okay to ask for clarification. You're using 'não sei' correctly.",
+                  "next": "rp-sit-bureau-registering-health-centre-explain_docs"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-registering-health-centre-explain_docs",
+              "npc_text": "É um documento que prova onde mora, como uma conta da água ou da eletricidade. Tem alguma dessas?",
+              "npc_translation": "It's a document that proves where you live, like a water or electricity bill. Do you have one of those?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, sim! Tenho a conta da luz. Está aqui.",
+                  "translation": "Oh, yes! I have the electricity bill. It's here.",
+                  "feedback": "Great, you understood and confirmed. 'Conta da luz' is a good example.",
+                  "next": "rp-sit-bureau-registering-health-centre-form"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-registering-health-centre-form",
+              "npc_text": "Muito bem. Então, preencha, por favor, este formulário. Depois vemos a questão do médico de família.",
+              "npc_translation": "Very good. So, please fill out this form. Afterwards, we'll look into the family doctor matter.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois, claro. Muito obrigado.",
+                  "translation": "Yes, of course. Thank you very much.",
+                  "feedback": "A polite and natural way to end the interaction for now. 'Pois, claro' is typically Portuguese."
+                },
+                {
+                  "text": "E quanto tempo demora para ter o médico?",
+                  "translation": "And how long does it take to get the doctor?",
+                  "feedback": "A good follow-up question. You're asking about the process.",
+                  "next": "rp-sit-bureau-registering-health-centre-wait_time"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-registering-health-centre-wait_time",
+              "npc_text": "Isso pode demorar um bocado, depende da disponibilidade. Mas assim que tiver o registo feito, já pode marcar consultas com qualquer médico de serviço.",
+              "npc_translation": "That can take a while, it depends on availability. But once you're registered, you can already book appointments with any on-duty doctor.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ah, está bem. Muito obrigado pela informação.",
+                  "translation": "Ah, okay. Thank you very much for the information.",
+                  "feedback": "You acknowledged the information and thanked them politely. A good, natural ending."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Get Registered at the Health Centre",
+          "prep": [
+            "Review the key vocabulary for bureaucratic processes and health services.",
+            "Practice asking to register and to be assigned a family doctor.",
+            "Prepare to answer questions about your documents (Cartão de Cidadão, Comprovativo de Morada)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?"
+          ],
+          "likely_responses": [
+            "Bom dia. Em que posso ajudar?",
+            "Precisa do cartão de cidadão e comprovativo de morada.",
+            "Para o médico de família, pode demorar um bocado.",
+            "Preencha este formulário, por favor."
+          ]
+        },
+        "goals": [
+          "Successfully initiate the registration process at a Portuguese health centre.",
+          "Clearly state your need for a family doctor.",
+          "Understand and respond to requests for necessary identification documents."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-bureau-registering-health-centre-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to register at the {place}.",
+            "answer": "Queria registar-me no {local}.",
+            "source_ref": "pp-sit-bureau-registering-health-centre-1"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need a family doctor.",
+            "answer": "Preciso de um médico de família.",
+            "source_ref": "pp-sit-bureau-registering-health-centre-2"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What documents are needed for registration?",
+            "answer": "Que documentos são necessários para o registo?",
+            "source_ref": "pp-sit-bureau-registering-health-centre-3"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I already have my health service number.",
+            "answer": "Já tenho o meu número de utente.",
+            "source_ref": "pp-sit-bureau-registering-health-centre-4"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: health centre (public primary care clinic)",
+            "answer": "centro de saúde",
+            "source_ref": "centro de saúde"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: family doctor / GP",
+            "answer": "médico de família",
+            "source_ref": "médico de família"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: user of public services (e.g., health, transport)",
+            "answer": "utente",
+            "source_ref": "utente"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: citizen card (ID card)",
+            "answer": "cartão de cidadão",
+            "source_ref": "cartão de cidadão"
+          },
+          {
+            "id": "rv-sit-bureau-registering-health-centre-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-bureau-registering-health-centre-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-bureau-opening-bank-account",
+      "kind": "track",
+      "title": "Opening a Bank Account",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-bureaucracy"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-bureau-opening-bank-account",
+        "title": "Opening a Bank Account",
+        "summary": "Opening an account at the bank counter: what you need, the questions the clerk asks, and setting up the card and app.",
+        "tracks": [
+          "track-structured-course"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-bureau-opening-bank-account-1",
+            "base": "Queria abrir uma {tipo_conta}, por favor.",
+            "translation": "I'd like to open a {type_of_account}, please.",
+            "slots": [
+              {
+                "name": "tipo_conta",
+                "description": "type of account",
+                "options": [
+                  "conta à ordem",
+                  "conta poupança"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-opening-bank-account-2",
+            "base": "Que documentos são necessários para {ação}?",
+            "translation": "What documents are needed for {action}?",
+            "slots": [
+              {
+                "name": "ação",
+                "description": "action",
+                "options": [
+                  "abrir a conta",
+                  "pedir o cartão"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-opening-bank-account-3",
+            "base": "Gostaria de ter um cartão de {tipo_cartao} e acesso à {tipo_acesso}.",
+            "translation": "I would like to have a {card_type} card and access to {access_type}.",
+            "slots": [
+              {
+                "name": "tipo_cartao",
+                "description": "type of card",
+                "options": [
+                  "débito",
+                  "crédito"
+                ]
+              },
+              {
+                "name": "tipo_acesso",
+                "description": "type of access",
+                "options": [
+                  "app",
+                  "homebanking"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-opening-bank-account-4",
+            "base": "É possível levantar dinheiro em qualquer {local}?",
+            "translation": "Is it possible to withdraw money from any {location}?",
+            "slots": [
+              {
+                "name": "local",
+                "description": "location",
+                "options": [
+                  "caixa Multibanco",
+                  "balcão"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "É possível fazer um depósito em qualquer Multibanco?",
+                "translation": "Is it possible to make a deposit at any ATM?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "conta à ordem",
+            "translation": "current account",
+            "pronunciation": "KON-tah ah OR-dem",
+            "register": "neutral"
+          },
+          {
+            "word": "cartão de débito",
+            "translation": "debit card",
+            "pronunciation": "kar-TOWN jee DEH-bee-too",
+            "register": "neutral"
+          },
+          {
+            "word": "Multibanco",
+            "translation": "ATM (Automated Teller Machine) / ATM network",
+            "pronunciation": "mool-tee-BANK-oo",
+            "register": "neutral",
+            "note": "Portugal-specific term for ATM network and machines."
+          },
+          {
+            "word": "balcão",
+            "translation": "bank counter / branch",
+            "pronunciation": "bal-KOW",
+            "register": "neutral"
+          },
+          {
+            "word": "comprovativo de morada",
+            "translation": "proof of address",
+            "pronunciation": "kom-pro-vah-TEE-voo jee moh-RAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "homebanking",
+            "translation": "online banking",
+            "pronunciation": "HO-me-banking",
+            "register": "neutral"
+          },
+          {
+            "word": "levantar dinheiro",
+            "translation": "to withdraw money",
+            "pronunciation": "leh-van-TAR dee-NYEH-roo",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-bureau-opening-bank-account-1",
+            "title": "Opening an Account at the Bank",
+            "context": "A client is at a bank branch in Funchal, asking to open a new account and about the process.",
+            "lines": [
+              {
+                "speaker": "Balconista",
+                "voice_type": "service",
+                "text": "Bom dia! Em que posso ajudar?",
+                "translation": "Good morning! How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria abrir uma conta, por favor.",
+                "translation": "Good morning. I'd like to open an account, please."
+              },
+              {
+                "speaker": "Balconista",
+                "voice_type": "service",
+                "text": "Pois não. Já tem algum documento consigo?",
+                "translation": "Of course. Do you have any documents with you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, tenho o meu passaporte e o NIF.",
+                "translation": "Yes, I have my passport and NIF."
+              },
+              {
+                "speaker": "Balconista",
+                "voice_type": "service",
+                "text": "Ótimo. E um comprovativo de morada?",
+                "translation": "Great. And proof of address?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Ah, um comprovativo de morada... hum, tenho uma conta da luz, serve?",
+                "translation": "Ah, proof of address... um, I have an electricity bill, does that work?"
+              },
+              {
+                "speaker": "Balconista",
+                "voice_type": "service",
+                "text": "Serve sim. E também vamos precisar de um comprovativo de rendimentos.",
+                "translation": "Yes, it works. And we'll also need proof of income."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Ah, certo. Um recibo de vencimento, por exemplo?",
+                "translation": "Ah, right. A payslip, for example?"
+              },
+              {
+                "speaker": "Balconista",
+                "voice_type": "service",
+                "text": "Exatamente. Depois disso, preenchemos os formulários e escolhemos o tipo de cartão.",
+                "translation": "Exactly. After that, we fill out the forms and choose the card type."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "E acesso à app, é possível?",
+                "translation": "And app access, is that possible?"
+              },
+              {
+                "speaker": "Balconista",
+                "voice_type": "service",
+                "text": "Sim, claro. Configuramos tudo na hora.",
+                "translation": "Yes, of course. We set everything up right away."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Required Documents for Bank Accounts in Portugal",
+            "body": "To open a bank account in Portugal, you typically need several documents: an identification document (passport or Portuguese ID card), a NIF (Número de Identificação Fiscal - tax identification number), proof of address (comprovativo de morada, e.g., a utility bill or residence certificate), and proof of income (comprovativo de rendimentos, e.g., a payslip or employment contract)."
+          },
+          {
+            "title": "The Multibanco Network",
+            "body": "Multibanco is Portugal's interbank network, offering a wide range of services beyond just cash withdrawals. You can pay bills, top up mobile phones, buy concert tickets, and even pay taxes at any Multibanco ATM. It's a very convenient and widely used system across the country, including Madeira."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a bank counter in Funchal, trying to open a new account. The bank clerk is guiding you through the process.",
+          "difficulty": 3,
+          "entry_node": "rp-bureau-start",
+          "nodes": [
+            {
+              "id": "rp-bureau-start",
+              "npc_text": "Bom dia! Em que posso ajudar?",
+              "npc_translation": "Good morning! How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria abrir uma conta bancária, por favor.",
+                  "translation": "I'd like to open a bank account, please.",
+                  "feedback": "Excellent, direct and polite.",
+                  "next": "rp-bureau-docs"
+                },
+                {
+                  "text": "Preciso de informações sobre como abrir uma conta.",
+                  "translation": "I need information on how to open an account.",
+                  "feedback": "A good way to start if you're unsure, leading to the same information.",
+                  "next": "rp-bureau-docs"
+                }
+              ]
+            },
+            {
+              "id": "rp-bureau-docs",
+              "npc_text": "Claro. Para abrir uma conta, preciso do seu documento de identificação, NIF, comprovativo de morada e comprovativo de rendimentos.",
+              "npc_translation": "Of course. To open an account, I need your identification document, NIF, proof of address, and proof of income.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Tenho tudo comigo.",
+                  "translation": "I have everything with me.",
+                  "feedback": "Great, you're prepared!",
+                  "next": "rp-bureau-card-app"
+                },
+                {
+                  "text": "O que é um comprovativo de morada?",
+                  "translation": "What is proof of address?",
+                  "feedback": "Good question to clarify an important document.",
+                  "next": "rp-bureau-docs-explain"
+                }
+              ]
+            },
+            {
+              "id": "rp-bureau-docs-explain",
+              "npc_text": "Um comprovativo de morada pode ser uma fatura da água, luz ou telefone em seu nome, ou um atestado de residência da Junta de Freguesia.",
+              "npc_translation": "Proof of address can be a water, electricity, or phone bill in your name, or a residence certificate from the Parish Council.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, sim, tenho uma fatura da luz.",
+                  "translation": "Ah, yes, I have an electricity bill.",
+                  "feedback": "Perfect, you've identified the correct document.",
+                  "next": "rp-bureau-card-app"
+                },
+                {
+                  "text": "Não tenho nenhum desses agora.",
+                  "translation": "I don't have any of those right now.",
+                  "feedback": "It's important to be honest, but this will halt the process for now.",
+                  "next": "rp-bureau-end-no-docs"
+                }
+              ]
+            },
+            {
+              "id": "rp-bureau-card-app",
+              "npc_text": "Ótimo. Agora, quanto ao cartão, prefere um de débito ou de crédito? E quer acesso ao homebanking e à app?",
+              "npc_translation": "Great. Now, regarding the card, do you prefer debit or credit? And do you want access to homebanking and the app?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Um cartão de débito, por favor, e sim, acesso à app e ao homebanking.",
+                  "translation": "A debit card, please, and yes, access to the app and homebanking.",
+                  "feedback": "You've clearly stated your preferences.",
+                  "next": "rp-bureau-next-steps"
+                },
+                {
+                  "text": "Só um cartão de débito, por enquanto.",
+                  "translation": "Just a debit card, for now.",
+                  "feedback": "A valid choice if you want to keep it simple.",
+                  "next": "rp-bureau-next-steps"
+                }
+              ]
+            },
+            {
+              "id": "rp-bureau-next-steps",
+              "npc_text": "Perfeito. Vamos preencher os formulários, e depois o cartão será enviado para a sua morada. O acesso à app configuramos já.",
+              "npc_translation": "Perfect. We'll fill out the forms, and then the card will be sent to your address. We'll set up app access now.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado/a! Parece simples.",
+                  "translation": "Thank you very much! It seems simple.",
+                  "feedback": "A polite and appreciative response.",
+                  "next": "rp-bureau-end-success"
+                },
+                {
+                  "text": "Quanto tempo demora até o cartão chegar?",
+                  "translation": "How long does it take for the card to arrive?",
+                  "feedback": "A practical question to manage expectations.",
+                  "next": "rp-bureau-card-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-bureau-card-time",
+              "npc_text": "Normalmente, o cartão chega em 5 a 7 dias úteis. Pode levantá-lo aqui ou recebê-lo em casa.",
+              "npc_translation": "Normally, the card arrives in 5 to 7 business days. You can pick it up here or receive it at home.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Receber em casa é melhor. Obrigado/a!",
+                  "translation": "Receiving it at home is better. Thank you!",
+                  "feedback": "You've made your preference clear.",
+                  "next": "rp-bureau-end-success"
+                }
+              ]
+            },
+            {
+              "id": "rp-bureau-end-no-docs",
+              "npc_text": "Sem os documentos completos, não consigo prosseguir. Por favor, volte quando os tiver.",
+              "npc_translation": "Without the complete documents, I cannot proceed. Please come back when you have them.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-bureau-end-success",
+              "npc_text": "De nada! Se tiver mais alguma questão, diga.",
+              "npc_translation": "You're welcome! If you have any more questions, just ask.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Open a Bank Account in Funchal",
+          "prep": [
+            "Gather necessary documents (ID, NIF, proof of address, proof of income) as you would in real life.",
+            "Practice asking to open an account and what documents are needed.",
+            "Practice asking for a debit card and online banking/app access."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Falo um pouco de português."
+          ],
+          "likely_responses": [
+            "Em que posso ajudar?",
+            "Precisa de...",
+            "Sim, claro.",
+            "O seu cartão chegará em..."
+          ]
+        },
+        "goals": [
+          "Successfully request to open a bank account in European Portuguese.",
+          "Understand and respond to questions about required documents.",
+          "Request a debit card and online banking/app access.",
+          "Understand the next steps in the account opening process."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-bureau-opening-bank-account-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to open a {type_of_account}, please.",
+            "answer": "Queria abrir uma {tipo_conta}, por favor.",
+            "source_ref": "pp-sit-bureau-opening-bank-account-1"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What documents are needed for {action}?",
+            "answer": "Que documentos são necessários para {ação}?",
+            "source_ref": "pp-sit-bureau-opening-bank-account-2"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to have a {card_type} card and access to {access_type}.",
+            "answer": "Gostaria de ter um cartão de {tipo_cartao} e acesso à {tipo_acesso}.",
+            "source_ref": "pp-sit-bureau-opening-bank-account-3"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is it possible to withdraw money from any {location}?",
+            "answer": "É possível levantar dinheiro em qualquer {local}?",
+            "source_ref": "pp-sit-bureau-opening-bank-account-4"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: current account",
+            "answer": "conta à ordem",
+            "source_ref": "conta à ordem"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: debit card",
+            "answer": "cartão de débito",
+            "source_ref": "cartão de débito"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: ATM (Automated Teller Machine) / ATM network",
+            "answer": "Multibanco",
+            "source_ref": "Multibanco"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: bank counter / branch",
+            "answer": "balcão",
+            "source_ref": "balcão"
+          },
+          {
+            "id": "rv-sit-bureau-opening-bank-account-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-bureau-opening-bank-account-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-bureau-utilities-setup",
+      "kind": "track",
+      "title": "Setting Up Electricity & Water",
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-bureaucracy",
+        "track-host"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-bureau-utilities-setup",
+        "title": "Setting Up Electricity & Water",
+        "summary": "Setting up or transferring the electricity and water (a luz e a água) for a home: giving the meter reading, the address, and arranging billing.",
+        "tracks": [
+          "track-structured-course",
+          "track-host"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-bureau-utilities-setup-1",
+            "base": "Queria ligar a {serviço}.",
+            "translation": "I'd like to connect the {service}.",
+            "slots": [
+              {
+                "name": "serviço",
+                "description": "Utility service",
+                "options": [
+                  "luz",
+                  "água"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Gostaria de ligar a {serviço}.",
+                "translation": "I would like to connect the {service}.",
+                "register": "formal",
+                "note": "Slightly more formal."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-utilities-setup-2",
+            "base": "Qual é a sua morada, por favor?",
+            "translation": "What is your address, please?",
+            "variants": [
+              {
+                "text": "Pode dar-me a sua morada?",
+                "translation": "Can you give me your address?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-utilities-setup-3",
+            "base": "Preciso da leitura do contador.",
+            "translation": "I need the meter reading.",
+            "variants": [
+              {
+                "text": "Pode dar-me a leitura do contador?",
+                "translation": "Can you give me the meter reading?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-utilities-setup-4",
+            "base": "Como quer pagar a fatura?",
+            "translation": "How do you want to pay the bill?",
+            "variants": [
+              {
+                "text": "Prefere débito direto ou multibanco?",
+                "translation": "Do you prefer direct debit or ATM payment?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "luz",
+            "translation": "electricity / light",
+            "pronunciation": "looz",
+            "register": "neutral",
+            "note": "Used for electricity service."
+          },
+          {
+            "word": "água",
+            "translation": "water",
+            "pronunciation": "AH-gwah",
+            "register": "neutral"
+          },
+          {
+            "word": "contador",
+            "translation": "meter (utility)",
+            "pronunciation": "kohn-tah-DOR",
+            "register": "neutral"
+          },
+          {
+            "word": "leitura",
+            "translation": "reading (e.g., meter reading)",
+            "pronunciation": "lay-TOO-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "morada",
+            "translation": "address",
+            "pronunciation": "moh-RAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "fatura",
+            "translation": "bill",
+            "pronunciation": "fah-TOO-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "débito direto",
+            "translation": "direct debit",
+            "pronunciation": "DEH-bee-too dee-REH-too",
+            "register": "neutral",
+            "note": "Common payment method in Portugal."
+          },
+          {
+            "word": "multibanco",
+            "translation": "ATM network / ATM payment",
+            "pronunciation": "mool-tee-BANK-oo",
+            "register": "neutral",
+            "note": "Portugal's interbank network, also refers to payment via ATM or online banking references."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-bureau-utilities-setup-1",
+            "title": "Setting up Electricity by Phone",
+            "context": "A new resident calls the electricity company (EEM) in Madeira to set up service for their new home.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "EEM, bom dia. Em que posso ajudar?",
+                "translation": "EEM, good morning. How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria ligar a luz na minha nova morada, por favor.",
+                "translation": "Good morning. I'd like to connect the electricity at my new address, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois não. Qual é a morada completa?",
+                "translation": "Of course. What's the full address?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "É na Rua do Pescador, número quarenta e dois, primeiro andar, Caniço.",
+                "translation": "It's on Fisherman's Street, number forty-two, first floor, Caniço."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Rua do Pescador, 42, 1º andar. Certo. E já tem a leitura do contador?",
+                "translation": "Fisherman's Street, 42, 1st floor. Right. And do you already have the meter reading?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, é cento e quarenta e cinco.",
+                "translation": "Yes, it's one hundred and forty-five."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Obrigada. E como quer pagar a fatura? Prefere débito direto ou multibanco?",
+                "translation": "Thank you. And how do you want to pay the bill? Do you prefer direct debit or ATM payment?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Débito direto, por favor.",
+                "translation": "Direct debit, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Muito bem. A ligação da luz fica ativa hoje mesmo.",
+                "translation": "Very good. The electricity connection will be active today."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Addressing Service Staff",
+            "body": "In Portugal, when speaking to service staff (e.g., utility companies, shops), it's common and polite to use the third-person singular verb forms (treating them as 'o senhor' or 'a senhora') even if they use 'tu' with you. This shows respect. Phrases like 'Queria ligar...' (I wanted to connect...) are also a polite, indirect way to state your request."
+          },
+          {
+            "title": "Meter Readings and Payment Methods",
+            "body": "When setting up or transferring utility services, you will almost always be asked for the current meter reading ('leitura do contador'). It's a good idea to take a photo of the meter. For bill payment, 'débito direto' (direct debit) is the most common and convenient method for recurring bills. 'Multibanco' refers to the national ATM network and is a common way to pay bills manually using a reference number at an ATM or via online banking."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling the local water company (EMAS) in Funchal to set up water service for your new apartment. You need to provide your address, the meter reading, and choose a payment method.",
+          "difficulty": 2,
+          "entry_node": "rp-node-start",
+          "nodes": [
+            {
+              "id": "rp-node-start",
+              "npc_text": "EMAS, bom dia. Em que posso ajudar?",
+              "npc_translation": "EMAS, good morning. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria ligar a água na minha nova morada.",
+                  "translation": "Good morning. I'd like to connect the water at my new address.",
+                  "feedback": "Excellent start! You clearly stated your purpose.",
+                  "next": "rp-node-address-request"
+                }
+              ]
+            },
+            {
+              "id": "rp-node-address-request",
+              "npc_text": "Pois não. Qual é a morada completa, por favor?",
+              "npc_translation": "Of course. What's the full address, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É na Rua das Hortas, número dez, rés do chão.",
+                  "translation": "It's on Hortas Street, number ten, ground floor.",
+                  "feedback": "Good job providing the address clearly. Remember to include the floor if applicable.",
+                  "next": "rp-node-meter-reading-request"
+                },
+                {
+                  "text": "A morada é Rua das Hortas, dez.",
+                  "translation": "The address is Hortas Street, ten.",
+                  "feedback": "That's good, but try to be more specific, like 'número dez'.",
+                  "next": "rp-node-address-clarify"
+                }
+              ]
+            },
+            {
+              "id": "rp-node-address-clarify",
+              "npc_text": "Rua das Hortas, número dez, certo? E qual o andar, por favor?",
+              "npc_translation": "Hortas Street, number ten, right? And which floor, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É o rés do chão.",
+                  "translation": "It's the ground floor.",
+                  "feedback": "Perfect! 'Rés do chão' is the ground floor.",
+                  "next": "rp-node-meter-reading-request"
+                }
+              ]
+            },
+            {
+              "id": "rp-node-meter-reading-request",
+              "npc_text": "Muito bem. E já tem a leitura do contador da água?",
+              "npc_translation": "Very good. And do you already have the water meter reading?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, é duzentos e três.",
+                  "translation": "Yes, it's two hundred and three.",
+                  "feedback": "Excellent, you gave the reading clearly.",
+                  "next": "rp-node-payment-method"
+                },
+                {
+                  "text": "Não, ainda não tenho a leitura.",
+                  "translation": "No, I don't have the reading yet.",
+                  "feedback": "This is a common issue. See how the agent responds.",
+                  "next": "rp-node-no-reading"
+                }
+              ]
+            },
+            {
+              "id": "rp-node-no-reading",
+              "npc_text": "Então, pode verificar e ligar-nos de novo, ou podemos enviar um técnico para fazer a leitura. Prefere qual?",
+              "npc_translation": "Then, you can check and call us back, or we can send a technician to take the reading. Which do you prefer?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Vou verificar e ligo mais tarde.",
+                  "translation": "I will check and call later.",
+                  "feedback": "Good, you chose to handle it yourself. The call ends here for now."
+                }
+              ]
+            },
+            {
+              "id": "rp-node-payment-method",
+              "npc_text": "Obrigada. E como quer pagar a fatura? Prefere débito direto ou multibanco?",
+              "npc_translation": "Thank you. And how do you want to pay the bill? Do you prefer direct debit or ATM payment?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Prefiro débito direto, por favor.",
+                  "translation": "I prefer direct debit, please.",
+                  "feedback": "Débito direto is often the easiest option for regular bills.",
+                  "next": "rp-node-confirmation"
+                },
+                {
+                  "text": "Multibanco, por favor.",
+                  "translation": "ATM payment, please.",
+                  "feedback": "Multibanco is also a very common and flexible payment method.",
+                  "next": "rp-node-confirmation"
+                }
+              ]
+            },
+            {
+              "id": "rp-node-confirmation",
+              "npc_text": "Certo. A ligação da água fica ativa hoje. Obrigada pela sua chamada.",
+              "npc_translation": "Right. The water connection will be active today. Thank you for your call.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigada. Bom dia.",
+                  "translation": "Thank you very much. Good day.",
+                  "feedback": "A polite way to end the call. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Set Up Your Home's Water Service",
+          "prep": [
+            "Practice saying your full address in Portuguese, including street name, number, and floor (e.g., 'rés do chão' for ground floor, 'primeiro andar' for first floor).",
+            "Prepare a three-digit number to use as a mock meter reading (e.g., 'cento e vinte e três').",
+            "Decide whether you would prefer 'débito direto' (direct debit) or 'multibanco' (ATM/online payment) for your bill."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi bem.",
+            "Desculpe, pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Qual é a sua morada?",
+            "Pode dar-me a leitura do contador?",
+            "Como quer pagar a fatura?",
+            "Qual o seu número de contribuinte?"
+          ]
+        },
+        "goals": [
+          "Initiate a phone call to a utility company to set up a service.",
+          "Clearly provide your address and a meter reading in Portuguese.",
+          "Understand and choose between common billing methods.",
+          "Politely conclude a service-related phone call."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-bureau-utilities-setup-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to connect the {service}.",
+            "answer": "Queria ligar a {serviço}.",
+            "source_ref": "pp-sit-bureau-utilities-setup-1"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is your address, please?",
+            "answer": "Qual é a sua morada, por favor?",
+            "source_ref": "pp-sit-bureau-utilities-setup-2"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need the meter reading.",
+            "answer": "Preciso da leitura do contador.",
+            "source_ref": "pp-sit-bureau-utilities-setup-3"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How do you want to pay the bill?",
+            "answer": "Como quer pagar a fatura?",
+            "source_ref": "pp-sit-bureau-utilities-setup-4"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: electricity / light",
+            "answer": "luz",
+            "source_ref": "luz"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: water",
+            "answer": "água",
+            "source_ref": "água"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: meter (utility)",
+            "answer": "contador",
+            "source_ref": "contador"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: reading (e.g., meter reading)",
+            "answer": "leitura",
+            "source_ref": "leitura"
+          },
+          {
+            "id": "rv-sit-bureau-utilities-setup-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-bureau-utilities-setup-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-bureau-junta-residency",
+      "kind": "track",
+      "title": "Residency at the Junta de Freguesia",
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-bureaucracy"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-bureau-junta-residency",
+        "title": "Residency at the Junta de Freguesia",
+        "summary": "At the Junta de Freguesia asking for a certificate of residence (atestado de residência): explaining what you need it for and which documents prove it.",
+        "tracks": [
+          "track-structured-course"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-bureau-junta-residency-1",
+            "base": "Preciso de um atestado de residência para {motivo}.",
+            "translation": "I need a certificate of residency for {reason}.",
+            "slots": [
+              {
+                "name": "motivo",
+                "description": "The reason for needing the certificate",
+                "options": [
+                  "o meu NIF",
+                  "a segurança social",
+                  "a escola do meu filho",
+                  "abrir uma conta no banco"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Queria pedir um atestado de residência, se faz favor.",
+                "translation": "I'd like to ask for a certificate of residency, please.",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-junta-residency-2",
+            "base": "Que documentos são necessários?",
+            "translation": "What documents are necessary?",
+            "variants": [
+              {
+                "text": "O que é que preciso de trazer?",
+                "translation": "What do I need to bring?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-junta-residency-3",
+            "base": "Tenho aqui o meu {documento1} e o meu {documento2}.",
+            "translation": "I have here my {document1} and my {document2}.",
+            "slots": [
+              {
+                "name": "documento1",
+                "description": "First document",
+                "options": [
+                  "cartão de cidadão",
+                  "passaporte",
+                  "título de residência"
+                ]
+              },
+              {
+                "name": "documento2",
+                "description": "Second document",
+                "options": [
+                  "comprovativo de morada",
+                  "recibo de água",
+                  "recibo de luz"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-bureau-junta-residency-4",
+            "base": "É para a {finalidade}.",
+            "translation": "It's for {purpose}.",
+            "slots": [
+              {
+                "name": "finalidade",
+                "description": "The specific purpose for the certificate",
+                "options": [
+                  "candidatura a um emprego",
+                  "renovação do título de residência",
+                  "inscrição na segurança social"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "atestado de residência",
+            "translation": "certificate of residency",
+            "pronunciation": "ah-tesh-TAH-doo dee reh-zee-DEN-see-ah",
+            "register": "formal",
+            "note": "A formal document issued by the local parish council (Junta de Freguesia)."
+          },
+          {
+            "word": "Junta de Freguesia",
+            "translation": "Parish Council",
+            "pronunciation": "ZHOON-tah dee freh-geh-ZEE-ah",
+            "register": "neutral",
+            "note": "The lowest tier of local government in Portugal, responsible for local administrative tasks."
+          },
+          {
+            "word": "comprovativo de morada",
+            "translation": "proof of address",
+            "pronunciation": "kohm-proh-vah-TEE-voo dee moh-RAH-dah",
+            "register": "neutral",
+            "note": "Often a utility bill (água, luz, gás) or a bank statement."
+          },
+          {
+            "word": "cartão de cidadão",
+            "translation": "citizen card / ID card",
+            "pronunciation": "kar-TOWN dee see-dah-DOW",
+            "register": "neutral",
+            "note": "The national identity card for Portuguese citizens, also used by foreign residents with a valid residence permit."
+          },
+          {
+            "word": "requerimento",
+            "translation": "application form / request",
+            "pronunciation": "reh-keh-ree-MEN-too",
+            "register": "formal",
+            "note": "A formal document or form used to make an official request."
+          },
+          {
+            "word": "NIF (Número de Identificação Fiscal)",
+            "translation": "Tax Identification Number",
+            "pronunciation": "NIF",
+            "register": "neutral",
+            "note": "Essential for almost all administrative and financial activities in Portugal."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-bureau-junta-residency-1",
+            "title": "Applying for Residency Certificate",
+            "context": "At the Junta de Freguesia office in Madeira. The learner needs a residency certificate for administrative purposes.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Bom dia. Diga, em que posso ajudar?",
+                "translation": "Good morning. Tell me, how can I help?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Bom dia. Preciso de um atestado de residência, se faz favor.",
+                "translation": "Good morning. I need a certificate of residency, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "local",
+                "text": "Pois, claro. E para que é que precisa do atestado? É para algum fim específico?",
+                "translation": "Yes, of course. And what do you need the certificate for? Is it for a specific purpose?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "É para a segurança social, para a inscrição.",
+                "translation": "It's for social security, for registration."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Certo. Nesse caso, vai precisar do seu documento de identificação e de um comprovativo de morada, como uma fatura da água ou da luz, em seu nome.",
+                "translation": "Right. In that case, you'll need your identification document and proof of address, like a water or electricity bill, in your name."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Tenho aqui o meu título de residência e um recibo da água.",
+                "translation": "I have my residence permit and a water bill here."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "local",
+                "text": "Ótimo, é mesmo isso. Preencha este requerimento, faz favor. Já está quase.",
+                "translation": "Great, that's exactly it. Please fill out this form. It'll be ready soon."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Role of the Junta de Freguesia",
+            "body": "In Portugal, the Junta de Freguesia (Parish Council) is the local administrative body responsible for many day-to-day citizen services. This includes issuing certificates like 'atestados de residência' (certificates of residency), which are often required for various bureaucratic processes such as applying for a NIF, registering with social security, or enrolling children in school. It's a fundamental point of contact for residents, especially for those new to a parish."
+          },
+          {
+            "title": "Proof of Address (Comprovativo de Morada)",
+            "body": "When asked for 'comprovativo de morada' (proof of address) in Portugal, the most commonly accepted documents are recent utility bills (faturas de água, luz, gás) or bank statements. These documents must be in your name and show your current address. It's always a good idea to have a recent one (less than 3 months old) available when dealing with official matters."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the Junta de Freguesia counter. You need a certificate of residency to enroll your child in a local school. The attendant is asking for details and documents.",
+          "difficulty": 4,
+          "entry_node": "rp-sit-bureau-junta-residency-start",
+          "nodes": [
+            {
+              "id": "rp-sit-bureau-junta-residency-start",
+              "npc_text": "Boa tarde. Em que posso ser útil?",
+              "npc_translation": "Good afternoon. How can I be of assistance?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Eu preciso de um atestado de residência, por favor.",
+                  "translation": "Good afternoon. I need a certificate of residency, please.",
+                  "feedback": "Excellent start! Direct and polite.",
+                  "next": "rp-sit-bureau-junta-residency-purpose"
+                },
+                {
+                  "text": "Olá. Queria um atestado de morada.",
+                  "translation": "Hello. I wanted an address certificate.",
+                  "feedback": "Good attempt, but 'atestado de residência' is the correct term. 'Atestado de morada' might be understood but isn't standard.",
+                  "next": "rp-sit-bureau-junta-residency-purpose-clarify"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-junta-residency-purpose",
+              "npc_text": "Certo. E qual é o motivo? Para que é que precisa dele?",
+              "npc_translation": "Right. And what's the reason? What do you need it for?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "É para a escola do meu filho, para a inscrição.",
+                  "translation": "It's for my son's school, for registration.",
+                  "feedback": "Perfect, clear and concise explanation.",
+                  "next": "rp-sit-bureau-junta-residency-documents"
+                },
+                {
+                  "text": "Preciso para a escola, para o meu filho.",
+                  "translation": "I need it for school, for my son.",
+                  "feedback": "Understood, but 'para a inscrição' (for registration) adds more precision.",
+                  "next": "rp-sit-bureau-junta-residency-documents"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-junta-residency-purpose-clarify",
+              "npc_text": "Um atestado de residência, certo? E para que é que precisa dele?",
+              "npc_translation": "A certificate of residency, right? And what do you need it for?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, isso mesmo. É para a escola do meu filho, para a inscrição.",
+                  "translation": "Yes, that's right. It's for my son's school, for registration.",
+                  "feedback": "Good job correcting yourself and providing the full reason.",
+                  "next": "rp-sit-bureau-junta-residency-documents"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-junta-residency-documents",
+              "npc_text": "Ah, para a escola. Entendido. Então, para isso, vai precisar do seu cartão de cidadão ou título de residência e de um comprovativo de morada, como uma fatura da água, luz ou telefone, em seu nome.",
+              "npc_translation": "Ah, for school. Understood. So, for that, you'll need your citizen card or residence permit and proof of address, like a water, electricity, or phone bill, in your name.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Tenho aqui o meu título de residência e um recibo da água.",
+                  "translation": "I have my residence permit and a water bill here.",
+                  "feedback": "Excellent! You have the correct documents.",
+                  "next": "rp-sit-bureau-junta-residency-finish"
+                },
+                {
+                  "text": "Só tenho o meu passaporte e um contrato de arrendamento.",
+                  "translation": "I only have my passport and a rental agreement.",
+                  "feedback": "The passport is fine for ID, but a rental agreement isn't always accepted as proof of address. Be prepared for a follow-up question.",
+                  "next": "rp-sit-bureau-junta-residency-alternative-documents"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-junta-residency-alternative-documents",
+              "npc_text": "O passaporte serve para a identificação. Quanto ao comprovativo de morada, o contrato de arrendamento pode não ser suficiente. Não tem uma fatura recente da água ou da luz em seu nome?",
+              "npc_translation": "The passport works for identification. As for proof of address, the rental agreement might not be enough. Don't you have a recent water or electricity bill in your name?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ah, não. Não tenho. Posso trazer amanhã?",
+                  "translation": "Oh, no. I don't. Can I bring it tomorrow?",
+                  "feedback": "Good, you're asking for a solution. This is a common real-life scenario.",
+                  "next": "rp-sit-bureau-junta-residency-revisit"
+                },
+                {
+                  "text": "Não, só tenho mesmo o contrato.",
+                  "translation": "No, I only have the contract.",
+                  "feedback": "You might need to find another document. The attendant will likely advise you to return.",
+                  "next": "rp-sit-bureau-junta-residency-revisit"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-junta-residency-revisit",
+              "npc_text": "Pois, sem um comprovativo de morada aceite, não consigo emitir o atestado. Se tiver a fatura da água ou da luz, pode vir amanhã. O atendimento é das 9h às 16h.",
+              "npc_translation": "Well, without an accepted proof of address, I can't issue the certificate. If you have the water or electricity bill, you can come tomorrow. Service is from 9 am to 4 pm.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Está bem, muito obrigado. Volto amanhã.",
+                  "translation": "Alright, thank you very much. I'll come back tomorrow.",
+                  "feedback": "You've successfully navigated the situation, even with a minor setback. Good politeness."
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-bureau-junta-residency-finish",
+              "npc_text": "Ótimo! Preencha este pequeno requerimento, faz favor. Em cinco minutos está pronto.",
+              "npc_translation": "Great! Please fill out this small form. It will be ready in five minutes.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Muito obrigado/a!",
+                  "translation": "Thank you very much!",
+                  "feedback": "Success! You got your certificate."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Get Your Residency Certificate",
+          "prep": [
+            "Practice asking for the 'atestado de residência' and stating its purpose clearly.",
+            "Rehearse explaining which documents you have for identification and proof of address.",
+            "Be prepared to ask for clarification if you don't understand the attendant's instructions."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi. Pode repetir, faz favor?",
+            "Pode falar um pouco mais devagar?",
+            "O que significa 'comprovativo de morada'?"
+          ],
+          "likely_responses": [
+            "Para que é que precisa?",
+            "Tem o seu cartão de cidadão/título de residência?",
+            "Precisa de um comprovativo de morada.",
+            "Preencha este formulário.",
+            "Volte amanhã com os documentos."
+          ]
+        },
+        "goals": [
+          "Successfully request an 'atestado de residência' at the Junta de Freguesia.",
+          "Clearly explain the purpose for which the certificate is needed.",
+          "Understand and respond to requests for necessary documents (ID, proof of address).",
+          "Navigate potential misunderstandings regarding required documentation."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-bureau-junta-residency-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need a certificate of residency for {reason}.",
+            "answer": "Preciso de um atestado de residência para {motivo}.",
+            "source_ref": "pp-sit-bureau-junta-residency-1"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What documents are necessary?",
+            "answer": "Que documentos são necessários?",
+            "source_ref": "pp-sit-bureau-junta-residency-2"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have here my {document1} and my {document2}.",
+            "answer": "Tenho aqui o meu {documento1} e o meu {documento2}.",
+            "source_ref": "pp-sit-bureau-junta-residency-3"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's for {purpose}.",
+            "answer": "É para a {finalidade}.",
+            "source_ref": "pp-sit-bureau-junta-residency-4"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: certificate of residency",
+            "answer": "atestado de residência",
+            "source_ref": "atestado de residência"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Parish Council",
+            "answer": "Junta de Freguesia",
+            "source_ref": "Junta de Freguesia"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: proof of address",
+            "answer": "comprovativo de morada",
+            "source_ref": "comprovativo de morada"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: citizen card / ID card",
+            "answer": "cartão de cidadão",
+            "source_ref": "cartão de cidadão"
+          },
+          {
+            "id": "rv-sit-bureau-junta-residency-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-bureau-junta-residency-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-work-scheduling-site-visit",
+      "kind": "track",
+      "title": "Scheduling a Site Visit",
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-work",
+        "track-host"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-work-scheduling-site-visit",
+        "title": "Scheduling a Site Visit",
+        "summary": "Arranging for someone to come and see a job in person: proposing days and times, confirming the address, and reconfirming the day before.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-work-scheduling-site-visit-1",
+            "base": "Podemos combinar para {dia_semana} ou {dia_semana_2}?",
+            "translation": "Can we arrange for {day of the week} or {day of the week 2}?",
+            "slots": [
+              {
+                "name": "dia_semana",
+                "description": "First day of the week",
+                "options": [
+                  "segunda-feira",
+                  "terça-feira",
+                  "quarta-feira",
+                  "quinta-feira",
+                  "sexta-feira"
+                ]
+              },
+              {
+                "name": "dia_semana_2",
+                "description": "Second day of the week",
+                "options": [
+                  "terça-feira",
+                  "quarta-feira",
+                  "quinta-feira",
+                  "sexta-feira",
+                  "sábado"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Que dia lhe dá mais jeito?",
+                "translation": "Which day is more convenient for you?",
+                "register": "formal",
+                "note": "Polite form, asking for convenience"
+              },
+              {
+                "text": "Que dia te dá mais jeito?",
+                "translation": "Which day is more convenient for you?",
+                "register": "informal",
+                "note": "Informal form, asking for convenience"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-scheduling-site-visit-2",
+            "base": "Qual é a {tipo_morada}?",
+            "translation": "What is the {type of address}?",
+            "slots": [
+              {
+                "name": "tipo_morada",
+                "description": "Type of address",
+                "options": [
+                  "morada",
+                  "sua morada",
+                  "morada completa"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-scheduling-site-visit-3",
+            "base": "Fico à espera da sua {confirmação}.",
+            "translation": "I'll wait for your {confirmation}.",
+            "slots": [
+              {
+                "name": "confirmação",
+                "description": "Type of confirmation",
+                "options": [
+                  "confirmação",
+                  "resposta"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-scheduling-site-visit-4",
+            "base": "Confirmo {quando}, está bem?",
+            "translation": "I'll confirm {when}, okay?",
+            "slots": [
+              {
+                "name": "quando",
+                "description": "When to confirm",
+                "options": [
+                  "amanhã",
+                  "mais tarde",
+                  "depois"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Confirmo consigo amanhã, está bem?",
+                "translation": "I'll confirm with you tomorrow, okay?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "orçamento",
+            "translation": "quote / estimate",
+            "pronunciation": "or-sah-MEN-too",
+            "register": "neutral",
+            "note": "Common for services/repairs"
+          },
+          {
+            "word": "dar jeito",
+            "translation": "to be convenient / to suit",
+            "pronunciation": "dar ZHEY-too",
+            "register": "neutral",
+            "note": "Very common idiom in Portugal"
+          },
+          {
+            "word": "morada",
+            "translation": "address",
+            "pronunciation": "moo-RAH-dah",
+            "register": "neutral",
+            "note": "Standard pt-PT for 'address'"
+          },
+          {
+            "word": "combinar",
+            "translation": "to arrange / to agree on",
+            "pronunciation": "kom-bee-NAR",
+            "register": "neutral",
+            "note": "Used for making plans or appointments"
+          },
+          {
+            "word": "visita",
+            "translation": "visit",
+            "pronunciation": "vee-ZEE-tah",
+            "register": "neutral",
+            "note": "Often used for a site visit or appointment"
+          },
+          {
+            "word": "p'ra já",
+            "translation": "for now / right away",
+            "pronunciation": "prah ZHAH",
+            "register": "informal",
+            "note": "Reduction of 'para já', common in spoken Madeiran/Portuguese"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-work-scheduling-site-visit-1",
+            "title": "Arranging a Plumber's Visit",
+            "context": "A cliente (client) calls a canalizador (plumber) to arrange a visit for a leak in her kitchen.",
+            "lines": [
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Boa tarde, Canalizações Silva. Diga!",
+                "translation": "Good afternoon, Silva Plumbing. Speak!"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde, sim. Estou a ligar por causa de uma fuga na cozinha. Precisava de um orçamento.",
+                "translation": "Good afternoon, yes. I'm calling about a leak in the kitchen. I needed a quote."
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Ah, pois. Certo. Que dia lhe dá mais jeito para eu ir ver?",
+                "translation": "Ah, right. Okay. Which day is more convenient for you for me to go take a look?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Hmm, pode ser quarta-feira de manhã ou quinta à tarde, talvez?",
+                "translation": "Hmm, could be Wednesday morning or Thursday afternoon, maybe?"
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "Quinta à tarde dá-me jeito. Por volta das três, pode ser?",
+                "translation": "Thursday afternoon suits me. Around three, can it be?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, sim, às três está ótimo. Qual é a morada?",
+                "translation": "Yes, yes, three is great. What's the address?"
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "É na Rua do Limoeiro, número vinte e cinco. No Funchal, claro.",
+                "translation": "It's on Rua do Limoeiro, number twenty-five. In Funchal, of course."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Certo. Rua do Limoeiro, vinte e cinco. Fico à espera na quinta-feira, então.",
+                "translation": "Right. Rua do Limoeiro, twenty-five. I'll wait on Thursday, then."
+              },
+              {
+                "speaker": "Canalizador",
+                "voice_type": "service",
+                "text": "P'ra já. Até quinta. Obrigado.",
+                "translation": "For now. See you Thursday. Thank you."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Flexibility in Scheduling",
+            "body": "When arranging visits in Madeira, especially with small businesses or independent professionals, there's often flexibility. It's common for them to propose a time 'por volta das...' (around...) rather than a precise minute. Likewise, offering a couple of options for days/times shows consideration."
+          },
+          {
+            "title": "Confirming the Address",
+            "body": "It's standard practice to reconfirm the full address, even if you think the person might have it. This avoids misunderstandings and ensures the professional arrives at the correct location. Using 'Qual é a morada?' or 'Pode confirmar a morada?' is polite and clear."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need a local handyman (o 'faz-tudo') to come to your house in Funchal to look at a broken gate and give you a quote. You call him to schedule a visit.",
+          "difficulty": 3,
+          "entry_node": "rp-sit-work-scheduling-site-visit-start",
+          "nodes": [
+            {
+              "id": "rp-sit-work-scheduling-site-visit-start",
+              "npc_text": "Bom dia, 'Faz-Tudo' Manuel. Diga!",
+              "npc_translation": "Good morning, 'Handyman' Manuel. Speak!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Estou a ligar porque preciso de um orçamento para um portão.",
+                  "translation": "Good morning. I'm calling because I need a quote for a gate.",
+                  "feedback": "Great start, clearly stating your purpose.",
+                  "next": "rp-sit-work-scheduling-site-visit-ask-availability"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scheduling-site-visit-ask-availability",
+              "npc_text": "Um portão, pois. Certo. Que dia lhe dá mais jeito para eu ir lá ver?",
+              "npc_translation": "A gate, right. Okay. Which day is more convenient for you for me to go there and see?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pode ser na terça-feira de manhã ou na quinta-feira à tarde?",
+                  "translation": "Could it be Tuesday morning or Thursday afternoon?",
+                  "feedback": "Good, offering two options is polite and helpful.",
+                  "next": "rp-sit-work-scheduling-site-visit-propose-time"
+                },
+                {
+                  "text": "Não sei. Que dias tem disponíveis?",
+                  "translation": "I don't know. Which days do you have available?",
+                  "feedback": "This is okay, but it puts the burden on the other person. Try to offer options if you can.",
+                  "next": "rp-sit-work-scheduling-site-visit-propose-time-npc"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scheduling-site-visit-propose-time",
+              "npc_text": "Quinta-feira à tarde, por volta das quatro, dá-me jeito. Pode ser?",
+              "npc_translation": "Thursday afternoon, around four, suits me. Can it be?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, às quatro na quinta-feira está ótimo. Qual é a morada?",
+                  "translation": "Yes, four on Thursday is great. What's the address?",
+                  "feedback": "Excellent, confirming the time and asking for the address.",
+                  "next": "rp-sit-work-scheduling-site-visit-confirm-address"
+                },
+                {
+                  "text": "Às quatro é um bocado tarde. Pode ser mais cedo?",
+                  "translation": "Four is a bit late. Can it be earlier?",
+                  "feedback": "Good, you're negotiating the time if it doesn't suit you.",
+                  "next": "rp-sit-work-scheduling-site-visit-renegotiate-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scheduling-site-visit-propose-time-npc",
+              "npc_text": "Tenho disponibilidade na terça-feira de manhã ou na quinta-feira à tarde. Que horas lhe dão mais jeito?",
+              "npc_translation": "I have availability on Tuesday morning or Thursday afternoon. What time suits you best?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Na quinta-feira à tarde, por volta das quatro, seria bom.",
+                  "translation": "On Thursday afternoon, around four, would be good.",
+                  "feedback": "You've chosen a time and are ready to confirm details.",
+                  "next": "rp-sit-work-scheduling-site-visit-confirm-address"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scheduling-site-visit-renegotiate-time",
+              "npc_text": "Mais cedo? Hum, às três e meia, talvez? Ou só na sexta-feira de manhã?",
+              "npc_translation": "Earlier? Hmm, three-thirty, maybe? Or only Friday morning?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Às três e meia na quinta-feira está bem. A morada é Rua das Flores, número dez.",
+                  "translation": "Three-thirty on Thursday is fine. The address is Rua das Flores, number ten.",
+                  "feedback": "Good, you've settled on a time and provided the address.",
+                  "next": "rp-sit-work-scheduling-site-visit-final-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scheduling-site-visit-confirm-address",
+              "npc_text": "A morada é Rua das Flores, número dez. Certo?",
+              "npc_translation": "The address is Rua das Flores, number ten. Correct?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, isso mesmo. Rua das Flores, dez. Fico à espera na quinta-feira.",
+                  "translation": "Yes, that's right. Rua das Flores, ten. I'll wait on Thursday.",
+                  "feedback": "Perfect, you've confirmed the address and the appointment.",
+                  "next": "rp-sit-work-scheduling-site-visit-final-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scheduling-site-visit-final-confirm",
+              "npc_text": "P'ra já. Até quinta-feira, então. Obrigado.",
+              "npc_translation": "For now. See you Thursday, then. Thank you.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Schedule a Handyman Visit for a Quote",
+          "prep": [
+            "Practice asking for a quote for a specific job.",
+            "Rehearse proposing a couple of days and times that work for you.",
+            "Practice confirming the agreed-upon day and time.",
+            "Be ready to provide your address clearly."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi. Pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?",
+            "Não entendi a última parte."
+          ],
+          "likely_responses": [
+            "Que dia lhe dá mais jeito?",
+            "Que horas lhe dão mais jeito?",
+            "Qual é a morada?",
+            "Sim, pode ser.",
+            "Não, nesse dia não consigo."
+          ]
+        },
+        "goals": [
+          "Successfully arrange a site visit with a local professional.",
+          "Propose and agree on a convenient date and time for the visit.",
+          "Clearly provide your address for the professional."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-work-scheduling-site-visit-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can we arrange for {day of the week} or {day of the week 2}?",
+            "answer": "Podemos combinar para {dia_semana} ou {dia_semana_2}?",
+            "source_ref": "pp-sit-work-scheduling-site-visit-1"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is the {type of address}?",
+            "answer": "Qual é a {tipo_morada}?",
+            "source_ref": "pp-sit-work-scheduling-site-visit-2"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'll wait for your {confirmation}.",
+            "answer": "Fico à espera da sua {confirmação}.",
+            "source_ref": "pp-sit-work-scheduling-site-visit-3"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'll confirm {when}, okay?",
+            "answer": "Confirmo {quando}, está bem?",
+            "source_ref": "pp-sit-work-scheduling-site-visit-4"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: quote / estimate",
+            "answer": "orçamento",
+            "source_ref": "orçamento"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to be convenient / to suit",
+            "answer": "dar jeito",
+            "source_ref": "dar jeito"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: address",
+            "answer": "morada",
+            "source_ref": "morada"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to arrange / to agree on",
+            "answer": "combinar",
+            "source_ref": "combinar"
+          },
+          {
+            "id": "rv-sit-work-scheduling-site-visit-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-work-scheduling-site-visit-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-work-scope-escalation",
+      "kind": "track",
+      "title": "Scope Escalation",
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-work"
+      ],
+      "course": null,
+      "situation": {
+        "id": "sit-work-scope-escalation",
+        "title": "Scope Escalation",
+        "summary": "A job has grown beyond what was agreed: explaining the extra work, the extra cost and time, and getting the client to approve before continuing.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-work"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-work-scope-escalation-1",
+            "base": "O trabalho {originalmente} acordado era {descrição}, mas agora {aconteceu_isto}.",
+            "translation": "The work {originally} agreed upon was {description}, but now {this happened}.",
+            "slots": [
+              {
+                "name": "originalmente",
+                "description": "Adverb for 'originally'",
+                "options": [
+                  "inicialmente",
+                  "primeiramente",
+                  "originalmente"
+                ]
+              },
+              {
+                "name": "descrição",
+                "description": "Description of the initial work",
+                "options": [
+                  "só pintar a sala",
+                  "reparar o telhado",
+                  "instalar a canalização"
+                ]
+              },
+              {
+                "name": "aconteceu_isto",
+                "description": "What happened to change the scope",
+                "options": [
+                  "descobrimos mais problemas",
+                  "apareceu um imprevisto",
+                  "a situação mudou"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-scope-escalation-2",
+            "base": "Isto vai implicar um {custo_extra} de {valor} e mais {tempo_extra}.",
+            "translation": "This will imply an {extra cost} of {value} and more {extra time}.",
+            "slots": [
+              {
+                "name": "custo_extra",
+                "description": "Type of extra cost",
+                "options": [
+                  "custo adicional",
+                  "gasto extra",
+                  "custo extra"
+                ]
+              },
+              {
+                "name": "valor",
+                "description": "Monetary value",
+                "options": [
+                  "200 euros",
+                  "mais 500 euros",
+                  "cerca de 100 euros"
+                ]
+              },
+              {
+                "name": "tempo_extra",
+                "description": "Extra time needed",
+                "options": [
+                  "dois dias de trabalho",
+                  "uma semana",
+                  "mais algumas horas"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-scope-escalation-3",
+            "base": "Precisamos da sua {aprovação} para continuar o trabalho.",
+            "translation": "We need your {approval} to continue the work.",
+            "slots": [
+              {
+                "name": "aprovação",
+                "description": "Word for 'approval'",
+                "options": [
+                  "luz verde",
+                  "concordância",
+                  "aprovação"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "O senhor/A senhora pode aprovar para continuarmos?",
+                "translation": "Can you approve for us to continue?",
+                "register": "formal"
+              },
+              {
+                "text": "Podemos avançar com isto?",
+                "translation": "Can we move forward with this?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-work-scope-escalation-4",
+            "base": "Entendo a sua preocupação, mas {justificação}.",
+            "translation": "I understand your concern, but {justification}.",
+            "slots": [
+              {
+                "name": "justificação",
+                "description": "Reason or justification",
+                "options": [
+                  "é essencial para a segurança",
+                  "não temos outra opção",
+                  "o material já está encomendado"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "orçamento",
+            "translation": "budget / quote",
+            "pronunciation": "or-SAH-men-too",
+            "register": "neutral",
+            "note": "Common in business and services for a cost estimate."
+          },
+          {
+            "word": "custo adicional",
+            "translation": "additional cost",
+            "pronunciation": "KOOS-too ah-dee-see-oh-NAHL",
+            "register": "neutral"
+          },
+          {
+            "word": "prazo",
+            "translation": "deadline / timeframe",
+            "pronunciation": "PRAH-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "imprevisto",
+            "translation": "unforeseen event / unexpected issue",
+            "pronunciation": "eem-preh-VEESH-too",
+            "register": "neutral"
+          },
+          {
+            "word": "aprovação",
+            "translation": "approval",
+            "pronunciation": "ah-proo-vah-SOW",
+            "register": "neutral"
+          },
+          {
+            "word": "avançar (com)",
+            "translation": "to move forward (with)",
+            "pronunciation": "ah-vahn-SAHR (kong)",
+            "register": "neutral"
+          },
+          {
+            "word": "negociar",
+            "translation": "to negotiate",
+            "pronunciation": "neh-goh-see-AHR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-work-scope-escalation-1",
+            "title": "Renovation Scope Change",
+            "context": "A contractor (João) is explaining to a client (Dona Fátima) that a bathroom renovation project has encountered an unexpected problem, requiring extra work and cost.",
+            "lines": [
+              {
+                "speaker": "João",
+                "voice_type": "service",
+                "text": "Dona Fátima, tenho que lhe dar uma notícia sobre a obra na casa de banho.",
+                "translation": "Dona Fátima, I have to give you some news about the work in the bathroom."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Diga, João. Está tudo bem?",
+                "translation": "Tell me, João. Is everything alright?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Pois, o trabalho inicialmente acordado era só substituir os azulejos, mas agora descobrimos que há um problema sério de humidade na parede por trás. Está muito pior do que pensávamos.",
+                "translation": "Well, the work initially agreed upon was just to replace the tiles, but now we've discovered a serious damp problem in the wall behind. It's much worse than we thought."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Ai, meu Deus! Isso é mau. E o que é que isso implica?",
+                "translation": "Oh, my God! That's bad. And what does that imply?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "service",
+                "text": "Para resolver, vamos ter de tratar a humidade, o que vai implicar um custo adicional de cerca de 300 euros e mais uns dois ou três dias de trabalho. É um imprevisto, infelizmente.",
+                "translation": "To solve it, we'll have to treat the damp, which will imply an additional cost of about 300 euros and another two or three days of work. It's an unforeseen event, unfortunately."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "300 euros? E mais dias? O orçamento já estava um bocado apertado...",
+                "translation": "300 euros? And more days? The budget was already a bit tight..."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Entendo a sua preocupação, Dona Fátima, mas é essencial para que o trabalho fique bem feito e não tenha problemas no futuro. Precisamos da sua aprovação para avançar com esta parte extra.",
+                "translation": "I understand your concern, Dona Fátima, but it's essential for the work to be well done and to avoid future problems. We need your approval to move forward with this extra part."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Addressing Service Providers and Clients",
+            "body": "In Portugal, when addressing service providers (like a contractor) or clients, it's common to use 'o senhor' / 'a senhora' (the polite third person) or their first name if the relationship is more established, often preceded by 'Sr.' / 'Sra.' or 'Dona' / 'Dom' for older individuals or those with higher status. Using 'você' is generally avoided in direct address as it can sound distancing or even rude in some contexts, especially when addressing someone older or in a professional setting. Instead, use the third person verb conjugation (e.g., 'o senhor pode' instead of 'você pode')."
+          },
+          {
+            "title": "Explaining Unexpected Costs",
+            "body": "When explaining unexpected costs or delays, it's important to be clear, justify the necessity, and present it as an 'imprevisto' (unforeseen event) rather than a mistake. Offering solutions and seeking explicit approval before proceeding shows professionalism and respect for the client's budget and time. Be prepared for some negotiation or expressions of concern, as budgets are often tight."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are a small contractor. You've been hired to fix a leaky tap in a client's kitchen. Upon inspection, you discover that the entire pipework behind the wall is corroded and needs replacing, which is a much bigger job than initially quoted. You need to explain this to the client, Mrs. Silva, explain the extra cost and time, and get her approval to proceed.",
+          "difficulty": 4,
+          "entry_node": "rp-sit-work-scope-escalation-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-work-scope-escalation-node-1",
+              "npc_text": "Bom dia, Sr. {learner_name}. Já conseguiu ver o problema da torneira?",
+              "npc_translation": "Good morning, Mr./Ms. {learner_name}. Have you managed to see the tap problem?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, Dona Silva. O problema é mais sério do que pensávamos. A canalização atrás da parede está corroída.",
+                  "translation": "Yes, Dona Silva. The problem is more serious than we thought. The pipework behind the wall is corroded.",
+                  "feedback": "Good start, you've identified the core issue directly.",
+                  "next": "rp-sit-work-scope-escalation-node-2"
+                },
+                {
+                  "text": "A torneira está estragada, mas podemos consertar.",
+                  "translation": "The tap is broken, but we can fix it.",
+                  "feedback": "This option doesn't address the new, bigger problem. You need to explain the scope escalation."
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scope-escalation-node-2",
+              "npc_text": "Corroída? Ai, que chatice! E o que é que isso significa para a reparação?",
+              "npc_translation": "Corroded? Oh, what a nuisance! And what does that mean for the repair?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Significa que não podemos só trocar a torneira. Temos de substituir toda a canalização, o que implica mais trabalho e materiais.",
+                  "translation": "It means we can't just change the tap. We have to replace all the pipework, which implies more work and materials.",
+                  "feedback": "Excellent, you're clearly explaining the extra work required.",
+                  "next": "rp-sit-work-scope-escalation-node-3"
+                },
+                {
+                  "text": "Não se preocupe, eu dou um jeito.",
+                  "translation": "Don't worry, I'll figure it out.",
+                  "feedback": "This is too vague and doesn't explain the implications for the client. You need to be transparent about the changes."
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scope-escalation-node-3",
+              "npc_text": "Entendo. E isso vai custar mais dinheiro e demorar mais tempo, não é?",
+              "npc_translation": "I understand. And that will cost more money and take more time, won't it?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, infelizmente. Vai implicar um custo adicional de 250 euros e mais uns dois dias de trabalho. É um imprevisto que não podíamos prever.",
+                  "translation": "Yes, unfortunately. It will imply an additional cost of 250 euros and about two more days of work. It's an unforeseen event we couldn't predict.",
+                  "feedback": "You've given the specifics clearly and acknowledged it's an unforeseen issue.",
+                  "next": "rp-sit-work-scope-escalation-node-4"
+                },
+                {
+                  "text": "Não muito mais, talvez 50 euros e algumas horas.",
+                  "translation": "Not much more, maybe 50 euros and a few hours.",
+                  "feedback": "Be honest about the full scope. Underestimating now will lead to bigger problems later."
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scope-escalation-node-4",
+              "npc_text": "250 euros e dois dias? Ai, Sr. {learner_name}, o meu orçamento já está muito apertado. Não há outra solução?",
+              "npc_translation": "250 euros and two days? Oh, Mr./Ms. {learner_name}, my budget is already very tight. Is there no other solution?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Entendo perfeitamente a sua preocupação. Mas para garantir que a fuga não volta e que a canalização aguenta, esta é a única solução duradoura. Precisamos da sua aprovação para avançar.",
+                  "translation": "I perfectly understand your concern. But to ensure the leak doesn't return and the pipework holds up, this is the only lasting solution. We need your approval to proceed.",
+                  "feedback": "You've empathized, justified the necessity, and asked for approval directly.",
+                  "next": "rp-sit-work-scope-escalation-node-5"
+                },
+                {
+                  "text": "Não sei, Dona Silva. É o que tem de ser.",
+                  "translation": "I don't know, Dona Silva. It's what has to be done.",
+                  "feedback": "This response is unhelpful and lacks empathy. Try to justify the necessity and offer reassurance."
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-work-scope-escalation-node-5",
+              "npc_text": "Pois é... Se diz que é a única forma de ficar bem feito... Está bem, Sr. {learner_name}. Pode avançar. Mas tente despachar-se, por favor.",
+              "npc_translation": "Well... If you say it's the only way to do it right... All right, Mr./Ms. {learner_name}. You can proceed. But try to be quick, please.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Muito obrigado, Dona Silva. Vou fazer o meu melhor para ser o mais rápido possível.",
+                  "translation": "Thank you very much, Dona Silva. I'll do my best to be as quick as possible.",
+                  "feedback": "Great! You've secured approval and reassured the client. This is a successful outcome."
+                },
+                {
+                  "text": "Certo. Não se preocupe.",
+                  "translation": "Okay. Don't worry.",
+                  "feedback": "While correct, a more polite and reassuring response would be better here, acknowledging her request for speed."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Discussing Project Changes",
+          "prep": [
+            "Review the key phrases for explaining unforeseen issues and additional costs.",
+            "Practice explaining the 'why' behind the extra work, not just the 'what'.",
+            "Mentally prepare for the client's potential concerns about budget and time."
+          ],
+          "fallback_phrases": [
+            "Podemos falar sobre isto com mais calma?",
+            "Desculpe, não estou a conseguir explicar bem. Posso tentar de outra forma?",
+            "O que é que a senhora acha que podemos fazer?"
+          ],
+          "likely_responses": [
+            "Mas isso não estava no orçamento inicial!",
+            "E o que é que isso significa em termos de tempo?",
+            "Não há outra maneira de resolver?",
+            "O meu orçamento não estica mais...",
+            "Está bem, pode avançar."
+          ]
+        },
+        "goals": [
+          "Explain an unforeseen problem that changes the scope of work.",
+          "Communicate additional costs and time required clearly and politely.",
+          "Obtain client approval to proceed with the expanded work."
+        ],
+        "review_items": [
+          {
+            "id": "rv-sit-work-scope-escalation-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The work {originally} agreed upon was {description}, but now {this happened}.",
+            "answer": "O trabalho {originalmente} acordado era {descrição}, mas agora {aconteceu_isto}.",
+            "source_ref": "pp-sit-work-scope-escalation-1"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: This will imply an {extra cost} of {value} and more {extra time}.",
+            "answer": "Isto vai implicar um {custo_extra} de {valor} e mais {tempo_extra}.",
+            "source_ref": "pp-sit-work-scope-escalation-2"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: We need your {approval} to continue the work.",
+            "answer": "Precisamos da sua {aprovação} para continuar o trabalho.",
+            "source_ref": "pp-sit-work-scope-escalation-3"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I understand your concern, but {justification}.",
+            "answer": "Entendo a sua preocupação, mas {justificação}.",
+            "source_ref": "pp-sit-work-scope-escalation-4"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: budget / quote",
+            "answer": "orçamento",
+            "source_ref": "orçamento"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: additional cost",
+            "answer": "custo adicional",
+            "source_ref": "custo adicional"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: deadline / timeframe",
+            "answer": "prazo",
+            "source_ref": "prazo"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: unforeseen event / unexpected issue",
+            "answer": "imprevisto",
+            "source_ref": "imprevisto"
+          },
+          {
+            "id": "rv-sit-work-scope-escalation-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-work-scope-escalation-1"
+          }
+        ]
+      }
+    }
+  ]
+}

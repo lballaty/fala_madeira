@@ -65,18 +65,17 @@ export const useLessons = ({ supabase, user, profile, setProfile, showToast, han
   const fetchCustomLessons = async (userId: string, userRole?: string) => {
     if (!supabase) return;
 
-    // Fetch custom lessons
-    const { data: customLessonsData } = await supabase
-      .from('lessons')
-      .select('*')
-      .eq('user_id', userId);
-
-    // Fetch video suggestions
+    // Custom lessons and video suggestions are independent reads — fetch them in parallel
+    // (Promise.all) instead of awaiting one then the other. Behavior-preserving: the merge
+    // below still sees both result sets; only the round-trip latency collapses from 2× to 1×.
     let suggestionsQuery = supabase.from('video_suggestions').select('*');
     if (userRole !== 'admin') {
       suggestionsQuery = suggestionsQuery.or(`status.eq.approved,user_id.eq.${userId}`);
     }
-    const { data: suggestionsData } = await suggestionsQuery;
+    const [{ data: customLessonsData }, { data: suggestionsData }] = await Promise.all([
+      supabase.from('lessons').select('*').eq('user_id', userId),
+      suggestionsQuery,
+    ]);
 
     if (suggestionsData) {
       setVideoSuggestions(suggestionsData);

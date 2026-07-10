@@ -1,0 +1,2653 @@
+{
+  "batch": 6,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T08:39:24.576Z",
+  "count": 8,
+  "situations": [
+    {
+      "id": "sit-d41-giving-explanations",
+      "title": "Giving Explanations",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 1,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d41-1",
+            "title": "Explaining a new bill",
+            "context": "A neighbour is explaining to another neighbour why the electricity bill is higher this month.",
+            "lines": [
+              {
+                "speaker": "Vizinho A",
+                "voice_type": "older",
+                "text": "Bom dia, vizinha! Como está? A conta da luz veio com um valor imenso este mês, não percebo.",
+                "translation": "Good morning, neighbour! How are you? The electricity bill came with a huge amount this month, I don't understand."
+              },
+              {
+                "speaker": "Vizinho B",
+                "voice_type": "local",
+                "text": "Pois é, a minha também. Deixa-me explicar o que me disseram na loja. Basicamente, aumentaram os preços.",
+                "translation": "Indeed, mine too. Let me explain what they told me at the shop. Basically, they increased the prices."
+              },
+              {
+                "speaker": "Vizinho A",
+                "voice_type": "older",
+                "text": "Aumentaram? Ou seja, vamos pagar mais por tudo?",
+                "translation": "Increased? In other words, we're going to pay more for everything?"
+              },
+              {
+                "speaker": "Vizinho B",
+                "voice_type": "local",
+                "text": "Exato. Por exemplo, a tarifa noturna está mais cara. Faz sentido para si?",
+                "translation": "Exactly. For example, the night tariff is more expensive. Does that make sense to you?"
+              },
+              {
+                "speaker": "Vizinho A",
+                "voice_type": "older",
+                "text": "Faz, faz. É um bocado chato, mas pronto. Obrigado por explicar!",
+                "translation": "Yes, it does. It's a bit annoying, but oh well. Thanks for explaining!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a repair service about a broken washing machine. You need to explain the problem and understand the next steps.",
+          "difficulty": 3,
+          "entry_node": "rp-d41-1",
+          "nodes": [
+            {
+              "id": "rp-d41-1",
+              "npc_text": "Boa tarde, Serviço de Reparações. Diga!",
+              "npc_translation": "Good afternoon, Repair Service. Speak!",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "A minha máquina de lavar está com um problema.",
+                  "translation": "My washing machine has a problem.",
+                  "feedback": "Good, you've stated the problem directly.",
+                  "next": "rp-d41-2"
+                },
+                {
+                  "text": "Gostaria de explicar uma situação.",
+                  "translation": "I would like to explain a situation.",
+                  "feedback": "A bit formal, but acceptable. The next step is to explain the problem.",
+                  "next": "rp-d41-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d41-2",
+              "npc_text": "Um problema? Deixa-me explicar, preciso de saber qual é o modelo e o que está a acontecer.",
+              "npc_translation": "A problem? Let me explain, I need to know the model and what is happening.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É uma máquina antiga, e não está a deitar a água fora, por exemplo.",
+                  "translation": "It's an old machine, and it's not draining the water, for example.",
+                  "feedback": "Excellent, you've given a specific detail and used 'por exemplo'.",
+                  "next": "rp-d41-3"
+                },
+                {
+                  "text": "Ou seja, a água não sai, está lá dentro.",
+                  "translation": "In other words, the water isn't coming out, it's inside.",
+                  "feedback": "Good use of 'ou seja' to clarify the problem.",
+                  "next": "rp-d41-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d41-3",
+              "npc_text": "Ah, percebo. Basicamente, pode ser a bomba. Faz sentido para si? Não consigo dar um diagnóstico sem ver.",
+              "npc_translation": "Ah, I understand. Basically, it could be the pump. Does that make sense to you? I can't give a diagnosis without seeing it.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, faz sentido. Quando pode vir?",
+                  "translation": "Yes, it makes sense. When can you come?",
+                  "feedback": "Good, you've confirmed understanding and asked about the next step.",
+                  "next": "rp-d41-4"
+                },
+                {
+                  "text": "Ou seja, tem de vir cá para ver o que é?",
+                  "translation": "In other words, you have to come here to see what it is?",
+                  "feedback": "Correct, you've used 'ou seja' to confirm the process.",
+                  "next": "rp-d41-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d41-4",
+              "npc_text": "Pois é. Posso ir amanhã de manhã, entre as nove e o meio-dia.",
+              "npc_translation": "Indeed. I can come tomorrow morning, between nine and noon.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Perfeito! Então, amanhã de manhã.",
+                  "translation": "Perfect! So, tomorrow morning.",
+                  "feedback": "Great, you've confirmed the appointment."
+                },
+                {
+                  "text": "Obrigado!",
+                  "translation": "Thank you!",
+                  "feedback": "A polite way to end the call."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Explain a household issue to a neighbour",
+          "prep": [
+            "Think of a small household problem (e.g., a noisy tap, a broken light bulb, a recycling question).",
+            "Imagine you need to explain it to a neighbour who might not know the details.",
+            "Practice using 'Deixa-me explicar.', 'Ou seja...', and 'Faz sentido?' in your explanation."
+          ],
+          "fallback_phrases": [
+            "Pode explicar de novo?",
+            "Não percebi bem.",
+            "Desculpe, pode repetir?"
+          ],
+          "likely_responses": [
+            "Pois é...",
+            "Ah, já percebi.",
+            "Faz sentido.",
+            "Obrigado por explicar."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d41-1",
+            "base": "Deixa-me explicar.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Deixa-me explicar melhor.",
+                "translation": "Let me explain better.",
+                "register": "informal"
+              },
+              {
+                "text": "Posso explicar?",
+                "translation": "Can I explain?",
+                "register": "neutral"
+              },
+              {
+                "text": "Gostaria de explicar-lhe.",
+                "translation": "I would like to explain to you (formal).",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d41-2",
+            "base": "Ou seja...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Ou seja, o que quer dizer?",
+                "translation": "In other words, what do you mean?",
+                "register": "formal",
+                "note": "Used to ask for clarification."
+              },
+              {
+                "text": "Ou seja, é assim:",
+                "translation": "In other words, it's like this:",
+                "register": "neutral"
+              },
+              {
+                "text": "Ou seja, é isto que acontece?",
+                "translation": "In other words, is this what's happening?",
+                "register": "neutral",
+                "note": "Used to check understanding."
+              }
+            ]
+          },
+          {
+            "id": "pp-d41-3",
+            "base": "Faz sentido?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Percebes?",
+                "translation": "Do you understand?",
+                "register": "informal"
+              },
+              {
+                "text": "Está claro?",
+                "translation": "Is it clear?",
+                "register": "neutral"
+              },
+              {
+                "text": "Consegue seguir?",
+                "translation": "Are you able to follow?",
+                "register": "formal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Checking Understanding in Portugal",
+            "body": "In Portugal, it's very common and polite to explicitly check if someone understands your explanation by asking 'Faz sentido?' (Does it make sense?) or 'Percebes?' (Do you understand? - informal). This shows you care about clear communication and gives the other person an opportunity to ask questions."
+          },
+          {
+            "title": "The Versatile 'Pois é'",
+            "body": "The phrase 'Pois é' is frequently used in Madeiran and European Portuguese. It can mean 'Indeed', 'That's right', 'Exactly', or simply acknowledge what the other person has said without necessarily agreeing. It's a natural filler that adds to the flow of conversation and often softens the tone."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d41-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Deixa-me explicar.\"",
+            "answer": "Deixa-me explicar.",
+            "source_ref": "pp-d41-1"
+          },
+          {
+            "id": "rv-d41-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Ou seja...\"",
+            "answer": "Ou seja...",
+            "source_ref": "pp-d41-2"
+          },
+          {
+            "id": "rv-d41-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Faz sentido?\"",
+            "answer": "Faz sentido?",
+            "source_ref": "pp-d41-3"
+          },
+          {
+            "id": "rv-d41-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: basically",
+            "answer": "basicamente",
+            "source_ref": "basicamente"
+          },
+          {
+            "id": "rv-d41-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: in other words",
+            "answer": "ou seja",
+            "source_ref": "ou seja"
+          },
+          {
+            "id": "rv-d41-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: for example",
+            "answer": "por exemplo",
+            "source_ref": "por exemplo"
+          },
+          {
+            "id": "rv-d41-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d41-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d42-week-6-stress-test",
+      "title": "Week 6 Stress Test",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 0,
+        "extra_cultural_notes": 2,
+        "review_items": 2,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d42-1",
+            "title": "High Water Bill",
+            "context": "A customer calls Águas da Madeira (the water company) about an unusually high bill.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Águas da Madeira, boa tarde. Em que posso ajudar?",
+                "translation": "Madeira Water, good afternoon. How can I help you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Boa tarde. O meu nome é [nome] e liguei por causa de uma fatura.",
+                "translation": "Good afternoon. My name is [name] and I called because of a bill."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois não. Qual é o número da fatura, por favor?",
+                "translation": "Yes, of course. What is the bill number, please?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "É a fatura número 2023/12345. Está muito alta este mês.",
+                "translation": "It's bill number 2023/12345. It's very high this month."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "local",
+                "text": "Um momento, por favor... Ah, sim. Vejo aqui. Houve um consumo um bocado elevado.",
+                "translation": "One moment, please... Ah, yes. I see here. There was a somewhat high consumption."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Pois é, mas não me parece normal. Não estivemos cá muito tempo.",
+                "translation": "Indeed, but it doesn't seem normal to me. We weren't here much time."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Entendo. Quer que enviemos um técnico para verificar o contador?",
+                "translation": "I understand. Do you want us to send a technician to check the meter?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Sim, por favor. Pode ser na próxima semana?",
+                "translation": "Yes, please. Can it be next week?"
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Podemos agendar para terça-feira de manhã, entre as nove e o meio-dia.",
+                "translation": "We can schedule it for Tuesday morning, between nine and noon."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Terça-feira de manhã, ótimo. Obrigada.",
+                "translation": "Tuesday morning, great. Thank you."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d42-2",
+            "title": "Confirming Cleaning",
+            "context": "A person is confirming a cleaning appointment with their cleaner, D. Maria.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Olá, D. Maria. Tudo bem?",
+                "translation": "Hello, D. Maria. How are you?"
+              },
+              {
+                "speaker": "Empregada",
+                "voice_type": "local",
+                "text": "Olá! Tudo bem, obrigada. É para confirmar a limpeza para amanhã, pois é?",
+                "translation": "Hello! I'm fine, thank you. It's to confirm the cleaning for tomorrow, right?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Sim, isso mesmo. Amanhã de manhã, às nove, está bem?",
+                "translation": "Yes, that's right. Tomorrow morning, at nine, is that okay?"
+              },
+              {
+                "speaker": "Empregada",
+                "voice_type": "local",
+                "text": "Sim, sim, às nove está perfeito. Não há problema nenhum.",
+                "translation": "Yes, yes, nine o'clock is perfect. No problem at all."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Ótimo. Precisa de alguma coisa em especial?",
+                "translation": "Great. Do you need anything special?"
+              },
+              {
+                "speaker": "Empregada",
+                "voice_type": "local",
+                "text": "Não, tá tudo bem. Tenho os meus produtos. Só preciso que me diga se há alguma coisa que queira que eu faça diferente.",
+                "translation": "No, everything's fine. I have my products. I just need you to tell me if there's anything you want me to do differently."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Não, está tudo como sempre. Obrigada, D. Maria.",
+                "translation": "No, everything is as always. Thank you, D. Maria."
+              },
+              {
+                "speaker": "Empregada",
+                "voice_type": "local",
+                "text": "De nada! Até amanhã.",
+                "translation": "You're welcome! See you tomorrow."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling an appliance repair service because your washing machine is broken. You need to explain the problem and schedule a repair.",
+          "difficulty": 2,
+          "entry_node": "rp-d42-wash-start",
+          "nodes": [
+            {
+              "id": "rp-d42-wash-start",
+              "npc_text": "Assistência Técnica, boa tarde. Em que posso ajudar?",
+              "npc_translation": "Technical Assistance, good afternoon. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. A minha máquina de lavar roupa está avariada.",
+                  "translation": "Good afternoon. My washing machine is broken.",
+                  "feedback": "You've clearly stated the problem. Good start!",
+                  "next": "rp-d42-wash-details"
+                },
+                {
+                  "text": "Olá. Preciso de um técnico para a máquina de lavar.",
+                  "translation": "Hello. I need a technician for the washing machine.",
+                  "feedback": "Direct and clear. Now you'll need to explain the issue.",
+                  "next": "rp-d42-wash-details"
+                }
+              ]
+            },
+            {
+              "id": "rp-d42-wash-details",
+              "npc_text": "Pois não. Qual é o problema, exatamente?",
+              "npc_translation": "Yes, of course. What is the problem, exactly?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ela não liga de todo.",
+                  "translation": "It doesn't turn on at all.",
+                  "feedback": "Good, you've specified the fault.",
+                  "next": "rp-d42-wash-schedule"
+                },
+                {
+                  "text": "Ela faz muito barulho e não centrifuga.",
+                  "translation": "It makes a lot of noise and doesn't spin.",
+                  "feedback": "Clear explanation of the symptoms.",
+                  "next": "rp-d42-wash-schedule"
+                },
+                {
+                  "text": "Está a deitar água para fora.",
+                  "translation": "It's leaking water.",
+                  "feedback": "A common and easy-to-understand problem description.",
+                  "next": "rp-d42-wash-schedule"
+                }
+              ]
+            },
+            {
+              "id": "rp-d42-wash-schedule",
+              "npc_text": "Certo. Podemos agendar uma visita para amanhã de manhã, entre as nove e o meio-dia, ou quinta-feira à tarde?",
+              "npc_translation": "Right. We can schedule a visit for tomorrow morning, between nine and noon, or Thursday afternoon?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Amanhã de manhã está ótimo.",
+                  "translation": "Tomorrow morning is great.",
+                  "feedback": "Excellent, you've accepted the first option.",
+                  "next": "rp-d42-wash-confirm-tue"
+                },
+                {
+                  "text": "Quinta-feira à tarde é melhor.",
+                  "translation": "Thursday afternoon is better.",
+                  "feedback": "Good, you've chosen the second option.",
+                  "next": "rp-d42-wash-confirm-thu"
+                },
+                {
+                  "text": "Não consigo amanhã nem quinta. Tem outra disponibilidade?",
+                  "translation": "I can't tomorrow or Thursday. Do you have other availability?",
+                  "feedback": "Well done for asking for more options! This shows flexibility.",
+                  "next": "rp-d42-wash-reschedule"
+                }
+              ]
+            },
+            {
+              "id": "rp-d42-wash-confirm-tue",
+              "npc_text": "Perfeito. Então fica agendado para amanhã de manhã. O técnico liga antes de ir.",
+              "npc_translation": "Perfect. So it's scheduled for tomorrow morning. The technician will call before going.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d42-wash-confirm-thu",
+              "npc_text": "Perfeito. Então fica agendado para quinta-feira à tarde. O técnico liga antes de ir.",
+              "npc_translation": "Perfect. So it's scheduled for Thursday afternoon. The technician will call before going.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d42-wash-reschedule",
+              "npc_text": "Um momento, por favor... Temos na sexta-feira de manhã, entre as dez e a uma.",
+              "npc_translation": "One moment, please... We have Friday morning, between ten and one.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sexta-feira de manhã está bem. Obrigada.",
+                  "translation": "Friday morning is fine. Thank you.",
+                  "feedback": "Great, you've found a suitable time and confirmed.",
+                  "next": "rp-d42-wash-confirm-fri"
+                },
+                {
+                  "text": "Não, também não dá. Vou ligar mais tarde.",
+                  "translation": "No, that doesn't work either. I'll call later.",
+                  "feedback": "It's okay to end the call if no time works. You handled it politely.",
+                  "next": "rp-d42-wash-end-call"
+                }
+              ]
+            },
+            {
+              "id": "rp-d42-wash-confirm-fri",
+              "npc_text": "Ótimo. Fica agendado para sexta-feira de manhã. O técnico liga antes de ir.",
+              "npc_translation": "Great. It's scheduled for Friday morning. The technician will call before going.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d42-wash-end-call",
+              "npc_text": "Certo. Ligue quando tiver outra disponibilidade. Boa tarde.",
+              "npc_translation": "Right. Call when you have other availability. Good afternoon.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Schedule a Washing Machine Repair",
+          "prep": [
+            "Think about how to explain the problem with your washing machine simply.",
+            "Practice asking for alternative times if the first ones don't work for you.",
+            "Remember to confirm the appointment time and day clearly."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Pode falar mais devagar?",
+            "Obrigado/a. Adeus."
+          ],
+          "likely_responses": [
+            "Qual é o seu nome?",
+            "Qual é o seu contacto?",
+            "Qual é a morada?",
+            "Um momento, por favor.",
+            "Já ligamos ao técnico."
+          ]
+        },
+        "phrase_patterns_enriched": [],
+        "cultural_notes": [
+          {
+            "title": "Addressing Service Staff",
+            "body": "In Portugal, especially in Madeira, it's common and polite to address service staff (e.g., shopkeepers, receptionists, technicians) using 'o senhor' (for men) or 'a senhora' (for women). If you know their first name and they are older, using 'Dona' (for women) or 'Dom' (for men) followed by their first name is also a sign of respect. Avoid using 'você' in these contexts as it can sometimes sound too direct or even impolite, especially with strangers or in formal settings."
+          },
+          {
+            "title": "The Versatile 'Pois'",
+            "body": "The word 'pois' is very common in Portuguese conversations, particularly in Madeira, and its meaning varies with context. 'Pois não' is frequently used by service staff to mean 'Yes, how can I help you?' or 'Of course, what can I do for you?', signaling readiness to assist. 'Pois é' is used to express agreement, acknowledgement, or to confirm something, similar to 'That's right' or 'Indeed' in English. Pay attention to the intonation for subtle differences in meaning."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d42-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Full Week 6 Review\"",
+            "answer": "Full Week 6 Review",
+            "source_ref": "pp-d42-1"
+          },
+          {
+            "id": "rv-d42-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d42-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d43-voces-addressing-groups",
+      "title": "Vocês: Addressing Groups",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 6,
+        "extra_cultural_notes": 2,
+        "review_items": 8,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d43-1",
+            "title": "Welcoming the Cleaners",
+            "context": "Two cleaners arrive at a house.",
+            "lines": [
+              {
+                "speaker": "Dono da casa",
+                "voice_type": "service",
+                "text": "Bom dia! Entrem, por favor. Vocês são a equipa de limpeza, certo?",
+                "translation": "Good morning! Come in, please. You are the cleaning team, right?"
+              },
+              {
+                "speaker": "Chefe da equipa",
+                "voice_type": "local",
+                "text": "Pois é, somos nós. Bom dia. Onde é que vocês querem que a gente comece?",
+                "translation": "That's right, it's us. Good morning. Where do you all want us to start?"
+              },
+              {
+                "speaker": "Dono da casa",
+                "voice_type": "teacher",
+                "text": "Primeiro, a cozinha e as casas de banho. Depois, os quartos. Vocês têm tudo o que precisam?",
+                "translation": "First, the kitchen and the bathrooms. Then, the bedrooms. Do you all have everything you need?"
+              },
+              {
+                "speaker": "Chefe da equipa",
+                "voice_type": "local",
+                "text": "Sim, sim, temos. Não se preocupem. Vocês querem que a gente leve o lixo?",
+                "translation": "Yes, yes, we have. Don't worry. Do you all want us to take the rubbish?"
+              },
+              {
+                "speaker": "Dono da casa",
+                "voice_type": "service",
+                "text": "Sim, por favor. E depois, vocês querem café ou água?",
+                "translation": "Yes, please. And afterwards, do you all want coffee or water?"
+              }
+            ]
+          },
+          {
+            "id": "dlg-d43-2",
+            "title": "Furniture Delivery",
+            "context": "Two delivery workers are bringing furniture into an apartment.",
+            "lines": [
+              {
+                "speaker": "Dono da casa",
+                "voice_type": "younger",
+                "text": "Olá! Sejam bem-vindos! Vocês estão a precisar de ajuda com isso?",
+                "translation": "Hello! Welcome! Do you all need help with that?"
+              },
+              {
+                "speaker": "Entregador 1",
+                "voice_type": "local",
+                "text": "Boa tarde. Não, obrigado, nós temos. Onde é que vocês querem que a gente ponha este sofá?",
+                "translation": "Good afternoon. No, thanks, we're fine. Where do you all want us to put this sofa?"
+              },
+              {
+                "speaker": "Dono da casa",
+                "voice_type": "younger",
+                "text": "O sofá é na sala, ali. E as cadeiras, vocês podem pôr na cozinha.",
+                "translation": "The sofa is in the living room, over there. And the chairs, you all can put them in the kitchen."
+              },
+              {
+                "speaker": "Entregador 2",
+                "voice_type": "service",
+                "text": "Perfeito. Vocês têm mais alguma coisa para nós?",
+                "translation": "Perfect. Do you all have anything else for us?"
+              },
+              {
+                "speaker": "Dono da casa",
+                "voice_type": "younger",
+                "text": "Não, é só isso. Muito obrigado! Vocês foram muito rápidos!",
+                "translation": "No, that's all. Thank you very much! You all were very fast!"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at home and a team of two plumbers arrives to fix a leak. You need to direct them and offer them something to drink.",
+          "difficulty": 2,
+          "entry_node": "rp-d43-1",
+          "nodes": [
+            {
+              "id": "rp-d43-1",
+              "npc_text": "Boa tarde! Nós somos os canalizadores. Vocês ligaram por causa da fuga de água, certo?",
+              "npc_translation": "Good afternoon! We are the plumbers. You all called about the water leak, right?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, sou eu. Entrem, por favor.",
+                  "translation": "Yes, it's me. Come in, please.",
+                  "feedback": "Good, you confirmed and invited them in.",
+                  "next": "rp-d43-2"
+                },
+                {
+                  "text": "Quem são vocês?",
+                  "translation": "Who are you all?",
+                  "feedback": "A bit direct. Try to be more welcoming.",
+                  "next": "rp-d43-1-alt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d43-1-alt",
+              "npc_text": "Como disse, somos os canalizadores. Vieram para a fuga. Podemos entrar?",
+              "npc_translation": "As I said, we are the plumbers. We came for the leak. May we come in?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, sim, desculpem. Entrem, por favor.",
+                  "translation": "Oh, yes, sorry. Come in, please.",
+                  "feedback": "Better, you apologized and invited them in.",
+                  "next": "rp-d43-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d43-2",
+              "npc_text": "Onde é que vocês querem que a gente veja a fuga?",
+              "npc_translation": "Where do you all want us to check for the leak?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "É na casa de banho, no andar de cima.",
+                  "translation": "It's in the bathroom, upstairs.",
+                  "feedback": "Clear directions.",
+                  "next": "rp-d43-3"
+                },
+                {
+                  "text": "Ali.",
+                  "translation": "There.",
+                  "feedback": "Try to be more specific with words, not just pointing.",
+                  "next": "rp-d43-2-alt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d43-2-alt",
+              "npc_text": "Onde 'ali'? No andar de baixo ou no andar de cima?",
+              "npc_translation": "Where 'there'? Downstairs or upstairs?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, desculpem. É na casa de banho, no andar de cima.",
+                  "translation": "Oh, sorry. It's in the bathroom, upstairs.",
+                  "feedback": "Good, you clarified.",
+                  "next": "rp-d43-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d43-3",
+              "npc_text": "Ok, vamos lá ver. Vocês têm um balde ou toalhas velhas?",
+              "npc_translation": "Okay, let's go check. Do you all have a bucket or old towels?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, eu trago já. E depois, vocês querem café ou água?",
+                  "translation": "Yes, I'll bring them now. And afterwards, do you all want coffee or water?",
+                  "feedback": "Excellent, you offered refreshments using 'vocês'.",
+                  "next": "rp-d43-4"
+                },
+                {
+                  "text": "Sim, tenho. Já trago.",
+                  "translation": "Yes, I have. I'll bring them now.",
+                  "feedback": "Good, but you missed an opportunity to offer a drink.",
+                  "next": "rp-d43-3-alt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d43-3-alt",
+              "npc_text": "Obrigado. Está bem, a gente avisa quando acabar. Vocês precisam de alguma coisa?",
+              "npc_translation": "Thanks. Okay, we'll let you know when we finish. Do you all need anything?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado. Mas, vocês querem café ou água?",
+                  "translation": "No, thanks. But, do you all want coffee or water?",
+                  "feedback": "Good, you remembered to offer a drink.",
+                  "next": "rp-d43-4"
+                },
+                {
+                  "text": "Não, obrigado.",
+                  "translation": "No, thanks.",
+                  "feedback": "You missed an opportunity to offer a drink, which is common hospitality."
+                }
+              ]
+            },
+            {
+              "id": "rp-d43-4",
+              "npc_text": "Ah, muito obrigado! Um café, por favor. Vocês são muito simpáticos!",
+              "npc_translation": "Oh, thank you very much! A coffee, please. You all are very kind!",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Directing a Maintenance Crew",
+          "prep": [
+            "Practice inviting people in: 'Entrem, por favor!'",
+            "Rehearse asking if they need anything: 'Vocês precisam de alguma coisa?'",
+            "Prepare to offer drinks: 'Vocês querem café ou água?'"
+          ],
+          "fallback_phrases": [
+            "Desculpem, podem repetir?",
+            "Não percebi.",
+            "Um momento, por favor."
+          ],
+          "likely_responses": [
+            "Sim, estamos aqui para isso.",
+            "Onde é que é o problema?",
+            "Não, obrigado/a.",
+            "Sim, aceitamos um café."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d43-1",
+            "base": "Vocês querem café?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Vocês querem água?",
+                "translation": "Do you all want water?",
+                "register": "neutral"
+              },
+              {
+                "text": "Vocês querem um sumo?",
+                "translation": "Do you all want a juice?",
+                "register": "neutral"
+              },
+              {
+                "text": "Vocês querem uma poncha?",
+                "translation": "Do you all want a poncha?",
+                "register": "informal",
+                "note": "A typical Madeiran drink."
+              }
+            ]
+          },
+          {
+            "id": "pp-d43-3",
+            "base": "Vocês gostaram?",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Vocês viram tudo?",
+                "translation": "Did you all see everything?",
+                "register": "neutral"
+              },
+              {
+                "text": "Vocês perceberam as instruções?",
+                "translation": "Did you all understand the instructions?",
+                "register": "neutral"
+              },
+              {
+                "text": "Vocês divertiram-se?",
+                "translation": "Did you all have fun?",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Offering Refreshments",
+            "body": "In Madeira, and Portugal generally, it's very common and polite to offer visitors, especially service people like plumbers or delivery staff, a coffee, water, or juice. It's a small gesture of hospitality that is much appreciated."
+          },
+          {
+            "title": "Addressing Groups with 'Vocês'",
+            "body": "While 'vocês' is grammatically the plural 'you,' its social register can vary. When addressing a group of service providers, it's neutral and appropriate. If you were addressing a group of close friends, it would be informal. Be mindful of context, but for service interactions, it's perfectly fine."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d43-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Vocês querem café?\"",
+            "answer": "Vocês querem café?",
+            "source_ref": "pp-d43-1"
+          },
+          {
+            "id": "rv-d43-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Sentem-se, por favor!\"",
+            "answer": "Sentem-se, por favor!",
+            "source_ref": "pp-d43-2"
+          },
+          {
+            "id": "rv-d43-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Vocês gostaram?\"",
+            "answer": "Vocês gostaram?",
+            "source_ref": "pp-d43-3"
+          },
+          {
+            "id": "rv-d43-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: you all are",
+            "answer": "são",
+            "source_ref": "são"
+          },
+          {
+            "id": "rv-d43-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: you all are (temp)",
+            "answer": "estão",
+            "source_ref": "estão"
+          },
+          {
+            "id": "rv-d43-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: you all have",
+            "answer": "têm",
+            "source_ref": "têm"
+          },
+          {
+            "id": "rv-d43-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: you all go",
+            "answer": "vão",
+            "source_ref": "vão"
+          },
+          {
+            "id": "rv-d43-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d43-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d44-future-subjunctive",
+      "title": "Future Subjunctive",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 8,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d44-1",
+            "title": "Scheduling a cleaner",
+            "context": "A homeowner calling a cleaning service to arrange a future visit.",
+            "lines": [
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Boa tarde, Serviço de Limpezas. Em que posso ajudar?",
+                "translation": "Good afternoon, Cleaning Service. How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Boa tarde. Gostaria de agendar uma limpeza. Quando a senhora tiver disponibilidade, pode vir na próxima semana?",
+                "translation": "Good afternoon. I'd like to schedule a cleaning. When you (formal) have availability, can you come next week?"
+              },
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Claro. Assim que tivermos a agenda da semana, avisamos. Quando o senhor for à Madeira, podemos combinar.",
+                "translation": "Of course. As soon as we have the week's schedule, we'll let you know. When you (formal) come to Madeira, we can arrange it."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Pois, obrigada. Assim que souber, diga, por favor.",
+                "translation": "Right, thank you. As soon as you know, please tell me."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d44-2",
+            "title": "Friends planning a visit",
+            "context": "Two friends discussing plans for when one visits the other in Madeira.",
+            "lines": [
+              {
+                "speaker": "Amigo 1",
+                "voice_type": "local",
+                "text": "Então, quando vieres à Madeira, o que queres fazer?",
+                "translation": "So, when you come to Madeira, what do you want to do?"
+              },
+              {
+                "speaker": "Amigo 2",
+                "voice_type": "younger",
+                "text": "Ah, não sei! Assim que chegar, quero ir à praia. E se pudermos, uma levada!",
+                "translation": "Oh, I don't know! As soon as I arrive, I want to go to the beach. And if we can, a levada!"
+              },
+              {
+                "speaker": "Amigo 1",
+                "voice_type": "local",
+                "text": "Pois, claro! Quando fores à praia, diz-me. Eu vou contigo. E quando tiveres tempo, vamos à levada.",
+                "translation": "Right, of course! When you go to the beach, tell me. I'll go with you. And when you have time, we'll go to the levada."
+              },
+              {
+                "speaker": "Amigo 2",
+                "voice_type": "younger",
+                "text": "Combinado! Assim que o meu voo for confirmado, aviso-te.",
+                "translation": "Deal! As soon as my flight is confirmed, I'll let you know."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a plumber to fix a leaky tap in your apartment. You need to arrange a time for them to come.",
+          "difficulty": 2,
+          "entry_node": "rp-d44-start",
+          "nodes": [
+            {
+              "id": "rp-d44-start",
+              "npc_text": "Boa tarde, Canalizações Rápidas. Em que posso ajudar?",
+              "npc_translation": "Good afternoon, Quick Plumbing. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Tenho uma torneira a pingar. Gostaria de agendar uma visita.",
+                  "translation": "Good afternoon. I have a dripping tap. I'd like to schedule a visit.",
+                  "feedback": "Good start, clear and polite.",
+                  "next": "rp-d44-time"
+                },
+                {
+                  "text": "Olá. A minha torneira tá estragada. Podem vir?",
+                  "translation": "Hi. My tap is broken. Can you come?",
+                  "feedback": "A bit informal, but understandable. Try to be a bit more polite for a service call.",
+                  "next": "rp-d44-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-d44-time",
+              "npc_text": "Pois, claro. Qual é a sua morada? E quando o senhor tiver um tempinho, qual seria a melhor hora para a visita?",
+              "npc_translation": "Right, of course. What's your address? And when you (formal) have a little time, what would be the best time for the visit?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "A morada é Rua da Calçada, número 10. Se puderem vir amanhã de manhã, era ótimo.",
+                  "translation": "The address is Rua da Calçada, number 10. If you can come tomorrow morning, that would be great.",
+                  "feedback": "Excellent, clear and uses 'se puderem'.",
+                  "next": "rp-d44-confirm"
+                },
+                {
+                  "text": "Moro na Rua da Calçada, 10. Amanhã de manhã, se der.",
+                  "translation": "I live on Rua da Calçada, 10. Tomorrow morning, if it works.",
+                  "feedback": "A bit abrupt, but they understood. 'Se der' is a common informal reduction of 'se der jeito' (if it's convenient).",
+                  "next": "rp-d44-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-d44-confirm",
+              "npc_text": "Amanhã de manhã, então. Assim que o canalizador estiver a caminho, ligamos-lhe para avisar.",
+              "npc_translation": "Tomorrow morning, then. As soon as the plumber is on the way, we'll call you to let you know.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigada! Fico à espera.",
+                  "translation": "Thank you very much! I'll be waiting.",
+                  "feedback": "Perfect ending, polite and natural."
+                },
+                {
+                  "text": "Ok, obrigada.",
+                  "translation": "Okay, thanks.",
+                  "feedback": "Simple and effective ending."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Arrange a delivery",
+          "prep": [
+            "Imagine you've ordered some furniture. You need to call the shop to arrange delivery.",
+            "Think about what day and time you prefer for delivery.",
+            "Practice asking 'Quando puderem entregar?' (When can you deliver?) or 'Se tiverem disponibilidade...' (If you have availability...)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Qual é a sua morada?",
+            "Quando é que o senhor está em casa?",
+            "Podemos entregar na próxima semana."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d44-1",
+            "base": "Quando vier a Madeira...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Quando fores ao Funchal, diz-me.",
+                "translation": "When you go to Funchal, tell me.",
+                "register": "informal"
+              },
+              {
+                "text": "Quando a senhora vier, podemos falar.",
+                "translation": "When you (formal) come, we can talk.",
+                "register": "formal"
+              },
+              {
+                "text": "Quando viermos a Portugal, ligamos.",
+                "translation": "When we come to Portugal, we'll call.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d44-2",
+            "base": "Se puderes...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Se puderes, liga-me mais tarde.",
+                "translation": "If you can, call me later.",
+                "register": "informal"
+              },
+              {
+                "text": "Se a senhora tiver um minuto, agradeço.",
+                "translation": "If you (formal) have a minute, I'd appreciate it.",
+                "register": "formal"
+              },
+              {
+                "text": "Se tivermos tempo, vamos à praia.",
+                "translation": "If we have time, we'll go to the beach.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d44-3",
+            "base": "Assim que chegares...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Assim que chegares, liga-me, sim?",
+                "translation": "As soon as you arrive, call me, okay?",
+                "register": "informal"
+              },
+              {
+                "text": "Assim que o senhor chegar, podemos começar.",
+                "translation": "As soon as you (formal) arrive, we can start.",
+                "register": "formal"
+              },
+              {
+                "text": "Assim que chegarmos a casa, comemos.",
+                "translation": "As soon as we get home, we eat.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness with 'o senhor' / 'a senhora'",
+            "body": "In Portugal, especially in service interactions or with people you don't know well, it's common and polite to use 'o senhor' (you, masculine formal) or 'a senhora' (you, feminine formal) instead of 'tu' (you, informal). This shows respect and avoids being overly familiar. It's often paired with the third person singular verb form."
+          },
+          {
+            "title": "Using 'Pois' / 'Pois é'",
+            "body": "'Pois' and 'Pois é' are very common interjections in Portuguese. They don't always translate directly but often mean 'Right', 'Indeed', 'Exactly', or simply acknowledge what the other person said, showing you're listening and agreeing or understanding. It's a natural part of conversation."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d44-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Quando vier a Madeira...\"",
+            "answer": "Quando vier a Madeira...",
+            "source_ref": "pp-d44-1"
+          },
+          {
+            "id": "rv-d44-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Se puderes...\"",
+            "answer": "Se puderes...",
+            "source_ref": "pp-d44-2"
+          },
+          {
+            "id": "rv-d44-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Assim que chegares...\"",
+            "answer": "Assim que chegares...",
+            "source_ref": "pp-d44-3"
+          },
+          {
+            "id": "rv-d44-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: come (fut subj)",
+            "answer": "vier",
+            "source_ref": "vier"
+          },
+          {
+            "id": "rv-d44-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: have (fut subj)",
+            "answer": "tiver",
+            "source_ref": "tiver"
+          },
+          {
+            "id": "rv-d44-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: can (fut subj)",
+            "answer": "puder",
+            "source_ref": "puder"
+          },
+          {
+            "id": "rv-d44-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: be/go (fut subj)",
+            "answer": "for",
+            "source_ref": "for"
+          },
+          {
+            "id": "rv-d44-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d44-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d45-the-personal-infinitive",
+      "title": "The Personal Infinitive",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 18,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d45-1",
+            "title": "Arranging a Cleaner",
+            "context": "A homeowner calls a cleaning service to arrange a visit.",
+            "lines": [
+              {
+                "speaker": "Homeowner",
+                "voice_type": "phone",
+                "text": "Boa tarde. Para a senhora vir limpar, quando é que é melhor?",
+                "translation": "Good afternoon. For you to come clean, when is it best?"
+              },
+              {
+                "speaker": "Cleaner",
+                "voice_type": "service",
+                "text": "Boa tarde. Para eu vir, a terça-feira de manhã é bom.",
+                "translation": "Good afternoon. For me to come, Tuesday morning is good."
+              },
+              {
+                "speaker": "Homeowner",
+                "voice_type": "phone",
+                "text": "Pois, e para nós falarmos sobre o trabalho?",
+                "translation": "Right, and for us to talk about the work?"
+              },
+              {
+                "speaker": "Cleaner",
+                "voice_type": "local",
+                "text": "Para nós falarmos, podemos combinar quando eu chegar.",
+                "translation": "For us to talk, we can arrange it when I arrive."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d45-2",
+            "title": "Confirming a Delivery",
+            "context": "A customer calls a store about a fridge delivery.",
+            "lines": [
+              {
+                "speaker": "Customer",
+                "voice_type": "phone",
+                "text": "Bom dia. Ligo sobre a entrega do frigorífico. Para eles entregarem, qual é o horário?",
+                "translation": "Good morning. I'm calling about the fridge delivery. For them to deliver, what's the schedule?"
+              },
+              {
+                "speaker": "Service Assistant",
+                "voice_type": "service",
+                "text": "Bom dia. Para eles poderem entregar, é entre as duas e as quatro da tarde.",
+                "translation": "Good morning. For them to be able to deliver, it's between two and four in the afternoon."
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "phone",
+                "text": "Pois, antes de eu sair de casa, preciso de ter a certeza.",
+                "translation": "Right, before I leave home, I need to be sure."
+              },
+              {
+                "speaker": "Service Assistant",
+                "voice_type": "local",
+                "text": "P'ra eles virem, tem de estar lá alguém, pois.",
+                "translation": "For them to come, someone has to be there, right."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a plumber to fix a leak in your house. You need to arrange a time for him to visit.",
+          "difficulty": 3,
+          "entry_node": "dlg-plumber-1",
+          "nodes": [
+            {
+              "id": "dlg-plumber-1",
+              "npc_text": "Boa tarde. Diga! Para eu ir ver a fuga, quando é que é melhor para si?",
+              "npc_translation": "Good afternoon. Tell me! For me to go see the leak, when is it best for you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Para o senhor vir, a tarde de amanhã é boa.",
+                  "translation": "For you to come, tomorrow afternoon is good.",
+                  "feedback": "Good, you've suggested a time using the personal infinitive.",
+                  "next": "dlg-plumber-2"
+                },
+                {
+                  "text": "Quando é que é bom para o senhor?",
+                  "translation": "When is it good for you?",
+                  "feedback": "Asking about their availability is also a good option.",
+                  "next": "dlg-plumber-3"
+                }
+              ]
+            },
+            {
+              "id": "dlg-plumber-2",
+              "npc_text": "Amanhã à tarde, pois é bom. Antes de eu ir, pode confirmar a morada?",
+              "npc_translation": "Tomorrow afternoon, that's good. Before I go, can you confirm the address?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, para confirmarmos tudo, a morada é Rua da Paz, número 5.",
+                  "translation": "Yes, for us to confirm everything, the address is Rua da Paz, number 5.",
+                  "feedback": "Excellent, you confirmed the address and used the personal infinitive.",
+                  "next": "dlg-plumber-4"
+                },
+                {
+                  "text": "Para eu confirmar, preciso de um minuto.",
+                  "translation": "For me to confirm, I need a minute.",
+                  "feedback": "It's good to be clear if you need a moment. You used the personal infinitive correctly.",
+                  "next": "dlg-plumber-5"
+                }
+              ]
+            },
+            {
+              "id": "dlg-plumber-3",
+              "npc_text": "Para eu poder ir, tenho a manhã de quinta-feira livre.",
+              "npc_translation": "For me to be able to go, I have Thursday morning free.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Quinta-feira de manhã é bom para mim.",
+                  "translation": "Thursday morning is good for me.",
+                  "feedback": "Great, you agreed to the time. Now confirm the address.",
+                  "next": "dlg-plumber-2"
+                },
+                {
+                  "text": "Para nós falarmos melhor, posso ligar mais tarde?",
+                  "translation": "For us to speak better, can I call later?",
+                  "feedback": "It's fine to defer the call if you need more time to check your schedule.",
+                  "next": "dlg-plumber-end-1"
+                }
+              ]
+            },
+            {
+              "id": "dlg-plumber-4",
+              "npc_text": "P'ra já, muito obrigado. Até amanhã à tarde então.",
+              "npc_translation": "For now, thank you very much. See you tomorrow afternoon then.",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "dlg-plumber-5",
+              "npc_text": "Claro. Para eu não ir para a morada errada, é mesmo importante.",
+              "npc_translation": "Of course. For me not to go to the wrong address, it's really important.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "A morada é Rua da Paz, número 5.",
+                  "translation": "The address is Rua da Paz, number 5.",
+                  "feedback": "Perfect, you've given the address. The appointment is set!",
+                  "next": "dlg-plumber-4"
+                }
+              ]
+            },
+            {
+              "id": "dlg-plumber-end-1",
+              "npc_text": "Está bem, ligue quando puder. Bom dia.",
+              "npc_translation": "Alright, call when you can. Good day.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Arrange a Home Repair",
+          "prep": [
+            "Imagine you have a problem at home (e.g., a leaking tap, a broken washing machine).",
+            "Call a local repair service (e.g., canalizador for plumber, eletricista for electrician).",
+            "Clearly explain the problem.",
+            "Use phrases with the personal infinitive to discuss when it's best for the professional to come, and for you to be at home.",
+            "Confirm the appointment details (date, time, address)."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi, pode falar mais devagar?",
+            "Quando é que é melhor para o senhor/a senhora vir?",
+            "Para mim, é melhor..."
+          ],
+          "likely_responses": [
+            "Para eu ir ver o problema...",
+            "Para o senhor/a senhora estar em casa...",
+            "Para nós combinarmos a hora...",
+            "Antes de eu ir..."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d45-1",
+            "base": "Antes de irmos...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Antes de eu ir...",
+                "translation": "Before I go...",
+                "register": "neutral"
+              },
+              {
+                "text": "Antes de tu ires...",
+                "translation": "Before you (informal) go...",
+                "register": "informal"
+              },
+              {
+                "text": "Antes de ele ir...",
+                "translation": "Before he goes...",
+                "register": "neutral"
+              },
+              {
+                "text": "Antes de nós irmos...",
+                "translation": "Before we go...",
+                "register": "neutral"
+              },
+              {
+                "text": "Antes de vocês irem...",
+                "translation": "Before you (plural) go...",
+                "register": "neutral"
+              },
+              {
+                "text": "Antes de eles irem...",
+                "translation": "Before they go...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d45-2",
+            "base": "Para podermos ir...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Para eu poder ir...",
+                "translation": "For me to be able to go...",
+                "register": "neutral"
+              },
+              {
+                "text": "Para tu poderes ir...",
+                "translation": "For you (informal) to be able to go...",
+                "register": "informal"
+              },
+              {
+                "text": "Para ele poder ir...",
+                "translation": "For him to be able to go...",
+                "register": "neutral"
+              },
+              {
+                "text": "Para nós podermos ir...",
+                "translation": "For us to be able to go...",
+                "register": "neutral"
+              },
+              {
+                "text": "Para vocês poderem ir...",
+                "translation": "For you (plural) to be able to go...",
+                "register": "neutral"
+              },
+              {
+                "text": "Para eles poderem ir...",
+                "translation": "For them to be able to go...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d45-3",
+            "base": "É importante falarmos.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "É importante eu falar.",
+                "translation": "It's important for me to speak.",
+                "register": "neutral"
+              },
+              {
+                "text": "É importante tu falares.",
+                "translation": "It's important for you (informal) to speak.",
+                "register": "informal"
+              },
+              {
+                "text": "É importante ele falar.",
+                "translation": "It's important for him to speak.",
+                "register": "neutral"
+              },
+              {
+                "text": "É importante nós falarmos.",
+                "translation": "It's important for us to speak.",
+                "register": "neutral"
+              },
+              {
+                "text": "É importante vocês falarem.",
+                "translation": "It's important for you (plural) to speak.",
+                "register": "neutral"
+              },
+              {
+                "text": "É importante eles falarem.",
+                "translation": "It's important for them to speak.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Service Requests",
+            "body": "When arranging services in Portugal, using the personal infinitive construction like 'Para o senhor vir...' (For you to come...) is a polite and common way to make a request or inquire about availability. It frames the action as a condition or purpose, which softens the request compared to a more direct 'Quando pode vir?' (When can you come?). This indirectness is often preferred in formal or service interactions."
+          },
+          {
+            "title": "Addressing Service Professionals",
+            "body": "In Portugal, it is customary and polite to address service professionals (plumbers, cleaners, delivery drivers, shop assistants) using 'o senhor' (the sir) or 'a senhora' (the madam) with the third-person verb form. This shows respect for their professional role and is generally preferred over using 'tu' (you, informal) or 'você' (you, which can sound distant in Portugal)."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d45-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Antes de irmos...\"",
+            "answer": "Antes de irmos...",
+            "source_ref": "pp-d45-1"
+          },
+          {
+            "id": "rv-d45-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Para podermos ir...\"",
+            "answer": "Para podermos ir...",
+            "source_ref": "pp-d45-2"
+          },
+          {
+            "id": "rv-d45-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"É importante falarmos.\"",
+            "answer": "É importante falarmos.",
+            "source_ref": "pp-d45-3"
+          },
+          {
+            "id": "rv-d45-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: for us to go",
+            "answer": "irmos",
+            "source_ref": "irmos"
+          },
+          {
+            "id": "rv-d45-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: for us to speak",
+            "answer": "falarmos",
+            "source_ref": "falarmos"
+          },
+          {
+            "id": "rv-d45-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: for us to eat",
+            "answer": "comermos",
+            "source_ref": "comermos"
+          },
+          {
+            "id": "rv-d45-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d45-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d46-abstract-topics-work-decisions",
+      "title": "Abstract Topics: Work & Decisions",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d46-1",
+            "title": "Career Changes and Burnout",
+            "context": "Two friends, Ana and Carlos, are having coffee and discussing Carlos's new work situation.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "teacher",
+                "text": "Então, Carlos, como é que vai o teu negócio novo?",
+                "translation": "So, Carlos, how is your new business going?"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "Pois, Ana, tá a correr bem, mas dá trabalho. Decidi mudar de vida, não é?",
+                "translation": "Well, Ana, it's going well, but it's a lot of work. I decided to change my life, didn't I?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "teacher",
+                "text": "E não te arrependes de ter deixado o teletrabalho?",
+                "translation": "And you don't regret leaving remote work?"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "Não me arrependo nada. O esgotamento era demais. Agora trabalho por conta própria e tenho mais liberdade.",
+                "translation": "I don't regret it at all. The burnout was too much. Now I work for myself and have more freedom."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d46-2",
+            "title": "The Decision to Work Independently",
+            "context": "Sofia and Miguel, colleagues, are talking during lunch about Miguel's decision to work for himself.",
+            "lines": [
+              {
+                "speaker": "Sofia",
+                "voice_type": "service",
+                "text": "Diz-me, Miguel, como é que decidiste trabalhar por conta própria?",
+                "translation": "Tell me, Miguel, how did you decide to work for yourself?"
+              },
+              {
+                "speaker": "Miguel",
+                "voice_type": "younger",
+                "text": "Foi depois de um período de esgotamento. Precisava de algo diferente.",
+                "translation": "It was after a period of burnout. I needed something different."
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "service",
+                "text": "E não te arrependes dessa decisão?",
+                "translation": "And you don't regret that decision?"
+              },
+              {
+                "speaker": "Miguel",
+                "voice_type": "younger",
+                "text": "Não, de todo. É mais difícil às vezes, mas tenho mais controlo. Foi a melhor decisão.",
+                "translation": "No, not at all. It's harder sometimes, but I have more control. It was the best decision."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are talking to your friend Joana about your work. She knows you recently made a big change and is asking about it.",
+          "difficulty": 2,
+          "entry_node": "rp-d46-start",
+          "nodes": [
+            {
+              "id": "rp-d46-start",
+              "npc_text": "Olá! Então, como é que está a correr o teu novo trabalho? Ou o teu negócio?",
+              "npc_translation": "Hi! So, how's your new job going? Or your business?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Decidi mudar de vida e agora trabalho por conta própria.",
+                  "translation": "I decided to change my life and now I work for myself.",
+                  "feedback": "Great, you clearly stated your decision and new work status.",
+                  "next": "rp-d46-ask_why"
+                },
+                {
+                  "text": "Está a correr bem, obrigado. É um desafio.",
+                  "translation": "It's going well, thanks. It's a challenge.",
+                  "feedback": "You answered politely, but didn't give much detail. Joana will ask more.",
+                  "next": "rp-d46-ask_why_v2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d46-ask_why",
+              "npc_text": "Ah, que bom! E porquê essa mudança? Não estavas feliz no teletrabalho?",
+              "npc_translation": "Oh, that's good! And why the change? Weren't you happy with remote work?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não, o teletrabalho causava-me muito esgotamento.",
+                  "translation": "No, remote work caused me a lot of burnout.",
+                  "feedback": "You explained the reason clearly, using the vocabulary 'esgotamento'.",
+                  "next": "rp-d46-ask_regret"
+                },
+                {
+                  "text": "Queria mais liberdade e um negócio meu.",
+                  "translation": "I wanted more freedom and a business of my own.",
+                  "feedback": "Good, you stated your motivation for the change.",
+                  "next": "rp-d46-ask_regret"
+                }
+              ]
+            },
+            {
+              "id": "rp-d46-ask_why_v2",
+              "npc_text": "Um desafio, pois é. Mas o que te fez decidir mudar de vida e deixar o que fazias antes?",
+              "npc_translation": "A challenge, indeed. But what made you decide to change your life and leave what you were doing before?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Estava com esgotamento e precisava de uma mudança.",
+                  "translation": "I was experiencing burnout and needed a change.",
+                  "feedback": "Direct and clear answer using 'esgotamento'.",
+                  "next": "rp-d46-ask_regret"
+                },
+                {
+                  "text": "Queria começar o meu próprio negócio.",
+                  "translation": "I wanted to start my own business.",
+                  "feedback": "Good, you explained your goal.",
+                  "next": "rp-d46-ask_regret"
+                }
+              ]
+            },
+            {
+              "id": "rp-d46-ask_regret",
+              "npc_text": "Percebo. E não te arrependes de ter tomado essa decisão?",
+              "npc_translation": "I understand. And you don't regret having made that decision?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não, não me arrependo nada. Foi a melhor coisa.",
+                  "translation": "No, I don't regret it at all. It was the best thing.",
+                  "feedback": "Excellent, a strong and positive affirmation.",
+                  "next": "rp-d46-end_positive"
+                },
+                {
+                  "text": "Acho que não me arrependo. É bom ter o meu próprio negócio.",
+                  "translation": "I think I don't regret it. It's good to have my own business.",
+                  "feedback": "A slightly more hesitant but still positive answer. Good.",
+                  "next": "rp-d46-end_neutral"
+                }
+              ]
+            },
+            {
+              "id": "rp-d46-end_positive",
+              "npc_text": "Que bom! Fico feliz por ti. Boa sorte com tudo!",
+              "npc_translation": "That's great! I'm happy for you. Good luck with everything!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d46-end_neutral",
+              "npc_text": "Pois, ter o nosso próprio negócio é sempre bom. Desejo-te o melhor.",
+              "npc_translation": "Well, having our own business is always good. I wish you the best.",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Discussing a Recent Career Change",
+          "prep": [
+            "Think about your reasons for changing jobs or starting a business.",
+            "Prepare to explain if you regret your decision or not.",
+            "Consider how to use phrases like 'trabalho por conta própria' and 'esgotamento'."
+          ],
+          "fallback_phrases": [
+            "Podes repetir, por favor?",
+            "Não percebi bem.",
+            "Podes falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Que coragem!",
+            "É uma boa ideia.",
+            "Fico feliz por ti.",
+            "E não te arrependes?"
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d46-1",
+            "base": "Trabalho por conta própria.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Comecei a trabalhar por conta própria.",
+                "translation": "I started working for myself.",
+                "register": "informal"
+              },
+              {
+                "text": "Sempre trabalhei por conta própria.",
+                "translation": "I always worked for myself.",
+                "register": "neutral"
+              },
+              {
+                "text": "Estou a pensar trabalhar por conta própria.",
+                "translation": "I'm thinking of working for myself.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d46-2",
+            "base": "Decidi mudar de vida.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Preciso decidir mudar de vida.",
+                "translation": "I need to decide to change my life.",
+                "register": "neutral"
+              },
+              {
+                "text": "Estou a pensar mudar de emprego.",
+                "translation": "I'm thinking of changing jobs.",
+                "register": "informal"
+              },
+              {
+                "text": "Quero mudar de vida, mas é difícil.",
+                "translation": "I want to change my life, but it's difficult.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d46-3",
+            "base": "Não me arrependo.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Nunca me arrependi.",
+                "translation": "I never regretted it.",
+                "register": "neutral"
+              },
+              {
+                "text": "Não me arrependo de nada.",
+                "translation": "I don't regret anything.",
+                "register": "informal"
+              },
+              {
+                "text": "Acho que não me arrependo.",
+                "translation": "I think I don't regret it.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Discussing 'Esgotamento' (Burnout)",
+            "body": "In Portugal, 'esgotamento' (burnout) is a recognized and increasingly discussed issue, particularly in urban and professional contexts. It's common to hear people talk about needing a change or a break due to stress, though some may still be reserved about openly discussing mental health. Using the term is generally understood and can be a valid reason for career changes."
+          },
+          {
+            "title": "'Trabalhar por conta própria' vs. 'Ser empregado'",
+            "body": "The distinction between 'trabalhar por conta própria' (working for oneself, self-employed) and 'ser empregado' (being employed by someone else) is very common in Portuguese conversations about work. While traditional employment is still prevalent, there's a growing trend, especially among younger generations, towards entrepreneurship and independent work, often driven by a desire for more flexibility or control, as well as sometimes by economic necessity."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d46-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Trabalho por conta própria.\"",
+            "answer": "Trabalho por conta própria.",
+            "source_ref": "pp-d46-1"
+          },
+          {
+            "id": "rv-d46-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Decidi mudar de vida.\"",
+            "answer": "Decidi mudar de vida.",
+            "source_ref": "pp-d46-2"
+          },
+          {
+            "id": "rv-d46-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Não me arrependo.\"",
+            "answer": "Não me arrependo.",
+            "source_ref": "pp-d46-3"
+          },
+          {
+            "id": "rv-d46-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: remote work",
+            "answer": "teletrabalho",
+            "source_ref": "teletrabalho"
+          },
+          {
+            "id": "rv-d46-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: business",
+            "answer": "negócio",
+            "source_ref": "negócio"
+          },
+          {
+            "id": "rv-d46-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: burnout",
+            "answer": "esgotamento",
+            "source_ref": "esgotamento"
+          },
+          {
+            "id": "rv-d46-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d46-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d47-formal-writing-funchal",
+      "title": "Formal Writing & Funchal",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d47-1",
+            "title": "Funchal Landmarks",
+            "context": "A tourist asks a local for directions to famous spots in Funchal.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "Bom dia, desculpe. Onde fica a Sé?",
+                "translation": "Good morning, excuse me. Where is the Cathedral?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "A Sé? Pois, é fácil. É mesmo ali, na baixa. Siga em frente.",
+                "translation": "The Cathedral? Right, it's easy. It's right there, downtown. Go straight ahead."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "teacher",
+                "text": "E a zona velha? É perto do teleférico?",
+                "translation": "And the old town? Is it near the cable car?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Sim, a zona velha é junto ao teleférico, mesmo ao lado. Não tem como enganar.",
+                "translation": "Yes, the old town is next to the cable car, right beside it. You can't miss it."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d47-2",
+            "title": "Confirming a Payment by Phone",
+            "context": "A person calls a customer service to confirm a bill payment.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Serviço de Apoio ao Cliente, bom dia. Em que posso ajudar?",
+                "translation": "Customer Support Service, good morning. How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "phone",
+                "text": "Bom dia. Venho por este meio confirmar o pagamento da fatura número dois, três, quatro, cinco.",
+                "translation": "Good morning. I am calling to confirm the payment of invoice number two, three, four, five."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Um momento, por favor... Sim, está tudo em ordem. O pagamento foi registado.",
+                "translation": "One moment, please... Yes, everything is in order. The payment has been registered."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "phone",
+                "text": "Agradecia se pudesse enviar um comprovativo por email.",
+                "translation": "I would be grateful if you could send a proof by email."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois, claro. Qual é o seu endereço de email, por favor?",
+                "translation": "Yes, of course. What is your email address, please?"
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling the Funchal Municipal Services to report a broken street light in your neighbourhood. You need to make a formal request and provide details.",
+          "difficulty": 3,
+          "entry_node": "rp-d47-start",
+          "nodes": [
+            {
+              "id": "rp-d47-start",
+              "npc_text": "Serviços Municipais do Funchal, bom dia. Em que posso ajudar?",
+              "npc_translation": "Funchal Municipal Services, good morning. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Venho por este meio reportar uma avaria na iluminação pública.",
+                  "translation": "Good morning. I am calling to report a fault in the public lighting.",
+                  "feedback": "Excellent formal opening. Now provide more details about the problem.",
+                  "next": "rp-d47-details"
+                },
+                {
+                  "text": "Olá. A luz da rua está estragada.",
+                  "translation": "Hi. The street light is broken.",
+                  "feedback": "This is too informal for a municipal service. Try to use a more formal opening.",
+                  "next": "rp-d47-start"
+                }
+              ]
+            },
+            {
+              "id": "rp-d47-details",
+              "npc_text": "Certo. E qual é a morada da avaria, por favor?",
+              "npc_translation": "Understood. And what is the address of the fault, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "A avaria é na Rua da Levada, número vinte e cinco. O poste está mesmo em frente à casa.",
+                  "translation": "The fault is on Rua da Levada, number twenty-five. The pole is right in front of the house.",
+                  "feedback": "Good, you provided the necessary details clearly.",
+                  "next": "rp-d47-confirm"
+                },
+                {
+                  "text": "É numa rua perto da Sé. Não sei o número.",
+                  "translation": "It's on a street near the Cathedral. I don't know the number.",
+                  "feedback": "You need to be more specific. Try to find the exact address or a clear landmark.",
+                  "next": "rp-d47-clarify"
+                }
+              ]
+            },
+            {
+              "id": "rp-d47-clarify",
+              "npc_text": "Pode ser mais preciso, por favor? Precisamos da morada exata para enviar uma equipa.",
+              "npc_translation": "Can you be more precise, please? We need the exact address to send a team.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Desculpe. É na Rua da Levada, número vinte e cinco. O poste está mesmo em frente à casa.",
+                  "translation": "Sorry. It's on Rua da Levada, number twenty-five. The pole is right in front of the house.",
+                  "feedback": "Much better! Providing a precise address is crucial.",
+                  "next": "rp-d47-confirm"
+                },
+                {
+                  "text": "Não consigo. Vou ligar mais tarde.",
+                  "translation": "I can't. I'll call later.",
+                  "feedback": "It's okay to end the call if you don't have the information, but try to be polite."
+                }
+              ]
+            },
+            {
+              "id": "rp-d47-confirm",
+              "npc_text": "Muito bem. Registámos o seu pedido. Uma equipa irá verificar a situação o mais breve possível. Agradecemos o seu contacto.",
+              "npc_translation": "Very good. We have registered your request. A team will check the situation as soon as possible. We thank you for your contact.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Agradecia se pudesse enviar uma notificação quando estiver resolvido.",
+                  "translation": "I would be grateful if you could send a notification when it's resolved.",
+                  "feedback": "A good, polite follow-up request. Now conclude the call.",
+                  "next": "rp-d47-thank"
+                },
+                {
+                  "text": "Obrigado.",
+                  "translation": "Thank you.",
+                  "feedback": "A simple 'thank you' is fine, but you could add a formal closing.",
+                  "next": "rp-d47-thank"
+                }
+              ]
+            },
+            {
+              "id": "rp-d47-thank",
+              "npc_text": "De nada. Tenha um bom dia.",
+              "npc_translation": "You're welcome. Have a good day.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado. Com os melhores cumprimentos, tenha um bom dia.",
+                  "translation": "Thank you very much. With best regards, have a good day.",
+                  "feedback": "A perfect, polite closing for a formal call."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Report a Public Service Issue Formally",
+          "prep": [
+            "Practice using 'Venho por este meio...' to state your purpose clearly.",
+            "Prepare to give specific details like an address or location.",
+            "Rehearse formal phrases like 'Agradecia se pudesse...' for requests.",
+            "Practice polite greetings and closings for a phone call."
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode repetir, por favor?",
+            "Não percebi bem. Pode falar mais devagar?",
+            "Pode soletrar, por favor?",
+            "Qual é o seu nome, por favor?"
+          ],
+          "likely_responses": [
+            "Serviços Municipais, diga!",
+            "Em que zona da cidade é?",
+            "Qual é a morada exata?",
+            "Vamos tratar disso.",
+            "Agradecemos o seu contacto."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d47-1",
+            "base": "Venho por este meio...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Venho por este meio informar que a fatura foi paga.",
+                "translation": "I am writing to inform you that the invoice has been paid.",
+                "register": "neutral"
+              },
+              {
+                "text": "Venho por este meio solicitar a sua intervenção.",
+                "translation": "I am writing to request your intervention.",
+                "register": "formal"
+              },
+              {
+                "text": "Venho por este meio agradecer a sua pronta resposta.",
+                "translation": "I am writing to thank you for your prompt reply.",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-d47-2",
+            "base": "Agradecia se pudesse...",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Agradecia se pudesse enviar o comprovativo.",
+                "translation": "I would be grateful if you could send the proof.",
+                "register": "neutral"
+              },
+              {
+                "text": "Agradecia se pudesse verificar o meu pedido.",
+                "translation": "I would be grateful if you could check my request.",
+                "register": "formal"
+              },
+              {
+                "text": "Agradecia se pudesse contactar-me amanhã.",
+                "translation": "I would be grateful if you could contact me tomorrow.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d47-3",
+            "base": "Com os melhores cumprimentos,",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Com os melhores cumprimentos,",
+                "translation": "With best regards,",
+                "register": "formal"
+              },
+              {
+                "text": "Atenciosamente,",
+                "translation": "Sincerely,",
+                "register": "formal",
+                "note": "A very common formal closing in Portugal."
+              },
+              {
+                "text": "Melhores cumprimentos,",
+                "translation": "Best regards,",
+                "register": "neutral",
+                "note": "Slightly less formal but still polite."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Formalidade no Telefone em Portugal",
+            "body": "When calling official services or businesses in Portugal, it's common to maintain a formal tone. Always start with a 'Bom dia' or 'Boa tarde', and use 'o senhor' / 'a senhora' even if you don't know the person. Avoid overly casual language. Formal closings like 'Com os melhores cumprimentos' or 'Atenciosamente' are also appropriate, even on the phone, before saying 'Tenha um bom dia'."
+          },
+          {
+            "title": "Estrutura de um Pedido Formal",
+            "body": "A formal request often follows a clear structure: 1. State the purpose directly using phrases like 'Venho por este meio informar que...' or 'Venho por este meio solicitar...'. 2. Provide all necessary details clearly and concisely. 3. Make any specific requests using 'Agradecia se pudesse...'. 4. Conclude with a polite thank you and a formal closing."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d47-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Venho por este meio...\"",
+            "answer": "Venho por este meio...",
+            "source_ref": "pp-d47-1"
+          },
+          {
+            "id": "rv-d47-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Agradecia se pudesse...\"",
+            "answer": "Agradecia se pudesse...",
+            "source_ref": "pp-d47-2"
+          },
+          {
+            "id": "rv-d47-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Com os melhores cumprimentos,\"",
+            "answer": "Com os melhores cumprimentos,",
+            "source_ref": "pp-d47-3"
+          },
+          {
+            "id": "rv-d47-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Cathedral district",
+            "answer": "Sé",
+            "source_ref": "Sé"
+          },
+          {
+            "id": "rv-d47-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: old town",
+            "answer": "zona velha",
+            "source_ref": "zona velha"
+          },
+          {
+            "id": "rv-d47-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: cable car",
+            "answer": "teleférico",
+            "source_ref": "teleférico"
+          },
+          {
+            "id": "rv-d47-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d47-1"
+          }
+        ],
+        "media": []
+      }
+    },
+    {
+      "id": "sit-d48-local-beaches-hiking",
+      "title": "Local Beaches & Hiking",
+      "level": 2,
+      "cefr": "A2",
+      "added": {
+        "dialogues": 2,
+        "roleplay": 1,
+        "mission": 1,
+        "pattern_slots": 0,
+        "pattern_variants": 9,
+        "extra_cultural_notes": 2,
+        "review_items": 7,
+        "media_video": 0
+      },
+      "generated": {
+        "dialogues": [
+          {
+            "id": "dlg-d48-1",
+            "title": "Beach Recommendations",
+            "context": "A tourist asks a local for beach recommendations in Madeira.",
+            "lines": [
+              {
+                "speaker": "Turista",
+                "voice_type": "younger",
+                "text": "Olá! Queria ir à praia. Qual recomendas?",
+                "translation": "Hello! I wanted to go to the beach. Which one do you recommend?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Pois, para praia de areia, recomendo Calheta. É muito boa.",
+                "translation": "Well, for a sand beach, I recommend Calheta. It's very good."
+              },
+              {
+                "speaker": "Turista",
+                "voice_type": "younger",
+                "text": "E para praia de seixo? Há alguma boa?",
+                "translation": "And for a pebble beach? Is there a good one?"
+              },
+              {
+                "speaker": "Local",
+                "voice_type": "local",
+                "text": "Sim, a Formosa, perto do Funchal. Ou a do Seixal, no norte.",
+                "translation": "Yes, Formosa, near Funchal. Or Seixal's, in the north."
+              }
+            ]
+          },
+          {
+            "id": "dlg-d48-2",
+            "title": "Hiking Preparations",
+            "context": "Two friends are planning a hike on a levada.",
+            "lines": [
+              {
+                "speaker": "Amigo 1",
+                "voice_type": "local",
+                "text": "Então, vamos fazer aquele trilho da Levada do Alecrim amanhã?",
+                "translation": "So, are we doing that Levada do Alecrim trail tomorrow?"
+              },
+              {
+                "speaker": "Amigo 2",
+                "voice_type": "local",
+                "text": "Pois, sim! Mas leva sempre capa de chuva, o tempo muda rápido na serra.",
+                "translation": "Yes, sure! But always bring a rain jacket, the weather changes fast in the mountains."
+              },
+              {
+                "speaker": "Amigo 1",
+                "voice_type": "local",
+                "text": "Ah, boa ideia! E os ténis de caminhada, claro.",
+                "translation": "Ah, good idea! And hiking shoes, of course."
+              },
+              {
+                "speaker": "Amigo 2",
+                "voice_type": "local",
+                "text": "Isso mesmo! E água. Vamos ver uma cascata bonita lá.",
+                "translation": "That's right! And water. We're going to see a beautiful waterfall there."
+              }
+            ]
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local information desk asking about a good hiking trail.",
+          "difficulty": 3,
+          "entry_node": "rp-d48-start",
+          "nodes": [
+            {
+              "id": "rp-d48-start",
+              "npc_text": "Olá! Posso ajudar?",
+              "npc_translation": "Hello! Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, queria saber de um bom trilho.",
+                  "translation": "Yes, I wanted to know about a good trail.",
+                  "feedback": "Good opening! You clearly state your need.",
+                  "next": "rp-d48-trilho-rec"
+                },
+                {
+                  "text": "Onde posso encontrar uma praia de areia?",
+                  "translation": "Where can I find a sand beach?",
+                  "feedback": "You asked about a beach, but the scenario is about hiking. Try to stick to the topic.",
+                  "next": "rp-d48-beach-rec"
+                }
+              ]
+            },
+            {
+              "id": "rp-d48-trilho-rec",
+              "npc_text": "Para um trilho fácil e bonito, recomendo a Levada do Alecrim. Tem uma cascata no fim. É para amanhã?",
+              "npc_translation": "For an easy and beautiful trail, I recommend Levada do Alecrim. It has a waterfall at the end. Is it for tomorrow?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, é para amanhã. O que devo levar?",
+                  "translation": "Yes, it's for tomorrow. What should I bring?",
+                  "feedback": "Excellent, you confirmed and asked for important details.",
+                  "next": "rp-d48-gear"
+                },
+                {
+                  "text": "Não, talvez noutro dia. Há mais cascatas?",
+                  "translation": "No, maybe another day. Are there more waterfalls?",
+                  "feedback": "You changed the plan but still asked a relevant question.",
+                  "next": "rp-d48-other-cascatas"
+                }
+              ]
+            },
+            {
+              "id": "rp-d48-beach-rec",
+              "npc_text": "Para praia de areia, recomendo Calheta. É muito popular. Quer saber mais sobre trilhos?",
+              "npc_translation": "For a sand beach, I recommend Calheta. It's very popular. Do you want to know more about trails?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor. Queria mesmo um trilho.",
+                  "translation": "Yes, please. I really wanted a trail.",
+                  "feedback": "Good recovery, you redirected to the scenario's topic.",
+                  "next": "rp-d48-trilho-rec"
+                }
+              ]
+            },
+            {
+              "id": "rp-d48-gear",
+              "npc_text": "Leva sempre capa de chuva e ténis de caminhada. E água, claro. O tempo pode mudar rápido na serra.",
+              "npc_translation": "Always bring a rain jacket and hiking shoes. And water, of course. The weather can change quickly in the mountains.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois é, obrigado pelas dicas!",
+                  "translation": "That's right, thanks for the tips!",
+                  "feedback": "You acknowledged the advice and thanked them. Good ending."
+                },
+                {
+                  "text": "Está bem. E onde fica o início do trilho?",
+                  "translation": "Okay. And where is the start of the trail?",
+                  "feedback": "You asked for more practical information. Very good!",
+                  "next": "rp-d48-location"
+                }
+              ]
+            },
+            {
+              "id": "rp-d48-other-cascatas",
+              "npc_text": "Sim, há muitas. A do Risco é famosa, mas o trilho é um bocado mais longo. Para ver muitas cascatas, o melhor é ir no inverno ou primavera.",
+              "npc_translation": "Yes, there are many. Risco's is famous, but the trail is a bit longer. To see many waterfalls, it's best to go in winter or spring.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado pela informação!",
+                  "translation": "Thanks for the information!",
+                  "feedback": "You thanked the person. Good ending."
+                }
+              ]
+            },
+            {
+              "id": "rp-d48-location",
+              "npc_text": "O início é na Rabaçal, no concelho da Calheta. Precisa de autocarro ou vai de carro?",
+              "npc_translation": "The start is in Rabaçal, in the municipality of Calheta. Do you need a bus or are you going by car?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Vou de carro. Obrigado!",
+                  "translation": "I'm going by car. Thank you!",
+                  "feedback": "You provided the information and thanked them. Good ending."
+                },
+                {
+                  "text": "Preciso de autocarro, por favor.",
+                  "translation": "I need a bus, please.",
+                  "feedback": "You asked for more details, which is practical. Good ending."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Plan a Madeiran Hike",
+          "prep": [
+            "Ask a local for a good hiking trail.",
+            "Ask what kind of gear you should bring.",
+            "Ask about the best time of year to see waterfalls."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir?",
+            "Pode falar mais devagar, por favor?",
+            "Como se diz...?"
+          ],
+          "likely_responses": [
+            "Claro, recomendo...",
+            "Deve levar...",
+            "O melhor é em..."
+          ]
+        },
+        "phrase_patterns_enriched": [
+          {
+            "id": "pp-d48-1",
+            "base": "Para praia de areia, recomendo Calheta.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Para praia de seixo, recomendo a Formosa.",
+                "translation": "For a pebble beach, I recommend Formosa.",
+                "register": "neutral"
+              },
+              {
+                "text": "Para um bom trilho, recomendo a Levada do Rei.",
+                "translation": "For a good trail, I recommend Levada do Rei.",
+                "register": "neutral",
+                "note": "Reuses 'trilho' vocabulary."
+              },
+              {
+                "text": "Para ver uma cascata, recomendo a do Risco.",
+                "translation": "To see a waterfall, I recommend Risco's.",
+                "register": "neutral",
+                "note": "Reuses 'cascata' vocabulary."
+              }
+            ]
+          },
+          {
+            "id": "pp-d48-2",
+            "base": "Leva sempre capa de chuva.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Leva sempre água, é importante.",
+                "translation": "Always bring water, it's important.",
+                "register": "informal"
+              },
+              {
+                "text": "Não te esqueças dos ténis de caminhada.",
+                "translation": "Don't forget your hiking shoes.",
+                "register": "informal"
+              },
+              {
+                "text": "É bom levar um casaco, pode ficar fresco.",
+                "translation": "It's good to bring a jacket, it can get cool.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-d48-3",
+            "base": "Em maio as flores estão em pleno.",
+            "slots": [],
+            "variants": [
+              {
+                "text": "Em agosto as cascatas estão com mais água.",
+                "translation": "In August the waterfalls have more water.",
+                "register": "neutral"
+              },
+              {
+                "text": "Em junho os trilhos são mais verdes.",
+                "translation": "In June the trails are greener.",
+                "register": "neutral"
+              },
+              {
+                "text": "Em setembro o tempo está ótimo para banhos de sol.",
+                "translation": "In September the weather is great for sunbathing.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Addressing Locals",
+            "body": "In Madeira, as in mainland Portugal, it's common to use 'tu' (informal 'you') with people your age or younger, or in casual settings. For older people, shopkeepers, or officials, use 'o senhor' (the gentleman) or 'a senhora' (the lady) with the third-person verb form for politeness. Avoid 'você' as it can sound distant or even rude in some contexts."
+          },
+          {
+            "title": "Madeiran Weather and Hiking",
+            "body": "The weather in Madeira can be very unpredictable, especially in the mountains (serra). It's common for it to be sunny on the coast and rainy or foggy inland on the same day. Always check the forecast for the specific area you plan to hike and be prepared with appropriate clothing, including a rain jacket, even if the day starts sunny."
+          }
+        ],
+        "review_items": [
+          {
+            "id": "rv-d48-say-1",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Para praia de areia, recomendo Calheta.\"",
+            "answer": "Para praia de areia, recomendo Calheta.",
+            "source_ref": "pp-d48-1"
+          },
+          {
+            "id": "rv-d48-say-2",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Leva sempre capa de chuva.\"",
+            "answer": "Leva sempre capa de chuva.",
+            "source_ref": "pp-d48-2"
+          },
+          {
+            "id": "rv-d48-say-3",
+            "dimension": "say",
+            "prompt": "Say this phrase from memory: \"Em maio as flores estão em pleno.\"",
+            "answer": "Em maio as flores estão em pleno.",
+            "source_ref": "pp-d48-3"
+          },
+          {
+            "id": "rv-d48-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: pebble beach",
+            "answer": "praia de seixo",
+            "source_ref": "praia de seixo"
+          },
+          {
+            "id": "rv-d48-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: waterfall",
+            "answer": "cascata",
+            "source_ref": "cascata"
+          },
+          {
+            "id": "rv-d48-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: trail",
+            "answer": "trilho",
+            "source_ref": "trilho"
+          },
+          {
+            "id": "rv-d48-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-d48-1"
+          }
+        ],
+        "media": []
+      }
+    }
+  ]
+}
