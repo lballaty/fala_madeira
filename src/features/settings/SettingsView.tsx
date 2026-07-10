@@ -19,7 +19,7 @@ import { TTS_PROVIDERS, UserProfile } from '../../types';
 import { ShowToast } from '../../hooks/useToast';
 import { ConfirmModalState } from '../../hooks/useConfirmationModal';
 import { BeforeInstallPromptEvent } from '../../hooks/usePwaInstall';
-import { errorMessage } from '../../lib/logger';
+import { errorMessage, logger, userMessage } from '../../lib/logger';
 import { config } from '../../config';
 import { contentRepository } from '../../content/repository';
 import { Track } from '../../content/schema';
@@ -579,7 +579,14 @@ export const SettingsView = ({
                     handleLogout();
                   })
                   .catch((error: unknown) => {
-                    showToast(errorMessage(error) || "Account deletion failed", "error");
+                    const event = logger.error('ACCOUNT_DELETE_FAILED', 'Account deletion failed', {
+                      category: 'SECURITY',
+                      error,
+                    });
+                    showToast(
+                      userMessage('ACCOUNT_DELETE_FAILED', errorMessage(error) || 'Account deletion failed — please try again or contact support', event.request_id),
+                      'error'
+                    );
                   });
               }
             });

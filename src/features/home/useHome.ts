@@ -311,9 +311,12 @@ export const useHome = ({ supabase, user, profile, pathContext, pathSelection, a
     return () => {
       cancelled = true;
     };
-    // Reconcile when the user or their last_active/streak changes (a completed session updates
-    // last_active, which should re-run the grace check).
-  }, [user, profile]);
+    // Reconcile only when the user or their last_active/streak changes — NOT on every profile
+    // mutation. Depending on the whole `profile` object re-ran this on xp/voice/time updates too,
+    // which (with async best-effort persistence of the reconcile record) opened a rapid-double-
+    // change race that could spend a streak-freeze twice for one missed day.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed to identity/last_active/streak only
+  }, [user, profile?.id, profile?.last_active, profile?.streak]);
 
   return { progress, competencePhrases, reviewDueCount, freeze };
 };
