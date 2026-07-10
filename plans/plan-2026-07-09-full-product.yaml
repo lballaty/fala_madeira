@@ -437,6 +437,13 @@ plan:
       depends_on: [verpex-deploy, vertical-slice-e2e]
       fatal_on_failure: true
 
+    - id: complete-structured-course-content
+      description: "AMENDMENT 2026-07-10 (operator-approved): bring the Structured Course to the canonical ~168-lesson density (CONTENT-ARCHITECTURE §5: 28 course days x 6 months). Gap: M2 +7 (21->28), M3 +21 (7->28), M4/M5/M6 +24 each (4->28) = +100 net-new FULL situations (patterns/vocab/dialogues/roleplay/mission/cultural_notes/review_items; EU-PT enforced; level-locked progression L1->L5, A2->B2 across months; coherent weekly themes). Renumber course.day into canonical month blocks ((m-1)*28+1..m*28) preserving relative order — day numbers are layout metadata, situation ids/progress keys unchanged. ≥1 real oEmbed-verified EU-PT video per week block (24 weeks total). Existing 68 course + 19 track-only situations content-untouched. Pack v1.2.0 -> v1.3.0; publish to DB; regenerate bundled default; review files per batch."
+      command: "agent-task: extend scripts/generate-content.mjs (or scripts/complete-course-content.mjs) — resumable batched generation of the 100 gap situations + day renumbering + weekly video curation; validate; publish; emit review files"
+      validation: node scripts/validate-content.mjs && npm test -- --run
+      depends_on: [author-tracks-and-curriculum]
+      fatal_on_failure: true
+
     - id: docs-sync-and-release
       description: "Sync docs to shipped reality (USER_MANUAL/TEST_MANUAL/PUBLISHING_GUIDE/README, package.json name+version); commit on main + tag v1.0.0 + push."
       command: "agent-task: run /update-docs across docs + README; npm pkg set name/version; then commit path-form on main, tag v1.0.0, push origin main --tags"
