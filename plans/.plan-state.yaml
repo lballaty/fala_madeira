@@ -216,7 +216,9 @@ checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). 
     finished_at: 2026-07-10T12:35:00Z
     notes: "scripts/serve-local.sh + static-server.mjs (zero-dep node http, emulates Verpex: explicit MIME .webmanifest=application/manifest+json + .js=text/javascript, SPA fallback [extensionless->index.html 200, real missing asset->404], sw/index/manifest no-cache + /assets immutable, path-traversal guard). @smoke run vs static server (reuseExistingServer, NOT vite preview): 6 passed exit 0. Curl probes all OK. NO deploy blockers. DEPLOY .htaccess RULES captured for web-deploy-pipeline: RewriteCond !-f/!-d -> index.html; AddType manifest+json .webmanifest + text/javascript .js .mjs; Cache-Control no-cache for sw/registerSW/index/manifest, immutable for /assets; scope = single falamadeira.searchingfool.com dir."
   - id: ios-build
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T13:30:00Z
+    notes: "AUTOMATABLE PORTION DONE (validation test -d ios && npm run build PASS): npm run build + npx cap sync ios (4 plugins incl. @capgo speech-recognition SPM); native web assets synced, NO key material in ios/App/App/public (verified). Orchestrator ADDED the required Info.plist usage strings (NSMicrophoneUsageDescription + NSSpeechRecognitionUsageDescription — app crashes at mic/speech use without them; plutil-validated). OPERATOR (interactive, needs Apple Developer acct): open ios in Xcode (npx cap open ios), set signing team, build/run on device or simulator, archive -> TestFlight. Xcode is installed at /Applications/Xcode.app."
   - id: web-deploy-pipeline
     status: succeeded
     finished_at: 2026-07-10T12:55:00Z

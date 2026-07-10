@@ -47,5 +47,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>FalaMadeira uses the microphone so you can speak Portuguese phrases and get pronunciation feedback.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>FalaMadeira uses speech recognition to check what you say during speaking and roleplay practice.</string>
 </dict>
 </plist>
