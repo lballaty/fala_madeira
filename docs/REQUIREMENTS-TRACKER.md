@@ -89,6 +89,7 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 | P8 | PWA assets + offline caching | pwa-assets, offline-caching | 🔵 |
 
 > Authoritative plan (2026-07-09): `plans/plan-2026-07-09-full-product.yaml` (55 steps) SUPERSEDES the 07-08 plan. Content-model-first, voice-first, cross-platform.
+> Audit findings/defects: see `docs/AUDIT-FIX-TRACKER.md` (verification/reconciliation/drift/standards passes; open items A3/A5/A6 + verify A2/A4).
 
 ## Cross-platform delivery (iOS-first, then Android; minimize recoding)
 | ID | Requirement | Plan step | Status |
