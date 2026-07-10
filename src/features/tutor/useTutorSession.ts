@@ -186,7 +186,7 @@ export const useTutorSession = ({
           last_voice_usage_date: today
         }).eq('id', profile.id).then(({ error }) => {
           if (error) handleSupabaseError(error, 'updateVoiceUsage', 'profiles');
-        });
+        }).catch((err) => handleSupabaseError(err, 'updateVoiceUsage', 'profiles'));
       }
     });
 

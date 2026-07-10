@@ -81,7 +81,7 @@ export const usePractice = ({
       if (supabase && user) {
         supabase.from('profiles').update({ completed_lessons: updatedCompleted }).eq('id', user.id).then(({ error }) => {
           if (error) handleSupabaseError(error, 'updateCompletedLessons', 'profiles');
-        });
+        }).catch((err) => handleSupabaseError(err, 'updateCompletedLessons', 'profiles'));
       }
     }
   };
