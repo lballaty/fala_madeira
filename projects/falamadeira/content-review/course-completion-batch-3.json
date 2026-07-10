@@ -1,0 +1,3155 @@
+{
+  "batch": 3,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:26:04.319Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d65-at-the-hairdresser",
+      "title": "At the Hairdresser / Barber",
+      "month": 3,
+      "day": 65,
+      "week": 10,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d65-at-the-hairdresser",
+        "title": "At the Hairdresser / Barber",
+        "summary": "Booking and sitting through a haircut: saying what you want (curto, aparar, as pontas), small talk in the chair, and paying — classic service-register Portuguese.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d65-at-the-hairdresser-1",
+            "base": "Queria marcar um {tipo_servico}, por favor.",
+            "translation": "I'd like to book a {service}, please.",
+            "slots": [
+              {
+                "name": "tipo_servico",
+                "description": "type of service",
+                "options": [
+                  "corte de cabelo",
+                  "corte e lavagem",
+                  "só uma lavagem",
+                  "só aparar as pontas"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d65-at-the-hairdresser-2",
+            "base": "Pode cortar um {quantidade}?",
+            "translation": "Can you cut a {quantity}?",
+            "slots": [
+              {
+                "name": "quantidade",
+                "description": "amount",
+                "options": [
+                  "pouco",
+                  "bocado",
+                  "pouquinho"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d65-at-the-hairdresser-3",
+            "base": "Só as {parte_cabelo}, por favor.",
+            "translation": "Just the {hair_part}, please.",
+            "slots": [
+              {
+                "name": "parte_cabelo",
+                "description": "part of hair",
+                "options": [
+                  "pontas",
+                  "laterais",
+                  "franja"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d65-at-the-hairdresser-4",
+            "base": "Quanto é?",
+            "translation": "How much is it?"
+          },
+          {
+            "id": "pp-sit-d65-at-the-hairdresser-5",
+            "base": "Está bom assim, obrigado/a.",
+            "translation": "It's good like this, thank you."
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "o cabeleireiro / a cabeleireira",
+            "translation": "hairdresser / barber (male/female)",
+            "pronunciation": "oo kah-beh-ley-REH-roo / ah kah-beh-ley-REH-rah",
+            "register": "neutral",
+            "note": "Can refer to the person or the salon."
+          },
+          {
+            "word": "cortar o cabelo",
+            "translation": "to cut hair",
+            "pronunciation": "kor-TAR oo kah-BEH-loo",
+            "register": "neutral"
+          },
+          {
+            "word": "aparar",
+            "translation": "to trim",
+            "pronunciation": "ah-pah-RAR",
+            "register": "neutral"
+          },
+          {
+            "word": "as pontas",
+            "translation": "the ends (of hair)",
+            "pronunciation": "az PON-tash",
+            "register": "neutral"
+          },
+          {
+            "word": "a franja",
+            "translation": "the fringe / bangs",
+            "pronunciation": "ah FRAN-zha",
+            "register": "neutral"
+          },
+          {
+            "word": "seco / molhado",
+            "translation": "dry / wet",
+            "pronunciation": "SEH-koo / moh-LYAH-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "marcar (uma hora)",
+            "translation": "to book (an appointment)",
+            "pronunciation": "mar-KAR (oo-ma O-ra)",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d65-at-the-hairdresser-1",
+            "title": "Booking a haircut",
+            "context": "The learner calls a hairdresser in Funchal to book an appointment.",
+            "lines": [
+              {
+                "speaker": "Cabeleireira",
+                "voice_type": "service",
+                "text": "Cabeleireiro X, diga!",
+                "translation": "Hairdresser X, speak!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Olá, boa tarde. Queria marcar um corte de cabelo, por favor.",
+                "translation": "Hello, good afternoon. I'd like to book a haircut, please."
+              },
+              {
+                "speaker": "Cabeleireira",
+                "voice_type": "service",
+                "text": "Pois não. Para quando é que queria?",
+                "translation": "Of course. When would you like it for?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Para amanhã de manhã, se for possível.",
+                "translation": "For tomorrow morning, if possible."
+              },
+              {
+                "speaker": "Cabeleireira",
+                "voice_type": "service",
+                "text": "Amanhã de manhã... Tenho uma vaga às dez e meia. Serve?",
+                "translation": "Tomorrow morning... I have an opening at half past ten. Does that work?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, serve perfeitamente. O meu nome é [Nome do Aluno].",
+                "translation": "Yes, that's perfect. My name is [Learner's Name]."
+              },
+              {
+                "speaker": "Cabeleireira",
+                "voice_type": "service",
+                "text": "Muito bem. Então, amanhã às dez e meia. Até já!",
+                "translation": "Very good. So, tomorrow at half past ten. See you soon!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Até amanhã, obrigada!",
+                "translation": "See you tomorrow, thanks!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d65-at-the-hairdresser-2",
+            "title": "Getting a trim",
+            "context": "The learner is in the chair at the hairdresser's in Funchal.",
+            "lines": [
+              {
+                "speaker": "Cabeleireira",
+                "voice_type": "local",
+                "text": "Olá! Então, o que vamos fazer hoje?",
+                "translation": "Hello! So, what are we doing today?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Olá! Queria só aparar as pontas, por favor. E um bocado mais curto atrás.",
+                "translation": "Hello! I'd just like to trim the ends, please. And a bit shorter at the back."
+              },
+              {
+                "speaker": "Cabeleireira",
+                "voice_type": "local",
+                "text": "Pois é, percebo. Quer que lavemos primeiro?",
+                "translation": "Right, I understand. Do you want us to wash it first?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, por favor. Pode lavar.",
+                "translation": "Yes, please. You can wash it."
+              },
+              {
+                "speaker": "Cabeleireira",
+                "voice_type": "local",
+                "text": "Muito bem. Já agora, está a gostar da Madeira?",
+                "translation": "Very good. By the way, are you enjoying Madeira?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, estou a adorar! É muito bonita.",
+                "translation": "Yes, I'm loving it! It's very beautiful."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Small Talk in the Chair",
+            "body": "In Portugal, it's common to engage in light conversation with service providers like hairdressers. Topics often include the weather, local events, or general pleasantries. Avoid overly personal questions. A simple 'Está a gostar da Madeira?' (Are you enjoying Madeira?) is a common ice-breaker for visitors."
+          },
+          {
+            "title": "Addressing Service Professionals",
+            "body": "When addressing a hairdresser or barber, use 'o senhor' or 'a senhora' to be polite, especially when you don't know them. They might switch to 'tu' if they feel the conversation is more relaxed, but it's best to start formally. 'Pois não' is a very common and polite way for a service provider to say 'Of course' or 'How can I help?'."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local hairdresser in Funchal, Madeira. You need to tell the hairdresser what kind of cut you want and respond to their questions.",
+          "difficulty": 2,
+          "entry_node": "rp-d65-start",
+          "nodes": [
+            {
+              "id": "rp-d65-start",
+              "npc_text": "Olá! Bem-vindo/a. O que vai ser hoje?",
+              "npc_translation": "Hello! Welcome. What will it be today?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria só aparar as pontas, por favor.",
+                  "translation": "I'd just like to trim the ends, please.",
+                  "feedback": "Good, clear request. 'Aparar as pontas' is a common phrase.",
+                  "next": "rp-d65-ends"
+                },
+                {
+                  "text": "Queria um corte de cabelo, por favor.",
+                  "translation": "I'd like a haircut, please.",
+                  "feedback": "Correct, but be ready for a follow-up question about the style.",
+                  "next": "rp-d65-cut"
+                }
+              ]
+            },
+            {
+              "id": "rp-d65-ends",
+              "npc_text": "Certo. E quer que corte um bocado mais em cima ou só mesmo as pontas?",
+              "npc_translation": "Right. And do you want me to cut a bit more on top or just the very ends?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Só as pontas, por favor.",
+                  "translation": "Just the ends, please.",
+                  "feedback": "Excellent, clear and concise.",
+                  "next": "rp-d65-wash"
+                },
+                {
+                  "text": "Pode cortar um pouquinho mais em cima também.",
+                  "translation": "You can cut a little bit more on top too.",
+                  "feedback": "Well said! 'Um pouquinho' is a nice way to say 'a little bit'.",
+                  "next": "rp-d65-wash"
+                }
+              ]
+            },
+            {
+              "id": "rp-d65-cut",
+              "npc_text": "Um corte, certo. Tem alguma ideia em mente? Quer mais curto atrás, por exemplo?",
+              "npc_translation": "A cut, right. Do you have any idea in mind? Do you want it shorter at the back, for example?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, um bocado mais curto atrás, por favor.",
+                  "translation": "Yes, a bit shorter at the back, please.",
+                  "feedback": "Perfect! 'Um bocado' is very natural.",
+                  "next": "rp-d65-wash"
+                },
+                {
+                  "text": "Não, não muito curto. Só um corte normal.",
+                  "translation": "No, not too short. Just a normal cut.",
+                  "feedback": "Good, 'não muito curto' is a useful phrase.",
+                  "next": "rp-d65-wash"
+                }
+              ]
+            },
+            {
+              "id": "rp-d65-wash",
+              "npc_text": "Muito bem. Quer lavar primeiro?",
+              "npc_translation": "Very good. Do you want to wash first?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "Simple and polite. Well done.",
+                  "next": "rp-d65-finish"
+                },
+                {
+                  "text": "Não, não é preciso. Está seco.",
+                  "translation": "No, it's not necessary. It's dry.",
+                  "feedback": "Good use of 'não é preciso' and 'seco'.",
+                  "next": "rp-d65-finish"
+                }
+              ]
+            },
+            {
+              "id": "rp-d65-finish",
+              "npc_text": "Pronto, está feito! Gostou?",
+              "npc_translation": "Alright, it's done! Did you like it?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, está muito bom, obrigada/o.",
+                  "translation": "Yes, it's very good, thank you.",
+                  "feedback": "Excellent, polite and appreciative.",
+                  "next": "rp-d65-pay"
+                }
+              ]
+            },
+            {
+              "id": "rp-d65-pay",
+              "npc_text": "Ficou em 15 euros, por favor.",
+              "npc_translation": "It's 15 euros, please.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Aqui tem. Obrigada/o!",
+                  "translation": "Here you go. Thank you!",
+                  "feedback": "Perfect way to end the transaction."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "My New Look",
+          "prep": [
+            "Review phrases for booking an appointment and describing a haircut.",
+            "Practice saying you want 'só aparar as pontas' (just trim the ends) or 'um corte mais curto' (a shorter cut).",
+            "Prepare to answer 'Quer lavar primeiro?' (Do you want to wash first?) and 'Gostou?' (Did you like it?).",
+            "Remember to say 'Obrigado/a' and ask 'Quanto é?' (How much is it?)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "Um bocado mais devagar, por favor."
+          ],
+          "likely_responses": [
+            "O que vai ser hoje?",
+            "Quer que corte mais?",
+            "Gostou?",
+            "Quanto é?"
+          ]
+        },
+        "goals": [
+          "Successfully book a haircut appointment over the phone.",
+          "Clearly communicate desired haircut style (e.g., trim ends, shorter).",
+          "Understand and respond to common questions from a hairdresser.",
+          "Complete the payment transaction politely."
+        ],
+        "course": {
+          "month": 3,
+          "day": 65,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to book a {service}, please.",
+            "answer": "Queria marcar um {tipo_servico}, por favor.",
+            "source_ref": "pp-sit-d65-at-the-hairdresser-1"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you cut a {quantity}?",
+            "answer": "Pode cortar um {quantidade}?",
+            "source_ref": "pp-sit-d65-at-the-hairdresser-2"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Just the {hair_part}, please.",
+            "answer": "Só as {parte_cabelo}, por favor.",
+            "source_ref": "pp-sit-d65-at-the-hairdresser-3"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much is it?",
+            "answer": "Quanto é?",
+            "source_ref": "pp-sit-d65-at-the-hairdresser-4"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: hairdresser / barber (male/female)",
+            "answer": "o cabeleireiro / a cabeleireira",
+            "source_ref": "o cabeleireiro / a cabeleireira"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to cut hair",
+            "answer": "cortar o cabelo",
+            "source_ref": "cortar o cabelo"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to trim",
+            "answer": "aparar",
+            "source_ref": "aparar"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: the ends (of hair)",
+            "answer": "as pontas",
+            "source_ref": "as pontas"
+          },
+          {
+            "id": "rv-sit-d65-at-the-hairdresser-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d65-at-the-hairdresser-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d66-car-mechanic-petrol",
+      "title": "The Car: Mechanic & Petrol Station",
+      "month": 3,
+      "day": 66,
+      "week": 10,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-survival",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d66-car-mechanic-petrol",
+        "title": "The Car: Mechanic & Petrol Station",
+        "summary": "At the petrol station and the mechanic: filling up (atestar), a strange noise, a warning light, leaving the car and understanding when it will be ready and what it costs.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-work"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d66-car-mechanic-petrol-1",
+            "base": "Pode atestar o depósito com {combustível}, por favor?",
+            "translation": "Can you fill up the tank with {fuel}, please?",
+            "slots": [
+              {
+                "name": "combustível",
+                "description": "Type of fuel",
+                "options": [
+                  "gasolina 95",
+                  "gasolina 98",
+                  "gasóleo"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Atestar o depósito, por favor.",
+                "translation": "Fill up the tank, please.",
+                "register": "neutral",
+                "note": "More direct, common at a petrol station."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d66-car-mechanic-petrol-2",
+            "base": "O carro está a fazer um {ruído} estranho.",
+            "translation": "The car is making a {noise} strange.",
+            "slots": [
+              {
+                "name": "ruído",
+                "description": "Type of noise",
+                "options": [
+                  "barulho",
+                  "chiado",
+                  "som"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d66-car-mechanic-petrol-3",
+            "base": "Há uma {luz} de aviso acesa no painel.",
+            "translation": "There is a {light} warning light on the dashboard.",
+            "slots": [
+              {
+                "name": "luz",
+                "description": "Type of light",
+                "options": [
+                  "luz vermelha",
+                  "luz amarela"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d66-car-mechanic-petrol-4",
+            "base": "Quando é que o carro estará {pronto}?",
+            "translation": "When will the car be {ready}?",
+            "slots": [
+              {
+                "name": "pronto",
+                "description": "State of readiness",
+                "options": [
+                  "pronto",
+                  "arranjado"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Quando posso vir buscar o carro?",
+                "translation": "When can I come pick up the car?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d66-car-mechanic-petrol-5",
+            "base": "Quanto vai custar a {reparação}?",
+            "translation": "How much will the {repair} cost?",
+            "slots": [
+              {
+                "name": "reparação",
+                "description": "The repair or fix",
+                "options": [
+                  "reparação",
+                  "o arranjo"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "atestar",
+            "translation": "to fill up (a tank)",
+            "pronunciation": "ah-tesh-TAR",
+            "register": "neutral"
+          },
+          {
+            "word": "depósito",
+            "translation": "fuel tank",
+            "pronunciation": "deh-PO-zee-toh",
+            "register": "neutral"
+          },
+          {
+            "word": "gasóleo",
+            "translation": "diesel",
+            "pronunciation": "gah-ZAW-lee-oh",
+            "register": "neutral",
+            "note": "Common fuel type in Portugal/Madeira"
+          },
+          {
+            "word": "oficina",
+            "translation": "workshop, garage (for car repairs)",
+            "pronunciation": "oh-fee-SEE-nah",
+            "register": "neutral"
+          },
+          {
+            "word": "barulho estranho",
+            "translation": "strange noise",
+            "pronunciation": "bah-ROO-lyoo esh-TRAN-yoo",
+            "register": "neutral"
+          },
+          {
+            "word": "luz de aviso",
+            "translation": "warning light",
+            "pronunciation": "loozh dee ah-VEE-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "arranjar",
+            "translation": "to fix, to repair",
+            "pronunciation": "ah-rran-ZHAR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d66-car-mechanic-petrol-1",
+            "title": "At the Petrol Station",
+            "context": "A customer is at a petrol station in Madeira, asking the attendant to fill up their car.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde! Pode atestar o depósito com gasolina 95, por favor?",
+                "translation": "Good afternoon! Can you fill up the tank with petrol 95, please?"
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Boa tarde! Sim, claro. É para encher tudo?",
+                "translation": "Good afternoon! Yes, of course. Is it to fill completely?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, p'ra já. E pode verificar o óleo, se faz favor?",
+                "translation": "Yes, for now. And can you check the oil, please?"
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Pois, vejo já. Um momento.",
+                "translation": "Okay, I'll check now. One moment."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d66-car-mechanic-petrol-2",
+            "title": "At the Mechanic's",
+            "context": "A customer is at a car workshop, describing a problem to the mechanic.",
+            "lines": [
+              {
+                "speaker": "Mecânico",
+                "voice_type": "service",
+                "text": "Diga! Em que posso ajudar?",
+                "translation": "Yes? How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde. Tenho um problema com o meu carro. Há um barulho estranho quando travo.",
+                "translation": "Good afternoon. I have a problem with my car. There's a strange noise when I brake."
+              },
+              {
+                "speaker": "Mecânico",
+                "voice_type": "older",
+                "text": "Um barulho? E quando é que começou?",
+                "translation": "A noise? And when did it start?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Começou hoje de manhã. E também sinto o pedal um bocado mole.",
+                "translation": "It started this morning. And I also feel the pedal a bit soft."
+              },
+              {
+                "speaker": "Mecânico",
+                "voice_type": "older",
+                "text": "Pois, temos de ver isso. Pode deixar o carro aqui? Ligo-lhe quando soubermos o que é.",
+                "translation": "Right, we need to check that. Can you leave the car here? I'll call you when we know what it is."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Petrol Station Service",
+            "body": "In Portugal and Madeira, it's common for petrol stations to have attendants who will fill up your tank for you. You can simply state the type of fuel and if you want to 'atestar' (fill up) or a specific amount. It's polite to also ask them to check the oil or tyre pressure ('verificar o óleo', 'verificar a pressão dos pneus'). Tipping is not expected but appreciated for extra services."
+          },
+          {
+            "title": "Car Repairs and Communication",
+            "body": "When taking your car to a mechanic (oficina), you'll usually describe the problem and then leave the car. It's common for the mechanic to call you later with a diagnosis and a quote ('orçamento') before proceeding with repairs. Don't be afraid to ask 'Quando estará pronto?' (When will it be ready?) and 'Quanto vai custar?' (How much will it cost?)."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a car workshop in Funchal. Your car has a warning light on, and you need to explain the problem to the mechanic.",
+          "difficulty": 2,
+          "entry_node": "rp-d66-node-1",
+          "nodes": [
+            {
+              "id": "rp-d66-node-1",
+              "npc_text": "Bom dia! Em que posso ajudar?",
+              "npc_translation": "Good morning! How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Tenho uma luz de aviso acesa no carro.",
+                  "translation": "Good morning. I have a warning light on in the car.",
+                  "feedback": "Great start, clearly states the problem.",
+                  "next": "rp-d66-node-2"
+                },
+                {
+                  "text": "O meu carro tem um problema.",
+                  "translation": "My car has a problem.",
+                  "feedback": "A bit vague, but acceptable. The mechanic will ask for more details.",
+                  "next": "rp-d66-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d66-node-2",
+              "npc_text": "Uma luz de aviso? De que cor é a luz e quando é que acendeu?",
+              "npc_translation": "A warning light? What color is the light and when did it come on?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "É uma luz vermelha e acendeu hoje de manhã.",
+                  "translation": "It's a red light and it came on this morning.",
+                  "feedback": "Excellent, provides key details.",
+                  "next": "rp-d66-node-4"
+                },
+                {
+                  "text": "É vermelha e acendeu agora há pouco.",
+                  "translation": "It's red and it just came on.",
+                  "feedback": "Good, 'agora há pouco' is a natural way to say 'just now'.",
+                  "next": "rp-d66-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d66-node-3",
+              "npc_text": "Pois, diga lá qual é o problema.",
+              "npc_translation": "Right, tell me what the problem is.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Tenho uma luz de aviso vermelha acesa no painel.",
+                  "translation": "I have a red warning light on the dashboard.",
+                  "feedback": "Good recovery, now the problem is clear.",
+                  "next": "rp-d66-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d66-node-4",
+              "npc_text": "Certo. Temos de ligar o carro à máquina para ver. Pode deixar o carro aqui? Ligo-lhe mais tarde com o diagnóstico e o orçamento.",
+              "npc_translation": "Understood. We need to connect the car to the machine to check. Can you leave the car here? I'll call you later with the diagnosis and the quote.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Quando é que o carro estará pronto, mais ou menos?",
+                  "translation": "When will the car be ready, more or less?",
+                  "feedback": "Good question, asking about the timeframe.",
+                  "next": "rp-d66-node-5"
+                },
+                {
+                  "text": "E quanto vai custar?",
+                  "translation": "And how much will it cost?",
+                  "feedback": "Direct and important question.",
+                  "next": "rp-d66-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d66-node-5",
+              "npc_text": "Primeiro temos de ver qual é o problema. Ligo-lhe hoje ou amanhã de manhã com tudo. Depois combinamos.",
+              "npc_translation": "First we need to see what the problem is. I'll call you today or tomorrow morning with everything. Then we'll arrange it.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Está bem, obrigado. Fico a aguardar a sua chamada.",
+                  "translation": "Okay, thank you. I'll wait for your call.",
+                  "feedback": "Polite and appropriate closing. Roleplay ends."
+                },
+                {
+                  "text": "Perfeito. Até já.",
+                  "translation": "Perfect. See you later.",
+                  "feedback": "Natural and concise. Roleplay ends."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Resolver o Problema do Carro",
+          "prep": [
+            "Review vocabulary for car parts and problems (luz de aviso, barulho, pneu).",
+            "Practice asking to fill up the tank and specifying fuel type.",
+            "Rehearse phrases for describing a car issue to a mechanic.",
+            "Prepare questions about repair time and cost."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?",
+            "O que significa isso?"
+          ],
+          "likely_responses": [
+            "Sim, claro.",
+            "Vamos ver.",
+            "Ligo-lhe mais tarde.",
+            "É para encher tudo?",
+            "Um momento, por favor."
+          ]
+        },
+        "goals": [
+          "Successfully ask to fill up your car at a petrol station.",
+          "Describe a simple car problem (e.g., a strange noise, a warning light) to a mechanic.",
+          "Ask about the expected time and cost for a car repair.",
+          "Understand basic instructions and information from service staff at a garage."
+        ],
+        "course": {
+          "month": 3,
+          "day": 66,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you fill up the tank with {fuel}, please?",
+            "answer": "Pode atestar o depósito com {combustível}, por favor?",
+            "source_ref": "pp-sit-d66-car-mechanic-petrol-1"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The car is making a {noise} strange.",
+            "answer": "O carro está a fazer um {ruído} estranho.",
+            "source_ref": "pp-sit-d66-car-mechanic-petrol-2"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: There is a {light} warning light on the dashboard.",
+            "answer": "Há uma {luz} de aviso acesa no painel.",
+            "source_ref": "pp-sit-d66-car-mechanic-petrol-3"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: When will the car be {ready}?",
+            "answer": "Quando é que o carro estará {pronto}?",
+            "source_ref": "pp-sit-d66-car-mechanic-petrol-4"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to fill up (a tank)",
+            "answer": "atestar",
+            "source_ref": "atestar"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fuel tank",
+            "answer": "depósito",
+            "source_ref": "depósito"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: diesel",
+            "answer": "gasóleo",
+            "source_ref": "gasóleo"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: workshop, garage (for car repairs)",
+            "answer": "oficina",
+            "source_ref": "oficina"
+          },
+          {
+            "id": "rv-sit-d66-car-mechanic-petrol-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d66-car-mechanic-petrol-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d67-bank-and-multibanco",
+      "title": "Bank Errands & the Multibanco",
+      "month": 3,
+      "day": 67,
+      "week": 10,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d67-bank-and-multibanco",
+        "title": "Bank Errands & the Multibanco",
+        "summary": "Everyday banking: the Multibanco menu (levantamentos, pagamentos, carregamentos), a counter question about a card or a transfer, and asking for help when the machine eats your card.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d67-bank-and-multibanco-1",
+            "base": "Queria fazer um {tipo_operacao}.",
+            "translation": "I'd like to do a {type_of_operation}.",
+            "slots": [
+              {
+                "name": "tipo_operacao",
+                "description": "type of operation",
+                "options": [
+                  "levantamento",
+                  "pagamento",
+                  "carregamento"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d67-bank-and-multibanco-2",
+            "base": "O meu cartão {problema}.",
+            "translation": "My card {problem}.",
+            "slots": [
+              {
+                "name": "problema",
+                "description": "problem with the card",
+                "options": [
+                  "não está a funcionar",
+                  "está bloqueado",
+                  "foi engolido"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d67-bank-and-multibanco-3",
+            "base": "Preciso de ajuda com o Multibanco, por favor.",
+            "translation": "I need help with the Multibanco, please.",
+            "variants": [
+              {
+                "text": "Pode ajudar-me com o Multibanco?",
+                "translation": "Can you help me with the Multibanco?",
+                "register": "neutral",
+                "note": "More direct question"
+              },
+              {
+                "text": "O Multibanco engoliu o meu cartão!",
+                "translation": "The Multibanco swallowed my card!",
+                "register": "informal",
+                "note": "Common expression when the machine retains the card"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d67-bank-and-multibanco-4",
+            "base": "Há algum problema com a minha {transacao}?",
+            "translation": "Is there a problem with my {transaction}?",
+            "slots": [
+              {
+                "name": "transacao",
+                "description": "type of transaction",
+                "options": [
+                  "transferência",
+                  "compra"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "Multibanco",
+            "translation": "ATM (Automated Teller Machine) / Portuguese ATM network",
+            "pronunciation": "Mool-tee-BANK-oo",
+            "register": "neutral",
+            "note": "Refers to both the machine and the interbank network in Portugal"
+          },
+          {
+            "word": "levantamento",
+            "translation": "withdrawal (cash)",
+            "pronunciation": "leh-van-TAH-men-too",
+            "register": "neutral"
+          },
+          {
+            "word": "pagamento",
+            "translation": "payment",
+            "pronunciation": "pah-gah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "carregamento",
+            "translation": "top-up (e.g., phone credit)",
+            "pronunciation": "kah-reh-gah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "talão",
+            "translation": "receipt",
+            "pronunciation": "tah-LAU",
+            "register": "neutral"
+          },
+          {
+            "word": "balcão",
+            "translation": "counter (e.g., bank counter)",
+            "pronunciation": "bal-KAU",
+            "register": "neutral"
+          },
+          {
+            "word": "engolir",
+            "translation": "to swallow (used for a machine retaining a card)",
+            "pronunciation": "en-goh-LEER",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d67-bank-and-multibanco-1",
+            "title": "Card Trouble at the Multibanco",
+            "context": "A person is having trouble with a Multibanco machine in a shopping centre in Funchal.",
+            "lines": [
+              {
+                "speaker": "Filipe",
+                "voice_type": "local",
+                "text": "Ai, não acredito! O cartão não sai!",
+                "translation": "Oh, I don't believe it! The card isn't coming out!"
+              },
+              {
+                "speaker": "Amiga",
+                "voice_type": "younger",
+                "text": "O Multibanco engoliu-o? Acontece. Vê se há um segurança.",
+                "translation": "The Multibanco swallowed it? It happens. See if there's a security guard."
+              },
+              {
+                "speaker": "Filipe",
+                "voice_type": "local",
+                "text": "Pois, pois é. Olhe, senhor, pode ajudar-me, por favor?",
+                "translation": "Yeah, that's right. Look, sir, can you help me, please?"
+              },
+              {
+                "speaker": "Segurança",
+                "voice_type": "service",
+                "text": "Diga! O que se passa?",
+                "translation": "Yes? What's happening?"
+              },
+              {
+                "speaker": "Filipe",
+                "voice_type": "local",
+                "text": "O Multibanco engoliu o meu cartão. Queria fazer um levantamento.",
+                "translation": "The Multibanco swallowed my card. I wanted to make a withdrawal."
+              },
+              {
+                "speaker": "Segurança",
+                "voice_type": "service",
+                "text": "Pois, sim. É um problema. O cartão é deste banco?",
+                "translation": "Right, yes. That's a problem. Is the card from this bank?"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d67-bank-and-multibanco-2",
+            "title": "Checking a Transfer at the Bank Counter",
+            "context": "At a bank branch in Machico, a client is asking about a pending transfer.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Bom dia. Queria ver se uma transferência já entrou, por favor.",
+                "translation": "Good morning. I wanted to see if a transfer has already come in, please."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Bom dia. Qual é o seu nome e número de conta, por favor?",
+                "translation": "Good morning. What is your name and account number, please?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Sou a Maria Silva, e o número é...",
+                "translation": "I'm Maria Silva, and the number is..."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Obrigada. Um momento, por favor. Ah, sim, a transferência de Lisboa entrou ontem à tarde.",
+                "translation": "Thank you. One moment, please. Ah, yes, the transfer from Lisbon came in yesterday afternoon."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Ah, ótimo! Muito obrigada.",
+                "translation": "Oh, great! Thank you very much."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "De nada. Precisa de mais alguma coisa?",
+                "translation": "You're welcome. Do you need anything else?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Multibanco System",
+            "body": "The Multibanco network in Portugal (and Madeira) is very comprehensive. You can do much more than just withdraw cash: pay bills (água, luz, telemóvel), top up phone credit (carregamentos), buy concert tickets, pay taxes, and even make donations. It's common for people to use it for daily errands. Most machines offer options in English too, but knowing the Portuguese terms for common operations is very useful."
+          },
+          {
+            "title": "Asking for Help at the Bank",
+            "body": "When interacting with bank staff or security guards, use polite forms like 'por favor' and 'obrigado/a'. For staff, 'o senhor/a senhora' or the more common null-subject 3rd person verb forms are appropriate. If a Multibanco machine 'swallows' your card, it's called 'engolir o cartão'. You should immediately seek assistance from a bank employee or security guard, especially if the machine is inside a branch or a shopping center."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at a Multibanco machine outside a bank in Funchal. You tried to withdraw cash, but the machine kept your card and didn't give you any money. A bank employee is passing by and notices your distress.",
+          "difficulty": 2,
+          "entry_node": "rp-d67-bank-1",
+          "nodes": [
+            {
+              "id": "rp-d67-bank-1",
+              "npc_text": "Bom dia. Está tudo bem? Parece um bocado preocupado.",
+              "npc_translation": "Good morning. Is everything okay? You seem a bit worried.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, não está. O Multibanco engoliu o meu cartão!",
+                  "translation": "No, it's not. The Multibanco swallowed my card!",
+                  "feedback": "Excellent, direct and clear. This is the common expression.",
+                  "next": "rp-d67-bank-2"
+                },
+                {
+                  "text": "Sim, está tudo bem, obrigado.",
+                  "translation": "Yes, everything is fine, thank you.",
+                  "feedback": "This ends the interaction without resolving the problem. Try again and ask for help."
+                }
+              ]
+            },
+            {
+              "id": "rp-d67-bank-2",
+              "npc_text": "Pois, isso acontece às vezes. O seu cartão é deste banco?",
+              "npc_translation": "Right, that happens sometimes. Is your card from this bank?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, é do vosso banco.",
+                  "translation": "Yes, it's from your bank.",
+                  "feedback": "Good, confirming it's their bank simplifies the process.",
+                  "next": "rp-d67-bank-3"
+                },
+                {
+                  "text": "Não, não é. É de outro banco.",
+                  "translation": "No, it's not. It's from another bank.",
+                  "feedback": "Okay, this will mean a slightly different procedure, but still good to be clear.",
+                  "next": "rp-d67-bank-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d67-bank-3",
+              "npc_text": "Ah, então é mais fácil. Entre, por favor, e vá ao balcão. Eles vão ajudá-lo a recuperar o cartão ou a pedir um novo.",
+              "npc_translation": "Ah, then it's easier. Come in, please, and go to the counter. They will help you retrieve the card or order a new one.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado pela ajuda!",
+                  "translation": "Thank you very much for the help!",
+                  "feedback": "Perfect! You've successfully navigated the situation and know what to do next."
+                }
+              ]
+            },
+            {
+              "id": "rp-d67-bank-4",
+              "npc_text": "Percebo. Nesse caso, tem de contactar o seu banco diretamente. Nós não podemos fazer nada por cartões de outros bancos. Posso dar-lhe o número de telefone de apoio ao cliente do seu banco, se souber qual é?",
+              "npc_translation": "I understand. In that case, you have to contact your bank directly. We cannot do anything for cards from other banks. Can I give you the customer support phone number for your bank, if you know which one it is?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor. É o Banco {nome_do_banco}.",
+                  "translation": "Yes, please. It's {bank_name} Bank.",
+                  "feedback": "Good, asking for the number is the right next step. You've handled the situation well."
+                },
+                {
+                  "text": "Não, obrigado. Eu ligo para eles.",
+                  "translation": "No, thank you. I'll call them.",
+                  "feedback": "Also an acceptable response. You've understood the situation and the next steps."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Bank Errands: Multibanco & Counter",
+          "prep": [
+            "Review the vocabulary for Multibanco operations (levantamento, pagamento, carregamento).",
+            "Practice asking for help politely: 'Pode ajudar-me, por favor?' or 'Preciso de ajuda com o Multibanco.'",
+            "Mentally prepare for a situation where the Multibanco machine might 'swallow' your card."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir?",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, não entendi."
+          ],
+          "likely_responses": [
+            "Diga! O que se passa?",
+            "O seu cartão é nosso?",
+            "Qual é o seu nome e número de conta?",
+            "Um momento, por favor."
+          ]
+        },
+        "goals": [
+          "Successfully perform a basic operation at a Multibanco machine (e.g., cash withdrawal, phone top-up).",
+          "Ask for assistance at a bank counter regarding a card or a transfer.",
+          "Report a problem with a Multibanco machine, specifically if it retains your card."
+        ],
+        "course": {
+          "month": 3,
+          "day": 67,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to do a {type_of_operation}.",
+            "answer": "Queria fazer um {tipo_operacao}.",
+            "source_ref": "pp-sit-d67-bank-and-multibanco-1"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My card {problem}.",
+            "answer": "O meu cartão {problema}.",
+            "source_ref": "pp-sit-d67-bank-and-multibanco-2"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need help with the Multibanco, please.",
+            "answer": "Preciso de ajuda com o Multibanco, por favor.",
+            "source_ref": "pp-sit-d67-bank-and-multibanco-3"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is there a problem with my {transaction}?",
+            "answer": "Há algum problema com a minha {transacao}?",
+            "source_ref": "pp-sit-d67-bank-and-multibanco-4"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: ATM (Automated Teller Machine) / Portuguese ATM network",
+            "answer": "Multibanco",
+            "source_ref": "Multibanco"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: withdrawal (cash)",
+            "answer": "levantamento",
+            "source_ref": "levantamento"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: payment",
+            "answer": "pagamento",
+            "source_ref": "pagamento"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: top-up (e.g., phone credit)",
+            "answer": "carregamento",
+            "source_ref": "carregamento"
+          },
+          {
+            "id": "rv-sit-d67-bank-and-multibanco-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d67-bank-and-multibanco-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d68-junta-simple-errands",
+      "title": "Simple Errands at the Junta",
+      "month": 3,
+      "day": 68,
+      "week": 10,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d68-junta-simple-errands",
+        "title": "Simple Errands at the Junta",
+        "summary": "Quick counter errands at the Junta de Freguesia or Câmara: asking where to go, taking a ticket (senha), a simple certificate request and understanding what to bring next time.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d68-junta-simple-errands-1",
+            "base": "Preciso de um(a) {documento}, por favor.",
+            "translation": "I need a {document}, please.",
+            "slots": [
+              {
+                "name": "documento",
+                "description": "type of document",
+                "options": [
+                  "certidão de residência",
+                  "certidão de nascimento",
+                  "documento",
+                  "folha"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d68-junta-simple-errands-2",
+            "base": "Onde é que posso {verb}?",
+            "translation": "Where can I {verb}?",
+            "slots": [
+              {
+                "name": "verb",
+                "description": "action to perform",
+                "options": [
+                  "pedir uma certidão",
+                  "tirar uma senha",
+                  "falar com alguém",
+                  "entregar isto"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d68-junta-simple-errands-3",
+            "base": "Tenho de trazer {item}?",
+            "translation": "Do I need to bring {item}?",
+            "slots": [
+              {
+                "name": "item",
+                "description": "item to bring",
+                "options": [
+                  "o meu cartão de cidadão",
+                  "um comprovativo de morada",
+                  "o meu passaporte",
+                  "a minha licença de condução"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "É preciso trazer {item}?",
+                "translation": "Is it necessary to bring {item}?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d68-junta-simple-errands-4",
+            "base": "Qual é o número?",
+            "translation": "What's the number?",
+            "variants": [
+              {
+                "text": "Qual é o meu número?",
+                "translation": "What's my number?",
+                "register": "neutral"
+              },
+              {
+                "text": "A que número vamos?",
+                "translation": "Which number are we on?",
+                "register": "neutral",
+                "note": "When waiting in a queue"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "Junta de Freguesia",
+            "translation": "Parish Council (local government office)",
+            "pronunciation": "ZHOON-tah d' Freh-geh-ZEE-ah",
+            "register": "neutral",
+            "note": "The lowest tier of local government in Portugal."
+          },
+          {
+            "word": "senha",
+            "translation": "queue ticket / number",
+            "pronunciation": "SEN-yah",
+            "register": "neutral",
+            "note": "Used to manage queues in public services and shops."
+          },
+          {
+            "word": "certidão",
+            "translation": "certificate",
+            "pronunciation": "ser-tee-DOW",
+            "register": "neutral"
+          },
+          {
+            "word": "balcão",
+            "translation": "counter",
+            "pronunciation": "bal-KOW",
+            "register": "neutral",
+            "note": "A service desk or counter."
+          },
+          {
+            "word": "cartão de cidadão",
+            "translation": "Citizen Card (ID card)",
+            "pronunciation": "kar-TOWN d' see-dah-DOW",
+            "register": "neutral",
+            "note": "The official Portuguese identity document."
+          },
+          {
+            "word": "morada",
+            "translation": "address",
+            "pronunciation": "moh-RAH-dah",
+            "register": "neutral",
+            "note": "Commonly used in Portugal for 'residential address'."
+          },
+          {
+            "word": "comprovativo",
+            "translation": "proof / evidence",
+            "pronunciation": "kom-proh-vah-TEE-voo",
+            "register": "neutral",
+            "note": "Often used in 'comprovativo de morada' (proof of address)."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d68-junta-simple-errands-1",
+            "title": "Asking for a certificate",
+            "context": "A person goes to the Junta de Freguesia to ask for a residence certificate.",
+            "lines": [
+              {
+                "speaker": "Learner",
+                "voice_type": "younger",
+                "text": "Bom dia. Queria pedir uma certidão de residência, por favor.",
+                "translation": "Good morning. I'd like to ask for a residence certificate, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Bom dia. Sim, claro. Precisa de tirar uma senha, ali à direita. É para o balcão dois.",
+                "translation": "Good morning. Yes, of course. You need to take a ticket, over there on the right. It's for counter two."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "younger",
+                "text": "Ah, pois. Obrigada. E tenho de trazer o cartão de cidadão?",
+                "translation": "Ah, right. Thank you. And do I need to bring my Citizen Card?"
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Sim, é essencial. E um comprovativo de morada, se tiver.",
+                "translation": "Yes, it's essential. And proof of address, if you have it."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "younger",
+                "text": "Um comprovativo... tipo, uma conta da água?",
+                "translation": "Proof... like, a water bill?"
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Exatamente. Ou da luz, ou do telemóvel. Algo com a sua morada. Mas o cartão de cidadão é o mais importante.",
+                "translation": "Exactly. Or electricity, or mobile phone. Something with your address. But the Citizen Card is the most important."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "younger",
+                "text": "Pois, entendi. Muito obrigada!",
+                "translation": "Right, I understand. Thank you very much!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The 'Senha' System",
+            "body": "In Portugal, especially in public services like the Junta de Freguesia, banks, and health centers, you'll often encounter a 'senha' (queue ticket) system. Upon entering, look for a machine where you select the service you need (e.g., 'Certidões', 'Atendimento Geral') and take a numbered ticket. You then wait for your number to be called or displayed on a screen, indicating which 'balcão' (counter) to go to. It's crucial to get a senha, otherwise, you might wait indefinitely without being served."
+          },
+          {
+            "title": "Addressing Public Service Staff",
+            "body": "When interacting with staff at a Junta or other public office, it's customary to use polite forms of address. 'O senhor' / 'A senhora' are appropriate, or simply using the third person singular verb conjugation (e.g., 'Queria pedir...' instead of 'Eu queria pedir...'). 'Você' is generally avoided as it can sound overly direct or even distancing in this context. Always start with a 'Bom dia' or 'Boa tarde' and end with a 'Obrigado/a'."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You've entered the Junta de Freguesia and need to get a document. You're not sure where to start.",
+          "difficulty": 2,
+          "entry_node": "rp-d68-node-1",
+          "nodes": [
+            {
+              "id": "rp-d68-node-1",
+              "npc_text": "Bom dia. Em que posso ajudar?",
+              "npc_translation": "Good morning. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria pedir uma certidão de casamento.",
+                  "translation": "Good morning. I'd like to ask for a marriage certificate.",
+                  "feedback": "Good polite opening and clear request.",
+                  "next": "rp-d68-node-2"
+                },
+                {
+                  "text": "Olá. Onde é que tiro uma senha?",
+                  "translation": "Hello. Where do I get a ticket?",
+                  "feedback": "Direct, but a bit abrupt. Remember to state your purpose first if possible.",
+                  "next": "rp-d68-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d68-node-2",
+              "npc_text": "Ah, sim. Para certidões, tem de tirar uma senha no dispensador, ali à esquerda. É a opção 'C'. Depois, espere pelo seu número no balcão 3.",
+              "npc_translation": "Ah, yes. For certificates, you need to take a ticket from the dispenser, over there on the left. It's option 'C'. Then, wait for your number at counter 3.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois, entendi. Obrigada. E qual é o número que devo esperar?",
+                  "translation": "Right, I understand. Thank you. And what number should I wait for?",
+                  "feedback": "Good, you're confirming the process.",
+                  "next": "rp-d68-node-4"
+                },
+                {
+                  "text": "OK. E tenho de trazer o meu cartão de cidadão?",
+                  "translation": "OK. And do I need to bring my Citizen Card?",
+                  "feedback": "Good question about documents, but you haven't taken the senha yet!",
+                  "next": "rp-d68-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d68-node-3",
+              "npc_text": "Para que serviço precisa da senha? As senhas são ali, à esquerda. Para certidões, é a opção 'C'.",
+              "npc_translation": "What service do you need the ticket for? The tickets are over there, on the left. For certificates, it's option 'C'.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É para uma certidão de casamento. Obrigada.",
+                  "translation": "It's for a marriage certificate. Thank you.",
+                  "feedback": "Good, you clarified your request.",
+                  "next": "rp-d68-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d68-node-4",
+              "npc_text": "(Depois de tirar a senha) O seu número é o C12. Já chamamos o C10, por isso não deve demorar muito.",
+              "npc_translation": "(After you take the ticket) Your number is C12. We've just called C10, so it shouldn't take long.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigada. E tenho de trazer algum documento?",
+                  "translation": "Thank you. And do I need to bring any document?",
+                  "feedback": "Excellent, asking about required documents is key.",
+                  "next": "rp-d68-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d68-node-5",
+              "npc_text": "Sim, claro. Para uma certidão de casamento, precisa do seu cartão de cidadão e, se possível, os dados do casamento, como a data e o local.",
+              "npc_translation": "Yes, of course. For a marriage certificate, you need your Citizen Card and, if possible, the marriage details, like the date and place.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois, tenho o cartão. E os dados também. Muito obrigada!",
+                  "translation": "Right, I have the card. And the details too. Thank you very much!",
+                  "feedback": "Perfect! You have all the information you need."
+                },
+                {
+                  "text": "Não percebi, pode repetir o que preciso de trazer?",
+                  "translation": "I didn't understand, can you repeat what I need to bring?",
+                  "feedback": "Good to ask for clarification if you're unsure.",
+                  "next": "rp-d68-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d68-node-6",
+              "npc_text": "Claro. Precisa do seu cartão de cidadão e, se tiver, a data e o local do casamento. É só isso.",
+              "npc_translation": "Of course. You need your Citizen Card and, if you have it, the date and place of the marriage. That's all.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, sim. Agora percebi. Muito obrigada pela ajuda!",
+                  "translation": "Ah, yes. Now I understand. Thank you very much for the help!",
+                  "feedback": "Great, you got the information you needed."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Obtain a 'Certidão de Residência' at the Junta",
+          "prep": [
+            "Review vocabulary for 'Junta', 'senha', 'certidão', 'balcão', 'cartão de cidadão', 'morada', 'comprovativo'.",
+            "Practice asking 'Onde é que posso tirar uma senha?' and 'Preciso de uma certidão de residência, por favor.'",
+            "Rehearse asking 'Tenho de trazer o meu cartão de cidadão?' and 'É preciso trazer um comprovativo de morada?'"
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, a que balcão é?"
+          ],
+          "likely_responses": [
+            "Bom dia. Em que posso ajudar?",
+            "Precisa de uma senha para o balcão X.",
+            "Sim, precisa do seu cartão de cidadão.",
+            "É preciso um comprovativo de morada."
+          ]
+        },
+        "goals": [
+          "Successfully ask for a specific document at a public service counter.",
+          "Understand instructions regarding queue tickets ('senhas') and counter numbers.",
+          "Be able to ask what documents are required for a service.",
+          "Confirm understanding or ask for repetition when necessary."
+        ],
+        "course": {
+          "month": 3,
+          "day": 68,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d68-junta-simple-errands-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need a {document}, please.",
+            "answer": "Preciso de um(a) {documento}, por favor.",
+            "source_ref": "pp-sit-d68-junta-simple-errands-1"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Where can I {verb}?",
+            "answer": "Onde é que posso {verb}?",
+            "source_ref": "pp-sit-d68-junta-simple-errands-2"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do I need to bring {item}?",
+            "answer": "Tenho de trazer {item}?",
+            "source_ref": "pp-sit-d68-junta-simple-errands-3"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What's the number?",
+            "answer": "Qual é o número?",
+            "source_ref": "pp-sit-d68-junta-simple-errands-4"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Parish Council (local government office)",
+            "answer": "Junta de Freguesia",
+            "source_ref": "Junta de Freguesia"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: queue ticket / number",
+            "answer": "senha",
+            "source_ref": "senha"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: certificate",
+            "answer": "certidão",
+            "source_ref": "certidão"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: counter",
+            "answer": "balcão",
+            "source_ref": "balcão"
+          },
+          {
+            "id": "rv-sit-d68-junta-simple-errands-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d68-junta-simple-errands-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d69-shop-returns-exchanges",
+      "title": "Returns & Exchanges",
+      "month": 3,
+      "day": 69,
+      "week": 10,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-survival",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d69-shop-returns-exchanges",
+        "title": "Returns & Exchanges",
+        "summary": "Taking something back to a shop: the receipt (talão), wrong size, does not work, exchanging or getting a credit note — polite, firm and simple.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-work"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d69-shop-returns-exchanges-1",
+            "base": "Gostaria de {action} este {item}, por favor.",
+            "translation": "I would like to {action} this {item}, please.",
+            "slots": [
+              {
+                "name": "action",
+                "description": "action to perform",
+                "options": [
+                  "trocar",
+                  "devolver"
+                ]
+              },
+              {
+                "name": "item",
+                "description": "the item",
+                "options": [
+                  "artigo",
+                  "aparelho",
+                  "tamanho"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d69-shop-returns-exchanges-2",
+            "base": "Tenho aqui o talão.",
+            "translation": "I have the receipt here."
+          },
+          {
+            "id": "pp-sit-d69-shop-returns-exchanges-3",
+            "base": "É que o {item} não {problem}.",
+            "translation": "It's because the {item} doesn't {problem}.",
+            "slots": [
+              {
+                "name": "item",
+                "description": "the item",
+                "options": [
+                  "tamanho",
+                  "aparelho",
+                  "telemóvel"
+                ]
+              },
+              {
+                "name": "problem",
+                "description": "the problem",
+                "options": [
+                  "serve",
+                  "funciona bem",
+                  "está avariado"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d69-shop-returns-exchanges-4",
+            "base": "Pode ser uma {option}?",
+            "translation": "Can it be a {option}?",
+            "slots": [
+              {
+                "name": "option",
+                "description": "the desired outcome",
+                "options": [
+                  "troca",
+                  "nota de crédito"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Prefiro uma {option}, se faz favor.",
+                "translation": "I prefer a {option}, please.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "talão",
+            "translation": "receipt",
+            "pronunciation": "tah-LAU",
+            "register": "neutral",
+            "note": "Common in Portugal for a till receipt"
+          },
+          {
+            "word": "trocar",
+            "translation": "to exchange",
+            "pronunciation": "troh-KAR",
+            "register": "neutral"
+          },
+          {
+            "word": "devolver",
+            "translation": "to return (an item)",
+            "pronunciation": "deh-voh-LVER",
+            "register": "neutral"
+          },
+          {
+            "word": "nota de crédito",
+            "translation": "credit note",
+            "pronunciation": "NOH-tah deh KREH-dee-too",
+            "register": "neutral",
+            "note": "Common alternative to a refund in Portugal"
+          },
+          {
+            "word": "tamanho",
+            "translation": "size",
+            "pronunciation": "tah-MAH-nyoo",
+            "register": "neutral"
+          },
+          {
+            "word": "funciona",
+            "translation": "it works",
+            "pronunciation": "foon-SYOH-nah",
+            "register": "neutral"
+          },
+          {
+            "word": "artigo",
+            "translation": "item / article",
+            "pronunciation": "ar-TEE-goo",
+            "register": "neutral"
+          },
+          {
+            "word": "avariado",
+            "translation": "faulty / broken (for an appliance)",
+            "pronunciation": "ah-vah-ree-AH-doo",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d69-shop-returns-exchanges-1",
+            "title": "Returning a shirt",
+            "context": "A customer is returning a shirt that is the wrong size to a clothing shop in Funchal.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Gostaria de trocar esta camisola, por favor.",
+                "translation": "Good morning. I would like to exchange this shirt, please."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Bom dia. Qual é o problema com ela?",
+                "translation": "Good morning. What's the problem with it?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "É que o tamanho não serve. Tenho aqui o talão.",
+                "translation": "It's because the size doesn't fit. I have the receipt here."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Ah, sim. Quer trocar por outro tamanho ou por outra coisa?",
+                "translation": "Ah, yes. Do you want to exchange it for another size or for something else?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Por outro tamanho, se faz favor. Um M, se tiverem.",
+                "translation": "For another size, please. A M, if you have it."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Deixe-me ver. Um momento. Sim, temos.",
+                "translation": "Let me see. One moment. Yes, we have it."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Ótimo! Muito obrigado.",
+                "translation": "Great! Thank you very much."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "De nada.",
+                "translation": "You're welcome."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Importance of the 'Talão'",
+            "body": "In Portugal, the 'talão' (receipt) is almost always required for returns or exchanges. Shops are not legally obliged to accept returns for non-defective items without it, and even for faulty goods, it simplifies the process significantly. Always keep your receipts!"
+          },
+          {
+            "title": "Credit Notes vs. Refunds",
+            "body": "For non-defective items, many shops in Portugal offer a 'nota de crédito' (credit note) instead of a direct refund. This allows you to purchase something else from the same shop later. For faulty items, you are generally entitled to an exchange, repair, or refund."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are returning a small faulty kitchen appliance to an electronics shop in Funchal. You have the receipt.",
+          "difficulty": 2,
+          "entry_node": "rp-sit-d69-shop-returns-exchanges-start",
+          "nodes": [
+            {
+              "id": "rp-sit-d69-shop-returns-exchanges-start",
+              "npc_text": "Boa tarde. Posso ajudar?",
+              "npc_translation": "Good afternoon. Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Gostaria de devolver este aparelho, por favor.",
+                  "translation": "Good afternoon. I would like to return this appliance, please.",
+                  "feedback": "A good start, polite and clear.",
+                  "next": "rp-sit-d69-shop-returns-exchanges-problem"
+                },
+                {
+                  "text": "Olá. Queria trocar este artigo.",
+                  "translation": "Hello. I wanted to exchange this item.",
+                  "feedback": "Direct and acceptable. Remember 'por favor' for extra politeness.",
+                  "next": "rp-sit-d69-shop-returns-exchanges-problem"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d69-shop-returns-exchanges-problem",
+              "npc_text": "Qual é o problema com ele? Tem o talão?",
+              "npc_translation": "What's the problem with it? Do you have the receipt?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não funciona bem. E sim, tenho aqui o talão.",
+                  "translation": "It doesn't work well. And yes, I have the receipt here.",
+                  "feedback": "Excellent! You explained the problem and confirmed the receipt.",
+                  "next": "rp-sit-d69-shop-returns-exchanges-options"
+                },
+                {
+                  "text": "O aparelho está avariado. Aqui está o talão.",
+                  "translation": "The appliance is faulty. Here is the receipt.",
+                  "feedback": "Perfect use of 'avariado' and presenting the receipt.",
+                  "next": "rp-sit-d69-shop-returns-exchanges-options"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d69-shop-returns-exchanges-options",
+              "npc_text": "Certo. Podemos trocar por um novo, ou prefere uma nota de crédito?",
+              "npc_translation": "Okay. We can exchange it for a new one, or do you prefer a credit note?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Prefiro trocar por um novo, se faz favor.",
+                  "translation": "I prefer to exchange it for a new one, please.",
+                  "feedback": "Clear choice and polite. Well done.",
+                  "next": "rp-sit-d69-shop-returns-exchanges-confirm-exchange"
+                },
+                {
+                  "text": "Uma nota de crédito, por favor.",
+                  "translation": "A credit note, please.",
+                  "feedback": "Good, you understood the option and made your choice politely.",
+                  "next": "rp-sit-d69-shop-returns-exchanges-confirm-credit"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d69-shop-returns-exchanges-confirm-exchange",
+              "npc_text": "Muito bem. Vou buscar um novo para si. Um momento, por favor.",
+              "npc_translation": "Very good. I'll get a new one for you. One moment, please.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-sit-d69-shop-returns-exchanges-confirm-credit",
+              "npc_text": "Ok. Vou processar a nota de crédito. Preciso da sua assinatura aqui, por favor.",
+              "npc_translation": "Okay. I will process the credit note. I need your signature here, please.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Return or Exchange an Item in a Shop",
+          "prep": [
+            "Review the key vocabulary for returns, exchanges, and receipts.",
+            "Practice asking to return or exchange an item politely.",
+            "Be ready to explain a simple problem with the item (e.g., 'não funciona bem', 'o tamanho não serve')."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, como disse?"
+          ],
+          "likely_responses": [
+            "Qual é o problema?",
+            "Tem o talão?",
+            "Quer trocar ou devolver?",
+            "Prefere uma nota de crédito?"
+          ]
+        },
+        "goals": [
+          "Ask to return or exchange an item using polite phrases.",
+          "Explain a basic problem with the item (e.g., wrong size, not working).",
+          "Understand and respond to options like 'trocar' (exchange) or 'nota de crédito' (credit note)."
+        ],
+        "course": {
+          "month": 3,
+          "day": 69,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to {action} this {item}, please.",
+            "answer": "Gostaria de {action} este {item}, por favor.",
+            "source_ref": "pp-sit-d69-shop-returns-exchanges-1"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have the receipt here.",
+            "answer": "Tenho aqui o talão.",
+            "source_ref": "pp-sit-d69-shop-returns-exchanges-2"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's because the {item} doesn't {problem}.",
+            "answer": "É que o {item} não {problem}.",
+            "source_ref": "pp-sit-d69-shop-returns-exchanges-3"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can it be a {option}?",
+            "answer": "Pode ser uma {option}?",
+            "source_ref": "pp-sit-d69-shop-returns-exchanges-4"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: receipt",
+            "answer": "talão",
+            "source_ref": "talão"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to exchange",
+            "answer": "trocar",
+            "source_ref": "trocar"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to return (an item)",
+            "answer": "devolver",
+            "source_ref": "devolver"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: credit note",
+            "answer": "nota de crédito",
+            "source_ref": "nota de crédito"
+          },
+          {
+            "id": "rv-sit-d69-shop-returns-exchanges-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d69-shop-returns-exchanges-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d70-week-10-stress-test",
+      "title": "Week 10 Stress Test",
+      "month": 3,
+      "day": 70,
+      "week": 10,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-survival",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d70-week-10-stress-test",
+        "title": "Week 10 Stress Test",
+        "summary": "An errand day around Funchal combining the week: pharmacy, bank, Junta counter and a shop return — one exchange after another at real speed.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-bureaucracy"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d70-week-10-stress-test-1",
+            "base": "Bom dia. Queria {action}, por favor.",
+            "translation": "Good morning. I wanted to {action}, please.",
+            "slots": [
+              {
+                "name": "action",
+                "description": "the action the customer wants to perform",
+                "options": [
+                  "devolver isto",
+                  "levantar um documento",
+                  "falar com o gerente",
+                  "pagar uma conta"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Boa tarde. Queria {action}, p'ra já.",
+                "translation": "Good afternoon. I wanted to {action}, right now.",
+                "register": "informal",
+                "note": "Common Madeiran reduction of 'para já'"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d70-week-10-stress-test-2",
+            "base": "Preciso de ajuda com {item}.",
+            "translation": "I need help with {item}.",
+            "slots": [
+              {
+                "name": "item",
+                "description": "the item or issue needing help",
+                "options": [
+                  "o meu telemóvel",
+                  "esta máquina",
+                  "o meu pedido",
+                  "um problema"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d70-week-10-stress-test-3",
+            "base": "Pode repetir, por favor?",
+            "translation": "Can you repeat, please?"
+          },
+          {
+            "id": "pp-sit-d70-week-10-stress-test-4",
+            "base": "Onde é que posso {verb}?",
+            "translation": "Where can I {verb}?",
+            "slots": [
+              {
+                "name": "verb",
+                "description": "the action the person wants to do",
+                "options": [
+                  "pagar",
+                  "levantar",
+                  "encontrar"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "talão",
+            "translation": "receipt",
+            "pronunciation": "tah-LAU",
+            "register": "neutral",
+            "note": "Common in Portugal for a sales receipt"
+          },
+          {
+            "word": "devolver",
+            "translation": "to return (an item)",
+            "pronunciation": "deh-vol-VER",
+            "register": "neutral"
+          },
+          {
+            "word": "marcação",
+            "translation": "appointment",
+            "pronunciation": "mar-kah-SAUNG",
+            "register": "neutral"
+          },
+          {
+            "word": "balcão",
+            "translation": "counter",
+            "pronunciation": "bal-KAU",
+            "register": "neutral",
+            "note": "Service counter, bank teller window"
+          },
+          {
+            "word": "Junta de Freguesia",
+            "translation": "Parish Council",
+            "pronunciation": "JOON-tah deh freh-GEH-zee-ah",
+            "register": "neutral",
+            "note": "Local administrative body in Portugal"
+          },
+          {
+            "word": "avaria",
+            "translation": "fault, defect, breakdown",
+            "pronunciation": "ah-vah-REE-ah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d70-week-10-stress-test-1",
+            "title": "Shop Return",
+            "context": "At a shop in Funchal, returning a faulty item.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria devolver este rádio, por favor. Está com uma avaria.",
+                "translation": "Good morning. I wanted to return this radio, please. It has a fault."
+              },
+              {
+                "speaker": "Empregada",
+                "voice_type": "service",
+                "text": "Bom dia. Tem o talão de compra?",
+                "translation": "Good morning. Do you have the purchase receipt?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, aqui está. Comprei-o na semana passada.",
+                "translation": "Yes, here it is. I bought it last week."
+              },
+              {
+                "speaker": "Empregada",
+                "voice_type": "service",
+                "text": "Muito bem. Vou verificar. Um momento, p'ra já.",
+                "translation": "Very good. I'll check. One moment, please."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d70-week-10-stress-test-2",
+            "title": "Bank & Junta",
+            "context": "Visiting the bank and then the local Junta de Freguesia.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Boa tarde. Tenho uma marcação para as duas e meia, com a Doutora Silva.",
+                "translation": "Good afternoon. I have an appointment for half past two, with Dr. Silva."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Boa tarde. Doutora Silva... Ah, sim. Pode aguardar um pouco, por favor? Ela está quase a terminar.",
+                "translation": "Good afternoon. Dr. Silva... Ah, yes. Can you wait a little, please? She's almost finished."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Pois, claro. Não há problema.",
+                "translation": "Yes, of course. No problem."
+              },
+              {
+                "speaker": "Funcionário Junta",
+                "voice_type": "older",
+                "text": "Diga! Em que posso ajudar?",
+                "translation": "Yes? How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Boa tarde. Queria um comprovativo de morada, por favor.",
+                "translation": "Good afternoon. I wanted a proof of address, please."
+              },
+              {
+                "speaker": "Funcionário Junta",
+                "voice_type": "older",
+                "text": "Pois é. Tem o seu cartão de cidadão?",
+                "translation": "Yes. Do you have your citizen card?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Service Interactions",
+            "body": "In Portugal, it's customary to greet staff with 'Bom dia' (Good morning) or 'Boa tarde' (Good afternoon) even if you're just asking a quick question. Always use 'por favor' (please) and 'obrigado/a' (thank you). When addressing service staff, 'O senhor/A senhora' is polite, or simply using the verb in the 3rd person singular (e.g., 'Queria...' instead of 'Eu queria...')."
+          },
+          {
+            "title": "Junta de Freguesia",
+            "body": "The 'Junta de Freguesia' is the local parish council, responsible for many day-to-day administrative tasks for residents, such as issuing proof of address, certifying documents, or handling minor local issues. It's an important point of contact for local services in Portugal."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a pharmacy in Funchal. You bought some medication yesterday but now realize it's the wrong type. You need to return it and get the correct one.",
+          "difficulty": 2,
+          "entry_node": "rp-d70-pharmacy-start",
+          "nodes": [
+            {
+              "id": "rp-d70-pharmacy-start",
+              "npc_text": "Bom dia. Em que posso ajudar?",
+              "npc_translation": "Good morning. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria devolver um medicamento, por favor.",
+                  "translation": "Good morning. I wanted to return a medicine, please.",
+                  "feedback": "A clear and polite start. Well done.",
+                  "next": "rp-d70-pharmacy-receipt"
+                },
+                {
+                  "text": "Olá. Este medicamento está errado.",
+                  "translation": "Hi. This medicine is wrong.",
+                  "feedback": "A bit direct. Try to add a 'Bom dia' and 'por favor' next time for politeness.",
+                  "next": "rp-d70-pharmacy-receipt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d70-pharmacy-receipt",
+              "npc_text": "Pois. Tem o talão de compra e a embalagem original?",
+              "npc_translation": "Right. Do you have the purchase receipt and the original packaging?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, aqui está o talão e a caixa.",
+                  "translation": "Yes, here is the receipt and the box.",
+                  "feedback": "Excellent! Providing all necessary items.",
+                  "next": "rp-d70-pharmacy-process"
+                },
+                {
+                  "text": "Não tenho o talão, mas tenho a embalagem.",
+                  "translation": "I don't have the receipt, but I have the packaging.",
+                  "feedback": "This might be a problem. Be prepared for a refusal or a more complicated process.",
+                  "next": "rp-d70-pharmacy-no-receipt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d70-pharmacy-process",
+              "npc_text": "Muito bem. Vou verificar. Que medicamento queria em troca?",
+              "npc_translation": "Very good. I'll check. Which medicine did you want instead?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria o medicamento para a dor de cabeça, por favor.",
+                  "translation": "I wanted the medicine for a headache, please.",
+                  "feedback": "Good, you're specifying the correct item.",
+                  "next": "rp-d70-pharmacy-success"
+                },
+                {
+                  "text": "Não sei o nome, mas é para o estômago.",
+                  "translation": "I don't know the name, but it's for the stomach.",
+                  "feedback": "You'll need to provide more details or ask for help finding the right one.",
+                  "next": "rp-d70-pharmacy-clarify"
+                }
+              ]
+            },
+            {
+              "id": "rp-d70-pharmacy-no-receipt",
+              "npc_text": "Sem o talão é mais difícil. Não posso fazer a troca diretamente. Posso chamar o gerente, se quiser.",
+              "npc_translation": "Without the receipt, it's more difficult. I can't do the exchange directly. I can call the manager, if you want.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor. Pode chamar o gerente?",
+                  "translation": "Yes, please. Can you call the manager?",
+                  "feedback": "Good, asking for the manager is a valid step when encountering difficulties.",
+                  "next": "rp-d70-pharmacy-manager"
+                },
+                {
+                  "text": "Ah, entendo. Então não posso trocar? Obrigado.",
+                  "translation": "Ah, I understand. So I can't exchange it? Thank you.",
+                  "feedback": "You've accepted the refusal. The interaction ends here."
+                }
+              ]
+            },
+            {
+              "id": "rp-d70-pharmacy-clarify",
+              "npc_text": "Para o estômago... temos vários. Pode descrever os seus sintomas ou o que o médico receitou?",
+              "npc_translation": "For the stomach... we have several. Can you describe your symptoms or what the doctor prescribed?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É para azia. O médico disse 'antiácido'.",
+                  "translation": "It's for heartburn. The doctor said 'antacid'.",
+                  "feedback": "Excellent, providing more specific information helps them find the right medication.",
+                  "next": "rp-d70-pharmacy-success"
+                }
+              ]
+            },
+            {
+              "id": "rp-d70-pharmacy-manager",
+              "npc_text": "Bom dia. Sou o gerente. Qual é o problema?",
+              "npc_translation": "Good morning. I'm the manager. What's the problem?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia. Queria devolver este medicamento. Não tenho o talão, mas está na embalagem original.",
+                  "translation": "Good morning. I wanted to return this medicine. I don't have the receipt, but it's in the original packaging.",
+                  "feedback": "Clearly state the situation and your request.",
+                  "next": "rp-d70-pharmacy-manager-decision"
+                }
+              ]
+            },
+            {
+              "id": "rp-d70-pharmacy-manager-decision",
+              "npc_text": "Pois bem. Sem talão é difícil, mas como é um engano claro e está selado, faremos a troca. Qual medicamento precisa?",
+              "npc_translation": "Alright. Without a receipt it's difficult, but as it's a clear mistake and it's sealed, we'll make the exchange. Which medicine do you need?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Preciso de um medicamento para a tosse, por favor.",
+                  "translation": "I need a medicine for a cough, please.",
+                  "feedback": "Success! You've managed to get the exchange.",
+                  "next": "rp-d70-pharmacy-success"
+                }
+              ]
+            },
+            {
+              "id": "rp-d70-pharmacy-success",
+              "npc_text": "Aqui está. Deseja mais alguma coisa? Tenha um bom dia.",
+              "npc_translation": "Here it is. Do you need anything else? Have a good day.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, muito obrigado. Bom dia!",
+                  "translation": "No, thank you very much. Good day!",
+                  "feedback": "You successfully completed the task!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Funchal Errand Day",
+          "prep": [
+            "Review phrases for asking for help, returning items, and making appointments.",
+            "Practice greetings and polite closings for service interactions.",
+            "Mentally prepare for potential misunderstandings and how to ask for repetition."
+          ],
+          "fallback_phrases": [
+            "Não entendi bem.",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, pode repetir?"
+          ],
+          "likely_responses": [
+            "Tem o talão?",
+            "Qual é o seu nome?",
+            "Tem marcação?",
+            "Um momento, por favor.",
+            "Em que posso ajudar?"
+          ]
+        },
+        "goals": [
+          "Successfully initiate and complete service interactions in a pharmacy, bank, or shop.",
+          "Practice asking for information and making requests politely.",
+          "Handle a minor complication, such as not having a receipt or clarifying a request."
+        ],
+        "course": {
+          "month": 3,
+          "day": 70,
+          "category": "custom"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d70-week-10-stress-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Good morning. I wanted to {action}, please.",
+            "answer": "Bom dia. Queria {action}, por favor.",
+            "source_ref": "pp-sit-d70-week-10-stress-test-1"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need help with {item}.",
+            "answer": "Preciso de ajuda com {item}.",
+            "source_ref": "pp-sit-d70-week-10-stress-test-2"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you repeat, please?",
+            "answer": "Pode repetir, por favor?",
+            "source_ref": "pp-sit-d70-week-10-stress-test-3"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Where can I {verb}?",
+            "answer": "Onde é que posso {verb}?",
+            "source_ref": "pp-sit-d70-week-10-stress-test-4"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: receipt",
+            "answer": "talão",
+            "source_ref": "talão"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to return (an item)",
+            "answer": "devolver",
+            "source_ref": "devolver"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: appointment",
+            "answer": "marcação",
+            "source_ref": "marcação"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: counter",
+            "answer": "balcão",
+            "source_ref": "balcão"
+          },
+          {
+            "id": "rv-sit-d70-week-10-stress-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d70-week-10-stress-test-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d71-meeting-the-neighbours",
+      "title": "Meeting the Neighbours Properly",
+      "month": 3,
+      "day": 71,
+      "week": 11,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d71-meeting-the-neighbours",
+        "title": "Meeting the Neighbours Properly",
+        "summary": "Beyond bom dia: introducing yourself properly to neighbours, saying where you are from and why Madeira, remembering names, and the questions Madeirans will ask you.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d71-meeting-the-neighbours-1",
+            "base": "Olá! Sou o/a {nome}, o/a {adjetivo} vizinho/a.",
+            "translation": "Hello! I'm {name}, the new neighbour.",
+            "slots": [
+              {
+                "name": "nome",
+                "description": "Your name",
+                "options": [
+                  "João",
+                  "Maria",
+                  "Alex",
+                  "Sofia"
+                ]
+              },
+              {
+                "name": "adjetivo",
+                "description": "Gender-agreed adjective for neighbour",
+                "options": [
+                  "novo",
+                  "nova"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Olá! Sou o/a {nome}, moro aqui ao lado.",
+                "translation": "Hello! I'm {name}, I live next door.",
+                "register": "informal",
+                "note": "More casual way to indicate you're a neighbour."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d71-meeting-the-neighbours-2",
+            "base": "É um prazer conhecê-lo/a.",
+            "translation": "It's a pleasure to meet you (polite).",
+            "variants": [
+              {
+                "text": "É um prazer.",
+                "translation": "It's a pleasure.",
+                "register": "neutral"
+              },
+              {
+                "text": "Muito prazer.",
+                "translation": "Much pleasure.",
+                "register": "neutral",
+                "note": "Very common and concise way to say 'nice to meet you'."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d71-meeting-the-neighbours-3",
+            "base": "Sou de {local}.",
+            "translation": "I'm from {place}.",
+            "slots": [
+              {
+                "name": "local",
+                "description": "Your city or country of origin",
+                "options": [
+                  "Lisboa",
+                  "Porto",
+                  "Inglaterra",
+                  "Alemanha",
+                  "França",
+                  "o Funchal"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d71-meeting-the-neighbours-4",
+            "base": "Estou cá há {tempo}.",
+            "translation": "I've been here for {time}.",
+            "slots": [
+              {
+                "name": "tempo",
+                "description": "Duration of stay",
+                "options": [
+                  "uma semana",
+                  "um mês",
+                  "seis meses",
+                  "um ano",
+                  "dois anos"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d71-meeting-the-neighbours-5",
+            "base": "Estou a gostar muito da Madeira.",
+            "translation": "I'm really liking Madeira.",
+            "variants": [
+              {
+                "text": "Estou a adorar a Madeira.",
+                "translation": "I'm loving Madeira.",
+                "register": "neutral"
+              },
+              {
+                "text": "Gosto muito de viver cá.",
+                "translation": "I really like living here.",
+                "register": "neutral",
+                "note": "More direct about the living experience."
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "vizinho/a",
+            "translation": "neighbour",
+            "pronunciation": "vee-ZEE-nyoo/nyah",
+            "register": "neutral",
+            "note": "Common term for male/female neighbour."
+          },
+          {
+            "word": "mudar-se",
+            "translation": "to move house",
+            "pronunciation": "moo-DAHR-seh",
+            "register": "neutral"
+          },
+          {
+            "word": "há quanto tempo?",
+            "translation": "how long (time)?",
+            "pronunciation": "ah KWAHN-too TEM-poo",
+            "register": "neutral"
+          },
+          {
+            "word": "calmo/a",
+            "translation": "calm, quiet",
+            "pronunciation": "KAHL-moo/mah",
+            "register": "neutral",
+            "note": "Often used to describe a peaceful place."
+          },
+          {
+            "word": "levada",
+            "translation": "irrigation channel",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Madeiran specific, traditional water channels, popular for walks."
+          },
+          {
+            "word": "pois é",
+            "translation": "indeed, that's right",
+            "pronunciation": "POYSH eh",
+            "register": "informal",
+            "note": "Common interjection to show agreement or acknowledgement."
+          },
+          {
+            "word": "imenso",
+            "translation": "a lot, immensely",
+            "pronunciation": "ee-MEN-soo",
+            "register": "neutral",
+            "note": "Common in European Portuguese instead of 'muito'."
+          },
+          {
+            "word": "cá",
+            "translation": "here (colloquial)",
+            "pronunciation": "KAH",
+            "register": "informal",
+            "note": "Common in Portugal, especially Madeira, instead of 'aqui'."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d71-meeting-the-neighbours-1",
+            "title": "First chat with a neighbour",
+            "context": "You're getting your mail, and an older neighbour, Dona Fátima, stops to say hello.",
+            "lines": [
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Bom dia! Então, é o/a novo/a vizinho/a, certo?",
+                "translation": "Good morning! So, you're the new neighbour, right?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Bom dia, Dona Fátima! Sim, sou eu. Sou o/a {nome}. Muito prazer.",
+                "translation": "Good morning, Dona Fátima! Yes, it's me. I'm {name}. Nice to meet you."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Ah, muito prazer! É de onde, se não se importa que lhe pergunte?",
+                "translation": "Ah, nice to meet you! Where are you from, if you don't mind me asking?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sou de {país}. Mudei-me cá há {tempo}.",
+                "translation": "I'm from {country}. I moved here {time} ago."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "local",
+                "text": "Ah, que bom! E está a gostar da Madeira? É tão calmo por aqui.",
+                "translation": "Ah, that's good! And are you liking Madeira? It's so quiet around here."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Estou a gostar imenso! É muito bonito e as pessoas são muito simpáticas.",
+                "translation": "I'm liking it immensely! It's very beautiful and the people are very friendly."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Pois é! Se precisar de alguma coisa, é só dizer. Bem-vindo/a!",
+                "translation": "Indeed! If you need anything, just say. Welcome!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Muito obrigado/a! Até breve.",
+                "translation": "Thank you very much! See you soon."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Directness in Madeiran Conversations",
+            "body": "Madeirans, like many Portuguese, can be quite direct with personal questions, especially when meeting new people. It's common for neighbours to ask where you're from, how long you've been in Madeira, or even about your family. This is generally not meant to be intrusive but rather a way to show interest and make a connection. Respond openly but you don't need to overshare."
+          },
+          {
+            "title": "Addressing Neighbours: 'O Senhor' / 'A Senhora'",
+            "body": "When addressing older neighbours or those you don't know well, it's polite to use 'o senhor' (for a man) or 'a senhora' (for a woman) followed by their first name (e.g., 'Dona Fátima', 'Senhor Manuel') or just 'o senhor/a senhora'. Using 'você' can sometimes sound too informal or even distancing in Portugal, so 'o senhor/a senhora' is generally preferred in polite interactions."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're taking out the rubbish when your next-door neighbour, Senhor José, a friendly older gentleman, sees you and starts a conversation.",
+          "difficulty": 3,
+          "entry_node": "rp-d71-node-1",
+          "nodes": [
+            {
+              "id": "rp-d71-node-1",
+              "npc_text": "Olá! Bom dia. É o/a vizinho/a novo/a, certo?",
+              "npc_translation": "Hello! Good morning. You're the new neighbour, right?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia, Senhor José! Sim, sou eu. Sou o/a {nome}. Muito prazer.",
+                  "translation": "Good morning, Senhor José! Yes, it's me. I'm {name}. Nice to meet you.",
+                  "feedback": "Excellent! You introduced yourself politely and correctly.",
+                  "next": "rp-d71-node-2"
+                },
+                {
+                  "text": "Sim, sou eu. Olá.",
+                  "translation": "Yes, it's me. Hello.",
+                  "feedback": "A bit brief, but acceptable. Try to be a bit more expansive next time.",
+                  "next": "rp-d71-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d71-node-2",
+              "npc_text": "Ah, muito prazer! E de onde é que o/a senhor/a vem?",
+              "npc_translation": "Ah, nice to meet you! And where do you come from?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sou de {país}. Estou cá há {tempo}.",
+                  "translation": "I'm from {country}. I've been here for {time}.",
+                  "feedback": "Perfect! You answered directly and added how long you've been here.",
+                  "next": "rp-d71-node-3"
+                },
+                {
+                  "text": "Venho de {cidade}.",
+                  "translation": "I come from {city}.",
+                  "feedback": "Good, but 'Sou de {cidade}' is more natural for origin. Adding how long you've been here is also a good touch.",
+                  "next": "rp-d71-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d71-node-3",
+              "npc_text": "Que bom! E está a gostar de viver na Madeira? É muito diferente de {país}?",
+              "npc_translation": "That's good! And are you liking living in Madeira? Is it very different from {country}?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, estou a gostar imenso! É muito calmo e as pessoas são muito acolhedoras.",
+                  "translation": "Yes, I'm liking it immensely! It's very calm and the people are very welcoming.",
+                  "feedback": "Excellent, showing enthusiasm and using good descriptive words!",
+                  "next": "rp-d71-node-4"
+                },
+                {
+                  "text": "Sim, gosto muito. É um bocado diferente, mas é bom.",
+                  "translation": "Yes, I like it a lot. It's a bit different, but it's good.",
+                  "feedback": "Good, but 'um bocado' might imply a slight reservation. Try to be more positive if you can.",
+                  "next": "rp-d71-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d71-node-4",
+              "npc_text": "Pois é, a Madeira é um paraíso! Se precisar de alguma coisa, já sabe onde moro. Seja bem-vindo/a!",
+              "npc_translation": "Indeed, Madeira is a paradise! If you need anything, you know where I live. Welcome!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Muito obrigado/a, Senhor José! É muito simpático da sua parte. Até breve!",
+                  "translation": "Thank you very much, Senhor José! That's very kind of you. See you soon!",
+                  "feedback": "Perfect closing! You showed gratitude and used a polite farewell."
+                },
+                {
+                  "text": "Obrigado/a! Adeus.",
+                  "translation": "Thanks! Goodbye.",
+                  "feedback": "A bit abrupt. Try to add a bit more warmth or a phrase like 'até breve' for neighbours."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Say Olá to Your Vizinho",
+          "prep": [
+            "Practice introducing yourself: 'Olá! Sou o/a {nome}, o/a novo/a vizinho/a.'",
+            "Prepare to state your origin: 'Sou de {país/cidade}.'",
+            "Practice saying how long you've been in Madeira: 'Estou cá há {tempo}.'",
+            "Rehearse expressing your enjoyment of Madeira: 'Estou a gostar imenso da Madeira.'",
+            "Remember to use 'o senhor' / 'a senhora' for polite address."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "Desculpe, o meu português ainda é um bocado fraco."
+          ],
+          "likely_responses": [
+            "Bem-vindo/a!",
+            "É de onde?",
+            "Mora cá há muito tempo?",
+            "E está a gostar da Madeira?",
+            "Se precisar de alguma coisa, é só dizer."
+          ]
+        },
+        "goals": [
+          "Introduce yourself clearly to a neighbour, stating your name and new status.",
+          "Share your country/city of origin and how long you've been in Madeira.",
+          "Express your positive feelings about living in Madeira.",
+          "Engage in a short, polite conversation with a local neighbour, using appropriate address forms."
+        ],
+        "course": {
+          "month": 3,
+          "day": 71,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Hello! I'm {name}, the new neighbour.",
+            "answer": "Olá! Sou o/a {nome}, o/a {adjetivo} vizinho/a.",
+            "source_ref": "pp-sit-d71-meeting-the-neighbours-1"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's a pleasure to meet you (polite).",
+            "answer": "É um prazer conhecê-lo/a.",
+            "source_ref": "pp-sit-d71-meeting-the-neighbours-2"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'm from {place}.",
+            "answer": "Sou de {local}.",
+            "source_ref": "pp-sit-d71-meeting-the-neighbours-3"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I've been here for {time}.",
+            "answer": "Estou cá há {tempo}.",
+            "source_ref": "pp-sit-d71-meeting-the-neighbours-4"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: neighbour",
+            "answer": "vizinho/a",
+            "source_ref": "vizinho/a"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to move house",
+            "answer": "mudar-se",
+            "source_ref": "mudar-se"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: how long (time)?",
+            "answer": "há quanto tempo?",
+            "source_ref": "há quanto tempo?"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: calm, quiet",
+            "answer": "calmo/a",
+            "source_ref": "calmo/a"
+          },
+          {
+            "id": "rv-sit-d71-meeting-the-neighbours-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d71-meeting-the-neighbours-1"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,600 @@
+{
+  "batch": 16,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T14:13:15.909Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 1,
+  "situations": [
+    {
+      "id": "sit-d168-graduation-integrated-resident",
+      "title": "Graduation: The Integrated Resident",
+      "month": 6,
+      "day": 168,
+      "week": 24,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d168-graduation-integrated-resident",
+        "title": "Graduation: The Integrated Resident",
+        "summary": "The final: a messy, multi-context, full-speed day drawing on all six months — service counters, neighbours, officialdom, hosting and the long table — the integrated-resident test.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d168-graduation-integrated-resident-1",
+            "base": "Já está tudo {status}?",
+            "translation": "Is everything {status}?",
+            "slots": [
+              {
+                "name": "status",
+                "description": "status of a task/item",
+                "options": [
+                  "tratado",
+                  "resolvido",
+                  "confirmado"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Está tudo tratado?",
+                "translation": "Is everything sorted?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d168-graduation-integrated-resident-2",
+            "base": "Poderia dar uma vista de olhos a isto, por favor?",
+            "translation": "Could you take a look at this, please?",
+            "variants": [
+              {
+                "text": "Pode dar uma olhadela a isto?",
+                "translation": "Can you take a quick look at this?",
+                "register": "informal",
+                "note": "More casual, common with peers or service staff you know."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d168-graduation-integrated-resident-3",
+            "base": "Então, quando é que nos {verbo}?",
+            "translation": "So, when are we {verb}?",
+            "slots": [
+              {
+                "name": "verbo",
+                "description": "verb of meeting/seeing",
+                "options": [
+                  "encontramos",
+                  "vemos"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Quando é que nos encontramos?",
+                "translation": "When are we meeting?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d168-graduation-integrated-resident-4",
+            "base": "Não se preocupe, eu trato disso.",
+            "translation": "Don't worry, I'll take care of it.",
+            "variants": [
+              {
+                "text": "Pode deixar, eu trato.",
+                "translation": "You can leave it, I'll handle it.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "despachar",
+            "translation": "to sort out, to deal with, to dispatch",
+            "pronunciation": "desh-PAH-shar",
+            "register": "neutral",
+            "note": "Very common in Portugal for handling tasks/bureaucracy."
+          },
+          {
+            "word": "papelada",
+            "translation": "paperwork (informal, often implies a lot or tedious)",
+            "pronunciation": "pah-peh-LAH-dah",
+            "register": "informal"
+          },
+          {
+            "word": "convívio",
+            "translation": "social gathering, fellowship",
+            "pronunciation": "kon-VEE-vee-oo",
+            "register": "neutral"
+          },
+          {
+            "word": "assunto",
+            "translation": "matter, topic, issue",
+            "pronunciation": "ah-SOON-too",
+            "register": "neutral"
+          },
+          {
+            "word": "resolver",
+            "translation": "to resolve, to solve",
+            "pronunciation": "reh-zol-VER",
+            "register": "neutral"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common term for espresso in Portugal, especially Lisbon/Madeira."
+          },
+          {
+            "word": "p'ra já",
+            "translation": "right away, immediately",
+            "pronunciation": "prah ZHAH",
+            "register": "informal",
+            "note": "Reduction of 'para já'."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d168-graduation-integrated-resident-1",
+            "title": "At the Junta de Freguesia",
+            "context": "You're at the local parish council (Junta de Freguesia) to clarify a document for your residency.",
+            "lines": [
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Bom dia. Diga lá!",
+                "translation": "Good morning. How can I help?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Bom dia. Eu queria só confirmar um assunto sobre este documento, se faz favor. É a minha prova de morada.",
+                "translation": "Good morning. I just wanted to confirm something about this document, please. It's my proof of address."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Ah, sim. Deixe-me ver... Pois é, falta aqui uma assinatura. Terá de voltar com ela já carimbada.",
+                "translation": "Ah, yes. Let me see... Right, it's missing a signature here. You'll have to come back with it already stamped."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Ah, pois. Entendido. Onde é que consigo o carimbo?",
+                "translation": "Ah, right. Understood. Where can I get the stamp?"
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Tem de ir à Conservatória do Registo Civil, ali na Rua da Carreira. Mas não se preocupe, é rápido.",
+                "translation": "You have to go to the Civil Registry Office, there on Rua da Carreira. But don't worry, it's quick."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "P'ra já! Muito obrigado pela ajuda.",
+                "translation": "Right away! Thank you very much for the help."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d168-graduation-integrated-resident-2",
+            "title": "A Quick Chat with a Neighbour",
+            "context": "You bump into your neighbour, Dona Alice, while leaving the Junta de Freguesia.",
+            "lines": [
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Ora viva! Tudo bem? A despachar a papelada, pois é?",
+                "translation": "Oh, hello! All well? Dealing with paperwork, I see?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Dona Alice! Tudo bem, sim. É mesmo isso, a tentar resolver uns assuntos.",
+                "translation": "Dona Alice! All well, yes. Exactly, trying to sort out some matters."
+              },
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Pois é, a vida do imigrante. Olha, na sexta-feira à noite vamos ter um pequeno convívio lá em casa, com um bolo do caco e poncha fresquinha. Apareça!",
+                "translation": "That's right, the immigrant's life. Look, on Friday evening we're having a small get-together at home, with bolo do caco and fresh poncha. Come along!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Que bom! Muito obrigado pelo convite, Dona Alice. Vou tentar, sim. Que horas?",
+                "translation": "How nice! Thank you very much for the invitation, Dona Alice. I'll try, yes. What time?"
+              },
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "A partir das oito, quando puder. É só chegar. Até já!",
+                "translation": "From eight o'clock, whenever you can. Just arrive. See you soon!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Navigating Portuguese Bureaucracy",
+            "body": "In Portugal, administrative processes often require multiple steps and in-person visits. It's common to be told to get a stamp, an extra document, or return another day. Patience and politeness are key. Using phrases like 'se faz favor' (please) and 'muito obrigado pela ajuda' (thank you for the help) can smooth interactions. The term 'despachar' is frequently used for sorting out such matters."
+          },
+          {
+            "title": "Madeiran Social Invitations",
+            "body": "Invitations from neighbours or friends are often informal and spontaneous. 'Apareça!' (Come along!) or 'É só chegar' (Just arrive) are common ways to extend an open invitation, without a strict RSVP. It's a sign of integration when you receive such invitations, often including local specialities like 'bolo do caco' (Madeiran flatbread) and 'poncha' (local drink)."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're trying to tie up loose ends on a busy day. You need to pick up a specific item from a local shop, but they don't have it. Then, you receive an unexpected call from the Junta de Freguesia about your document. Finally, you have to confirm your attendance at your neighbour's social gathering.",
+          "difficulty": 5,
+          "entry_node": "rp-d168-node-1",
+          "nodes": [
+            {
+              "id": "rp-d168-node-1",
+              "npc_text": "Bom dia! Posso ajudar?",
+              "npc_translation": "Good morning! Can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria saber se têm o {item} em stock, por favor.",
+                  "translation": "Good morning. I wanted to know if you have the {item} in stock, please.",
+                  "feedback": "Good, you're polite and direct. Now, choose an item to ask about.",
+                  "next": "rp-d168-node-2"
+                },
+                {
+                  "text": "Olá. Estou à procura de um {item} específico.",
+                  "translation": "Hello. I'm looking for a specific {item}.",
+                  "feedback": "Also good, slightly less formal but still clear. Now, choose an item.",
+                  "next": "rp-d168-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d168-node-2",
+              "npc_text": "Um {item}? Deixe-me verificar... Ah, lamento, mas não temos esse {item} em particular. Está esgotado de momento. Quer que veja se consigo encomendar?",
+              "npc_translation": "A {item}? Let me check... Ah, I'm sorry, but we don't have that particular {item}. It's out of stock at the moment. Do you want me to see if I can order it?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois, não vale a pena encomendar, preciso dele p'ra já. Onde é que eu poderia encontrá-lo, talvez?",
+                  "translation": "Right, no point in ordering, I need it right away. Where might I find it, perhaps?",
+                  "feedback": "Excellent use of 'p'ra já' and asking for alternatives.",
+                  "next": "rp-d168-node-3"
+                },
+                {
+                  "text": "Não, não precisa de encomendar. É urgente. Muito obrigado na mesma.",
+                  "translation": "No, no need to order. It's urgent. Thank you anyway.",
+                  "feedback": "Clear and polite, but you could try to get more information.",
+                  "next": "rp-d168-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d168-node-3",
+              "npc_text": "Hum... talvez na loja 'Tudo Mais', ali na rua de trás. Tente lá. (O seu telemóvel toca.)",
+              "npc_translation": "Hmm... perhaps at 'Tudo Mais' shop, just on the street behind. Try there. (Your phone rings.)",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado pela indicação! Tenha um bom dia. (Atende o telemóvel.)",
+                  "translation": "Thank you very much for the tip! Have a good day. (Answers the phone.)",
+                  "feedback": "Good, polite exit and transition.",
+                  "next": "rp-d168-node-4"
+                },
+                {
+                  "text": "Ah, obrigado! Vou lá ver. (Atende o telemóvel.)",
+                  "translation": "Ah, thanks! I'll go check. (Answers the phone.)",
+                  "feedback": "A bit more informal, but still effective. Good transition.",
+                  "next": "rp-d168-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d168-node-4",
+              "npc_text": "Olá, é da Junta de Freguesia. Ligamos a propósito do seu documento. Esquecemos de lhe dizer que precisa também de uma cópia do seu Cartão de Cidadão. Pode trazer hoje?",
+              "npc_translation": "Hello, it's from the Junta de Freguesia. We're calling about your document. We forgot to tell you that you also need a copy of your Citizen Card. Can you bring it today?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Pois é, claro. Já estou a caminho da Conservatória, mas passo aí depois com a cópia. Obrigado por avisar!",
+                  "translation": "Right, of course. I'm already on my way to the Registry Office, but I'll stop by afterwards with the copy. Thanks for letting me know!",
+                  "feedback": "Excellent! You've shown you're organised and proactive.",
+                  "next": "rp-d168-node-5"
+                },
+                {
+                  "text": "Ah, sim. Sem problema. Passo aí mais logo com isso. Até já.",
+                  "translation": "Ah, yes. No problem. I'll stop by later with that. See you soon.",
+                  "feedback": "Good, clear and polite. 'Mais logo' is a good choice for 'later today'.",
+                  "next": "rp-d168-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d168-node-5",
+              "npc_text": "(Desliga o telemóvel. De repente, lembra-se da Dona Alice e do convite para sexta-feira.)",
+              "npc_translation": "(You hang up the phone. Suddenly, you remember Dona Alice and the invitation for Friday.)",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Tenho de enviar uma mensagem à Dona Alice a confirmar que vou ao convívio.",
+                  "translation": "I need to send a message to Dona Alice confirming I'm going to the get-together.",
+                  "feedback": "Good, proactive social follow-up.",
+                  "next": "rp-d168-node-6"
+                },
+                {
+                  "text": "Melhor ligar à Dona Alice para confirmar a minha presença na sexta-feira.",
+                  "translation": "Better call Dona Alice to confirm my presence on Friday.",
+                  "feedback": "A call is often preferred for more personal confirmations.",
+                  "next": "rp-d168-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d168-node-6",
+              "npc_text": "(A Dona Alice responde com um 'Ótimo, ficamos à sua espera!'. Missão cumprida: burocracia e social, tudo despachado.)",
+              "npc_translation": "(Dona Alice replies with 'Great, we'll be waiting for you!'. Mission accomplished: bureaucracy and social, all sorted.)",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Integrated Resident: The Daily Hustle",
+          "prep": [
+            "Review vocabulary for administrative tasks and social interactions.",
+            "Practice polite requests and confirmations.",
+            "Mentally prepare for unexpected changes in plans."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi. Pode repetir, por favor?",
+            "Pode falar um pouco mais devagar?",
+            "Obrigado pela sua paciência."
+          ],
+          "likely_responses": [
+            "Pois é, a vida é assim!",
+            "Não se preocupe, isso resolve-se.",
+            "Quando puder, apareça."
+          ]
+        },
+        "goals": [
+          "Successfully navigate a multi-context daily scenario, including administrative and social interactions.",
+          "Demonstrate flexibility in responding to unexpected changes and requests.",
+          "Utilise appropriate register and politeness strategies in varied contexts.",
+          "Confirm social engagements and manage logistical information effectively."
+        ],
+        "course": {
+          "month": 6,
+          "day": 168,
+          "category": "custom"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is everything {status}?",
+            "answer": "Já está tudo {status}?",
+            "source_ref": "pp-sit-d168-graduation-integrated-resident-1"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Could you take a look at this, please?",
+            "answer": "Poderia dar uma vista de olhos a isto, por favor?",
+            "source_ref": "pp-sit-d168-graduation-integrated-resident-2"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: So, when are we {verb}?",
+            "answer": "Então, quando é que nos {verbo}?",
+            "source_ref": "pp-sit-d168-graduation-integrated-resident-3"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Don't worry, I'll take care of it.",
+            "answer": "Não se preocupe, eu trato disso.",
+            "source_ref": "pp-sit-d168-graduation-integrated-resident-4"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to sort out, to deal with, to dispatch",
+            "answer": "despachar",
+            "source_ref": "despachar"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: paperwork (informal, often implies a lot or tedious)",
+            "answer": "papelada",
+            "source_ref": "papelada"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: social gathering, fellowship",
+            "answer": "convívio",
+            "source_ref": "convívio"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: matter, topic, issue",
+            "answer": "assunto",
+            "source_ref": "assunto"
+          },
+          {
+            "id": "rv-sit-d168-graduation-integrated-resident-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d168-graduation-integrated-resident-1"
+          }
+        ]
+      }
+    }
+  ]
+}

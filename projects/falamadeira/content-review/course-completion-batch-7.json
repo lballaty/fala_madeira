@@ -1,0 +1,3159 @@
+{
+  "batch": 7,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:40:18.271Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d97-inviting-to-a-festa",
+      "title": "Inviting & Being Invited",
+      "month": 4,
+      "day": 97,
+      "week": 14,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d97-inviting-to-a-festa",
+        "title": "Inviting & Being Invited",
+        "summary": "Festa invitations done right: inviting neighbours, accepting warmly, asking what to bring, arriving at the right time (which is not the stated time), and thanking afterwards.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d97-inviting-to-a-festa-1",
+            "base": "Queres vir à minha festa {dia}?",
+            "translation": "Do you want to come to my party {day}?",
+            "slots": [
+              {
+                "name": "dia",
+                "description": "Day of the week",
+                "options": [
+                  "no sábado",
+                  "no domingo",
+                  "na sexta-feira"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Queres aparecer cá em casa {dia}?",
+                "translation": "Do you want to come over {day}?",
+                "register": "informal",
+                "note": "More general, less formal than 'festa'"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d97-inviting-to-a-festa-2",
+            "base": "Posso levar alguma coisa?",
+            "translation": "Can I bring something?",
+            "variants": [
+              {
+                "text": "Queres que leve alguma coisa?",
+                "translation": "Do you want me to bring something?",
+                "register": "informal"
+              },
+              {
+                "text": "Há algo que possa trazer?",
+                "translation": "Is there anything I can bring?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d97-inviting-to-a-festa-3",
+            "base": "Chega por volta das {horas}.",
+            "translation": "Arrive around {time}.",
+            "slots": [
+              {
+                "name": "horas",
+                "description": "Time of day",
+                "options": [
+                  "oito",
+                  "nove",
+                  "sete e meia"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d97-inviting-to-a-festa-4",
+            "base": "Muito obrigado(a) pelo convite!",
+            "translation": "Thank you very much for the invitation!"
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "festa",
+            "translation": "party, festival",
+            "pronunciation": "FESH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "convite",
+            "translation": "invitation",
+            "pronunciation": "kon-VEE-tuh",
+            "register": "neutral"
+          },
+          {
+            "word": "vizinho/vizinha",
+            "translation": "neighbour (m/f)",
+            "pronunciation": "vee-ZEE-nyoo / vee-ZEE-nyah",
+            "register": "neutral"
+          },
+          {
+            "word": "aparecer",
+            "translation": "to show up, to come (informal)",
+            "pronunciation": "ah-pah-reh-SER",
+            "register": "informal"
+          },
+          {
+            "word": "poncha",
+            "translation": "Madeiran alcoholic drink",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Madeira regionalism"
+          },
+          {
+            "word": "bolo do caco",
+            "translation": "Madeiran flatbread",
+            "pronunciation": "BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "Madeira regionalism"
+          },
+          {
+            "word": "espetada",
+            "translation": "Madeiran beef skewer",
+            "pronunciation": "esh-peh-TAH-dah",
+            "register": "neutral",
+            "note": "Madeira regionalism"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d97-inviting-to-a-festa-1",
+            "title": "Festa Invitation",
+            "context": "Maria invites her neighbour, João, to a small festa at her home in Madeira.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Olá, João! Tudo bem? Olha, estamos a organizar uma festinha cá em casa no sábado. Queres vir?",
+                "translation": "Hi, João! How are you? Look, we're organizing a small party here at home on Saturday. Do you want to come?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Ah, Maria, que bom! Claro que sim! A que horas é?",
+                "translation": "Oh, Maria, how nice! Of course! What time is it?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Olha, começa p'raí às sete, mas chega por volta das oito, nove… Sabes como é!",
+                "translation": "Look, it starts around seven, but arrive around eight, nine... You know how it is!"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Pois, pois! E queres que leve alguma coisa? Um bolo do caco, talvez?",
+                "translation": "Right, right! And do you want me to bring anything? A bolo do caco, maybe?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Não te preocupes! Mas se quiseres, uma garrafa de vinho é sempre bem-vinda. Ou um sumo p'ra criançada.",
+                "translation": "Don't worry! But if you want, a bottle of wine is always welcome. Or some juice for the kids."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Combinado! Muito obrigado pelo convite, Maria! Até sábado!",
+                "translation": "Deal! Thank you very much for the invitation, Maria! See you Saturday!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Portuguese Time (Hora Portuguesa)",
+            "body": "In Portugal, especially in informal social gatherings, it's common for guests to arrive later than the stated time. If a party is advertised for 7 PM, arriving at 8 PM or even 9 PM is often perfectly acceptable, sometimes even expected. This is known as 'hora portuguesa' (Portuguese time). It allows the hosts extra time for last-minute preparations without feeling rushed and avoids guests arriving before everything is ready."
+          },
+          {
+            "title": "Bringing a Small Gift to a Festa",
+            "body": "While not strictly obligatory, it's a kind gesture to bring a small gift when invited to someone's home for a party. This could be a bottle of wine, a dessert, some local Madeiran speciality like a bolo do caco, or a small box of chocolates. The host will usually say 'Não te preocupes!' (Don't worry!) but a small contribution is almost always appreciated and shows good manners."
+          }
+        ],
+        "roleplay": {
+          "scenario": "Your neighbour, Dona Laura, has just invited you to a small gathering at her house this Sunday. You want to accept politely and offer to bring something.",
+          "difficulty": 2,
+          "entry_node": "rp-d97-node-1",
+          "nodes": [
+            {
+              "id": "rp-d97-node-1",
+              "npc_text": "Olá! Olha, no domingo vamos ter uma pequena festa lá em casa. Queres aparecer?",
+              "npc_translation": "Hi! Look, on Sunday we're having a small party at our place. Do you want to come?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, claro! Que ótimo! A que horas?",
+                  "translation": "Yes, of course! How great! What time?",
+                  "feedback": "Good, you accepted and asked for the time. This is a natural next step.",
+                  "next": "rp-d97-node-2"
+                },
+                {
+                  "text": "Ah, que pena, não posso. Tenho um compromisso.",
+                  "translation": "Oh, what a shame, I can't. I have an engagement.",
+                  "feedback": "A polite refusal. It's good to have a reason, even vague.",
+                  "next": "rp-d97-node-end-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-d97-node-2",
+              "npc_text": "Olha, a festa começa p'raí às sete, mas não te preocupes em chegar logo. Aparece por volta das oito, oito e meia.",
+              "npc_translation": "Look, the party starts around seven, but don't worry about arriving right away. Come around eight, half past eight.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Combinado! E queres que leve alguma coisa? Um sumo ou um bolo?",
+                  "translation": "Understood! And do you want me to bring anything? A juice or a cake?",
+                  "feedback": "Excellent! You confirmed the time and offered to bring something, with specific suggestions.",
+                  "next": "rp-d97-node-3"
+                },
+                {
+                  "text": "Está bem! Muito obrigado pelo convite!",
+                  "translation": "Okay! Thank you very much for the invitation!",
+                  "feedback": "A good acceptance, but you missed the chance to offer to bring something, which is a common courtesy.",
+                  "next": "rp-d97-node-end-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d97-node-3",
+              "npc_text": "Não, não te preocupes! Mas se insistes, um bom vinho madeirense é sempre bem-vindo. Ou uns rebuçados de mel.",
+              "npc_translation": "No, don't worry! But if you insist, a good Madeiran wine is always welcome. Or some honey candies.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Perfeito! Então levo um vinho. Até domingo, Dona Laura!",
+                  "translation": "Perfect! I'll bring a wine then. See you Sunday, Dona Laura!",
+                  "feedback": "Great! You accepted the suggestion and confirmed. Very natural ending.",
+                  "next": "rp-d97-node-end-3"
+                },
+                {
+                  "text": "Está bem, não levo nada então. Muito obrigado!",
+                  "translation": "Okay, I won't bring anything then. Thank you very much!",
+                  "feedback": "You could have insisted a little more, but this is still polite. The host's initial 'não te preocupes' is often a polite refusal.",
+                  "next": "rp-d97-node-end-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d97-node-end-1",
+              "npc_text": "Ah, que pena! Fica para a próxima então. Um abraço!",
+              "npc_translation": "Oh, what a shame! Next time then. A hug!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d97-node-end-2",
+              "npc_text": "De nada! Até domingo!",
+              "npc_translation": "You're welcome! See you Sunday!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d97-node-end-3",
+              "npc_text": "Até domingo! Obrigada!",
+              "npc_translation": "See you Sunday! Thank you!",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Accepting a Festa Invitation",
+          "prep": [
+            "Review phrases for accepting invitations and asking about bringing something.",
+            "Practice saying 'Muito obrigado(a) pelo convite!' with enthusiasm.",
+            "Think about common Madeiran items you could offer to bring (e.g., bolo do caco, poncha, a bottle of wine)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "Obrigado(a)!"
+          ],
+          "likely_responses": [
+            "De nada!",
+            "Até lá!",
+            "Não te preocupes!"
+          ]
+        },
+        "goals": [
+          "Accept a social invitation from a neighbour in a polite and natural way.",
+          "Offer to bring something to a party, demonstrating cultural awareness.",
+          "Understand and respond appropriately to 'Portuguese time' indications for arrival."
+        ],
+        "course": {
+          "month": 4,
+          "day": 97,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do you want to come to my party {day}?",
+            "answer": "Queres vir à minha festa {dia}?",
+            "source_ref": "pp-sit-d97-inviting-to-a-festa-1"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can I bring something?",
+            "answer": "Posso levar alguma coisa?",
+            "source_ref": "pp-sit-d97-inviting-to-a-festa-2"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Arrive around {time}.",
+            "answer": "Chega por volta das {horas}.",
+            "source_ref": "pp-sit-d97-inviting-to-a-festa-3"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Thank you very much for the invitation!",
+            "answer": "Muito obrigado(a) pelo convite!",
+            "source_ref": "pp-sit-d97-inviting-to-a-festa-4"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: party, festival",
+            "answer": "festa",
+            "source_ref": "festa"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: invitation",
+            "answer": "convite",
+            "source_ref": "convite"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: neighbour (m/f)",
+            "answer": "vizinho/vizinha",
+            "source_ref": "vizinho/vizinha"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to show up, to come (informal)",
+            "answer": "aparecer",
+            "source_ref": "aparecer"
+          },
+          {
+            "id": "rv-sit-d97-inviting-to-a-festa-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d97-inviting-to-a-festa-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d98-week-14-stress-test",
+      "title": "Week 14 Stress Test",
+      "month": 4,
+      "day": 98,
+      "week": 14,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d98-week-14-stress-test",
+        "title": "Week 14 Stress Test",
+        "summary": "A festival weekend end-to-end: getting invited, planning the day, navigating the arraial crowd, festival small talk and the goodbyes — month-4 culture under pressure.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d98-week-14-stress-test-1",
+            "base": "Vais ao arraial {location} este fim de semana?",
+            "translation": "Are you going to the festival at {location} this weekend?",
+            "slots": [
+              {
+                "name": "location",
+                "description": "Festival location",
+                "options": [
+                  "da Nossa Senhora do Monte",
+                  "de São Roque",
+                  "da Ponta do Sol",
+                  "aqui no bairro"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não queres ir ao arraial {location} este fim de semana?",
+                "translation": "Don't you want to go to the festival at {location} this weekend?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d98-week-14-stress-test-2",
+            "base": "Está uma {crowd_level} de gente!",
+            "translation": "There's a {crowd_level} of people!",
+            "slots": [
+              {
+                "name": "crowd_level",
+                "description": "Level of crowd",
+                "options": [
+                  "multidão",
+                  "enchente",
+                  "confusão tremenda"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Isto está cheio de gente, não está?",
+                "translation": "This is full of people, isn't it?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d98-week-14-stress-test-3",
+            "base": "Já provaste a {food_item}?",
+            "translation": "Have you tried the {food_item} yet?",
+            "slots": [
+              {
+                "name": "food_item",
+                "description": "Festival food item",
+                "options": [
+                  "espetada",
+                  "poncha",
+                  "bolo do caco com manteiga de alho",
+                  "carne de vinho e alhos"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d98-week-14-stress-test-4",
+            "base": "Até à próxima!",
+            "translation": "See you next time!",
+            "variants": [
+              {
+                "text": "Até já!",
+                "translation": "See you soon!",
+                "register": "informal"
+              },
+              {
+                "text": "Fica bem!",
+                "translation": "Take care!",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "arraial",
+            "translation": "festival / fair (religious or local)",
+            "pronunciation": "uh-RRYE-al",
+            "register": "neutral",
+            "note": "Common term in Portugal, especially Madeira, for local religious festivals."
+          },
+          {
+            "word": "enchente",
+            "translation": "crowd / throng (literally 'flood')",
+            "pronunciation": "en-SHEN-tee",
+            "register": "informal",
+            "note": "Used to describe a very large crowd of people."
+          },
+          {
+            "word": "poncha",
+            "translation": "poncha (traditional Madeiran drink)",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Madeiran alcoholic drink made with aguardente (sugarcane rum), honey, and lemon juice."
+          },
+          {
+            "word": "espetada",
+            "translation": "espetada (Madeiran beef skewer)",
+            "pronunciation": "esh-puh-TAH-duh",
+            "register": "neutral",
+            "note": "Traditional Madeiran dish of beef cubes on a laurel skewer, grilled."
+          },
+          {
+            "word": "bolo do caco",
+            "translation": "bolo do caco (Madeiran flatbread)",
+            "pronunciation": "BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "Traditional Madeiran wheat flour bread, often served with garlic butter."
+          },
+          {
+            "word": "imenso",
+            "translation": "immense / a lot",
+            "pronunciation": "ee-MEN-soo",
+            "register": "informal",
+            "note": "Common in pt-PT for 'very much' or 'a lot'."
+          },
+          {
+            "word": "um bocado",
+            "translation": "a bit / a little",
+            "pronunciation": "oom boo-KAH-doo",
+            "register": "informal",
+            "note": "Common in pt-PT for 'a little bit'."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d98-week-14-stress-test-1",
+            "title": "Invitation to the Arraial",
+            "context": "You meet your neighbour, Dona Maria, near the local market. She's asking about your weekend plans.",
+            "lines": [
+              {
+                "speaker": "Dona Maria",
+                "voice_type": "older",
+                "text": "Olá! Tudo bem? Vais ao arraial este fim de semana, não vais?",
+                "translation": "Hello! All good? You're going to the festival this weekend, aren't you?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Olá, Dona Maria! Sim, estou a pensar ir. Qual é que é o melhor dia?",
+                "translation": "Hello, Dona Maria! Yes, I'm thinking of going. Which is the best day?"
+              },
+              {
+                "speaker": "Dona Maria",
+                "voice_type": "older",
+                "text": "Ah, o sábado à noite é sempre o mais animado. Há mais música e mais gente.",
+                "translation": "Ah, Saturday night is always the liveliest. There's more music and more people."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Pois, imagino. E a comida? O que é que me aconselha a provar?",
+                "translation": "Right, I imagine. And the food? What do you advise me to try?"
+              },
+              {
+                "speaker": "Dona Maria",
+                "voice_type": "older",
+                "text": "Tens que comer uma espetada e um bolo do caco, claro! E uma poncha para refrescar.",
+                "translation": "You have to eat an espetada and a bolo do caco, of course! And a poncha to refresh."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Hmm, parece-me bem! Obrigado pelas dicas, Dona Maria.",
+                "translation": "Hmm, sounds good! Thanks for the tips, Dona Maria."
+              },
+              {
+                "speaker": "Dona Maria",
+                "voice_type": "older",
+                "text": "De nada! Se me vires lá, diz olá! Fica bem!",
+                "translation": "You're welcome! If you see me there, say hello! Take care!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d98-week-14-stress-test-2",
+            "title": "Festival Small Talk",
+            "context": "You are at a crowded arraial, trying to get a poncha. You bump into your friend, Pedro.",
+            "lines": [
+              {
+                "speaker": "Pedro",
+                "voice_type": "local",
+                "text": "Ora, quem é que eu encontro aqui! Tudo bem? Isto está uma enchente, não está?",
+                "translation": "Well, who do I find here! All good? This is packed, isn't it?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Pedro! Olá! Pois é, está uma confusão tremenda! Estou há imenso tempo à espera de uma poncha.",
+                "translation": "Pedro! Hello! That's right, it's incredibly crowded! I've been waiting for a poncha for ages."
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "local",
+                "text": "Eu sei, é sempre assim. Mas vale a pena. Já provaste a espetada?",
+                "translation": "I know, it's always like that. But it's worth it. Have you tried the espetada yet?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Ainda não, mas está nos planos. A música está boa, não está?",
+                "translation": "Not yet, but it's in the plans. The music is good, isn't it?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "local",
+                "text": "Está sim! É pena que seja tão difícil andar por aqui. Queres ir apanhar um ar lá fora um bocado?",
+                "translation": "It is! It's a shame it's so difficult to walk around here. Do you want to go get some fresh air outside for a bit?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Sim, boa ideia! Acabando a poncha, vamos.",
+                "translation": "Yes, good idea! Once I finish the poncha, let's go."
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "local",
+                "text": "Combinado. Até já, então.",
+                "translation": "Deal. See you in a bit, then."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Madeiran Arraial",
+            "body": "An 'arraial' in Madeira is a traditional local festival, often associated with a religious celebration (like a saint's day). They are vibrant community events featuring live music (often traditional 'bandas filarmónicas' or folk groups), food stalls selling Madeiran specialties like espetada, bolo do caco, and carne de vinho e alhos, and of course, poncha. They are incredibly popular and can get very crowded, especially on Saturday nights. It's a key part of Madeiran social life and a great place to experience local culture, meet friends, and enjoy the festive atmosphere."
+          },
+          {
+            "title": "Navigating Crowds and Small Talk",
+            "body": "At an arraial, expect large crowds ('enchentes' or 'confusões'). It's common to comment on the number of people. Small talk often revolves around the food, drinks, music, and the general atmosphere. Don't be afraid to strike up a conversation with locals; they are usually very friendly. 'Pois é' is a common and natural way to agree or acknowledge what someone has said in European Portuguese."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a bustling arraial in Madeira. You've just finished a bolo do caco and are looking for a drink. Your friend, Sofia, spots you.",
+          "difficulty": 3,
+          "entry_node": "rp-d98-node-1",
+          "nodes": [
+            {
+              "id": "rp-d98-node-1",
+              "npc_text": "Olá! Que surpresa boa! Estás a gostar do arraial?",
+              "npc_translation": "Hello! What a nice surprise! Are you enjoying the festival?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, estou a gostar imenso! Está muita gente, não está?",
+                  "translation": "Yes, I'm enjoying it immensely! It's very crowded, isn't it?",
+                  "feedback": "Great start, acknowledging the crowd is very natural.",
+                  "next": "rp-d98-node-2"
+                },
+                {
+                  "text": "Está bom, mas está um bocado cheio. Onde é que posso arranjar uma poncha?",
+                  "translation": "It's good, but it's a bit full. Where can I get a poncha?",
+                  "feedback": "Good question! Direct and practical for the situation.",
+                  "next": "rp-d98-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d98-node-2",
+              "npc_text": "Pois é, está uma enchente! É normal, é dos arraiais mais populares. Já provaste a espetada daqui?",
+              "npc_translation": "That's right, it's packed! It's normal, it's one of the most popular festivals. Have you tried the espetada from here yet?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ainda não, mas parece deliciosa. E tu, o que é que já comeste?",
+                  "translation": "Not yet, but it looks delicious. And you, what have you eaten already?",
+                  "feedback": "Excellent, turning the question back to Sofia keeps the conversation flowing.",
+                  "next": "rp-d98-node-4"
+                },
+                {
+                  "text": "Não, já comi um bolo do caco. Agora queria uma bebida para refrescar.",
+                  "translation": "No, I already ate a bolo do caco. Now I want a drink to refresh.",
+                  "feedback": "Good, you're stating your current need. Sofia will help.",
+                  "next": "rp-d98-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d98-node-3",
+              "npc_text": "Claro, há uma banca ali mais à frente que faz ponchas muito boas. Queres que te acompanhe?",
+              "npc_translation": "Of course, there's a stall a bit further ahead that makes very good ponchas. Do you want me to go with you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor! Assim não me perco nesta multidão.",
+                  "translation": "Yes, please! That way I won't get lost in this crowd.",
+                  "feedback": "Polite and practical, accepting the help is a good social move.",
+                  "next": "rp-d98-node-5"
+                },
+                {
+                  "text": "Não é preciso, obrigado/a. Mas obrigado/a pela dica!",
+                  "translation": "No need, thanks. But thanks for the tip!",
+                  "feedback": "Polite refusal, but you might miss out on more interaction.",
+                  "next": "rp-d98-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d98-node-4",
+              "npc_text": "Eu já comi uma espetada e umas lapas. Tudo uma delícia! Mas está mesmo difícil falar com este barulho.",
+              "npc_translation": "I've already eaten an espetada and some limpets. All delicious! But it's really hard to talk with this noise.",
+              "npc_voice_type": "noisy",
+              "options": [
+                {
+                  "text": "Pois é, o barulho é imenso. Talvez seja melhor ir para um sítio mais calmo.",
+                  "translation": "That's right, the noise is immense. Maybe it's better to go to a quieter place.",
+                  "feedback": "Good observation and suggestion, showing you're engaged.",
+                  "next": "rp-d98-node-5"
+                },
+                {
+                  "text": "Sim, e a fila para as bebidas é enorme. Acho que vou para casa.",
+                  "translation": "Yes, and the queue for drinks is huge. I think I'm going home.",
+                  "feedback": "A bit abrupt, but understandable if you're tired of the crowd.",
+                  "next": "rp-d98-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d98-node-5",
+              "npc_text": "Boa ideia! Vamos lá para a zona dos bancos, que é mais tranquilo. Assim podemos conversar melhor. Anda!",
+              "npc_translation": "Good idea! Let's go to the seating area, it's calmer there. That way we can talk better. Come on!",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "rp-d98-node-6",
+              "npc_text": "Ah, que pena! Mas percebo. Então, até à próxima! Fica bem!",
+              "npc_translation": "Ah, what a shame! But I understand. Well, see you next time! Take care!",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Festival Explorer",
+          "prep": [
+            "Review the vocabulary for festival food and drinks.",
+            "Practice asking and answering about plans for the weekend.",
+            "Rehearse phrases for commenting on crowds and suggesting activities.",
+            "Familiarize yourself with polite ways to agree ('Pois é') and say goodbye."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Obrigado/a!"
+          ],
+          "likely_responses": [
+            "Sim, está imensa gente!",
+            "Já provaste a poncha?",
+            "Está muito bom, não está?",
+            "Até à próxima!"
+          ]
+        },
+        "goals": [
+          "Understand and respond to invitations to local festivals.",
+          "Engage in small talk about festival atmosphere, food, and drinks.",
+          "Comment on crowd levels and suggest moving to a quieter spot.",
+          "Use common Madeiran expressions for agreement and farewells in a social context."
+        ],
+        "course": {
+          "month": 4,
+          "day": 98,
+          "category": "custom"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d98-week-14-stress-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Are you going to the festival at {location} this weekend?",
+            "answer": "Vais ao arraial {location} este fim de semana?",
+            "source_ref": "pp-sit-d98-week-14-stress-test-1"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: There's a {crowd_level} of people!",
+            "answer": "Está uma {crowd_level} de gente!",
+            "source_ref": "pp-sit-d98-week-14-stress-test-2"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Have you tried the {food_item} yet?",
+            "answer": "Já provaste a {food_item}?",
+            "source_ref": "pp-sit-d98-week-14-stress-test-3"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: See you next time!",
+            "answer": "Até à próxima!",
+            "source_ref": "pp-sit-d98-week-14-stress-test-4"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: festival / fair (religious or local)",
+            "answer": "arraial",
+            "source_ref": "arraial"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: crowd / throng (literally 'flood')",
+            "answer": "enchente",
+            "source_ref": "enchente"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: poncha (traditional Madeiran drink)",
+            "answer": "poncha",
+            "source_ref": "poncha"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espetada (Madeiran beef skewer)",
+            "answer": "espetada",
+            "source_ref": "espetada"
+          },
+          {
+            "id": "rv-sit-d98-week-14-stress-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d98-week-14-stress-test-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d99-espetada-night",
+      "title": "Espetada Night",
+      "month": 4,
+      "day": 99,
+      "week": 15,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d99-espetada-night",
+        "title": "Espetada Night",
+        "summary": "Dinner at a casa de pasto: ordering espetada em pau de louro, milho frito and salada, sharing dishes, asking for more bolo do caco, and the long-table conversation around it.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d99-espetada-night-1",
+            "base": "Queria uma {dish}, por favor.",
+            "translation": "I'd like a {dish}, please.",
+            "slots": [
+              {
+                "name": "dish",
+                "description": "Type of dish",
+                "options": [
+                  "espetada em pau de louro",
+                  "dose de milho frito",
+                  "salada mista"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Eu queria uma {dish}.",
+                "translation": "I would like a {dish}.",
+                "register": "neutral",
+                "note": "Slightly less direct, but still polite."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d99-espetada-night-2",
+            "base": "Podia trazer mais {item}, por favor?",
+            "translation": "Could you bring more {item}, please?",
+            "slots": [
+              {
+                "name": "item",
+                "description": "Additional food item",
+                "options": [
+                  "bolo do caco",
+                  "milho frito"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Pode trazer mais {item}?",
+                "translation": "Can you bring more {item}?",
+                "register": "informal",
+                "note": "More informal, common with 'tu' address."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d99-espetada-night-3",
+            "base": "Está muito {quality}!",
+            "translation": "It's very {quality}!",
+            "slots": [
+              {
+                "name": "quality",
+                "description": "Quality adjective for food",
+                "options": [
+                  "bom",
+                  "saboroso",
+                  "tenro",
+                  "delicioso"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Está uma delícia!",
+                "translation": "It's a delight!",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d99-espetada-night-4",
+            "base": "Vamos dividir {dish}?",
+            "translation": "Shall we share {dish}?",
+            "slots": [
+              {
+                "name": "dish",
+                "description": "Dish to share",
+                "options": [
+                  "a salada",
+                  "o milho frito"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d99-espetada-night-5",
+            "base": "Pois é, está mesmo {quality}.",
+            "translation": "Indeed, it's really {quality}.",
+            "slots": [
+              {
+                "name": "quality",
+                "description": "Quality adjective for food",
+                "options": [
+                  "bom",
+                  "delicioso"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "espetada",
+            "translation": "skewered meat",
+            "pronunciation": "esh-peh-TAH-dah",
+            "register": "neutral",
+            "note": "Traditional Madeiran dish, usually beef on a laurel stick."
+          },
+          {
+            "word": "pau de louro",
+            "translation": "laurel stick",
+            "pronunciation": "pow dih LOH-roo",
+            "register": "neutral",
+            "note": "Used as the skewer for traditional Madeiran espetada."
+          },
+          {
+            "word": "milho frito",
+            "translation": "fried cornmeal cubes",
+            "pronunciation": "MEEL-yoo FREE-too",
+            "register": "neutral",
+            "note": "A common Madeiran side dish, often served with espetada."
+          },
+          {
+            "word": "bolo do caco",
+            "translation": "Madeiran flatbread",
+            "pronunciation": "BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "Traditional Madeiran bread, often served with garlic butter."
+          },
+          {
+            "word": "casa de pasto",
+            "translation": "traditional eatery",
+            "pronunciation": "KAH-zah dih PASH-too",
+            "register": "neutral",
+            "note": "A type of unpretentious, traditional Portuguese restaurant."
+          },
+          {
+            "word": "tenro",
+            "translation": "tender",
+            "pronunciation": "TEN-roo",
+            "register": "neutral",
+            "note": "Commonly used to describe meat."
+          },
+          {
+            "word": "p'ra já",
+            "translation": "coming right up / at once",
+            "pronunciation": "prah ZHAH",
+            "register": "informal",
+            "note": "Common reduction of 'para já', used by service staff."
+          },
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common term for an espresso coffee in Portugal."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d99-espetada-night-1",
+            "title": "Dinner at the Casa de Pasto",
+            "context": "At a busy traditional Madeiran restaurant, a group of friends and neighbours are having dinner. The waiter is taking their order.",
+            "lines": [
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Boa noite. Já decidiram o que vão comer?",
+                "translation": "Good evening. Have you decided what you're going to eat?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa noite! Sim, eu queria uma espetada em pau de louro, por favor. E uma dose de milho frito para a mesa.",
+                "translation": "Good evening! Yes, I'd like a laurel-stick espetada, please. And a portion of fried cornmeal for the table."
+              },
+              {
+                "speaker": "Vizinha",
+                "voice_type": "older",
+                "text": "Ah, e eu queria só uma salada mista. E mais bolo do caco para todos, sim?",
+                "translation": "Oh, and I'd just like a mixed salad. And more bolo do caco for everyone, yes?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "P'ra já! E para beber?",
+                "translation": "Coming right up! And to drink?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Para mim, um copo de vinho da casa. E a espetada está a ficar mesmo tenra, esta noite!",
+                "translation": "For me, a glass of house wine. And the espetada is getting really tender tonight!"
+              },
+              {
+                "speaker": "Vizinha",
+                "voice_type": "older",
+                "text": "Pois é, está uma delícia! Vamos dividir a salada, depois?",
+                "translation": "Indeed, it's delicious! Shall we share the salad, later?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Claro! E o milho frito também, se sobrar. Está muito saboroso.",
+                "translation": "Of course! And the fried cornmeal too, if there's any left. It's very tasty."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Espetada and Sharing in Madeira",
+            "body": "Espetada em pau de louro is a quintessential Madeiran dish. Traditionally, beef cubes are skewered onto a laurel (louro) stick, which imparts a unique flavour, and grilled over charcoal. It's common for side dishes like milho frito (fried cornmeal cubes) and bolo do caco (Madeiran flatbread with garlic butter) to be ordered 'para a mesa' (for the table) and shared amongst diners. This communal eating style is a big part of the dining experience in a 'casa de pasto' (traditional eatery)."
+          },
+          {
+            "title": "Polite Requests and Reductions",
+            "body": "In Portugal, 'queria' (I would like) and 'podia trazer' (could you bring) are polite and common ways to order or make requests, even in informal settings like a local restaurant. You'll also often hear reductions like 'p'ra já' (for now/coming right up) from service staff, which is a natural part of spoken Portuguese in Madeira."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local Madeiran 'casa de pasto' with a friend. The waiter approaches to take your order.",
+          "difficulty": 3,
+          "entry_node": "rp-d99-node-1",
+          "nodes": [
+            {
+              "id": "rp-d99-node-1",
+              "npc_text": "Boa noite! O que vão querer hoje?",
+              "npc_translation": "Good evening! What will you have today?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria uma espetada em pau de louro, por favor.",
+                  "translation": "I'd like a laurel-stick espetada, please.",
+                  "feedback": "Excellent, polite and specific! Remember 'em pau de louro' for the authentic Madeiran touch.",
+                  "next": "rp-d99-node-2"
+                },
+                {
+                  "text": "Vou querer só uma salada mista.",
+                  "translation": "I'll just have a mixed salad.",
+                  "feedback": "Good, clear order. Now try to add a side dish for the table!",
+                  "next": "rp-d99-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d99-node-2",
+              "npc_text": "Ótima escolha! E alguma coisa para acompanhar, ou para a mesa?",
+              "npc_translation": "Great choice! And anything to go with it, or for the table?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, uma dose de milho frito para a mesa, por favor.",
+                  "translation": "Yes, a portion of fried cornmeal for the table, please.",
+                  "feedback": "Perfeito! 'Para a mesa' is exactly how you'd order shared dishes.",
+                  "next": "rp-d99-node-4"
+                },
+                {
+                  "text": "Não, está bom assim, obrigado.",
+                  "translation": "No, that's fine, thank you.",
+                  "feedback": "That's fine, but in Madeira, sharing is caring! Try ordering a side next time.",
+                  "next": "rp-d99-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d99-node-3",
+              "npc_text": "Uma salada mista. Mais alguma coisa?",
+              "npc_translation": "A mixed salad. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Podia trazer também bolo do caco para a mesa?",
+                  "translation": "Could you also bring bolo do caco for the table?",
+                  "feedback": "Very good! 'Podia trazer' is a polite way to ask, and 'bolo do caco' is a must!",
+                  "next": "rp-d99-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d99-node-4",
+              "npc_text": "P'ra já! Em breve a vossa comida está a chegar.",
+              "npc_translation": "Coming right up! Your food will be arriving soon.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado!",
+                  "translation": "Thank you very much!",
+                  "feedback": "Perfect, a polite and natural response. Enjoy your meal!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order Espetada and Sides",
+          "prep": [
+            "Practice ordering an 'espetada em pau de louro' using 'queria'.",
+            "Rehearse asking for shared side dishes like 'milho frito' or 'bolo do caco' with 'para a mesa'.",
+            "Prepare to express satisfaction with the food using phrases like 'está muito bom'."
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode repetir?",
+            "Não percebi, pode falar mais devagar?",
+            "Só queria isto, obrigado."
+          ],
+          "likely_responses": [
+            "Pois é, está uma maravilha!",
+            "A espetada está sempre boa aqui.",
+            "Mais alguma coisa, senhores?"
+          ]
+        },
+        "goals": [
+          "Order a main course and a shared side dish politely in a Madeiran restaurant.",
+          "Ask for more of a specific item (e.g., bread) for the table.",
+          "Express satisfaction with the food's quality using appropriate adjectives."
+        ],
+        "course": {
+          "month": 4,
+          "day": 99,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d99-espetada-night-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like a {dish}, please.",
+            "answer": "Queria uma {dish}, por favor.",
+            "source_ref": "pp-sit-d99-espetada-night-1"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Could you bring more {item}, please?",
+            "answer": "Podia trazer mais {item}, por favor?",
+            "source_ref": "pp-sit-d99-espetada-night-2"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's very {quality}!",
+            "answer": "Está muito {quality}!",
+            "source_ref": "pp-sit-d99-espetada-night-3"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Shall we share {dish}?",
+            "answer": "Vamos dividir {dish}?",
+            "source_ref": "pp-sit-d99-espetada-night-4"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: skewered meat",
+            "answer": "espetada",
+            "source_ref": "espetada"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: laurel stick",
+            "answer": "pau de louro",
+            "source_ref": "pau de louro"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fried cornmeal cubes",
+            "answer": "milho frito",
+            "source_ref": "milho frito"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Madeiran flatbread",
+            "answer": "bolo do caco",
+            "source_ref": "bolo do caco"
+          },
+          {
+            "id": "rv-sit-d99-espetada-night-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d99-espetada-night-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d100-ordering-like-a-local",
+      "title": "Ordering Like a Local",
+      "month": 4,
+      "day": 100,
+      "week": 15,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d100-ordering-like-a-local",
+        "title": "Ordering Like a Local",
+        "summary": "Menu mastery Madeira-style: lapas grelhadas, bife de atum, prego no bolo do caco, picado to share — asking how dishes come, what the house does well, and ordering with confidence.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival",
+          "track-host"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d100-ordering-like-a-local-1",
+            "base": "O que é que {prato} traz?",
+            "translation": "What does {dish} come with?",
+            "slots": [
+              {
+                "name": "prato",
+                "description": "A dish name",
+                "options": [
+                  "o picado",
+                  "o bife de atum",
+                  "as lapas",
+                  "o prego no bolo do caco"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Como é que vem o/a {prato}?",
+                "translation": "How does the {dish} come?",
+                "register": "neutral",
+                "note": "A slightly more general way to ask about preparation or accompaniments."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d100-ordering-like-a-local-2",
+            "base": "Queria um/uma {prato}, por favor.",
+            "translation": "I'd like a {dish}, please.",
+            "slots": [
+              {
+                "name": "prato",
+                "description": "A dish name",
+                "options": [
+                  "picado",
+                  "bife de atum",
+                  "espetada",
+                  "prego no bolo do caco",
+                  "poncha",
+                  "bica"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Vou querer um/uma {prato}, por favor.",
+                "translation": "I'll have a {dish}, please.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d100-ordering-like-a-local-3",
+            "base": "Qual é a especialidade da casa?",
+            "translation": "What's the house specialty?",
+            "variants": [
+              {
+                "text": "O que é que me recomenda?",
+                "translation": "What do you recommend?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d100-ordering-like-a-local-4",
+            "base": "É para partilhar?",
+            "translation": "Is it for sharing?",
+            "variants": [
+              {
+                "text": "Dá para partilhar?",
+                "translation": "Is it enough to share?",
+                "register": "informal",
+                "note": "More informal, often used when asking about portion size for sharing."
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "lapas grelhadas",
+            "translation": "grilled limpets",
+            "pronunciation": "LAH-pash greh-LYAH-dash",
+            "register": "neutral",
+            "note": "A typical Madeiran seafood starter."
+          },
+          {
+            "word": "bife de atum",
+            "translation": "tuna steak",
+            "pronunciation": "BEE-fuh dee ah-TOOM",
+            "register": "neutral",
+            "note": "A very popular dish in Madeira, often served with milho frito."
+          },
+          {
+            "word": "prego no bolo do caco",
+            "translation": "steak sandwich on bolo do caco bread",
+            "pronunciation": "PREH-goo noh BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "A Madeiran specialty: thinly sliced steak, sometimes with ham and cheese, served in warm bolo do caco bread with garlic butter."
+          },
+          {
+            "word": "picado",
+            "translation": "diced meat dish",
+            "pronunciation": "pee-KAH-doo",
+            "register": "neutral",
+            "note": "A Madeiran dish of diced beef or octopus, fried with garlic, served with fries, usually for sharing."
+          },
+          {
+            "word": "espetada",
+            "translation": "meat skewer",
+            "pronunciation": "esh-peh-TAH-dah",
+            "register": "neutral",
+            "note": "Traditional Madeiran beef skewer cooked over embers, often on a laurel stick."
+          },
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeiran regional word for 'batata' (potato)."
+          },
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common word for a short black coffee (espresso) in Portugal."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d100-ordering-like-a-local-1",
+            "title": "Ordering Lunch",
+            "context": "A customer is ordering lunch at a traditional Madeiran restaurant.",
+            "lines": [
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Boa tarde! Já decidiu o que vai comer?",
+                "translation": "Good afternoon! Have you decided what you're going to eat?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde! Estou um bocado indeciso. O que é que me recomenda hoje?",
+                "translation": "Good afternoon! I'm a bit undecided. What do you recommend today?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Bem, temos um bife de atum fresquinho, que está uma maravilha. Ou se preferir algo mais tradicional, o picado de carne é sempre uma boa opção.",
+                "translation": "Well, we have a very fresh tuna steak, which is wonderful. Or if you prefer something more traditional, the beef picado is always a good option."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "O picado é para partilhar, certo?",
+                "translation": "The picado is for sharing, right?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Sim, o picado normalmente é para duas pessoas. Traz carne de vaca aos cubos, com batata frita e um molho de alho.",
+                "translation": "Yes, the picado is usually for two people. It comes with diced beef, with fries and a garlic sauce."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Hmm, parece bem. Mas hoje queria algo só para mim. Acho que vou querer o bife de atum. Como é que ele vem?",
+                "translation": "Hmm, sounds good. But today I wanted something just for myself. I think I'll have the tuna steak. How does it come?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "O bife de atum vem grelhado, com milho frito e salada. Pode escolher se quer bem passado, médio ou mal passado.",
+                "translation": "The tuna steak comes grilled, with fried cornmeal and salad. You can choose if you want it well-done, medium, or rare."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Perfeito! Médio, por favor. E para beber, uma água sem gás.",
+                "translation": "Perfect! Medium, please. And to drink, a still water."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Pois, muito bem. Já vem!",
+                "translation": "Right, very good. Coming right up!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Madeiran Sharing Culture",
+            "body": "In Madeira, many dishes are traditionally served for sharing, especially among friends or family. The 'picado' is a prime example, often served on a large platter in the middle of the table, allowing everyone to pick from it. 'Espetada' can also be shared. It's common to ask 'É para partilhar?' or 'Dá para partilhar?' to understand portion sizes and dining customs."
+          },
+          {
+            "title": "Polite Ordering with 'Queria'",
+            "body": "When ordering food or drinks in Portugal, it's very common and polite to use the conditional 'Queria...' (I would like...) instead of the direct 'Eu quero...' (I want...). This softens the request and is considered more courteous in service interactions. For example, 'Queria um café, por favor' is preferred over 'Eu quero um café, por favor'."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at a popular local 'tasca' (tavern) in Funchal, looking at the menu. The waiter approaches to take your order.",
+          "difficulty": 3,
+          "entry_node": "rp-d100-node-1",
+          "nodes": [
+            {
+              "id": "rp-d100-node-1",
+              "npc_text": "Boa noite! Já sabe o que vai querer?",
+              "npc_translation": "Good evening! Do you already know what you'd like?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa noite! Ainda não. O que é que me recomenda?",
+                  "translation": "Good evening! Not yet. What do you recommend?",
+                  "feedback": "Excellent! Asking for recommendations is a great way to engage and discover local favorites.",
+                  "next": "rp-d100-node-2"
+                },
+                {
+                  "text": "Boa noite! Sim, queria um prego no bolo do caco.",
+                  "translation": "Good evening! Yes, I'd like a prego no bolo do caco.",
+                  "feedback": "Good direct order, polite use of 'queria'. Now, what about a drink?",
+                  "next": "rp-d100-node-3a"
+                }
+              ]
+            },
+            {
+              "id": "rp-d100-node-2",
+              "npc_text": "Hoje temos umas lapas grelhadas muito boas, e o nosso bife de atum com milho frito é sempre um sucesso. Ou se preferir carne, a espetada é excelente.",
+              "npc_translation": "Today we have some very good grilled limpets, and our tuna steak with fried cornmeal is always a success. Or if you prefer meat, the espetada is excellent.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "As lapas grelhadas vêm com o quê?",
+                  "translation": "What do the grilled limpets come with?",
+                  "feedback": "Great question! Asking about accompaniments helps you understand the dish better.",
+                  "next": "rp-d100-node-3b"
+                },
+                {
+                  "text": "Obrigado! Acho que vou querer o bife de atum. Médio, por favor.",
+                  "translation": "Thanks! I think I'll have the tuna steak. Medium, please.",
+                  "feedback": "Perfect! You've made a choice and specified your preference. Now for drinks!",
+                  "next": "rp-d100-node-3a"
+                }
+              ]
+            },
+            {
+              "id": "rp-d100-node-3a",
+              "npc_text": "Muito bem. E para beber, o que é que vai ser?",
+              "npc_translation": "Very good. And to drink, what will it be?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria uma imperial, por favor.",
+                  "translation": "I'd like a draft beer, please.",
+                  "feedback": "Excellent! You've successfully ordered your meal and a drink. Enjoy!",
+                  "next": "rp-d100-node-end-1"
+                },
+                {
+                  "text": "Uma água sem gás, por favor.",
+                  "translation": "A still water, please.",
+                  "feedback": "Great! A simple and clear order. Well done!",
+                  "next": "rp-d100-node-end-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-d100-node-3b",
+              "npc_text": "As lapas vêm grelhadas na chapa, com manteiga de alho e limão. São ótimas para entrada!",
+              "npc_translation": "The limpets come grilled on the griddle, with garlic butter and lemon. They're great as a starter!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Parece delicioso! Queria as lapas e depois o bife de atum, médio.",
+                  "translation": "Sounds delicious! I'd like the limpets and then the tuna steak, medium.",
+                  "feedback": "Fantastic! You've ordered an appetizer and a main course, clearly stating your preferences.",
+                  "next": "rp-d100-node-3a"
+                },
+                {
+                  "text": "Ah, ok. Acho que vou direto para o bife de atum. Médio, por favor.",
+                  "translation": "Ah, okay. I think I'll go straight for the tuna steak. Medium, please.",
+                  "feedback": "Good choice! You've decided on your main dish. What about a drink?",
+                  "next": "rp-d100-node-3a"
+                }
+              ]
+            },
+            {
+              "id": "rp-d100-node-end-1",
+              "npc_text": "Pois, muito bem. Já vem!",
+              "npc_translation": "Right, very good. Coming right up!",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order a Madeiran Meal",
+          "prep": [
+            "Review the vocabulary for Madeiran dishes like 'lapas grelhadas', 'bife de atum', 'prego no bolo do caco', and 'picado'.",
+            "Practice asking 'O que é que {prato} traz?' or 'Como é que vem o/a {prato}?' for clarification.",
+            "Practice ordering politely using 'Queria um/uma {prato}, por favor.'",
+            "Be ready to ask 'Qual é a especialidade da casa?' or 'O que é que me recomenda?'"
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não entendi bem.",
+            "Desculpe, pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Já sabe o que vai querer?",
+            "O que é que vai ser?",
+            "Para beber?",
+            "Recomendo o/a..."
+          ]
+        },
+        "goals": [
+          "Ask confidently about the ingredients or preparation of a dish.",
+          "Order a specific Madeiran dish using polite phrasing.",
+          "Ask for recommendations like a local.",
+          "Understand common responses from restaurant staff in Madeira."
+        ],
+        "course": {
+          "month": 4,
+          "day": 100,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What does {dish} come with?",
+            "answer": "O que é que {prato} traz?",
+            "source_ref": "pp-sit-d100-ordering-like-a-local-1"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like a {dish}, please.",
+            "answer": "Queria um/uma {prato}, por favor.",
+            "source_ref": "pp-sit-d100-ordering-like-a-local-2"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What's the house specialty?",
+            "answer": "Qual é a especialidade da casa?",
+            "source_ref": "pp-sit-d100-ordering-like-a-local-3"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is it for sharing?",
+            "answer": "É para partilhar?",
+            "source_ref": "pp-sit-d100-ordering-like-a-local-4"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: grilled limpets",
+            "answer": "lapas grelhadas",
+            "source_ref": "lapas grelhadas"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: tuna steak",
+            "answer": "bife de atum",
+            "source_ref": "bife de atum"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: steak sandwich on bolo do caco bread",
+            "answer": "prego no bolo do caco",
+            "source_ref": "prego no bolo do caco"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: diced meat dish",
+            "answer": "picado",
+            "source_ref": "picado"
+          },
+          {
+            "id": "rv-sit-d100-ordering-like-a-local-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d100-ordering-like-a-local-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d101-talking-recipes",
+      "title": "Talking Recipes & How It’s Made",
+      "month": 4,
+      "day": 101,
+      "week": 15,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d101-talking-recipes",
+        "title": "Talking Recipes & How It’s Made",
+        "summary": "Food talk beyond the menu: how bolo do caco is made, what goes in a poncha, a neighbour’s recipe — following instructions (amassa-se, deixa-se descansar) and asking about steps.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d101-talking-recipes-1",
+            "base": "Como é que se faz {food_item}?",
+            "translation": "How do you make {food_item}?",
+            "slots": [
+              {
+                "name": "food_item",
+                "description": "A Madeiran food item",
+                "options": [
+                  "bolo do caco",
+                  "poncha",
+                  "espetada"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d101-talking-recipes-2",
+            "base": "Leva {ingredient1} e {ingredient2}.",
+            "translation": "It takes {ingredient1} and {ingredient2}.",
+            "slots": [
+              {
+                "name": "ingredient1",
+                "description": "A cooking ingredient",
+                "options": [
+                  "farinha",
+                  "água",
+                  "levedura",
+                  "mel",
+                  "aguardente"
+                ]
+              },
+              {
+                "name": "ingredient2",
+                "description": "Another cooking ingredient",
+                "options": [
+                  "sal",
+                  "açúcar",
+                  "sumo de limão",
+                  "laranja",
+                  "alho"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d101-talking-recipes-3",
+            "base": "{action_verb}-se {object}.",
+            "translation": "You {action_verb} {object}.",
+            "slots": [
+              {
+                "name": "action_verb",
+                "description": "An impersonal cooking action verb",
+                "options": [
+                  "amassa",
+                  "deixa descansar",
+                  "coze",
+                  "frita"
+                ]
+              },
+              {
+                "name": "object",
+                "description": "The item being acted upon",
+                "options": [
+                  "a massa",
+                  "o preparado",
+                  "o peixe",
+                  "as semilhas"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Depois amassa-se bem.",
+                "translation": "Then you knead it well.",
+                "register": "neutral"
+              },
+              {
+                "text": "Deixa-se descansar um bocado.",
+                "translation": "You let it rest for a bit.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d101-talking-recipes-4",
+            "base": "E depois, {question_phrase}?",
+            "translation": "And then, {question_phrase}?",
+            "slots": [
+              {
+                "name": "question_phrase",
+                "description": "A phrase to ask what happens next",
+                "options": [
+                  "o que se faz?",
+                  "como é que se faz?",
+                  "põe-se no forno?"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "receita",
+            "translation": "recipe",
+            "pronunciation": "heh-SAY-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "amassar",
+            "translation": "to knead",
+            "pronunciation": "ah-mah-SAHR",
+            "register": "neutral"
+          },
+          {
+            "word": "levedura",
+            "translation": "yeast",
+            "pronunciation": "leh-veh-DOO-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "deixar descansar",
+            "translation": "to let rest",
+            "pronunciation": "day-SHAR des-kahn-SAHR",
+            "register": "neutral"
+          },
+          {
+            "word": "forno",
+            "translation": "oven",
+            "pronunciation": "FOR-noh",
+            "register": "neutral"
+          },
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeira regionalism for 'batata'"
+          },
+          {
+            "word": "cozer",
+            "translation": "to cook (by boiling/baking)",
+            "pronunciation": "koh-ZEHR",
+            "register": "neutral"
+          },
+          {
+            "word": "fritar",
+            "translation": "to fry",
+            "pronunciation": "free-TAHR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d101-talking-recipes-1",
+            "title": "Bolo do Caco Recipe",
+            "context": "Two neighbours, Maria and João, are chatting outside their homes. João is asking Maria about her bolo do caco recipe.",
+            "lines": [
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Olá, Maria! O teu bolo do caco é sempre o melhor. Qual é o segredo?",
+                "translation": "Hi, Maria! Your bolo do caco is always the best. What's the secret?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Olá, João! Ah, não tem segredo nenhum. É a receita da minha avó. Leva farinha, água, levedura e um bocadinho de sal.",
+                "translation": "Hi, João! Ah, there's no secret. It's my grandmother's recipe. It takes flour, water, yeast, and a little bit of salt."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Pois, e depois? Amassa-se por muito tempo?",
+                "translation": "Right, and then? Do you knead it for a long time?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Sim, amassa-se bem, até ficar fofa. Depois, deixa-se descansar a massa num sítio quentinho, p'ra levedar.",
+                "translation": "Yes, you knead it well, until it's soft. Then, you let the dough rest in a warm place, to rise."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "E depois de levedar, coze-se no forno?",
+                "translation": "And after it rises, do you bake it in the oven?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Não, não! O bolo do caco coze-se numa chapa quente, não no forno. Fica mais estaladiço!",
+                "translation": "No, no! Bolo do caco is cooked on a hot griddle, not in the oven. It gets crispier!"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Ah, pois é! Que diferença. Tenho de experimentar isso, obrigado!",
+                "translation": "Ah, that's right! What a difference. I have to try that, thanks!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Sharing Recipes and the Impersonal 'Se'",
+            "body": "In Portugal, especially in informal settings like among neighbours, sharing recipes is common. When explaining cooking steps, the impersonal 'se' (e.g., 'faz-se', 'amassa-se', 'deixa-se') is frequently used. It translates to 'one does', 'you do', or 'it is done', and is a very natural way to give instructions without specifying who performs the action. It's crucial for understanding and giving cooking directions."
+          },
+          {
+            "title": "Madeiran Food & Social Bonds",
+            "body": "Food is central to Madeiran culture and social life. Conversations about how dishes are made, family recipes, and local ingredients like 'semilha' (potato) are common and help strengthen community bonds. Asking for a recipe from a neighbour is a sign of connection and appreciation."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at the local market in Funchal, buying vegetables. You see a neighbour, Dona Rosa, known for her delicious 'espetada' (Madeiran beef skewer). You decide to ask her about her recipe.",
+          "difficulty": 3,
+          "entry_node": "rp-d101-node-1",
+          "nodes": [
+            {
+              "id": "rp-d101-node-1",
+              "npc_text": "Olá! Tudo bem? Estás a comprar umas coisas boas, não é?",
+              "npc_translation": "Hello! All good? You're buying some good things, aren't you?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Dona Rosa! Tudo bem, sim. Estou a tentar fazer uma espetada este fim de semana.",
+                  "translation": "Hello, Dona Rosa! All good, yes. I'm trying to make 'espetada' this weekend.",
+                  "feedback": "Good start! You've set the context for your question.",
+                  "next": "rp-d101-node-2"
+                },
+                {
+                  "text": "Sim, Dona Rosa. Mas estou a pensar na sua espetada... É a melhor!",
+                  "translation": "Yes, Dona Rosa. But I'm thinking about your 'espetada'... It's the best!",
+                  "feedback": "Flattery works! You've opened the door to asking about the recipe.",
+                  "next": "rp-d101-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d101-node-2",
+              "npc_text": "Ah, a minha espetada! Obrigada! É simples, mas tem os seus truques. O que queres saber?",
+              "npc_translation": "Ah, my 'espetada'! Thank you! It's simple, but it has its tricks. What do you want to know?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Que carne se usa? E leva alho?",
+                  "translation": "What meat do you use? And does it take garlic?",
+                  "feedback": "Excellent, asking about key ingredients.",
+                  "next": "rp-d101-node-3"
+                },
+                {
+                  "text": "Como é que se faz para a carne ficar tão tenra?",
+                  "translation": "How do you make the meat so tender?",
+                  "feedback": "Good question about a specific quality of the dish.",
+                  "next": "rp-d101-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d101-node-3",
+              "npc_text": "Usa-se carne de vaca, cortada em cubos grandes. E sim, leva imenso alho esmagado, louro e sal grosso. Deixa-se marinar umas horas.",
+              "npc_translation": "You use beef, cut into large cubes. And yes, it takes lots of crushed garlic, bay leaf, and coarse salt. You let it marinate for a few hours.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ah, entendi! E depois, como é que se faz para cozer?",
+                  "translation": "Ah, I understand! And then, how do you cook it?",
+                  "feedback": "Good, you're moving on to the cooking process.",
+                  "next": "rp-d101-node-5"
+                },
+                {
+                  "text": "Então, é o alho e o louro que dão o sabor? E o sal grosso?",
+                  "translation": "So, it's the garlic and bay leaf that give the flavour? And the coarse salt?",
+                  "feedback": "Good follow-up, showing engagement with the details.",
+                  "next": "rp-d101-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d101-node-4",
+              "npc_text": "Pois é! O sal grosso ajuda a temperar e a reter os sucos. E para a carne ficar tenra, é importante não cozer demais. Frita-se rápido.",
+              "npc_translation": "That's right! The coarse salt helps season and retain the juices. And for the meat to be tender, it's important not to overcook it. You fry it quickly.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Frita-se? Pensei que era assado. Obrigado pela dica!",
+                  "translation": "You fry it? I thought it was roasted. Thanks for the tip!",
+                  "feedback": "Excellent, you've clarified a common misconception and thanked her.",
+                  "next": "rp-d101-node-6"
+                },
+                {
+                  "text": "Ah, entendi! Então, depois de marinar, frita-se?",
+                  "translation": "Ah, I understand! So, after marinating, you fry it?",
+                  "feedback": "Good, you're confirming the process.",
+                  "next": "rp-d101-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d101-node-5",
+              "npc_text": "Sim, depois de marinar, espeta-se nos paus de louro e frita-se na brasa, ou numa chapa bem quente, um bocado de cada lado. É rápido!",
+              "npc_translation": "Yes, after marinating, you skewer it on bay laurel sticks and fry it on the coals, or on a very hot griddle, a bit on each side. It's quick!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Muito obrigado, Dona Rosa! Vou seguir a sua receita. Um bom fim de semana!",
+                  "translation": "Thank you very much, Dona Rosa! I'm going to follow your recipe. Have a good weekend!",
+                  "feedback": "Perfect ending! You've thanked her and said goodbye."
+                },
+                {
+                  "text": "Uhm... e os paus de louro, onde é que se arranjam?",
+                  "translation": "Uhm... and the bay laurel sticks, where do you get them?",
+                  "feedback": "A very Madeiran question! Good detail to ask about.",
+                  "next": "rp-d101-node-7"
+                }
+              ]
+            },
+            {
+              "id": "rp-d101-node-6",
+              "npc_text": "De nada! É isso mesmo, frita-se para ficar suculenta. Depois diz-me como correu!",
+              "npc_translation": "You're welcome! That's it, you fry it to make it juicy. Let me know how it goes!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Vou dizer, sim! Muito obrigado e um bom fim de semana!",
+                  "translation": "I will, yes! Thank you very much and have a good weekend!",
+                  "feedback": "Great interaction, you've ended politely."
+                }
+              ]
+            },
+            {
+              "id": "rp-d101-node-7",
+              "npc_text": "Ah, os paus de louro! Ou se têm em casa, ou se pede a um vizinho, ou então usa-se espetos de metal, mas não é a mesma coisa. Vai a uma loja de produtos regionais, talvez tenham!",
+              "npc_translation": "Ah, the bay laurel sticks! Either you have them at home, or you ask a neighbour, or else you use metal skewers, but it's not the same thing. Go to a regional products shop, maybe they'll have them!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ok, vou procurar! Muito obrigado por tudo, Dona Rosa!",
+                  "translation": "Okay, I'll look! Thank you very much for everything, Dona Rosa!",
+                  "feedback": "You've got all the info you need and thanked her."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Ask for a Recipe",
+          "prep": [
+            "Review the impersonal 'se' for giving instructions (e.g., 'amassa-se', 'deixa-se descansar').",
+            "Familiarize yourself with common cooking verbs and ingredients in Portuguese.",
+            "Practice asking 'Como é que se faz X?' and 'E depois, o que se faz?'"
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "O que significa 'X'?",
+            "Um bocadinho mais devagar, por favor."
+          ],
+          "likely_responses": [
+            "Ah, é fácil!",
+            "Leva isto e aquilo.",
+            "Primeiro faz-se X, depois Y.",
+            "É um truque que aprendi com a minha avó."
+          ]
+        },
+        "goals": [
+          "Understand and use the impersonal 'se' to describe cooking steps.",
+          "Ask and answer questions about ingredients and preparation methods for Madeiran dishes.",
+          "Engage in a natural conversation about food and recipes with a local speaker."
+        ],
+        "course": {
+          "month": 4,
+          "day": 101,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d101-talking-recipes-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How do you make {food_item}?",
+            "answer": "Como é que se faz {food_item}?",
+            "source_ref": "pp-sit-d101-talking-recipes-1"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It takes {ingredient1} and {ingredient2}.",
+            "answer": "Leva {ingredient1} e {ingredient2}.",
+            "source_ref": "pp-sit-d101-talking-recipes-2"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: You {action_verb} {object}.",
+            "answer": "{action_verb}-se {object}.",
+            "source_ref": "pp-sit-d101-talking-recipes-3"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: And then, {question_phrase}?",
+            "answer": "E depois, {question_phrase}?",
+            "source_ref": "pp-sit-d101-talking-recipes-4"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: recipe",
+            "answer": "receita",
+            "source_ref": "receita"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to knead",
+            "answer": "amassar",
+            "source_ref": "amassar"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: yeast",
+            "answer": "levedura",
+            "source_ref": "levedura"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to let rest",
+            "answer": "deixar descansar",
+            "source_ref": "deixar descansar"
+          },
+          {
+            "id": "rv-sit-d101-talking-recipes-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d101-talking-recipes-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+            "caption": "Receita: Bolo do Caco da Madeira — pt-PT cooking video (Cozinha com Dino Duarte)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d102-fish-market",
+      "title": "At the Fish Market",
+      "month": 4,
+      "day": 102,
+      "week": 15,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d102-fish-market",
+        "title": "At the Fish Market",
+        "summary": "The fish hall at the Mercado: naming the catch (espada, atum, bodião), asking what is fresh today, how much for a posta, and having it cleaned (amanhado) — fast counter talk.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival",
+          "track-host"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d102-fish-market-1",
+            "base": "Queria {fish_type}, por favor.",
+            "translation": "I'd like {fish_type}, please.",
+            "slots": [
+              {
+                "name": "fish_type",
+                "description": "Type of fish",
+                "options": [
+                  "espada",
+                  "atum",
+                  "bodião"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d102-fish-market-2",
+            "base": "Está fresquinho hoje?",
+            "translation": "Is it fresh today?"
+          },
+          {
+            "id": "pp-sit-d102-fish-market-3",
+            "base": "Pode amanhar?",
+            "translation": "Can you clean it (the fish)?"
+          },
+          {
+            "id": "pp-sit-d102-fish-market-4",
+            "base": "Quanto é que custa a {fish_type}?",
+            "translation": "How much does the {fish_type} cost?",
+            "slots": [
+              {
+                "name": "fish_type",
+                "description": "Type of fish",
+                "options": [
+                  "espada",
+                  "atum",
+                  "bodião"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Quanto é que custa o quilo da {fish_type}?",
+                "translation": "How much does a kilo of {fish_type} cost?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d102-fish-market-5",
+            "base": "Uma {quantity} de {fish_type}, se faz favor.",
+            "translation": "A {quantity} of {fish_type}, please.",
+            "slots": [
+              {
+                "name": "quantity",
+                "description": "Unit of measure or piece",
+                "options": [
+                  "posta",
+                  "quilo",
+                  "meio quilo"
+                ]
+              },
+              {
+                "name": "fish_type",
+                "description": "Type of fish",
+                "options": [
+                  "espada",
+                  "atum",
+                  "bodião"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "espada",
+            "translation": "black scabbardfish",
+            "pronunciation": "esh-PAH-dah",
+            "register": "neutral",
+            "note": "A Madeiran specialty fish."
+          },
+          {
+            "word": "atum",
+            "translation": "tuna",
+            "pronunciation": "ah-TOOM",
+            "register": "neutral"
+          },
+          {
+            "word": "bodião",
+            "translation": "parrotfish",
+            "pronunciation": "boh-dee-OWN",
+            "register": "neutral",
+            "note": "A common local fish in Madeira."
+          },
+          {
+            "word": "posta",
+            "translation": "fish steak / slice",
+            "pronunciation": "POSH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "amanhar",
+            "translation": "to clean / prepare fish",
+            "pronunciation": "ah-mah-NYAR",
+            "register": "neutral"
+          },
+          {
+            "word": "fresquinho",
+            "translation": "very fresh",
+            "pronunciation": "fresh-KEEN-yoo",
+            "register": "informal",
+            "note": "Diminutive, implying 'very' or 'nicely' fresh."
+          },
+          {
+            "word": "quilo",
+            "translation": "kilo / kilogram",
+            "pronunciation": "KEE-loo",
+            "register": "neutral"
+          },
+          {
+            "word": "Mercado dos Lavradores",
+            "translation": "Farmers' Market",
+            "pronunciation": "mer-KAH-doo dozh lah-vrah-DOR-esh",
+            "register": "neutral",
+            "note": "The main market in Funchal, famous for its fish hall."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d102-fish-market-1",
+            "title": "Buying Espada",
+            "context": "A customer approaches a fish stall in the vibrant fish hall of the Mercado dos Lavradores in Funchal.",
+            "lines": [
+              {
+                "speaker": "Peixeira",
+                "voice_type": "noisy",
+                "text": "Diga, minha senhora! O que deseja?",
+                "translation": "Hello, madam! What do you wish?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia! Tem espada fresquinha hoje?",
+                "translation": "Good morning! Do you have fresh scabbardfish today?"
+              },
+              {
+                "speaker": "Peixeira",
+                "voice_type": "noisy",
+                "text": "Temos sim! Acabadinha de chegar. Quer uma posta?",
+                "translation": "Yes, we do! Just arrived. Do you want a steak?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, uma posta. Quanto é que custa o quilo?",
+                "translation": "Yes, one steak. How much is a kilo?"
+              },
+              {
+                "speaker": "Peixeira",
+                "voice_type": "service",
+                "text": "Está a doze euros o quilo. Quer que eu amanhe?",
+                "translation": "It's twelve euros a kilo. Do you want me to clean it?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, por favor. Pode amanhar.",
+                "translation": "Yes, please. You can clean it."
+              },
+              {
+                "speaker": "Peixeira",
+                "voice_type": "noisy",
+                "text": "P'ra já! Já fica pronto.",
+                "translation": "Right away! It'll be ready soon."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Mercado dos Lavradores Fish Hall",
+            "body": "The fish hall at Funchal's Mercado dos Lavradores is an iconic and lively place. It's common to see a wide variety of fresh fish, including the famous 'espada' (black scabbardfish), 'atum' (tuna), and 'bodião' (parrotfish). Vendors are often very vocal and keen to help, sometimes using informal but polite address like 'minha senhora' (my madam) or 'meu senhor' (my sir)."
+          },
+          {
+            "title": "Asking for Fish Cleaning ('Amanhar')",
+            "body": "When buying fish in Portugal, especially at markets, it's standard practice to ask the fishmonger to clean and prepare the fish for you. The verb 'amanhar' specifically refers to this process of gutting, scaling, and sometimes cutting the fish into steaks ('postas'). It's a free service and expected, so don't hesitate to ask: 'Pode amanhar?' or 'Quer que eu amanhe?' (Do you want me to clean it?) is a common question from the vendor."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a fish stall in the Mercado dos Lavradores. You want to buy some tuna (atum) for dinner.",
+          "difficulty": 3,
+          "entry_node": "rp-d102-start",
+          "nodes": [
+            {
+              "id": "rp-d102-start",
+              "npc_text": "Olá! Posso ajudar?",
+              "npc_translation": "Hello! Can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, queria atum, por favor.",
+                  "translation": "Yes, I'd like tuna, please.",
+                  "feedback": "Good start! You clearly stated what you wanted.",
+                  "next": "rp-d102-atum-price"
+                },
+                {
+                  "text": "Está fresquinho hoje?",
+                  "translation": "Is it fresh today?",
+                  "feedback": "A good general question about freshness. Now, specify the fish.",
+                  "next": "rp-d102-fresh-general"
+                }
+              ]
+            },
+            {
+              "id": "rp-d102-atum-price",
+              "npc_text": "Atum, claro! Quer uma posta ou um bocado?",
+              "npc_translation": "Tuna, of course! Do you want a steak or a piece?",
+              "npc_voice_type": "noisy",
+              "options": [
+                {
+                  "text": "Uma posta, se faz favor. Quanto custa?",
+                  "translation": "A steak, please. How much is it?",
+                  "feedback": "Excellent, you specified the cut and asked for the price.",
+                  "next": "rp-d102-price-response"
+                },
+                {
+                  "text": "Está fresquinho?",
+                  "translation": "Is it fresh?",
+                  "feedback": "Good to confirm freshness, even if you just asked generally.",
+                  "next": "rp-d102-fresh-atum"
+                }
+              ]
+            },
+            {
+              "id": "rp-d102-fresh-general",
+              "npc_text": "Todo o peixe aqui é fresquinho, minha senhora! Acabadinho de chegar.",
+              "npc_translation": "All the fish here is fresh, madam! Just arrived.",
+              "npc_voice_type": "noisy",
+              "options": [
+                {
+                  "text": "Pois, mas queria atum. Tem?",
+                  "translation": "Right, but I wanted tuna. Do you have it?",
+                  "feedback": "Good, you acknowledged the vendor and redirected to your specific request.",
+                  "next": "rp-d102-atum-price"
+                }
+              ]
+            },
+            {
+              "id": "rp-d102-fresh-atum",
+              "npc_text": "Sim, o atum está ótimo hoje! Acabadinho de chegar.",
+              "npc_translation": "Yes, the tuna is great today! Just arrived.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ótimo! Quanto é que custa a posta?",
+                  "translation": "Great! How much is a steak?",
+                  "feedback": "Perfect, you're moving towards the purchase.",
+                  "next": "rp-d102-price-response"
+                }
+              ]
+            },
+            {
+              "id": "rp-d102-price-response",
+              "npc_text": "A posta está a dezasseis euros o quilo.",
+              "npc_translation": "The steak is sixteen euros a kilo.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pode amanhar, por favor?",
+                  "translation": "Can you clean it, please?",
+                  "feedback": "Asking for the cleaning service is very common and polite.",
+                  "next": "rp-d102-clean-confirm"
+                },
+                {
+                  "text": "Vou levar só esta. Obrigada.",
+                  "translation": "I'll just take this one. Thank you.",
+                  "feedback": "You've completed your purchase without cleaning, which is also fine."
+                }
+              ]
+            },
+            {
+              "id": "rp-d102-clean-confirm",
+              "npc_text": "P'ra já! Fica já pronto.",
+              "npc_translation": "Right away! It'll be ready soon.",
+              "npc_voice_type": "noisy",
+              "options": [
+                {
+                  "text": "Muito obrigada!",
+                  "translation": "Thank you very much!",
+                  "feedback": "A polite way to end the interaction. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Buy fish for dinner at the market",
+          "prep": [
+            "Review the names of common Madeiran fish like 'espada', 'atum', and 'bodião'.",
+            "Practice asking 'Está fresquinho hoje?' to inquire about freshness.",
+            "Rehearse asking 'Quanto é que custa?' for prices.",
+            "Practice requesting the fish to be cleaned with 'Pode amanhar?'."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?"
+          ],
+          "likely_responses": [
+            "Sim, está fresquinho!",
+            "É X euros o quilo/a posta.",
+            "P'ra já!",
+            "O que deseja?"
+          ]
+        },
+        "goals": [
+          "Ask for a specific type of fish at a market stall.",
+          "Inquire about the freshness of the fish.",
+          "Ask for the price of fish, specifying the unit (kilo/posta).",
+          "Request that the fish be cleaned and prepared.",
+          "Understand common phrases and responses from fishmongers in a market setting."
+        ],
+        "course": {
+          "month": 4,
+          "day": 102,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d102-fish-market-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like {fish_type}, please.",
+            "answer": "Queria {fish_type}, por favor.",
+            "source_ref": "pp-sit-d102-fish-market-1"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is it fresh today?",
+            "answer": "Está fresquinho hoje?",
+            "source_ref": "pp-sit-d102-fish-market-2"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you clean it (the fish)?",
+            "answer": "Pode amanhar?",
+            "source_ref": "pp-sit-d102-fish-market-3"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much does the {fish_type} cost?",
+            "answer": "Quanto é que custa a {fish_type}?",
+            "source_ref": "pp-sit-d102-fish-market-4"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: black scabbardfish",
+            "answer": "espada",
+            "source_ref": "espada"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: tuna",
+            "answer": "atum",
+            "source_ref": "atum"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: parrotfish",
+            "answer": "bodião",
+            "source_ref": "bodião"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fish steak / slice",
+            "answer": "posta",
+            "source_ref": "posta"
+          },
+          {
+            "id": "rv-sit-d102-fish-market-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d102-fish-market-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d103-coffee-culture",
+      "title": "Coffee Culture: Chinesa, Garoto & Bica",
+      "month": 4,
+      "day": 103,
+      "week": 15,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d103-coffee-culture",
+        "title": "Coffee Culture: Chinesa, Garoto & Bica",
+        "summary": "Madeira’s coffee code: chinesa, garoto, bica, café duplo — what each is, how to order yours, café etiquette at the counter versus the table, and paying at the till.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d103-coffee-culture-1",
+            "base": "Queria {quantity} {coffee_type}, por favor.",
+            "translation": "I'd like {quantity} {coffee_type}, please.",
+            "slots": [
+              {
+                "name": "quantity",
+                "description": "Quantity",
+                "options": [
+                  "um",
+                  "uma",
+                  "dois",
+                  "duas"
+                ]
+              },
+              {
+                "name": "coffee_type",
+                "description": "Type of coffee",
+                "options": [
+                  "bica",
+                  "chinesa",
+                  "garoto",
+                  "café duplo",
+                  "descafeinado"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Uma bica, p'ra já!",
+                "translation": "An espresso, right away!",
+                "register": "informal",
+                "note": "More direct and common at a busy counter."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d103-coffee-culture-2",
+            "base": "É p'ra beber aqui ou p'ra levar?",
+            "translation": "Is it to drink here or to take away?"
+          },
+          {
+            "id": "pp-sit-d103-coffee-culture-3",
+            "base": "Posso pagar?",
+            "translation": "Can I pay?"
+          },
+          {
+            "id": "pp-sit-d103-coffee-culture-4",
+            "base": "Quanto é?",
+            "translation": "How much is it?"
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common term for espresso in Lisbon and Madeira."
+          },
+          {
+            "word": "chinesa",
+            "translation": "latte",
+            "pronunciation": "shee-NEH-zah",
+            "register": "neutral",
+            "note": "Specific to Madeira for a latte/coffee with milk, similar to 'galão' elsewhere in Portugal."
+          },
+          {
+            "word": "garoto",
+            "translation": "espresso with a dash of milk",
+            "pronunciation": "gah-ROH-too",
+            "register": "neutral",
+            "note": "Espresso with a little bit of milk foam."
+          },
+          {
+            "word": "café duplo",
+            "translation": "double espresso",
+            "pronunciation": "kah-FEH DOO-ploo",
+            "register": "neutral"
+          },
+          {
+            "word": "balcão",
+            "translation": "counter",
+            "pronunciation": "bal-KOWN",
+            "register": "neutral"
+          },
+          {
+            "word": "empregado/a",
+            "translation": "waiter/waitress",
+            "pronunciation": "em-preh-GAH-doo/dah",
+            "register": "neutral"
+          },
+          {
+            "word": "troco",
+            "translation": "change (money)",
+            "pronunciation": "TROH-koo",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d103-coffee-culture-1",
+            "title": "Ordering at the counter",
+            "context": "At a local café in Funchal, a customer orders coffee from the barista.",
+            "lines": [
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Diga! O que vai ser?",
+                "translation": "Tell me! What will it be?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Queria uma chinesa, por favor. E um bolo do caco.",
+                "translation": "I'd like a latte, please. And a bolo do caco."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Tá bem. É p'ra beber aqui, no balcão?",
+                "translation": "Alright. Is it to drink here, at the counter?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, sim. Aqui mesmo.",
+                "translation": "Yes, yes. Right here."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "P'ra já!",
+                "translation": "Coming right up!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d103-coffee-culture-2",
+            "title": "Coffee advice from a neighbor",
+            "context": "A learner is talking to a neighbor about ordering coffee in Madeira.",
+            "lines": [
+              {
+                "speaker": "Vizinha",
+                "voice_type": "older",
+                "text": "Então, já sabe o que pedir no café?",
+                "translation": "So, do you know what to order at the café yet?"
+              },
+              {
+                "speaker": "Aprendiz",
+                "voice_type": "local",
+                "text": "Ainda não sei bem a diferença entre uma bica e um garoto.",
+                "translation": "I don't quite know the difference between an espresso and a garoto yet."
+              },
+              {
+                "speaker": "Vizinha",
+                "voice_type": "older",
+                "text": "Ah, é fácil! A bica é só café, o garoto é com um bocadinho de leite. E a chinesa é como um galão, mais leite.",
+                "translation": "Ah, it's easy! The bica is just coffee, the garoto is with a little bit of milk. And the chinesa is like a galão, more milk."
+              },
+              {
+                "speaker": "Aprendiz",
+                "voice_type": "local",
+                "text": "Pois, faz sentido. Obrigada pela dica!",
+                "translation": "Right, that makes sense. Thanks for the tip!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Madeira's Coffee Code",
+            "body": "In Madeira, ordering coffee has its own specific terms. A 'bica' is a standard espresso. A 'garoto' is an espresso with a small amount of milk, usually just a dash of foam. The 'chinesa' is a local term for a latte (coffee with a larger amount of milk), similar to what's called a 'galão' in mainland Portugal. A 'café duplo' is a double espresso. Knowing these terms will help you order exactly what you want like a local!"
+          },
+          {
+            "title": "Counter vs. Table Service & Paying",
+            "body": "It's common to drink coffee standing at the 'balcão' (counter) in cafés, which is usually cheaper than sitting at a table. If you sit at a table, an 'empregado' will serve you. When you're ready to pay, especially at the counter, you usually go to the 'caixa' (till) and say 'Posso pagar?' or 'Quanto é?'. It's rare for the barista to collect payment directly at a busy counter."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at a busy café in Funchal. You want to order a coffee and pay.",
+          "difficulty": 3,
+          "entry_node": "rp-sit-d103-coffee-culture-start",
+          "nodes": [
+            {
+              "id": "rp-sit-d103-coffee-culture-start",
+              "npc_text": "Bom dia! O que vai ser?",
+              "npc_translation": "Good morning! What will it be?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Queria uma bica, por favor.",
+                  "translation": "I'd like an espresso, please.",
+                  "feedback": "Great start, polite and clear!",
+                  "next": "rp-sit-d103-coffee-culture-bica-order"
+                },
+                {
+                  "text": "Uma chinesa, p'ra já!",
+                  "translation": "A latte, right away!",
+                  "feedback": "Direct and confident, perfect for a busy counter!",
+                  "next": "rp-sit-d103-coffee-culture-chinesa-order"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d103-coffee-culture-bica-order",
+              "npc_text": "Uma bica. É p'ra beber aqui ou p'ra levar?",
+              "npc_translation": "An espresso. Is it to drink here or to take away?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É p'ra beber aqui.",
+                  "translation": "It's to drink here.",
+                  "feedback": "Correctly answering the common question.",
+                  "next": "rp-sit-d103-coffee-culture-here"
+                },
+                {
+                  "text": "P'ra levar, por favor.",
+                  "translation": "To take away, please.",
+                  "feedback": "Good, indicating you want it to go.",
+                  "next": "rp-sit-d103-coffee-culture-takeaway"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d103-coffee-culture-chinesa-order",
+              "npc_text": "Uma chinesa. No balcão?",
+              "npc_translation": "A latte. At the counter?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, no balcão.",
+                  "translation": "Yes, at the counter.",
+                  "feedback": "Confirming your choice correctly.",
+                  "next": "rp-sit-d103-coffee-culture-here"
+                },
+                {
+                  "text": "Não, numa mesa, por favor.",
+                  "translation": "No, at a table, please.",
+                  "feedback": "Good, asking for table service.",
+                  "next": "rp-sit-d103-coffee-culture-table"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d103-coffee-culture-here",
+              "npc_text": "P'ra já! Fica a pagar na caixa quando acabar.",
+              "npc_translation": "Coming right up! You pay at the till when you're done.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigada!",
+                  "translation": "Thank you very much!",
+                  "feedback": "Polite acknowledgment. Now, time to pay!",
+                  "next": "rp-sit-d103-coffee-culture-pay"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d103-coffee-culture-takeaway",
+              "npc_text": "P'ra levar. São dois euros. Pode pagar aqui.",
+              "npc_translation": "To take away. It's two euros. You can pay here.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Aqui tem.",
+                  "translation": "Here you go.",
+                  "feedback": "Successfully paid and concluded the interaction."
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d103-coffee-culture-table",
+              "npc_text": "Claro. Pode sentar-se onde quiser. Já levo.",
+              "npc_translation": "Of course. You can sit wherever you like. I'll bring it.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigada.",
+                  "translation": "Thank you.",
+                  "feedback": "You've successfully secured a table. The payment will likely happen at the table after you finish."
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d103-coffee-culture-pay",
+              "npc_text": "Diga! Já pagou?",
+              "npc_translation": "Tell me! Have you paid?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ainda não. Posso pagar agora?",
+                  "translation": "Not yet. Can I pay now?",
+                  "feedback": "Good, asking to pay at the till.",
+                  "next": "rp-sit-d103-coffee-culture-final-pay"
+                },
+                {
+                  "text": "Quanto é, por favor?",
+                  "translation": "How much is it, please?",
+                  "feedback": "Directly asking for the price, also good.",
+                  "next": "rp-sit-d103-coffee-culture-final-pay"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d103-coffee-culture-final-pay",
+              "npc_text": "Claro. É um euro e vinte. Quer fatura?",
+              "npc_translation": "Of course. It's one euro twenty. Do you want a receipt?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigada. Aqui tem.",
+                  "translation": "No, thank you. Here you go.",
+                  "feedback": "You've successfully completed your coffee order and payment!"
+                },
+                {
+                  "text": "Sim, por favor.",
+                  "translation": "Yes, please.",
+                  "feedback": "You've successfully completed your coffee order and payment, asking for a receipt."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order your Madeiran coffee!",
+          "prep": [
+            "Practice ordering a 'bica', 'chinesa', or 'garoto' using 'Queria um/uma...'.",
+            "Rehearse 'É p'ra beber aqui ou p'ra levar?' and how to answer.",
+            "Practice asking 'Posso pagar?' or 'Quanto é?' at the till."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Mais alguma coisa?",
+            "É tanto.",
+            "Obrigado/a. Volte sempre!"
+          ]
+        },
+        "goals": [
+          "Order a specific type of coffee (bica, chinesa, garoto).",
+          "Understand and respond to questions about drinking 'here or to go'.",
+          "Ask to pay and understand the price at a café."
+        ],
+        "course": {
+          "month": 4,
+          "day": 103,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d103-coffee-culture-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like {quantity} {coffee_type}, please.",
+            "answer": "Queria {quantity} {coffee_type}, por favor.",
+            "source_ref": "pp-sit-d103-coffee-culture-1"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is it to drink here or to take away?",
+            "answer": "É p'ra beber aqui ou p'ra levar?",
+            "source_ref": "pp-sit-d103-coffee-culture-2"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can I pay?",
+            "answer": "Posso pagar?",
+            "source_ref": "pp-sit-d103-coffee-culture-3"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much is it?",
+            "answer": "Quanto é?",
+            "source_ref": "pp-sit-d103-coffee-culture-4"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: latte",
+            "answer": "chinesa",
+            "source_ref": "chinesa"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso with a dash of milk",
+            "answer": "garoto",
+            "source_ref": "garoto"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: double espresso",
+            "answer": "café duplo",
+            "source_ref": "café duplo"
+          },
+          {
+            "id": "rv-sit-d103-coffee-culture-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d103-coffee-culture-1"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -228,7 +228,8 @@ checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). 
   - id: post-deploy-smoke
     status: pending
   - id: complete-structured-course-content
-    status: in-progress
-    notes: "AMENDMENT (operator-approved 2026-07-10): full 168-lesson course. +100 situations (M2+7, M3+21, M4/5/6+24), canonical day-block renumbering, 24 weekly verified videos. Launched as resumable batched agent."
+    status: succeeded
+    finished_at: 2026-07-10T17:30:00Z
+    notes: "COMPLETE (agent hit session limit during final reporting; generation+publish had finished — orchestrator completed verification). 187 situations total: 168 course-slotted (28/month x 6, days 1-168 each exactly once, no gaps/dups — orchestrator-verified) + 19 track-only. 16 generation batches + course-outline.json in content-review/. Videos: 24/24 week blocks covered, ALL 25 unique video URLs oEmbed-verified 200 (zero fabricated). Pack v1.3.0 published to DB (187 rows, checksum match) + bundled seed-course.ts regenerated. Validator valid; tsc 0; 154 tests; build green."
   - id: docs-sync-and-release
     status: pending

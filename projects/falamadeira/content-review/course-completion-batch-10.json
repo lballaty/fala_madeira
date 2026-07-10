@@ -1,0 +1,3235 @@
+{
+  "batch": 10,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:51:59.074Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d122-neighbour-friction",
+      "title": "Noise, Boundaries & Neighbour Friction",
+      "month": 5,
+      "day": 122,
+      "week": 18,
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d122-neighbour-friction",
+        "title": "Noise, Boundaries & Neighbour Friction",
+        "summary": "Raising a problem with a neighbour — noise, water, a boundary — the Madeiran way: indirect openers, face-saving framing, and finding an arrangement that preserves the relationship.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-host"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d122-neighbour-friction-1",
+            "base": "Desculpe {incomodar}, mas será que podíamos falar um bocadinho?",
+            "translation": "Sorry to bother you, but could we talk for a bit?",
+            "slots": [
+              {
+                "name": "incomodar",
+                "description": "verb 'to bother'",
+                "options": [
+                  "incomodar",
+                  "chatear"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Desculpe, mas preciso de falar consigo um bocadinho.",
+                "translation": "Excuse me, but I need to talk to you for a bit.",
+                "register": "neutral",
+                "note": "More direct, but still polite."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d122-neighbour-friction-2",
+            "base": "É que há um pequeno problema com {o barulho}.",
+            "translation": "It's just that there's a small problem with the noise.",
+            "slots": [
+              {
+                "name": "o barulho",
+                "description": "the issue",
+                "options": [
+                  "o barulho",
+                  "a água",
+                  "a cerca",
+                  "o cão"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d122-neighbour-friction-3",
+            "base": "Não queria causar {chatice}, mas está a ser um bocado {complicado}.",
+            "translation": "I didn't want to cause trouble, but it's getting a bit complicated.",
+            "slots": [
+              {
+                "name": "chatice",
+                "description": "trouble/bother",
+                "options": [
+                  "chatice",
+                  "problemas"
+                ]
+              },
+              {
+                "name": "complicado",
+                "description": "difficult/complicated",
+                "options": [
+                  "complicado",
+                  "difícil"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d122-neighbour-friction-4",
+            "base": "Talvez pudéssemos {arranjar} uma solução que fosse boa para todos.",
+            "translation": "Perhaps we could find a solution that would be good for everyone.",
+            "slots": [
+              {
+                "name": "arranjar",
+                "description": "to find/arrange",
+                "options": [
+                  "arranjar",
+                  "encontrar"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "barulho",
+            "translation": "noise",
+            "pronunciation": "bah-ROO-lyoo",
+            "register": "neutral",
+            "note": "Common word for 'noise'."
+          },
+          {
+            "word": "incomodar",
+            "translation": "to bother, to disturb",
+            "pronunciation": "een-koh-moh-DAR",
+            "register": "neutral",
+            "note": "Often used to open a difficult conversation politely."
+          },
+          {
+            "word": "chatear",
+            "translation": "to annoy, to bother",
+            "pronunciation": "shah-tee-AR",
+            "register": "informal",
+            "note": "Can also mean 'to get bored'."
+          },
+          {
+            "word": "um bocadinho",
+            "translation": "a little bit",
+            "pronunciation": "oom boh-kah-DEE-nyoo",
+            "register": "neutral",
+            "note": "Used to soften requests or statements."
+          },
+          {
+            "word": "arranjar",
+            "translation": "to arrange, to fix, to find",
+            "pronunciation": "ah-rran-ZHAR",
+            "register": "neutral",
+            "note": "Very versatile verb in Portugal."
+          },
+          {
+            "word": "solução",
+            "translation": "solution",
+            "pronunciation": "soh-loo-SOW",
+            "register": "neutral",
+            "note": "Standard word."
+          },
+          {
+            "word": "vizinho / vizinha",
+            "translation": "neighbour (m/f)",
+            "pronunciation": "vee-ZEE-nyoo / vee-ZEE-nyah",
+            "register": "neutral",
+            "note": "Essential for this context."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d122-neighbour-friction-1",
+            "title": "A Quiet Word",
+            "context": "You're at your gate, and your neighbour, Sr. Manuel, is watering his garden. You need to talk about his dog's barking at night.",
+            "lines": [
+              {
+                "speaker": "Learner",
+                "voice_type": "service",
+                "text": "Bom dia, Sr. Manuel! Tudo bem?",
+                "translation": "Good morning, Mr. Manuel! How are you?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Bom dia! Tudo bem, e consigo? Está tudo em ordem?",
+                "translation": "Good morning! All good, and with you? Is everything in order?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "service",
+                "text": "Sim, sim. Olhe, Sr. Manuel, desculpe incomodar, mas será que podíamos falar um bocadinho?",
+                "translation": "Yes, yes. Look, Mr. Manuel, sorry to bother you, but could we talk for a bit?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Pois, diga lá. O que se passa?",
+                "translation": "Yes, tell me. What's happening?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "service",
+                "text": "É que tenho tido um pequeno problema com o barulho do cão, à noite. Não queria causar chatice, mas está a ser um bocado difícil dormir.",
+                "translation": "It's just that I've been having a small problem with the dog's noise at night. I didn't want to cause trouble, but it's been a bit difficult to sleep."
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "local",
+                "text": "Ah, o Tobias... Pois é. Ele é um bocadinho ruidoso às vezes. Peço desculpa. Não me tinha apercebido que era assim tanto.",
+                "translation": "Ah, Tobias... Yes, he is. He's a bit noisy sometimes. I apologize. I hadn't realized it was that much."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "service",
+                "text": "Não faz mal. Talvez pudéssemos arranjar uma solução que fosse boa para todos?",
+                "translation": "No problem. Perhaps we could find a solution that would be good for everyone?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Claro, claro. Vamos ver o que se pode fazer. Obrigada por ter vindo falar comigo.",
+                "translation": "Of course, of course. Let's see what can be done. Thank you for coming to talk to me."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Indirectness and Face-Saving",
+            "body": "In Madeira, as in much of Portugal, direct confrontation with neighbours is generally avoided. It's important to preserve good relationships, especially in close-knit communities. When raising a problem, start with pleasantries, apologize for 'bothering' them, and frame the issue as a 'small problem' or 'difficulty' rather than an accusation. The goal is to find a 'solution for everyone' rather than demanding a change."
+          },
+          {
+            "title": "Opening a Difficult Conversation",
+            "body": "Begin by asking 'Tudo bem?' (How are you?) or making a general observation. Then, use phrases like 'Desculpe incomodar...' (Sorry to bother you...) or 'Não queria chatear, mas...' (I didn't want to annoy you, but...). Avoid starting with the problem immediately. This sets a polite tone and shows respect for the other person, making them more receptive to your concern."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You've noticed that water from your neighbour's garden is consistently pooling on your side of the property, causing dampness. You see your neighbour, Dona Lúcia, in her garden and decide to approach her.",
+          "difficulty": 4,
+          "entry_node": "rp-d122-node-1",
+          "nodes": [
+            {
+              "id": "rp-d122-node-1",
+              "npc_text": "Bom dia! Que dia lindo, não é? Estou aqui a cuidar das minhas flores.",
+              "npc_translation": "Good morning! What a beautiful day, isn't it? I'm here taking care of my flowers.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia, Dona Lúcia! Sim, está um dia ótimo. Desculpe incomodar, mas posso falar consigo um bocadinho?",
+                  "translation": "Good morning, Dona Lúcia! Yes, it's a great day. Sorry to bother you, but can I talk to you for a bit?",
+                  "feedback": "Excellent, you started with a polite greeting and asked permission to speak, softening the approach.",
+                  "next": "rp-d122-node-2"
+                },
+                {
+                  "text": "Dona Lúcia, a água do seu jardim está a vir para o meu lado e está a causar problemas.",
+                  "translation": "Dona Lúcia, the water from your garden is coming to my side and causing problems.",
+                  "feedback": "This is too direct for a first approach with a neighbour in Madeira. It might put her on the defensive.",
+                  "next": "rp-d122-node-3a"
+                }
+              ]
+            },
+            {
+              "id": "rp-d122-node-2",
+              "npc_text": "Pois não, diga lá! O que se passa? Algum problema com as suas plantas?",
+              "npc_translation": "Of course, tell me! What's going on? Any problem with your plants?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não, não com as minhas. É que tenho notado que a água do seu jardim, quando rega, está a escorrer para o meu lado e está a causar alguma humidade na parede.",
+                  "translation": "No, not with mine. It's just that I've noticed that the water from your garden, when you water, is running down to my side and causing some dampness on the wall.",
+                  "feedback": "Good, you explained the issue calmly and focused on the observation rather than an accusation.",
+                  "next": "rp-d122-node-3b"
+                },
+                {
+                  "text": "Sim, é sobre a água. A sua água está a estragar a minha parede e preciso que resolva isso.",
+                  "translation": "Yes, it's about the water. Your water is ruining my wall and I need you to fix it.",
+                  "feedback": "Still a bit too confrontational. Try to frame it as a shared problem or a neutral observation.",
+                  "next": "rp-d122-node-3a"
+                }
+              ]
+            },
+            {
+              "id": "rp-d122-node-3a",
+              "npc_text": "A minha água? Não me parece! Eu tenho sempre cuidado. Tem a certeza que é do meu lado?",
+              "npc_translation": "My water? I don't think so! I'm always careful. Are you sure it's from my side?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, tenho a certeza. É visível. Poderíamos ver juntas para encontrar uma solução?",
+                  "translation": "Yes, I'm sure. It's visible. Could we look together to find a solution?",
+                  "feedback": "You held your ground but immediately offered to collaborate on a solution, which is good.",
+                  "next": "rp-d122-node-4b"
+                },
+                {
+                  "text": "Sim, é mesmo do seu lado. É preciso fazer alguma coisa.",
+                  "translation": "Yes, it's definitely from your side. Something needs to be done.",
+                  "feedback": "This directness can lead to a breakdown in communication. In Madeira, preserving the relationship is key.",
+                  "next": "rp-d122-node-end-negative"
+                }
+              ]
+            },
+            {
+              "id": "rp-d122-node-3b",
+              "npc_text": "Ah, a sério? Não me tinha apercebido! Eu tento sempre ter cuidado. Peço imensa desculpa. Não queremos chatices, pois não?",
+              "npc_translation": "Oh, really? I hadn't noticed! I always try to be careful. I'm so sorry. We don't want trouble, do we?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pois não! Não faz mal, mas talvez pudéssemos arranjar uma forma de a água não escorrer tanto para o meu lado.",
+                  "translation": "Exactly! No problem, but perhaps we could find a way for the water not to run so much to my side.",
+                  "feedback": "Excellent! You reassured her and immediately moved to suggest a collaborative solution.",
+                  "next": "rp-d122-node-4a"
+                }
+              ]
+            },
+            {
+              "id": "rp-d122-node-4a",
+              "npc_text": "Sim, claro! Talvez um pequeno desvio ou algo assim. Deixe-me pensar um pouco e falamos outra vez. Obrigada por me ter avisado.",
+              "npc_translation": "Yes, of course! Maybe a small diversion or something like that. Let me think a bit and we'll talk again. Thank you for letting me know.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "P'ra já! Fico a aguardar. Obrigada, Dona Lúcia!",
+                  "translation": "You're welcome! I'll wait. Thank you, Dona Lúcia!",
+                  "feedback": "Perfect. You ended on a positive, collaborative note, leaving the door open for a solution.",
+                  "next": "rp-d122-node-end-positive"
+                }
+              ]
+            },
+            {
+              "id": "rp-d122-node-4b",
+              "npc_text": "Pois, vamos ver. Venha cá ver. Onde é que está a humidade? Ah, sim... realmente... Deixe-me ver o que posso fazer.",
+              "npc_translation": "Yes, let's see. Come over here and see. Where is the dampness? Ah, yes... indeed... Let me see what I can do.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Obrigada, Dona Lúcia. Se precisar de ajuda, diga.",
+                  "translation": "Thank you, Dona Lúcia. If you need help, just say.",
+                  "feedback": "Good, you offered support and ended on a constructive note.",
+                  "next": "rp-d122-node-end-positive"
+                }
+              ]
+            },
+            {
+              "id": "rp-d122-node-end-positive",
+              "npc_text": "De nada! Falamos depois. Tenha um bom dia!",
+              "npc_translation": "You're welcome! We'll talk later. Have a good day!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d122-node-end-negative",
+              "npc_text": "Olhe, não me parece que seja assim tão grave. Vou ver, mas não prometo nada.",
+              "npc_translation": "Look, I don't think it's that serious. I'll take a look, but I don't promise anything.",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Discuss a Property Issue with a Neighbour",
+          "prep": [
+            "Identify a specific, minor property issue that affects you (e.g., noise, plant overgrowth, minor water runoff).",
+            "Mentally rehearse opening the conversation politely and indirectly, using phrases like 'Desculpe incomodar...' and framing the issue as a 'pequeno problema'.",
+            "Think about potential collaborative solutions you could suggest, rather than demands.",
+            "Practice offering to help find a solution that is 'boa para todos' (good for everyone)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, se calhar não me expliquei bem.",
+            "Talvez não seja o melhor momento, falamos noutra altura.",
+            "Não queria causar problemas, só queria ver se arranjávamos uma solução."
+          ],
+          "likely_responses": [
+            "Pois não, diga lá.",
+            "Ah, a sério? Não me tinha apercebido.",
+            "Vamos ver o que se pode fazer.",
+            "Não me parece que seja assim tão grave."
+          ]
+        },
+        "goals": [
+          "Initiate a conversation with a neighbour about a property issue using polite and indirect language.",
+          "Describe a problem clearly but without accusation, focusing on its impact.",
+          "Negotiate a potential solution collaboratively, maintaining a good neighbourly relationship."
+        ],
+        "course": {
+          "month": 5,
+          "day": 122,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d122-neighbour-friction-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Sorry to bother you, but could we talk for a bit?",
+            "answer": "Desculpe {incomodar}, mas será que podíamos falar um bocadinho?",
+            "source_ref": "pp-sit-d122-neighbour-friction-1"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's just that there's a small problem with the noise.",
+            "answer": "É que há um pequeno problema com {o barulho}.",
+            "source_ref": "pp-sit-d122-neighbour-friction-2"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I didn't want to cause trouble, but it's getting a bit complicated.",
+            "answer": "Não queria causar {chatice}, mas está a ser um bocado {complicado}.",
+            "source_ref": "pp-sit-d122-neighbour-friction-3"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Perhaps we could find a solution that would be good for everyone.",
+            "answer": "Talvez pudéssemos {arranjar} uma solução que fosse boa para todos.",
+            "source_ref": "pp-sit-d122-neighbour-friction-4"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: noise",
+            "answer": "barulho",
+            "source_ref": "barulho"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to bother, to disturb",
+            "answer": "incomodar",
+            "source_ref": "incomodar"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to annoy, to bother",
+            "answer": "chatear",
+            "source_ref": "chatear"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: a little bit",
+            "answer": "um bocadinho",
+            "source_ref": "um bocadinho"
+          },
+          {
+            "id": "rv-sit-d122-neighbour-friction-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d122-neighbour-friction-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d123-landlord-tenant-deposit",
+      "title": "Landlord & Tenant: Deposit and Repairs",
+      "month": 5,
+      "day": 123,
+      "week": 18,
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-host",
+        "track-bureaucracy",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d123-landlord-tenant-deposit",
+        "title": "Landlord & Tenant: Deposit and Repairs",
+        "summary": "The end-of-lease conversation: the deposit (caução), what counts as wear versus damage, pending repairs, and putting agreements in writing.",
+        "tracks": [
+          "track-structured-course",
+          "track-host",
+          "track-bureaucracy",
+          "track-social"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d123-landlord-tenant-deposit-1",
+            "base": "A caução é para cobrir {tipo_de_problema}.",
+            "translation": "The deposit is to cover {type of problem}.",
+            "slots": [
+              {
+                "name": "tipo_de_problema",
+                "description": "Type of problem",
+                "options": [
+                  "danos",
+                  "estragos",
+                  "reparações necessárias"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d123-landlord-tenant-deposit-2",
+            "base": "Isto é {tipo_de_desgaste}, não é estrago.",
+            "translation": "This is {type of wear and tear}, it's not damage.",
+            "slots": [
+              {
+                "name": "tipo_de_desgaste",
+                "description": "Type of wear and tear",
+                "options": [
+                  "desgaste normal",
+                  "o uso normal",
+                  "o desgaste natural"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Isto é desgaste normal, não é estrago.",
+                "translation": "This is normal wear and tear, it's not damage.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d123-landlord-tenant-deposit-3",
+            "base": "Precisamos de pôr isto por {forma_de_registo}.",
+            "translation": "We need to put this in {form of record}.",
+            "slots": [
+              {
+                "name": "forma_de_registo",
+                "description": "Form of record",
+                "options": [
+                  "escrito",
+                  "papel",
+                  "um documento"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d123-landlord-tenant-deposit-4",
+            "base": "Podemos chegar a um {tipo_de_acordo}?",
+            "translation": "Can we reach a {type of agreement}?",
+            "slots": [
+              {
+                "name": "tipo_de_acordo",
+                "description": "Type of agreement",
+                "options": [
+                  "acordo",
+                  "bom acordo",
+                  "entendimento"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Podemos chegar a um acordo?",
+                "translation": "Can we reach an agreement?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "caução",
+            "translation": "deposit (security deposit)",
+            "pronunciation": "kow-SOW-un",
+            "register": "neutral",
+            "note": "Common term for a rental security deposit."
+          },
+          {
+            "word": "senhorio",
+            "translation": "landlord",
+            "pronunciation": "seh-nyor-EE-oo",
+            "register": "neutral"
+          },
+          {
+            "word": "inquilino",
+            "translation": "tenant",
+            "pronunciation": "een-kee-LEE-noo",
+            "register": "neutral"
+          },
+          {
+            "word": "desgaste normal",
+            "translation": "normal wear and tear",
+            "pronunciation": "dez-GAHSH-teh nor-MAHL",
+            "register": "neutral"
+          },
+          {
+            "word": "estrago",
+            "translation": "damage",
+            "pronunciation": "esh-TRAH-goo",
+            "register": "neutral"
+          },
+          {
+            "word": "reparação",
+            "translation": "repair",
+            "pronunciation": "reh-pah-rah-SOW-un",
+            "register": "neutral"
+          },
+          {
+            "word": "por escrito",
+            "translation": "in writing",
+            "pronunciation": "por esh-KREE-too",
+            "register": "neutral"
+          },
+          {
+            "word": "vistoria",
+            "translation": "inspection",
+            "pronunciation": "veesh-tor-EE-ah",
+            "register": "neutral",
+            "note": "Often refers to a property inspection."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d123-landlord-tenant-deposit-1",
+            "title": "Deposit Discussion",
+            "context": "Dona Fátima, the landlord, is doing the final inspection with Ricardo, the tenant, before he moves out. They are discussing the return of the security deposit.",
+            "lines": [
+              {
+                "speaker": "Dona Fátima (Landlord)",
+                "voice_type": "older",
+                "text": "Então, Ricardo, está tudo bem no geral, mas estas marcas na parede da sala... Isso não é desgaste normal, pois não?",
+                "translation": "So, Ricardo, it's all generally fine, but these marks on the living room wall... That's not normal wear and tear, is it?"
+              },
+              {
+                "speaker": "Ricardo (Tenant)",
+                "voice_type": "local",
+                "text": "Dona Fátima, são só umas pequenas marcas. Acha mesmo que é estrago? É do uso do dia a dia, sabe?",
+                "translation": "Dona Fátima, they're just small marks. Do you really think it's damage? It's from daily use, you know?"
+              },
+              {
+                "speaker": "Dona Fátima (Landlord)",
+                "voice_type": "service",
+                "text": "Pois, mas a caução é para cobrir danos que não sejam desgaste. Eu vou ter de pintar e isso tem um custo.",
+                "translation": "Well, but the deposit is to cover damages that aren't wear and tear. I'll have to paint, and that has a cost."
+              },
+              {
+                "speaker": "Ricardo (Tenant)",
+                "voice_type": "local",
+                "text": "Mas a parede já não estava perfeita quando entrei. E eu sempre tive muito cuidado. Podemos chegar a um acordo?",
+                "translation": "But the wall wasn't perfect when I moved in. And I was always very careful. Can we reach an agreement?"
+              },
+              {
+                "speaker": "Dona Fátima (Landlord)",
+                "voice_type": "older",
+                "text": "Podemos ver. Mas precisamos de pôr isto por escrito, para não haver problemas depois.",
+                "translation": "We can see. But we need to put this in writing, so there are no problems later."
+              },
+              {
+                "speaker": "Ricardo (Tenant)",
+                "voice_type": "local",
+                "text": "Sim, claro. Por escrito é o melhor. Assim fica tudo claro para ambos.",
+                "translation": "Yes, of course. In writing is best. That way everything is clear for both of us."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Importance of Written Agreements (Por Escrito)",
+            "body": "In Portugal, especially concerning property and financial matters, having agreements 'por escrito' (in writing) is highly valued and often legally required. Verbal agreements are less common for significant transactions and can lead to misunderstandings or disputes. Always ask for a written document, even for minor agreements, to ensure clarity and protection for both parties."
+          },
+          {
+            "title": "Wear and Tear vs. Damage",
+            "body": "A common point of contention between landlords and tenants is distinguishing 'desgaste normal' (normal wear and tear) from 'estrago' (damage). Normal wear and tear, such as minor scuffs on walls or faded paint over time, is generally the landlord's responsibility. Damage, like a broken window or significant holes in a wall, is typically the tenant's responsibility. It's crucial to have a detailed 'vistoria' (inspection) report with photos at the beginning and end of a tenancy."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are a tenant, Miguel, moving out of your apartment in Funchal. The landlord, Senhor Jorge, is inspecting the property. He's pointing out a scratch on the wooden floor, claiming it's damage that needs to be deducted from your deposit. You believe it's normal wear and tear.",
+          "difficulty": 4,
+          "entry_node": "rp-d123-node-1",
+          "nodes": [
+            {
+              "id": "rp-d123-node-1",
+              "npc_text": "Bom dia, Miguel. Então, a vistoria está quase no fim. Mas olhe para este risco no chão da sala. Isso é um estrago, não é desgaste normal. Vou ter de descontar da caução para reparar.",
+              "npc_translation": "Good morning, Miguel. So, the inspection is almost done. But look at this scratch on the living room floor. That's damage, not normal wear and tear. I'll have to deduct it from the deposit for repair.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Senhor Jorge, acho que é desgaste normal. O chão já não era novo quando me mudei.",
+                  "translation": "Senhor Jorge, I think it's normal wear and tear. The floor wasn't new when I moved in.",
+                  "feedback": "Good point! Reminding the landlord of the initial condition is a strong argument.",
+                  "next": "rp-d123-node-2"
+                },
+                {
+                  "text": "Quanto custaria a reparação, Senhor Jorge? Podia dar-me um orçamento?",
+                  "translation": "How much would the repair cost, Senhor Jorge? Could you give me a quote?",
+                  "feedback": "Asking for a quote is a good practical step to understand the potential deduction.",
+                  "next": "rp-d123-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d123-node-2",
+              "npc_text": "Pois, mas este risco é um bocado grande. Não é apenas do uso diário. A caução é mesmo para estas situações.",
+              "npc_translation": "Well, but this scratch is a bit big. It's not just from daily use. The deposit is precisely for these situations.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Podemos rever o contrato? Eu tenho fotos do chão antes de entrar.",
+                  "translation": "Can we review the contract? I have photos of the floor before I moved in.",
+                  "feedback": "Excellent! Referring to the contract and providing evidence (photos) strengthens your position.",
+                  "next": "rp-d123-node-4"
+                },
+                {
+                  "text": "Talvez possamos dividir o custo? Não me parece justo pagar tudo.",
+                  "translation": "Perhaps we can split the cost? It doesn't seem fair to pay for everything.",
+                  "feedback": "A reasonable negotiation tactic, showing willingness to compromise.",
+                  "next": "rp-d123-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d123-node-3",
+              "npc_text": "Um carpinteiro para lixar e envernizar só aquela área... Deve ficar à volta de 150 euros. É caro, sim.",
+              "npc_translation": "A carpenter to sand and varnish just that area... It should be around 150 euros. It's expensive, yes.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "150 euros é imenso! Não concordo que seja um estrago que justifique isso.",
+                  "translation": "150 euros is a lot! I don't agree it's damage that justifies that.",
+                  "feedback": "Expressing your disagreement with the cost is important, especially if you feel it's excessive.",
+                  "next": "rp-d123-node-5"
+                },
+                {
+                  "text": "Podemos pôr isto por escrito, por favor? O acordo sobre a caução.",
+                  "translation": "Can we put this in writing, please? The agreement about the deposit.",
+                  "feedback": "Always ask for written confirmation. This is a key step to protect yourself.",
+                  "next": "rp-d123-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d123-node-4",
+              "npc_text": "Fotos? Pois, isso é uma boa prova. Deixe-me ver. Se o risco já lá estava, então não posso descontar.",
+              "npc_translation": "Photos? Well, that's good proof. Let me see. If the scratch was already there, then I can't deduct it.",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d123-node-5",
+              "npc_text": "Então, o que propõe? Não podemos deixar o risco assim. Temos de encontrar uma solução.",
+              "npc_translation": "So, what do you propose? We can't leave the scratch like this. We have to find a solution.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Que tal se pagasse metade e o senhor a outra metade? Ou arranjo um carpinteiro mais barato.",
+                  "translation": "How about I pay half and you pay the other half? Or I'll find a cheaper carpenter.",
+                  "feedback": "Offering concrete solutions, including finding your own quote, shows proactive negotiation.",
+                  "next": "rp-d123-node-6"
+                },
+                {
+                  "text": "Não concordo que seja um estrago. Se o senhor insiste, quero que ponha isso por escrito.",
+                  "translation": "I don't agree it's damage. If you insist, I want you to put that in writing.",
+                  "feedback": "Standing firm on your position and demanding written documentation is crucial if you can't agree.",
+                  "next": "rp-d123-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d123-node-6",
+              "npc_text": "Pois, por escrito é o melhor. Vamos acordar os termos da devolução da caução com tudo detalhado.",
+              "npc_translation": "Yes, in writing is best. We'll agree on the terms of the deposit return with everything detailed.",
+              "npc_voice_type": "teacher",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Negotiate Deposit Refund for Property Issues",
+          "prep": [
+            "Review the vocabulary for 'deposit', 'wear and tear', 'damage', and 'in writing'.",
+            "Practice phrases for disagreeing politely and asking for written confirmation.",
+            "Mentally prepare to argue your point using evidence (like photos if you had them)."
+          ],
+          "fallback_phrases": [
+            "Não entendi bem, pode repetir?",
+            "Podemos falar sobre isto mais tarde?",
+            "Preciso de pensar um bocado."
+          ],
+          "likely_responses": [
+            "Mas o contrato diz que...",
+            "Eu não posso aceitar isso.",
+            "Vou ter de consultar o meu advogado.",
+            "Pois, talvez tenhamos de chegar a um meio-termo."
+          ]
+        },
+        "goals": [
+          "Successfully negotiate the return of a security deposit with a landlord.",
+          "Distinguish between normal wear and tear and actual property damage.",
+          "Request and obtain agreements in writing for clarity and legal protection."
+        ],
+        "course": {
+          "month": 5,
+          "day": 123,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The deposit is to cover {type of problem}.",
+            "answer": "A caução é para cobrir {tipo_de_problema}.",
+            "source_ref": "pp-sit-d123-landlord-tenant-deposit-1"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: This is {type of wear and tear}, it's not damage.",
+            "answer": "Isto é {tipo_de_desgaste}, não é estrago.",
+            "source_ref": "pp-sit-d123-landlord-tenant-deposit-2"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: We need to put this in {form of record}.",
+            "answer": "Precisamos de pôr isto por {forma_de_registo}.",
+            "source_ref": "pp-sit-d123-landlord-tenant-deposit-3"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can we reach a {type of agreement}?",
+            "answer": "Podemos chegar a um {tipo_de_acordo}?",
+            "source_ref": "pp-sit-d123-landlord-tenant-deposit-4"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: deposit (security deposit)",
+            "answer": "caução",
+            "source_ref": "caução"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: landlord",
+            "answer": "senhorio",
+            "source_ref": "senhorio"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: tenant",
+            "answer": "inquilino",
+            "source_ref": "inquilino"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: normal wear and tear",
+            "answer": "desgaste normal",
+            "source_ref": "desgaste normal"
+          },
+          {
+            "id": "rv-sit-d123-landlord-tenant-deposit-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d123-landlord-tenant-deposit-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d124-power-cuts-utilities",
+      "title": "Power Cuts & Utility Failures",
+      "month": 5,
+      "day": 124,
+      "week": 18,
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-host",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d124-power-cuts-utilities",
+        "title": "Power Cuts & Utility Failures",
+        "summary": "The electricity or water is off: reporting the fault, understanding recorded menus and the callback, chasing a resolution, and asking about compensation.",
+        "tracks": [
+          "track-structured-course",
+          "track-host",
+          "track-bureaucracy"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d124-power-cuts-utilities-1",
+            "base": "Não tenho {serviço} em {local}.",
+            "translation": "I don't have {service} at {location}.",
+            "slots": [
+              {
+                "name": "serviço",
+                "description": "Utility service",
+                "options": [
+                  "luz",
+                  "água"
+                ]
+              },
+              {
+                "name": "local",
+                "description": "Location",
+                "options": [
+                  "casa",
+                  "prédio",
+                  "apartamento"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não há luz na minha casa.",
+                "translation": "There's no electricity at my house.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d124-power-cuts-utilities-2",
+            "base": "Queria reportar uma avaria na {utilidade}.",
+            "translation": "I'd like to report a fault with the {utility}.",
+            "slots": [
+              {
+                "name": "utilidade",
+                "description": "Type of utility",
+                "options": [
+                  "eletricidade",
+                  "água"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d124-power-cuts-utilities-3",
+            "base": "Há alguma previsão para o restabelecimento do {serviço}?",
+            "translation": "Is there any estimate for the restoration of the {service}?",
+            "slots": [
+              {
+                "name": "serviço",
+                "description": "Utility service",
+                "options": [
+                  "serviço",
+                  "fornecimento"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Quando é que a luz volta?",
+                "translation": "When will the power come back?",
+                "register": "informal",
+                "note": "More direct and informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d124-power-cuts-utilities-4",
+            "base": "Tenho direito a alguma compensação ou indemnização?",
+            "translation": "Am I entitled to any compensation or indemnity?"
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "avaria",
+            "translation": "fault, breakdown",
+            "pronunciation": "ah-vah-REE-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "corte de luz",
+            "translation": "power cut",
+            "pronunciation": "KOR-tuh duh LOOSH",
+            "register": "neutral"
+          },
+          {
+            "word": "falta de água",
+            "translation": "water shortage/cut",
+            "pronunciation": "FAL-tah duh AH-gwah",
+            "register": "neutral"
+          },
+          {
+            "word": "restabelecimento",
+            "translation": "restoration, re-establishment",
+            "pronunciation": "resh-tah-beh-leh-see-MEN-too",
+            "register": "formal"
+          },
+          {
+            "word": "indemnização",
+            "translation": "compensation, indemnity",
+            "pronunciation": "een-deh-mnee-zah-SOW",
+            "register": "formal"
+          },
+          {
+            "word": "linha de apoio",
+            "translation": "helpline, support line",
+            "pronunciation": "LEE-nyah duh ah-POY-oo",
+            "register": "neutral",
+            "note": "Common term for customer service phone lines"
+          },
+          {
+            "word": "contador",
+            "translation": "meter (electricity/water)",
+            "pronunciation": "kon-tah-DOR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d124-power-cuts-utilities-1",
+            "title": "Reporting a Power Cut",
+            "context": "A customer calls the electricity company (EDP) helpline to report a power cut at their home in Funchal.",
+            "lines": [
+              {
+                "speaker": "Operador",
+                "voice_type": "service",
+                "text": "Linha de apoio da EDP, boa tarde. Em que posso ajudar?",
+                "translation": "EDP helpline, good afternoon. How can I help?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Boa tarde. Não tenho luz em casa e parece que é em todo o prédio.",
+                "translation": "Good afternoon. I don't have electricity at home and it seems to be the whole building."
+              },
+              {
+                "speaker": "Operador",
+                "voice_type": "service",
+                "text": "Pois, entendo. Pode-me indicar o seu código postal e número de porta, por favor?",
+                "translation": "Right, I understand. Can you give me your postcode and door number, please?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Claro. É 9000-000, e o número 12, rés-do-chão direito.",
+                "translation": "Of course. It's 9000-000, and number 12, ground floor right."
+              },
+              {
+                "speaker": "Operador",
+                "voice_type": "service",
+                "text": "Obrigado. Sim, temos um registo de avaria nessa zona. Há alguma previsão para o restabelecimento?",
+                "translation": "Thank you. Yes, we have a fault registered in that area. Is there an estimate for restoration?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Sim, é o que eu queria saber. Quando é que a luz volta?",
+                "translation": "Yes, that's what I wanted to know. When will the power come back?"
+              },
+              {
+                "speaker": "Operador",
+                "voice_type": "service",
+                "text": "Ainda não temos uma hora exata, mas a equipa técnica está a trabalhar no local. Estimamos que seja restabelecido nas próximas duas a três horas.",
+                "translation": "We don't have an exact time yet, but the technical team is working on site. We estimate it will be restored in the next two to three hours."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d124-power-cuts-utilities-2",
+            "title": "Neighbours Discussing Water Cut",
+            "context": "Two neighbours on a street in Machico are talking about a sudden lack of water.",
+            "lines": [
+              {
+                "speaker": "Manuela",
+                "voice_type": "local",
+                "text": "Então, Jorge! Também não tens água em casa?",
+                "translation": "So, Jorge! Don't you have water at home either?"
+              },
+              {
+                "speaker": "Jorge",
+                "voice_type": "local",
+                "text": "Pois é, Manuela! Nada de água desde há uma hora. Que chatice!",
+                "translation": "That's right, Manuela! No water for an hour now. What a nuisance!"
+              },
+              {
+                "speaker": "Manuela",
+                "voice_type": "local",
+                "text": "Eu já liguei p'ra a ARM. Disseram que é uma avaria na rede principal. Estão a tentar resolver.",
+                "translation": "I already called ARM. They said it's a fault in the main network. They're trying to fix it."
+              },
+              {
+                "speaker": "Jorge",
+                "voice_type": "local",
+                "text": "Ah, boa! E há previsão p'ra quando volta?",
+                "translation": "Ah, good! And is there an estimate for when it comes back?"
+              },
+              {
+                "speaker": "Manuela",
+                "voice_type": "local",
+                "text": "Disseram que pode demorar um bocado, talvez até ao fim da tarde. É o que dá viver na ilha, não é?",
+                "translation": "They said it might take a while, maybe until late afternoon. That's what living on the island is like, isn't it?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Reporting Utility Problems in Portugal",
+            "body": "In Portugal, utility problems like power cuts or water shortages are typically reported by phone to a dedicated 'linha de apoio' (helpline) for the respective company (e.g., EDP for electricity, ARM or local municipal services for water in Madeira). Automated menus are common, often requiring you to input your customer number or postcode. It's rare for a technician to visit immediately unless it's a localized internal issue; broader outages are usually handled by teams in the field."
+          },
+          {
+            "title": "Compensation for Outages",
+            "body": "For prolonged utility outages (e.g., over 12 or 24 hours, depending on the service and company policy), customers may be entitled to compensation ('indemnização'). This usually requires a formal complaint after the service is restored. It's not always automatic and often requires the customer to initiate the process by contacting the utility provider directly."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling the local water company (ARM) in Madeira to report that you have no water at your apartment. You want to know what's happening and when it might be fixed.",
+          "difficulty": 4,
+          "entry_node": "rp-d124-water-cut-start",
+          "nodes": [
+            {
+              "id": "rp-d124-water-cut-start",
+              "npc_text": "Linha de apoio da ARM, boa tarde. Em que posso ajudar?",
+              "npc_translation": "ARM helpline, good afternoon. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Não tenho água em casa.",
+                  "translation": "Good afternoon. I don't have water at home.",
+                  "feedback": "Good start, clear and direct.",
+                  "next": "rp-d124-water-cut-address"
+                },
+                {
+                  "text": "A minha água não está a funcionar.",
+                  "translation": "My water isn't working.",
+                  "feedback": "Also acceptable, but 'Não tenho água' is slightly more common.",
+                  "next": "rp-d124-water-cut-address"
+                }
+              ]
+            },
+            {
+              "id": "rp-d124-water-cut-address",
+              "npc_text": "Pode-me indicar o seu código postal e número de porta, por favor?",
+              "npc_translation": "Can you give me your postcode and door number, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, é 9300-000, e o número 5, segundo andar esquerdo.",
+                  "translation": "Yes, it's 9300-000, and number 5, second floor left.",
+                  "feedback": "Excellent, providing all necessary details.",
+                  "next": "rp-d124-water-cut-check"
+                },
+                {
+                  "text": "O meu código postal é 9300-000. E o número 5.",
+                  "translation": "My postcode is 9300-000. And number 5.",
+                  "feedback": "Good, but remember to specify the floor/side if applicable (e.g., 'segundo andar esquerdo').",
+                  "next": "rp-d124-water-cut-check"
+                }
+              ]
+            },
+            {
+              "id": "rp-d124-water-cut-check",
+              "npc_text": "Obrigado. Confirmo que há uma avaria registada na sua zona. É uma rotura na rede principal.",
+              "npc_translation": "Thank you. I confirm there's a registered fault in your area. It's a burst in the main network.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, entendo. E há alguma previsão para o restabelecimento?",
+                  "translation": "Ah, I understand. And is there any estimate for the restoration?",
+                  "feedback": "Perfect, asking for the next logical piece of information.",
+                  "next": "rp-d124-water-cut-time"
+                },
+                {
+                  "text": "Quando é que volta a água?",
+                  "translation": "When will the water come back?",
+                  "feedback": "Good, direct and informal. 'Restabelecimento' is more formal but also correct.",
+                  "next": "rp-d124-water-cut-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-d124-water-cut-time",
+              "npc_text": "A equipa técnica está no local a trabalhar. Prevemos que o restabelecimento ocorra até às 19h. Lamentamos o inconveniente.",
+              "npc_translation": "The technical team is on site working. We anticipate restoration by 7 PM. We apologize for the inconvenience.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois, até às 19h... Tenho direito a alguma compensação por isto?",
+                  "translation": "Right, until 7 PM... Am I entitled to any compensation for this?",
+                  "feedback": "Good, pushing for information about compensation.",
+                  "next": "rp-d124-water-cut-compensation"
+                },
+                {
+                  "text": "Ok, obrigado pela informação. Boa tarde.",
+                  "translation": "Okay, thanks for the information. Good afternoon.",
+                  "feedback": "A polite way to end the call if you don't need further information."
+                }
+              ]
+            },
+            {
+              "id": "rp-d124-water-cut-compensation",
+              "npc_text": "Para informações sobre compensação, deve preencher um formulário no nosso site após o restabelecimento do serviço. Tenha uma boa tarde.",
+              "npc_translation": "For information regarding compensation, you should fill out a form on our website after the service is restored. Have a good afternoon.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Certo, vou verificar o site. Obrigado e boa tarde.",
+                  "translation": "Understood, I'll check the website. Thank you and good afternoon.",
+                  "feedback": "Excellent, confirming understanding and ending the call politely."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Report a Utility Fault",
+          "prep": [
+            "Review the phrase patterns for reporting a problem and asking about restoration.",
+            "Practice giving your address and postcode in Portuguese.",
+            "Familiarize yourself with the vocabulary for 'fault', 'restoration', and 'compensation'."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi bem.",
+            "Pode falar um pouco mais devagar?"
+          ],
+          "likely_responses": [
+            "Qual é o seu código postal?",
+            "Temos um registo de avaria nessa zona.",
+            "A equipa técnica está a trabalhar no local.",
+            "Não temos uma previsão exata."
+          ]
+        },
+        "goals": [
+          "Report a utility fault (power/water) clearly and concisely.",
+          "Provide necessary personal and location details to a service operator.",
+          "Ask about the estimated time for service restoration.",
+          "Inquire about potential compensation for the inconvenience."
+        ],
+        "course": {
+          "month": 5,
+          "day": 124,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I don't have {service} at {location}.",
+            "answer": "Não tenho {serviço} em {local}.",
+            "source_ref": "pp-sit-d124-power-cuts-utilities-1"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to report a fault with the {utility}.",
+            "answer": "Queria reportar uma avaria na {utilidade}.",
+            "source_ref": "pp-sit-d124-power-cuts-utilities-2"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is there any estimate for the restoration of the {service}?",
+            "answer": "Há alguma previsão para o restabelecimento do {serviço}?",
+            "source_ref": "pp-sit-d124-power-cuts-utilities-3"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Am I entitled to any compensation or indemnity?",
+            "answer": "Tenho direito a alguma compensação ou indemnização?",
+            "source_ref": "pp-sit-d124-power-cuts-utilities-4"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fault, breakdown",
+            "answer": "avaria",
+            "source_ref": "avaria"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: power cut",
+            "answer": "corte de luz",
+            "source_ref": "corte de luz"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: water shortage/cut",
+            "answer": "falta de água",
+            "source_ref": "falta de água"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: restoration, re-establishment",
+            "answer": "restabelecimento",
+            "source_ref": "restabelecimento"
+          },
+          {
+            "id": "rv-sit-d124-power-cuts-utilities-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d124-power-cuts-utilities-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d125-midnight-plumber",
+      "title": "Emergency: The Midnight Plumber",
+      "month": 5,
+      "day": 125,
+      "week": 18,
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d125-midnight-plumber",
+        "title": "Emergency: The Midnight Plumber",
+        "summary": "A burst pipe at night: conveying urgency on the phone, describing what you already turned off, negotiating the call-out fee, and directing them to the house.",
+        "tracks": [
+          "track-structured-course",
+          "track-host"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d125-midnight-plumber-1",
+            "base": "Tenho uma fuga de água {onde}.",
+            "translation": "I have a water leak {where}.",
+            "slots": [
+              {
+                "name": "onde",
+                "description": "Location of the leak",
+                "options": [
+                  "na casa de banho",
+                  "na cozinha",
+                  "na lavandaria",
+                  "no sótão"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Há uma fuga de água enorme!",
+                "translation": "There's a huge water leak!",
+                "register": "informal",
+                "note": "More emphatic and urgent"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d125-midnight-plumber-2",
+            "base": "Já fechei a {o_que}.",
+            "translation": "I've already turned off the {what}.",
+            "slots": [
+              {
+                "name": "o_que",
+                "description": "What was turned off",
+                "options": [
+                  "água principal",
+                  "torneira de segurança",
+                  "eletricidade"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Já cortei a água.",
+                "translation": "I've already cut the water.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d125-midnight-plumber-3",
+            "base": "Quanto é a taxa de deslocação {quando}?",
+            "translation": "How much is the call-out fee {when}?",
+            "slots": [
+              {
+                "name": "quando",
+                "description": "Time of day",
+                "options": [
+                  "à noite",
+                  "agora",
+                  "nesta altura"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d125-midnight-plumber-4",
+            "base": "A minha morada é {street_name}, número {number}.",
+            "translation": "My address is {street_name}, number {number}.",
+            "slots": [
+              {
+                "name": "street_name",
+                "description": "Street name",
+                "options": [
+                  "Rua da Levada",
+                  "Caminho do Monte",
+                  "Travessa dos Loios"
+                ]
+              },
+              {
+                "name": "number",
+                "description": "House number",
+                "options": [
+                  "vinte e cinco",
+                  "quarenta e dois",
+                  "dezassete B"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "fuga de água",
+            "translation": "water leak",
+            "pronunciation": "FOO-gah d'AH-gwah",
+            "register": "neutral"
+          },
+          {
+            "word": "canalizador",
+            "translation": "plumber",
+            "pronunciation": "kah-nah-lee-zah-DOR",
+            "register": "neutral"
+          },
+          {
+            "word": "cano rebentado",
+            "translation": "burst pipe",
+            "pronunciation": "KAH-no reh-ben-TAH-do",
+            "register": "neutral"
+          },
+          {
+            "word": "torneira de segurança",
+            "translation": "main stopcock/shut-off valve",
+            "pronunciation": "tor-NEH-rah deh seh-goo-RAHN-sah",
+            "register": "neutral",
+            "note": "Also 'torneira de corte' or 'contador da água'"
+          },
+          {
+            "word": "taxa de deslocação",
+            "translation": "call-out fee",
+            "pronunciation": "TAH-shah deh dez-loh-kah-SOWN",
+            "register": "neutral"
+          },
+          {
+            "word": "urgência",
+            "translation": "emergency / urgency",
+            "pronunciation": "oor-JEN-see-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "morada",
+            "translation": "address",
+            "pronunciation": "moh-RAH-dah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d125-midnight-plumber-1",
+            "title": "Midnight Emergency Call",
+            "context": "It's 2 AM and a pipe has burst in your house in Funchal. You're calling an emergency plumber.",
+            "lines": [
+              {
+                "speaker": "Plumber",
+                "voice_type": "phone",
+                "text": "Boa noite, Canalizador Silva, diga!",
+                "translation": "Good evening, Plumber Silva, speak!"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Boa noite, desculpe a hora, mas tenho uma urgência! Há uma fuga de água enorme na minha cozinha!",
+                "translation": "Good evening, sorry about the time, but I have an emergency! There's a huge water leak in my kitchen!"
+              },
+              {
+                "speaker": "Plumber",
+                "voice_type": "service",
+                "text": "Uma fuga? Pois é. Já fechou a água principal?",
+                "translation": "A leak? Right. Have you already turned off the main water supply?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Sim, sim, já fechei a torneira de segurança. Mas a água continua a sair um bocado e preciso de ajuda já!",
+                "translation": "Yes, yes, I've already turned off the stopcock. But the water is still coming out a bit and I need help now!"
+              },
+              {
+                "speaker": "Plumber",
+                "voice_type": "phone",
+                "text": "Está bem, percebo a urgência. A taxa de deslocação à noite é de setenta e cinco euros, mais o trabalho. Concorda?",
+                "translation": "Alright, I understand the urgency. The call-out fee at night is seventy-five euros, plus the work. Do you agree?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "local",
+                "text": "Setenta e cinco? É um bocado caro, mas sim, concordo. A minha casa é na Rua da Achada, número vinte e três.",
+                "translation": "Seventy-five? It's a bit expensive, but yes, I agree. My house is on Rua da Achada, number twenty-three."
+              },
+              {
+                "speaker": "Plumber",
+                "voice_type": "service",
+                "text": "Rua da Achada, vinte e três. P'ra já! Chego aí em uns trinta minutos.",
+                "translation": "Rua da Achada, twenty-three. Right away! I'll be there in about thirty minutes."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Emergency Services and Fees",
+            "body": "In Portugal, including Madeira, emergency services outside of normal working hours (especially late at night, weekends, or holidays) typically incur a higher 'taxa de deslocação' (call-out fee). This is standard practice, and it's common for the service provider to state this fee upfront. While you can try to negotiate, for urgent situations, it's often non-negotiable due to the immediate need."
+          },
+          {
+            "title": "Addressing Service Providers",
+            "body": "When speaking to service professionals like plumbers, especially over the phone, it's polite to use formal address (o senhor/a senhora) or the implied third person. In this context, the plumber uses 'diga' (tell me/speak) which is a common, direct way to answer the phone in a professional but not overly formal manner. The learner's initial apology for the late hour ('desculpe a hora') is also a polite way to start such a call."
+          }
+        ],
+        "roleplay": {
+          "scenario": "It's 1 AM and a pipe has burst in your bathroom. You've managed to turn off the main water supply, but there's still a mess and you need a plumber urgently. You call an emergency number.",
+          "difficulty": 4,
+          "entry_node": "rp-d125-node-1",
+          "nodes": [
+            {
+              "id": "rp-d125-node-1",
+              "npc_text": "Boa noite, Canalizações Funchal, como posso ajudar?",
+              "npc_translation": "Good evening, Funchal Plumbing, how can I help?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Boa noite, tenho uma fuga de água na casa de banho, é uma urgência!",
+                  "translation": "Good evening, I have a water leak in the bathroom, it's an emergency!",
+                  "feedback": "Excellent, you've clearly stated the problem and urgency.",
+                  "next": "rp-d125-node-2"
+                },
+                {
+                  "text": "Olá, o meu cano rebentou, preciso de um canalizador.",
+                  "translation": "Hello, my pipe burst, I need a plumber.",
+                  "feedback": "Good, but adding 'urgência' or 'emergência' would convey the critical nature better.",
+                  "next": "rp-d125-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d125-node-2",
+              "npc_text": "Uma fuga? Já fechou a torneira de segurança?",
+              "npc_translation": "A leak? Have you already turned off the main stopcock?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, já fechei a água principal, mas continua a pingar.",
+                  "translation": "Yes, I've already turned off the main water, but it's still dripping.",
+                  "feedback": "Clear and concise, explaining the situation well.",
+                  "next": "rp-d125-node-3"
+                },
+                {
+                  "text": "Sim, claro, a água está cortada.",
+                  "translation": "Yes, of course, the water is cut off.",
+                  "feedback": "Correct, you confirm the action taken.",
+                  "next": "rp-d125-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d125-node-3",
+              "npc_text": "Pois, percebo. Para um serviço de urgência à noite, a taxa de deslocação é de oitenta euros. Concorda com o valor?",
+              "npc_translation": "Right, I understand. For an emergency night service, the call-out fee is eighty euros. Do you agree to the amount?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Oitenta euros? É um bocado caro, mas sim, concordo. Preciso mesmo de ajuda.",
+                  "translation": "Eighty euros? It's a bit expensive, but yes, I agree. I really need help.",
+                  "feedback": "You've acknowledged the price and agreed, showing urgency.",
+                  "next": "rp-d125-node-4"
+                },
+                {
+                  "text": "Não consegue fazer um preço melhor? É muito dinheiro.",
+                  "translation": "Can't you do a better price? It's a lot of money.",
+                  "feedback": "It's good to try, but for emergencies, it's often fixed.",
+                  "next": "rp-d125-node-3b"
+                }
+              ]
+            },
+            {
+              "id": "rp-d125-node-3b",
+              "npc_text": "Lamento, mas é o preço tabelado para este tipo de intervenção urgente à noite. Sem isso, não consigo enviar ninguém.",
+              "npc_translation": "I'm sorry, but it's the fixed price for this type of urgent night intervention. Without that, I can't send anyone.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Está bem, aceito. Por favor, venha o mais rápido possível.",
+                  "translation": "Alright, I accept. Please come as fast as possible.",
+                  "feedback": "You've accepted the terms to get the service.",
+                  "next": "rp-d125-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d125-node-4",
+              "npc_text": "Muito bem. Qual é a sua morada completa? E há alguma referência para encontrar a casa?",
+              "npc_translation": "Very well. What is your full address? And is there any reference to find the house?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "É na Rua Nova do Livramento, número trinta e três. A casa é amarela, perto da padaria.",
+                  "translation": "It's on Rua Nova do Livramento, number thirty-three. The house is yellow, near the bakery.",
+                  "feedback": "Excellent, clear address and a useful local landmark.",
+                  "next": "rp-d125-node-5"
+                },
+                {
+                  "text": "A morada é Caminho das Courelas, vinte e um. É fácil de encontrar.",
+                  "translation": "The address is Caminho das Courelas, twenty-one. It's easy to find.",
+                  "feedback": "Good, you've provided the address. A small landmark could be helpful in Madeira's winding roads.",
+                  "next": "rp-d125-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d125-node-5",
+              "npc_text": "Rua Nova do Livramento, trinta e três, casa amarela. Entendido. Chego aí em vinte a trinta minutos. Até já!",
+              "npc_translation": "Rua Nova do Livramento, thirty-three, yellow house. Understood. I'll be there in twenty to thirty minutes. See you soon!",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Call a Plumber for a Burst Pipe",
+          "prep": [
+            "Review vocabulary for plumbing emergencies and addresses.",
+            "Practice describing a leak and stating urgency.",
+            "Be ready to ask about call-out fees and give your address clearly."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar mais devagar?",
+            "Desculpe, como disse?"
+          ],
+          "likely_responses": [
+            "Qual é o problema?",
+            "Já fechou a água?",
+            "Qual a sua morada?",
+            "A taxa de deslocação é de X euros."
+          ]
+        },
+        "goals": [
+          "Successfully report a plumbing emergency over the phone.",
+          "Convey urgency and specify the location of the problem.",
+          "Understand and respond to questions about turning off the water supply.",
+          "Negotiate or confirm the emergency call-out fee.",
+          "Provide your address and any necessary directions clearly."
+        ],
+        "course": {
+          "month": 5,
+          "day": 125,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d125-midnight-plumber-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have a water leak {where}.",
+            "answer": "Tenho uma fuga de água {onde}.",
+            "source_ref": "pp-sit-d125-midnight-plumber-1"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I've already turned off the {what}.",
+            "answer": "Já fechei a {o_que}.",
+            "source_ref": "pp-sit-d125-midnight-plumber-2"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much is the call-out fee {when}?",
+            "answer": "Quanto é a taxa de deslocação {quando}?",
+            "source_ref": "pp-sit-d125-midnight-plumber-3"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My address is {street_name}, number {number}.",
+            "answer": "A minha morada é {street_name}, número {number}.",
+            "source_ref": "pp-sit-d125-midnight-plumber-4"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: water leak",
+            "answer": "fuga de água",
+            "source_ref": "fuga de água"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: plumber",
+            "answer": "canalizador",
+            "source_ref": "canalizador"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: burst pipe",
+            "answer": "cano rebentado",
+            "source_ref": "cano rebentado"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: main stopcock/shut-off valve",
+            "answer": "torneira de segurança",
+            "source_ref": "torneira de segurança"
+          },
+          {
+            "id": "rv-sit-d125-midnight-plumber-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d125-midnight-plumber-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d126-week-18-stress-test",
+      "title": "Week 18 Stress Test",
+      "month": 5,
+      "day": 126,
+      "week": 18,
+      "level": 4,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d126-week-18-stress-test",
+        "title": "Week 18 Stress Test",
+        "summary": "A bad week at the house: a leak, an inflated bill, a no-show and an insurance call — problem-solving under sustained pressure.",
+        "tracks": [
+          "track-structured-course",
+          "track-host"
+        ],
+        "level": 4,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d126-week-18-stress-test-1",
+            "base": "Tenho uma {problema} na {local}.",
+            "translation": "I have a {problem} in the {location}.",
+            "slots": [
+              {
+                "name": "problema",
+                "description": "type of problem",
+                "options": [
+                  "fuga",
+                  "avaria",
+                  "infiltração"
+                ]
+              },
+              {
+                "name": "local",
+                "description": "location in the house",
+                "options": [
+                  "casa",
+                  "cozinha",
+                  "casa de banho",
+                  "lavandaria"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Há uma fuga na cozinha.",
+                "translation": "There's a leak in the kitchen.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d126-week-18-stress-test-2",
+            "base": "A {tipo_de_conta} parece-me {adjetivo}.",
+            "translation": "The {type_of_bill} seems {adjective} to me.",
+            "slots": [
+              {
+                "name": "tipo_de_conta",
+                "description": "type of bill",
+                "options": [
+                  "fatura da água",
+                  "fatura da luz",
+                  "fatura do gás"
+                ]
+              },
+              {
+                "name": "adjetivo",
+                "description": "adjective describing the bill",
+                "options": [
+                  "muito alta",
+                  "exagerada",
+                  "errada"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "A fatura da luz parece-me exagerada.",
+                "translation": "The electricity bill seems exaggerated to me.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d126-week-18-stress-test-3",
+            "base": "O {profissional} não {ação}.",
+            "translation": "The {professional} didn't {action}.",
+            "slots": [
+              {
+                "name": "profissional",
+                "description": "type of professional",
+                "options": [
+                  "canalizador",
+                  "técnico",
+                  "eletricista"
+                ]
+              },
+              {
+                "name": "ação",
+                "description": "action not performed",
+                "options": [
+                  "apareceu",
+                  "veio",
+                  "cumpriu o agendamento"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "O canalizador não apareceu.",
+                "translation": "The plumber didn't show up.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d126-week-18-stress-test-4",
+            "base": "Preciso de falar com alguém sobre {assunto}.",
+            "translation": "I need to speak with someone about {subject}.",
+            "slots": [
+              {
+                "name": "assunto",
+                "description": "topic of discussion",
+                "options": [
+                  "a minha apólice",
+                  "um sinistro",
+                  "um problema na casa",
+                  "o meu seguro"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Preciso de falar com alguém sobre o meu seguro.",
+                "translation": "I need to speak with someone about my insurance.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "fuga",
+            "translation": "leak",
+            "pronunciation": "FOO-gah",
+            "register": "neutral"
+          },
+          {
+            "word": "fatura",
+            "translation": "bill (utility, invoice)",
+            "pronunciation": "fah-TOO-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "canalizador",
+            "translation": "plumber",
+            "pronunciation": "kah-nah-lee-zah-DOR",
+            "register": "neutral"
+          },
+          {
+            "word": "seguradora",
+            "translation": "insurance company",
+            "pronunciation": "seh-goo-rah-DOH-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "agendamento",
+            "translation": "appointment, scheduling",
+            "pronunciation": "ah-zheh-dah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "avaria",
+            "translation": "breakdown, fault, malfunction",
+            "pronunciation": "ah-vah-REE-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "sinistro",
+            "translation": "insurance claim, incident",
+            "pronunciation": "see-NEESH-troo",
+            "register": "formal",
+            "note": "Used specifically in insurance context for an event causing damage."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d126-week-18-stress-test-1",
+            "title": "A leak in the kitchen",
+            "context": "You are calling your landlord, Dona Fátima, about a leak in your kitchen.",
+            "lines": [
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Diga? Ah, olá! Tudo bem?",
+                "translation": "Hello? Oh, hi! Is everything okay?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Olá, Dona Fátima. Não muito bem, infelizmente. Tenho uma fuga na cozinha.",
+                "translation": "Hello, Dona Fátima. Not very well, unfortunately. I have a leak in the kitchen."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "local",
+                "text": "Uma fuga? Ai, que chatice! De onde é que vem a água? Já viu?",
+                "translation": "A leak? Oh, how annoying! Where is the water coming from? Have you seen?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Parece vir do lava-loiça. Está a pingar bastante. Já fechei a torneira principal.",
+                "translation": "It seems to be coming from the sink. It's dripping a lot. I've already turned off the main tap."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Pois, muito bem. Vou ligar já ao canalizador. Ele costuma vir rápido. Depois aviso-a.",
+                "translation": "Right, very good. I'll call the plumber immediately. He usually comes quickly. I'll let you know afterwards."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Muito obrigada, Dona Fátima. Tenho o balde por baixo, mas é urgente.",
+                "translation": "Thank you very much, Dona Fátima. I have the bucket underneath, but it's urgent."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d126-week-18-stress-test-2",
+            "title": "Questioning an electricity bill",
+            "context": "You are calling the electricity company about an unusually high bill.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Boa tarde, [Nome da Empresa de Eletricidade], em que posso ajudar?",
+                "translation": "Good afternoon, [Electricity Company Name], how can I help you?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Boa tarde. Gostaria de questionar a minha última fatura da luz. Parece-me muito alta.",
+                "translation": "Good afternoon. I'd like to query my last electricity bill. It seems very high to me."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Certo. Pode indicar o seu número de cliente, por favor?",
+                "translation": "Of course. Can you provide your client number, please?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, é o 123456789. Refere-se ao mês passado, e é quase o dobro do habitual.",
+                "translation": "Yes, it's 123456789. It refers to last month, and it's almost double the usual."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Entendo. Vou verificar o seu histórico de consumo. Um momento, por favor.",
+                "translation": "I understand. I'll check your consumption history. One moment, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois é, vejo aqui um pico de consumo. Houve alguma alteração na sua casa ou algum aparelho novo?",
+                "translation": "Indeed, I see a consumption peak here. Was there any change in your house or any new appliance?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Não, nada de especial. É por isso que estou a ligar. Será que pode ter havido um erro na leitura?",
+                "translation": "No, nothing special. That's why I'm calling. Could there have been a reading error?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in complaints",
+            "body": "In Portugal, even when making a complaint, it's important to maintain a polite and respectful tone. Start with 'Boa tarde/dia' and use 'por favor' and 'muito obrigada'. While directness is acceptable, aggressive language is generally not well-received and can hinder a resolution. Frame your issue as a 'problema' or 'questão' (question) rather than an accusation."
+          },
+          {
+            "title": "Persistence in problem-solving",
+            "body": "Bureaucracy and services can sometimes be slow. It's often necessary to follow up multiple times (e.g., 'ligar novamente' - to call again) to ensure your issue is being addressed. Keep records of who you spoke to and when. Don't be afraid to politely insist on a timeline or a specific course of action, especially for urgent matters like leaks or no-shows."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling the plumber's office because the plumber you scheduled for yesterday didn't show up and didn't call. You've had a leak for a day already.",
+          "difficulty": 4,
+          "entry_node": "rp-d126-node-1",
+          "nodes": [
+            {
+              "id": "rp-d126-node-1",
+              "npc_text": "Boa tarde, [Nome da Empresa de Canalizações], em que posso ajudar?",
+              "npc_translation": "Good afternoon, [Plumbing Company Name], how can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. O canalizador que devia ter vindo ontem não apareceu.",
+                  "translation": "Good afternoon. The plumber who was supposed to come yesterday didn't show up.",
+                  "feedback": "Direct and clear. Good start.",
+                  "next": "rp-d126-node-2"
+                },
+                {
+                  "text": "Olá. Estou a ligar porque estou à espera de um canalizador desde ontem.",
+                  "translation": "Hello. I'm calling because I've been waiting for a plumber since yesterday.",
+                  "feedback": "Polite and explains the situation. Excellent.",
+                  "next": "rp-d126-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d126-node-2",
+              "npc_text": "Ah, lamento imenso! Qual é o seu nome e morada, por favor? Vou verificar o agendamento.",
+              "npc_translation": "Oh, I'm so sorry! What's your name and address, please? I'll check the appointment.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "O meu nome é [O Seu Nome] e a morada é [A Sua Morada]. Tenho uma fuga de água.",
+                  "translation": "My name is [Your Name] and the address is [Your Address]. I have a water leak.",
+                  "feedback": "Provide the necessary details clearly and state the urgency.",
+                  "next": "rp-d126-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d126-node-3",
+              "npc_text": "Sim, vejo aqui. O nosso canalizador teve um problema inesperado ontem e não conseguiu ir. Pedimos desculpa pelo inconveniente. Podemos agendar para amanhã de manhã?",
+              "npc_translation": "Yes, I see it here. Our plumber had an unexpected problem yesterday and couldn't make it. We apologize for the inconvenience. Can we schedule for tomorrow morning?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Amanhã de manhã? Mas tenho uma fuga desde ontem! Preciso de alguém hoje.",
+                  "translation": "Tomorrow morning? But I've had a leak since yesterday! I need someone today.",
+                  "feedback": "Express your urgency and push for a quicker solution. Good assertiveness.",
+                  "next": "rp-d126-node-4"
+                },
+                {
+                  "text": "Não é possível hoje? Já estou com este problema há um dia.",
+                  "translation": "It's not possible today? I've already had this problem for a day.",
+                  "feedback": "Politely but firmly state the ongoing issue and ask about today.",
+                  "next": "rp-d126-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d126-node-4",
+              "npc_text": "Entendo a sua frustração. Vou ver se consigo encaixar alguém hoje à tarde, mas não posso prometer. Senão, amanhã de manhã é garantido. O que prefere?",
+              "npc_translation": "I understand your frustration. I'll see if I can fit someone in this afternoon, but I can't promise. Otherwise, tomorrow morning is guaranteed. What do you prefer?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Por favor, tente encaixar hoje. É mesmo urgente. Se não der, amanhã de manhã é a única opção.",
+                  "translation": "Please, try to fit someone in today. It's really urgent. If not, tomorrow morning is the only option.",
+                  "feedback": "You're showing flexibility while still prioritizing urgency. Good negotiation.",
+                  "next": "rp-d126-node-5"
+                },
+                {
+                  "text": "Preferia hoje, claro. Mas se não for possível, então que seja amanhã de manhã, por favor.",
+                  "translation": "I'd prefer today, of course. But if it's not possible, then let it be tomorrow morning, please.",
+                  "feedback": "Clear preference, but accepting the alternative if necessary.",
+                  "next": "rp-d126-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d126-node-5",
+              "npc_text": "Muito bem. Vou tentar e ligo-lhe de volta em 30 minutos para confirmar. Se não conseguir ninguém hoje, será o primeiro agendamento de amanhã. É o melhor que posso fazer.",
+              "npc_translation": "Alright. I'll try and call you back in 30 minutes to confirm. If I can't find anyone today, it will be the first appointment tomorrow. It's the best I can do.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Agradeço a sua ajuda. Fico à espera da sua chamada.",
+                  "translation": "I appreciate your help. I'll await your call.",
+                  "feedback": "Polite and concludes the call effectively."
+                },
+                {
+                  "text": "Obrigada. Espero que consiga alguém para hoje.",
+                  "translation": "Thank you. I hope you can find someone for today.",
+                  "feedback": "Expresses hope and concludes the call."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Challenge the high electricity bill",
+          "prep": [
+            "Review the vocabulary for 'bill', 'high', 'query', and 'consumption'.",
+            "Practice asking 'A fatura da luz parece-me muito alta' and 'Será que pode ter havido um erro na leitura?'.",
+            "Prepare to give your client number and explain the situation clearly."
+          ],
+          "fallback_phrases": [
+            "Não entendi, pode repetir, por favor?",
+            "Pode falar mais devagar?",
+            "Qual é o próximo passo?",
+            "Obrigada pela sua ajuda."
+          ],
+          "likely_responses": [
+            "Qual é o seu número de cliente?",
+            "Vou verificar o seu consumo.",
+            "Houve algum aumento no seu consumo?",
+            "Podemos enviar um técnico para verificar o contador."
+          ]
+        },
+        "goals": [
+          "Successfully report a household problem (e.g., a leak) and arrange for a repair.",
+          "Formally question an inflated utility bill and understand the possible causes.",
+          "Complain about a missed appointment and negotiate a new, urgent scheduling.",
+          "Communicate effectively with service providers and insurance companies in Portuguese."
+        ],
+        "course": {
+          "month": 5,
+          "day": 126,
+          "category": "custom"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d126-week-18-stress-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have a {problem} in the {location}.",
+            "answer": "Tenho uma {problema} na {local}.",
+            "source_ref": "pp-sit-d126-week-18-stress-test-1"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The {type_of_bill} seems {adjective} to me.",
+            "answer": "A {tipo_de_conta} parece-me {adjetivo}.",
+            "source_ref": "pp-sit-d126-week-18-stress-test-2"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The {professional} didn't {action}.",
+            "answer": "O {profissional} não {ação}.",
+            "source_ref": "pp-sit-d126-week-18-stress-test-3"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need to speak with someone about {subject}.",
+            "answer": "Preciso de falar com alguém sobre {assunto}.",
+            "source_ref": "pp-sit-d126-week-18-stress-test-4"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: leak",
+            "answer": "fuga",
+            "source_ref": "fuga"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: bill (utility, invoice)",
+            "answer": "fatura",
+            "source_ref": "fatura"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: plumber",
+            "answer": "canalizador",
+            "source_ref": "canalizador"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: insurance company",
+            "answer": "seguradora",
+            "source_ref": "seguradora"
+          },
+          {
+            "id": "rv-sit-d126-week-18-stress-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d126-week-18-stress-test-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d127-missing-document-financas",
+      "title": "The Missing Document at Finanças",
+      "month": 5,
+      "day": 127,
+      "week": 19,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d127-missing-document-financas",
+        "title": "The Missing Document at Finanças",
+        "summary": "Finanças says a document is missing and today’s trip was wasted: establishing exactly what is required, questioning contradictory instructions, and leaving with it in writing.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d127-missing-document-financas-1",
+            "base": "Parece que está a faltar um {tipo_documento}.",
+            "translation": "It seems a {document_type} is missing.",
+            "slots": [
+              {
+                "name": "tipo_documento",
+                "description": "Type of document",
+                "options": [
+                  "documento",
+                  "comprovativo",
+                  "formulário",
+                  "registo"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Está a faltar um documento.",
+                "translation": "A document is missing.",
+                "register": "neutral"
+              },
+              {
+                "text": "Falta um documento, sim.",
+                "translation": "Yes, a document is missing.",
+                "register": "neutral",
+                "note": "Common official's confirmation"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d127-missing-document-financas-2",
+            "base": "Poderia confirmar exatamente o que é {preciso}?",
+            "translation": "Could you confirm exactly what is {needed}?",
+            "slots": [
+              {
+                "name": "preciso",
+                "description": "What is needed/required",
+                "options": [
+                  "preciso",
+                  "necessário",
+                  "exigido"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Pode confirmar o que é preciso?",
+                "translation": "Can you confirm what is needed?",
+                "register": "informal"
+              },
+              {
+                "text": "Gostaria de confirmar o que é necessário.",
+                "translation": "I would like to confirm what is necessary.",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d127-missing-document-financas-3",
+            "base": "Tenho a certeza que entreguei o {documento_nome}.",
+            "translation": "I am sure I submitted the {document_name}.",
+            "slots": [
+              {
+                "name": "documento_nome",
+                "description": "Name of the document",
+                "options": [
+                  "documento",
+                  "comprovativo de morada",
+                  "formulário de IRS"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Entreguei esse documento, sim.",
+                "translation": "I did submit that document.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d127-missing-document-financas-4",
+            "base": "Poderia dar-me isso por escrito, por favor?",
+            "translation": "Could you give me that in writing, please?",
+            "variants": [
+              {
+                "text": "Pode-me dar isso por escrito?",
+                "translation": "Can you give me that in writing?",
+                "register": "informal"
+              },
+              {
+                "text": "Seria possível ter essa informação por escrito?",
+                "translation": "Would it be possible to have that information in writing?",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d127-missing-document-financas-5",
+            "base": "Não me parece que seja o {documento_errado}.",
+            "translation": "It doesn't seem to me that it's the {wrong_document}.",
+            "slots": [
+              {
+                "name": "documento_errado",
+                "description": "The document that seems incorrect",
+                "options": [
+                  "comprovativo de morada",
+                  "formulário de IRS",
+                  "registo de nascimento"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "Finanças",
+            "translation": "Tax office / Finance Department",
+            "pronunciation": "fee-NAHN-sahsh",
+            "register": "neutral",
+            "note": "Common name for the Portuguese tax authority"
+          },
+          {
+            "word": "contribuinte",
+            "translation": "taxpayer",
+            "pronunciation": "kohn-tree-BWEEN-tsh",
+            "register": "neutral"
+          },
+          {
+            "word": "documento",
+            "translation": "document",
+            "pronunciation": "doo-koo-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "comprovativo",
+            "translation": "proof / evidence / receipt",
+            "pronunciation": "kohm-proh-vah-TEE-voo",
+            "register": "neutral",
+            "note": "Often used for proof of address, payment, etc."
+          },
+          {
+            "word": "entregar",
+            "translation": "to submit / to hand in",
+            "pronunciation": "en-treh-GAR",
+            "register": "neutral"
+          },
+          {
+            "word": "faltar",
+            "translation": "to be missing / to lack",
+            "pronunciation": "fahl-TAR",
+            "register": "neutral"
+          },
+          {
+            "word": "por escrito",
+            "translation": "in writing",
+            "pronunciation": "poor esh-KREE-too",
+            "register": "neutral"
+          },
+          {
+            "word": "balcão",
+            "translation": "counter",
+            "pronunciation": "bahl-KOW",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d127-missing-document-financas-1",
+            "title": "Missing Document at the Counter",
+            "context": "A cidadã (citizen) está no balcão das Finanças a tentar entregar uns papéis, mas o funcionário (civil servant) diz que falta algo.",
+            "lines": [
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Bom dia. Diga, por favor.",
+                "translation": "Good morning. Yes, please."
+              },
+              {
+                "speaker": "Cidadã",
+                "voice_type": "local",
+                "text": "Bom dia. Venho entregar este formulário de alteração de morada, como me pediram.",
+                "translation": "Good morning. I've come to submit this address change form, as I was asked."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Hum... sim. Mas parece que está a faltar o comprovativo de morada, o documento que prova a sua nova residência.",
+                "translation": "Hmm... yes. But it seems the proof of address is missing, the document that proves your new residence."
+              },
+              {
+                "speaker": "Cidadã",
+                "voice_type": "local",
+                "text": "A faltar? Mas eu tenho a certeza que o entreguei na semana passada, quando vim cá pela primeira vez!",
+                "translation": "Missing? But I'm sure I submitted it last week, when I came here for the first time!"
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Pois, mas não consta aqui no sistema. Sem ele, não podemos processar a alteração.",
+                "translation": "Well, it's not in the system here. Without it, we cannot process the change."
+              },
+              {
+                "speaker": "Cidadã",
+                "voice_type": "local",
+                "text": "Então, o que é que é preciso agora? Tenho de o trazer outra vez?",
+                "translation": "So, what's needed now? Do I have to bring it again?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Dealing with Portuguese Bureaucracy",
+            "body": "Portuguese bureaucracy, like in many countries, can be complex and sometimes frustrating. It's common to be asked for documents you believe you've already submitted, or to receive conflicting information. Patience and polite persistence are key. Always try to get instructions or confirmations 'por escrito' (in writing) to avoid misunderstandings later."
+          },
+          {
+            "title": "The Importance of 'Por Escrito'",
+            "body": "In Portugal, having official information or instructions 'por escrito' (in writing) is highly valued. It provides a formal record and can prevent disputes or further issues down the line. If you receive verbal instructions that seem unclear, or if you're dealing with a complex issue, politely requesting written confirmation is a standard and effective strategy."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at Finanças. You've been told a document is missing, but you're sure you submitted it. The official is now giving you instructions that seem a bit vague or contradictory. You need to clarify what's truly needed and ideally, get it in writing.",
+          "difficulty": 4,
+          "entry_node": "rp-d127-node-1",
+          "nodes": [
+            {
+              "id": "rp-d127-node-1",
+              "npc_text": "Senhor, verifico que, para esta alteração, ainda precisamos do comprovativo de morada atualizado. Não o encontro no seu processo.",
+              "npc_translation": "Sir/Madam, I see that, for this change, we still need the updated proof of address. I cannot find it in your file.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Mas eu entreguei esse documento na semana passada! Não está no sistema?",
+                  "translation": "But I submitted that document last week! Isn't it in the system?",
+                  "feedback": "Good, you're challenging the missing document claim directly.",
+                  "next": "rp-d127-node-2"
+                },
+                {
+                  "text": "Ah, pois. O que é que é preciso exatamente? É um comprovativo de morada, certo?",
+                  "translation": "Oh, right. What exactly is needed? It's a proof of address, right?",
+                  "feedback": "You're seeking clarification, but perhaps too readily accepting it's missing.",
+                  "next": "rp-d127-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d127-node-2",
+              "npc_text": "Não, não está. Às vezes acontece. Terá de o trazer novamente. Pode ser uma fatura da água ou da luz, por exemplo.",
+              "npc_translation": "No, it's not. It happens sometimes. You'll have to bring it again. It can be a water or electricity bill, for example.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Uma fatura? Mas quando cá vim, disseram-me que precisava do atestado de residência da Junta de Freguesia. Qual é o correto?",
+                  "translation": "A bill? But when I came here, they told me I needed the residence certificate from the Parish Council. Which one is correct?",
+                  "feedback": "Excellent! You're pointing out a contradiction in the instructions.",
+                  "next": "rp-d127-node-4"
+                },
+                {
+                  "text": "Pois é. E se eu trouxer a fatura, já fica tudo resolvido?",
+                  "translation": "Right. And if I bring the bill, will everything be resolved?",
+                  "feedback": "You're trying to confirm, but still not pushing for the 'why' or written proof.",
+                  "next": "rp-d127-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d127-node-3",
+              "npc_text": "Sim, uma fatura serve, desde que tenha o seu nome e a nova morada. Mas tem de ser uma fatura recente, dos últimos três meses.",
+              "npc_translation": "Yes, a bill will do, as long as it has your name and the new address. But it has to be a recent bill, from the last three months.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Certo. E poderia dar-me essa informação por escrito, por favor? Assim sei exatamente o que trazer.",
+                  "translation": "Okay. And could you give me that information in writing, please? That way I'll know exactly what to bring.",
+                  "feedback": "Very good! You're asking for written confirmation, a crucial step in bureaucracy.",
+                  "next": "rp-d127-node-5"
+                },
+                {
+                  "text": "Ah, okay. Então volto cá amanhã com uma fatura. Obrigado.",
+                  "translation": "Ah, okay. So I'll come back tomorrow with a bill. Thank you.",
+                  "feedback": "You've accepted the instruction, but missed the chance to get it in writing and confirm the contradiction."
+                }
+              ]
+            },
+            {
+              "id": "rp-d127-node-4",
+              "npc_text": "Hum... O atestado da Junta também serve, claro. O importante é que comprove a morada. Uma fatura é só mais simples de obter, talvez.",
+              "npc_translation": "Hmm... The certificate from the Parish Council also works, of course. The important thing is that it proves the address. A bill is just simpler to obtain, perhaps.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Percebo. Para evitar mais problemas, poderia, por favor, escrever qual a melhor opção e o que mais preciso?",
+                  "translation": "I understand. To avoid further problems, could you please write down the best option and what else I need?",
+                  "feedback": "Excellent! You're firmly requesting written instructions to prevent future issues.",
+                  "next": "rp-d127-node-5"
+                },
+                {
+                  "text": "Então, posso trazer qualquer um dos dois? Uma fatura recente, ou o atestado?",
+                  "translation": "So, I can bring either of the two? A recent bill, or the certificate?",
+                  "feedback": "You're clarifying, but haven't yet asked for it in writing. Keep pushing!",
+                  "next": "rp-d127-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d127-node-5",
+              "npc_text": "Claro. Um momento, por favor. Vou escrever-lhe uma pequena nota com o que é preciso e o prazo. Assim fica mais claro.",
+              "npc_translation": "Of course. One moment, please. I'll write you a small note with what's needed and the deadline. That way it's clearer.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado/a. Assim já sei como proceder. Tenha um bom dia.",
+                  "translation": "Thank you very much. Now I know how to proceed. Have a good day.",
+                  "feedback": "Success! You got the information in writing and ended politely."
+                },
+                {
+                  "text": "Pois, muito obrigado. É que da última vez foi um bocado confuso.",
+                  "translation": "Right, thank you very much. It's just that last time it was a bit confusing.",
+                  "feedback": "You've successfully got the written note. A bit of a complaint, but still a good outcome."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Get Written Confirmation at Finanças",
+          "prep": [
+            "Review the phrase patterns for asking for clarification and written information.",
+            "Practice politely but firmly challenging contradictory instructions.",
+            "Mentally prepare for potential vague answers and how to rephrase your questions."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Poderia repetir, por favor?",
+            "O que quer dizer com isso?"
+          ],
+          "likely_responses": [
+            "Não está no sistema.",
+            "Terá de trazer novamente.",
+            "Pode ser uma fatura ou um atestado.",
+            "Sim, posso dar-lhe por escrito."
+          ]
+        },
+        "goals": [
+          "Successfully clarify exactly which document is required by Finanças.",
+          "Politely question any contradictory instructions received.",
+          "Obtain written confirmation of the required document(s) and next steps."
+        ],
+        "course": {
+          "month": 5,
+          "day": 127,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d127-missing-document-financas-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It seems a {document_type} is missing.",
+            "answer": "Parece que está a faltar um {tipo_documento}.",
+            "source_ref": "pp-sit-d127-missing-document-financas-1"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Could you confirm exactly what is {needed}?",
+            "answer": "Poderia confirmar exatamente o que é {preciso}?",
+            "source_ref": "pp-sit-d127-missing-document-financas-2"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I am sure I submitted the {document_name}.",
+            "answer": "Tenho a certeza que entreguei o {documento_nome}.",
+            "source_ref": "pp-sit-d127-missing-document-financas-3"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Could you give me that in writing, please?",
+            "answer": "Poderia dar-me isso por escrito, por favor?",
+            "source_ref": "pp-sit-d127-missing-document-financas-4"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Tax office / Finance Department",
+            "answer": "Finanças",
+            "source_ref": "Finanças"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: taxpayer",
+            "answer": "contribuinte",
+            "source_ref": "contribuinte"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: document",
+            "answer": "documento",
+            "source_ref": "documento"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: proof / evidence / receipt",
+            "answer": "comprovativo",
+            "source_ref": "comprovativo"
+          },
+          {
+            "id": "rv-sit-d127-missing-document-financas-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d127-missing-document-financas-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+            "caption": "Portugal primeiros passos: Finanças — NIF (Portuguese-language explainer)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d128-cancelled-appointment",
+      "title": "The Cancelled Appointment",
+      "month": 5,
+      "day": 128,
+      "week": 19,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d128-cancelled-appointment",
+        "title": "The Cancelled Appointment",
+        "summary": "Your long-awaited marcação was cancelled: pushing for the earliest new slot, explaining urgency, asking who can authorise an exception, and insisting politely past the first no.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d128-cancelled-appointment-1",
+            "base": "A minha marcação para {data} foi cancelada.",
+            "translation": "My appointment for {date} was cancelled.",
+            "slots": [
+              {
+                "name": "data",
+                "description": "Date of the appointment",
+                "options": [
+                  "amanhã",
+                  "dia vinte",
+                  "a próxima semana"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Fui informado que a minha marcação foi cancelada.",
+                "translation": "I was informed that my appointment was cancelled.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d128-cancelled-appointment-2",
+            "base": "Preciso de uma nova marcação o mais depressa possível.",
+            "translation": "I need a new appointment as soon as possible.",
+            "variants": [
+              {
+                "text": "É urgente que consiga uma nova marcação.",
+                "translation": "It's urgent that I get a new appointment.",
+                "register": "neutral"
+              },
+              {
+                "text": "Preciso mesmo que seja para breve.",
+                "translation": "I really need it to be soon.",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d128-cancelled-appointment-3",
+            "base": "Não há nenhuma vaga mais cedo para {tipo_servico}?",
+            "translation": "Isn't there any earlier slot for {type_of_service}?",
+            "slots": [
+              {
+                "name": "tipo_servico",
+                "description": "Type of service or reason for appointment",
+                "options": [
+                  "este assunto",
+                  "o registo",
+                  "a renovação"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d128-cancelled-appointment-4",
+            "base": "É um assunto {urgencia} e não posso esperar tanto tempo.",
+            "translation": "It's an {urgency_level} matter and I can't wait that long.",
+            "slots": [
+              {
+                "name": "urgencia",
+                "description": "Level of urgency",
+                "options": [
+                  "urgente",
+                  "muito importante",
+                  "prioritário"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d128-cancelled-appointment-5",
+            "base": "Será que não consegue ver se há alguma exceção ou falar com o {superior}?",
+            "translation": "Couldn't you see if there's an exception or speak with the {superior}?",
+            "slots": [
+              {
+                "name": "superior",
+                "description": "Person in charge",
+                "options": [
+                  "seu chefe",
+                  "responsável",
+                  "diretor do serviço"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "marcação",
+            "translation": "appointment, booking",
+            "pronunciation": "mar-kah-SOW",
+            "register": "neutral"
+          },
+          {
+            "word": "cancelar",
+            "translation": "to cancel",
+            "pronunciation": "kan-seh-LAR",
+            "register": "neutral"
+          },
+          {
+            "word": "urgente",
+            "translation": "urgent",
+            "pronunciation": "oor-JEN-teh",
+            "register": "neutral"
+          },
+          {
+            "word": "vaga",
+            "translation": "slot, opening, vacancy",
+            "pronunciation": "VAH-gah",
+            "register": "neutral"
+          },
+          {
+            "word": "exceção",
+            "translation": "exception",
+            "pronunciation": "eh-seh-SOW",
+            "register": "neutral"
+          },
+          {
+            "word": "o mais depressa possível",
+            "translation": "as soon as possible",
+            "pronunciation": "oo MYSH deh-PREH-sah poh-SEE-vel",
+            "register": "neutral"
+          },
+          {
+            "word": "serviço",
+            "translation": "service, department",
+            "pronunciation": "ser-VEE-soo",
+            "register": "neutral"
+          },
+          {
+            "word": "insistir",
+            "translation": "to insist",
+            "pronunciation": "een-sees-TEER",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d128-cancelled-appointment-1",
+            "title": "At the Public Service Counter",
+            "context": "You are at a public service counter in Funchal. Your important appointment was cancelled, and you're trying to get an earlier replacement.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Bom dia. Diga, por favor.",
+                "translation": "Good day. Tell me, please."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Bom dia. A minha marcação para o registo do carro, que era para amanhã, foi cancelada. Recebi um e-mail.",
+                "translation": "Good day. My appointment for the car registration, which was for tomorrow, was cancelled. I received an email."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Ah, sim. Houve um problema com o sistema. A data mais próxima que temos é só para daqui a três semanas, dia 20 do próximo mês.",
+                "translation": "Ah, yes. There was a problem with the system. The earliest date we have is only in three weeks, on the 20th of next month."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Três semanas? É um bocado demais. Preciso de uma nova marcação o mais depressa possível. É um assunto urgente.",
+                "translation": "Three weeks? That's a bit too much. I need a new appointment as soon as possible. It's an urgent matter."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois, compreendo, mas não temos mesmo vagas antes disso. O sistema está cheio.",
+                "translation": "Yes, I understand, but we really don't have any slots before that. The system is full."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Não há mesmo nenhuma exceção? Ou será que não consegue ver se há alguma vaga de última hora que possa aparecer? Já estou à espera há imenso tempo.",
+                "translation": "Is there really no exception? Or couldn't you see if there's any last-minute slot that might appear? I've been waiting for ages."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Hum... Deixe-me ver no sistema outra vez. Às vezes, aparece alguma desmarcação. Um momento, por favor.",
+                "translation": "Hmm... Let me check the system again. Sometimes a cancellation appears. One moment, please."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Muito obrigado. Agradeço imenso a sua ajuda.",
+                "translation": "Thank you very much. I really appreciate your help."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Polite Persistence in Portuguese Bureaucracy",
+            "body": "When dealing with public services in Portugal, direct confrontation is generally avoided. Instead, polite but firm persistence is key. Phrases like 'Será que não consegue ver se...' (Couldn't you see if...) or 'Não há mesmo nenhuma exceção?' (Is there really no exception?) are effective ways to push back without being rude. Emphasizing urgency ('É um assunto urgente', 'o mais depressa possível') and the duration you've already waited ('Já estou à espera há imenso tempo') can also help your case."
+          },
+          {
+            "title": "The Use of 'Pois' and 'Pois é'",
+            "body": "In European Portuguese, 'pois' or 'pois é' are common interjections. 'Pois' can mean 'yes', 'indeed', or 'well'. 'Pois, compreendo' (Yes, I understand) shows acknowledgement. 'Pois é' often indicates agreement or a recognition of a shared reality, sometimes with a hint of resignation. These are natural parts of conversation in Madeira and Portugal."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a health clinic in Funchal. Your important consultation was cancelled, and you need to reschedule it for an earlier date due to a health concern.",
+          "difficulty": 4,
+          "entry_node": "rp-sit-d128-cancelled-appointment-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-d128-cancelled-appointment-node-1",
+              "npc_text": "Bom dia. Em que posso ajudar?",
+              "npc_translation": "Good day. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. A minha consulta com o Dr. Silva foi cancelada e preciso de uma nova marcação.",
+                  "translation": "Good day. My appointment with Dr. Silva was cancelled and I need a new booking.",
+                  "feedback": "Good start, clear statement of the problem.",
+                  "next": "rp-sit-d128-cancelled-appointment-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d128-cancelled-appointment-node-2",
+              "npc_text": "Sim, a agenda do Dr. Silva teve de ser ajustada. A próxima vaga é só para daqui a um mês e meio, no dia 25 de agosto.",
+              "npc_translation": "Yes, Dr. Silva's schedule had to be adjusted. The next available slot is only in a month and a half, on August 25th.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Um mês e meio? Não posso esperar tanto tempo. É um assunto de saúde urgente.",
+                  "translation": "A month and a half? I can't wait that long. It's an urgent health matter.",
+                  "feedback": "Good, you've expressed urgency and the reason.",
+                  "next": "rp-sit-d128-cancelled-appointment-node-3"
+                },
+                {
+                  "text": "Oh, não! Essa data é impossível para mim. Não há nada mais cedo?",
+                  "translation": "Oh, no! That date is impossible for me. Isn't there anything earlier?",
+                  "feedback": "Also good, you're challenging the proposed date and asking for alternatives.",
+                  "next": "rp-sit-d128-cancelled-appointment-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d128-cancelled-appointment-node-3",
+              "npc_text": "Compreendo a sua preocupação, mas a agenda dele está mesmo preenchida. Não temos como encaixar antes.",
+              "npc_translation": "I understand your concern, but his schedule is really full. We can't fit you in earlier.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Será que não consegue ver se há alguma desmarcação de última hora? Ou falar com o responsável do serviço?",
+                  "translation": "Couldn't you see if there's a last-minute cancellation? Or speak with the service manager?",
+                  "feedback": "Excellent! You're politely pushing for alternatives and escalating if necessary.",
+                  "next": "rp-sit-d128-cancelled-appointment-node-4"
+                },
+                {
+                  "text": "Não há mesmo nenhuma possibilidade de exceção, tendo em conta a urgência?",
+                  "translation": "Is there really no possibility of an exception, given the urgency?",
+                  "feedback": "Good, you're insisting on the urgency and asking for an exception.",
+                  "next": "rp-sit-d128-cancelled-appointment-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d128-cancelled-appointment-node-4",
+              "npc_text": "Bem... posso verificar se houve alguma desmarcação que ainda não foi registada. Mas não prometo nada. Um momento, por favor.",
+              "npc_translation": "Well... I can check if there was any cancellation that hasn't been registered yet. But I don't promise anything. One moment, please.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado pela sua ajuda. Agradeço imenso se conseguir arranjar algo.",
+                  "translation": "Thank you very much for your help. I'd really appreciate it if you could find something.",
+                  "feedback": "Great, show appreciation while still hoping for a positive outcome.",
+                  "next": "rp-sit-d128-cancelled-appointment-node-5"
+                },
+                {
+                  "text": "Pois, entendo. Mas se puder fazer um esforço, seria muito importante para mim.",
+                  "translation": "Yes, I understand. But if you could make an effort, it would be very important to me.",
+                  "feedback": "Polite insistence, emphasizing the importance.",
+                  "next": "rp-sit-d128-cancelled-appointment-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d128-cancelled-appointment-node-5",
+              "npc_text": "Tenho sorte! Alguém desmarcou para a próxima semana, terça-feira de manhã. Serve-lhe?",
+              "npc_translation": "I'm in luck! Someone cancelled for next week, Tuesday morning. Does that work for you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, perfeito! Muito obrigado, salvou-me o dia!",
+                  "translation": "Yes, perfect! Thank you very much, you saved my day!",
+                  "feedback": "Success! Expressing gratitude is good."
+                },
+                {
+                  "text": "Excelente! Muito obrigado pelo seu esforço. Fico muito grato.",
+                  "translation": "Excellent! Thank you very much for your effort. I'm very grateful.",
+                  "feedback": "Success! Showing gratitude is important."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Reschedule a Cancelled Appointment",
+          "prep": [
+            "Review phrases for expressing urgency and asking for alternatives.",
+            "Practice polite but firm insistence without being aggressive.",
+            "Mentally prepare for potential 'no' answers and how to respond."
+          ],
+          "fallback_phrases": [
+            "Não há mesmo nada que se possa fazer?",
+            "Compreendo, mas é mesmo muito importante para mim.",
+            "Será que não é possível falar com alguém superior?"
+          ],
+          "likely_responses": [
+            "Não temos vagas antes dessa data.",
+            "O sistema não permite.",
+            "Vou ver o que consigo fazer, mas não prometo nada.",
+            "Essa é a data mais próxima disponível."
+          ]
+        },
+        "goals": [
+          "To effectively communicate the urgency of a cancelled appointment.",
+          "To politely insist on finding an earlier alternative.",
+          "To understand and respond to bureaucratic pushback.",
+          "To successfully negotiate for a better outcome in a service setting."
+        ],
+        "course": {
+          "month": 5,
+          "day": 128,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d128-cancelled-appointment-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My appointment for {date} was cancelled.",
+            "answer": "A minha marcação para {data} foi cancelada.",
+            "source_ref": "pp-sit-d128-cancelled-appointment-1"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need a new appointment as soon as possible.",
+            "answer": "Preciso de uma nova marcação o mais depressa possível.",
+            "source_ref": "pp-sit-d128-cancelled-appointment-2"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Isn't there any earlier slot for {type_of_service}?",
+            "answer": "Não há nenhuma vaga mais cedo para {tipo_servico}?",
+            "source_ref": "pp-sit-d128-cancelled-appointment-3"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's an {urgency_level} matter and I can't wait that long.",
+            "answer": "É um assunto {urgencia} e não posso esperar tanto tempo.",
+            "source_ref": "pp-sit-d128-cancelled-appointment-4"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: appointment, booking",
+            "answer": "marcação",
+            "source_ref": "marcação"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to cancel",
+            "answer": "cancelar",
+            "source_ref": "cancelar"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: urgent",
+            "answer": "urgente",
+            "source_ref": "urgente"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: slot, opening, vacancy",
+            "answer": "vaga",
+            "source_ref": "vaga"
+          },
+          {
+            "id": "rv-sit-d128-cancelled-appointment-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d128-cancelled-appointment-1"
+          }
+        ]
+      }
+    }
+  ]
+}

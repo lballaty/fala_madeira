@@ -1,0 +1,3260 @@
+{
+  "batch": 11,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:56:02.995Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d129-chasing-a-stuck-process",
+      "title": "Chasing a Stuck Process",
+      "month": 5,
+      "day": 129,
+      "week": 19,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d129-chasing-a-stuck-process",
+        "title": "Chasing a Stuck Process",
+        "summary": "A request has been \"em análise\" for months: following up in person, citing reference numbers and dates, asking precisely what is blocking it and when to expect movement.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-survival"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d129-chasing-a-stuck-process-1",
+            "base": "Gostaria de saber o ponto da situação do meu {tipo_de_pedido}.",
+            "translation": "I would like to know the status of my {type_of_request}.",
+            "slots": [
+              {
+                "name": "tipo_de_pedido",
+                "description": "Type of request/application",
+                "options": [
+                  "pedido",
+                  "processo",
+                  "requerimento",
+                  "candidatura"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Queria saber como está o meu {tipo_de_pedido}.",
+                "translation": "I wanted to know how my {type_of_request} is doing.",
+                "register": "neutral",
+                "note": "Slightly less formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d129-chasing-a-stuck-process-2",
+            "base": "Tenho um processo com o número de referência {numero_de_referencia}.",
+            "translation": "I have a process with reference number {reference_number}.",
+            "slots": [
+              {
+                "name": "numero_de_referencia",
+                "description": "Reference number",
+                "options": [
+                  "12345/2023",
+                  "ABC-6789",
+                  "001/DM/24"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d129-chasing-a-stuck-process-3",
+            "base": "Está 'em análise' desde {data}.",
+            "translation": "It's been 'under review' since {date}.",
+            "slots": [
+              {
+                "name": "data",
+                "description": "Date",
+                "options": [
+                  "abril",
+                  "há três meses",
+                  "o mês passado"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d129-chasing-a-stuck-process-4",
+            "base": "Pode verificar o que está a bloquear o {processo_ou_pedido}?",
+            "translation": "Can you check what is blocking the {process_or_request}?",
+            "slots": [
+              {
+                "name": "processo_ou_pedido",
+                "description": "Process or request",
+                "options": [
+                  "processo",
+                  "pedido"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "O que é que está a impedir o andamento?",
+                "translation": "What is preventing it from moving forward?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d129-chasing-a-stuck-process-5",
+            "base": "Quando é que posso esperar uma {resposta_ou_decisao}?",
+            "translation": "When can I expect a {reply_or_decision}?",
+            "slots": [
+              {
+                "name": "resposta_ou_decisao",
+                "description": "Reply or decision",
+                "options": [
+                  "resposta",
+                  "decisão",
+                  "notificação"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "processo",
+            "translation": "process; case; application",
+            "pronunciation": "proh-SESS-oo",
+            "register": "neutral"
+          },
+          {
+            "word": "pedido",
+            "translation": "request; application",
+            "pronunciation": "peh-DEE-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "referência",
+            "translation": "reference (number)",
+            "pronunciation": "reh-feh-REN-see-uh",
+            "register": "neutral"
+          },
+          {
+            "word": "em análise",
+            "translation": "under review; being analyzed",
+            "pronunciation": "eng uh-NAH-lee-zeh",
+            "register": "neutral"
+          },
+          {
+            "word": "bloquear",
+            "translation": "to block; to hold up",
+            "pronunciation": "bloh-kee-AHR",
+            "register": "neutral"
+          },
+          {
+            "word": "ponto da situação",
+            "translation": "status update; current situation",
+            "pronunciation": "PON-too dah see-too-uh-SOW",
+            "register": "neutral"
+          },
+          {
+            "word": "serviço",
+            "translation": "department; service (e.g., public service)",
+            "pronunciation": "ser-VEE-soo",
+            "register": "neutral"
+          },
+          {
+            "word": "aguardar",
+            "translation": "to wait for",
+            "pronunciation": "ah-goo-ahr-DAHR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d129-chasing-a-stuck-process-1",
+            "title": "Stalled Application Follow-up",
+            "context": "A cidadã Maria está a tentar obter informações sobre um pedido que fez há meses, num balcão de atendimento público na Madeira.",
+            "lines": [
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Diga! Em que posso ajudar?",
+                "translation": "Yes! How can I help you?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Boa tarde. Gostaria de saber o ponto da situação de um pedido que fiz. Tenho o número de referência.",
+                "translation": "Good afternoon. I'd like to know the status of a request I made. I have the reference number."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Pois não. Qual é o número, por favor?",
+                "translation": "Of course. What's the number, please?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "É o 12345/2023. Está 'em análise' desde abril, e já lá vão três meses.",
+                "translation": "It's 12345/2023. It's been 'under review' since April, and it's already been three months."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Um momento, por favor. Vou verificar no sistema. Pois... sim, cá está. Continua 'em análise'.",
+                "translation": "One moment, please. I'll check the system. Right... yes, here it is. It's still 'under review'."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Sim, isso eu sei. Mas o que é que está a bloquear o processo? Há algum documento em falta, ou algo que eu possa fazer?",
+                "translation": "Yes, I know that. But what is blocking the process? Is there a missing document, or something I can do?"
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Não me parece que esteja a faltar nada. O processo está no departamento técnico. Temos tido imensos pedidos, sabe?",
+                "translation": "It doesn't seem like anything is missing. The process is with the technical department. We've had a lot of requests, you know?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Compreendo. Mas quando é que posso esperar uma decisão, ou pelo menos um prazo? É que preciso disto com alguma urgência.",
+                "translation": "I understand. But when can I expect a decision, or at least a timeframe? Because I need this with some urgency."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Vou enviar um e-mail a solicitar prioridade e um ponto de situação. Volte a contactar-nos na próxima semana, se faz favor.",
+                "translation": "I will send an email requesting priority and a status update. Please contact us again next week."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Muito obrigada. Fico a aguardar.",
+                "translation": "Thank you very much. I'll be waiting."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Navigating Portuguese Bureaucracy",
+            "body": "Portuguese public services, including those in Madeira, can often be slow. Processes like applications ('pedidos' or 'processos') can remain 'em análise' (under review) for extended periods. It's common to follow up in person, as it can sometimes be more effective than phone calls or emails. Always bring all relevant documentation and reference numbers. Patience and polite persistence are key. Avoid accusatory language; instead, focus on understanding what's needed or what's causing the delay."
+          },
+          {
+            "title": "Politeness and Register with Public Servants",
+            "body": "When interacting with public servants, it's customary to use formal address. This typically means using the null-subject third person ('Gostaria de saber...') or 'o senhor'/'a senhora' ('Pode verificar, por favor?'). While 'você' is grammatically correct for 'you', it's generally avoided in polite interactions in Portugal as it can sound distancing or even impolite. Maintain a polite and respectful tone, even when expressing frustration, to ensure the best possible outcome."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the 'Serviço de Urbanismo' (Urban Planning Department) in Funchal, Madeira. You applied for a small construction permit three months ago, and it's been 'em análise' ever since. You have the reference number and need an update.",
+          "difficulty": 4,
+          "entry_node": "node-sit-d129-chasing-a-stuck-process-start",
+          "nodes": [
+            {
+              "id": "node-sit-d129-chasing-a-stuck-process-start",
+              "npc_text": "Bom dia. Em que posso ser útil?",
+              "npc_translation": "Good morning. How can I be of assistance?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Gostaria de saber o ponto da situação de um processo.",
+                  "translation": "Good morning. I'd like to know the status of a process.",
+                  "feedback": "Excellent start, clear and polite.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-ref"
+                },
+                {
+                  "text": "Olá. O meu pedido está atrasado, pode ver?",
+                  "translation": "Hi. My request is delayed, can you check?",
+                  "feedback": "A bit too direct, but still understandable. Try to be more formal next time.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-ref"
+                }
+              ]
+            },
+            {
+              "id": "node-sit-d129-chasing-a-stuck-process-ref",
+              "npc_text": "Claro. Qual é o número de referência do processo?",
+              "npc_translation": "Of course. What is the reference number for the process?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É o B-7890/2024. É um pedido de licença de construção.",
+                  "translation": "It's B-7890/2024. It's a construction permit request.",
+                  "feedback": "Good, providing the reference and context clearly.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-analise"
+                },
+                {
+                  "text": "O número é B-7890/2024.",
+                  "translation": "The number is B-7890/2024.",
+                  "feedback": "Correct, but adding the type of request helps the clerk.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-analise"
+                }
+              ]
+            },
+            {
+              "id": "node-sit-d129-chasing-a-stuck-process-analise",
+              "npc_text": "Obrigado. Deixe-me ver... Ah, sim. Está 'em análise' no departamento técnico desde maio.",
+              "npc_translation": "Thank you. Let me see... Ah, yes. It's 'under review' in the technical department since May.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois é, já lá vão três meses. Há algo que esteja a bloquear o andamento?",
+                  "translation": "Indeed, it's been three months already. Is there anything blocking its progress?",
+                  "feedback": "Excellent, directly addressing the delay and asking for specifics.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-blocker"
+                },
+                {
+                  "text": "Já sei que está em análise. Mas quando é que se resolve?",
+                  "translation": "I already know it's under review. But when will it be resolved?",
+                  "feedback": "A bit blunt. 'Quando é que se resolve?' is okay, but 'Há algo que esteja a bloquear?' is more polite and effective.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-blocker"
+                }
+              ]
+            },
+            {
+              "id": "node-sit-d129-chasing-a-stuck-process-blocker",
+              "npc_text": "Não me aparece nenhuma nota de bloqueio aqui. Penso que é apenas o volume de trabalho, temos tido muitos processos ultimamente.",
+              "npc_translation": "I don't see any blocking notes here. I think it's just the workload; we've had many processes lately.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Compreendo. E quando é que posso esperar uma previsão ou uma resposta, pelo menos?",
+                  "translation": "I understand. And when can I expect a forecast or a reply, at least?",
+                  "feedback": "Good, acknowledging their explanation while still pushing for a timeframe.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-next-step"
+                },
+                {
+                  "text": "Portanto, tenho de esperar mais tempo? Não há nada que se possa fazer?",
+                  "translation": "So, I have to wait longer? Is there nothing that can be done?",
+                  "feedback": "This shows some frustration, which is natural, but try to phrase it as a question about next steps rather than a complaint.",
+                  "next": "node-sit-d129-chasing-a-stuck-process-next-step"
+                }
+              ]
+            },
+            {
+              "id": "node-sit-d129-chasing-a-stuck-process-next-step",
+              "npc_text": "Vou enviar um e-mail interno ao departamento técnico a pedir um ponto da situação urgente. Por favor, volte a contactar-nos em duas semanas.",
+              "npc_translation": "I will send an internal email to the technical department requesting an urgent status update. Please contact us again in two weeks.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado/a pela ajuda. Fico a aguardar.",
+                  "translation": "Thank you very much for the help. I'll be waiting.",
+                  "feedback": "Perfect, polite and concludes the interaction effectively."
+                },
+                {
+                  "text": "Duas semanas? É muito tempo, mas obrigado/a.",
+                  "translation": "Two weeks? That's a long time, but thank you.",
+                  "feedback": "Acceptable, but a simple 'Muito obrigado/a' is usually better in these situations."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Get an Update on Your Stalled Application",
+          "prep": [
+            "Review the key phrases for asking about process status and delays.",
+            "Mentally prepare your reference number (e.g., 'A-1234/2024') and the date your application went 'em análise' (e.g., 'há três meses').",
+            "Practice politely asking what is blocking the process and when to expect movement."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?",
+            "Obrigado/a pela ajuda."
+          ],
+          "likely_responses": [
+            "Qual é o número de referência?",
+            "Está em análise.",
+            "Temos muitos processos.",
+            "Vou verificar.",
+            "Tem de aguardar mais um pouco.",
+            "Não há nada a bloquear, apenas o volume de trabalho."
+          ]
+        },
+        "goals": [
+          "Initiate a follow-up conversation about a pending bureaucratic request.",
+          "Clearly state your request's reference number and the duration it has been pending.",
+          "Politely inquire about the specific reasons for the delay or what is 'blocking' the process.",
+          "Ask for a realistic timeframe or next steps for your application.",
+          "Maintain a polite and persistent tone throughout the interaction."
+        ],
+        "course": {
+          "month": 5,
+          "day": 129,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to know the status of my {type_of_request}.",
+            "answer": "Gostaria de saber o ponto da situação do meu {tipo_de_pedido}.",
+            "source_ref": "pp-sit-d129-chasing-a-stuck-process-1"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have a process with reference number {reference_number}.",
+            "answer": "Tenho um processo com o número de referência {numero_de_referencia}.",
+            "source_ref": "pp-sit-d129-chasing-a-stuck-process-2"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's been 'under review' since {date}.",
+            "answer": "Está 'em análise' desde {data}.",
+            "source_ref": "pp-sit-d129-chasing-a-stuck-process-3"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you check what is blocking the {process_or_request}?",
+            "answer": "Pode verificar o que está a bloquear o {processo_ou_pedido}?",
+            "source_ref": "pp-sit-d129-chasing-a-stuck-process-4"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: process; case; application",
+            "answer": "processo",
+            "source_ref": "processo"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: request; application",
+            "answer": "pedido",
+            "source_ref": "pedido"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: reference (number)",
+            "answer": "referência",
+            "source_ref": "referência"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: under review; being analyzed",
+            "answer": "em análise",
+            "source_ref": "em análise"
+          },
+          {
+            "id": "rv-sit-d129-chasing-a-stuck-process-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d129-chasing-a-stuck-process-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d130-health-centre-referral",
+      "title": "Getting the Referral You Need",
+      "month": 5,
+      "day": 130,
+      "week": 19,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d130-health-centre-referral",
+        "title": "Getting the Referral You Need",
+        "summary": "At the centro de saúde pressing for a specialist referral (credencial): describing symptoms with precision, questioning the waiting time, and asking about alternatives.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-host"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d130-health-centre-referral-1",
+            "base": "Tenho tido {sintoma} há {tempo}.",
+            "translation": "I've been having {symptom} for {time}.",
+            "slots": [
+              {
+                "name": "sintoma",
+                "description": "symptom",
+                "options": [
+                  "dores de cabeça fortes",
+                  "tonturas frequentes",
+                  "uma dor aguda no joelho",
+                  "problemas de visão",
+                  "uma tosse persistente"
+                ]
+              },
+              {
+                "name": "tempo",
+                "description": "time period",
+                "options": [
+                  "uma semana",
+                  "uns dias",
+                  "um mês",
+                  "algum tempo",
+                  "seis meses"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d130-health-centre-referral-2",
+            "base": "Precisava de uma credencial para {especialista}.",
+            "translation": "I needed a referral for {specialist}.",
+            "slots": [
+              {
+                "name": "especialista",
+                "description": "type of specialist",
+                "options": [
+                  "um neurologista",
+                  "um ortopedista",
+                  "um cardiologista",
+                  "um oftalmologista",
+                  "um pneumologista"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Gostaria de pedir uma credencial para {especialista}.",
+                "translation": "I would like to ask for a referral for {especialista}.",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d130-health-centre-referral-3",
+            "base": "Qual é o tempo de espera médio para {especialidade}?",
+            "translation": "What is the average waiting time for {specialty}?",
+            "slots": [
+              {
+                "name": "especialidade",
+                "description": "medical specialty",
+                "options": [
+                  "neurologia",
+                  "ortopedia",
+                  "cardiologia",
+                  "oftalmologia",
+                  "pneumologia"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Quanto tempo costuma demorar para {especialidade}?",
+                "translation": "How long does it usually take for {specialty}?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d130-health-centre-referral-4",
+            "base": "Há alguma alternativa para acelerar o processo?",
+            "translation": "Is there any alternative to speed up the process?",
+            "variants": [
+              {
+                "text": "Há forma de ser visto mais rapidamente?",
+                "translation": "Is there a way to be seen faster?",
+                "register": "neutral"
+              },
+              {
+                "text": "Existe alguma opção para encurtar o tempo de espera?",
+                "translation": "Is there any option to shorten the waiting time?",
+                "register": "formal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "credencial",
+            "translation": "referral (document)",
+            "pronunciation": "kreh-den-SYAL",
+            "register": "neutral",
+            "note": "Specific document from a GP to see a specialist in Portugal."
+          },
+          {
+            "word": "centro de saúde",
+            "translation": "health centre",
+            "pronunciation": "SEN-troh dee sah-OOD",
+            "register": "neutral",
+            "note": "Local public health clinic."
+          },
+          {
+            "word": "especialista",
+            "translation": "specialist",
+            "pronunciation": "esh-peh-syah-LEES-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "tempo de espera",
+            "translation": "waiting time",
+            "pronunciation": "TEM-poh dee esh-PEH-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "urgência",
+            "translation": "emergency",
+            "pronunciation": "oor-JEN-syah",
+            "register": "neutral"
+          },
+          {
+            "word": "consultório privado",
+            "translation": "private clinic/office",
+            "pronunciation": "kon-sool-TOH-ryoh pree-VAH-doh",
+            "register": "neutral"
+          },
+          {
+            "word": "sintomas",
+            "translation": "symptoms",
+            "pronunciation": "seen-TOH-mas",
+            "register": "neutral"
+          },
+          {
+            "word": "agendar",
+            "translation": "to schedule/book",
+            "pronunciation": "ah-jen-DAR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d130-health-centre-referral-1",
+            "title": "At the Health Centre Reception",
+            "context": "You are at the reception of a health centre in Funchal, trying to get a referral for a specialist due to persistent knee pain.",
+            "lines": [
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Bom dia! Em que posso ajudar?",
+                "translation": "Good morning! How can I help?"
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "local",
+                "text": "Bom dia. Tenho tido uma dor aguda no joelho há umas semanas e precisava de uma credencial para um ortopedista.",
+                "translation": "Good morning. I've been having a sharp pain in my knee for a few weeks and I needed a referral for an orthopaedist."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Pois, entendo. O seu médico de família é que tem de avaliar primeiro. Já tem consulta marcada com ele?",
+                "translation": "Right, I understand. Your family doctor needs to assess it first. Do you already have an appointment with him?"
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "local",
+                "text": "Sim, já fui visto. Ele disse que me passava a credencial, mas ainda não recebi nada. Qual é o tempo de espera médio para ortopedia?",
+                "translation": "Yes, I've already been seen. He said he would give me the referral, but I haven't received anything yet. What's the average waiting time for orthopaedics?"
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Hum, para ortopedia, o tempo de espera pode ser um bocado longo, sim. Depende da urgência, mas pode ir aos seis meses ou mais.",
+                "translation": "Hmm, for orthopaedics, the waiting time can be a bit long, yes. It depends on the urgency, but it can be six months or more."
+              },
+              {
+                "speaker": "Utente",
+                "voice_type": "local",
+                "text": "Seis meses? É muito tempo! Há alguma alternativa para acelerar o processo? Não posso esperar tanto.",
+                "translation": "Six months? That's a long time! Is there any alternative to speed up the process? I can't wait that long."
+              },
+              {
+                "speaker": "Funcionária",
+                "voice_type": "service",
+                "text": "Pois, a única forma de ser visto mais rapidamente é procurar um consultório privado. Mas aí é por sua conta, claro.",
+                "translation": "Well, the only way to be seen faster is to look for a private clinic. But that's at your own expense, of course."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The 'Credencial' in the Portuguese Health System",
+            "body": "In Portugal, to see a specialist through the public health system (SNS - Serviço Nacional de Saúde), you almost always need a 'credencial' (referral) from your 'médico de família' (family doctor) at your local 'centro de saúde'. This document authorizes the specialist consultation and is crucial for public system coverage. Without it, you cannot book a specialist appointment in the public sector. Waiting times for specialist appointments can be significant, especially for non-urgent cases."
+          },
+          {
+            "title": "Addressing Health Professionals",
+            "body": "When interacting with staff at a health centre or hospital in Portugal, it is customary and polite to use the formal address 'o senhor' / 'a senhora' (or the corresponding verb conjugations in the 3rd person singular). Using 'você' is generally avoided as it can sound distant or even impolite in this context. Be clear and concise about your symptoms and requests, but maintain a respectful tone."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the reception of a health centre in Funchal. You have persistent neck pain and have been advised by your family doctor to see a physiotherapist, but you need a referral (credencial) for the public system. You're also worried about long waiting times.",
+          "difficulty": 4,
+          "entry_node": "rp-d130-node-1",
+          "nodes": [
+            {
+              "id": "rp-d130-node-1",
+              "npc_text": "Bom dia! Em que posso ajudar?",
+              "npc_translation": "Good morning! How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Tenho tido dores no pescoço há umas semanas e precisava de uma credencial para fisioterapia.",
+                  "translation": "Good morning. I've been having neck pain for a few weeks and I needed a referral for physiotherapy.",
+                  "feedback": "Excellent, you clearly stated your problem and request using the correct term 'credencial'.",
+                  "next": "rp-d130-node-2"
+                },
+                {
+                  "text": "Olá. O meu pescoço dói e quero ir ao fisioterapeuta.",
+                  "translation": "Hi. My neck hurts and I want to go to the physiotherapist.",
+                  "feedback": "This is a bit too informal and direct. Try to be more polite and use 'credencial'.",
+                  "next": "rp-d130-node-2_alt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d130-node-2",
+              "npc_text": "Pois, para fisioterapia, o seu médico de família tem de passar a credencial. Já foi visto por ele?",
+              "npc_translation": "Right, for physiotherapy, your family doctor has to issue the referral. Have you already been seen by him?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, já fui visto. Ele disse que ia passar a credencial, mas ainda não recebi nada. Qual é o tempo de espera médio?",
+                  "translation": "Yes, I've already been seen. He said he would issue the referral, but I haven't received anything yet. What's the average waiting time?",
+                  "feedback": "Good, you clarified your situation and asked about the waiting time directly.",
+                  "next": "rp-d130-node-3"
+                },
+                {
+                  "text": "Sim, ele já me viu e disse que passava o papel. Mas não sei quanto tempo demora.",
+                  "translation": "Yes, he already saw me and said he would give me the paper. But I don't know how long it takes.",
+                  "feedback": "Acceptable, but 'o papel' is less precise than 'a credencial'. Still, you got the point across.",
+                  "next": "rp-d130-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d130-node-2_alt",
+              "npc_text": "Entendo. Para ir ao fisioterapeuta pelo público, precisa de uma credencial do seu médico de família. Já o consultou?",
+              "npc_translation": "I see. To go to the physiotherapist through the public system, you need a referral from your family doctor. Have you already consulted him?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ah, sim, já fui visto. Ele disse que passava a credencial. Qual é o tempo de espera para fisioterapia?",
+                  "translation": "Ah, yes, I've already been seen. He said he would issue the referral. What's the waiting time for physiotherapy?",
+                  "feedback": "Good recovery, you used 'credencial' this time and asked about waiting times.",
+                  "next": "rp-d130-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d130-node-3",
+              "npc_text": "Para fisioterapia, o tempo de espera pode variar bastante, mas geralmente são uns três a seis meses, dependendo da urgência. É o que temos tido ultimamente.",
+              "npc_translation": "For physiotherapy, the waiting time can vary quite a bit, but generally it's about three to six months, depending on the urgency. That's what we've been having lately.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Três a seis meses é muito tempo! Há alguma alternativa para acelerar o processo?",
+                  "translation": "Three to six months is a long time! Is there any alternative to speed up the process?",
+                  "feedback": "Excellent, you expressed concern and asked for alternatives.",
+                  "next": "rp-d130-node-4"
+                },
+                {
+                  "text": "Tanto tempo? Não posso esperar tanto. O que posso fazer?",
+                  "translation": "So long? I can't wait that long. What can I do?",
+                  "feedback": "Good, you conveyed urgency and asked for options.",
+                  "next": "rp-d130-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d130-node-4",
+              "npc_text": "A única forma de ser visto mais rapidamente é procurar um consultório privado. Nesse caso, a credencial não é necessária, mas os custos são por sua conta. Ou então, pode aguardar pela sua vez no público.",
+              "npc_translation": "The only way to be seen faster is to look for a private clinic. In that case, the referral is not necessary, but the costs are at your expense. Or, you can wait your turn in the public system.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Percebo. Vou pensar sobre a opção privada. Muito obrigado pela informação.",
+                  "translation": "I understand. I'll think about the private option. Thank you very much for the information.",
+                  "feedback": "Polite and clear. You've successfully navigated the situation."
+                },
+                {
+                  "text": "Ok, obrigado. Vou esperar então.",
+                  "translation": "Okay, thank you. I'll wait then.",
+                  "feedback": "Simple and effective. You've made a decision."
+                },
+                {
+                  "text": "Não há mesmo mais nada que possa fazer para o público?",
+                  "translation": "Is there really nothing else I can do for the public system?",
+                  "feedback": "You're pushing for more options, which is a valid strategy in bureaucracy. Let's see the response.",
+                  "next": "rp-d130-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d130-node-5",
+              "npc_text": "Não, infelizmente não há. O sistema é este. O seu médico pode, em casos de agravamento, tentar acelerar, mas não é garantido.",
+              "npc_translation": "No, unfortunately there isn't. This is the system. Your doctor can, in cases of worsening, try to speed it up, but it's not guaranteed.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Certo, entendi. Obrigado pela sua ajuda.",
+                  "translation": "Right, I understand. Thank you for your help.",
+                  "feedback": "You've accepted the reality of the situation and concluded politely."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Get That Referral!",
+          "prep": [
+            "Rehearse describing your symptoms clearly and concisely.",
+            "Practice asking for a 'credencial' for a specific specialist.",
+            "Prepare to ask about the typical 'tempo de espera' (waiting time).",
+            "Think about how to inquire about 'alternativas' (alternatives) if the waiting time is too long."
+          ],
+          "fallback_phrases": [
+            "Não percebi bem, pode repetir?",
+            "Pode falar um pouco mais devagar, por favor?",
+            "O que significa 'credencial'?",
+            "Pode explicar isso de outra forma?"
+          ],
+          "likely_responses": [
+            "O seu médico de família é que tem de passar a credencial.",
+            "O tempo de espera pode ser longo.",
+            "Pode sempre ir a um consultório privado, mas os custos são seus.",
+            "Já tem consulta marcada com o seu médico?"
+          ]
+        },
+        "goals": [
+          "Describe physical symptoms with precision.",
+          "Successfully request a specialist referral ('credencial').",
+          "Inquire about expected waiting times in the public health system.",
+          "Ask about and understand alternative options for faster treatment.",
+          "Navigate a bureaucratic interaction at a health centre politely and effectively."
+        ],
+        "course": {
+          "month": 5,
+          "day": 130,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d130-health-centre-referral-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I've been having {symptom} for {time}.",
+            "answer": "Tenho tido {sintoma} há {tempo}.",
+            "source_ref": "pp-sit-d130-health-centre-referral-1"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I needed a referral for {specialist}.",
+            "answer": "Precisava de uma credencial para {especialista}.",
+            "source_ref": "pp-sit-d130-health-centre-referral-2"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is the average waiting time for {specialty}?",
+            "answer": "Qual é o tempo de espera médio para {especialidade}?",
+            "source_ref": "pp-sit-d130-health-centre-referral-3"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is there any alternative to speed up the process?",
+            "answer": "Há alguma alternativa para acelerar o processo?",
+            "source_ref": "pp-sit-d130-health-centre-referral-4"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: referral (document)",
+            "answer": "credencial",
+            "source_ref": "credencial"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: health centre",
+            "answer": "centro de saúde",
+            "source_ref": "centro de saúde"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: specialist",
+            "answer": "especialista",
+            "source_ref": "especialista"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: waiting time",
+            "answer": "tempo de espera",
+            "source_ref": "tempo de espera"
+          },
+          {
+            "id": "rv-sit-d130-health-centre-referral-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d130-health-centre-referral-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d131-contesting-a-fine",
+      "title": "Contesting a Fine",
+      "month": 5,
+      "day": 131,
+      "week": 19,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d131-contesting-a-fine",
+        "title": "Contesting a Fine",
+        "summary": "A parking or administrative fine (coima) you believe is wrong: understanding the notice, presenting your case calmly at the counter, and starting a written contestação.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d131-contesting-a-fine-1",
+            "base": "Gostaria de contestar esta coima.",
+            "translation": "I would like to contest this fine.",
+            "variants": [
+              {
+                "text": "Queria contestar esta coima.",
+                "translation": "I wanted to contest this fine.",
+                "register": "neutral",
+                "note": "Slightly softer, common in polite requests."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d131-contesting-a-fine-2",
+            "base": "Tenho {documentos} que provam que não fui eu.",
+            "translation": "I have {documents} that prove it wasn't me.",
+            "slots": [
+              {
+                "name": "documentos",
+                "description": "Type of evidence",
+                "options": [
+                  "fotos",
+                  "testemunhas",
+                  "recibos",
+                  "provas"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d131-contesting-a-fine-3",
+            "base": "Qual é o procedimento para {apresentar uma contestação}?",
+            "translation": "What is the procedure for {submitting a contestation}?",
+            "slots": [
+              {
+                "name": "apresentar uma contestação",
+                "description": "Action to be taken",
+                "options": [
+                  "recorrer da decisão",
+                  "fazer uma reclamação"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d131-contesting-a-fine-4",
+            "base": "Acho que houve um engano na identificação.",
+            "translation": "I think there was a mistake in the identification.",
+            "variants": [
+              {
+                "text": "Penso que há um erro aqui.",
+                "translation": "I think there's a mistake here.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d131-contesting-a-fine-5",
+            "base": "Poderia indicar-me o balcão correto?",
+            "translation": "Could you direct me to the correct counter?"
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "coima",
+            "translation": "administrative fine (e.g., parking, speeding)",
+            "pronunciation": "KOY-mah",
+            "register": "neutral",
+            "note": "Common in Portugal for non-criminal penalties."
+          },
+          {
+            "word": "contestar",
+            "translation": "to contest, to dispute (a decision, a fine)",
+            "pronunciation": "kon-tes-TAR",
+            "register": "neutral"
+          },
+          {
+            "word": "contestação",
+            "translation": "formal dispute, appeal (noun)",
+            "pronunciation": "kon-tes-ta-SAH-oh",
+            "register": "formal"
+          },
+          {
+            "word": "balcão",
+            "translation": "counter, service desk",
+            "pronunciation": "bal-KAH-oh",
+            "register": "neutral"
+          },
+          {
+            "word": "documentos comprovativos",
+            "translation": "supporting documents, proof",
+            "pronunciation": "doo-koo-MEN-toosh kom-pro-va-TEE-voosh",
+            "register": "formal"
+          },
+          {
+            "word": "prazo",
+            "translation": "deadline, time limit",
+            "pronunciation": "PRAH-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "notificação",
+            "translation": "notification, official notice",
+            "pronunciation": "noh-tee-fee-ka-SAH-oh",
+            "register": "neutral"
+          },
+          {
+            "word": "auto de contraordenação",
+            "translation": "infringement notice, citation",
+            "pronunciation": "AH-too d(eh) kon-trah-or-d(eh)-na-SAH-oh",
+            "register": "formal"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d131-contesting-a-fine-1",
+            "title": "Querying a Parking Fine",
+            "context": "At the municipal police counter in Funchal, a person is trying to understand and contest a parking fine they believe is unjust.",
+            "lines": [
+              {
+                "speaker": "Cidadão",
+                "voice_type": "local",
+                "text": "Bom dia. Recebi esta coima e acho que há um engano.",
+                "translation": "Good morning. I received this fine and I think there's a mistake."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Pois não. Diga lá qual é o problema.",
+                "translation": "Yes, of course. Tell me what the problem is."
+              },
+              {
+                "speaker": "Cidadão",
+                "voice_type": "local",
+                "text": "Foi por estacionamento indevido, mas o carro nem sequer estava lá àquela hora.",
+                "translation": "It was for improper parking, but the car wasn't even there at that time."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Tem algum documento que comprove isso?",
+                "translation": "Do you have any document that proves that?"
+              },
+              {
+                "speaker": "Cidadão",
+                "voice_type": "local",
+                "text": "Sim, tenho um recibo de um parque de estacionamento diferente, com a hora.",
+                "translation": "Yes, I have a receipt from a different car park, with the time."
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Certo. Para contestar, vai ter de preencher um formulário e anexar os documentos comprovativos.",
+                "translation": "Alright. To contest it, you'll have to fill out a form and attach the supporting documents."
+              },
+              {
+                "speaker": "Cidadão",
+                "voice_type": "local",
+                "text": "Onde posso levantar esse formulário?",
+                "translation": "Where can I pick up that form?"
+              },
+              {
+                "speaker": "Funcionário",
+                "voice_type": "service",
+                "text": "Pode levantar aqui ou descarregar do nosso site. Tem um prazo de 15 dias úteis.",
+                "translation": "You can pick it up here or download it from our website. You have a deadline of 15 working days."
+              },
+              {
+                "speaker": "Cidadão",
+                "voice_type": "local",
+                "text": "Ah, ok. Muito obrigado pela informação.",
+                "translation": "Ah, okay. Thank you very much for the information."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Navigating Portuguese Bureaucracy",
+            "body": "When dealing with administrative matters in Portugal, especially contesting fines, it's crucial to be polite, clear, and prepared. Always have all relevant documents (originals and copies) ready. Officials often follow strict procedures, so direct challenges might be met with procedural responses rather than immediate resolution. Patience and persistence are key."
+          },
+          {
+            "title": "The Importance of 'Prazo'",
+            "body": "The 'prazo' (deadline) for contesting fines or submitting appeals is non-negotiable in Portugal. Missing a deadline almost certainly means losing your right to appeal, regardless of the merits of your case. Always ask about the deadline, write it down, and aim to submit your documents well in advance."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the municipal police counter in Funchal, ready to submit your written contestation for a parking fine you believe is unjust. The official is busy, but you need to get this done correctly.",
+          "difficulty": 4,
+          "entry_node": "rp-d131-node-1",
+          "nodes": [
+            {
+              "id": "rp-d131-node-1",
+              "npc_text": "Bom dia. Em que posso ajudá-lo?",
+              "npc_translation": "Good morning. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Venho entregar a minha contestação para esta coima.",
+                  "translation": "Good morning. I'm here to submit my contestation for this fine.",
+                  "feedback": "A direct and clear statement of purpose.",
+                  "next": "rp-d131-node-2"
+                },
+                {
+                  "text": "Bom dia. Gostaria de saber qual é o procedimento para contestar uma coima.",
+                  "translation": "Good morning. I'd like to know what the procedure is for contesting a fine.",
+                  "feedback": "A polite way to start if you're unsure about the next steps.",
+                  "next": "rp-d131-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d131-node-2",
+              "npc_text": "Certo. Tem o formulário preenchido e os documentos comprovativos?",
+              "npc_translation": "Alright. Do you have the completed form and supporting documents?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, tenho tudo aqui. A coima é referente a estacionamento indevido, mas tenho provas de que o carro não estava lá.",
+                  "translation": "Yes, I have everything here. The fine is for improper parking, but I have proof the car wasn't there.",
+                  "feedback": "Excellent, you're prepared and ready to submit your case.",
+                  "next": "rp-d131-node-4"
+                },
+                {
+                  "text": "Ah, esqueci-me de uma cópia de um documento importante. Posso entregar depois?",
+                  "translation": "Ah, I forgot a copy of an important document. Can I submit it later?",
+                  "feedback": "It's common to forget something. Be prepared for a procedural answer.",
+                  "next": "rp-d131-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d131-node-3",
+              "npc_text": "Para contestar, tem de preencher o formulário próprio e anexar os documentos que comprovem a sua versão. Já tem o formulário?",
+              "npc_translation": "To contest, you need to fill out the specific form and attach documents that prove your version. Do you already have the form?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, já tenho o formulário preenchido e os documentos. Posso entregar agora?",
+                  "translation": "Yes, I already have the form filled out and the documents. Can I submit it now?",
+                  "feedback": "You've successfully gathered the necessary information and are ready to proceed.",
+                  "next": "rp-d131-node-4"
+                },
+                {
+                  "text": "Não, ainda não tenho o formulário. Onde o posso obter?",
+                  "translation": "No, I don't have the form yet. Where can I get it?",
+                  "feedback": "It's important to know where to find the form. You might need to make another trip.",
+                  "next": "rp-d131-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d131-node-4",
+              "npc_text": "Muito bem. Entregue-me tudo, por favor. Vamos registar a sua contestação. Será contactado com a decisão.",
+              "npc_translation": "Very good. Please hand everything to me. We will register your contestation. You will be contacted with the decision.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d131-node-5",
+              "npc_text": "Lamento, mas tem de entregar tudo completo e dentro do prazo. Sem o formulário ou os documentos em falta, não podemos aceitar a contestação agora.",
+              "npc_translation": "I'm sorry, but you need to submit everything complete and within the deadline. Without the form or the missing documents, we cannot accept the contestation now.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ok, percebo. Vou buscar o que falta e volto antes do prazo.",
+                  "translation": "Okay, I understand. I'll get what's missing and come back before the deadline.",
+                  "feedback": "It's important to acknowledge and commit to returning with all required items within the deadline.",
+                  "next": "rp-d131-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d131-node-6",
+              "npc_text": "Pois, é o melhor. Não se esqueça do prazo.",
+              "npc_translation": "Yes, that's best. Don't forget the deadline.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Contestar uma Coima",
+          "prep": [
+            "Review vocabulary related to fines, bureaucracy, and formal complaints.",
+            "Practice explaining a misunderstanding or error clearly and politely in Portuguese.",
+            "Prepare to ask about specific procedures and deadlines for administrative processes."
+          ],
+          "fallback_phrases": [
+            "Pode repetir, por favor?",
+            "Não percebi bem. Pode explicar de outra forma?",
+            "Obrigado pela ajuda."
+          ],
+          "likely_responses": [
+            "Precisa de preencher este formulário.",
+            "Tem de anexar os documentos comprovativos.",
+            "O prazo é de X dias úteis.",
+            "Tem que se dirigir ao balcão Y.",
+            "Não podemos aceitar sem todos os documentos."
+          ]
+        },
+        "goals": [
+          "Understand the process for contesting an administrative fine in Portugal.",
+          "Practice explaining a misunderstanding or error clearly and politely to an official.",
+          "Learn to ask about required documents and deadlines in a bureaucratic context.",
+          "Successfully navigate a bureaucratic interaction to submit a formal complaint or gather necessary information."
+        ],
+        "course": {
+          "month": 5,
+          "day": 131,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d131-contesting-a-fine-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to contest this fine.",
+            "answer": "Gostaria de contestar esta coima.",
+            "source_ref": "pp-sit-d131-contesting-a-fine-1"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have {documents} that prove it wasn't me.",
+            "answer": "Tenho {documentos} que provam que não fui eu.",
+            "source_ref": "pp-sit-d131-contesting-a-fine-2"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is the procedure for {submitting a contestation}?",
+            "answer": "Qual é o procedimento para {apresentar uma contestação}?",
+            "source_ref": "pp-sit-d131-contesting-a-fine-3"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I think there was a mistake in the identification.",
+            "answer": "Acho que houve um engano na identificação.",
+            "source_ref": "pp-sit-d131-contesting-a-fine-4"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: administrative fine (e.g., parking, speeding)",
+            "answer": "coima",
+            "source_ref": "coima"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to contest, to dispute (a decision, a fine)",
+            "answer": "contestar",
+            "source_ref": "contestar"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: formal dispute, appeal (noun)",
+            "answer": "contestação",
+            "source_ref": "contestação"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: counter, service desk",
+            "answer": "balcão",
+            "source_ref": "balcão"
+          },
+          {
+            "id": "rv-sit-d131-contesting-a-fine-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d131-contesting-a-fine-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d132-escalating-politely",
+      "title": "Escalating Without Burning Bridges",
+      "month": 5,
+      "day": 132,
+      "week": 19,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d132-escalating-politely",
+        "title": "Escalating Without Burning Bridges",
+        "summary": "The counter cannot help: asking for the responsável or a written refusal, keeping every exchange courteous, and leaving the door open while moving the problem up.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-work"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d132-escalating-politely-1",
+            "base": "Gostaria de falar com o/a {responsável}, por favor.",
+            "translation": "I would like to speak with the person in charge, please.",
+            "slots": [
+              {
+                "name": "responsável",
+                "description": "the person in charge",
+                "options": [
+                  "responsável",
+                  "diretor",
+                  "chefe",
+                  "supervisor"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Podia falar com o/a responsável?",
+                "translation": "Could I speak with the person in charge?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d132-escalating-politely-2",
+            "base": "Seria possível ter esta {decisão} por escrito?",
+            "translation": "Would it be possible to have this decision in writing?",
+            "slots": [
+              {
+                "name": "decisão",
+                "description": "the decision or refusal",
+                "options": [
+                  "decisão",
+                  "recusa",
+                  "informação"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d132-escalating-politely-3",
+            "base": "Compreendo, mas é uma situação importante para mim.",
+            "translation": "I understand, but it's an important situation for me.",
+            "variants": [
+              {
+                "text": "Percebo, mas preciso mesmo de resolver isto.",
+                "translation": "I get it, but I really need to resolve this.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d132-escalating-politely-4",
+            "base": "Quem é o responsável por este {departamento}?",
+            "translation": "Who is responsible for this department?",
+            "slots": [
+              {
+                "name": "departamento",
+                "description": "the department or area",
+                "options": [
+                  "departamento",
+                  "serviço",
+                  "assunto"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "responsável",
+            "translation": "person in charge / responsible (adj.)",
+            "pronunciation": "rreh-spon-SAH-vel",
+            "register": "neutral"
+          },
+          {
+            "word": "recusa",
+            "translation": "refusal",
+            "pronunciation": "rreh-KOO-zah",
+            "register": "neutral"
+          },
+          {
+            "word": "por escrito",
+            "translation": "in writing",
+            "pronunciation": "por esh-KREE-too",
+            "register": "neutral"
+          },
+          {
+            "word": "escalar",
+            "translation": "to escalate (a problem)",
+            "pronunciation": "esh-kah-LAR",
+            "register": "neutral"
+          },
+          {
+            "word": "resolver",
+            "translation": "to resolve",
+            "pronunciation": "rreh-zol-VER",
+            "register": "neutral"
+          },
+          {
+            "word": "situação",
+            "translation": "situation",
+            "pronunciation": "see-too-ah-SAH-o",
+            "register": "neutral"
+          },
+          {
+            "word": "departamento",
+            "translation": "department",
+            "pronunciation": "deh-par-tah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "livro de reclamações",
+            "translation": "complaint book",
+            "pronunciation": "LEE-vroo deh rreh-klah-mah-SOYSH",
+            "register": "neutral",
+            "note": "A legally mandated physical book for complaints in Portugal, available in all commercial establishments and public services."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d132-escalating-politely-1",
+            "title": "A Problem with the Bill",
+            "context": "At the local water company office in Funchal. The learner is trying to contest an unexpectedly high water bill. The counter attendant says they can't do anything.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Boa tarde. Diga.",
+                "translation": "Good afternoon. How can I help?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Boa tarde. Estou aqui por causa desta fatura da água. Parece-me excessiva.",
+                "translation": "Good afternoon. I'm here because of this water bill. It seems excessive to me."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Ah, sim. Já verificámos e está tudo correto no sistema. Não podemos fazer nada.",
+                "translation": "Ah, yes. We've already checked and everything is correct in the system. We can't do anything."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Compreendo, mas é o dobro do habitual e não houve consumo extra. Gostaria de falar com o responsável, por favor.",
+                "translation": "I understand, but it's double the usual and there was no extra consumption. I'd like to speak with the person in charge, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "O responsável está em reunião agora. Não sei quando volta.",
+                "translation": "The person in charge is in a meeting right now. I don't know when they'll be back."
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Entendo. Seria possível ter esta recusa por escrito, então? Ou o contacto do departamento que gere estas questões?",
+                "translation": "I understand. Would it be possible to have this refusal in writing, then? Or the contact for the department that manages these issues?"
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Por escrito? Hum... Deixe-me ver o que posso fazer. Um momento, por favor.",
+                "translation": "In writing? Hmm... Let me see what I can do. One moment, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "local",
+                "text": "Pois é. Vou ver se consigo que o meu colega, o chefe de secção, venha cá. Ele pode ter mais informação.",
+                "translation": "Right. I'll see if I can get my colleague, the section chief, to come here. He might have more information."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness and Persistence in Portuguese Bureaucracy",
+            "body": "When dealing with bureaucracy in Portugal, especially in Madeira, maintaining a polite and respectful tone is crucial, even when you are firm. Direct confrontation is generally avoided. Using phrases like 'por favor' (please), 'com licença' (excuse me), and 'agradeço a sua ajuda' (I appreciate your help) can help smooth interactions. However, it's also important to be persistent. If a first-line attendant says 'não é possível' (it's not possible), politely asking to speak with 'o responsável' (the person in charge) or requesting a 'recusa por escrito' (refusal in writing) are common and accepted ways to escalate a problem without being rude. Many places also have a 'Livro de Reclamações' (complaint book), which is a legal requirement and a powerful tool for registered complaints."
+          },
+          {
+            "title": "The 'Livro de Reclamações' (Complaint Book)",
+            "body": "In Portugal, every commercial establishment and public service is legally obliged to have a physical 'Livro de Reclamações' (Complaint Book) available for customers. If you are unsatisfied with a service or product and cannot resolve the issue directly, you have the right to request this book and register a formal complaint. The entity is then legally required to respond to your complaint within a certain timeframe. Mentioning your intention to use the 'Livro de Reclamações' can sometimes prompt staff to find a solution, as it signifies a formal escalation."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the local council (Câmara Municipal) in Funchal, trying to get information about a building permit application that seems to be stuck. The counter clerk tells you they have no update and can't help further.",
+          "difficulty": 4,
+          "entry_node": "rp-d132-node-1",
+          "nodes": [
+            {
+              "id": "rp-d132-node-1",
+              "npc_text": "Bom dia. Já verifiquei o seu processo e não há novidades. Penso que não podemos fazer mais nada por aqui.",
+              "npc_translation": "Good morning. I've already checked your process and there are no updates. I don't think we can do anything more here.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Compreendo, mas preciso mesmo de uma atualização. Gostaria de falar com o responsável pelo departamento.",
+                  "translation": "I understand, but I really need an update. I'd like to speak with the person in charge of the department.",
+                  "feedback": "Excellent! You're politely but firmly asking for escalation.",
+                  "next": "rp-d132-node-2"
+                },
+                {
+                  "text": "Não percebo. O que é que posso fazer agora?",
+                  "translation": "I don't understand. What can I do now?",
+                  "feedback": "This is okay, but it leaves the initiative with the clerk. Try to be more assertive.",
+                  "next": "rp-d132-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d132-node-2",
+              "npc_text": "O responsável está muito ocupado hoje. Não sei se pode vir. Posso deixar uma mensagem?",
+              "npc_translation": "The person in charge is very busy today. I don't know if they can come. Can I leave a message?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Agradeço a sua ajuda, mas é urgente. Podia, por favor, tentar contactá-lo/a ou dar-me o contacto direto?",
+                  "translation": "I appreciate your help, but it's urgent. Could you please try to contact them or give me direct contact information?",
+                  "feedback": "Good, you're politely insisting and offering alternatives.",
+                  "next": "rp-d132-node-4"
+                },
+                {
+                  "text": "Sim, por favor. Diga que é sobre o processo número X.",
+                  "translation": "Yes, please. Say it's about process number X.",
+                  "feedback": "This is a reasonable option, but you're accepting the delay. You could push a bit more.",
+                  "next": "rp-d132-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d132-node-3",
+              "npc_text": "Pois é. Não sei. O processo está a seguir o seu curso. É esperar.",
+              "npc_translation": "Right. I don't know. The process is running its course. You just have to wait.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Não posso esperar mais. Seria possível ter esta informação por escrito ou o contacto do responsável?",
+                  "translation": "I can't wait any longer. Would it be possible to have this information in writing or the contact of the person in charge?",
+                  "feedback": "Good! You're now escalating effectively, using key phrases.",
+                  "next": "rp-d132-node-4"
+                },
+                {
+                  "text": "Ah, está bem. Obrigado na mesma.",
+                  "translation": "Oh, okay. Thanks anyway.",
+                  "feedback": "You've given up too easily. This problem won't be resolved this way.",
+                  "next": "rp-d132-node-end-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-d132-node-4",
+              "npc_text": "Um momento, por favor. Vou tentar contactar a chefia. Se não conseguir, posso dar-lhe o formulário para registar a sua situação.",
+              "npc_translation": "One moment, please. I'll try to contact the supervisor. If I can't, I can give you the form to register your situation.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Perfeito. Agradeço imenso a sua ajuda. Fico a aguardar.",
+                  "translation": "Perfect. I really appreciate your help. I'll wait.",
+                  "feedback": "Excellent! You've successfully moved the situation forward. You've been polite and effective.",
+                  "next": "rp-d132-node-end-2"
+                },
+                {
+                  "text": "Sim, por favor. Quero ter tudo por escrito.",
+                  "translation": "Yes, please. I want everything in writing.",
+                  "feedback": "Good, you're ensuring a formal record, which is a strong move in bureaucracy.",
+                  "next": "rp-d132-node-end-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d132-node-5",
+              "npc_text": "Certo. Vou deixar a mensagem. Mas não garanto uma resposta rápida.",
+              "npc_translation": "Alright. I'll leave the message. But I don't guarantee a quick response.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Entendo. Mas se não tiver notícias em {dias}, volto cá.",
+                  "translation": "I understand. But if I don't hear back in {days}, I'll come back.",
+                  "feedback": "You're setting an expectation, which is good. You're still in control of the follow-up.",
+                  "next": "rp-d132-node-end-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d132-node-end-1",
+              "npc_text": "De nada. Bom dia.",
+              "npc_translation": "You're welcome. Good day.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d132-node-end-2",
+              "npc_text": "De nada. Um momento, por favor.",
+              "npc_translation": "You're welcome. One moment, please.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d132-node-end-3",
+              "npc_text": "Pois, faça isso. Bom dia.",
+              "npc_translation": "Right, do that. Good day.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "A Sua Voz Conta: Resolva o Seu Problema",
+          "prep": [
+            "Review the phrase patterns for politely asking for a supervisor or written refusal.",
+            "Practice maintaining a calm and firm tone while speaking.",
+            "Mentally rehearse how you would explain your problem concisely."
+          ],
+          "fallback_phrases": [
+            "Peço desculpa, mas não estou a perceber.",
+            "Pode repetir, por favor?",
+            "Pode explicar isso de outra forma?"
+          ],
+          "likely_responses": [
+            "Não é possível.",
+            "Não sou eu o responsável.",
+            "Terá de falar com o departamento X.",
+            "O responsável não está.",
+            "Não posso dar essa informação por escrito."
+          ]
+        },
+        "goals": [
+          "Politely request to speak with a supervisor or manager.",
+          "Ask for a decision or refusal in writing.",
+          "Maintain a courteous but firm tone while asserting your rights.",
+          "Understand and navigate common bureaucratic pushback in Portuguese.",
+          "Learn to use the 'Livro de Reclamações' as a last resort."
+        ],
+        "course": {
+          "month": 5,
+          "day": 132,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d132-escalating-politely-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to speak with the person in charge, please.",
+            "answer": "Gostaria de falar com o/a {responsável}, por favor.",
+            "source_ref": "pp-sit-d132-escalating-politely-1"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Would it be possible to have this decision in writing?",
+            "answer": "Seria possível ter esta {decisão} por escrito?",
+            "source_ref": "pp-sit-d132-escalating-politely-2"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I understand, but it's an important situation for me.",
+            "answer": "Compreendo, mas é uma situação importante para mim.",
+            "source_ref": "pp-sit-d132-escalating-politely-3"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Who is responsible for this department?",
+            "answer": "Quem é o responsável por este {departamento}?",
+            "source_ref": "pp-sit-d132-escalating-politely-4"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: person in charge / responsible (adj.)",
+            "answer": "responsável",
+            "source_ref": "responsável"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: refusal",
+            "answer": "recusa",
+            "source_ref": "recusa"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: in writing",
+            "answer": "por escrito",
+            "source_ref": "por escrito"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to escalate (a problem)",
+            "answer": "escalar",
+            "source_ref": "escalar"
+          },
+          {
+            "id": "rv-sit-d132-escalating-politely-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d132-escalating-politely-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d133-week-19-stress-test",
+      "title": "Week 19 Stress Test",
+      "month": 5,
+      "day": 133,
+      "week": 19,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d133-week-19-stress-test",
+        "title": "Week 19 Stress Test",
+        "summary": "A bureaucratic marathon: a missing document, a cancelled slot, a stuck process and an escalation — one office after another, in one day.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d133-week-19-stress-test-1",
+            "base": "Peço desculpa, mas há um problema com {o_meu_documento}.",
+            "translation": "I'm sorry, but there's a problem with my {document_type}.",
+            "slots": [
+              {
+                "name": "o_meu_documento",
+                "description": "The type of document or request.",
+                "options": [
+                  "o meu registo",
+                  "a minha marcação",
+                  "o meu pedido"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Desculpe, tenho um problema com o meu pedido.",
+                "translation": "Excuse me, I have a problem with my request.",
+                "register": "neutral",
+                "note": "Slightly more direct."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d133-week-19-stress-test-2",
+            "base": "A minha marcação para {assunto} foi cancelada.",
+            "translation": "My appointment for {subject} was cancelled.",
+            "slots": [
+              {
+                "name": "assunto",
+                "description": "The subject of the appointment.",
+                "options": [
+                  "a renovação do cartão de cidadão",
+                  "a emissão do passaporte",
+                  "o registo de residência"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Cancelar-me-ão a marcação para o registo de residência.",
+                "translation": "My appointment for the residence registration was cancelled.",
+                "register": "formal",
+                "note": "Uses the passive voice, common in formal contexts."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d133-week-19-stress-test-3",
+            "base": "Já faz {tempo} que o processo está parado.",
+            "translation": "The process has been stuck for {time}.",
+            "slots": [
+              {
+                "name": "tempo",
+                "description": "Duration of the delay.",
+                "options": [
+                  "uma semana",
+                  "duas semanas",
+                  "um mês"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "O processo está bloqueado há um mês.",
+                "translation": "The process has been blocked for a month.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d133-week-19-stress-test-4",
+            "base": "Gostaria de falar com o/a {responsavel}, por favor.",
+            "translation": "I would like to speak with the {person_in_charge}, please.",
+            "slots": [
+              {
+                "name": "responsavel",
+                "description": "The specific role of the person in charge.",
+                "options": [
+                  "chefe de serviço",
+                  "diretor/a",
+                  "pessoa responsável"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Pode chamar o/a responsável?",
+                "translation": "Can you call the person in charge?",
+                "register": "neutral",
+                "note": "More direct way to ask."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d133-week-19-stress-test-5",
+            "base": "Não estou a conseguir {resolver_problema}.",
+            "translation": "I am not able to {solve_problem}.",
+            "slots": [
+              {
+                "name": "resolver_problema",
+                "description": "The specific problem to resolve.",
+                "options": [
+                  "obter o documento",
+                  "avançar com o pedido",
+                  "perceber a situação"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Tenho dificuldade em avançar com o pedido.",
+                "translation": "I have difficulty advancing with the request.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "balcão",
+            "translation": "counter, desk",
+            "pronunciation": "BAL-cow",
+            "register": "neutral",
+            "note": "Refers to a service counter in an office or shop."
+          },
+          {
+            "word": "documento",
+            "translation": "document",
+            "pronunciation": "doo-koo-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "marcação",
+            "translation": "appointment",
+            "pronunciation": "mar-kah-SOWN",
+            "register": "neutral"
+          },
+          {
+            "word": "processo",
+            "translation": "process, administrative procedure",
+            "pronunciation": "pro-SESS-oh",
+            "register": "neutral"
+          },
+          {
+            "word": "reclamação",
+            "translation": "complaint",
+            "pronunciation": "reh-klah-mah-SOWN",
+            "register": "neutral"
+          },
+          {
+            "word": "serviço de atendimento",
+            "translation": "customer service, service desk",
+            "pronunciation": "ser-VEE-soo deh ah-ten-dee-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "escalar a situação",
+            "translation": "to escalate the situation",
+            "pronunciation": "esh-kah-LAR ah see-too-ah-SOWN",
+            "register": "formal",
+            "note": "Common in professional and bureaucratic contexts."
+          },
+          {
+            "word": "comprovativo",
+            "translation": "proof, receipt",
+            "pronunciation": "kom-pro-vah-TEE-voo",
+            "register": "neutral",
+            "note": "Any document that serves as evidence."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d133-week-19-stress-test-1",
+            "title": "Missing Document",
+            "context": "You are at the 'Loja do Cidadão' in Funchal, trying to get a copy of a document you need. The attendant cannot find it in the system.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Bom dia. Em que posso ajudar?",
+                "translation": "Good morning. How can I help?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Bom dia. Eu precisava de uma cópia do meu registo de residência, por favor.",
+                "translation": "Good morning. I needed a copy of my residence registration, please."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Um momento... Não estou a encontrar o seu registo aqui na base de dados. Tem algum comprovativo do pedido original?",
+                "translation": "One moment... I can't find your registration here in the database. Do you have any proof of the original request?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Comprovativo? Acho que não. Eu fiz o pedido há uns meses e disseram-me que estaria pronto.",
+                "translation": "Proof? I don't think so. I made the request a few months ago and they told me it would be ready."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois, mas sem um número de processo ou comprovativo, é difícil. O sistema não o encontra.",
+                "translation": "Well, but without a process number or proof, it's difficult. The system can't find it."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Então, o que posso fazer? Eu preciso mesmo deste documento para o meu trabalho.",
+                "translation": "So, what can I do? I really need this document for my job."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Vou ter de escalar a situação. Vou chamar a minha supervisora.",
+                "translation": "I'll have to escalate the situation. I'll call my supervisor."
+              },
+              {
+                "speaker": "Supervisor",
+                "voice_type": "older",
+                "text": "Bom dia. Qual é o problema, colega? Ah, pois é, estas coisas acontecem. Deixe-me ver o que se passa aqui.",
+                "translation": "Good morning. What's the problem, colleague? Ah, well, these things happen. Let me see what's going on here."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d133-week-19-stress-test-2",
+            "title": "Cancelled Appointment",
+            "context": "You are calling a different public office, as your appointment for a permit renewal was cancelled without explanation.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "phone",
+                "text": "Serviços de Urbanismo, bom dia. Diga?",
+                "translation": "Urban Planning Services, good morning. Yes?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Bom dia. Ligo porque a minha marcação para a renovação da licença de obras foi cancelada e não recebi nenhuma explicação.",
+                "translation": "Good morning. I'm calling because my appointment for the building permit renewal was cancelled and I didn't receive any explanation."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "phone",
+                "text": "Ah, sim. Houve um problema no sistema. Muitas marcações foram afetadas. Tem o número do seu processo?",
+                "translation": "Ah, yes. There was a system problem. Many appointments were affected. Do you have your process number?"
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Tenho sim. É o 2023/L/3456. Eu preciso de resolver isto com alguma urgência, o prazo está a acabar.",
+                "translation": "Yes, I do. It's 2023/L/3456. I need to resolve this urgently, the deadline is approaching."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "phone",
+                "text": "Pois é, percebo. Mas não há vagas para já. O sistema está a bloquear novas marcações.",
+                "translation": "Well, I understand. But there are no slots for now. The system is blocking new appointments."
+              },
+              {
+                "speaker": "Você",
+                "voice_type": "younger",
+                "text": "Não há mesmo nada que se possa fazer? É que isto é um bocado complicado para mim.",
+                "translation": "Is there really nothing that can be done? Because this is a bit complicated for me."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "phone",
+                "text": "Vou tentar verificar se há alguma exceção, mas não prometo nada. Deixe-me o seu contacto.",
+                "translation": "I'll try to check if there's an exception, but I don't promise anything. Leave me your contact."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Navigating Portuguese Bureaucracy",
+            "body": "Bureaucracy in Portugal, like in many countries, can be a test of patience. It's common to encounter delays, missing documents, or system errors. Always try to be polite and persistent. Having copies of all submitted documents and any reference numbers (like a 'número de processo') is crucial. The 'Loja do Cidadão' (Citizen's Shop) is a common point for many administrative tasks, aiming to centralize services."
+          },
+          {
+            "title": "Politeness and Escalation",
+            "body": "When facing a problem, maintaining a polite and respectful tone, even when frustrated, is important. Instead of demanding, ask for assistance or clarification. If the initial attendant cannot help, it's acceptable to politely ask to speak with 'o/a responsável' (the person in charge) or 'o/a chefe de serviço' (the head of the department). This is a standard way to escalate an issue without being confrontational."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the 'Conservatória' (registry office) in Funchal, attempting to register a new address. The clerk informs you that a crucial document, which you are certain you submitted, is missing from your file.",
+          "difficulty": 4,
+          "entry_node": "rp-d133-node-1",
+          "nodes": [
+            {
+              "id": "rp-d133-node-1",
+              "npc_text": "Bom dia. Para o registo de morada, certo? Um momento... o seu processo parece estar incompleto. O comprovativo de residência anterior não está aqui.",
+              "npc_translation": "Good morning. For the address registration, right? One moment... your file seems to be incomplete. The previous proof of residence is not here.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não percebo. Eu entreguei esse documento na semana passada.",
+                  "translation": "I don't understand. I submitted that document last week.",
+                  "feedback": "Good, you're asserting that you did your part.",
+                  "next": "rp-d133-node-2"
+                },
+                {
+                  "text": "Oh, não! O que devo fazer agora?",
+                  "translation": "Oh, no! What should I do now?",
+                  "feedback": "This shows you're seeking a solution, but try to be more firm if you're sure you submitted it.",
+                  "next": "rp-d133-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d133-node-2",
+              "npc_text": "Pois, mas não consta no sistema. Tem alguma cópia ou comprovativo de entrega?",
+              "npc_translation": "Well, but it's not in the system. Do you have a copy or proof of submission?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não tenho uma cópia física, mas tenho a certeza que o entreguei. Há alguma forma de verificar?",
+                  "translation": "I don't have a physical copy, but I'm sure I submitted it. Is there any way to check?",
+                  "feedback": "Excellent, you're politely pushing for a solution and asking for verification.",
+                  "next": "rp-d133-node-4"
+                },
+                {
+                  "text": "Isso é impossível! Eu deixei-o com o colega que estava aqui.",
+                  "translation": "That's impossible! I left it with the colleague who was here.",
+                  "feedback": "While understandable, try to keep your tone polite. Accusations can be counterproductive.",
+                  "next": "rp-d133-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d133-node-3",
+              "npc_text": "Lamento, mas sem o documento ou comprovativo, não posso avançar. Terá de o trazer novamente.",
+              "npc_translation": "I'm sorry, but without the document or proof, I cannot proceed. You will have to bring it again.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Entendo, mas preciso de resolver isto hoje. Gostaria de falar com o/a responsável, por favor.",
+                  "translation": "I understand, but I need to resolve this today. I would like to speak with the person in charge, please.",
+                  "feedback": "Good use of escalation. Be firm but polite.",
+                  "next": "rp-d133-node-5"
+                },
+                {
+                  "text": "Não tenho tempo para voltar. Não há outra solução?",
+                  "translation": "I don't have time to come back. Is there no other solution?",
+                  "feedback": "This expresses urgency. Now try to suggest a path forward.",
+                  "next": "rp-d133-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d133-node-4",
+              "npc_text": "Hum... posso ver se consigo contactar o colega do turno anterior, mas não garanto nada. Ou pode preencher um formulário de reclamação.",
+              "npc_translation": "Hmm... I can see if I can contact the colleague from the previous shift, but I don't guarantee anything. Or you can fill out a complaint form.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Agradeço se puder verificar. É que o processo está parado e preciso de registar a morada com urgência.",
+                  "translation": "I appreciate it if you can check. The process is stuck and I urgently need to register the address.",
+                  "feedback": "You're emphasizing the urgency and politely asking for the check.",
+                  "next": "rp-d133-node-5"
+                },
+                {
+                  "text": "Prefiro falar com alguém que me possa ajudar a resolver isto agora.",
+                  "translation": "I prefer to speak with someone who can help me resolve this now.",
+                  "feedback": "This is a polite way to request to speak to a supervisor.",
+                  "next": "rp-d133-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d133-node-5",
+              "npc_text": "Bom dia. Fui informada sobre a situação. De facto, o documento não foi digitalizado. Peço desculpa. Vamos tentar resolver isto de imediato, mas pode demorar um pouco.",
+              "npc_translation": "Good morning. I've been informed about the situation. Indeed, the document was not scanned. I apologize. We will try to resolve this immediately, but it might take a while.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Muito obrigado/a pela ajuda. Fico a aguardar.",
+                  "translation": "Thank you very much for the help. I'll wait.",
+                  "feedback": "Excellent, you've achieved a resolution. Show gratitude and patience."
+                },
+                {
+                  "text": "Agradeço imenso. Há alguma forma de me avisarem quando estiver pronto?",
+                  "translation": "I'm very grateful. Is there any way to let me know when it's ready?",
+                  "feedback": "Good, you're asking for a follow-up. This is a practical step."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Desbloquear o Registo",
+          "prep": [
+            "Review vocabulary related to bureaucracy, documents, and complaints.",
+            "Practice phrases for expressing a problem clearly and requesting assistance or escalation.",
+            "Mentally prepare to be persistent and polite, even if the process is frustrating."
+          ],
+          "fallback_phrases": [
+            "Não estou a perceber bem, pode explicar de outra forma?",
+            "O que devo fazer agora?",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Não está no sistema.",
+            "Precisa de ir a outro balcão.",
+            "Tem de preencher este formulário.",
+            "Volte amanhã."
+          ]
+        },
+        "goals": [
+          "Clearly express a bureaucratic problem or misunderstanding.",
+          "Politely ask for clarification or further assistance.",
+          "Successfully request to speak with a supervisor or person in charge.",
+          "Understand and navigate common bureaucratic procedures in Portugal."
+        ],
+        "course": {
+          "month": 5,
+          "day": 133,
+          "category": "custom"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d133-week-19-stress-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'm sorry, but there's a problem with my {document_type}.",
+            "answer": "Peço desculpa, mas há um problema com {o_meu_documento}.",
+            "source_ref": "pp-sit-d133-week-19-stress-test-1"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My appointment for {subject} was cancelled.",
+            "answer": "A minha marcação para {assunto} foi cancelada.",
+            "source_ref": "pp-sit-d133-week-19-stress-test-2"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The process has been stuck for {time}.",
+            "answer": "Já faz {tempo} que o processo está parado.",
+            "source_ref": "pp-sit-d133-week-19-stress-test-3"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to speak with the {person_in_charge}, please.",
+            "answer": "Gostaria de falar com o/a {responsavel}, por favor.",
+            "source_ref": "pp-sit-d133-week-19-stress-test-4"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: counter, desk",
+            "answer": "balcão",
+            "source_ref": "balcão"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: document",
+            "answer": "documento",
+            "source_ref": "documento"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: appointment",
+            "answer": "marcação",
+            "source_ref": "marcação"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: process, administrative procedure",
+            "answer": "processo",
+            "source_ref": "processo"
+          },
+          {
+            "id": "rv-sit-d133-week-19-stress-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d133-week-19-stress-test-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d134-client-wont-pay",
+      "title": "The Client Who Won’t Pay",
+      "month": 5,
+      "day": 134,
+      "week": 20,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d134-client-wont-pay",
+        "title": "The Client Who Won’t Pay",
+        "summary": "An invoice is long overdue and excuses are repeating: the firm final reminder, restating amounts and dates, proposing a payment plan, and signalling next steps without threats.",
+        "tracks": [
+          "track-structured-course",
+          "track-work"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d134-client-wont-pay-1",
+            "base": "A fatura número {numero} no valor de {valor} euros está em atraso.",
+            "translation": "Invoice number {number} for the amount of {value} euros is overdue.",
+            "slots": [
+              {
+                "name": "numero",
+                "description": "Invoice number",
+                "options": [
+                  "2023/123",
+                  "2024/045",
+                  "1001"
+                ]
+              },
+              {
+                "name": "valor",
+                "description": "Amount in euros",
+                "options": [
+                  "150",
+                  "320",
+                  "85"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d134-client-wont-pay-2",
+            "base": "O prazo de pagamento já foi ultrapassado.",
+            "translation": "The payment deadline has already passed."
+          },
+          {
+            "id": "pp-sit-d134-client-wont-pay-3",
+            "base": "Gostaríamos de propor um plano de pagamento.",
+            "translation": "We would like to propose a payment plan.",
+            "variants": [
+              {
+                "text": "Podemos discutir um plano de pagamento?",
+                "translation": "Can we discuss a payment plan?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d134-client-wont-pay-4",
+            "base": "Precisamos de uma data concreta para o pagamento, {ate_quando}.",
+            "translation": "We need a concrete date for payment, {by_when}.",
+            "slots": [
+              {
+                "name": "ate_quando",
+                "description": "By when",
+                "options": [
+                  "o mais breve possível",
+                  "até ao final da semana",
+                  "até à próxima segunda-feira"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d134-client-wont-pay-5",
+            "base": "Quais são os próximos passos se não houver pagamento?",
+            "translation": "What are the next steps if there is no payment?"
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "fatura",
+            "translation": "invoice",
+            "pronunciation": "fah-TOO-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "em atraso",
+            "translation": "overdue",
+            "pronunciation": "em ah-TRAH-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "prazo de pagamento",
+            "translation": "payment deadline",
+            "pronunciation": "PRAH-zoo deh pah-gah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "plano de pagamento",
+            "translation": "payment plan",
+            "pronunciation": "PLAH-no deh pah-gah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "montante",
+            "translation": "amount (of money)",
+            "pronunciation": "mon-TAN-teh",
+            "register": "formal",
+            "note": "Can also use 'valor'"
+          },
+          {
+            "word": "lembrete",
+            "translation": "reminder",
+            "pronunciation": "lem-BRET-eh",
+            "register": "neutral"
+          },
+          {
+            "word": "resolver",
+            "translation": "to solve, to resolve",
+            "pronunciation": "reh-zol-VER",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d134-client-wont-pay-1",
+            "title": "Final Reminder Call",
+            "context": "A empresa 'Soluções Madeira' está a ligar a um cliente, o Sr. Rodrigues, sobre uma fatura em atraso. A conversa é um último lembrete amigável antes de medidas mais sérias.",
+            "lines": [
+              {
+                "speaker": "Marta (Soluções Madeira)",
+                "voice_type": "service",
+                "text": "Bom dia, Sr. Rodrigues. É a Marta, da Soluções Madeira. Estou a ligar sobre a fatura número 2023/123, no valor de 320 euros.",
+                "translation": "Good morning, Mr. Rodrigues. It's Marta, from Soluções Madeira. I'm calling about invoice number 2023/123, for the amount of 320 euros."
+              },
+              {
+                "speaker": "Sr. Rodrigues (Cliente)",
+                "voice_type": "phone",
+                "text": "Ah, sim, Marta. Pois é. Tive uns problemas, sabe? Estou a tentar resolver isso.",
+                "translation": "Ah, yes, Marta. That's right. I've had some problems, you know? I'm trying to sort it out."
+              },
+              {
+                "speaker": "Marta (Soluções Madeira)",
+                "voice_type": "service",
+                "text": "Compreendo, Sr. Rodrigues. No entanto, o prazo de pagamento já foi ultrapassado há bastante tempo. Precisamos de uma resolução.",
+                "translation": "I understand, Mr. Rodrigues. However, the payment deadline was passed quite some time ago. We need a resolution."
+              },
+              {
+                "speaker": "Sr. Rodrigues (Cliente)",
+                "voice_type": "local",
+                "text": "Pois, pois. Eu sei. Mas a situação está um bocado apertada agora. Não consigo pagar tudo de uma vez.",
+                "translation": "Yes, yes. I know. But the situation is a bit tight right now. I can't pay everything at once."
+              },
+              {
+                "speaker": "Marta (Soluções Madeira)",
+                "voice_type": "service",
+                "text": "Nesse caso, gostaríamos de propor um plano de pagamento. Seria uma forma de resolver a situação de forma faseada.",
+                "translation": "In that case, we would like to propose a payment plan. It would be a way to resolve the situation in stages."
+              },
+              {
+                "speaker": "Sr. Rodrigues (Cliente)",
+                "voice_type": "phone",
+                "text": "Um plano? Hum... E como é que isso funcionaria?",
+                "translation": "A plan? Hmm... And how would that work?"
+              },
+              {
+                "speaker": "Marta (Soluções Madeira)",
+                "voice_type": "service",
+                "text": "Podemos dividir o montante em duas ou três prestações. O importante é que haja um compromisso e datas concretas. Podemos enviar uma proposta por email.",
+                "translation": "We can divide the amount into two or three installments. The important thing is that there is a commitment and concrete dates. We can send a proposal by email."
+              },
+              {
+                "speaker": "Sr. Rodrigues (Cliente)",
+                "voice_type": "local",
+                "text": "Ah, sim, isso talvez ajude. Envie, por favor. Vou ver se consigo encaixar.",
+                "translation": "Ah, yes, that might help. Please send it. I'll see if I can fit it in."
+              },
+              {
+                "speaker": "Marta (Soluções Madeira)",
+                "voice_type": "service",
+                "text": "Excelente. Envio hoje mesmo. Agradecemos a sua atenção a este assunto, Sr. Rodrigues.",
+                "translation": "Excellent. I'll send it today. We appreciate your attention to this matter, Mr. Rodrigues."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in Business Communication",
+            "body": "In Portugal, even when dealing with overdue payments, communication tends to remain polite and indirect, especially in initial contacts. Direct threats are usually avoided. Phrases like 'gostaríamos de propor' (we would like to propose) or 'precisamos de uma resolução' (we need a resolution) are preferred over more aggressive language. Offering a payment plan ('plano de pagamento') is a common first step to facilitate resolution without escalating."
+          },
+          {
+            "title": "Addressing Clients Formally",
+            "body": "When speaking to clients, particularly those you don't know well or in a professional context, it's customary to use 'o senhor'/'a senhora' and the third-person verb conjugation (e.g., 'o senhor tem', 'a senhora compreende'). This indicates respect and maintains a professional distance. Using 'tu' would only be appropriate if there's an established informal relationship."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You work for 'Serviços Rápidos, Lda.' and are calling an individual client, Sra. Silva, about an overdue invoice for cleaning services. She has ignored previous email reminders. Your goal is to get a commitment for payment or agree on a payment plan.",
+          "difficulty": 4,
+          "entry_node": "rp-d134-node-1",
+          "nodes": [
+            {
+              "id": "rp-d134-node-1",
+              "npc_text": "Bom dia. É a Sra. Silva? É da Serviços Rápidos, Lda. Estou a ligar sobre a fatura número 1001, no valor de 85 euros, que está em atraso.",
+              "npc_translation": "Good morning. Is this Ms. Silva? This is from Serviços Rápidos, Lda. I'm calling about invoice number 1001, for the amount of 85 euros, which is overdue.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, Sra. Silva, o prazo de pagamento já foi ultrapassado.",
+                  "translation": "Yes, Ms. Silva, the payment deadline has already passed.",
+                  "feedback": "Good, you immediately state the problem clearly and politely.",
+                  "next": "rp-d134-node-2"
+                },
+                {
+                  "text": "Olá Sra. Silva, queria falar da sua fatura.",
+                  "translation": "Hello Ms. Silva, I wanted to talk about your invoice.",
+                  "feedback": "A bit too informal and vague for a first contact about an overdue payment. Try to be more precise.",
+                  "next": "rp-d134-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d134-node-2",
+              "npc_text": "Ah, a fatura... sim, eu sei. Tive uns gastos inesperados este mês e não consegui pagar. Peço desculpa.",
+              "npc_translation": "Ah, the invoice... yes, I know. I had some unexpected expenses this month and couldn't pay. I apologize.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Compreendo, mas precisamos de resolver esta situação com urgência. Quando pensa que pode pagar?",
+                  "translation": "I understand, but we need to resolve this situation urgently. When do you think you can pay?",
+                  "feedback": "Good, you acknowledge her situation but pivot back to the need for a solution and a date.",
+                  "next": "rp-d134-node-3"
+                },
+                {
+                  "text": "Não podemos esperar mais. Tem de pagar já.",
+                  "translation": "We can't wait any longer. You have to pay now.",
+                  "feedback": "This is too aggressive and might make the client uncooperative. Try a softer approach first.",
+                  "next": "rp-d134-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d134-node-3",
+              "npc_text": "Não sei bem... Talvez no próximo mês, se tudo correr bem.",
+              "npc_translation": "I'm not sure... Maybe next month, if all goes well.",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Poderíamos discutir um plano de pagamento? Assim, dividimos o montante em prestações mais pequenas.",
+                  "translation": "Could we discuss a payment plan? That way, we divide the amount into smaller installments.",
+                  "feedback": "Excellent, you offer a concrete solution that shows flexibility.",
+                  "next": "rp-d134-node-5"
+                },
+                {
+                  "text": "Próximo mês é demasiado tempo. Precisamos de uma data mais próxima.",
+                  "translation": "Next month is too long. We need a closer date.",
+                  "feedback": "While true, this might sound confrontational. Consider offering a solution instead of just rejecting her suggestion.",
+                  "next": "rp-d134-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d134-node-4",
+              "npc_text": "Mas eu não tenho o dinheiro agora! O que é que quer que eu faça?",
+              "npc_translation": "But I don't have the money now! What do you want me to do?",
+              "npc_voice_type": "noisy",
+              "options": [
+                {
+                  "text": "Compreendo que a situação seja difícil. Gostaríamos de propor um plano de pagamento para facilitar.",
+                  "translation": "I understand that the situation is difficult. We would like to propose a payment plan to make it easier.",
+                  "feedback": "You successfully de-escalated and offered a solution, even after a difficult response.",
+                  "next": "rp-d134-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d134-node-5",
+              "npc_text": "Um plano de pagamento? Hum... e como é que isso funcionaria? Em quantas vezes?",
+              "npc_translation": "A payment plan? Hmm... and how would that work? In how many installments?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Podemos dividir em duas prestações, uma agora e outra no próximo mês. O que acha?",
+                  "translation": "We can divide it into two installments, one now and another next month. What do you think?",
+                  "feedback": "You've offered a clear, actionable plan. Good job.",
+                  "next": "rp-d134-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d134-node-6",
+              "npc_text": "Duas prestações... está bem. Posso pagar a primeira no final desta semana e a segunda no final do próximo mês. Serve?",
+              "npc_translation": "Two installments... okay. I can pay the first one at the end of this week and the second at the end of next month. Does that work?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, Sra. Silva, isso seria ótimo. Envio-lhe a proposta por email para confirmar.",
+                  "translation": "Yes, Ms. Silva, that would be great. I'll send you the proposal by email to confirm.",
+                  "feedback": "You've successfully reached an agreement and confirmed the next steps. Well done!"
+                },
+                {
+                  "text": "Não, tem de ser tudo esta semana.",
+                  "translation": "No, it all has to be this week.",
+                  "feedback": "You had an agreement, but you're now rejecting it. This might lead to the client backing out."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Resolving an Overdue Invoice",
+          "prep": [
+            "Review the key phrases for stating the problem and proposing solutions.",
+            "Practice offering a payment plan politely but firmly.",
+            "Mentally prepare for potential client excuses and how to respond constructively."
+          ],
+          "fallback_phrases": [
+            "Poderíamos discutir isto mais tarde, se preferir, mas precisamos de uma data.",
+            "Compreendo a sua situação, mas este assunto precisa de ser resolvido."
+          ],
+          "likely_responses": [
+            "Tive uns problemas inesperados e não consigo pagar agora.",
+            "Posso pagar no próximo mês, mas não antes.",
+            "Não tenho o dinheiro todo de uma vez.",
+            "Já enviei o pagamento, não recebeu?"
+          ]
+        },
+        "goals": [
+          "Successfully inform a client about an overdue invoice.",
+          "Politely but firmly push for a resolution to the payment issue.",
+          "Negotiate and propose a payment plan if the client cannot pay the full amount immediately.",
+          "Secure a clear commitment or next step from the client regarding payment."
+        ],
+        "course": {
+          "month": 5,
+          "day": 134,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d134-client-wont-pay-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Invoice number {number} for the amount of {value} euros is overdue.",
+            "answer": "A fatura número {numero} no valor de {valor} euros está em atraso.",
+            "source_ref": "pp-sit-d134-client-wont-pay-1"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The payment deadline has already passed.",
+            "answer": "O prazo de pagamento já foi ultrapassado.",
+            "source_ref": "pp-sit-d134-client-wont-pay-2"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: We would like to propose a payment plan.",
+            "answer": "Gostaríamos de propor um plano de pagamento.",
+            "source_ref": "pp-sit-d134-client-wont-pay-3"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: We need a concrete date for payment, {by_when}.",
+            "answer": "Precisamos de uma data concreta para o pagamento, {ate_quando}.",
+            "source_ref": "pp-sit-d134-client-wont-pay-4"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: invoice",
+            "answer": "fatura",
+            "source_ref": "fatura"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: overdue",
+            "answer": "em atraso",
+            "source_ref": "em atraso"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: payment deadline",
+            "answer": "prazo de pagamento",
+            "source_ref": "prazo de pagamento"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: payment plan",
+            "answer": "plano de pagamento",
+            "source_ref": "plano de pagamento"
+          },
+          {
+            "id": "rv-sit-d134-client-wont-pay-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d134-client-wont-pay-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+            "caption": "Essential money vocabulary and phrases — European Portuguese (Learn European Portuguese Online)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d135-renegotiating-deadlines",
+      "title": "Renegotiating a Deadline",
+      "month": 5,
+      "day": 135,
+      "week": 20,
+      "level": 4,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-work",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d135-renegotiating-deadlines",
+        "title": "Renegotiating a Deadline",
+        "summary": "A deadline is going to slip — yours or theirs: breaking the news early, explaining causes without excuses, and agreeing a new date both sides believe.",
+        "tracks": [
+          "track-structured-course",
+          "track-work",
+          "track-social"
+        ],
+        "level": 4,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d135-renegotiating-deadlines-1",
+            "base": "Lamento, mas não vou conseguir entregar {a tempo}.",
+            "translation": "I'm sorry, but I won't be able to deliver {on time}.",
+            "slots": [
+              {
+                "name": "a tempo",
+                "description": "when",
+                "options": [
+                  "a tempo",
+                  "até à data combinada",
+                  "no prazo"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não vamos conseguir cumprir o prazo.",
+                "translation": "We won't be able to meet the deadline.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d135-renegotiating-deadlines-2",
+            "base": "Precisamos de {mais tempo} para {terminar o projeto}.",
+            "translation": "We need {more time} to {finish the project}.",
+            "slots": [
+              {
+                "name": "mais tempo",
+                "description": "duration",
+                "options": [
+                  "mais um ou dois dias",
+                  "pelo menos mais uma semana",
+                  "um bocado mais de tempo"
+                ]
+              },
+              {
+                "name": "terminar o projeto",
+                "description": "task",
+                "options": [
+                  "terminar o projeto",
+                  "concluir a tarefa",
+                  "resolver o problema"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d135-renegotiating-deadlines-3",
+            "base": "Será que conseguimos {adiar a data} para {a próxima semana}?",
+            "translation": "Can we {postpone the date} to {next week}?",
+            "slots": [
+              {
+                "name": "adiar a data",
+                "description": "action",
+                "options": [
+                  "adiar a data",
+                  "prolongar o prazo",
+                  "reagendar a entrega"
+                ]
+              },
+              {
+                "name": "a próxima semana",
+                "description": "new date",
+                "options": [
+                  "a próxima semana",
+                  "o final do mês",
+                  "dia 25"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d135-renegotiating-deadlines-4",
+            "base": "Houve um {imprevisto} que nos atrasou.",
+            "translation": "There was an {unforeseen event} that delayed us.",
+            "slots": [
+              {
+                "name": "imprevisto",
+                "description": "type of event",
+                "options": [
+                  "imprevisto",
+                  "problema técnico",
+                  "atraso na entrega de materiais"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "prazo",
+            "translation": "deadline",
+            "pronunciation": "PRAH-zoo",
+            "register": "neutral"
+          },
+          {
+            "word": "adiar",
+            "translation": "to postpone",
+            "pronunciation": "ah-dee-AHR",
+            "register": "neutral"
+          },
+          {
+            "word": "cumprir (o prazo)",
+            "translation": "to meet (the deadline)",
+            "pronunciation": "koom-PREER",
+            "register": "neutral"
+          },
+          {
+            "word": "imprevisto",
+            "translation": "unforeseen event",
+            "pronunciation": "eem-preh-VEESH-too",
+            "register": "neutral"
+          },
+          {
+            "word": "renegociar",
+            "translation": "to renegotiate",
+            "pronunciation": "reh-neh-goh-see-AHR",
+            "register": "neutral"
+          },
+          {
+            "word": "compensar",
+            "translation": "to compensate",
+            "pronunciation": "kom-pen-SAHR",
+            "register": "neutral"
+          },
+          {
+            "word": "solução",
+            "translation": "solution",
+            "pronunciation": "soh-loo-SAH-ohn",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d135-renegotiating-deadlines-1",
+            "title": "Renovação Atrasada",
+            "context": "Um cliente liga para a empresa de remodelações porque não recebeu notícias sobre a entrega da obra que estava prevista para hoje.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Bom dia. Estou a ligar sobre a remodelação da minha casa. A entrega era para hoje, certo?",
+                "translation": "Good morning. I'm calling about my house renovation. The delivery was for today, right?"
+              },
+              {
+                "speaker": "Empresa",
+                "voice_type": "service",
+                "text": "Ah, sim, bom dia, senhor Silva. Lamento imenso, mas vamos ter um pequeno atraso. Houve um imprevisto na entrega de alguns materiais essenciais.",
+                "translation": "Ah, yes, good morning, Mr. Silva. I'm very sorry, but we're going to have a small delay. There was an unforeseen issue with the delivery of some essential materials."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Um atraso? Mas tínhamos um prazo bem definido! E não me avisaram antes?",
+                "translation": "A delay? But we had a well-defined deadline! And you didn't warn me earlier?"
+              },
+              {
+                "speaker": "Empresa",
+                "voice_type": "service",
+                "text": "Pois é, o problema surgiu esta manhã. Estamos a tentar renegociar com o fornecedor. Proponho adiar a entrega para a próxima quarta-feira. Seria possível para o senhor?",
+                "translation": "That's right, the problem arose this morning. We are trying to renegotiate with the supplier. I propose postponing the delivery to next Wednesday. Would that be possible for you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Quarta-feira? É um bocado apertado, mas... se não houver outra solução. E como é que vão compensar o atraso?",
+                "translation": "Wednesday? It's a bit tight, but... if there's no other solution. And how will you compensate for the delay?"
+              },
+              {
+                "speaker": "Empresa",
+                "voice_type": "service",
+                "text": "Podemos oferecer um desconto de 5% na mão de obra final, ou uma limpeza profissional da casa depois da obra. O que prefere?",
+                "translation": "We can offer a 5% discount on the final labor, or a professional house cleaning after the work. What do you prefer?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Hum... a limpeza parece-me bem. Então, quarta-feira, sem falta?",
+                "translation": "Hmm... the cleaning sounds good. So, Wednesday, no fail?"
+              },
+              {
+                "speaker": "Empresa",
+                "voice_type": "service",
+                "text": "Confirmado, senhor Silva. Quarta-feira, sem falta. E obrigado pela sua compreensão.",
+                "translation": "Confirmed, Mr. Silva. Wednesday, no fail. And thank you for your understanding."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Portuguese Directness vs. Indirectness",
+            "body": "In Portugal, when delivering bad news or asking for a favour like a deadline extension, it's common to start with an apology or an explanation of the circumstances (e.g., 'Lamento, mas...', 'Houve um imprevisto...'). While directness is valued, softening the blow with context is also appreciated. Avoid being overly apologetic to the point of sounding incompetent, but a sincere 'Lamento' (I'm sorry) or 'Peço desculpa' (I apologize) is appropriate."
+          },
+          {
+            "title": "The Importance of 'Prazo'",
+            "body": "The word 'prazo' (deadline/term) carries significant weight in Portuguese professional contexts. Missing a deadline without prior communication is generally seen as unprofessional. When renegotiating, always propose a new, realistic date and, if applicable, suggest how you might mitigate the inconvenience or compensate for the delay, as seen in the dialogue example."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are working on a report for your manager, Doutora Antunes. Due to unexpected technical issues with your computer, you won't be able to submit it by tomorrow's deadline. You need to call her to explain and ask for an extension.",
+          "difficulty": 4,
+          "entry_node": "rp-d135-node-1",
+          "nodes": [
+            {
+              "id": "rp-d135-node-1",
+              "npc_text": "Diga, está a ligar sobre o relatório? O prazo é amanhã, certo? Está a correr tudo bem?",
+              "npc_translation": "Yes, are you calling about the report? The deadline is tomorrow, right? Is everything going well?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, Doutora, está tudo a correr bem, obrigado.",
+                  "translation": "Yes, Doctor, everything is going well, thank you.",
+                  "feedback": "This is not truthful and will lead to bigger problems later. You need to address the issue directly.",
+                  "next": "rp-d135-node-bad-start"
+                },
+                {
+                  "text": "Doutora Antunes, lamento, mas não vou conseguir entregar o relatório a tempo.",
+                  "translation": "Doutora Antunes, I'm sorry, but I won't be able to submit the report on time.",
+                  "feedback": "Good, you're being direct and apologetic. Now you need to explain why.",
+                  "next": "rp-d135-node-2-explain"
+                },
+                {
+                  "text": "Houve um imprevisto com o meu computador e preciso de mais tempo para o relatório.",
+                  "translation": "There was an unforeseen issue with my computer and I need more time for the report.",
+                  "feedback": "Excellent, you've immediately given a reason. Now be ready to elaborate.",
+                  "next": "rp-d135-node-2-explain"
+                }
+              ]
+            },
+            {
+              "id": "rp-d135-node-bad-start",
+              "npc_text": "Ótimo. Então, espero-o amanhã. Tenha um bom dia.",
+              "npc_translation": "Great. So, I'll expect it tomorrow. Have a good day.",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d135-node-2-explain",
+              "npc_text": "Não vai conseguir? Qual é o problema? Aconteceu alguma coisa grave?",
+              "npc_translation": "You won't be able to? What's the problem? Did something serious happen?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, o meu computador avariou e não consigo aceder aos ficheiros para terminar o trabalho.",
+                  "translation": "Yes, my computer broke down and I can't access the files to finish the work.",
+                  "feedback": "Clear and concise explanation. Now you need to propose a solution.",
+                  "next": "rp-d135-node-3-propose"
+                },
+                {
+                  "text": "Tive uns problemas técnicos inesperados e isso atrasou-me imenso.",
+                  "translation": "I had some unexpected technical problems and that delayed me a lot.",
+                  "feedback": "Good, but try to be a bit more specific if possible, as you'll need to justify the extension.",
+                  "next": "rp-d135-node-3-propose"
+                }
+              ]
+            },
+            {
+              "id": "rp-d135-node-3-propose",
+              "npc_text": "Compreendo. E qual é a sua proposta? Quando é que acha que consegue entregar?",
+              "npc_translation": "I understand. And what's your proposal? When do you think you can deliver?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Acredito que consigo ter tudo pronto até quinta-feira, Doutora. Será que podemos adiar o prazo para esse dia?",
+                  "translation": "I believe I can have everything ready by Thursday, Doctor. Can we postpone the deadline to that day?",
+                  "feedback": "Excellent! You've proposed a new date clearly and asked for her agreement.",
+                  "next": "rp-d135-node-4-accept-pushback"
+                },
+                {
+                  "text": "Preciso de mais uns dias, talvez até ao final da semana.",
+                  "translation": "I need a few more days, maybe until the end of the week.",
+                  "feedback": "Good, but try to be more specific with the exact date for clarity and professionalism.",
+                  "next": "rp-d135-node-4-accept-pushback"
+                }
+              ]
+            },
+            {
+              "id": "rp-d135-node-4-accept-pushback",
+              "npc_text": "Quinta-feira... hum... É um bocado apertado para mim, mas se não houver mesmo outra solução... Consegue garantir que não haverá mais atrasos?",
+              "npc_translation": "Thursday... hmm... It's a bit tight for me, but if there really is no other solution... Can you guarantee there won't be any further delays?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, Doutora. Garanto que farei tudo para entregar na quinta-feira. Já estou a resolver o problema técnico.",
+                  "translation": "Yes, Doctor. I guarantee I will do everything to deliver on Thursday. I'm already resolving the technical issue.",
+                  "feedback": "Perfect! You've reassured her and confirmed your commitment.",
+                  "next": "rp-d135-node-final-success"
+                },
+                {
+                  "text": "Vou fazer o meu melhor, Doutora.",
+                  "translation": "I will do my best, Doctor.",
+                  "feedback": "Good, but a stronger commitment might be better here, given the situation.",
+                  "next": "rp-d135-node-final-success"
+                }
+              ]
+            },
+            {
+              "id": "rp-d135-node-final-success",
+              "npc_text": "Muito bem. Então fica combinado para quinta-feira. Mas por favor, avise-me se surgir algo mais. Obrigado.",
+              "npc_translation": "Very well. So it's agreed for Thursday. But please, let me know if anything else comes up. Thank you.",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Pedir um Prolongamento de Prazo",
+          "prep": [
+            "Identifique o problema que causou o atraso (seja honesto, mas conciso).",
+            "Pense numa nova data de entrega realista e aceite para si.",
+            "Considere se pode oferecer alguma forma de compensação ou mitigação do impacto do atraso (ex: trabalhar horas extra, apresentar uma parte mais cedo)."
+          ],
+          "fallback_phrases": [
+            "Lamento imenso o incómodo.",
+            "O que é que podemos fazer para minimizar o impacto?",
+            "Compreendo perfeitamente a sua frustração."
+          ],
+          "likely_responses": [
+            "Não é possível, o prazo é inegociável.",
+            "Qual é a sua proposta para uma nova data?",
+            "E o que é que nos garante que não haverá mais atrasos?",
+            "Como é que podemos resolver isto?"
+          ]
+        },
+        "goals": [
+          "Explain a delay professionally and concisely.",
+          "Propose a new, realistic deadline.",
+          "Negotiate a new agreement with the other party.",
+          "Understand and use vocabulary related to deadlines and delays."
+        ],
+        "course": {
+          "month": 5,
+          "day": 135,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'm sorry, but I won't be able to deliver {on time}.",
+            "answer": "Lamento, mas não vou conseguir entregar {a tempo}.",
+            "source_ref": "pp-sit-d135-renegotiating-deadlines-1"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: We need {more time} to {finish the project}.",
+            "answer": "Precisamos de {mais tempo} para {terminar o projeto}.",
+            "source_ref": "pp-sit-d135-renegotiating-deadlines-2"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can we {postpone the date} to {next week}?",
+            "answer": "Será que conseguimos {adiar a data} para {a próxima semana}?",
+            "source_ref": "pp-sit-d135-renegotiating-deadlines-3"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: There was an {unforeseen event} that delayed us.",
+            "answer": "Houve um {imprevisto} que nos atrasou.",
+            "source_ref": "pp-sit-d135-renegotiating-deadlines-4"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: deadline",
+            "answer": "prazo",
+            "source_ref": "prazo"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to postpone",
+            "answer": "adiar",
+            "source_ref": "adiar"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to meet (the deadline)",
+            "answer": "cumprir (o prazo)",
+            "source_ref": "cumprir (o prazo)"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: unforeseen event",
+            "answer": "imprevisto",
+            "source_ref": "imprevisto"
+          },
+          {
+            "id": "rv-sit-d135-renegotiating-deadlines-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d135-renegotiating-deadlines-1"
+          }
+        ]
+      }
+    }
+  ]
+}

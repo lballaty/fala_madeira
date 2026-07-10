@@ -1,0 +1,87 @@
+{
+  "title": "FalaMadeira Structured Course — canonical 168-day curriculum outline",
+  "description": "Curriculum design for plan step complete-structured-course-content. 6 months x 28 course days (4 weeks of 7). Existing situations keep their relative order within their month (only course.day renumbers to canonical blocks); net-new days are authored against the weekly themes below. Levels are locked per month: M1 L0-L1/A1, M2 L1-L2/A2, M3 L2-L3/A2-B1, M4 L3/B1, M5 L4/B1-B2, M6 L5/B2. Themes serve understand/speak/use/belong and draw on the goal tracks (survival/host/social/bureaucracy/work) plus Madeira culture, festivals, weather, food and geography.",
+  "generated_at": "2026-07-10",
+  "day_blocks": "month m owns days (m-1)*28+1 .. m*28; week k owns days (k-1)*7+1 .. k*7",
+  "months": [
+    {
+      "month": 1,
+      "days": "1-28",
+      "level": "L0-L1 / A1",
+      "theme": "Foundations — survive and be present",
+      "status": "existing 28 days, unchanged (canonical already)",
+      "weeks": [
+        { "week": 1, "days": "1-7", "theme": "Presence & first exchanges: greetings, café, numbers, clarification, directions, opinions", "new_days": [] },
+        { "week": 2, "days": "8-14", "theme": "Being a person: self-introduction, time, prices, first past tense, ser/estar, routines", "new_days": [] },
+        { "week": 3, "days": "15-21", "theme": "Needs & requests: talking about others, TER, PODER, shopping, pharmacy, connectors", "new_days": [] },
+        { "week": 4, "days": "22-28", "theme": "Time travel & daily life: imperfect, future, conditionals, restaurant, home, big numbers", "new_days": [] }
+      ]
+    },
+    {
+      "month": 2,
+      "days": "29-56",
+      "level": "L1-L2 / A2",
+      "theme": "Complete grammar & real conversations",
+      "status": "existing 21 days keep d29-49; 7 net-new days fill week 8 (d50-56)",
+      "weeks": [
+        { "week": 5, "days": "29-35", "theme": "Registers & the complete present: tu vs você, all persons, preterite+imperfect, telephone", "new_days": [] },
+        { "week": 6, "days": "36-42", "theme": "Past, feelings & the island: present perfect, reflexives, emotions, Madeiran geography, complex sentences", "new_days": [] },
+        { "week": 7, "days": "43-49", "theme": "Advanced structures: vocês, future subjunctive, personal infinitive, abstract topics, formal writing, beaches & hiking", "new_days": [] },
+        { "week": 8, "days": "50-56", "theme": "Grammar to the street — running your daily life (L2/A2): market, post office, phone appointments, household problems, narrating your week, plans, stress test", "new_days": [50, 51, 52, 53, 54, 55, 56] }
+      ]
+    },
+    {
+      "month": 3,
+      "days": "57-84",
+      "level": "L2-L3 / A2-B1",
+      "theme": "Fluency in motion — speed, services and local conversation",
+      "status": "existing 7 days renumber d50-56 -> d57-63 (week 9); 21 net-new days fill weeks 10-12 (d64-84)",
+      "weeks": [
+        { "week": 9, "days": "57-63", "theme": "Consolidation & mastery: speed/automaticity, tense system, register fluency, professional/formal, Madeira in depth, complex structures, grand stress test", "new_days": [] },
+        { "week": 10, "days": "64-70", "theme": "Town services day-to-day (L2/A2): pharmacy beyond basics, hairdresser, car & petrol station, bank & Multibanco, Junta errands, shop returns, errand-day stress test", "new_days": [64, 65, 66, 67, 68, 69, 70] },
+        { "week": 11, "days": "71-77", "theme": "Neighbourhood conversations (L3/B1): meeting neighbours properly, family talk, Madeira weather small talk, asking/offering help, local recommendations, café-counter chat, stress test", "new_days": [71, 72, 73, 74, 75, 76, 77] },
+        { "week": 12, "days": "78-84", "theme": "Island life (L3/B1): levada walks, the sea & fish talk, local produce, football small talk, village visits, getting around the island, month-3 grand stress test", "new_days": [78, 79, 80, 81, 82, 83, 84] }
+      ]
+    },
+    {
+      "month": 4,
+      "days": "85-112",
+      "level": "L3 / B1",
+      "theme": "Local slang & culture — belonging in the bairro",
+      "status": "existing 4 days renumber d57/64/71/78 -> d85-88 (order preserved); 24 net-new days fill d89-112",
+      "weeks": [
+        { "week": 13, "days": "85-91", "theme": "Belonging in the bairro: neighbourhood small talk, the arraial, Madeiran expressions & humour, month-4 checkpoint, poncha-bar rounds & toasts, Madeiran words in the wild, reacting like a local", "new_days": [89, 90, 91] },
+        { "week": 14, "days": "92-98", "theme": "The festival calendar: Festa da Flor, Christmas & Missas do Parto, New Year in Funchal, santos populares, the vindima (harvest), inviting & being invited, festival-weekend stress test", "new_days": [92, 93, 94, 95, 96, 97, 98] },
+        { "week": 15, "days": "99-105", "theme": "Food & the table: espetada night, ordering like a local (lapas, bolo do caco, milho frito), talking recipes, the fish market, coffee culture (bica, chinesa, garoto), table etiquette, food-day stress test", "new_days": [99, 100, 101, 102, 103, 104, 105] },
+        { "week": 16, "days": "106-112", "theme": "Knowing the island: playing the local guide, microclimates & north/south divide, boats & whales, planning Porto Santo, island history & stories, directions like a local, month-4 grand stress test", "new_days": [106, 107, 108, 109, 110, 111, 112] }
+      ]
+    },
+    {
+      "month": 5,
+      "days": "113-140",
+      "level": "L4 / B1-B2",
+      "theme": "Problem solving — when things go wrong",
+      "status": "existing 4 days renumber d85/92/99/106 -> d113-116 (order preserved); 24 net-new days fill d117-140",
+      "weeks": [
+        { "week": 17, "days": "113-119", "theme": "Problem-solving foundations (B1): complaining politely, negotiating & arranging, repairing misunderstandings, checkpoint, returning a faulty purchase, disputing a wrong bill, the no-show tradesperson", "new_days": [117, 118, 119] },
+        { "week": 18, "days": "120-126", "theme": "House & property problems (B1): water damage & insurance, the quote that grew, neighbour friction, landlord/tenant deposit & repairs, power cuts & utilities, the midnight plumber, bad-week stress test", "new_days": [120, 121, 122, 123, 124, 125, 126] },
+        { "week": 19, "days": "127-133", "theme": "Bureaucracy pushback (B2): the missing document at Finanças, cancelled appointments, chasing a stuck process, health-centre referrals, contesting a fine, escalating without burning bridges, bureaucratic-marathon stress test", "new_days": [127, 128, 129, 130, 131, 132, 133] },
+        { "week": 20, "days": "134-140", "theme": "Money & work friction (B2): the client who won't pay, renegotiating deadlines, the guest refund, price-rise conversations, misdelivered orders, saying no professionally, month-5 grand stress test", "new_days": [134, 135, 136, 137, 138, 139, 140] }
+      ]
+    },
+    {
+      "month": 6,
+      "days": "141-168",
+      "level": "L5 / B2",
+      "theme": "Full immersion — the integrated resident",
+      "status": "existing 4 days renumber d113/120/127/134 -> d141-144 (order preserved); 24 net-new days fill d145-168",
+      "weeks": [
+        { "week": 21, "days": "141-147", "theme": "Resident-level expression: storytelling, formal email & office Portuguese, debating opinions, immersion checkpoint, humour & irony, the art of indirectness, reacting to stories like a native", "new_days": [145, 146, 147] },
+        { "week": 22, "days": "148-154", "theme": "Formal & administrative mastery: formal letters & requerimentos, reading contracts, speaking in meetings, official phone calls at full speed, money & tax vocabulary, complaining in writing (livro de reclamações), administrative-gauntlet stress test", "new_days": [148, 149, 150, 151, 152, 153, 154] },
+        { "week": 23, "days": "155-161", "theme": "Deep social integration: news & local politics carefully, toasts & speaking at gatherings, condolences & congratulations rituals, gossip & discretion, helping a newcomer in Portuguese, talking with the older generation, full-social-weekend stress test", "new_days": [155, 156, 157, 158, 159, 160, 161] },
+        { "week": 24, "days": "162-168", "theme": "Capstone — living the island in Portuguese: a full errand day in town, hosting end-to-end, improvising when plans collapse, extreme listening (fast/noisy/real), your Madeira story, the long unscripted conversation, graduation: the integrated-resident final", "new_days": [162, 163, 164, 165, 166, 167, 168] }
+      ]
+    }
+  ],
+  "video_policy": "one verified (YouTube oEmbed HTTP 200) European-Portuguese or Madeira-culture video per week block where a genuinely matching real video can be found; existing verified videos count for their weeks (w1: sit-d1, w3: sit-d15 + sit-d16, w13: arraial food video). Never fabricate an id; weeks with no verifiable match are left absent and reported."
+}

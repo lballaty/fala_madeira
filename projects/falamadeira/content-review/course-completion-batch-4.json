@@ -1,0 +1,3229 @@
+{
+  "batch": 4,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:30:07.643Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d72-family-and-kids",
+      "title": "Talking About Family & Kids",
+      "month": 3,
+      "day": 72,
+      "week": 11,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d72-family-and-kids",
+        "title": "Talking About Family & Kids",
+        "summary": "Family talk with neighbours and acquaintances: who is who, ages, what people do, kids and school — and asking about their family without being intrusive.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d72-family-and-kids-1",
+            "base": "Como é que está a sua família?",
+            "translation": "How is your family?",
+            "variants": [
+              {
+                "text": "Como é que está a tua família?",
+                "translation": "How is your family? (informal)",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d72-family-and-kids-2",
+            "base": "Quantos anos tem o/a {nome_da_pessoa}?",
+            "translation": "How old is {person's_name}?",
+            "slots": [
+              {
+                "name": "nome_da_pessoa",
+                "description": "Name of the person",
+                "options": [
+                  "seu filho",
+                  "sua filha",
+                  "seu neto",
+                  "sua neta"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d72-family-and-kids-3",
+            "base": "O que é que ele/ela faz?",
+            "translation": "What does he/she do?",
+            "variants": [
+              {
+                "text": "Qual é a profissão dele/dela?",
+                "translation": "What is his/her profession?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d72-family-and-kids-4",
+            "base": "Os seus filhos já vão à {instituicao_de_ensino}?",
+            "translation": "Do your children already go to {educational_institution}?",
+            "slots": [
+              {
+                "name": "instituicao_de_ensino",
+                "description": "Type of educational institution",
+                "options": [
+                  "escola",
+                  "creche",
+                  "universidade",
+                  "colégio"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "neto/neta",
+            "translation": "grandson/granddaughter",
+            "pronunciation": "NEH-too / NEH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "creche",
+            "translation": "nursery (daycare)",
+            "pronunciation": "KREH-shuh",
+            "register": "neutral",
+            "note": "Common in Portugal for children under 3"
+          },
+          {
+            "word": "colégio",
+            "translation": "private school / college",
+            "pronunciation": "ko-LEH-zhee-oo",
+            "register": "neutral",
+            "note": "Can refer to a private school for any age, or a specific type of vocational college"
+          },
+          {
+            "word": "ensino",
+            "translation": "education / teaching",
+            "pronunciation": "en-SEE-noo",
+            "register": "neutral"
+          },
+          {
+            "word": "reformado/a",
+            "translation": "retired person",
+            "pronunciation": "reh-for-MAH-doo / reh-for-MAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "atarefado/a",
+            "translation": "busy / occupied",
+            "pronunciation": "ah-tah-reh-FAH-doo / ah-tah-reh-FAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "imenso",
+            "translation": "a lot / immensely",
+            "pronunciation": "ee-MEN-soo",
+            "register": "informal",
+            "note": "Very common in Portugal for 'muito'"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d72-family-and-kids-1",
+            "title": "A Chat with the Neighbour",
+            "context": "Maria and João, neighbours, meet by chance near the local market in Funchal and catch up on family news.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Bom dia, João! Como é que está a sua família? Há muito que não os vejo.",
+                "translation": "Good morning, João! How is your family? I haven't seen them in a long time."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Olá, Maria! Tudo bem, obrigado. Estão todos ótimos, a crescer depressa. E a sua? A sua neta, a Inês, já vai à escola?",
+                "translation": "Hello, Maria! All good, thanks. They're all great, growing fast. And yours? Your granddaughter, Inês, is she already going to school?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Pois é, o tempo voa! Já vai sim, já está no primeiro ano. E o seu filho, o Pedro, como é que está? Ainda está a trabalhar no hotel?",
+                "translation": "Indeed, time flies! Yes, she is, she's already in the first year. And your son, Pedro, how is he? Is he still working at the hotel?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Está, está. Sempre atarefado, mas gosta do que faz. E a sua filha, a Sofia, está bem? O que é que ela anda a fazer?",
+                "translation": "He is, he is. Always busy, but he likes what he does. And your daughter, Sofia, is she well? What is she up to?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Está bem, obrigado. Anda a estudar na universidade, no Funchal. Está quase a acabar o curso de direito. É um bocado puxado, mas ela é empenhada.",
+                "translation": "She's good, thanks. She's studying at the university, in Funchal. She's almost finishing her law degree. It's a bit tough, but she's dedicated."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Ah, que bom! É preciso ter força de vontade. Desejo-lhe muita sorte!",
+                "translation": "Ah, that's good! You need willpower. I wish her good luck!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Asking About Family in Madeira",
+            "body": "In Madeira, as in mainland Portugal, family is central to life. It's common for neighbours and acquaintances to ask about each other's families, especially children and grandchildren. However, direct questions about income or very personal matters are generally avoided. Keep questions open-ended or focused on general well-being or children's schooling. Using 'Como é que está a sua família?' (How is your family?) is a polite and safe way to start."
+          },
+          {
+            "title": "Using 'tu' vs. 'o senhor/a senhora'",
+            "body": "When speaking with neighbours, the choice between 'tu' (informal) and 'o senhor/a senhora' (formal) depends on your relationship and age difference. If you've known them for a while and they are peers or slightly older, 'tu' might be used. If they are significantly older or you've only recently met, 'o senhor/a senhora' is safer and more respectful. In these dialogues, we model a mix, reflecting common Madeiran social dynamics."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a local café in Funchal and run into your neighbour, Dona Celeste, who you haven't seen in a while. You want to ask about her family, especially her grandchildren.",
+          "difficulty": 2,
+          "entry_node": "rp-d72-node-1",
+          "nodes": [
+            {
+              "id": "rp-d72-node-1",
+              "npc_text": "Olá! Que surpresa boa! Há muito tempo que não a vejo por aqui. Como é que está?",
+              "npc_translation": "Hello! What a nice surprise! I haven't seen you around here in a long time. How are you?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Dona Celeste! Estou bem, obrigado. E a senhora, como é que está a sua família?",
+                  "translation": "Hello, Dona Celeste! I'm well, thank you. And you, how is your family?",
+                  "feedback": "Excellent start! You've reciprocated the greeting and politely asked about her family.",
+                  "next": "rp-d72-node-2"
+                },
+                {
+                  "text": "Estou bem. E a senhora?",
+                  "translation": "I'm well. And you?",
+                  "feedback": "Good, but you could be more specific. Try asking about her family to deepen the conversation.",
+                  "next": "rp-d72-node-1-alt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d72-node-1-alt",
+              "npc_text": "Estou bem, sim, obrigado. A vida vai andando. E os seus, como é que estão?",
+              "npc_translation": "I'm well, yes, thank you. Life goes on. And yours, how are they?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Estão todos bem, obrigado. E os seus netos, já estão muito crescidos, não é?",
+                  "translation": "They are all well, thank you. And your grandchildren, they must be very grown up now, right?",
+                  "feedback": "Good recovery, you've brought the conversation back to family.",
+                  "next": "rp-d72-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d72-node-2",
+              "npc_text": "Ah, os meus netos! Estão uns rapazes já. O mais velho, o Tiago, já tem dez anos e está na escola primária. A mais nova, a Leonor, faz seis anos no próximo mês e também já está na escola.",
+              "npc_translation": "Ah, my grandchildren! They're big boys now. The oldest, Tiago, is already ten and in primary school. The youngest, Leonor, turns six next month and is also at school.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Que bom! O tempo passa a correr. E os pais deles, como é que estão?",
+                  "translation": "That's good! Time flies. And their parents, how are they?",
+                  "feedback": "Excellent! You're showing interest and expanding the conversation naturally.",
+                  "next": "rp-d72-node-3"
+                },
+                {
+                  "text": "Dez anos? Que rápido!",
+                  "translation": "Ten years old? How fast!",
+                  "feedback": "Good, but try to ask another question to keep the conversation flowing.",
+                  "next": "rp-d72-node-2-alt"
+                }
+              ]
+            },
+            {
+              "id": "rp-d72-node-2-alt",
+              "npc_text": "Pois é, parece que foi ontem que nasceram! E os seus, como é que estão?",
+              "npc_translation": "Indeed, it seems like they were born yesterday! And yours, how are they?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Os meus estão bem, obrigado. O mais novo está a estudar no Funchal.",
+                  "translation": "Mine are well, thank you. The youngest is studying in Funchal.",
+                  "feedback": "Good, you've answered her question and shared a bit about your family.",
+                  "next": "rp-d72-node-end-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-d72-node-3",
+              "npc_text": "Estão bem, estão bem. A minha filha, a mãe deles, está a trabalhar imenso no hospital. É enfermeira, sabe?",
+              "npc_translation": "They're well, they're well. My daughter, their mother, is working a lot at the hospital. She's a nurse, you know?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ah, sim, lembro-me. É uma profissão muito exigente. Diga-lhe um olá da minha parte.",
+                  "translation": "Ah, yes, I remember. It's a very demanding profession. Say hello to her from me.",
+                  "feedback": "Perfect! You've shown empathy and ended the conversation politely.",
+                  "next": "rp-d72-node-end-1"
+                },
+                {
+                  "text": "Que bom! E o que é que o pai deles faz?",
+                  "translation": "That's good! And what does their father do?",
+                  "feedback": "Good, but be careful not to pry too much. This is a bit more direct than typical neighbourly chat.",
+                  "next": "rp-d72-node-end-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d72-node-end-1",
+              "npc_text": "Sim, digo. Foi um prazer vê-la! Tenha um bom dia!",
+              "npc_translation": "Yes, I will. It was a pleasure to see you! Have a good day!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d72-node-end-2",
+              "npc_text": "Ele é professor de matemática. Mas agora tenho de ir, que a bica está a arrefecer. Foi um prazer vê-la!",
+              "npc_translation": "He's a maths teacher. But now I have to go, my coffee is getting cold. It was a pleasure to see you!",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Family Catch-Up",
+          "prep": [
+            "Review phrases for asking about family members and their activities.",
+            "Practice asking about ages: 'Quantos anos tem o/a...?'",
+            "Think of a few simple facts about your own family to share."
+          ],
+          "fallback_phrases": [
+            "Como é que está tudo?",
+            "Está tudo bem, obrigado.",
+            "Desculpe, não percebi."
+          ],
+          "likely_responses": [
+            "Está tudo bem, obrigado/a.",
+            "Os meus estão bem, obrigado/a.",
+            "Vão andando, como sempre.",
+            "Estão a crescer depressa!",
+            "Está atarefado/a com o trabalho/escola."
+          ]
+        },
+        "goals": [
+          "Ask politely about a neighbour's family members and their well-being.",
+          "Understand responses about children's ages and schooling.",
+          "Share basic information about your own family.",
+          "Maintain a polite and natural conversation with a neighbour."
+        ],
+        "course": {
+          "month": 3,
+          "day": 72,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d72-family-and-kids-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How is your family?",
+            "answer": "Como é que está a sua família?",
+            "source_ref": "pp-sit-d72-family-and-kids-1"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How old is {person's_name}?",
+            "answer": "Quantos anos tem o/a {nome_da_pessoa}?",
+            "source_ref": "pp-sit-d72-family-and-kids-2"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What does he/she do?",
+            "answer": "O que é que ele/ela faz?",
+            "source_ref": "pp-sit-d72-family-and-kids-3"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do your children already go to {educational_institution}?",
+            "answer": "Os seus filhos já vão à {instituicao_de_ensino}?",
+            "source_ref": "pp-sit-d72-family-and-kids-4"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: grandson/granddaughter",
+            "answer": "neto/neta",
+            "source_ref": "neto/neta"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: nursery (daycare)",
+            "answer": "creche",
+            "source_ref": "creche"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: private school / college",
+            "answer": "colégio",
+            "source_ref": "colégio"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: education / teaching",
+            "answer": "ensino",
+            "source_ref": "ensino"
+          },
+          {
+            "id": "rv-sit-d72-family-and-kids-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d72-family-and-kids-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d73-weather-and-seasons",
+      "title": "Madeira Weather Small Talk",
+      "month": 3,
+      "day": 73,
+      "week": 11,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d73-weather-and-seasons",
+        "title": "Madeira Weather Small Talk",
+        "summary": "The island’s favourite topic: rain in the north, sun in Funchal, the capacete over the mountains, humidity, the seasons — weather small talk as social glue.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-bureaucracy"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d73-weather-and-seasons-1",
+            "base": "O tempo está {adjetivo}.",
+            "translation": "The weather is {adjective}.",
+            "slots": [
+              {
+                "name": "adjetivo",
+                "description": "Weather adjective",
+                "options": [
+                  "bom",
+                  "mau",
+                  "fresco",
+                  "quente",
+                  "nublado",
+                  "estranho",
+                  "agradável"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Que tempo é este, não?",
+                "translation": "What's this weather, right?",
+                "register": "informal",
+                "note": "Common way to open a weather conversation"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d73-weather-and-seasons-2",
+            "base": "Está a {verbo} no {local}.",
+            "translation": "It's {verb} in {place}.",
+            "slots": [
+              {
+                "name": "verbo",
+                "description": "Weather action verb",
+                "options": [
+                  "chover",
+                  "fazer sol",
+                  "ventar",
+                  "nevar (raro)"
+                ]
+              },
+              {
+                "name": "local",
+                "description": "Location on the island",
+                "options": [
+                  "Funchal",
+                  "norte",
+                  "sul",
+                  "montanha"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "No norte está sempre a chover.",
+                "translation": "In the north, it's always raining.",
+                "register": "neutral",
+                "note": "Common observation about Madeira's microclimates"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d73-weather-and-seasons-3",
+            "base": "Gosto do {estação} por causa do {motivo}.",
+            "translation": "I like {season} because of the {reason}.",
+            "slots": [
+              {
+                "name": "estação",
+                "description": "Season of the year",
+                "options": [
+                  "verão",
+                  "inverno",
+                  "primavera",
+                  "outono"
+                ]
+              },
+              {
+                "name": "motivo",
+                "description": "Reason for preference",
+                "options": [
+                  "sol",
+                  "fresco",
+                  "chuva",
+                  "verde"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Qual é a tua estação preferida?",
+                "translation": "What's your favorite season?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d73-weather-and-seasons-4",
+            "base": "Parece que vai {mudar}.",
+            "translation": "It looks like it's going to {change}.",
+            "slots": [
+              {
+                "name": "mudar",
+                "description": "Weather change",
+                "options": [
+                  "chover",
+                  "melhorar",
+                  "piorar",
+                  "ficar mais quente"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "capacete",
+            "translation": "cloud cap (over the mountains)",
+            "pronunciation": "kah-pah-SEHT-eh",
+            "register": "neutral",
+            "note": "Madeira regionalism, refers to the cloud formation often seen over the central mountains."
+          },
+          {
+            "word": "humidade",
+            "translation": "humidity",
+            "pronunciation": "oo-mee-DAH-deh",
+            "register": "neutral"
+          },
+          {
+            "word": "nevoeiro",
+            "translation": "fog",
+            "pronunciation": "neh-voh-EH-roo",
+            "register": "neutral"
+          },
+          {
+            "word": "fresco",
+            "translation": "cool",
+            "pronunciation": "FRES-koo",
+            "register": "neutral"
+          },
+          {
+            "word": "está a chover",
+            "translation": "it's raining",
+            "pronunciation": "eh-STAH ah shoh-VEHR",
+            "register": "neutral"
+          },
+          {
+            "word": "está sol",
+            "translation": "it's sunny",
+            "pronunciation": "eh-STAH sohl",
+            "register": "neutral"
+          },
+          {
+            "word": "estação",
+            "translation": "season",
+            "pronunciation": "eh-stah-SOWN",
+            "register": "neutral"
+          },
+          {
+            "word": "levada",
+            "translation": "irrigation channel / walking trail",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Madeira specific, refers to the unique walking trails alongside irrigation channels."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d73-weather-and-seasons-1",
+            "title": "Morning Chat with João",
+            "context": "Maria and João, neighbours, meet in the street in the morning and chat about the weather.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Bom dia, João! Que tempo é este, não? Um bocado estranho para a época.",
+                "translation": "Good morning, João! What's this weather, right? A bit strange for the season."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "older",
+                "text": "Pois é, Maria. Cá em baixo no Funchal ainda está sol, mas lá p'ra cima, o capacete está a apertar.",
+                "translation": "Indeed, Maria. Down here in Funchal it's still sunny, but up there, the cloud cap is tightening."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "É sempre assim. E a humidade? Sinto-a nos ossos hoje.",
+                "translation": "It's always like that. And the humidity? I feel it in my bones today."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "older",
+                "text": "É verdade. Mas é o que faz a ilha tão verde, não é? Temos que nos habituar.",
+                "translation": "It's true. But it's what makes the island so green, isn't it? We have to get used to it."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d73-weather-and-seasons-2",
+            "title": "Quick Chat at the Market",
+            "context": "Ana, a shop assistant, is chatting with Dona Rosa, a regular customer, at the local market.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "service",
+                "text": "Dona Rosa, bom dia! Como está? Tudo bem por aí?",
+                "translation": "Dona Rosa, good morning! How are you? Everything good?"
+              },
+              {
+                "speaker": "Dona Rosa",
+                "voice_type": "older",
+                "text": "Olá, Ana! Tudo bem, obrigada. Mas este tempo está um bocado esquisito, não acha?",
+                "translation": "Hello, Ana! All good, thank you. But this weather is a bit odd, don't you think?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Pois, um dia sol, outro dia chuva. Mas no norte está sempre a chover, não é? Nunca muda.",
+                "translation": "Indeed, one day sun, another day rain. But in the north it's always raining, isn't it? Never changes."
+              },
+              {
+                "speaker": "Dona Rosa",
+                "voice_type": "older",
+                "text": "É o normal para lá. Mas eu prefiro o sol daqui do Funchal, para ser sincera.",
+                "translation": "That's normal for up there. But I prefer the sun here in Funchal, to be honest."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Weather as Social Glue",
+            "body": "In Madeira, discussing the weather is a very common and safe way to start a conversation with neighbours, shopkeepers, or even strangers. It's a universal topic that everyone can relate to, and it helps to build rapport. Don't be surprised if your first interaction with someone involves a comment on the current weather conditions!"
+          },
+          {
+            "title": "Madeira's Microclimates",
+            "body": "Madeira is known for its distinct microclimates. It's very common for the south (e.g., Funchal) to be sunny while the north is cloudy or rainy, and the central mountains are often covered by the 'capacete' (cloud cap). Locals frequently refer to these differences, so mentioning 'o norte' or 'lá p'ra cima' (up there) in relation to the weather is a natural part of conversation."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're walking in your neighbourhood and bump into your neighbour, Senhor Manuel. He starts a conversation about the weather.",
+          "difficulty": 3,
+          "entry_node": "rp-d73-node-1",
+          "nodes": [
+            {
+              "id": "rp-d73-node-1",
+              "npc_text": "Olá, [Nome do Aluno]! Que tempo é este, não? Um bocado estranho para a época.",
+              "npc_translation": "Hello, [Learner's Name]! What's this weather, right? A bit strange for the season.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Pois é! No norte deve estar a chover a potes, como sempre.",
+                  "translation": "Indeed! In the north, it must be raining heavily, as always.",
+                  "feedback": "Great observation about the north/south weather difference!",
+                  "next": "rp-d73-node-2"
+                },
+                {
+                  "text": "Sim, e a humidade? Sinto-a nos ossos hoje.",
+                  "translation": "Yes, and the humidity? I feel it in my bones today.",
+                  "feedback": "Good use of 'humidade' and a common local expression!",
+                  "next": "rp-d73-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d73-node-2",
+              "npc_text": "É verdade, lá é sempre assim. Mas cá no Funchal ainda está bom para uma caminhada. Vais fazer alguma coisa hoje?",
+              "npc_translation": "It's true, it's always like that up there. But here in Funchal it's still good for a walk. Are you doing anything today?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, estava a pensar ir dar uma volta pela levada. O tempo está bom para isso.",
+                  "translation": "Yes, I was thinking of going for a walk along the levada. The weather is good for that.",
+                  "feedback": "Perfect! Suggesting a local activity like a levada walk is very natural.",
+                  "next": "rp-d73-node-4"
+                },
+                {
+                  "text": "Não sei. Talvez fique por casa. Não confio muito neste sol enganador.",
+                  "translation": "I don't know. Maybe I'll stay home. I don't trust this deceptive sun much.",
+                  "feedback": "A very realistic and cautious response! Good use of 'enganador'.",
+                  "next": "rp-d73-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d73-node-3",
+              "npc_text": "Ah, a humidade é terrível! Mas é a vida na ilha. Qual é a tua estação preferida, já agora?",
+              "npc_translation": "Ah, the humidity is terrible! But that's island life. What's your favourite season, by the way?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Gosto do verão, por causa do sol e da praia.",
+                  "translation": "I like summer, because of the sun and the beach.",
+                  "feedback": "Good, clear answer. Explaining your reason is excellent.",
+                  "next": "rp-d73-node-6"
+                },
+                {
+                  "text": "Prefiro a primavera, quando tudo está verde e fresco.",
+                  "translation": "I prefer spring, when everything is green and cool.",
+                  "feedback": "Another great choice, showing appreciation for the island's nature.",
+                  "next": "rp-d73-node-6"
+                }
+              ]
+            },
+            {
+              "id": "rp-d73-node-4",
+              "npc_text": "Boa ideia! Aproveita bem. Vê lá se não apanhas chuva!",
+              "npc_translation": "Good idea! Enjoy it well. Be careful not to get caught in the rain!",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d73-node-5",
+              "npc_text": "Percebo. É melhor prevenir. Fica bem! Até à próxima.",
+              "npc_translation": "I understand. It's better to be safe. Take care! See you next time.",
+              "npc_voice_type": "older",
+              "options": []
+            },
+            {
+              "id": "rp-d73-node-6",
+              "npc_text": "Pois é, cada um tem a sua preferência. Mas o importante é aproveitar o que temos, não é?",
+              "npc_translation": "Indeed, everyone has their preference. But the important thing is to enjoy what we have, isn't it?",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Discuss the weather with a local",
+          "prep": [
+            "Listen to the weather forecast (local news or app) to know the current conditions.",
+            "Practice opening phrases like 'Que tempo é este, não?' or 'O tempo está bom hoje, não acha?'",
+            "Think about what you like or dislike about the current weather."
+          ],
+          "fallback_phrases": [
+            "Está bom tempo, não acha?",
+            "Um bocado de humidade, não é?",
+            "No norte deve estar a chover."
+          ],
+          "likely_responses": [
+            "Sim, está ótimo!",
+            "Um bocado de calor/frio, mas bom.",
+            "Pois, mas lá p'ra cima está nublado.",
+            "É o normal para esta época."
+          ]
+        },
+        "goals": [
+          "Initiate and participate in small talk about the weather in Madeira.",
+          "Discuss different weather conditions and their impact.",
+          "Express preferences for seasons and weather types.",
+          "Understand and use common Madeiran expressions related to weather."
+        ],
+        "course": {
+          "month": 3,
+          "day": 73,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d73-weather-and-seasons-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The weather is {adjective}.",
+            "answer": "O tempo está {adjetivo}.",
+            "source_ref": "pp-sit-d73-weather-and-seasons-1"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's {verb} in {place}.",
+            "answer": "Está a {verbo} no {local}.",
+            "source_ref": "pp-sit-d73-weather-and-seasons-2"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I like {season} because of the {reason}.",
+            "answer": "Gosto do {estação} por causa do {motivo}.",
+            "source_ref": "pp-sit-d73-weather-and-seasons-3"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It looks like it's going to {change}.",
+            "answer": "Parece que vai {mudar}.",
+            "source_ref": "pp-sit-d73-weather-and-seasons-4"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: cloud cap (over the mountains)",
+            "answer": "capacete",
+            "source_ref": "capacete"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: humidity",
+            "answer": "humidade",
+            "source_ref": "humidade"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fog",
+            "answer": "nevoeiro",
+            "source_ref": "nevoeiro"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: cool",
+            "answer": "fresco",
+            "source_ref": "fresco"
+          },
+          {
+            "id": "rv-sit-d73-weather-and-seasons-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d73-weather-and-seasons-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+            "caption": "The weather and the sea — European Portuguese (Portuguese Lab)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d74-neighbourly-help",
+      "title": "Asking For & Offering Help",
+      "month": 3,
+      "day": 74,
+      "week": 11,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d74-neighbourly-help",
+        "title": "Asking For & Offering Help",
+        "summary": "Neighbourly favours: borrowing a ladder, asking someone to accept a delivery, watering plants, offering help in return — the polite dance of asking and accepting.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-host"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d74-neighbourly-help-1",
+            "base": "Preciso de uma ajuda com {tarefa}, se não se importa.",
+            "translation": "I need some help with {task}, if you don't mind.",
+            "slots": [
+              {
+                "name": "tarefa",
+                "description": "the task",
+                "options": [
+                  "a encomenda",
+                  "mudar uma lâmpada",
+                  "as plantas"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Preciso de uma ajuda com {tarefa}, se não te importas.",
+                "translation": "I need some help with {task}, if you don't mind.",
+                "register": "informal",
+                "note": "Informal version for friends/closer neighbours."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d74-neighbourly-help-2",
+            "base": "Precisa de alguma coisa?",
+            "translation": "Do you need anything?",
+            "variants": [
+              {
+                "text": "Posso ajudar em alguma coisa?",
+                "translation": "Can I help with anything?",
+                "register": "neutral"
+              },
+              {
+                "text": "Precisas de alguma coisa?",
+                "translation": "Do you need anything?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d74-neighbourly-help-3",
+            "base": "Ah, que bom! Muito obrigado/a.",
+            "translation": "Oh, that's good! Thank you very much.",
+            "variants": [
+              {
+                "text": "P'ra já! Muito obrigado/a!",
+                "translation": "Right away! Thank you very much!",
+                "register": "informal",
+                "note": "A more enthusiastic, informal acceptance."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d74-neighbourly-help-4",
+            "base": "Não, obrigado/a, mas agradeço imenso.",
+            "translation": "No, thank you, but I really appreciate it.",
+            "variants": [
+              {
+                "text": "Não é preciso, mas muito obrigado/a.",
+                "translation": "It's not necessary, but thank you very much.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d74-neighbourly-help-5",
+            "base": "Será que me empresta o/a {item}?",
+            "translation": "Could you lend me the {item}?",
+            "slots": [
+              {
+                "name": "item",
+                "description": "the item",
+                "options": [
+                  "escadote",
+                  "regador",
+                  "ferramenta"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "escadote",
+            "translation": "ladder (usually a stepladder)",
+            "pronunciation": "esh-kah-DOH-tuh",
+            "register": "neutral"
+          },
+          {
+            "word": "regador",
+            "translation": "watering can",
+            "pronunciation": "reh-gah-DOR",
+            "register": "neutral"
+          },
+          {
+            "word": "encomenda",
+            "translation": "delivery, package",
+            "pronunciation": "en-koh-MEN-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "fazer um favor",
+            "translation": "to do a favour",
+            "pronunciation": "fah-ZER oom fah-VOR",
+            "register": "neutral"
+          },
+          {
+            "word": "agradecer",
+            "translation": "to thank, to appreciate",
+            "pronunciation": "ah-grah-deh-SER",
+            "register": "neutral"
+          },
+          {
+            "word": "dar uma mão",
+            "translation": "to lend a hand",
+            "pronunciation": "dar OO-mah MOWN",
+            "register": "neutral"
+          },
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeiran regionalism for 'batata'"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso coffee",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common in Portugal and Madeira"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d74-neighbourly-help-1",
+            "title": "Accepting a Delivery",
+            "context": "Ana asks her neighbour, Sr. Manuel, if he can accept a package for her while she's out. He agrees and offers to water her plants too.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Bom dia, Sr. Manuel! Tudo bem?",
+                "translation": "Good morning, Sr. Manuel! How are you?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Bom dia, Ana! Tudo ótimo, obrigado. Diga!",
+                "translation": "Good morning, Ana! All great, thank you. Tell me!"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Olhe, será que me faz um favor? Estou à espera de uma encomenda e vou ter de sair.",
+                "translation": "Look, could you do me a favour? I'm waiting for a delivery and I'll have to go out."
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Ah, claro que sim! Não há problema nenhum. Pode deixar a chave comigo, se precisar.",
+                "translation": "Oh, of course! No problem at all. You can leave the key with me, if you need to."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Não, não é preciso. É só receber. Muito obrigado mesmo!",
+                "translation": "No, that's not necessary. It's just to receive it. Thank you very much indeed!"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "E as plantas? Precisa que lhes dê uma mão, enquanto está fora?",
+                "translation": "And the plants? Do you need me to give them a hand while you're away?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Ah, que simpático! Pois, se não for muito incómodo... agradeço imenso!",
+                "translation": "Oh, how kind! Well, if it's not too much trouble... I really appreciate it!"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Qual incómodo! É um prazer ajudar. Vá lá, Ana.",
+                "translation": "No trouble at all! It's a pleasure to help. Go on, Ana."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d74-neighbourly-help-2",
+            "title": "Borrowing a Ladder",
+            "context": "Carlos needs to borrow a ladder from his neighbour, D. Fátima, and offers to help her in return.",
+            "lines": [
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "D. Fátima, boa tarde! Está tudo bem?",
+                "translation": "D. Fátima, good afternoon! Is everything alright?"
+              },
+              {
+                "speaker": "D. Fátima",
+                "voice_type": "older",
+                "text": "Boa tarde, Carlos! Sim, está tudo bem, obrigada. E consigo?",
+                "translation": "Good afternoon, Carlos! Yes, everything's fine, thank you. And with you?"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "Está, está. Olhe, preciso de uma ajuda, se não se importa. Será que me empresta o escadote por um bocadinho?",
+                "translation": "Yes, it is. Look, I need some help, if you don't mind. Could you lend me the ladder for a little while?"
+              },
+              {
+                "speaker": "D. Fátima",
+                "voice_type": "older",
+                "text": "O escadote? Claro que sim! Está lá atrás, na arrecadação. Vá buscar.",
+                "translation": "The ladder? Of course! It's back there, in the storage room. Go get it."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "Muito obrigado! É só p'ra mudar uma lâmpada. Quando precisar de alguma coisa, é só dizer!",
+                "translation": "Thank you very much! It's just to change a lightbulb. When you need anything, just say!"
+              },
+              {
+                "speaker": "D. Fátima",
+                "voice_type": "older",
+                "text": "Pois, pois. Não se preocupe. E olhe, já que fala nisso, quando tiver um tempinho, podia-me dar uma ajuda com aquelas semilhas pesadas, p'ra levar p'ra casa?",
+                "translation": "Yes, yes. Don't worry. And look, since you mention it, when you have a little time, could you give me a hand with those heavy potatoes, to take home?"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "local",
+                "text": "Claro que sim, D. Fátima! Passo lá mais logo, sem falta. P'ra já!",
+                "translation": "Of course, D. Fátima! I'll stop by later, without fail. See you!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Dance of Favours: Indirectness and Reciprocity",
+            "body": "In Madeira, as in much of Portugal, direct requests can sometimes feel abrupt. It's common to start with a general 'Preciso de uma ajuda' (I need some help) or 'Será que me faz um favor?' (Could you do me a favour?) before stating the specific need. There's also an expectation of reciprocity. When someone does you a favour, it's polite to offer help in return, even if it's not immediately needed, with phrases like 'Quando precisar de alguma coisa, é só dizer!' (When you need anything, just say!)."
+          },
+          {
+            "title": "Addressing Neighbours: Tu vs. O Senhor/A Senhora",
+            "body": "The choice between 'tu' (informal 'you') and 'o senhor' / 'a senhora' (polite 'you') depends on your relationship and the age difference. With older neighbours or those you don't know well, 'o senhor' / 'a senhora' (e.g., 'Sr. Manuel', 'D. Fátima') is respectful. With neighbours you've become closer to, especially if they're around your age or younger, 'tu' is common. In the dialogues, we see a mix reflecting typical Madeiran neighbourhood interactions."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need to borrow a stepladder from your neighbour, Dona Lúcia, to change a lightbulb. She's a bit older and always happy to chat.",
+          "difficulty": 3,
+          "entry_node": "rp-d74-node-1",
+          "nodes": [
+            {
+              "id": "rp-d74-node-1",
+              "npc_text": "Ah, boa tarde! Tudo bem? Que faz por aqui?",
+              "npc_translation": "Ah, good afternoon! How are you? What are you doing around here?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Boa tarde, D. Lúcia! Tudo bem, obrigado. Olhe, preciso da sua ajuda.",
+                  "translation": "Good afternoon, D. Lúcia! All well, thank you. Look, I need your help.",
+                  "feedback": "A good, polite opening. You've indicated you need help without being too direct yet.",
+                  "next": "rp-d74-node-2"
+                },
+                {
+                  "text": "Olá, D. Lúcia! Preciso do seu escadote.",
+                  "translation": "Hi, D. Lúcia! I need your ladder.",
+                  "feedback": "A bit too direct for a first approach. Remember to ease into requests with neighbours.",
+                  "next": "rp-d74-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d74-node-2",
+              "npc_text": "Minha ajuda? Pois, diga! Em que posso ser útil?",
+              "npc_translation": "My help? Well, tell me! How can I be useful?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "É que preciso de mudar uma lâmpada em casa e não tenho escadote. Será que me empresta o seu?",
+                  "translation": "It's just that I need to change a lightbulb at home and I don't have a ladder. Could you lend me yours?",
+                  "feedback": "Excellent! You explained the situation and made a polite request.",
+                  "next": "rp-d74-node-3"
+                },
+                {
+                  "text": "Preciso do seu escadote para mudar uma lâmpada.",
+                  "translation": "I need your ladder to change a lightbulb.",
+                  "feedback": "This is a bit blunt. The 'Será que me empresta?' (Could you lend me?) makes it much more polite.",
+                  "next": "rp-d74-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d74-node-3",
+              "npc_text": "Ah, o escadote! Claro que sim. Mas olhe, se quiser, eu dou-lhe uma mão. Mudar lâmpadas é perigoso!",
+              "npc_translation": "Ah, the ladder! Of course. But look, if you want, I'll give you a hand. Changing lightbulbs is dangerous!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Muito obrigado, D. Lúcia, mas não é preciso. Eu consigo, mas agradeço imenso a sua ajuda!",
+                  "translation": "Thank you very much, D. Lúcia, but it's not necessary. I can manage, but I really appreciate your help!",
+                  "feedback": "Perfect! You politely declined while still showing gratitude.",
+                  "next": "rp-d74-node-5"
+                },
+                {
+                  "text": "Ah, que bom! Se não for muito incómodo, aceito a sua ajuda.",
+                  "translation": "Oh, that's good! If it's not too much trouble, I accept your help.",
+                  "feedback": "Great! You accepted her help politely, acknowledging it might be a favour for her.",
+                  "next": "rp-d74-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d74-node-4",
+              "npc_text": "Qual incómodo! É um prazer. E olhe, já que está por cá, podia dar-me uma mão com aquelas compras pesadas que trouxe do mercado? As semilhas...",
+              "npc_translation": "No trouble at all! It's a pleasure. And look, since you're here, could you give me a hand with those heavy groceries I brought from the market? The potatoes...",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Claro que sim, D. Lúcia! P'ra já!",
+                  "translation": "Of course, D. Lúcia! Right away!",
+                  "feedback": "Excellent! You're showing good neighbourly spirit by immediately agreeing."
+                },
+                {
+                  "text": "Hoje não consigo, mas amanhã ajudo, sem falta.",
+                  "translation": "I can't today, but I'll help tomorrow, without fail.",
+                  "feedback": "A polite refusal and a clear offer to help later. Good."
+                }
+              ]
+            },
+            {
+              "id": "rp-d74-node-5",
+              "npc_text": "Pois, pois. Não se preocupe então. O escadote está na arrecadação, como sabe. É só ir buscar.",
+              "npc_translation": "Yes, yes. Don't worry then. The ladder is in the storage room, as you know. Just go get it.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Muito obrigado, D. Lúcia! Quando precisar de alguma coisa, é só dizer!",
+                  "translation": "Thank you very much, D. Lúcia! When you need anything, just say!",
+                  "feedback": "Perfect! You thanked her and offered help in return, showing good neighbourly etiquette."
+                },
+                {
+                  "text": "Obrigado!",
+                  "translation": "Thanks!",
+                  "feedback": "A bit short. Try to add a phrase offering help in return to maintain good neighbourly relations."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Asking a Neighbour for a Favour",
+          "prep": [
+            "Practice asking for a specific item (e.g., 'o escadote', 'o regador') using 'Será que me empresta...?'",
+            "Rehearse politely declining help with 'Não, obrigado/a, mas agradeço imenso.'",
+            "Practice offering help in return: 'Quando precisar de alguma coisa, é só dizer!'"
+          ],
+          "fallback_phrases": [
+            "Desculpe o incómodo.",
+            "Não se preocupe.",
+            "Obrigado/a na mesma."
+          ],
+          "likely_responses": [
+            "Claro que sim!",
+            "Pois, diga!",
+            "Não há problema nenhum.",
+            "Qual incómodo!",
+            "É um prazer ajudar."
+          ]
+        },
+        "goals": [
+          "Politely ask a neighbour for a favour, such as borrowing an item or accepting a delivery.",
+          "Understand and respond to offers of help from neighbours.",
+          "Offer help in return, reinforcing neighbourly goodwill.",
+          "Use common vocabulary for household items and neighbourly interactions in Madeira."
+        ],
+        "course": {
+          "month": 3,
+          "day": 74,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d74-neighbourly-help-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need some help with {task}, if you don't mind.",
+            "answer": "Preciso de uma ajuda com {tarefa}, se não se importa.",
+            "source_ref": "pp-sit-d74-neighbourly-help-1"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do you need anything?",
+            "answer": "Precisa de alguma coisa?",
+            "source_ref": "pp-sit-d74-neighbourly-help-2"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Oh, that's good! Thank you very much.",
+            "answer": "Ah, que bom! Muito obrigado/a.",
+            "source_ref": "pp-sit-d74-neighbourly-help-3"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: No, thank you, but I really appreciate it.",
+            "answer": "Não, obrigado/a, mas agradeço imenso.",
+            "source_ref": "pp-sit-d74-neighbourly-help-4"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: ladder (usually a stepladder)",
+            "answer": "escadote",
+            "source_ref": "escadote"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: watering can",
+            "answer": "regador",
+            "source_ref": "regador"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: delivery, package",
+            "answer": "encomenda",
+            "source_ref": "encomenda"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to do a favour",
+            "answer": "fazer um favor",
+            "source_ref": "fazer um favor"
+          },
+          {
+            "id": "rv-sit-d74-neighbourly-help-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d74-neighbourly-help-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d75-local-recommendations",
+      "title": "Getting Local Recommendations",
+      "month": 3,
+      "day": 75,
+      "week": 11,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d75-local-recommendations",
+        "title": "Getting Local Recommendations",
+        "summary": "Asking locals what they actually recommend: where to buy fish, which mechanic to trust, who fixes shutters — and understanding the hedged, indirect way advice is given.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d75-local-recommendations-1",
+            "base": "Conhece alguém que faça {serviço}?",
+            "translation": "Do you know anyone who does {service}?",
+            "slots": [
+              {
+                "name": "serviço",
+                "description": "type of service",
+                "options": [
+                  "arranjos na casa",
+                  "reparações de carros",
+                  "jardinagem",
+                  "limpezas"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Sabe de alguém que faça {serviço}?",
+                "translation": "Do you know of anyone who does {service}?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d75-local-recommendations-2",
+            "base": "Onde é que se compra {produto} bom?",
+            "translation": "Where can one buy good {product}?",
+            "slots": [
+              {
+                "name": "produto",
+                "description": "type of product",
+                "options": [
+                  "peixe fresco",
+                  "bolo do caco",
+                  "frutas da época",
+                  "carne para espetada"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Onde é que posso comprar {produto} bom?",
+                "translation": "Where can I buy good {product}?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d75-local-recommendations-3",
+            "base": "Eu costumo ir ao/à {local}.",
+            "translation": "I usually go to the {place}.",
+            "slots": [
+              {
+                "name": "local",
+                "description": "type of place",
+                "options": [
+                  "talho da esquina",
+                  "mercado",
+                  "senhora da peixaria",
+                  "café do Zé"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d75-local-recommendations-4",
+            "base": "É de confiança.",
+            "translation": "It's trustworthy.",
+            "variants": [
+              {
+                "text": "É uma pessoa de confiança.",
+                "translation": "He/She is a trustworthy person.",
+                "register": "neutral"
+              },
+              {
+                "text": "São de confiança.",
+                "translation": "They are trustworthy.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "bica",
+            "translation": "espresso coffee",
+            "pronunciation": "BEE-kah",
+            "register": "informal",
+            "note": "Common in Portugal for an espresso. In Madeira, it's just 'café' or 'uma bica'."
+          },
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeiran regionalism for 'batata'."
+          },
+          {
+            "word": "levada",
+            "translation": "irrigation channel; walking trail alongside one",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Specific to Madeira, referring to the island's unique irrigation system and associated hiking paths."
+          },
+          {
+            "word": "talho",
+            "translation": "butcher shop",
+            "pronunciation": "TAH-lyoo",
+            "register": "neutral",
+            "note": "Standard pt-PT. Not 'açougue'."
+          },
+          {
+            "word": "canalizador",
+            "translation": "plumber",
+            "pronunciation": "kah-nah-lee-zah-DOR",
+            "register": "neutral",
+            "note": "Standard pt-PT. Not 'encanador'."
+          },
+          {
+            "word": "confiança",
+            "translation": "trust, confidence",
+            "pronunciation": "kohn-fee-AHN-sah",
+            "register": "neutral"
+          },
+          {
+            "word": "arranjos",
+            "translation": "repairs, fixes",
+            "pronunciation": "ah-RRAHN-zhoosh",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d75-local-recommendations-1",
+            "title": "Asking for a Mechanic",
+            "context": "Afonso is talking to his neighbour, Dona Fátima, about a car repair.",
+            "lines": [
+              {
+                "speaker": "Afonso",
+                "voice_type": "local",
+                "text": "Dona Fátima, bom dia! Tudo bem?",
+                "translation": "Dona Fátima, good morning! All well?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Bom dia, Afonso! Sim, tudo bem, obrigada. E consigo?",
+                "translation": "Good morning, Afonso! Yes, all well, thank you. And with you?"
+              },
+              {
+                "speaker": "Afonso",
+                "voice_type": "local",
+                "text": "Sim, sim. Olhe, a minha carrinha está a fazer um barulho estranho. Conhece algum mecânico de confiança aqui perto?",
+                "translation": "Yes, yes. Look, my van is making a strange noise. Do you know any trustworthy mechanic nearby?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Pois, pois. O meu marido costuma ir ao Sr. Manuel, ali na rua de baixo. Ele é bom e não é muito caro.",
+                "translation": "Right, right. My husband usually goes to Mr. Manuel, down on the street below. He's good and not too expensive."
+              },
+              {
+                "speaker": "Afonso",
+                "voice_type": "local",
+                "text": "Ah, sim? O Sr. Manuel, daquela oficina pequenina? É de confiança?",
+                "translation": "Oh, really? Mr. Manuel, from that little garage? Is he trustworthy?"
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "Sim, sim, é ele. Já lá levámos o carro algumas vezes e nunca tivemos problemas. Ele é muito honesto.",
+                "translation": "Yes, yes, that's him. We've taken the car there a few times and never had problems. He's very honest."
+              },
+              {
+                "speaker": "Afonso",
+                "voice_type": "local",
+                "text": "Muito obrigado pela dica, Dona Fátima! Vou lá passar.",
+                "translation": "Thank you very much for the tip, Dona Fátima! I'll go there."
+              },
+              {
+                "speaker": "Dona Fátima",
+                "voice_type": "older",
+                "text": "De nada, Afonso. Se precisar de mais alguma coisa, diga!",
+                "translation": "You're welcome, Afonso. If you need anything else, just say!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Indirect Recommendations",
+            "body": "In Portugal, especially in local conversations, direct commands like 'Go there!' or 'You must try this!' are less common when giving recommendations. Instead, people often use more indirect or personal phrasing, such as 'Eu costumo ir ao/à...' (I usually go to the...), 'O meu marido vai sempre ao/à...' (My husband always goes to the...), or 'Dizem que é bom...' (They say it's good...). This shows a preference for sharing personal experience rather than issuing an instruction, and it allows the other person to make their own decision."
+          },
+          {
+            "title": "The Value of 'Confiança' (Trust)",
+            "body": "Trust ('confiança') is a highly valued quality when seeking recommendations for services or products. A personal endorsement from a neighbour or friend, especially one that emphasizes honesty and reliability ('é de confiança', 'é muito honesto'), carries significant weight. Locals often prefer to go to places or people they know, or who come recommended by someone they trust, over a new or unknown business, even if it might be cheaper."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at the local market, buying some fruit. You've noticed your window shutters are a bit wobbly and need fixing. You see a neighbour, Sr. José, who is known to be good with practical advice.",
+          "difficulty": 3,
+          "entry_node": "rp-d75-start",
+          "nodes": [
+            {
+              "id": "rp-d75-start",
+              "npc_text": "Bom dia! Então, como é que está? A apanhar umas frutas frescas?",
+              "npc_translation": "Good morning! So, how are you? Getting some fresh fruit?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia, Sr. José! Sim, estou a comprar umas maçãs. Olhe, sabe de alguém que arranje estores?",
+                  "translation": "Good morning, Sr. José! Yes, I'm buying some apples. Look, do you know of anyone who fixes shutters?",
+                  "feedback": "Great start, you've directly but politely asked for a recommendation.",
+                  "next": "rp-d75-ask-shutters"
+                },
+                {
+                  "text": "Bom dia! Sim, estou a ver o que há de bom. Os meus estores estão com problemas, conhece alguém?",
+                  "translation": "Good morning! Yes, I'm seeing what's good. My shutters are having problems, do you know anyone?",
+                  "feedback": "Good, a little more direct, but still clear. 'Conhece alguém?' is a good phrase.",
+                  "next": "rp-d75-ask-shutters-v2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d75-ask-shutters",
+              "npc_text": "Estores, pois. Há o Sr. António, que trabalha bem. Eu costumo chamá-lo para os arranjos cá em casa. É ali p'ra cima, perto da padaria antiga.",
+              "npc_translation": "Shutters, right. There's Mr. António, who works well. I usually call him for repairs here at home. He's up there, near the old bakery.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "O Sr. António? É de confiança? E é caro?",
+                  "translation": "Mr. António? Is he trustworthy? And is he expensive?",
+                  "feedback": "Asking about trust and cost is very natural when getting a recommendation.",
+                  "next": "rp-d75-trust-cost"
+                },
+                {
+                  "text": "Perto da padaria antiga? Ok. Ele faz um bom trabalho?",
+                  "translation": "Near the old bakery? Okay. Does he do a good job?",
+                  "feedback": "Good follow-up, focusing on the quality of work.",
+                  "next": "rp-d75-good-job"
+                }
+              ]
+            },
+            {
+              "id": "rp-d75-ask-shutters-v2",
+              "npc_text": "Estores... Há um rapaz novo, o Tiago, que faz esses arranjos. É neto da Dona Rosa, da rua de trás. Ele é jeitoso.",
+              "npc_translation": "Shutters... There's a young lad, Tiago, who does those repairs. He's Dona Rosa's grandson, from the street behind. He's handy.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ah, o neto da Dona Rosa? E é de confiança? Já o chamou?",
+                  "translation": "Ah, Dona Rosa's grandson? And is he trustworthy? Have you called him?",
+                  "feedback": "Good, asking about personal experience and trust.",
+                  "next": "rp-d75-trust-younger"
+                },
+                {
+                  "text": "Tiago, ok. Tem o contacto dele, por acaso?",
+                  "translation": "Tiago, okay. Do you have his contact, by any chance?",
+                  "feedback": "Practical question, asking for contact information.",
+                  "next": "rp-d75-contact"
+                }
+              ]
+            },
+            {
+              "id": "rp-d75-trust-cost",
+              "npc_text": "Sim, sim, é de confiança. Já me arranjou uns estores e ficou impecável. Quanto ao preço, ele é justo, não é dos mais caros. Mas o melhor é falar com ele.",
+              "npc_translation": "Yes, yes, he's trustworthy. He already fixed some shutters for me and it was impeccable. As for the price, he's fair, not one of the most expensive. But the best is to talk to him.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Muito obrigado, Sr. José! Vou procurar por ele.",
+                  "translation": "Thank you very much, Sr. José! I'll look for him.",
+                  "feedback": "Good, polite way to end the conversation."
+                }
+              ]
+            },
+            {
+              "id": "rp-d75-good-job",
+              "npc_text": "Faz, faz. É caprichoso no trabalho, não deixa nada mal feito. Eu confio nele. Diga que vai da minha parte.",
+              "npc_translation": "He does, he does. He's meticulous in his work, doesn't leave anything badly done. I trust him. Tell him you're coming from me.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ah, sim, boa ideia! Obrigado pela ajuda, Sr. José!",
+                  "translation": "Ah, yes, good idea! Thanks for the help, Sr. José!",
+                  "feedback": "Acknowledging the 'from my part' suggestion is a good cultural touch."
+                }
+              ]
+            },
+            {
+              "id": "rp-d75-trust-younger",
+              "npc_text": "Eu ainda não precisei, mas a Dona Rosa diz que sim, que ele é muito certinho. E a Dona Rosa é uma pessoa de palavra.",
+              "npc_translation": "I haven't needed him yet, but Dona Rosa says yes, that he's very reliable. And Dona Rosa is a woman of her word.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pois é, a Dona Rosa sabe o que diz. Obrigado pela informação!",
+                  "translation": "That's right, Dona Rosa knows what she's talking about. Thanks for the information!",
+                  "feedback": "Acknowledging the third-party endorsement is good."
+                }
+              ]
+            },
+            {
+              "id": "rp-d75-contact",
+              "npc_text": "Tenho, tenho sim. Espere um bocado, vou ver se o encontro no meu telemóvel. Ah, aqui está: 912 345 678.",
+              "npc_translation": "Yes, I do. Wait a moment, I'll see if I can find it on my mobile. Ah, here it is: 912 345 678.",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Muito obrigado, Sr. José! É uma grande ajuda.",
+                  "translation": "Thank you very much, Sr. José! It's a great help.",
+                  "feedback": "Expressing gratitude is always appropriate."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Find a Trusted Professional",
+          "prep": [
+            "Review phrases for asking for recommendations: 'Conhece alguém que faça...?' and 'Sabe de alguém que...?'",
+            "Practice asking about trust: 'É de confiança?'",
+            "Prepare to explain what you need fixed or bought.",
+            "Be ready to thank them for their help."
+          ],
+          "fallback_phrases": [
+            "Obrigado/a pela ajuda.",
+            "Pois é, obrigado/a.",
+            "Ok, vou ver."
+          ],
+          "likely_responses": [
+            "De nada.",
+            "Se precisar de mais alguma coisa, diga!",
+            "Pois é, espero que resolva."
+          ]
+        },
+        "goals": [
+          "Ask for a recommendation for a service or product using appropriate Portuguese phrases.",
+          "Understand and respond to indirect recommendations from locals.",
+          "Inquire about the trustworthiness and quality of a recommended person or place."
+        ],
+        "course": {
+          "month": 3,
+          "day": 75,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d75-local-recommendations-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do you know anyone who does {service}?",
+            "answer": "Conhece alguém que faça {serviço}?",
+            "source_ref": "pp-sit-d75-local-recommendations-1"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Where can one buy good {product}?",
+            "answer": "Onde é que se compra {produto} bom?",
+            "source_ref": "pp-sit-d75-local-recommendations-2"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I usually go to the {place}.",
+            "answer": "Eu costumo ir ao/à {local}.",
+            "source_ref": "pp-sit-d75-local-recommendations-3"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's trustworthy.",
+            "answer": "É de confiança.",
+            "source_ref": "pp-sit-d75-local-recommendations-4"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso coffee",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: potato",
+            "answer": "semilha",
+            "source_ref": "semilha"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: irrigation channel; walking trail alongside one",
+            "answer": "levada",
+            "source_ref": "levada"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: butcher shop",
+            "answer": "talho",
+            "source_ref": "talho"
+          },
+          {
+            "id": "rv-sit-d75-local-recommendations-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d75-local-recommendations-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d76-cafe-counter-chat",
+      "title": "Chatting at the Café Counter",
+      "month": 3,
+      "day": 76,
+      "week": 11,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d76-cafe-counter-chat",
+        "title": "Chatting at the Café Counter",
+        "summary": "Being a regular: the counter conversation with the empregado and other regulars, commenting on the day, the football, the roadworks — short, fast, overlapping talk.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival",
+          "track-work"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d76-cafe-counter-chat-1",
+            "base": "Bom dia! Queria um/uma {item}, por favor.",
+            "translation": "Good morning! I'd like a {item}, please.",
+            "slots": [
+              {
+                "name": "item",
+                "description": "Item to order",
+                "options": [
+                  "bica",
+                  "galão",
+                  "chá",
+                  "sumo de laranja",
+                  "bolo do caco",
+                  "tosta mista"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d76-cafe-counter-chat-2",
+            "base": "Que {adjective} que está hoje, não é?",
+            "translation": "It's so {adjective} today, isn't it?",
+            "slots": [
+              {
+                "name": "adjective",
+                "description": "Adjective describing the day/weather",
+                "options": [
+                  "sol",
+                  "frio",
+                  "calor",
+                  "vento",
+                  "chuva"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Está um dia {adjective}, não está?",
+                "translation": "It's a {adjective} day, isn't it?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d76-cafe-counter-chat-3",
+            "base": "E as obras na {place}, quando é que acabam?",
+            "translation": "And the roadworks at {place}, when do they finish?",
+            "slots": [
+              {
+                "name": "place",
+                "description": "Location of roadworks",
+                "options": [
+                  "estrada",
+                  "rotunda",
+                  "rua principal",
+                  "baixa"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d76-cafe-counter-chat-4",
+            "base": "Pois é, concordo plenamente.",
+            "translation": "That's right, I completely agree.",
+            "variants": [
+              {
+                "text": "Pois é.",
+                "translation": "That's right.",
+                "register": "informal"
+              },
+              {
+                "text": "Concordo.",
+                "translation": "I agree.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common in Portugal for espresso, vs. 'café' which can mean coffee in general."
+          },
+          {
+            "word": "bolo do caco",
+            "translation": "Madeiran flatbread",
+            "pronunciation": "BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "Traditional Madeiran wheat flour bread, often served with garlic butter."
+          },
+          {
+            "word": "empregado",
+            "translation": "waiter / server",
+            "pronunciation": "em-preh-GAH-doo",
+            "register": "neutral",
+            "note": "Used for service staff in cafes, restaurants, shops."
+          },
+          {
+            "word": "obras",
+            "translation": "roadworks / construction",
+            "pronunciation": "OH-brahsh",
+            "register": "neutral",
+            "note": "Often used in plural to refer to ongoing construction or road maintenance."
+          },
+          {
+            "word": "pois é",
+            "translation": "that's right / indeed",
+            "pronunciation": "POYSH eh",
+            "register": "informal",
+            "note": "Very common interjection in Portugal to express agreement or acknowledgement."
+          },
+          {
+            "word": "imenso",
+            "translation": "a lot / immensely",
+            "pronunciation": "ee-MEN-soo",
+            "register": "neutral",
+            "note": "Common in Portugal, 'muito' is also used but 'imenso' adds emphasis."
+          },
+          {
+            "word": "um bocado",
+            "translation": "a little bit / a while",
+            "pronunciation": "oom boo-KAH-doo",
+            "register": "informal",
+            "note": "Common informal expression."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d76-cafe-counter-chat-1",
+            "title": "Morning Chat at the Counter",
+            "context": "At a busy local cafe in Funchal, two regulars are chatting with the empregado while having their morning coffee.",
+            "lines": [
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Bom dia! O de sempre, Sr. Manuel?",
+                "translation": "Good morning! The usual, Mr. Manuel?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Bom dia, empregado. Sim, uma bica e um bolo do caco, p'ra já.",
+                "translation": "Good morning, server. Yes, an espresso and a bolo do caco, right away."
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "P'ra já! Que sol que está hoje, não é? Dá gosto!",
+                "translation": "Right away! What sun there is today, isn't it? It's lovely!"
+              },
+              {
+                "speaker": "D. Maria",
+                "voice_type": "local",
+                "text": "Pois é! Com este calor, até dá vontade de ir à praia. Mas com as obras na estrada, chegar lá é que é o problema.",
+                "translation": "That's right! With this heat, it even makes you want to go to the beach. But with the roadworks, getting there is the problem."
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "older",
+                "text": "Nem me fale! Aquilo está um inferno. E os jogos do Marítimo, como é que foram?",
+                "translation": "Don't even get me started! That's a nightmare. And Marítimo's games, how did they go?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "noisy",
+                "text": "Ah, o Marítimo? Jogou um bocado mal, Sr. Manuel. Perdemos outra vez, infelizmente. Mas o café está quase!",
+                "translation": "Ah, Marítimo? They played a bit badly, Mr. Manuel. We lost again, unfortunately. But your coffee is almost ready!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Portuguese Cafe as a Social Hub",
+            "body": "In Portugal, and particularly in Madeira, cafes are much more than just places to grab a coffee. They are central to daily life, serving as social hubs where people meet friends, read the newspaper, have quick meals, and engage in local gossip. It's common to stand at the counter for a quick 'bica' (espresso) and a chat with the 'empregado' (server) or other regulars. This informal interaction is a key part of the culture."
+          },
+          {
+            "title": "Small Talk and Politeness at the Counter",
+            "body": "When interacting with service staff like an 'empregado', it's polite to use 'Bom dia/Boa tarde' and 'por favor/obrigado'. Small talk about the weather, local news (like roadworks – 'obras'), or football is very common and expected, especially if you're a regular. Using expressions like 'Pois é' (that's right) or 'Nem me fale!' (don't even get me started!) shows engagement and familiarity. Addressing the server as 'empregado' is perfectly normal and respectful."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're a regular at a local cafe in Funchal. You approach the counter to order your usual and chat briefly with the empregado.",
+          "difficulty": 3,
+          "entry_node": "rp-d76-node-1",
+          "nodes": [
+            {
+              "id": "rp-d76-node-1",
+              "npc_text": "Bom dia! O de sempre, ou vai mudar hoje?",
+              "npc_translation": "Good morning! The usual, or are you changing today?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia! Sim, o de sempre: uma bica e um bolo do caco, por favor.",
+                  "translation": "Good morning! Yes, the usual: an espresso and a bolo do caco, please.",
+                  "feedback": "Great, you confirmed your usual order clearly. Remember 'p'ra já' is also common for 'right away'.",
+                  "next": "rp-d76-node-2"
+                },
+                {
+                  "text": "Bom dia! Hoje vou experimentar um galão e uma tosta mista, por favor.",
+                  "translation": "Good morning! Today I'm going to try a galão and a mixed toast, please.",
+                  "feedback": "Excellent, you ordered something different using good vocabulary.",
+                  "next": "rp-d76-node-2b"
+                }
+              ]
+            },
+            {
+              "id": "rp-d76-node-2",
+              "npc_text": "P'ra já! Que calor que está hoje, não é? Já apetece ir à praia...",
+              "npc_translation": "Right away! It's so hot today, isn't it? Makes you want to go to the beach...",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Pois é, está um sol imenso! Mas com as obras, ir à praia é um bocado complicado.",
+                  "translation": "That's right, it's immensely sunny! But with the roadworks, going to the beach is a bit complicated.",
+                  "feedback": "Perfect! You agreed and brought up a common local topic (roadworks).",
+                  "next": "rp-d76-node-3"
+                },
+                {
+                  "text": "Sim, está ótimo para passear! Mas prefiro a serra.",
+                  "translation": "Yes, it's great for walking! But I prefer the mountains.",
+                  "feedback": "Good, you agreed and shared your preference. 'Serra' (mountain range) is a good Madeiran reference.",
+                  "next": "rp-d76-node-3b"
+                }
+              ]
+            },
+            {
+              "id": "rp-d76-node-2b",
+              "npc_text": "Um galão e uma tosta mista. Boa escolha! Que dia tão bonito, não é?",
+              "npc_translation": "A galão and a mixed toast. Good choice! What a beautiful day, isn't it?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Pois é, está um dia excelente! Até dá para esquecer as obras na rua.",
+                  "translation": "That's right, it's an excellent day! It even makes you forget the roadworks on the street.",
+                  "feedback": "Well done, you agreed and subtly introduced the topic of roadworks.",
+                  "next": "rp-d76-node-3"
+                },
+                {
+                  "text": "Sim, está perfeito! Pena é o vento que se faz sentir.",
+                  "translation": "Yes, it's perfect! It's a pity about the wind.",
+                  "feedback": "Good observation! You agreed but added a small counter-point, very natural.",
+                  "next": "rp-d76-node-3b"
+                }
+              ]
+            },
+            {
+              "id": "rp-d76-node-3",
+              "npc_text": "Ah, as obras... Nem me fale! Aquilo já devia ter acabado há um mês. Mas o que é que se há de fazer?",
+              "npc_translation": "Ah, the roadworks... Don't even get me started! That should have finished a month ago. But what can you do?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Pois é, é sempre a mesma coisa. Mas a bica está ótima, obrigado!",
+                  "translation": "That's right, it's always the same thing. But the espresso is great, thank you!",
+                  "feedback": "Excellent, you agreed with a common complaint and thanked the server, ending the interaction naturally."
+                },
+                {
+                  "text": "Sim, é um bocado chato. Mas espero que melhore em breve.",
+                  "translation": "Yes, it's a bit annoying. But I hope it gets better soon.",
+                  "feedback": "Good, you expressed mild frustration and hope, a common way to respond. Well done!"
+                }
+              ]
+            },
+            {
+              "id": "rp-d76-node-3b",
+              "npc_text": "Sim, o vento aqui na ilha é sempre um bocado traiçoeiro. Mas o café está pronto!",
+              "npc_translation": "Yes, the wind here on the island is always a bit tricky. But your coffee is ready!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado! E o Marítimo, jogou bem ontem?",
+                  "translation": "Thank you! And Marítimo, did they play well yesterday?",
+                  "feedback": "Great, you thanked them and smoothly transitioned to another common small talk topic, football!"
+                },
+                {
+                  "text": "Pois é! Obrigado, empregado. Até já!",
+                  "translation": "That's right! Thank you, server. See you soon!",
+                  "feedback": "Perfect, a polite and natural way to end the interaction. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Order and Chat at Your Local Cafe",
+          "prep": [
+            "Review vocabulary for common cafe items and small talk phrases.",
+            "Practice ordering your usual coffee and snack aloud.",
+            "Prepare a phrase to comment on the weather or local news (e.g., roadworks)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "Como disse?"
+          ],
+          "likely_responses": [
+            "Pois é!",
+            "O de sempre?",
+            "P'ra já!",
+            "Está um dia ótimo, não é?",
+            "Nem me fale!"
+          ]
+        },
+        "goals": [
+          "Order food and drink at a cafe counter using appropriate politeness.",
+          "Engage in short, informal small talk with service staff about daily topics (weather, local events).",
+          "Understand and respond to common interjections and Madeiran expressions.",
+          "Practice using 'tu' form or null-subject 3rd person in a natural conversational setting."
+        ],
+        "course": {
+          "month": 3,
+          "day": 76,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Good morning! I'd like a {item}, please.",
+            "answer": "Bom dia! Queria um/uma {item}, por favor.",
+            "source_ref": "pp-sit-d76-cafe-counter-chat-1"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's so {adjective} today, isn't it?",
+            "answer": "Que {adjective} que está hoje, não é?",
+            "source_ref": "pp-sit-d76-cafe-counter-chat-2"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: And the roadworks at {place}, when do they finish?",
+            "answer": "E as obras na {place}, quando é que acabam?",
+            "source_ref": "pp-sit-d76-cafe-counter-chat-3"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: That's right, I completely agree.",
+            "answer": "Pois é, concordo plenamente.",
+            "source_ref": "pp-sit-d76-cafe-counter-chat-4"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Madeiran flatbread",
+            "answer": "bolo do caco",
+            "source_ref": "bolo do caco"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: waiter / server",
+            "answer": "empregado",
+            "source_ref": "empregado"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: roadworks / construction",
+            "answer": "obras",
+            "source_ref": "obras"
+          },
+          {
+            "id": "rv-sit-d76-cafe-counter-chat-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d76-cafe-counter-chat-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d77-week-11-stress-test",
+      "title": "Week 11 Stress Test",
+      "month": 3,
+      "day": 77,
+      "week": 11,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d77-week-11-stress-test",
+        "title": "Week 11 Stress Test",
+        "summary": "An afternoon of neighbourhood talk: a neighbour on the stairs, a favour to ask, weather chat and café counter banter — sustained real conversation.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d77-week-11-stress-test-1",
+            "base": "Olá, {nome}! Tudo bem?",
+            "translation": "Hello, {name}! All good?",
+            "slots": [
+              {
+                "name": "nome",
+                "description": "Name of the person",
+                "options": [
+                  "Maria",
+                  "João",
+                  "Vizinho",
+                  "Vizinha"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Olá, {nome}! Como está?",
+                "translation": "Hello, {name}! How are you? (polite)",
+                "register": "formal"
+              },
+              {
+                "text": "Então, {nome}, tudo a correr bem?",
+                "translation": "So, {name}, is everything going well?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d77-week-11-stress-test-2",
+            "base": "Preciso de um {favor}, se não for muito incómodo.",
+            "translation": "I need a {favour}, if it's not too much trouble.",
+            "slots": [
+              {
+                "name": "favor",
+                "description": "Type of favour",
+                "options": [
+                  "minuto",
+                  "segundo",
+                  "pouco de ajuda",
+                  "pequeno favor"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Será que me podia fazer um {favor}?",
+                "translation": "Could you do me a {favour}?",
+                "register": "formal"
+              },
+              {
+                "text": "Podes dar-me uma ajuda?",
+                "translation": "Can you give me a hand?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d77-week-11-stress-test-3",
+            "base": "O tempo está {descrição} hoje, não está?",
+            "translation": "The weather is {description} today, isn't it?",
+            "slots": [
+              {
+                "name": "descrição",
+                "description": "Weather description",
+                "options": [
+                  "ótimo",
+                  "péssimo",
+                  "um bocado ventoso",
+                  "muito bom"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Que dia {descrição}, não é?",
+                "translation": "What a {description} day, isn't it?",
+                "register": "neutral"
+              },
+              {
+                "text": "Está um sol {descrição}!",
+                "translation": "It's a {description} sun!",
+                "register": "informal",
+                "note": "For sunny weather"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d77-week-11-stress-test-4",
+            "base": "P'ra já!",
+            "translation": "Coming right up! / Just a moment!",
+            "variants": [
+              {
+                "text": "Já vai!",
+                "translation": "It's coming!",
+                "register": "neutral"
+              },
+              {
+                "text": "Um momento, por favor.",
+                "translation": "One moment, please.",
+                "register": "formal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeiran regionalism for 'batata'"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common in Portugal for 'café expresso'"
+          },
+          {
+            "word": "levada",
+            "translation": "irrigation channel / walking trail",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Specific to Madeira"
+          },
+          {
+            "word": "poncha",
+            "translation": "Madeiran rum cocktail",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Specific to Madeira"
+          },
+          {
+            "word": "imenso",
+            "translation": "a lot / immensely",
+            "pronunciation": "ee-MEN-soo",
+            "register": "neutral",
+            "note": "Common in pt-PT, stronger than 'muito'"
+          },
+          {
+            "word": "um bocado",
+            "translation": "a little bit / a while",
+            "pronunciation": "oom boo-KAH-doo",
+            "register": "neutral",
+            "note": "Common in pt-PT"
+          },
+          {
+            "word": "talho",
+            "translation": "butcher's shop",
+            "pronunciation": "TAH-lyoo",
+            "register": "neutral",
+            "note": "Standard pt-PT"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d77-week-11-stress-test-1",
+            "title": "Stairs Chat",
+            "context": "You meet your neighbour, Dona Alice, on the stairs. She's carrying heavy shopping bags.",
+            "lines": [
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Olá! Que surpresa boa! Como está a correr o dia?",
+                "translation": "Hello! What a nice surprise! How's your day going?"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Olá, Dona Alice! Tudo bem, obrigada. A senhora está com umas sacas pesadas, precisa de ajuda?",
+                "translation": "Hello, Dona Alice! All good, thank you. You have some heavy bags, do you need help?"
+              },
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Ai, pois preciso! Estas semilhas e a carne do talho pesam imenso. Se não for muito incómodo...",
+                "translation": "Oh, yes I do! These potatoes and the meat from the butcher's weigh a lot. If it's not too much trouble..."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Claro que não é! Dê cá, eu levo-lhe estas duas.",
+                "translation": "Of course it's not! Give them here, I'll take these two for you."
+              },
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Muito obrigada! É uma querida. O tempo está ótimo hoje, não está? Bom para uma levada.",
+                "translation": "Thank you very much! You're a dear. The weather is great today, isn't it? Good for a levada walk."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Pois é, está sim. Talvez amanhã! Tenha um bom resto de dia.",
+                "translation": "Yes, it is. Maybe tomorrow! Have a good rest of the day."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d77-week-11-stress-test-2",
+            "title": "Café Counter",
+            "context": "You're at a local café, ordering a coffee. It's a bit busy.",
+            "lines": [
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Diga! O que vai ser?",
+                "translation": "Say! What will it be?"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Olá! Queria uma bica, por favor.",
+                "translation": "Hello! I'd like an espresso, please."
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "P'ra já! E o tempo, hein? Que calor!",
+                "translation": "Coming right up! And the weather, huh? So hot!"
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Pois é, está um bocado abafado. Mas bom para a praia!",
+                "translation": "Yes, it's a bit muggy. But good for the beach!"
+              },
+              {
+                "speaker": "Barista",
+                "voice_type": "service",
+                "text": "Com certeza. Aqui está a sua bica. São 0,70€.",
+                "translation": "Certainly. Here's your espresso. That's 0,70€."
+              },
+              {
+                "speaker": "You",
+                "voice_type": "local",
+                "text": "Obrigada! Bom trabalho.",
+                "translation": "Thank you! Good work."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Asking for Favours in Portugal",
+            "body": "In Portugal, especially in more traditional or neighbourly contexts, it's common to use softening phrases when asking for help or a favour. Phrases like 'se não for muito incómodo' (if it's not too much trouble) or 'será que me podia...' (would you be able to...) show politeness and respect, even with people you know well. Directly stating 'Preciso de ajuda' (I need help) can be seen as a bit abrupt without a softener."
+          },
+          {
+            "title": "Madeiran Small Talk and Greetings",
+            "body": "Madeirans are generally warm and open. Small talk about the weather ('o tempo está ótimo hoje, não está?'), daily life, or local events is very common, even with acquaintances or in service interactions. Greetings like 'Diga!' (literally 'Say!', but meaning 'How can I help you?' or 'What'll it be?') are typical in cafés or shops, indicating a readiness to serve. Using 'Dona' or 'Senhor' followed by the first name (e.g., 'Dona Alice') is a respectful way to address older neighbours or acquaintances, even in informal settings."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need to ask your neighbour, Sr. Manuel, if you can borrow his ladder for a quick task. You meet him in the building's common area.",
+          "difficulty": 3,
+          "entry_node": "rp-d77-node-1",
+          "nodes": [
+            {
+              "id": "rp-d77-node-1",
+              "npc_text": "Olá! Tudo bem? Por aqui a esta hora?",
+              "npc_translation": "Hello! All good? Around here at this hour?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Sr. Manuel! Sim, está tudo bem, obrigada. E consigo?",
+                  "translation": "Hello, Sr. Manuel! Yes, all good, thank you. And with you?",
+                  "feedback": "A good, polite start. Now you can introduce your request.",
+                  "next": "rp-d77-node-2"
+                },
+                {
+                  "text": "Olá! Sim, e o senhor?",
+                  "translation": "Hello! Yes, and you?",
+                  "feedback": "A bit more direct, but acceptable. Prepare to state your reason.",
+                  "next": "rp-d77-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d77-node-2",
+              "npc_text": "Tudo em ordem, obrigado. Diga, precisa de alguma coisa?",
+              "npc_translation": "All in order, thank you. Say, do you need anything?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Pois, na verdade, preciso de um pequeno favor, se não for muito incómodo.",
+                  "translation": "Well, actually, I need a small favour, if it's not too much trouble.",
+                  "feedback": "Excellent! You're using a polite softening phrase.",
+                  "next": "rp-d77-node-3"
+                },
+                {
+                  "text": "Sim, preciso de ajuda com uma coisa.",
+                  "translation": "Yes, I need help with something.",
+                  "feedback": "A bit more direct, but still clear. The next step is to specify what you need.",
+                  "next": "rp-d77-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d77-node-3",
+              "npc_text": "Diga, diga! Se eu puder ajudar, ajudo.",
+              "npc_translation": "Say, say! If I can help, I will help.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Será que me podia emprestar a sua escada por um bocado? É só para chegar a umas coisas lá em cima.",
+                  "translation": "Could you lend me your ladder for a bit? It's just to reach some things up high.",
+                  "feedback": "Perfect! Clear, polite, and explains the reason.",
+                  "next": "rp-d77-node-4"
+                },
+                {
+                  "text": "Queria pedir-lhe a escada emprestada, por favor.",
+                  "translation": "I wanted to ask to borrow your ladder, please.",
+                  "feedback": "Good, direct request. Adding 'por um bocado' or a reason would make it even smoother.",
+                  "next": "rp-d77-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d77-node-4",
+              "npc_text": "Ah, a escada! Claro que sim. Está ali na arrecadação. Precisa dela agora?",
+              "npc_translation": "Ah, the ladder! Of course. It's there in the storage room. Do you need it now?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, se não for inconveniente. É só um instante.",
+                  "translation": "Yes, if it's not inconvenient. It's just for a moment.",
+                  "feedback": "Good, confirms urgency politely.",
+                  "next": "rp-d77-node-5"
+                },
+                {
+                  "text": "Sim, por favor. É só para umas coisas rápidas.",
+                  "translation": "Yes, please. It's just for some quick things.",
+                  "feedback": "Clear and polite. Shows you won't keep it long.",
+                  "next": "rp-d77-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d77-node-5",
+              "npc_text": "Então vá, eu vou lá buscá-la p'ra si. Espere um bocado.",
+              "npc_translation": "Alright then, I'll go get it for you. Wait a bit.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Muito obrigada, Sr. Manuel! É uma ajuda imensa.",
+                  "translation": "Thank genomic. Thank you very much, Sr. Manuel! It's a huge help.",
+                  "feedback": "Excellent, shows gratitude and uses 'imensa'."
+                },
+                {
+                  "text": "Obrigada! Agradeço imenso a sua ajuda.",
+                  "translation": "Thank you! I really appreciate your help.",
+                  "feedback": "Very good, expresses strong thanks."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Borrowing a Household Item",
+          "prep": [
+            "Mentally rehearse how you would ask a neighbour for a small favour, like borrowing an item.",
+            "Practice the softening phrases: 'se não for muito incómodo' and 'será que me podia...'",
+            "Think about how to offer help if you see someone struggling with bags or a task."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?",
+            "Obrigada pela ajuda."
+          ],
+          "likely_responses": [
+            "Claro que sim!",
+            "Pois, não é nada de mais.",
+            "Com certeza, diga!"
+          ]
+        },
+        "goals": [
+          "Initiate conversations with neighbours using appropriate greetings and small talk.",
+          "Politely ask for a small favour using softening phrases.",
+          "Offer help to someone in need in a natural way.",
+          "Understand and respond to common Madeiran expressions related to daily interactions."
+        ],
+        "course": {
+          "month": 3,
+          "day": 77,
+          "category": "custom"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d77-week-11-stress-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Hello, {name}! All good?",
+            "answer": "Olá, {nome}! Tudo bem?",
+            "source_ref": "pp-sit-d77-week-11-stress-test-1"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need a {favour}, if it's not too much trouble.",
+            "answer": "Preciso de um {favor}, se não for muito incómodo.",
+            "source_ref": "pp-sit-d77-week-11-stress-test-2"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The weather is {description} today, isn't it?",
+            "answer": "O tempo está {descrição} hoje, não está?",
+            "source_ref": "pp-sit-d77-week-11-stress-test-3"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Coming right up! / Just a moment!",
+            "answer": "P'ra já!",
+            "source_ref": "pp-sit-d77-week-11-stress-test-4"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: potato",
+            "answer": "semilha",
+            "source_ref": "semilha"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: irrigation channel / walking trail",
+            "answer": "levada",
+            "source_ref": "levada"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Madeiran rum cocktail",
+            "answer": "poncha",
+            "source_ref": "poncha"
+          },
+          {
+            "id": "rv-sit-d77-week-11-stress-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d77-week-11-stress-test-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d78-on-a-levada-walk",
+      "title": "On a Levada Walk",
+      "month": 3,
+      "day": 78,
+      "week": 12,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d78-on-a-levada-walk",
+        "title": "On a Levada Walk",
+        "summary": "Talking while walking a levada: trail talk with other walkers, asking about conditions ahead, the water channels and their history, and warnings (escorregadio, vertigens).",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d78-on-a-levada-walk-1",
+            "base": "Está um bocado escorregadio aqui.",
+            "translation": "It's a bit slippery here.",
+            "variants": [
+              {
+                "text": "Cuidado, está escorregadio!",
+                "translation": "Careful, it's slippery!",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d78-on-a-levada-walk-2",
+            "base": "Cuidado com {perigo}!",
+            "translation": "Be careful with {danger}!",
+            "slots": [
+              {
+                "name": "perigo",
+                "description": "Type of danger",
+                "options": [
+                  "as vertigens",
+                  "as pedras",
+                  "o túnel"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d78-on-a-levada-walk-3",
+            "base": "Quanto tempo falta para {destino}?",
+            "translation": "How much time until {destination}?",
+            "slots": [
+              {
+                "name": "destino",
+                "description": "Destination",
+                "options": [
+                  "o fim",
+                  "a cascata",
+                  "o miradouro"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d78-on-a-levada-walk-4",
+            "base": "Esta levada é {caracteristica}, não é?",
+            "translation": "This levada is {characteristic}, isn't it?",
+            "slots": [
+              {
+                "name": "caracteristica",
+                "description": "Characteristic of the levada",
+                "options": [
+                  "muito bonita",
+                  "um bocado longa",
+                  "bem fácil"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "levada",
+            "translation": "irrigation channel / walking path",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Specific to Madeira, refers to both the water channel and the path alongside it."
+          },
+          {
+            "word": "escorregadio",
+            "translation": "slippery",
+            "pronunciation": "esh-koh-reh-GAH-dee-oo",
+            "register": "neutral"
+          },
+          {
+            "word": "vertigens",
+            "translation": "vertigo / dizziness",
+            "pronunciation": "ver-TEE-zhens",
+            "register": "neutral",
+            "note": "Often used in plural when referring to the sensation."
+          },
+          {
+            "word": "túnel",
+            "translation": "tunnel",
+            "pronunciation": "TOO-nel",
+            "register": "neutral"
+          },
+          {
+            "word": "cascata",
+            "translation": "waterfall",
+            "pronunciation": "kash-KAH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "percurso",
+            "translation": "route / path",
+            "pronunciation": "per-KOOR-soo",
+            "register": "neutral"
+          },
+          {
+            "word": "miradouro",
+            "translation": "viewpoint",
+            "pronunciation": "mee-rah-DOH-roo",
+            "register": "neutral",
+            "note": "Common on Madeira for scenic spots."
+          },
+          {
+            "word": "ribeira",
+            "translation": "stream / brook",
+            "pronunciation": "ree-BEH-rah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d78-on-a-levada-walk-1",
+            "title": "Chatting on the Levada",
+            "context": "Two hikers, a local and a visitor, meet on a levada. The local is going in the opposite direction.",
+            "lines": [
+              {
+                "speaker": "Caminhante Local",
+                "voice_type": "local",
+                "text": "Bom dia! Tudo bem? Vai até ao fim da levada?",
+                "translation": "Good morning! All good? Are you going to the end of the levada?"
+              },
+              {
+                "speaker": "Turista (Learner)",
+                "voice_type": "teacher",
+                "text": "Bom dia! Sim, tudo bem. Não sei, talvez até à cascata. Sabe se está muito escorregadio mais à frente?",
+                "translation": "Good morning! Yes, all good. I don't know, maybe until the waterfall. Do you know if it's very slippery further ahead?"
+              },
+              {
+                "speaker": "Caminhante Local",
+                "voice_type": "local",
+                "text": "Olhe, até à cascata não, mas depois da cascata, sim, há um bocado. E tem um túnel, leve lanterna, se for.",
+                "translation": "Look, until the waterfall, no, but after the waterfall, yes, a bit. And there's a tunnel, take a flashlight, if you go."
+              },
+              {
+                "speaker": "Turista (Learner)",
+                "voice_type": "teacher",
+                "text": "Ah, ok, obrigado! E esta levada, é antiga? Gosto muito da história das levadas.",
+                "translation": "Ah, okay, thank you! And this levada, is it old? I really like the history of the levadas."
+              },
+              {
+                "speaker": "Caminhante Local",
+                "voice_type": "older",
+                "text": "Pois é, esta é das mais antigas. Servia para levar água da serra para as culturas, sabe? Há centenas de anos.",
+                "translation": "That's right, this is one of the oldest. It used to carry water from the mountains to the crops, you know? Hundreds of years ago."
+              },
+              {
+                "speaker": "Turista (Learner)",
+                "voice_type": "teacher",
+                "text": "Que interessante! É um trabalho incrível. E há muitas levadas assim na Madeira?",
+                "translation": "How interesting! It's incredible work. And are there many levadas like this in Madeira?"
+              },
+              {
+                "speaker": "Caminhante Local",
+                "voice_type": "local",
+                "text": "Imensas! Mais de dois mil e quinhentos quilómetros, por toda a ilha. Mas algumas são só para manutenção, não para caminhar.",
+                "translation": "Loads! More than two thousand five hundred kilometers, all over the island. But some are just for maintenance, not for walking."
+              },
+              {
+                "speaker": "Turista (Learner)",
+                "voice_type": "teacher",
+                "text": "Uau! É mesmo impressionante. Obrigado pela informação!",
+                "translation": "Wow! That's really impressive. Thanks for the information!"
+              },
+              {
+                "speaker": "Caminhante Local",
+                "voice_type": "local",
+                "text": "De nada! Boa caminhada! E cuidado com as vertigens nalguns pontos, sim?",
+                "translation": "You're welcome! Good walk! And be careful with vertigo at some points, okay?"
+              },
+              {
+                "speaker": "Turista (Learner)",
+                "voice_type": "teacher",
+                "text": "Vou ter! Adeus!",
+                "translation": "I will! Goodbye!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Levadas of Madeira",
+            "body": "Levadas are a unique feature of Madeira, originally built to carry water from the wet north of the island to the drier south for agriculture. Today, many of these narrow irrigation channels also serve as incredible walking paths, offering breathtaking views and access to the island's natural beauty. They range in difficulty from easy, flat walks to challenging routes with tunnels and steep drops. Always check the conditions and difficulty before starting a levada walk."
+          },
+          {
+            "title": "Trail Etiquette and Warnings",
+            "body": "It's common and polite to greet other hikers on a levada. Locals are often happy to share information about the path ahead, including warnings about slippery sections ('escorregadio'), narrow parts with steep drops ('vertigens'), or tunnels ('túneis') that might require a flashlight. Always pay attention to these warnings for your safety."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are walking a popular levada trail in Madeira. You meet another walker coming from the opposite direction.",
+          "difficulty": 3,
+          "entry_node": "rp-d78-node-1",
+          "nodes": [
+            {
+              "id": "rp-d78-node-1",
+              "npc_text": "Bom dia! Tudo bem? Vai até ao fim da levada?",
+              "npc_translation": "Good morning! All good? Are you going to the end of the levada?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Bom dia! Sim, tudo bem. Não sei, talvez até à cascata.",
+                  "translation": "Good morning! Yes, all good. I don't know, maybe until the waterfall.",
+                  "feedback": "Great start, you've answered and given your plan.",
+                  "next": "rp-d78-node-2"
+                },
+                {
+                  "text": "Bom dia! Sim, obrigado. Não, só um bocado.",
+                  "translation": "Good morning! Yes, thank you. No, just a bit.",
+                  "feedback": "Polite and clear, but you could ask a question to keep the conversation going.",
+                  "next": "rp-d78-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d78-node-2",
+              "npc_text": "Ah, a cascata é muito bonita! Mas cuidado, depois da cascata, o caminho fica um bocado escorregadio e há um túnel.",
+              "npc_translation": "Ah, the waterfall is very beautiful! But be careful, after the waterfall, the path gets a bit slippery and there's a tunnel.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Obrigado pelo aviso! É um túnel muito comprido?",
+                  "translation": "Thanks for the warning! Is it a very long tunnel?",
+                  "feedback": "Excellent, you acknowledged the warning and asked for more detail.",
+                  "next": "rp-d78-node-4"
+                },
+                {
+                  "text": "Ah, ok. Vou ter cuidado. Obrigado!",
+                  "translation": "Ah, okay. I'll be careful. Thank you!",
+                  "feedback": "Good response, but you could try to extend the conversation.",
+                  "next": "rp-d78-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d78-node-3",
+              "npc_text": "Pois é. Esta levada é das mais conhecidas. Já fez alguma outra levada na ilha?",
+              "npc_translation": "That's right. This levada is one of the most well-known. Have you done any other levada on the island?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, fiz a das 25 Fontes. Adorei!",
+                  "translation": "Yes, I did the 25 Fontes one. I loved it!",
+                  "feedback": "Good, sharing your experience is a natural way to converse.",
+                  "next": "rp-d78-node-5"
+                },
+                {
+                  "text": "Não, é a primeira vez numa levada. É muito diferente de caminhar noutros sítios.",
+                  "translation": "No, it's my first time on a levada. It's very different from walking in other places.",
+                  "feedback": "Good, you've explained your experience and made a comment.",
+                  "next": "rp-d78-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d78-node-4",
+              "npc_text": "Não, não é muito. Uns cem metros, talvez. Mas é escuro, precisa de lanterna. E depois do túnel, há um miradouro lindo!",
+              "npc_translation": "No, it's not very long. About a hundred meters, maybe. But it's dark, you need a flashlight. And after the tunnel, there's a beautiful viewpoint!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ótimo! Obrigado pelas dicas. Tenha um bom dia!",
+                  "translation": "Great! Thanks for the tips. Have a good day!",
+                  "feedback": "A polite way to end the conversation. Well done!"
+                },
+                {
+                  "text": "Que bom! Vou levar a lanterna. E sabe se esta levada tem muita história?",
+                  "translation": "How good! I'll take the flashlight. And do you know if this levada has much history?",
+                  "feedback": "Excellent, you've tried to extend the conversation by asking about history.",
+                  "next": "rp-d78-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d78-node-5",
+              "npc_text": "Sim, imensa! Muitas foram construídas há séculos para levar água para os campos. É um património da Madeira. Bem, tenho de ir. Boa caminhada!",
+              "npc_translation": "Yes, loads! Many were built centuries ago to bring water to the fields. It's a heritage of Madeira. Well, I have to go. Good walk!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Obrigado! Para si também!",
+                  "translation": "Thank you! You too!",
+                  "feedback": "A natural and polite ending to the conversation."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Ask about the Levada Path Ahead",
+          "prep": [
+            "Review vocabulary for trail conditions: 'escorregadio', 'vertigens', 'túnel', 'cascata'.",
+            "Practice asking 'Quanto tempo falta para...?' and 'Está...?'",
+            "Prepare a polite greeting and a thank you phrase."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem.",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "É um bocado escorregadio, sim.",
+            "Falta pouco para lá.",
+            "Cuidado com as pedras!",
+            "Tem um túnel mais à frente.",
+            "Não, está bom."
+          ]
+        },
+        "goals": [
+          "Ask another walker about the conditions of the levada path ahead.",
+          "Understand common warnings about safety on levada trails (e.g., 'escorregadio', 'vertigens').",
+          "Discuss basic facts or history about the levadas of Madeira.",
+          "Engage in a polite and natural conversation with a local on a walking trail."
+        ],
+        "course": {
+          "month": 3,
+          "day": 78,
+          "category": "travel"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's a bit slippery here.",
+            "answer": "Está um bocado escorregadio aqui.",
+            "source_ref": "pp-sit-d78-on-a-levada-walk-1"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Be careful with {danger}!",
+            "answer": "Cuidado com {perigo}!",
+            "source_ref": "pp-sit-d78-on-a-levada-walk-2"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much time until {destination}?",
+            "answer": "Quanto tempo falta para {destino}?",
+            "source_ref": "pp-sit-d78-on-a-levada-walk-3"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: This levada is {characteristic}, isn't it?",
+            "answer": "Esta levada é {caracteristica}, não é?",
+            "source_ref": "pp-sit-d78-on-a-levada-walk-4"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: irrigation channel / walking path",
+            "answer": "levada",
+            "source_ref": "levada"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: slippery",
+            "answer": "escorregadio",
+            "source_ref": "escorregadio"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: vertigo / dizziness",
+            "answer": "vertigens",
+            "source_ref": "vertigens"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: tunnel",
+            "answer": "túnel",
+            "source_ref": "túnel"
+          },
+          {
+            "id": "rv-sit-d78-on-a-levada-walk-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d78-on-a-levada-walk-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+            "caption": "Ilha da Madeira, Levadas — Portuguese-language documentary (ECOAMA)"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3186 @@
+{
+  "batch": 2,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:22:44.081Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d51-post-office-and-parcels",
+      "title": "Post Office & Parcels",
+      "month": 2,
+      "day": 51,
+      "week": 8,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-host",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d51-post-office-and-parcels",
+        "title": "Post Office & Parcels",
+        "summary": "At the CTT counter and with couriers: sending a parcel, buying stamps, collecting a registered letter with the aviso, and dealing with a missed-delivery note.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-host",
+          "track-social"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d51-post-office-and-parcels-1",
+            "base": "Queria {action}, por favor.",
+            "translation": "I'd like to {action}, please.",
+            "slots": [
+              {
+                "name": "action",
+                "description": "The action to perform at the post office.",
+                "options": [
+                  "enviar uma encomenda",
+                  "comprar selos",
+                  "levantar uma carta",
+                  "levantar uma encomenda"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Bom dia. Queria enviar uma encomenda.",
+                "translation": "Good morning. I'd like to send a parcel.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d51-post-office-and-parcels-2",
+            "base": "É para {destination}.",
+            "translation": "It's for {destination}.",
+            "slots": [
+              {
+                "name": "destination",
+                "description": "The destination of the mail/parcel.",
+                "options": [
+                  "Portugal continental",
+                  "a Europa",
+                  "o estrangeiro",
+                  "o Funchal"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "É para Lisboa, em Portugal continental.",
+                "translation": "It's for Lisbon, in mainland Portugal.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d51-post-office-and-parcels-3",
+            "base": "Recebi um {note_type}.",
+            "translation": "I received a {note_type}.",
+            "slots": [
+              {
+                "name": "note_type",
+                "description": "The type of notice received.",
+                "options": [
+                  "aviso de receção",
+                  "aviso de tentativa de entrega"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Recebi um aviso de receção para uma carta registada.",
+                "translation": "I received a delivery notice for a registered letter.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d51-post-office-and-parcels-4",
+            "base": "O meu {document}, por favor.",
+            "translation": "My {document}, please.",
+            "slots": [
+              {
+                "name": "document",
+                "description": "The identification document.",
+                "options": [
+                  "documento de identificação",
+                  "cartão de cidadão"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Aqui está o meu cartão de cidadão.",
+                "translation": "Here is my ID card.",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "CTT",
+            "translation": "Post office (Correios, Telégrafos e Telefones)",
+            "pronunciation": "say-tay-tay",
+            "register": "neutral",
+            "note": "Common acronym for the national postal service in Portugal."
+          },
+          {
+            "word": "encomenda",
+            "translation": "Parcel / package",
+            "pronunciation": "en-koh-MEN-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "selos",
+            "translation": "Stamps",
+            "pronunciation": "SAY-loosh",
+            "register": "neutral"
+          },
+          {
+            "word": "aviso de receção",
+            "translation": "Delivery/receipt notice (for registered mail)",
+            "pronunciation": "ah-VEE-zoo duh reh-seh-SAH-oh",
+            "register": "neutral"
+          },
+          {
+            "word": "levantar",
+            "translation": "To pick up / collect",
+            "pronunciation": "leh-van-TAR",
+            "register": "neutral"
+          },
+          {
+            "word": "correio registado",
+            "translation": "Registered mail",
+            "pronunciation": "koh-REH-yoo reh-jeesh-TAH-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "tentativa de entrega",
+            "translation": "Delivery attempt",
+            "pronunciation": "ten-tah-TEE-vah duh en-TREH-gah",
+            "register": "neutral"
+          },
+          {
+            "word": "documento de identificação",
+            "translation": "Identification document (ID)",
+            "pronunciation": "doo-koo-MEN-too duh ee-den-tee-fee-kah-SAH-oh",
+            "register": "neutral",
+            "note": "Often shortened to 'documento'."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d51-post-office-and-parcels-1",
+            "title": "Sending a parcel at CTT",
+            "context": "At the CTT counter, a customer wants to send a parcel.",
+            "lines": [
+              {
+                "speaker": "Customer",
+                "voice_type": "local",
+                "text": "Bom dia. Queria enviar uma encomenda, por favor.",
+                "translation": "Good morning. I'd like to send a parcel, please."
+              },
+              {
+                "speaker": "CTT Worker",
+                "voice_type": "service",
+                "text": "Bom dia. É para onde?",
+                "translation": "Good morning. Where is it for?"
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "local",
+                "text": "É para Coimbra, em Portugal continental.",
+                "translation": "It's for Coimbra, in mainland Portugal."
+              },
+              {
+                "speaker": "CTT Worker",
+                "voice_type": "service",
+                "text": "Pois. Tem de preencher este formulário aqui.",
+                "translation": "Right. You need to fill out this form here."
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "local",
+                "text": "Ah, ok. Obrigado.",
+                "translation": "Ah, okay. Thank you."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d51-post-office-and-parcels-2",
+            "title": "Collecting a registered letter",
+            "context": "A customer is at the CTT counter to collect a registered letter using a notice.",
+            "lines": [
+              {
+                "speaker": "Customer",
+                "voice_type": "older",
+                "text": "Boa tarde. Recebi um aviso de receção para uma carta registada.",
+                "translation": "Good afternoon. I received a delivery notice for a registered letter."
+              },
+              {
+                "speaker": "CTT Worker",
+                "voice_type": "service",
+                "text": "Pois, claro. O seu documento de identificação, por favor.",
+                "translation": "Right, of course. Your ID, please."
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "older",
+                "text": "Aqui está. É o meu cartão de cidadão.",
+                "translation": "Here it is. It's my ID card."
+              },
+              {
+                "speaker": "CTT Worker",
+                "voice_type": "service",
+                "text": "Obrigada. Um momento, por favor.",
+                "translation": "Thank you. One moment, please."
+              },
+              {
+                "speaker": "Customer",
+                "voice_type": "older",
+                "text": "P'ra já.",
+                "translation": "No problem. (Literally: For now.)"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness at the CTT (Post Office)",
+            "body": "When interacting with staff at the CTT, it's customary to start with a polite greeting like 'Bom dia' (Good morning) or 'Boa tarde' (Good afternoon). Always use 'por favor' (please) when making a request and 'obrigado/a' (thank you) afterwards. For politeness with staff, it's common to use the third person singular (e.g., 'Queria...' instead of 'Eu quero...') or address them as 'o senhor' / 'a senhora' (e.g., 'Pode ajudar-me, o senhor?'). Avoid using 'você' in these contexts, as it can sound too direct or even distancing in Portugal."
+          },
+          {
+            "title": "Understanding 'Aviso de Receção' and 'Aviso de Tentativa de Entrega'",
+            "body": "An 'aviso de receção' is a notice you receive when a registered letter or parcel requires your signature upon collection. You must present this notice along with a valid form of identification (like your 'cartão de cidadão' - ID card) at the CTT to collect your item. An 'aviso de tentativa de entrega' means a courier or postal worker tried to deliver a parcel but you weren't home. This note will usually provide instructions on how to arrange a redelivery or where to pick up the parcel (often at a local CTT office or courier depot) and will include a tracking number."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You received an 'aviso de tentativa de entrega' (missed delivery note) for a parcel. You are calling the courier service to arrange a new delivery.",
+          "difficulty": 2,
+          "entry_node": "rp-d51-node-1",
+          "nodes": [
+            {
+              "id": "rp-d51-node-1",
+              "npc_text": "Transportadora X, boa tarde. Em que posso ajudar?",
+              "npc_translation": "Courier X, good afternoon. How can I help?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Boa tarde. Recebi um aviso de tentativa de entrega.",
+                  "translation": "Good afternoon. I received a missed delivery note.",
+                  "feedback": "Good start! You clearly state the reason for your call.",
+                  "next": "rp-d51-node-2"
+                },
+                {
+                  "text": "Olá. Tenho um problema com uma encomenda.",
+                  "translation": "Hello. I have a problem with a parcel.",
+                  "feedback": "This is a bit too vague. Try to be more specific about why you're calling.",
+                  "next": "rp-d51-node-fail"
+                }
+              ]
+            },
+            {
+              "id": "rp-d51-node-2",
+              "npc_text": "Pois. Pode dar-me o número do aviso, por favor?",
+              "npc_translation": "Right. Can you give me the notice number, please?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Sim, claro. É o número 123456789.",
+                  "translation": "Yes, of course. It's number 123456789.",
+                  "feedback": "Excellent! You provided the requested information politely.",
+                  "next": "rp-d51-node-3"
+                },
+                {
+                  "text": "Não sei. Onde é que está o número?",
+                  "translation": "I don't know. Where is the number?",
+                  "feedback": "The number is usually clearly printed on the delivery note. Try to find it before calling.",
+                  "next": "rp-d51-node-fail"
+                }
+              ]
+            },
+            {
+              "id": "rp-d51-node-3",
+              "npc_text": "Obrigado. Vejo aqui que a entrega não foi possível. Quer que tentemos outra vez ou prefere levantar a encomenda?",
+              "npc_translation": "Thank you. I see here that delivery wasn't possible. Do you want us to try again or do you prefer to pick up the parcel?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Podem tentar entregar outra vez, por favor?",
+                  "translation": "Can you try to deliver again, please?",
+                  "feedback": "Good choice! You're asking for a redelivery.",
+                  "next": "rp-d51-node-4-success"
+                },
+                {
+                  "text": "Prefiro levantar a encomenda. Onde é que posso ir?",
+                  "translation": "I prefer to pick up the parcel. Where can I go?",
+                  "feedback": "Good choice! You're asking where to collect it.",
+                  "next": "rp-d51-node-5-success"
+                }
+              ]
+            },
+            {
+              "id": "rp-d51-node-4-success",
+              "npc_text": "Claro. Em que dia e período é melhor para si? Manhã ou tarde?",
+              "npc_translation": "Of course. What day and period is best for you? Morning or afternoon?",
+              "npc_voice_type": "phone",
+              "options": []
+            },
+            {
+              "id": "rp-d51-node-5-success",
+              "npc_text": "Pode levantar a encomenda no nosso armazém, na zona industrial, a partir de amanhã. Precisa do aviso e do seu documento.",
+              "npc_translation": "You can pick up the parcel at our warehouse, in the industrial zone, starting tomorrow. You need the notice and your ID.",
+              "npc_voice_type": "phone",
+              "options": []
+            },
+            {
+              "id": "rp-d51-node-fail",
+              "npc_text": "Desculpe, não consigo ajudar sem mais informações. Pode verificar o aviso?",
+              "npc_translation": "Sorry, I can't help without more information. Can you check the notice?",
+              "npc_voice_type": "phone",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Collect a parcel from the CTT",
+          "prep": [
+            "Practice asking to 'levantar uma encomenda' (collect a parcel) or 'uma carta registada' (a registered letter).",
+            "Rehearse how to say you have the 'aviso de receção' and offer your 'documento de identificação'.",
+            "Listen for key questions like 'O seu documento, por favor?' and practice your response."
+          ],
+          "fallback_phrases": [
+            "Não entendi, pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, não percebi."
+          ],
+          "likely_responses": [
+            "O seu documento, por favor?",
+            "Um momento, por favor.",
+            "Aqui está a sua encomenda.",
+            "Assine aqui, por favor."
+          ]
+        },
+        "goals": [
+          "Successfully ask to send a parcel or buy stamps at the CTT.",
+          "Understand and respond to basic questions about the destination of mail or parcels.",
+          "Communicate effectively about collecting a registered letter or a parcel after a missed delivery.",
+          "Use polite language when interacting with CTT staff or courier services."
+        ],
+        "course": {
+          "month": 2,
+          "day": 51,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to {action}, please.",
+            "answer": "Queria {action}, por favor.",
+            "source_ref": "pp-sit-d51-post-office-and-parcels-1"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's for {destination}.",
+            "answer": "É para {destination}.",
+            "source_ref": "pp-sit-d51-post-office-and-parcels-2"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I received a {note_type}.",
+            "answer": "Recebi um {note_type}.",
+            "source_ref": "pp-sit-d51-post-office-and-parcels-3"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My {document}, please.",
+            "answer": "O meu {document}, por favor.",
+            "source_ref": "pp-sit-d51-post-office-and-parcels-4"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Post office (Correios, Telégrafos e Telefones)",
+            "answer": "CTT",
+            "source_ref": "CTT"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Parcel / package",
+            "answer": "encomenda",
+            "source_ref": "encomenda"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Stamps",
+            "answer": "selos",
+            "source_ref": "selos"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Delivery/receipt notice (for registered mail)",
+            "answer": "aviso de receção",
+            "source_ref": "aviso de receção"
+          },
+          {
+            "id": "rv-sit-d51-post-office-and-parcels-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d51-post-office-and-parcels-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d52-booking-by-phone",
+      "title": "Booking Appointments by Phone",
+      "month": 2,
+      "day": 52,
+      "week": 8,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-host",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d52-booking-by-phone",
+        "title": "Booking Appointments by Phone",
+        "summary": "Phoning to book, confirm or move an appointment — doctor, hairdresser, mechanic: dates, times, spelling your name, and confirming details you did not catch.",
+        "tracks": [
+          "track-structured-course",
+          "track-host",
+          "track-bureaucracy"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d52-booking-by-phone-1",
+            "base": "Gostaria de marcar um/uma {tipo_compromisso}, por favor.",
+            "translation": "I would like to book a {type_of_appointment}, please.",
+            "slots": [
+              {
+                "name": "tipo_compromisso",
+                "description": "type of appointment/commitment",
+                "options": [
+                  "consulta",
+                  "marcação",
+                  "corte de cabelo",
+                  "revisão"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d52-booking-by-phone-2",
+            "base": "É possível para {data} às {hora}?",
+            "translation": "Is it possible for {date} at {time}?",
+            "slots": [
+              {
+                "name": "data",
+                "description": "date",
+                "options": [
+                  "quarta-feira",
+                  "sexta-feira",
+                  "amanhã",
+                  "dia vinte e três"
+                ]
+              },
+              {
+                "name": "hora",
+                "description": "time",
+                "options": [
+                  "duas da tarde",
+                  "dez da manhã",
+                  "meio-dia",
+                  "quatro e meia"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d52-booking-by-phone-3",
+            "base": "Pode soletrar, por favor?",
+            "translation": "Can you spell it, please?",
+            "variants": [
+              {
+                "text": "Pode repetir, por favor?",
+                "translation": "Can you repeat, please?",
+                "register": "neutral"
+              },
+              {
+                "text": "Não percebi. Pode dizer de novo?",
+                "translation": "I didn't understand. Can you say it again?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d52-booking-by-phone-4",
+            "base": "O meu nome é {nome_completo}.",
+            "translation": "My name is {full_name}.",
+            "slots": [
+              {
+                "name": "nome_completo",
+                "description": "full name",
+                "options": [
+                  "Maria Silva",
+                  "João Santos",
+                  "Ana Costa"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "marcar",
+            "translation": "to book, to schedule",
+            "pronunciation": "mar-KAR",
+            "register": "neutral"
+          },
+          {
+            "word": "consulta",
+            "translation": "appointment (often medical or professional)",
+            "pronunciation": "kon-SOOL-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "marcação",
+            "translation": "booking, appointment (general)",
+            "pronunciation": "mar-kah-SAU",
+            "register": "neutral"
+          },
+          {
+            "word": "data",
+            "translation": "date",
+            "pronunciation": "DAH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "hora",
+            "translation": "time, hour",
+            "pronunciation": "OH-rah",
+            "register": "neutral"
+          },
+          {
+            "word": "soletrar",
+            "translation": "to spell",
+            "pronunciation": "so-leh-TRAR",
+            "register": "neutral"
+          },
+          {
+            "word": "disponível",
+            "translation": "available",
+            "pronunciation": "deez-po-NEE-vel",
+            "register": "neutral"
+          },
+          {
+            "word": "confirmar",
+            "translation": "to confirm",
+            "pronunciation": "kon-feer-MAR",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d52-booking-by-phone-1",
+            "title": "Booking a Doctor's Appointment",
+            "context": "A person is calling a medical clinic in Funchal to book an appointment with their doctor.",
+            "lines": [
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Clínica da Saúde, diga!",
+                "translation": "Health Clinic, speak!"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde. Gostaria de marcar uma consulta com o Dr. Santos, por favor.",
+                "translation": "Good afternoon. I would like to book an appointment with Dr. Santos, please."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Boa tarde. Para quando seria? O Dr. Santos está disponível na próxima terça-feira.",
+                "translation": "Good afternoon. For when would it be? Dr. Santos is available next Tuesday."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Terça-feira? Hmm... É possível para quinta-feira, dia vinte e três?",
+                "translation": "Tuesday? Hmm... Is it possible for Thursday, the twenty-third?"
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Dia vinte e três... sim, às dez da manhã. Serve-lhe?",
+                "translation": "The twenty-third... yes, at ten in the morning. Does that suit you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, perfeito! O meu nome é Ana Costa.",
+                "translation": "Yes, perfect! My name is Ana Costa."
+              },
+              {
+                "speaker": "Rececionista",
+                "voice_type": "service",
+                "text": "Ana Costa. Certo. Consulta marcada para quinta-feira, dia vinte e três, às dez da manhã. Obrigada!",
+                "translation": "Ana Costa. Right. Appointment booked for Thursday, the twenty-third, at ten in the morning. Thank you!"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Obrigada eu. Até lá!",
+                "translation": "Thank you. See you then!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Phone Greetings in Portugal",
+            "body": "When answering the phone in Portugal, especially in a professional context, you'll often hear 'Diga!' (Speak!) or 'Está?' (Are you there?). As a caller, a simple 'Bom dia/Boa tarde' is appropriate. It's polite to state your purpose clearly and concisely."
+          },
+          {
+            "title": "Spelling Names and Confirming Details",
+            "body": "It's common to be asked to spell your name, especially if it's not a very common Portuguese name. Don't be afraid to ask the other person to repeat or spell information if you don't catch it the first time. Phrases like 'Pode repetir, por favor?' (Can you repeat, please?) or 'Não percebi, pode soletrar?' (I didn't understand, can you spell it?) are very useful."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a hairdresser in Funchal to book a haircut. You need to find an available time, give your name, and confirm the details.",
+          "difficulty": 3,
+          "entry_node": "rp-d52-start",
+          "nodes": [
+            {
+              "id": "rp-d52-start",
+              "npc_text": "Bom dia, Cabeleireiro Estilo. Diga!",
+              "npc_translation": "Good morning, Style Hairdresser. Speak!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Gostaria de marcar um corte de cabelo, por favor.",
+                  "translation": "Good morning. I would like to book a haircut, please.",
+                  "feedback": "Excellent start! Clear and polite.",
+                  "next": "rp-d52-ask-day"
+                }
+              ]
+            },
+            {
+              "id": "rp-d52-ask-day",
+              "npc_text": "Certo. Para quando gostaria? Temos disponibilidade na próxima semana, a partir de terça-feira.",
+              "npc_translation": "Right. For when would you like it? We have availability next week, starting from Tuesday.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É possível para quarta-feira, às três da tarde?",
+                  "translation": "Is it possible for Wednesday, at three in the afternoon?",
+                  "feedback": "Good, you're suggesting a specific day and time.",
+                  "next": "rp-d52-check-wednesday"
+                },
+                {
+                  "text": "Que horas têm na terça-feira?",
+                  "translation": "What times do you have on Tuesday?",
+                  "feedback": "Asking for options is a good strategy.",
+                  "next": "rp-d52-check-tuesday"
+                }
+              ]
+            },
+            {
+              "id": "rp-d52-check-wednesday",
+              "npc_text": "Quarta-feira às três... sim, está livre. Qual é o seu nome, por favor?",
+              "npc_translation": "Wednesday at three... yes, it's free. What's your name, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "O meu nome é Sofia Santos.",
+                  "translation": "My name is Sofia Santos.",
+                  "feedback": "Perfect, giving your full name clearly.",
+                  "next": "rp-d52-confirm-name"
+                }
+              ]
+            },
+            {
+              "id": "rp-d52-check-tuesday",
+              "npc_text": "Na terça-feira temos às dez da manhã ou às quatro da tarde. Qual prefere?",
+              "npc_translation": "On Tuesday we have ten in the morning or four in the afternoon. Which do you prefer?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Às quatro da tarde, por favor. O meu nome é Carlos Pereira.",
+                  "translation": "At four in the afternoon, please. My name is Carlos Pereira.",
+                  "feedback": "Good choice and clear name.",
+                  "next": "rp-d52-confirm-name"
+                }
+              ]
+            },
+            {
+              "id": "rp-d52-confirm-name",
+              "npc_text": "Sofia Santos / Carlos Pereira, certo. Pode soletrar o apelido, por favor?",
+              "npc_translation": "Sofia Santos / Carlos Pereira, right. Can you spell the surname, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Claro. S-A-N-T-O-S. / P-E-R-E-I-R-A.",
+                  "translation": "Of course. S-A-N-T-O-S. / P-E-R-E-I-R-A.",
+                  "feedback": "Excellent, spelling it out clearly.",
+                  "next": "rp-d52-final-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-d52-final-confirm",
+              "npc_text": "Obrigada. Então, está marcada a sua visita para quarta-feira, dia vinte e três, às três da tarde. / terça-feira, dia vinte e dois, às quatro da tarde. Certo?",
+              "npc_translation": "Thank you. So, your visit is booked for Wednesday, the twenty-third, at three in the afternoon. / Tuesday, the twenty-second, at four in the afternoon. Correct?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, está certo. Muito obrigada!",
+                  "translation": "Yes, that's correct. Thank you very much!",
+                  "feedback": "Great job confirming the details and ending politely!"
+                },
+                {
+                  "text": "Não, desculpe. Pensei que fosse às duas da tarde.",
+                  "translation": "No, sorry. I thought it was at two in the afternoon.",
+                  "feedback": "Good, correcting a misunderstanding is important. The NPC would likely offer to check availability again."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Book a Haircut by Phone",
+          "prep": [
+            "Review the phrase patterns for booking and confirming.",
+            "Practice spelling your name and a few common Portuguese names.",
+            "Mentally prepare to ask for repetition if you don't understand."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode falar mais devagar, por favor?",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Para quando gostaria?",
+            "Qual é o seu nome?",
+            "Pode soletrar, por favor?",
+            "Está marcado."
+          ]
+        },
+        "goals": [
+          "Initiate a phone call to book an appointment.",
+          "State your desired service and preferred time/date.",
+          "Provide your name and spell it if requested.",
+          "Confirm the appointment details."
+        ],
+        "course": {
+          "month": 2,
+          "day": 52,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d52-booking-by-phone-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to book a {type_of_appointment}, please.",
+            "answer": "Gostaria de marcar um/uma {tipo_compromisso}, por favor.",
+            "source_ref": "pp-sit-d52-booking-by-phone-1"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Is it possible for {date} at {time}?",
+            "answer": "É possível para {data} às {hora}?",
+            "source_ref": "pp-sit-d52-booking-by-phone-2"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you spell it, please?",
+            "answer": "Pode soletrar, por favor?",
+            "source_ref": "pp-sit-d52-booking-by-phone-3"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My name is {full_name}.",
+            "answer": "O meu nome é {nome_completo}.",
+            "source_ref": "pp-sit-d52-booking-by-phone-4"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to book, to schedule",
+            "answer": "marcar",
+            "source_ref": "marcar"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: appointment (often medical or professional)",
+            "answer": "consulta",
+            "source_ref": "consulta"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: booking, appointment (general)",
+            "answer": "marcação",
+            "source_ref": "marcação"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: date",
+            "answer": "data",
+            "source_ref": "data"
+          },
+          {
+            "id": "rv-sit-d52-booking-by-phone-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d52-booking-by-phone-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d53-household-problems",
+      "title": "Describing Problems at Home",
+      "month": 2,
+      "day": 53,
+      "week": 8,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-host",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d53-household-problems",
+        "title": "Describing Problems at Home",
+        "summary": "Something at home is broken, leaking or not working: describing the problem clearly (não funciona, está avariado, está a pingar), asking for help and understanding simple instructions.",
+        "tracks": [
+          "track-structured-course",
+          "track-host",
+          "track-work"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d53-household-problems-1",
+            "base": "O/A {item} não está a funcionar.",
+            "translation": "The {item} isn't working.",
+            "slots": [
+              {
+                "name": "item",
+                "description": "Household item",
+                "options": [
+                  "frigorífico",
+                  "máquina de lavar roupa",
+                  "luz da cozinha",
+                  "torneira da casa de banho"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "O/A {item} está avariado/a.",
+                "translation": "The {item} is broken/out of order.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d53-household-problems-2",
+            "base": "Está a {problem}.",
+            "translation": "It's {problem}.",
+            "slots": [
+              {
+                "name": "problem",
+                "description": "Type of problem",
+                "options": [
+                  "pingar",
+                  "fazer barulho estranho",
+                  "fugir água",
+                  "fugir gás"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d53-household-problems-3",
+            "base": "Preciso de um {professional}.",
+            "translation": "I need a {professional}.",
+            "slots": [
+              {
+                "name": "professional",
+                "description": "Type of professional",
+                "options": [
+                  "canalizador",
+                  "eletricista",
+                  "técnico"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Pode enviar um {professional}?",
+                "translation": "Can you send a {professional}?",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d53-household-problems-4",
+            "base": "Quando é que pode vir {action}?",
+            "translation": "When can you come {action}?",
+            "slots": [
+              {
+                "name": "action",
+                "description": "Action to be taken",
+                "options": [
+                  "ver o problema",
+                  "arranjar",
+                  "fazer a reparação"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "avariado/a",
+            "translation": "broken/out of order",
+            "pronunciation": "ah-vah-ree-AH-doo/dah",
+            "register": "neutral"
+          },
+          {
+            "word": "a pingar",
+            "translation": "leaking/dripping",
+            "pronunciation": "ah peen-GAHR",
+            "register": "neutral"
+          },
+          {
+            "word": "canalizador",
+            "translation": "plumber",
+            "pronunciation": "kah-nah-lee-zah-DOR",
+            "register": "neutral"
+          },
+          {
+            "word": "eletricista",
+            "translation": "electrician",
+            "pronunciation": "eh-leh-tree-SEE-shtah",
+            "register": "neutral"
+          },
+          {
+            "word": "arranjar",
+            "translation": "to fix/repair",
+            "pronunciation": "ah-rrahn-ZHAHR",
+            "register": "neutral"
+          },
+          {
+            "word": "fugir água/gás",
+            "translation": "water/gas leaking",
+            "pronunciation": "foo-ZHEER AH-gwa/gahsh",
+            "register": "neutral"
+          },
+          {
+            "word": "a luz",
+            "translation": "the light/electricity",
+            "pronunciation": "ah loozh",
+            "register": "neutral"
+          },
+          {
+            "word": "quadro elétrico",
+            "translation": "electrical panel/fuse box",
+            "pronunciation": "KWAH-droh eh-LEH-tree-koh",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d53-household-problems-1",
+            "title": "Calling a Plumber",
+            "context": "A resident calls a local plumbing service in Madeira because their tap is leaking.",
+            "lines": [
+              {
+                "speaker": "Serviço de Canalização",
+                "voice_type": "service",
+                "text": "Serviço de Canalização, boa tarde. Diga!",
+                "translation": "Plumbing Service, good afternoon. Speak!"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde. A minha torneira da cozinha está a pingar imenso. Precisava de ajuda.",
+                "translation": "Good afternoon. My kitchen tap is leaking a lot. I needed help."
+              },
+              {
+                "speaker": "Serviço de Canalização",
+                "voice_type": "service",
+                "text": "Pois, a pingar, diz? É na água fria ou na quente?",
+                "translation": "Right, leaking, you say? Is it the cold or hot water?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "É na água fria. Não para de pingar. Já tentei fechar bem, mas nada.",
+                "translation": "It's the cold water. It won't stop dripping. I already tried to close it tightly, but nothing."
+              },
+              {
+                "speaker": "Serviço de Canalização",
+                "voice_type": "service",
+                "text": "Certo. Podemos enviar um canalizador amanhã de manhã, entre as nove e as onze. Serve-lhe?",
+                "translation": "Okay. We can send a plumber tomorrow morning, between nine and eleven. Does that suit you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, amanhã de manhã está ótimo. Muito obrigada!",
+                "translation": "Yes, tomorrow morning is great. Thank you very much!"
+              },
+              {
+                "speaker": "Serviço de Canalização",
+                "voice_type": "service",
+                "text": "De nada. Até amanhã.",
+                "translation": "You're welcome. See you tomorrow."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d53-household-problems-2",
+            "title": "Reporting a Power Cut",
+            "context": "A resident calls the electricity company about a power outage in their apartment.",
+            "lines": [
+              {
+                "speaker": "Empresa de Eletricidade",
+                "voice_type": "phone",
+                "text": "Boa noite, apoio ao cliente. Qual é o problema?",
+                "translation": "Good evening, customer support. What's the problem?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Boa noite. A luz do meu apartamento não está a funcionar. Está tudo escuro.",
+                "translation": "Good evening. The light in my apartment isn't working. It's all dark."
+              },
+              {
+                "speaker": "Empresa de Eletricidade",
+                "voice_type": "phone",
+                "text": "Não tem luz de todo, ou só em algumas divisões? Já verificou o quadro elétrico?",
+                "translation": "You have no light at all, or only in some rooms? Have you checked the electrical panel?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "Não, não tenho luz em lado nenhum. O quadro elétrico parece estar bem, não saltou nada.",
+                "translation": "No, I don't have light anywhere. The electrical panel seems fine, nothing tripped."
+              },
+              {
+                "speaker": "Empresa de Eletricidade",
+                "voice_type": "phone",
+                "text": "Pois. Pode ser uma avaria na rua. Qual é a sua morada, por favor?",
+                "translation": "Right. It could be a fault on the street. What's your address, please?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "younger",
+                "text": "É na Rua da Calçada, número vinte e cinco. No Funchal.",
+                "translation": "It's on Rua da Calçada, number twenty-five. In Funchal."
+              },
+              {
+                "speaker": "Empresa de Eletricidade",
+                "voice_type": "phone",
+                "text": "Ok, vamos enviar uma equipa. Pode demorar um bocado, mas vamos tentar resolver o mais rápido possível.",
+                "translation": "Okay, we'll send a team. It might take a while, but we'll try to resolve it as quickly as possible."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Calling for Services in Portugal",
+            "body": "When calling for a service (plumber, electrician, etc.), it's common to start with a polite greeting like 'Bom dia/Boa tarde/Boa noite' and then state your problem directly. Using 'precisava de ajuda' (I needed help) or 'precisava que viesse ver' (I needed you to come see) is a polite way to express your need without sounding demanding. Expect a 'Diga!' or 'Pois!' as a common response from the service provider."
+          },
+          {
+            "title": "Describing Problems Clearly",
+            "body": "Be specific but concise when describing the issue. Phrases like 'está a pingar' (it's dripping), 'não está a funcionar' (it's not working), or 'está avariado/a' (it's broken) are very common. If it's a leak, specifying 'água' or 'gás' is crucial. Service providers might ask follow-up questions like 'onde é?' (where is it?) or 'há quanto tempo?' (for how long?)."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You call a local handyman service in Funchal because your bathroom light isn't working.",
+          "difficulty": 2,
+          "entry_node": "rp-d53-start",
+          "nodes": [
+            {
+              "id": "rp-d53-start",
+              "npc_text": "Serviço de Reparações, boa tarde. Diga!",
+              "npc_translation": "Repair Service, good afternoon. Speak!",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. A luz da minha casa de banho não está a funcionar.",
+                  "translation": "Good afternoon. My bathroom light isn't working.",
+                  "feedback": "Excellent start! You clearly stated the problem.",
+                  "next": "rp-d53-where"
+                },
+                {
+                  "text": "Olá. A luz está avariada.",
+                  "translation": "Hello. The light is broken.",
+                  "feedback": "Good, but 'não está a funcionar' is a bit more common for lights. Also, 'Boa tarde' is better than 'Olá' for a service call.",
+                  "next": "rp-d53-where"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-where",
+              "npc_text": "Pois. A luz da casa de banho, diz. Já verificou o disjuntor?",
+              "npc_translation": "Right. The bathroom light, you say. Have you checked the circuit breaker?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, já vi o quadro elétrico e está tudo bem. Não saltou nada.",
+                  "translation": "Yes, I already checked the electrical panel and everything is fine. Nothing tripped.",
+                  "feedback": "Perfect! You confirmed you checked and nothing is wrong with the breaker.",
+                  "next": "rp-d53-schedule"
+                },
+                {
+                  "text": "Não sei o que é um disjuntor.",
+                  "translation": "I don't know what a circuit breaker is.",
+                  "feedback": "Honest, but they might ask you to check it. 'Quadro elétrico' is the common term for the panel.",
+                  "next": "rp-d53-schedule-no-check"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-schedule",
+              "npc_text": "Certo. Nesse caso, precisamos de enviar um eletricista. Podemos ir amanhã de manhã, entre as dez e o meio-dia?",
+              "npc_translation": "Okay. In that case, we need to send an electrician. Can we come tomorrow morning, between ten and noon?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, amanhã de manhã está bem para mim. Obrigada!",
+                  "translation": "Yes, tomorrow morning is fine for me. Thank you!",
+                  "feedback": "Great, you accepted the appointment politely.",
+                  "next": "rp-d53-confirm"
+                },
+                {
+                  "text": "Não, amanhã de manhã não posso. Pode ser à tarde?",
+                  "translation": "No, I can't tomorrow morning. Can it be in the afternoon?",
+                  "feedback": "Good, you're negotiating the time. Remember to be polite.",
+                  "next": "rp-d53-reschedule"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-schedule-no-check",
+              "npc_text": "Ah, pois. O disjuntor é no quadro elétrico. Se não sabe, é melhor o eletricista ir lá ver. Podemos ir amanhã de manhã, entre as dez e o meio-dia?",
+              "npc_translation": "Ah, I see. The circuit breaker is in the electrical panel. If you don't know, it's better for the electrician to go there and check. Can we come tomorrow morning, between ten and noon?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, amanhã de manhã está bem. Muito obrigada.",
+                  "translation": "Yes, tomorrow morning is fine. Thank you very much.",
+                  "feedback": "Good, you accepted the appointment.",
+                  "next": "rp-d53-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-reschedule",
+              "npc_text": "À tarde, diz? Hum... Podemos tentar entre as duas e as quatro da tarde. Serve-lhe?",
+              "npc_translation": "In the afternoon, you say? Hmm... We can try between two and four in the afternoon. Does that suit you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, isso está perfeito. Até amanhã.",
+                  "translation": "Yes, that's perfect. See you tomorrow.",
+                  "feedback": "Excellent, you successfully rescheduled and confirmed.",
+                  "next": "rp-d53-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-d53-confirm",
+              "npc_text": "Pronto. Então fica combinado. Até amanhã.",
+              "npc_translation": "Alright. So it's settled. See you tomorrow.",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Report a household problem by phone",
+          "prep": [
+            "Review the key phrases for describing problems (e.g., 'não está a funcionar', 'está a pingar').",
+            "Practice asking for a professional and scheduling an appointment.",
+            "Mentally prepare to give your address if asked (e.g., 'A minha morada é...')."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar um bocado mais devagar, por favor?",
+            "Como se diz isso em português?"
+          ],
+          "likely_responses": [
+            "Serviço de Reparações, boa tarde. Diga!",
+            "Qual é o problema?",
+            "Onde é que é o problema?",
+            "Quando é que lhe dá mais jeito?",
+            "Podemos ir amanhã, entre as X e as Y."
+          ]
+        },
+        "goals": [
+          "Describe common household problems (e.g., a leak, a broken appliance, no electricity).",
+          "Request assistance from a professional (e.g., a plumber, an electrician).",
+          "Understand and respond to simple questions about the problem and scheduling.",
+          "Maintain a polite tone during a service call."
+        ],
+        "course": {
+          "month": 2,
+          "day": 53,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d53-household-problems-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The {item} isn't working.",
+            "answer": "O/A {item} não está a funcionar.",
+            "source_ref": "pp-sit-d53-household-problems-1"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's {problem}.",
+            "answer": "Está a {problem}.",
+            "source_ref": "pp-sit-d53-household-problems-2"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need a {professional}.",
+            "answer": "Preciso de um {professional}.",
+            "source_ref": "pp-sit-d53-household-problems-3"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: When can you come {action}?",
+            "answer": "Quando é que pode vir {action}?",
+            "source_ref": "pp-sit-d53-household-problems-4"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: broken/out of order",
+            "answer": "avariado/a",
+            "source_ref": "avariado/a"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: leaking/dripping",
+            "answer": "a pingar",
+            "source_ref": "a pingar"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: plumber",
+            "answer": "canalizador",
+            "source_ref": "canalizador"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: electrician",
+            "answer": "eletricista",
+            "source_ref": "eletricista"
+          },
+          {
+            "id": "rv-sit-d53-household-problems-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d53-household-problems-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d54-talking-about-your-week",
+      "title": "Talking About Your Week",
+      "month": 2,
+      "day": 54,
+      "week": 8,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d54-talking-about-your-week",
+        "title": "Talking About Your Week",
+        "summary": "Telling a neighbour or friend what you did this week: sequencing past events with the preterite and setting the scene with the imperfect, reacting to their week in return.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d54-talking-about-your-week-1",
+            "base": "Então, como foi a tua semana?",
+            "translation": "So, how was your week?",
+            "variants": [
+              {
+                "text": "Como é que foi a tua semana?",
+                "translation": "How was your week?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d54-talking-about-your-week-2",
+            "base": "A minha semana foi {adjetivo}.",
+            "translation": "My week was {adjective}.",
+            "slots": [
+              {
+                "name": "adjetivo",
+                "description": "adjective describing the week",
+                "options": [
+                  "boa",
+                  "calma",
+                  "ocupada",
+                  "cansativa",
+                  "divertida"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d54-talking-about-your-week-3",
+            "base": "Eu {fui ao sítio} e {fiz a atividade}.",
+            "translation": "I {went to the place} and {did the activity}.",
+            "slots": [
+              {
+                "name": "fui ao sítio",
+                "description": "where you went",
+                "options": [
+                  "fui ao mercado",
+                  "fui à levada",
+                  "fui ao centro comercial",
+                  "fui à praia"
+                ]
+              },
+              {
+                "name": "fiz a atividade",
+                "description": "what you did",
+                "options": [
+                  "comprei fruta",
+                  "andei um bocado",
+                  "vi as lojas",
+                  "apanhei sol"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d54-talking-about-your-week-4",
+            "base": "Enquanto {estava a fazer}, {aconteceu isto}.",
+            "translation": "While {I was doing}, {this happened}.",
+            "slots": [
+              {
+                "name": "estava a fazer",
+                "description": "what you were doing (imperfect)",
+                "options": [
+                  "estava a cozinhar",
+                  "estava a ver televisão",
+                  "estava a trabalhar",
+                  "estava a ler"
+                ]
+              },
+              {
+                "name": "aconteceu isto",
+                "description": "what happened (preterite)",
+                "options": [
+                  "o telefone tocou",
+                  "a luz foi abaixo",
+                  "recebi uma chamada",
+                  "o vizinho bateu à porta"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "acontecer",
+            "translation": "to happen",
+            "pronunciation": "ah-kon-teh-SER",
+            "register": "neutral"
+          },
+          {
+            "word": "cansativo",
+            "translation": "tiring",
+            "pronunciation": "kan-sah-TEE-voo",
+            "register": "neutral"
+          },
+          {
+            "word": "divertido",
+            "translation": "fun",
+            "pronunciation": "dee-ver-TEE-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "pois é",
+            "translation": "that's right / yeah",
+            "pronunciation": "poysh EH",
+            "register": "informal",
+            "note": "Common interjection for agreement or acknowledgement."
+          },
+          {
+            "word": "um bocado",
+            "translation": "a bit / a little",
+            "pronunciation": "oom boo-KAH-doo",
+            "register": "neutral",
+            "note": "Common in Portugal, often replaces 'um pouco'."
+          },
+          {
+            "word": "resolver",
+            "translation": "to solve / to resolve",
+            "pronunciation": "reh-zol-VER",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d54-talking-about-your-week-1",
+            "title": "A Week's Chat",
+            "context": "Two neighbours, Maria and João, meet by chance on the street and chat about their week.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Olá, João! Então, como foi a tua semana?",
+                "translation": "Hi, João! So, how was your week?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Olá, Maria! Foi um bocado ocupada, mas boa. Fui ao Funchal e estive a resolver uns papéis.",
+                "translation": "Hi, Maria! It was a bit busy, but good. I went to Funchal and was sorting out some paperwork."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Ah, pois é. E correu tudo bem?",
+                "translation": "Ah, that's right. Did everything go well?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Sim, correu. Enquanto estava lá, encontrei o teu primo, o Rui!",
+                "translation": "Yes, it did. While I was there, I ran into your cousin, Rui!"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "A sério? Que coincidência! A minha semana foi mais calma, estive a limpar a casa e a ir ao mercado.",
+                "translation": "Really? What a coincidence! My week was calmer, I was cleaning the house and going to the market."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Que bom! Assim aproveitas para descansar um bocado.",
+                "translation": "That's good! That way you can rest a bit."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Informal Address with Neighbours",
+            "body": "In Madeira, as in most of Portugal, it's very common to use the informal 'tu' form when speaking with neighbours, friends, and people you know well. This creates a sense of familiarity and community. Using 'o senhor/a senhora' in this context might sound too formal or distant."
+          },
+          {
+            "title": "Common Interjections",
+            "body": "Portuguese conversations are rich with interjections. 'Pois é' is frequently used to express agreement, acknowledgement, or to simply keep the conversation flowing. 'Então' can mean 'so', 'then', or act as a general conversational opener, often used when asking 'How are you?' or 'What's up?'"
+          }
+        ],
+        "roleplay": {
+          "scenario": "You meet your neighbour, Dona Alice, outside your apartment building or house. She asks how your week was, and you tell her about a couple of things you did.",
+          "difficulty": 2,
+          "entry_node": "rp-d54-node-1",
+          "nodes": [
+            {
+              "id": "rp-d54-node-1",
+              "npc_text": "Olá! Então, como foi a tua semana? Espero que tenha sido boa!",
+              "npc_translation": "Hello! So, how was your week? I hope it was good!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Dona Alice! Foi boa, obrigado. Fui ao mercado e depois estive a cozinhar.",
+                  "translation": "Hello, Dona Alice! It was good, thank you. I went to the market and then I was cooking.",
+                  "feedback": "Great use of 'fui' (preterite) and 'estive a cozinhar' (imperfect for ongoing action).",
+                  "next": "rp-d54-node-2"
+                },
+                {
+                  "text": "Foi um bocado cansativa, Dona Alice. Tive muito que fazer.",
+                  "translation": "It was a bit tiring, Dona Alice. I had a lot to do.",
+                  "feedback": "Good use of 'cansativa' and 'tive' (preterite). Now she'll ask for more details.",
+                  "next": "rp-d54-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-node-2",
+              "npc_text": "Ah, que bom! E encontraste coisas boas no mercado? Eu adoro ir lá.",
+              "npc_translation": "Ah, that's good! And did you find good things at the market? I love going there.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, encontrei fruta fresca e uns legumes ótimos. Enquanto estava lá, vi a tua filha!",
+                  "translation": "Yes, I found fresh fruit and some great vegetables. While I was there, I saw your daughter!",
+                  "feedback": "Excellent! You used 'encontrei' (preterite) and 'estava lá' (imperfect) correctly.",
+                  "next": "rp-d54-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-node-3",
+              "npc_text": "Pois é, às vezes as semanas são assim. Mas conseguiste resolver tudo?",
+              "npc_translation": "Yeah, sometimes weeks are like that. But did you manage to resolve everything?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, consegui resolver quase tudo. Só falta uma coisa para amanhã.",
+                  "translation": "Yes, I managed to resolve almost everything. Only one thing left for tomorrow.",
+                  "feedback": "Well done using 'consegui resolver' (preterite).",
+                  "next": "rp-d54-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-node-4",
+              "npc_text": "A sério? Que engraçado! Ela disse-me que ia lá. E o que é que ela estava a fazer?",
+              "npc_translation": "Really? How funny! She told me she was going there. And what was she doing?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ela estava a comprar flores, para a casa, acho eu.",
+                  "translation": "She was buying flowers, for the house, I think.",
+                  "feedback": "Perfect use of 'estava a comprar' (imperfect) for an ongoing action.",
+                  "next": "rp-d54-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d54-node-5",
+              "npc_text": "Ah, está bem. Pois, as coisas nunca acabam! Mas agora é fim de semana, p'ra descansar.",
+              "npc_translation": "Ah, okay. Well, things never end! But now it's the weekend, for resting.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "É verdade! Bom fim de semana, Dona Alice!",
+                  "translation": "That's true! Have a good weekend, Dona Alice!",
+                  "feedback": "Polite and natural ending to the conversation."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Share Your Week's Highlights",
+          "prep": [
+            "Think about 2-3 things you did this week. One simple activity, and maybe one where something 'happened' while you were doing something else.",
+            "Practice describing these events using the preterite ('fui', 'fiz', 'encontrei') and the imperfect ('estava a fazer').",
+            "Prepare to ask your friend/neighbour about their week in return."
+          ],
+          "fallback_phrases": [
+            "Não foi muito interessante.",
+            "Foi normal, sem novidades.",
+            "E a tua, como foi?"
+          ],
+          "likely_responses": [
+            "Ah, que bom!",
+            "Pois é, as semanas são assim.",
+            "E o que é que fizeste?",
+            "A minha também foi..."
+          ]
+        },
+        "goals": [
+          "Describe past events using the preterite tense.",
+          "Set the scene and describe ongoing actions in the past using the imperfect tense.",
+          "React to a friend's or neighbour's description of their week."
+        ],
+        "course": {
+          "month": 2,
+          "day": 54,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d54-talking-about-your-week-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: So, how was your week?",
+            "answer": "Então, como foi a tua semana?",
+            "source_ref": "pp-sit-d54-talking-about-your-week-1"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My week was {adjective}.",
+            "answer": "A minha semana foi {adjetivo}.",
+            "source_ref": "pp-sit-d54-talking-about-your-week-2"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I {went to the place} and {did the activity}.",
+            "answer": "Eu {fui ao sítio} e {fiz a atividade}.",
+            "source_ref": "pp-sit-d54-talking-about-your-week-3"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: While {I was doing}, {this happened}.",
+            "answer": "Enquanto {estava a fazer}, {aconteceu isto}.",
+            "source_ref": "pp-sit-d54-talking-about-your-week-4"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to happen",
+            "answer": "acontecer",
+            "source_ref": "acontecer"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: tiring",
+            "answer": "cansativo",
+            "source_ref": "cansativo"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fun",
+            "answer": "divertido",
+            "source_ref": "divertido"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: that's right / yeah",
+            "answer": "pois é",
+            "source_ref": "pois é"
+          },
+          {
+            "id": "rv-sit-d54-talking-about-your-week-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d54-talking-about-your-week-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d55-plans-and-arrangements",
+      "title": "Plans & Arrangements",
+      "month": 2,
+      "day": 55,
+      "week": 8,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-bureaucracy",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d55-plans-and-arrangements",
+        "title": "Plans & Arrangements",
+        "summary": "Making, confirming and changing plans: suggesting times, agreeing where to meet, moving something to another day, and confirming by a short message.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-bureaucracy",
+          "track-host"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d55-plans-and-arrangements-1",
+            "base": "Que tal {dia} às {hora}?",
+            "translation": "What about {day} at {time}?",
+            "slots": [
+              {
+                "name": "dia",
+                "description": "Day of the week",
+                "options": [
+                  "segunda-feira",
+                  "terça-feira",
+                  "quarta-feira",
+                  "quinta-feira",
+                  "sexta-feira",
+                  "sábado",
+                  "domingo",
+                  "amanhã",
+                  "depois de amanhã"
+                ]
+              },
+              {
+                "name": "hora",
+                "description": "Time of day",
+                "options": [
+                  "nove",
+                  "dez",
+                  "meio-dia",
+                  "uma",
+                  "duas e meia",
+                  "três",
+                  "quatro e um quarto",
+                  "cinco"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Está livre {dia} às {hora}?",
+                "translation": "Are you free {day} at {time}?",
+                "register": "formal",
+                "note": "More polite way to ask about availability."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d55-plans-and-arrangements-2",
+            "base": "Podemos mudar para {dia}?",
+            "translation": "Can we change to {day}?",
+            "slots": [
+              {
+                "name": "dia",
+                "description": "New day",
+                "options": [
+                  "amanhã",
+                  "depois de amanhã",
+                  "sexta-feira",
+                  "próxima semana"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Será que podemos mudar para {dia}?",
+                "translation": "Could we possibly change to {day}?",
+                "register": "formal",
+                "note": "Adds a layer of politeness and indirectness."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d55-plans-and-arrangements-3",
+            "base": "Confirmo a nossa {tipo_encontro} para {dia} às {hora}.",
+            "translation": "I confirm our {type_of_meeting} for {day} at {time}.",
+            "slots": [
+              {
+                "name": "tipo_encontro",
+                "description": "Type of meeting or arrangement",
+                "options": [
+                  "reunião",
+                  "entrega",
+                  "marcação",
+                  "visita"
+                ]
+              },
+              {
+                "name": "dia",
+                "description": "Day of the week",
+                "options": [
+                  "hoje",
+                  "amanhã",
+                  "segunda-feira",
+                  "quinta-feira"
+                ]
+              },
+              {
+                "name": "hora",
+                "description": "Time of day",
+                "options": [
+                  "dez",
+                  "duas da tarde",
+                  "quatro e meia"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d55-plans-and-arrangements-4",
+            "base": "Sim, combinado.",
+            "translation": "Yes, agreed.",
+            "variants": [
+              {
+                "text": "Sim, perfeito!",
+                "translation": "Yes, perfect!",
+                "register": "neutral"
+              },
+              {
+                "text": "Está bem, obrigado/a.",
+                "translation": "Okay, thank you.",
+                "register": "formal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "combinado",
+            "translation": "agreed / settled",
+            "pronunciation": "kom-bee-NAH-doo",
+            "register": "neutral",
+            "note": "Used to confirm an agreement."
+          },
+          {
+            "word": "encontro",
+            "translation": "meeting / appointment",
+            "pronunciation": "en-KON-troo",
+            "register": "neutral",
+            "note": "General term for a scheduled get-together."
+          },
+          {
+            "word": "disponível",
+            "translation": "available",
+            "pronunciation": "deez-po-NEE-vel",
+            "register": "neutral"
+          },
+          {
+            "word": "mudar",
+            "translation": "to change",
+            "pronunciation": "moo-DAR",
+            "register": "neutral"
+          },
+          {
+            "word": "confirmar",
+            "translation": "to confirm",
+            "pronunciation": "kon-feer-MAR",
+            "register": "neutral"
+          },
+          {
+            "word": "marcar",
+            "translation": "to schedule / to book",
+            "pronunciation": "mar-KAR",
+            "register": "neutral",
+            "note": "Commonly used for making appointments or reservations."
+          },
+          {
+            "word": "dar jeito",
+            "translation": "to be convenient / to suit",
+            "pronunciation": "dar ZHEY-too",
+            "register": "neutral",
+            "note": "Used in phrases like 'não me dá jeito' (it's not convenient for me)."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d55-plans-and-arrangements-1",
+            "title": "Scheduling a plumber",
+            "context": "A customer calls a plumbing service to schedule a repair in their home.",
+            "lines": [
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Boa tarde, serviço de canalização. Em que posso ajudar?",
+                "translation": "Good afternoon, plumbing service. How can I help you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Boa tarde. Gostaria de marcar um canalizador para vir cá a casa. Tenho uma torneira a pingar.",
+                "translation": "Good afternoon. I'd like to schedule a plumber to come to my house. I have a dripping tap."
+              },
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Claro. Temos disponibilidade para amanhã de manhã, entre as nove e o meio-dia. Que tal?",
+                "translation": "Of course. We have availability for tomorrow morning, between nine and noon. How does that sound?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Amanhã de manhã não me dá jeito. Podemos mudar para depois de amanhã, à tarde? Ou na sexta-feira?",
+                "translation": "Tomorrow morning doesn't suit me. Can we change to the day after tomorrow, in the afternoon? Or on Friday?"
+              },
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Pois, depois de amanhã, quinta-feira, temos um horário livre às três da tarde. Serve?",
+                "translation": "Well, the day after tomorrow, Thursday, we have a free slot at three in the afternoon. Does that work?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, três da tarde está perfeito. Combinado.",
+                "translation": "Yes, three in the afternoon is perfect. Agreed."
+              },
+              {
+                "speaker": "Serviço",
+                "voice_type": "service",
+                "text": "Muito bem. Confirmo a sua marcação para quinta-feira, às três da tarde. Obrigado.",
+                "translation": "Very good. I confirm your appointment for Thursday, at three in the afternoon. Thank you."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d55-plans-and-arrangements-2",
+            "title": "Friends making plans",
+            "context": "Two friends, Ana and Pedro, are discussing plans for the weekend.",
+            "lines": [
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Então, Pedro, queres ir à levada no sábado de manhã?",
+                "translation": "So, Pedro, do you want to go to the levada on Saturday morning?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "local",
+                "text": "No sábado? Ui, não posso. Já tenho um compromisso. Podemos ir no domingo?",
+                "translation": "On Saturday? Oh, I can't. I already have an engagement. Can we go on Sunday?"
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Domingo? Hum, sim, domingo dá-me jeito. Que tal às nove da manhã, lá no início da levada?",
+                "translation": "Sunday? Hmm, yes, Sunday suits me. What about nine in the morning, there at the start of the levada?"
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "local",
+                "text": "Pois, nove é um bocado cedo. Que tal às dez? Assim temos mais tempo para o pequeno-almoço.",
+                "translation": "Well, nine is a bit early. What about ten? That way we have more time for breakfast."
+              },
+              {
+                "speaker": "Ana",
+                "voice_type": "local",
+                "text": "Combinado! Às dez, então. Confirmo por mensagem depois.",
+                "translation": "Agreed! At ten, then. I'll confirm by message later."
+              },
+              {
+                "speaker": "Pedro",
+                "voice_type": "local",
+                "text": "P'ra já! Até domingo!",
+                "translation": "See you! Until Sunday!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness in scheduling",
+            "body": "When making or changing plans, especially with service providers or people you don't know well, it's common to use polite forms. Phrases like 'Gostaria de...' (I would like to...) or 'Será que podemos...?' (Could we...?) are preferred over direct commands. When suggesting a time, 'Que tal...?' (What about...?) is a common and polite way to propose. For refusing a time, 'Não me dá jeito' (It doesn't suit me/it's not convenient) is a soft refusal."
+          },
+          {
+            "title": "Confirming arrangements",
+            "body": "In Portugal, it's very common to confirm appointments or social plans with a short message (often via WhatsApp) closer to the date or time. A simple 'Confirmo a nossa reunião para as 10h' or 'Combinado para amanhã' is sufficient and appreciated, especially for professional or semi-professional arrangements."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You need to reschedule a delivery of a new appliance (e.g., a frigorífico) that was planned for tomorrow morning. You call the delivery company.",
+          "difficulty": 2,
+          "entry_node": "rp-d55-start",
+          "nodes": [
+            {
+              "id": "rp-d55-start",
+              "npc_text": "Boa tarde, Serviço de Entregas. Em que posso ajudar?",
+              "npc_translation": "Good afternoon, Delivery Service. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Liguei para mudar a minha entrega de amanhã.",
+                  "translation": "Good afternoon. I called to change my delivery for tomorrow.",
+                  "feedback": "Good start! You clearly stated your intention.",
+                  "next": "rp-d55-ask-new-time"
+                },
+                {
+                  "text": "Quero mudar a entrega.",
+                  "translation": "I want to change the delivery.",
+                  "feedback": "A bit direct, but acceptable. Adding 'Gostaria de...' would be more polite.",
+                  "next": "rp-d55-ask-new-time"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-ask-new-time",
+              "npc_text": "Certo. Qual é o seu número de encomenda, por favor? E para quando gostaria de mudar?",
+              "npc_translation": "Okay. What's your order number, please? And for when would you like to change it?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "O número é 12345. Podemos mudar para depois de amanhã, à tarde?",
+                  "translation": "The number is 12345. Can we change to the day after tomorrow, in the afternoon?",
+                  "feedback": "Excellent! You provided the info and suggested a new time.",
+                  "next": "rp-d55-check-availability"
+                },
+                {
+                  "text": "Não posso amanhã. Tem disponibilidade na próxima semana?",
+                  "translation": "I can't tomorrow. Do you have availability next week?",
+                  "feedback": "Good alternative, asking for their general availability.",
+                  "next": "rp-d55-check-availability-week"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-check-availability",
+              "npc_text": "Depois de amanhã, quinta-feira, à tarde... Sim, temos um horário livre entre as duas e as cinco. Serve-lhe?",
+              "npc_translation": "The day after tomorrow, Thursday, in the afternoon... Yes, we have a slot free between two and five. Does that suit you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, perfeito! Combinado.",
+                  "translation": "Yes, perfect! Agreed.",
+                  "feedback": "Great! Clear and concise confirmation.",
+                  "next": "rp-d55-confirm-final"
+                },
+                {
+                  "text": "Às duas e as cinco está bem.",
+                  "translation": "Between two and five is fine.",
+                  "feedback": "Good, but 'perfeito' or 'combinado' adds a nice touch of agreement.",
+                  "next": "rp-d55-confirm-final"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-check-availability-week",
+              "npc_text": "Na próxima semana, temos na terça-feira de manhã, entre as nove e o meio-dia. Que tal?",
+              "npc_translation": "Next week, we have Tuesday morning, between nine and noon. How does that sound?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Terça-feira de manhã, sim, está bem. Obrigado.",
+                  "translation": "Tuesday morning, yes, that's fine. Thank you.",
+                  "feedback": "Perfect, you've accepted and thanked them.",
+                  "next": "rp-d55-confirm-final"
+                },
+                {
+                  "text": "Não, terça-feira não posso. Tem outro dia?",
+                  "translation": "No, I can't on Tuesday. Do you have another day?",
+                  "feedback": "You're asking for more options. Good persistence!",
+                  "next": "rp-d55-ask-again"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-ask-again",
+              "npc_text": "Hum, na próxima semana, só na sexta-feira, à tarde. Serve?",
+              "npc_translation": "Hmm, next week, only on Friday, in the afternoon. Does that work?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, sexta-feira à tarde. Combinado.",
+                  "translation": "Yes, Friday afternoon. Agreed.",
+                  "feedback": "Excellent, you found a suitable time and confirmed.",
+                  "next": "rp-d55-confirm-final"
+                }
+              ]
+            },
+            {
+              "id": "rp-d55-confirm-final",
+              "npc_text": "Muito bem. Confirmo a sua entrega para {DIA_FINAL}, às {HORA_FINAL}. Alguma questão?",
+              "npc_translation": "Very good. I confirm your delivery for {FINAL_DAY}, at {FINAL_TIME}. Any questions?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, está tudo bem. Obrigado/a.",
+                  "translation": "No, everything is fine. Thank you.",
+                  "feedback": "The call ends successfully."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Reschedule a Service Appointment",
+          "prep": [
+            "Identify the key phrases for suggesting a new time or asking for availability.",
+            "Think of at least two alternative days/times you could propose.",
+            "Practice how to politely refuse a time that doesn't suit you."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "Um momento, por favor."
+          ],
+          "likely_responses": [
+            "Para quando gostaria de mudar?",
+            "Qual é a sua disponibilidade?",
+            "Temos livre para...",
+            "Não me dá jeito.",
+            "Combinado."
+          ]
+        },
+        "goals": [
+          "Suggest alternative times for an appointment or delivery.",
+          "Politely refuse a proposed time.",
+          "Confirm a new arrangement with a service provider.",
+          "Understand questions about availability and order details."
+        ],
+        "course": {
+          "month": 2,
+          "day": 55,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What about {day} at {time}?",
+            "answer": "Que tal {dia} às {hora}?",
+            "source_ref": "pp-sit-d55-plans-and-arrangements-1"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can we change to {day}?",
+            "answer": "Podemos mudar para {dia}?",
+            "source_ref": "pp-sit-d55-plans-and-arrangements-2"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I confirm our {type_of_meeting} for {day} at {time}.",
+            "answer": "Confirmo a nossa {tipo_encontro} para {dia} às {hora}.",
+            "source_ref": "pp-sit-d55-plans-and-arrangements-3"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Yes, agreed.",
+            "answer": "Sim, combinado.",
+            "source_ref": "pp-sit-d55-plans-and-arrangements-4"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: agreed / settled",
+            "answer": "combinado",
+            "source_ref": "combinado"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: meeting / appointment",
+            "answer": "encontro",
+            "source_ref": "encontro"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: available",
+            "answer": "disponível",
+            "source_ref": "disponível"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to change",
+            "answer": "mudar",
+            "source_ref": "mudar"
+          },
+          {
+            "id": "rv-sit-d55-plans-and-arrangements-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d55-plans-and-arrangements-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d56-week-8-stress-test",
+      "title": "Week 8 Stress Test",
+      "month": 2,
+      "day": 56,
+      "week": 8,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d56-week-8-stress-test",
+        "title": "Week 8 Stress Test",
+        "summary": "Mixed real-time exchanges combining the whole of month 2: market shopping, a phone booking, describing a household problem, and narrating your week — under light pressure.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival",
+          "track-host"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d56-week-8-stress-test-1",
+            "base": "Preciso de {serviço} para {problema}.",
+            "translation": "I need {service} for {problem}.",
+            "slots": [
+              {
+                "name": "serviço",
+                "description": "type of service",
+                "options": [
+                  "um canalizador",
+                  "um eletricista",
+                  "um técnico"
+                ]
+              },
+              {
+                "name": "problema",
+                "description": "the problem",
+                "options": [
+                  "uma fuga de água",
+                  "a luz que não funciona",
+                  "o frigorífico avariado"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Preciso que me ajudem com {problema}.",
+                "translation": "I need help with {problem}.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d56-week-8-stress-test-2",
+            "base": "Está {condição} e não funciona.",
+            "translation": "It's {condition} and it's not working.",
+            "slots": [
+              {
+                "name": "condição",
+                "description": "condition of the item",
+                "options": [
+                  "avariado",
+                  "partido",
+                  "estragado"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d56-week-8-stress-test-3",
+            "base": "Pode vir {quando}?",
+            "translation": "Can you come {when}?",
+            "slots": [
+              {
+                "name": "quando",
+                "description": "time/day",
+                "options": [
+                  "amanhã de manhã",
+                  "hoje à tarde",
+                  "na próxima semana"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d56-week-8-stress-test-4",
+            "base": "Pois, está bem.",
+            "translation": "Yes, that's fine."
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "canalizador",
+            "translation": "plumber",
+            "pronunciation": "kah-nah-lee-zah-DOR",
+            "register": "neutral"
+          },
+          {
+            "word": "fuga de água",
+            "translation": "water leak",
+            "pronunciation": "FOO-gah d'AH-gwah",
+            "register": "neutral"
+          },
+          {
+            "word": "avariado",
+            "translation": "broken (for machine/appliance)",
+            "pronunciation": "ah-vah-ree-AH-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "semilhas",
+            "translation": "potatoes",
+            "pronunciation": "seh-MEE-lyahs",
+            "register": "neutral",
+            "note": "Madeiran regionalism for 'batatas'"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common term for espresso in Portugal, especially Lisbon. 'Café' also works."
+          },
+          {
+            "word": "marcação",
+            "translation": "appointment / booking",
+            "pronunciation": "mar-kah-SAUNG",
+            "register": "neutral"
+          },
+          {
+            "word": "talho",
+            "translation": "butcher's shop / butcher",
+            "pronunciation": "TAH-lyoo",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d56-week-8-stress-test-1",
+            "title": "At the Market",
+            "context": "A quick exchange at the local market in Funchal, buying vegetables.",
+            "lines": [
+              {
+                "speaker": "Vendedor",
+                "voice_type": "local",
+                "text": "Diga, minha senhora! Precisa de alguma coisa?",
+                "translation": "Tell me, madam! Do you need anything?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, queria um quilo de semilhas, por favor.",
+                "translation": "Yes, I'd like a kilo of potatoes, please."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "local",
+                "text": "Pois não. Aqui está. E mais alguma coisa?",
+                "translation": "Of course. Here you go. Anything else?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Não, é só isso. Quanto é?",
+                "translation": "No, that's all. How much is it?"
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "local",
+                "text": "São dois euros e cinquenta, minha senhora.",
+                "translation": "It's two euros fifty, madam."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d56-week-8-stress-test-2",
+            "title": "Calling a Plumber",
+            "context": "The learner is calling a plumbing service about a leak at home.",
+            "lines": [
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Serviços de Canalização da Madeira, boa tarde. Em que posso ajudar?",
+                "translation": "Madeira Plumbing Services, good afternoon. How can I help?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Boa tarde. Preciso de um canalizador. Tenho uma fuga de água na cozinha.",
+                "translation": "Good afternoon. I need a plumber. I have a water leak in the kitchen."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Uma fuga de água, entendi. É urgente?",
+                "translation": "A water leak, I understand. Is it urgent?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, é um bocado urgente. A água está a pingar bastante.",
+                "translation": "Yes, it's a bit urgent. The water is dripping quite a lot."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Pois, claro. Podemos enviar alguém hoje à tarde, entre as três e as cinco. Serve-lhe?",
+                "translation": "Yes, of course. We can send someone this afternoon, between three and five. Does that suit you?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Sim, serve. Muito obrigada!",
+                "translation": "Yes, that suits me. Thank you very much!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Directness in Service Interactions",
+            "body": "In Portugal, especially in service settings like shops or markets, interactions are often more direct than in some other cultures. It's common to state your need clearly and concisely, for example, 'Queria um quilo de semilhas' (I'd like a kilo of potatoes) rather than elaborate indirect requests. 'Diga!' (Tell me!) is a common, polite way for a vendor to initiate a conversation, inviting you to state your needs."
+          },
+          {
+            "title": "The Importance of 'Pois'",
+            "body": "'Pois' and 'Pois é' are very common interjections in European Portuguese. They often express agreement, acknowledgement, or a slight pause for thought. 'Pois não' is a polite way to say 'of course' or 'you're welcome' when someone asks for something. Using these naturally will make your Portuguese sound much more authentic."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a repair service because your washing machine is broken. You need to describe the problem and arrange a visit.",
+          "difficulty": 2,
+          "entry_node": "rp-d56-node-1",
+          "nodes": [
+            {
+              "id": "rp-d56-node-1",
+              "npc_text": "Boa tarde, Reparações Rápidas. Em que posso ajudar?",
+              "npc_translation": "Good afternoon, Quick Repairs. How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. A minha máquina de lavar está avariada.",
+                  "translation": "Good afternoon. My washing machine is broken.",
+                  "feedback": "Excellent start! Clear and direct.",
+                  "next": "rp-d56-node-2"
+                },
+                {
+                  "text": "Olá. Preciso de ajuda com a máquina.",
+                  "translation": "Hello. I need help with the machine.",
+                  "feedback": "Good, but 'avariada' is more precise for 'broken'.",
+                  "next": "rp-d56-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d56-node-2",
+              "npc_text": "Avariada, pois. Qual é o problema exatamente? Ela não liga, ou não lava?",
+              "npc_translation": "Broken, I see. What's the problem exactly? It doesn't turn on, or it doesn't wash?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Ela liga, mas não está a lavar a roupa.",
+                  "translation": "It turns on, but it's not washing the clothes.",
+                  "feedback": "Perfect use of 'estar a + infinitive' for ongoing action.",
+                  "next": "rp-d56-node-3"
+                },
+                {
+                  "text": "Não lava a roupa.",
+                  "translation": "It doesn't wash the clothes.",
+                  "feedback": "Good, but adding 'Ela liga, mas...' gives more detail.",
+                  "next": "rp-d56-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d56-node-3",
+              "npc_text": "Entendido. Precisamos de enviar um técnico. Pode ser amanhã de manhã, entre as nove e o meio-dia?",
+              "npc_translation": "Understood. We need to send a technician. Can it be tomorrow morning, between nine and noon?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, amanhã de manhã está bem. Muito obrigada.",
+                  "translation": "Yes, tomorrow morning is fine. Thank you very much.",
+                  "feedback": "Clear acceptance. You're almost done!",
+                  "next": "rp-d56-node-4"
+                },
+                {
+                  "text": "Amanhã de manhã? Sim, pode ser.",
+                  "translation": "Tomorrow morning? Yes, that can be.",
+                  "feedback": "A little less formal, but still good.",
+                  "next": "rp-d56-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d56-node-4",
+              "npc_text": "P'ra já. Então, amanhã de manhã, entre as nove e o meio-dia. Qual é a sua morada, por favor?",
+              "npc_translation": "You're welcome. So, tomorrow morning, between nine and noon. What is your address, please?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É a Rua das Flores, número 10.",
+                  "translation": "It's Rua das Flores, number 10.",
+                  "feedback": "Great, you've provided the necessary information and completed the call."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Daily Life in Madeira: The Stress Test",
+          "prep": [
+            "Review vocabulary for common household problems (fuga de água, avariado).",
+            "Practice asking for prices at the market ('Quanto é?').",
+            "Rehearse making an appointment by phone, using 'estar a + infinitive' for ongoing actions.",
+            "Be ready to use 'pois' and 'pois não' naturally in conversation."
+          ],
+          "fallback_phrases": [
+            "Não entendi, pode repetir?",
+            "Pode falar mais devagar, por favor?",
+            "Desculpe, não sei essa palavra."
+          ],
+          "likely_responses": [
+            "Pois não, minha senhora.",
+            "Em que posso ajudar?",
+            "Serve-lhe/Serve-lhe bem?",
+            "Quanto queria?",
+            "Pode ser amanhã?"
+          ]
+        },
+        "goals": [
+          "Successfully ask for items and prices at a market stall.",
+          "Describe a household problem clearly to a service provider over the phone.",
+          "Make and confirm an appointment for a repair.",
+          "Use 'estar a + infinitive' correctly in a real-time conversation.",
+          "Respond appropriately to common Portuguese interjections like 'Diga!' and 'Pois'."
+        ],
+        "course": {
+          "month": 2,
+          "day": 56,
+          "category": "custom"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d56-week-8-stress-test-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need {service} for {problem}.",
+            "answer": "Preciso de {serviço} para {problema}.",
+            "source_ref": "pp-sit-d56-week-8-stress-test-1"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's {condition} and it's not working.",
+            "answer": "Está {condição} e não funciona.",
+            "source_ref": "pp-sit-d56-week-8-stress-test-2"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you come {when}?",
+            "answer": "Pode vir {quando}?",
+            "source_ref": "pp-sit-d56-week-8-stress-test-3"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Yes, that's fine.",
+            "answer": "Pois, está bem.",
+            "source_ref": "pp-sit-d56-week-8-stress-test-4"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: plumber",
+            "answer": "canalizador",
+            "source_ref": "canalizador"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: water leak",
+            "answer": "fuga de água",
+            "source_ref": "fuga de água"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: broken (for machine/appliance)",
+            "answer": "avariado",
+            "source_ref": "avariado"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: potatoes",
+            "answer": "semilhas",
+            "source_ref": "semilhas"
+          },
+          {
+            "id": "rv-sit-d56-week-8-stress-test-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d56-week-8-stress-test-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d64-pharmacy-beyond-basics",
+      "title": "Pharmacy: Beyond the Basics",
+      "month": 3,
+      "day": 64,
+      "week": 10,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-survival",
+        "track-host"
+      ],
+      "situation": {
+        "id": "sit-d64-pharmacy-beyond-basics",
+        "title": "Pharmacy: Beyond the Basics",
+        "summary": "A fuller pharmacy visit: describing symptoms, understanding dosage instructions, asking about a prescription (receita), and the pharmacist’s follow-up questions.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival",
+          "track-host"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d64-pharmacy-beyond-basics-1",
+            "base": "Tenho {symptom}.",
+            "translation": "I have {symptom}.",
+            "slots": [
+              {
+                "name": "symptom",
+                "description": "a common symptom or ailment",
+                "options": [
+                  "dor de cabeça",
+                  "febre",
+                  "tosse",
+                  "dores no corpo",
+                  "uma constipação"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d64-pharmacy-beyond-basics-2",
+            "base": "Pode dizer-me como devo tomar {medicine}?",
+            "translation": "Can you tell me how I should take {medicine}?",
+            "slots": [
+              {
+                "name": "medicine",
+                "description": "a type of medicine",
+                "options": [
+                  "este comprimido",
+                  "este xarope",
+                  "isto"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Como devo tomar isto?",
+                "translation": "How should I take this?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d64-pharmacy-beyond-basics-3",
+            "base": "Tenho uma receita para {item}.",
+            "translation": "I have a prescription for {item}.",
+            "slots": [
+              {
+                "name": "item",
+                "description": "the item on the prescription",
+                "options": [
+                  "este medicamento",
+                  "uns antibióticos",
+                  "isto"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d64-pharmacy-beyond-basics-4",
+            "base": "Quantas vezes por dia devo tomar?",
+            "translation": "How many times a day should I take it?",
+            "variants": [
+              {
+                "text": "É uma vez por dia?",
+                "translation": "Is it once a day?",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "farmácia",
+            "translation": "pharmacy",
+            "pronunciation": "far-MAH-see-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "receita",
+            "translation": "prescription",
+            "pronunciation": "reh-SAY-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "sintomas",
+            "translation": "symptoms",
+            "pronunciation": "seen-TOH-mas",
+            "register": "neutral"
+          },
+          {
+            "word": "comprimido",
+            "translation": "pill / tablet",
+            "pronunciation": "kom-pree-MEE-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "xarope",
+            "translation": "syrup",
+            "pronunciation": "shah-ROH-peh",
+            "register": "neutral"
+          },
+          {
+            "word": "dose",
+            "translation": "dose",
+            "pronunciation": "DOH-zeh",
+            "register": "neutral"
+          },
+          {
+            "word": "tomar (medicamento)",
+            "translation": "to take (medicine)",
+            "pronunciation": "toh-MAR",
+            "register": "neutral"
+          },
+          {
+            "word": "febre",
+            "translation": "fever",
+            "pronunciation": "FEH-breh",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d64-pharmacy-beyond-basics-1",
+            "title": "Pharmacy Visit",
+            "context": "A customer is at a pharmacy in Funchal, describing symptoms and asking about a prescription.",
+            "lines": [
+              {
+                "speaker": "Farmacêutica",
+                "voice_type": "service",
+                "text": "Boa tarde! Em que posso ajudar?",
+                "translation": "Good afternoon! How can I help you?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Boa tarde. Tenho uma dor de cabeça e um bocado de febre.",
+                "translation": "Good afternoon. I have a headache and a bit of a fever."
+              },
+              {
+                "speaker": "Farmacêutica",
+                "voice_type": "local",
+                "text": "Pois, entendo. Há quanto tempo está com estes sintomas?",
+                "translation": "Right, I understand. How long have you had these symptoms?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "Desde ontem. E também tenho esta receita para levantar um medicamento.",
+                "translation": "Since yesterday. And I also have this prescription to pick up some medicine."
+              },
+              {
+                "speaker": "Farmacêutica",
+                "voice_type": "service",
+                "text": "Certo. Deixe-me ver. Ah, sim. Este é um analgésico. Para a dor de cabeça e a febre. Deve tomar um comprimido de oito em oito horas.",
+                "translation": "Okay. Let me see. Ah, yes. This is a painkiller. For the headache and fever. You should take one pill every eight hours."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "teacher",
+                "text": "De oito em oito horas? Então, três vezes por dia?",
+                "translation": "Every eight hours? So, three times a day?"
+              },
+              {
+                "speaker": "Farmacêutica",
+                "voice_type": "service",
+                "text": "Exato. E com um pouco de água, de preferência depois de comer. Mais alguma coisa?",
+                "translation": "Exactly. And with a little water, preferably after eating. Anything else?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Pharmacist's Role in Portugal",
+            "body": "In Portugal, pharmacists have an extended role compared to some other countries. They are often the first point of contact for minor health issues. You can describe your symptoms, and they can often recommend over-the-counter medication or advise if a doctor's visit is necessary. They are highly trained professionals, so treat them with respect, using polite address ('o senhor' / 'a senhora' or formal verb conjugations)."
+          },
+          {
+            "title": "Understanding Dosage Instructions",
+            "body": "Dosage instructions are typically given verbally by the pharmacist and may also be printed on the medicine box or a sticker. Common phrases include 'uma vez por dia' (once a day), 'duas vezes por dia' (twice a day), 'de 8 em 8 horas' (every 8 hours), or 'às refeições' (with meals). Don't hesitate to ask for clarification if you're unsure, using phrases like 'Pode repetir, por favor?' or 'Não percebi bem'."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a pharmacy in Madeira. You need to describe a cough and ask about a prescription for a different medicine.",
+          "difficulty": 2,
+          "entry_node": "rp-d64-start",
+          "nodes": [
+            {
+              "id": "rp-d64-start",
+              "npc_text": "Boa tarde! Em que posso ajudar hoje?",
+              "npc_translation": "Good afternoon! How can I help you today?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Tenho uma tosse forte e uma receita para levantar.",
+                  "translation": "Good afternoon. I have a bad cough and a prescription to pick up.",
+                  "feedback": "Good start! You've stated both issues clearly.",
+                  "next": "rp-d64-cough-detail"
+                },
+                {
+                  "text": "Preciso de um medicamento para a tosse, por favor.",
+                  "translation": "I need medicine for a cough, please.",
+                  "feedback": "This is okay, but you forgot to mention the prescription.",
+                  "next": "rp-d64-cough-only"
+                }
+              ]
+            },
+            {
+              "id": "rp-d64-cough-detail",
+              "npc_text": "Pois, uma tosse forte... há quanto tempo está assim? E a receita, pode mostrar-me?",
+              "npc_translation": "Right, a bad cough... how long have you been like this? And the prescription, can you show me?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Estou com tosse há uns três dias. Aqui está a receita.",
+                  "translation": "I've had a cough for about three days. Here is the prescription.",
+                  "feedback": "Excellent, you've provided the requested information.",
+                  "next": "rp-d64-prescription-check"
+                }
+              ]
+            },
+            {
+              "id": "rp-d64-cough-only",
+              "npc_text": "Certo. É uma tosse seca ou com expetoração? E tem mais alguma coisa?",
+              "npc_translation": "Okay. Is it a dry cough or with phlegm? And do you have anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "É uma tosse seca. E sim, tenho uma receita aqui para levantar um medicamento.",
+                  "translation": "It's a dry cough. And yes, I have a prescription here to pick up some medicine.",
+                  "feedback": "Good recovery, you remembered the prescription.",
+                  "next": "rp-d64-prescription-check"
+                }
+              ]
+            },
+            {
+              "id": "rp-d64-prescription-check",
+              "npc_text": "Ah, sim. Este é para a tensão. Deve tomar um comprimido todos os dias de manhã. Para a tosse, sugiro este xarope. Deve tomar uma colher de sopa, três vezes por dia.",
+              "npc_translation": "Ah, yes. This one is for blood pressure. You should take one pill every morning. For the cough, I suggest this syrup. You should take one tablespoon, three times a day.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Uma colher de sopa, três vezes por dia? Com ou sem comida?",
+                  "translation": "One tablespoon, three times a day? With or without food?",
+                  "feedback": "Great job asking for clarification on the dosage and timing!",
+                  "next": "rp-d64-clarify-dosage"
+                },
+                {
+                  "text": "Ok, muito obrigado/a.",
+                  "translation": "Okay, thank you very much.",
+                  "feedback": "You understood, but you could have asked for more details about the cough syrup."
+                }
+              ]
+            },
+            {
+              "id": "rp-d64-clarify-dosage",
+              "npc_text": "Pode ser com ou sem comida, mas tente tomar sempre à mesma hora. Algo mais?",
+              "npc_translation": "It can be with or without food, but try to take it at the same time every day. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, é tudo. Muito obrigado/a pela ajuda!",
+                  "translation": "No, that's all. Thank you very much for your help!",
+                  "feedback": "Perfect! You've completed your pharmacy visit successfully."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Obtain Medicine and Understand Instructions",
+          "prep": [
+            "Review vocabulary for common symptoms (e.g., dor de cabeça, febre, tosse).",
+            "Practice asking 'Como devo tomar isto?' and 'Quantas vezes por dia?'.",
+            "Rehearse how to present a prescription: 'Tenho uma receita para levantar um medicamento.'"
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar um bocado mais devagar?",
+            "Desculpe, pode explicar de novo?"
+          ],
+          "likely_responses": [
+            "Sim, claro.",
+            "Deve tomar...",
+            "De manhã / à noite.",
+            "Mais alguma coisa?",
+            "De nada."
+          ]
+        },
+        "goals": [
+          "Describe common symptoms to a pharmacist.",
+          "Present a prescription and ask about its contents.",
+          "Ask for and understand dosage instructions for medication.",
+          "Clarify any information about how to take the medicine."
+        ],
+        "course": {
+          "month": 3,
+          "day": 64,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have {symptom}.",
+            "answer": "Tenho {symptom}.",
+            "source_ref": "pp-sit-d64-pharmacy-beyond-basics-1"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you tell me how I should take {medicine}?",
+            "answer": "Pode dizer-me como devo tomar {medicine}?",
+            "source_ref": "pp-sit-d64-pharmacy-beyond-basics-2"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I have a prescription for {item}.",
+            "answer": "Tenho uma receita para {item}.",
+            "source_ref": "pp-sit-d64-pharmacy-beyond-basics-3"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How many times a day should I take it?",
+            "answer": "Quantas vezes por dia devo tomar?",
+            "source_ref": "pp-sit-d64-pharmacy-beyond-basics-4"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: pharmacy",
+            "answer": "farmácia",
+            "source_ref": "farmácia"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: prescription",
+            "answer": "receita",
+            "source_ref": "receita"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: symptoms",
+            "answer": "sintomas",
+            "source_ref": "sintomas"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: pill / tablet",
+            "answer": "comprimido",
+            "source_ref": "comprimido"
+          },
+          {
+            "id": "rv-sit-d64-pharmacy-beyond-basics-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d64-pharmacy-beyond-basics-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+            "caption": "At the pharmacy — European Portuguese basic vocabulary (Learn European Portuguese Online)"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,859 @@
+{
+  "batch": 1,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:19:04.306Z",
+  "renumber_changes": [
+    {
+      "id": "sit-d50-speed-automaticity",
+      "month": 3,
+      "from": 50,
+      "to": 57
+    },
+    {
+      "id": "sit-d51-tense-system-mastery",
+      "month": 3,
+      "from": 51,
+      "to": 58
+    },
+    {
+      "id": "sit-d52-register-social-fluency",
+      "month": 3,
+      "from": 52,
+      "to": 59
+    },
+    {
+      "id": "sit-d53-professional-formal",
+      "month": 3,
+      "from": 53,
+      "to": 60
+    },
+    {
+      "id": "sit-d54-madeira-in-depth",
+      "month": 3,
+      "from": 54,
+      "to": 61
+    },
+    {
+      "id": "sit-d55-complex-structures",
+      "month": 3,
+      "from": 55,
+      "to": 62
+    },
+    {
+      "id": "sit-d56-the-grand-stress-test",
+      "month": 3,
+      "from": 56,
+      "to": 63
+    },
+    {
+      "id": "sit-m4w1-neighbourhood-small-talk",
+      "month": 4,
+      "from": 57,
+      "to": 85
+    },
+    {
+      "id": "sit-m4w2-festival-arraial",
+      "month": 4,
+      "from": 64,
+      "to": 86
+    },
+    {
+      "id": "sit-m4w3-madeiran-expressions",
+      "month": 4,
+      "from": 71,
+      "to": 87
+    },
+    {
+      "id": "sit-m4w4-month4-stress-test",
+      "month": 4,
+      "from": 78,
+      "to": 88
+    },
+    {
+      "id": "sit-m5w1-complaint-politely",
+      "month": 5,
+      "from": 85,
+      "to": 113
+    },
+    {
+      "id": "sit-m5w2-negotiating-arranging",
+      "month": 5,
+      "from": 92,
+      "to": 114
+    },
+    {
+      "id": "sit-m5w3-misunderstandings-repair",
+      "month": 5,
+      "from": 99,
+      "to": 115
+    },
+    {
+      "id": "sit-m5w4-month5-stress-test",
+      "month": 5,
+      "from": 106,
+      "to": 116
+    },
+    {
+      "id": "sit-m6w1-telling-a-story",
+      "month": 6,
+      "from": 113,
+      "to": 141
+    },
+    {
+      "id": "sit-m6w2-formal-email-office",
+      "month": 6,
+      "from": 120,
+      "to": 142
+    },
+    {
+      "id": "sit-m6w3-debating-opinions",
+      "month": 6,
+      "from": 127,
+      "to": 143
+    },
+    {
+      "id": "sit-m6w4-final-immersion-test",
+      "month": 6,
+      "from": 134,
+      "to": 144
+    }
+  ],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 1,
+  "situations": [
+    {
+      "id": "sit-d50-at-the-market",
+      "title": "At the Market (Mercado)",
+      "month": 2,
+      "day": 50,
+      "week": 8,
+      "level": 2,
+      "cefr": "A2",
+      "tracks": [
+        "track-structured-course",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d50-at-the-market",
+        "title": "At the Market (Mercado)",
+        "summary": "A proper shop at the local market: fruit, vegetables, fish, quantities (um quilo, meio quilo, uma dúzia), asking what is fresh, prices and paying — using full month-2 sentences, not tourist fragments.",
+        "tracks": [
+          "track-structured-course",
+          "track-survival"
+        ],
+        "level": 2,
+        "cefr": "A2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d50-at-the-market-1",
+            "base": "Queria {quantity} de {item}, por favor.",
+            "translation": "I'd like {quantity} of {item}, please.",
+            "slots": [
+              {
+                "name": "quantity",
+                "description": "quantity",
+                "options": [
+                  "um quilo",
+                  "meio quilo",
+                  "uma dúzia",
+                  "duas unidades"
+                ]
+              },
+              {
+                "name": "item",
+                "description": "item",
+                "options": [
+                  "maçãs",
+                  "bananas",
+                  "semilhas",
+                  "tomates",
+                  "ovos",
+                  "peixe-espada"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d50-at-the-market-2",
+            "base": "Estão frescos/as hoje?",
+            "translation": "Are they fresh today?",
+            "variants": [
+              {
+                "text": "Está fresco/a hoje?",
+                "translation": "Is it fresh today?",
+                "register": "neutral",
+                "note": "For singular items"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d50-at-the-market-3",
+            "base": "Quanto custa o/a {item_type}?",
+            "translation": "How much does the {item_type} cost?",
+            "slots": [
+              {
+                "name": "item_type",
+                "description": "item type (per unit)",
+                "options": [
+                  "quilo",
+                  "dúzia",
+                  "unidade"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Qual é o preço do/da {item}?",
+                "translation": "What is the price of the {item}?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d50-at-the-market-4",
+            "base": "É tudo, obrigado/a.",
+            "translation": "That's all, thank you.",
+            "variants": [
+              {
+                "text": "Fico por aqui, obrigado/a.",
+                "translation": "I'll stop here, thank you.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d50-at-the-market-5",
+            "base": "Quanto é que fica?",
+            "translation": "How much is it?",
+            "variants": [
+              {
+                "text": "Quanto é?",
+                "translation": "How much is it?",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "Mercado",
+            "translation": "Market",
+            "pronunciation": "mer-CAH-doo",
+            "register": "neutral"
+          },
+          {
+            "word": "Quilo",
+            "translation": "Kilo",
+            "pronunciation": "KEY-loo",
+            "register": "neutral"
+          },
+          {
+            "word": "Meio quilo",
+            "translation": "Half kilo",
+            "pronunciation": "MAY-oo KEY-loo",
+            "register": "neutral"
+          },
+          {
+            "word": "Dúzia",
+            "translation": "Dozen",
+            "pronunciation": "DOO-zee-ah",
+            "register": "neutral"
+          },
+          {
+            "word": "Semilhas",
+            "translation": "Potatoes",
+            "pronunciation": "seh-MEE-lyahs",
+            "register": "neutral",
+            "note": "Madeiran regionalism for 'batatas'"
+          },
+          {
+            "word": "Peixe-espada",
+            "translation": "Black scabbard fish",
+            "pronunciation": "PAYSH-eh ehsh-PAH-dah",
+            "register": "neutral",
+            "note": "Madeiran specialty"
+          },
+          {
+            "word": "Fresco/a",
+            "translation": "Fresh",
+            "pronunciation": "FRESH-koo/ah",
+            "register": "neutral"
+          },
+          {
+            "word": "Troco",
+            "translation": "Change (money)",
+            "pronunciation": "TROH-koo",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d50-at-the-market-1",
+            "title": "Buying Fruit and Vegetables",
+            "context": "A customer is buying fruit and vegetables at a stall in the Mercado dos Lavradores in Funchal.",
+            "lines": [
+              {
+                "speaker": "Vendedor",
+                "voice_type": "service",
+                "text": "Diga! Posso ajudar?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Queria um quilo de bananas, por favor."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "service",
+                "text": "Claro. São estas, estão ótimas hoje."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Pois, parecem boas. E quanto custa o quilo?"
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "service",
+                "text": "São dois euros e cinquenta."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Está bem. E queria também meio quilo de semilhas."
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "service",
+                "text": "Meio quilo de semilhas. Mais alguma coisa?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Não, é tudo. Quanto é que fica?"
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "service",
+                "text": "Então, um quilo de bananas e meio quilo de semilhas... Fica três euros e setenta e cinco."
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Aqui tem. Obrigado!"
+              },
+              {
+                "speaker": "Vendedor",
+                "voice_type": "service",
+                "text": "Eu é que agradeço. Volte sempre!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d50-at-the-market-2",
+            "title": "Asking about Fish",
+            "context": "A customer is asking about fresh fish at a busy fish stall in the market, with some background noise.",
+            "lines": [
+              {
+                "speaker": "Peixeira",
+                "voice_type": "noisy",
+                "text": "Olá! O que deseja?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Bom dia. O peixe-espada está fresco hoje?"
+              },
+              {
+                "speaker": "Peixeira",
+                "voice_type": "noisy",
+                "text": "Fresco, fresquíssimo! Acabou de chegar!"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Ah, que bom. E quanto custa o quilo?"
+              },
+              {
+                "speaker": "Peixeira",
+                "voice_type": "noisy",
+                "text": "Está a dez euros o quilo. Posso preparar um para si?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Sim, por favor. Um bocado grande, p'ra dois."
+              },
+              {
+                "speaker": "Peixeira",
+                "voice_type": "noisy",
+                "text": "P'ra já! Quer que o amanhe?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "older",
+                "text": "Sim, por favor. Obrigado!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Market Etiquette in Madeira",
+            "body": "When shopping at a market stall in Madeira, it's common to greet the vendor ('Bom dia'/'Boa tarde') and ask about the freshness of produce ('Está fresco/a hoje?' or 'Estão frescos/as hoje?'). It's considered polite to ask the vendor to pick items for you rather than touching them yourself, especially for fruits and vegetables. Don't be afraid to ask for local specialties like 'semilhas' (potatoes) or 'peixe-espada' (black scabbard fish)."
+          },
+          {
+            "title": "Quantities and Payment",
+            "body": "Quantities are usually requested in 'quilos' (kilos), 'meio quilo' (half kilo), or 'dúzias' (dozens). For small items like a single avocado, you might ask for 'uma unidade' or 'um abacate'. After selecting your items, the vendor will usually ask 'Mais alguma coisa?' (Anything else?). When finished, say 'É tudo, obrigado/a' and ask 'Quanto é que fica?' to get the total. Cash is often preferred, but many stalls now accept card payments."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a fruit and vegetable stall in the market. You want to buy some fresh produce.",
+          "difficulty": 2,
+          "entry_node": "rp-sit-d50-at-the-market-start",
+          "nodes": [
+            {
+              "id": "rp-sit-d50-at-the-market-start",
+              "npc_text": "Bom dia! Em que posso ajudar?",
+              "npc_translation": "Good morning! How can I help?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria um quilo de tomates, por favor.",
+                  "translation": "Good morning. I'd like a kilo of tomatoes, please.",
+                  "feedback": "Good start! You asked for a quantity of an item.",
+                  "next": "rp-sit-d50-at-the-market-tomatoes"
+                },
+                {
+                  "text": "Olá. O que é que tem de fresco hoje?",
+                  "translation": "Hello. What do you have fresh today?",
+                  "feedback": "Excellent! Asking about fresh produce is a great way to start.",
+                  "next": "rp-sit-d50-at-the-market-fresh"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-tomatoes",
+              "npc_text": "Um quilo de tomates, claro. São estes, estão ótimos. Mais alguma coisa?",
+              "npc_translation": "A kilo of tomatoes, of course. These ones, they're great. Anything else?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, queria também uma dúzia de ovos.",
+                  "translation": "Yes, I'd also like a dozen eggs.",
+                  "feedback": "Well done! You added another item with a different quantity.",
+                  "next": "rp-sit-d50-at-the-market-eggs"
+                },
+                {
+                  "text": "Não, é tudo. Quanto é que fica?",
+                  "translation": "No, that's all. How much is it?",
+                  "feedback": "Perfect! You're ready to pay.",
+                  "next": "rp-sit-d50-at-the-market-total"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-fresh",
+              "npc_text": "Hoje temos umas bananas da Madeira fresquíssimas e semilhas acabadas de chegar. O que prefere?",
+              "npc_translation": "Today we have very fresh Madeiran bananas and potatoes that just arrived. What do you prefer?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Vou levar meio quilo de bananas.",
+                  "translation": "I'll take half a kilo of bananas.",
+                  "feedback": "Good choice! You specified a quantity for a fresh item.",
+                  "next": "rp-sit-d50-at-the-market-bananas"
+                },
+                {
+                  "text": "Quanto custa o quilo das semilhas?",
+                  "translation": "How much does a kilo of potatoes cost?",
+                  "feedback": "Great question! Always good to know the price.",
+                  "next": "rp-sit-d50-at-the-market-price-semilhas"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-eggs",
+              "npc_text": "Uma dúzia de ovos. É tudo, então?",
+              "npc_translation": "A dozen eggs. Is that all, then?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, é tudo. Quanto é que fica?",
+                  "translation": "Yes, that's all. How much is it?",
+                  "feedback": "Excellent, ready to finalize the purchase.",
+                  "next": "rp-sit-d50-at-the-market-total"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-bananas",
+              "npc_text": "Meio quilo de bananas. Mais alguma coisa que precise?",
+              "npc_translation": "Half a kilo of bananas. Anything else you need?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, obrigado/a. Quanto é?",
+                  "translation": "No, thank you. How much is it?",
+                  "feedback": "Good, you're moving to payment.",
+                  "next": "rp-sit-d50-at-the-market-total"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-price-semilhas",
+              "npc_text": "As semilhas estão a um euro e vinte o quilo. Quer levar algumas?",
+              "npc_translation": "The potatoes are one euro twenty a kilo. Do you want to take some?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, queria um quilo, por favor.",
+                  "translation": "Yes, I'd like a kilo, please.",
+                  "feedback": "Good, you specified the quantity after asking the price.",
+                  "next": "rp-sit-d50-at-the-market-semilhas-taken"
+                },
+                {
+                  "text": "Não, obrigado/a. Fico só com as bananas.",
+                  "translation": "No, thank you. I'll just take the bananas.",
+                  "feedback": "That's fine, you can decline politely.",
+                  "next": "rp-sit-d50-at-the-market-total-bananas-only"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-semilhas-taken",
+              "npc_text": "Um quilo de semilhas. É tudo?",
+              "npc_translation": "A kilo of potatoes. Is that all?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, é tudo. Quanto é que fica?",
+                  "translation": "Yes, that's all. How much is it?",
+                  "feedback": "Perfect, ready to pay.",
+                  "next": "rp-sit-d50-at-the-market-total"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-total-bananas-only",
+              "npc_text": "Certo, só as bananas então. Fica um euro e cinquenta.",
+              "npc_translation": "Okay, just the bananas then. That's one euro fifty.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Aqui tem. Obrigado/a!",
+                  "translation": "Here you go. Thank you!",
+                  "feedback": "Great! You completed the transaction.",
+                  "next": "rp-sit-d50-at-the-market-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-total",
+              "npc_text": "Deixe ver... Fica cinco euros e vinte e cinco. Aceitamos MB Way ou dinheiro.",
+              "npc_translation": "Let me see... That's five euros and twenty-five. We accept MB Way or cash.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Vou pagar em dinheiro.",
+                  "translation": "I'll pay in cash.",
+                  "feedback": "Good, you specified your payment method.",
+                  "next": "rp-sit-d50-at-the-market-payment"
+                },
+                {
+                  "text": "Posso pagar com cartão?",
+                  "translation": "Can I pay by card?",
+                  "feedback": "Good to check payment options.",
+                  "next": "rp-sit-d50-at-the-market-card-payment"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-card-payment",
+              "npc_text": "Sim, claro. Pode encostar o cartão aqui.",
+              "npc_translation": "Yes, of course. You can tap your card here.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado/a! Tenha um bom dia.",
+                  "translation": "Thank you! Have a good day.",
+                  "feedback": "Polite ending to the transaction.",
+                  "next": "rp-sit-d50-at-the-market-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-payment",
+              "npc_text": "Obrigado/a! Aqui está o seu troco.",
+              "npc_translation": "Thank you! Here's your change.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado/a! Até à próxima.",
+                  "translation": "Thank you! See you next time.",
+                  "feedback": "Perfect! You completed the purchase.",
+                  "next": "rp-sit-d50-at-the-market-end"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d50-at-the-market-end",
+              "npc_text": "Até já! Volte sempre!",
+              "npc_translation": "See you soon! Come back again!",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Buy Fresh Produce at the Market",
+          "prep": [
+            "Review how to ask for quantities (um quilo, meio quilo, uma dúzia).",
+            "Practice asking about freshness ('Está fresco/a hoje?' / 'Estão frescos/as hoje?').",
+            "Learn how to ask for prices ('Quanto custa o quilo?' / 'Quanto é que fica?')."
+          ],
+          "fallback_phrases": [
+            "Não percebi, pode repetir, por favor?",
+            "Pode falar mais devagar, por favor?"
+          ],
+          "likely_responses": [
+            "Mais alguma coisa?",
+            "São X euros e Y cêntimos.",
+            "Está fresquíssimo!",
+            "É tudo?"
+          ]
+        },
+        "goals": [
+          "Successfully ask for specific quantities of items at a market stall.",
+          "Inquire about the freshness of produce using appropriate questions.",
+          "Understand and state prices for items per kilo or dozen.",
+          "Complete a purchase transaction, including asking for the total and paying."
+        ],
+        "course": {
+          "month": 2,
+          "day": 50,
+          "category": "daily"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d50-at-the-market-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like {quantity} of {item}, please.",
+            "answer": "Queria {quantity} de {item}, por favor.",
+            "source_ref": "pp-sit-d50-at-the-market-1"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Are they fresh today?",
+            "answer": "Estão frescos/as hoje?",
+            "source_ref": "pp-sit-d50-at-the-market-2"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: How much does the {item_type} cost?",
+            "answer": "Quanto custa o/a {item_type}?",
+            "source_ref": "pp-sit-d50-at-the-market-3"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: That's all, thank you.",
+            "answer": "É tudo, obrigado/a.",
+            "source_ref": "pp-sit-d50-at-the-market-4"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Market",
+            "answer": "Mercado",
+            "source_ref": "Mercado"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Kilo",
+            "answer": "Quilo",
+            "source_ref": "Quilo"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Half kilo",
+            "answer": "Meio quilo",
+            "source_ref": "Meio quilo"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Dozen",
+            "answer": "Dúzia",
+            "source_ref": "Dúzia"
+          },
+          {
+            "id": "rv-sit-d50-at-the-market-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d50-at-the-market-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+            "caption": "Shop like a pro in Portugal — European Portuguese (Learn European Portuguese Online)"
+          }
+        ]
+      }
+    }
+  ]
+}

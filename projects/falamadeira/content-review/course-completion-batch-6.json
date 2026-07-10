@@ -1,0 +1,2943 @@
+{
+  "batch": 6,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T13:36:37.799Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d90-madeiran-words-in-the-wild",
+      "title": "Madeiran Words in the Wild",
+      "month": 4,
+      "day": 90,
+      "week": 13,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d90-madeiran-words-in-the-wild",
+        "title": "Madeiran Words in the Wild",
+        "summary": "Recognising and using genuine Madeiran vocabulary in context — semilha, bica, levada, arraial, \"andar de baixo\" — knowing when a word is island-only and what mainlanders say instead.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d90-madeiran-words-in-the-wild-1",
+            "base": "Vamos ao {local}?",
+            "translation": "Shall we go to the {local}?",
+            "slots": [
+              {
+                "name": "local",
+                "description": "type of local event or place",
+                "options": [
+                  "arraial",
+                  "mercado",
+                  "café"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d90-madeiran-words-in-the-wild-2",
+            "base": "Queres uma {drink}?",
+            "translation": "Do you want a {drink}?",
+            "slots": [
+              {
+                "name": "drink",
+                "description": "type of drink",
+                "options": [
+                  "bica",
+                  "poncha",
+                  "água"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Quer uma {drink}, senhor/a?",
+                "translation": "Do you want a {drink}, sir/madam?",
+                "register": "formal",
+                "note": "Polite form, using 'o senhor' or 'a senhora' implicitly"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d90-madeiran-words-in-the-wild-3",
+            "base": "Onde é o {place}?",
+            "translation": "Where is the {place}?",
+            "slots": [
+              {
+                "name": "place",
+                "description": "type of place or area",
+                "options": [
+                  "andar de baixo",
+                  "talho",
+                  "arraial"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d90-madeiran-words-in-the-wild-4",
+            "base": "Precisamos de {item} para o jantar.",
+            "translation": "We need {item} for dinner.",
+            "slots": [
+              {
+                "name": "item",
+                "description": "food item",
+                "options": [
+                  "semilhas",
+                  "bolo do caco",
+                  "peixe fresco"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeiran regionalism; 'batata' on mainland Portugal"
+          },
+          {
+            "word": "bica",
+            "translation": "espresso coffee",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common in Portugal for an espresso; 'café' is also used"
+          },
+          {
+            "word": "levada",
+            "translation": "irrigation channel / walking trail",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Madeiran regionalism, referring to the unique irrigation channels and popular walking paths alongside them"
+          },
+          {
+            "word": "arraial",
+            "translation": "local festival / street party",
+            "pronunciation": "ah-RRY-al",
+            "register": "neutral",
+            "note": "Common in Portugal, but particularly significant in Madeiran culture for village feasts"
+          },
+          {
+            "word": "andar de baixo",
+            "translation": "ground floor",
+            "pronunciation": "ahn-DAR deh BYE-shoo",
+            "register": "neutral",
+            "note": "Madeiran regionalism; 'rés-do-chão' on mainland Portugal"
+          },
+          {
+            "word": "poncha",
+            "translation": "traditional Madeiran drink",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Madeiran regionalism; made with aguardente de cana, honey, and lemon/orange juice"
+          },
+          {
+            "word": "bolo do caco",
+            "translation": "traditional Madeiran bread",
+            "pronunciation": "BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "Madeiran regionalism; flat bread baked on a basalt stone ('caco')"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d90-madeiran-words-in-the-wild-1",
+            "title": "Arraial plans and local food",
+            "context": "Two neighbours, Dona Alice and Senhor Jorge, meet on the street and chat about the upcoming local festival and what to eat.",
+            "lines": [
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Olá, Senhor Jorge! Tudo bem?",
+                "translation": "Hello, Mr. Jorge! All good?"
+              },
+              {
+                "speaker": "Senhor Jorge",
+                "voice_type": "local",
+                "text": "Olá, Dona Alice! Tá tudo bem, sim. E consigo? Vai ao arraial este fim de semana?",
+                "translation": "Hello, Mrs. Alice! Yes, all good. And with you? Are you going to the festival this weekend?"
+              },
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Pois é, acho que sim! Queria comprar umas semilhas para assar. As do arraial são sempre boas.",
+                "translation": "Yes, I think so! I wanted to buy some potatoes to roast. The ones at the festival are always good."
+              },
+              {
+                "speaker": "Senhor Jorge",
+                "voice_type": "local",
+                "text": "Ah, sim! E não se esqueça de um bolo do caco com manteiga de alho! É uma delícia!",
+                "translation": "Oh, yes! And don't forget a bolo do caco with garlic butter! It's delicious!"
+              },
+              {
+                "speaker": "Dona Alice",
+                "voice_type": "older",
+                "text": "Claro! E depois, uma bica para acordar no dia seguinte, depois de tanta festa!",
+                "translation": "Of course! And then, an espresso to wake up the next day, after so much partying!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d90-madeiran-words-in-the-wild-2",
+            "title": "Asking for directions at the market",
+            "context": "A local resident, Carlos, is at a new grocery store in the market and asks a shop assistant for help finding items and directions to a levada.",
+            "lines": [
+              {
+                "speaker": "Carlos",
+                "voice_type": "younger",
+                "text": "Com licença, sabe onde é o andar de baixo? Não encontro as frutas.",
+                "translation": "Excuse me, do you know where the ground floor is? I can't find the fruit."
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "service",
+                "text": "Bom dia! O andar de baixo é lá no fundo, à esquerda, depois das escadas. Lá tem as frutas e as semilhas frescas.",
+                "translation": "Good morning! The ground floor is at the back, to the left, after the stairs. There you'll find fresh fruit and potatoes."
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "younger",
+                "text": "Ah, muito obrigado! E já agora, sabe se a levada dos Piornais está aberta para passeios?",
+                "translation": "Ah, thank you very much! And by the way, do you know if the Piornais levada is open for walks?"
+              },
+              {
+                "speaker": "Assistente",
+                "voice_type": "local",
+                "text": "A dos Piornais? Acho que sim, esteve fechada um bocado para obras, mas agora tá aberta. É um passeio muito bonito!",
+                "translation": "The Piornais one? I think so, it was closed for a bit for works, but now it's open. It's a very beautiful walk!"
+              },
+              {
+                "speaker": "Carlos",
+                "voice_type": "younger",
+                "text": "Ótimo! Depois de umas compras, vou lá dar um salto. E uma bica, claro!",
+                "translation": "Great! After some shopping, I'll pop over there. And an espresso, of course!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Madeiran vs. Mainland Portuguese Vocabulary",
+            "body": "Madeira has several unique words and expressions. For example, 'semilha' is used for 'potato' instead of 'batata', and 'andar de baixo' refers to the 'ground floor' instead of 'rés-do-chão'. While mainlanders would understand these, using them shows you're familiar with local customs. 'Levada' is a term unique to Madeira, referring to the island's distinctive irrigation channels, many of which are now popular walking trails. 'Arraial' refers to a local festival, often a village feast with food, music, and religious celebrations, a very important part of Madeiran culture."
+          },
+          {
+            "title": "Ordering Coffee: 'Bica' and 'Café'",
+            "body": "In Portugal, including Madeira, the most common way to order an espresso is simply 'um café'. However, 'uma bica' is also widely understood and used, especially in Lisbon and the south of Portugal, and by extension, in Madeira. Both terms refer to the same small, strong coffee. Using 'bica' in Madeira is perfectly natural and shows familiarity."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a small local grocery store in Madeira, asking the owner about some specific Madeiran products and local information.",
+          "difficulty": 3,
+          "entry_node": "rp-d90-node-1",
+          "nodes": [
+            {
+              "id": "rp-d90-node-1",
+              "npc_text": "Olá! Posso ajudar em alguma coisa?",
+              "npc_translation": "Hello! Can I help you with anything?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, queria umas semilhas, por favor.",
+                  "translation": "Yes, I'd like some potatoes, please.",
+                  "feedback": "Great start! You asked for 'semilhas', the Madeiran word for potatoes.",
+                  "next": "rp-d90-node-2"
+                },
+                {
+                  "text": "Estou à procura de bolo do caco fresco.",
+                  "translation": "I'm looking for fresh bolo do caco.",
+                  "feedback": "Excellent! You asked for 'bolo do caco', a famous Madeiran bread.",
+                  "next": "rp-d90-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d90-node-2",
+              "npc_text": "Claro! Quantas semilhas quer? Temos umas ótimas hoje.",
+              "npc_translation": "Of course! How many potatoes do you want? We have some great ones today.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Um quilo, por favor. E sabe onde posso encontrar poncha?",
+                  "translation": "One kilo, please. And do you know where I can find poncha?",
+                  "feedback": "Good, you specified the quantity and then asked about 'poncha', another Madeiran specialty.",
+                  "next": "rp-d90-node-4"
+                },
+                {
+                  "text": "Dois quilos. E onde é que costumam fazer os arraiais maiores?",
+                  "translation": "Two kilos. And where do they usually hold the bigger festivals?",
+                  "feedback": "Well done! You specified the quantity and then asked about 'arraiais', the local festivals.",
+                  "next": "rp-d90-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d90-node-3",
+              "npc_text": "Bolo do caco? Acabou de chegar! Está no andar de baixo, ao lado dos queijos.",
+              "npc_translation": "Bolo do caco? It just arrived! It's on the ground floor, next to the cheeses.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Ah, o andar de baixo! Obrigada. E alguma levada bonita por perto?",
+                  "translation": "Ah, the ground floor! Thank you. And any nice levada nearby?",
+                  "feedback": "Perfect! You understood 'andar de baixo' and then asked about a 'levada'.",
+                  "next": "rp-d90-node-6"
+                },
+                {
+                  "text": "Ótimo! E depois de ir ao andar de baixo, onde posso beber uma boa bica?",
+                  "translation": "Great! And after going to the ground floor, where can I drink a good espresso?",
+                  "feedback": "Good, you used 'andar de baixo' correctly and then asked for a 'bica'.",
+                  "next": "rp-d90-node-7"
+                }
+              ]
+            },
+            {
+              "id": "rp-d90-node-4",
+              "npc_text": "Poncha? Temos ali no balcão, já feita. Se quiser a mais tradicional, vá ao bar do senhor João, ali na rua de baixo.",
+              "npc_translation": "Poncha? We have it here at the counter, already made. If you want the more traditional one, go to Mr. João's bar, down that street.",
+              "npc_voice_type": "service",
+              "options": []
+            },
+            {
+              "id": "rp-d90-node-5",
+              "npc_text": "Os arraiais maiores são mais nos concelhos, como o de Santana ou o Monte. Mas aqui na freguesia também há sempre um arraial, especialmente no verão!",
+              "npc_translation": "The bigger festivals are more in the municipalities, like Santana or Monte. But here in the parish, there's always a festival too, especially in summer!",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "rp-d90-node-6",
+              "npc_text": "Sim, a levada do Norte passa aqui perto. É um passeio fácil e com vistas lindas. É só seguir aquela rua à direita.",
+              "npc_translation": "Yes, the North levada passes nearby. It's an easy walk with beautiful views. Just follow that street to the right.",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "rp-d90-node-7",
+              "npc_text": "Uma bica? No café da Dona Rosa, mesmo em frente. A bica dela é a melhor da zona!",
+              "npc_translation": "An espresso? At Dona Rosa's café, right across the street. Her espresso is the best in the area!",
+              "npc_voice_type": "service",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Find Madeiran Specialties and Local Spots",
+          "prep": [
+            "Review the Madeiran vocabulary for food items and places.",
+            "Practice asking for specific items and asking for directions.",
+            "Mentally prepare to ask about local events or recommendations."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi.",
+            "Pode repetir, por favor?",
+            "O que significa 'andar de baixo'?"
+          ],
+          "likely_responses": [
+            "Quantos quer?",
+            "É lá no fundo, à direita.",
+            "Pois é, é muito bom!",
+            "Sim, claro!"
+          ]
+        },
+        "goals": [
+          "Recognise and use Madeiran-specific vocabulary (semilha, andar de baixo, levada, arraial, poncha, bolo do caco) in context.",
+          "Understand when a word is Madeiran vs. mainland Portuguese.",
+          "Ask for local products and information in a market or local shop setting.",
+          "Engage in short, natural conversations about local culture and recommendations."
+        ],
+        "course": {
+          "month": 4,
+          "day": 90,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Shall we go to the {local}?",
+            "answer": "Vamos ao {local}?",
+            "source_ref": "pp-sit-d90-madeiran-words-in-the-wild-1"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do you want a {drink}?",
+            "answer": "Queres uma {drink}?",
+            "source_ref": "pp-sit-d90-madeiran-words-in-the-wild-2"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Where is the {place}?",
+            "answer": "Onde é o {place}?",
+            "source_ref": "pp-sit-d90-madeiran-words-in-the-wild-3"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: We need {item} for dinner.",
+            "answer": "Precisamos de {item} para o jantar.",
+            "source_ref": "pp-sit-d90-madeiran-words-in-the-wild-4"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: potato",
+            "answer": "semilha",
+            "source_ref": "semilha"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso coffee",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: irrigation channel / walking trail",
+            "answer": "levada",
+            "source_ref": "levada"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: local festival / street party",
+            "answer": "arraial",
+            "source_ref": "arraial"
+          },
+          {
+            "id": "rv-sit-d90-madeiran-words-in-the-wild-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d90-madeiran-words-in-the-wild-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d91-reacting-like-a-local",
+      "title": "Reacting Like a Local",
+      "month": 4,
+      "day": 91,
+      "week": 13,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d91-reacting-like-a-local",
+        "title": "Reacting Like a Local",
+        "summary": "The sounds of a real conversation: pois, pois é, então, ora bem, é verdade, não me digas — agreeing, showing surprise and keeping a conversation alive without full sentences.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d91-reacting-like-a-local-1",
+            "base": "Pois.",
+            "translation": "Right. / Indeed.",
+            "variants": [
+              {
+                "text": "Pois é.",
+                "translation": "That's right. / Exactly.",
+                "register": "informal",
+                "note": "A slightly stronger agreement than 'Pois'."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d91-reacting-like-a-local-2",
+            "base": "Então...",
+            "translation": "So... / Well then...",
+            "variants": [
+              {
+                "text": "Então, o que é que fazemos?",
+                "translation": "So, what are we doing?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d91-reacting-like-a-local-3",
+            "base": "É verdade!",
+            "translation": "It's true! / That's right!",
+            "variants": [
+              {
+                "text": "Ah, é verdade!",
+                "translation": "Oh, that's true!",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d91-reacting-like-a-local-4",
+            "base": "Não me digas!",
+            "translation": "You don't say! / Really?!",
+            "variants": [
+              {
+                "text": "Não me digas uma coisa dessas!",
+                "translation": "Don't tell me such a thing!",
+                "register": "informal",
+                "note": "A more emphatic expression of surprise."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d91-reacting-like-a-local-5",
+            "base": "Ora bem.",
+            "translation": "Well then. / Alright now.",
+            "variants": [
+              {
+                "text": "Ora bem, vamos lá.",
+                "translation": "Alright now, let's go.",
+                "register": "informal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "bica",
+            "translation": "Espresso coffee",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common term for espresso in Portugal, especially Lisbon and Madeira."
+          },
+          {
+            "word": "levada",
+            "translation": "Irrigation channel / Walkway next to a channel",
+            "pronunciation": "leh-VAH-dah",
+            "register": "neutral",
+            "note": "Unique to Madeira, for water distribution and popular hiking trails."
+          },
+          {
+            "word": "imenso",
+            "translation": "A lot / Immensely",
+            "pronunciation": "ee-MEN-soo",
+            "register": "neutral",
+            "note": "Common in pt-PT, often used instead of 'muito'."
+          },
+          {
+            "word": "um bocado",
+            "translation": "A bit / A little",
+            "pronunciation": "oom boo-KAH-doo",
+            "register": "informal",
+            "note": "Often reduced to 'um bocadinho'."
+          },
+          {
+            "word": "bairro",
+            "translation": "Neighbourhood",
+            "pronunciation": "BAH-ee-roo",
+            "register": "neutral"
+          },
+          {
+            "word": "fofocas",
+            "translation": "Gossip",
+            "pronunciation": "foh-FOH-kahsh",
+            "register": "informal"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d91-reacting-like-a-local-1",
+            "title": "Morning Chat at the Café",
+            "context": "Two neighbours, Dona Rosa and Senhor Manuel, are having a quick morning coffee at a local café, catching up on neighbourhood news.",
+            "lines": [
+              {
+                "speaker": "Dona Rosa",
+                "voice_type": "older",
+                "text": "Bom dia, Manuel! Sabes que o padeiro novo vai abrir a loja mais cedo agora?",
+                "translation": "Good morning, Manuel! Do you know the new baker is opening the shop earlier now?"
+              },
+              {
+                "speaker": "Senhor Manuel",
+                "voice_type": "local",
+                "text": "Não me digas! A sério? Que boa notícia!",
+                "translation": "You don't say! Really? What good news!"
+              },
+              {
+                "speaker": "Dona Rosa",
+                "voice_type": "older",
+                "text": "Pois é! Assim podemos comprar o bolo do caco quentinho para o pequeno-almoço.",
+                "translation": "That's right! This way we can buy warm bolo do caco for breakfast."
+              },
+              {
+                "speaker": "Senhor Manuel",
+                "voice_type": "local",
+                "text": "É verdade! Eu adoro. E as levadas, já viste como estão limpas? Fizeram um bom trabalho.",
+                "translation": "It's true! I love it. And the levadas, have you seen how clean they are? They did a good job."
+              },
+              {
+                "speaker": "Dona Rosa",
+                "voice_type": "older",
+                "text": "Ora bem, sim. Ficaram impecáveis. Ontem fui dar um passeio e tava tudo arranjadinho.",
+                "translation": "Well then, yes. They're impeccable. Yesterday I went for a walk and everything was tidied up."
+              },
+              {
+                "speaker": "Senhor Manuel",
+                "voice_type": "local",
+                "text": "Então, mais uma bica? A minha já acabou.",
+                "translation": "So, another espresso? Mine's finished already."
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d91-reacting-like-a-local-2",
+            "title": "Market Day Buzz",
+            "context": "At the local market, the learner overhears a conversation between two vendors, Maria and João, about a new local initiative. There's some background noise.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Então, João, já soubeste da nova feira de artesanato que vai haver no largo?",
+                "translation": "So, João, have you heard about the new craft fair that's going to be in the square?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "noisy",
+                "text": "Não me digas! No largo? Quando é que é?",
+                "translation": "You don't say! In the square? When is it?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Pois é, no próximo sábado. Vai ser bom para a malta do bairro, não achas?",
+                "translation": "That's right, next Saturday. It'll be good for the people in the neighbourhood, don't you think?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "noisy",
+                "text": "É verdade! Sempre dá mais vida aqui. E posso vender os meus cestos lá.",
+                "translation": "It's true! It always brings more life here. And I can sell my baskets there."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Ora bem! Tens de ir. Vai ser um sucesso, de certeza.",
+                "translation": "Well then! You have to go. It'll be a success, for sure."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Nuances of 'Pois' and 'Pois é'",
+            "body": "'Pois' is a versatile word in Portuguese. It can mean 'indeed', 'right', or simply acknowledge what someone said without necessarily agreeing strongly. 'Pois é' is a slightly stronger form of agreement, often meaning 'that's right' or 'exactly', confirming a shared understanding or opinion. Both are very common in Madeiran conversations to keep the flow going."
+          },
+          {
+            "title": "Expressing Surprise with 'Não me digas!'",
+            "body": "'Não me digas!' (Literally: 'Don't tell me!') is a very common and friendly way to express surprise or disbelief in conversation. It's similar to 'You don't say!' or 'Really?!' in English. It shows engagement and interest in what the other person is sharing, making it an excellent phrase to use when reacting like a local."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at the local 'mercearia' (grocery store) and strike up a conversation with Dona Fátima, a friendly neighbour. She's telling you about some recent news in the neighbourhood.",
+          "difficulty": 3,
+          "entry_node": "rp-d91-node-1",
+          "nodes": [
+            {
+              "id": "rp-d91-node-1",
+              "npc_text": "Olá! Sabes que a padaria da esquina vai fechar para obras umas semanas?",
+              "npc_translation": "Hello! Do you know that the bakery on the corner is closing for renovations for a few weeks?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não me digas! E onde vamos comprar pão?",
+                  "translation": "You don't say! And where are we going to buy bread?",
+                  "feedback": "Excellent! You've expressed surprise and asked a relevant follow-up question.",
+                  "next": "rp-d91-node-2"
+                },
+                {
+                  "text": "Pois, já ouvi dizer. É uma chatice.",
+                  "translation": "Right, I've heard. It's a nuisance.",
+                  "feedback": "Good use of 'Pois' to show you're aware. Now, let's keep the conversation going.",
+                  "next": "rp-d91-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d91-node-2",
+              "npc_text": "Pois é! Mas disseram que o mini-mercado do senhor João vai ter pão fresco todos os dias. Que sorte, não é?",
+              "npc_translation": "That's right! But they said Mr. João's mini-market will have fresh bread every day. Lucky, isn't it?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "É verdade! Ainda bem que há uma alternativa.",
+                  "translation": "It's true! Good thing there's an alternative.",
+                  "feedback": "Perfect! You've agreed and shown relief, keeping the conversation natural.",
+                  "next": "rp-d91-node-4"
+                },
+                {
+                  "text": "Então, sempre é melhor que nada.",
+                  "translation": "Well then, it's still better than nothing.",
+                  "feedback": "Good use of 'Então' to reflect on the situation. You're engaging well!",
+                  "next": "rp-d91-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d91-node-3",
+              "npc_text": "Mas disseram que o mini-mercado do senhor João vai ter pão fresco todos os dias. Ainda bem, não é?",
+              "npc_translation": "But they said Mr. João's mini-market will have fresh bread every day. Good thing, isn't it?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ora bem, isso é uma boa notícia!",
+                  "translation": "Well then, that's good news!",
+                  "feedback": "Excellent! 'Ora bem' sets a positive tone for your agreement.",
+                  "next": "rp-d91-node-4"
+                },
+                {
+                  "text": "Pois é, assim já não ficamos sem pão.",
+                  "translation": "That's right, this way we won't be without bread.",
+                  "feedback": "Great use of 'Pois é' for strong agreement. You're sounding very local!",
+                  "next": "rp-d91-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d91-node-4",
+              "npc_text": "Sim, é verdade. E tu, como é que estás? Tudo bem contigo?",
+              "npc_translation": "Yes, it's true. And you, how are you? Is everything alright with you?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Tudo bem, obrigada! E a senhora?",
+                  "translation": "All good, thank you! And you (formal)?",
+                  "feedback": "You've successfully used local reaction phrases and sustained the conversation. Well done!"
+                },
+                {
+                  "text": "Sim, tudo ótimo. Tenho andado a passear nas levadas.",
+                  "translation": "Yes, all great. I've been walking the levadas.",
+                  "feedback": "You've successfully used local reaction phrases and sustained the conversation. Well done!"
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Engaging in Local Chat",
+          "prep": [
+            "Listen for 'Pois', 'Pois é', 'Então', 'É verdade', 'Não me digas', and 'Ora bem' in conversations around you.",
+            "Practice saying these phrases aloud, trying to match the natural flow and intonation.",
+            "Think of a simple piece of news or observation you could share with a neighbour to prompt a reaction."
+          ],
+          "fallback_phrases": [
+            "Ah, sim.",
+            "Entendi.",
+            "Interessante."
+          ],
+          "likely_responses": [
+            "Pois é!",
+            "Não me digas!",
+            "É verdade!",
+            "Ora bem...",
+            "Então, o que é que achas?"
+          ]
+        },
+        "goals": [
+          "To understand and use common Portuguese reaction phrases like 'Pois', 'Pois é', 'Então', 'É verdade', 'Não me digas', and 'Ora bem'.",
+          "To demonstrate active listening and engagement in a conversation without needing full sentences.",
+          "To sound more natural and integrated when chatting with locals in Madeira."
+        ],
+        "course": {
+          "month": 4,
+          "day": 91,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Right. / Indeed.",
+            "answer": "Pois.",
+            "source_ref": "pp-sit-d91-reacting-like-a-local-1"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: So... / Well then...",
+            "answer": "Então...",
+            "source_ref": "pp-sit-d91-reacting-like-a-local-2"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's true! / That's right!",
+            "answer": "É verdade!",
+            "source_ref": "pp-sit-d91-reacting-like-a-local-3"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: You don't say! / Really?!",
+            "answer": "Não me digas!",
+            "source_ref": "pp-sit-d91-reacting-like-a-local-4"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Espresso coffee",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Irrigation channel / Walkway next to a channel",
+            "answer": "levada",
+            "source_ref": "levada"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: A lot / Immensely",
+            "answer": "imenso",
+            "source_ref": "imenso"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: A bit / A little",
+            "answer": "um bocado",
+            "source_ref": "um bocado"
+          },
+          {
+            "id": "rv-sit-d91-reacting-like-a-local-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d91-reacting-like-a-local-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d92-festa-da-flor",
+      "title": "Festa da Flor",
+      "month": 4,
+      "day": 92,
+      "week": 14,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d92-festa-da-flor",
+        "title": "Festa da Flor",
+        "summary": "Funchal’s Flower Festival: the cortejo, the flower carpets, finding a spot in the crowd, talking about the floats, and arranging where to meet when the streets are packed.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-bureaucracy"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d92-festa-da-flor-1",
+            "base": "Vamos ver o {evento}?",
+            "translation": "Shall we go see the {event}?",
+            "slots": [
+              {
+                "name": "evento",
+                "description": "type of event",
+                "options": [
+                  "cortejo",
+                  "tapete de flores",
+                  "carro alegórico"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Queres ir ver o cortejo?",
+                "translation": "Do you want to go see the parade?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d92-festa-da-flor-2",
+            "base": "Está muita gente na {local}.",
+            "translation": "There are a lot of people in the {place}.",
+            "slots": [
+              {
+                "name": "local",
+                "description": "place",
+                "options": [
+                  "rua",
+                  "praça",
+                  "avenida"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Há imensa gente na rua.",
+                "translation": "There's a huge crowd in the street.",
+                "register": "informal",
+                "note": "Using 'imensa' for 'a lot', common in Madeira/Portugal."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d92-festa-da-flor-3",
+            "base": "Onde nos encontramos depois?",
+            "translation": "Where shall we meet afterwards?",
+            "variants": [
+              {
+                "text": "Onde é que a gente se encontra?",
+                "translation": "Where do we meet?",
+                "register": "informal"
+              },
+              {
+                "text": "Combinamos encontrar-nos onde?",
+                "translation": "Where do we agree to meet?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d92-festa-da-flor-4",
+            "base": "As flores estão {qualidade}.",
+            "translation": "The flowers are {quality}.",
+            "slots": [
+              {
+                "name": "qualidade",
+                "description": "quality",
+                "options": [
+                  "lindas",
+                  "espetaculares",
+                  "incríveis"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "cortejo",
+            "translation": "parade / procession",
+            "pronunciation": "kor-TEH-zho",
+            "register": "neutral"
+          },
+          {
+            "word": "tapete de flores",
+            "translation": "flower carpet",
+            "pronunciation": "tah-PEH-tuh dee FLOH-resh",
+            "register": "neutral"
+          },
+          {
+            "word": "carro alegórico",
+            "translation": "float (parade)",
+            "pronunciation": "KA-rroo ah-leh-GOH-ree-koo",
+            "register": "neutral"
+          },
+          {
+            "word": "multidão",
+            "translation": "crowd",
+            "pronunciation": "mool-tee-DOHN",
+            "register": "neutral"
+          },
+          {
+            "word": "festa",
+            "translation": "festival / party",
+            "pronunciation": "FESH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "poncha",
+            "translation": "Poncha (Madeiran drink)",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Traditional Madeiran alcoholic drink."
+          },
+          {
+            "word": "espetada",
+            "translation": "Espetada (Madeiran skewer)",
+            "pronunciation": "esh-peh-TAH-dah",
+            "register": "neutral",
+            "note": "Traditional Madeiran meat skewer, usually beef."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d92-festa-da-flor-1",
+            "title": "Flower Festival Plans",
+            "context": "Two neighbours, Maria and João, meet on the street in Funchal during the Flower Festival.",
+            "lines": [
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Olá, Maria! Tudo bem? Vais ver o cortejo hoje?",
+                "translation": "Hi, Maria! All good? Are you going to see the parade today?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Olá, João! Sim, claro! Não perco por nada. As flores estão espetaculares este ano!",
+                "translation": "Hi, João! Yes, of course! I wouldn't miss it for anything. The flowers are spectacular this year!"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Pois é! Já viste os tapetes de flores na baixa? Estão lindos.",
+                "translation": "Indeed! Have you seen the flower carpets downtown? They're beautiful."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Ainda não tive tempo, mas quero ir amanhã. Está muita gente na rua, não está?",
+                "translation": "I haven't had time yet, but I want to go tomorrow. There are a lot of people in the street, aren't there?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Está, está! É sempre assim na Festa da Flor. É melhor chegar cedo p'ra apanhar um bom sítio.",
+                "translation": "Yes, there are! It's always like this at the Flower Festival. It's better to arrive early to get a good spot."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Pois, vou tentar. Olha, depois do cortejo, queres ir beber uma poncha?",
+                "translation": "Yeah, I'll try. Hey, after the parade, do you want to go drink a poncha?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Boa ideia! Onde nos encontramos depois? A rua vai estar cheia.",
+                "translation": "Good idea! Where shall we meet afterwards? The street will be packed."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Que tal no café em frente à Sé? Às cinco e meia?",
+                "translation": "How about at the cafe in front of the Cathedral? At half past five?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Perfeito! Até já, Maria!",
+                "translation": "Perfect! See you soon, Maria!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Funchal Flower Festival (Festa da Flor)",
+            "body": "The Festa da Flor is one of Madeira's most iconic annual events, typically held in spring (April/May). It celebrates the island's unique flora and the arrival of spring. Key events include the 'Cortejo Alegórico' (main parade with floats decorated with flowers), the 'Muro da Esperança' (Wall of Hope, where children place flowers), and the 'Tapetes de Flores' (flower carpets) displayed in the city centre. It attracts many visitors, so expect large crowds, especially for the main parade."
+          },
+          {
+            "title": "Meeting in Crowded Places",
+            "body": "When planning to meet friends or family in crowded areas like during a festival, it's common to suggest a very specific, easy-to-spot landmark (e.g., 'em frente à Sé' - in front of the Cathedral, or 'ao lado da estátua' - next to the statue). Being punctual is appreciated, but a slight delay is often understood due to the crowds. Confirming a precise time and location is crucial to avoid getting lost."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are trying to meet your friend, Ana, at the Funchal Flower Festival. The streets are very crowded.",
+          "difficulty": 3,
+          "entry_node": "rp-d92-festa-da-flor-start",
+          "nodes": [
+            {
+              "id": "rp-d92-festa-da-flor-start",
+              "npc_text": "Olá! Consegues ver-me? Estou aqui perto do carro alegórico das orquídeas.",
+              "npc_translation": "Hi! Can you see me? I'm here near the orchid float.",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Olá! Não consigo ver-te, está muita gente.",
+                  "translation": "Hi! I can't see you, there are a lot of people.",
+                  "feedback": "Good, you're explaining the situation clearly.",
+                  "next": "rp-d92-festa-da-flor-no-see"
+                },
+                {
+                  "text": "Sim, acho que te vejo! Estou a ir para aí.",
+                  "translation": "Yes, I think I see you! I'm coming over.",
+                  "feedback": "Great, you're confirming you see them.",
+                  "next": "rp-d92-festa-da-flor-found"
+                }
+              ]
+            },
+            {
+              "id": "rp-d92-festa-da-flor-no-see",
+              "npc_text": "Pois é, está uma multidão! Onde estás tu? Descreve-me onde estás.",
+              "npc_translation": "Indeed, it's a crowd! Where are you? Describe where you are.",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Estou em frente ao Mercado dos Lavradores.",
+                  "translation": "I'm in front of the Farmers' Market.",
+                  "feedback": "Excellent, giving a clear landmark.",
+                  "next": "rp-d92-festa-da-flor-new-spot"
+                },
+                {
+                  "text": "Estou perto de uma senhora com um chapéu grande.",
+                  "translation": "I'm near a lady with a big hat.",
+                  "feedback": "This might be too vague in a crowd. Try to be more specific next time.",
+                  "next": "rp-d92-festa-da-flor-vague"
+                }
+              ]
+            },
+            {
+              "id": "rp-d92-festa-da-flor-vague",
+              "npc_text": "Hmm, um chapéu grande? Há muitos chapéus grandes! Que tal nos encontrarmos num sítio mais fácil?",
+              "npc_translation": "Hmm, a big hat? There are many big hats! How about we meet somewhere easier?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Sim, boa ideia. Onde nos encontramos?",
+                  "translation": "Yes, good idea. Where shall we meet?",
+                  "feedback": "Asking for a new plan is a good move.",
+                  "next": "rp-d92-festa-da-flor-new-spot"
+                }
+              ]
+            },
+            {
+              "id": "rp-d92-festa-da-flor-new-spot",
+              "npc_text": "Ok, então vamos para o café em frente à Sé, perto da entrada. É mais calmo lá. Consegues chegar lá em dez minutos?",
+              "npc_translation": "Okay, so let's go to the cafe in front of the Cathedral, near the entrance. It's calmer there. Can you get there in ten minutes?",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Sim, consigo. Encontramo-nos lá!",
+                  "translation": "Yes, I can. See you there!",
+                  "feedback": "Perfect! You've successfully arranged a new meeting point."
+                },
+                {
+                  "text": "Acho que sim, mas pode demorar um bocado por causa da gente.",
+                  "translation": "I think so, but it might take a while because of the people.",
+                  "feedback": "Good, you're managing expectations about the time."
+                }
+              ]
+            },
+            {
+              "id": "rp-d92-festa-da-flor-found",
+              "npc_text": "Ah, espetacular! Estou mesmo aqui. Até já!",
+              "npc_translation": "Ah, spectacular! I'm right here. See you soon!",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Navigating the Flower Festival",
+          "prep": [
+            "Review phrases for describing crowds and suggesting meeting points.",
+            "Practice asking for and giving directions to specific landmarks.",
+            "Mentally prepare for a noisy environment, as often found at festivals."
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode repetir?",
+            "Não percebi, pode falar mais devagar?",
+            "Onde é que é isso?"
+          ],
+          "likely_responses": [
+            "Está mesmo aqui ao lado.",
+            "É um bocado longe, mas é fácil.",
+            "Não, não consigo ver-te."
+          ]
+        },
+        "goals": [
+          "Discuss plans for attending a local festival.",
+          "Describe crowded situations using appropriate vocabulary.",
+          "Arrange a meeting point with a friend in a busy environment."
+        ],
+        "course": {
+          "month": 4,
+          "day": 92,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d92-festa-da-flor-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Shall we go see the {event}?",
+            "answer": "Vamos ver o {evento}?",
+            "source_ref": "pp-sit-d92-festa-da-flor-1"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: There are a lot of people in the {place}.",
+            "answer": "Está muita gente na {local}.",
+            "source_ref": "pp-sit-d92-festa-da-flor-2"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Where shall we meet afterwards?",
+            "answer": "Onde nos encontramos depois?",
+            "source_ref": "pp-sit-d92-festa-da-flor-3"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The flowers are {quality}.",
+            "answer": "As flores estão {qualidade}.",
+            "source_ref": "pp-sit-d92-festa-da-flor-4"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: parade / procession",
+            "answer": "cortejo",
+            "source_ref": "cortejo"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: flower carpet",
+            "answer": "tapete de flores",
+            "source_ref": "tapete de flores"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: float (parade)",
+            "answer": "carro alegórico",
+            "source_ref": "carro alegórico"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: crowd",
+            "answer": "multidão",
+            "source_ref": "multidão"
+          },
+          {
+            "id": "rv-sit-d92-festa-da-flor-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d92-festa-da-flor-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+            "caption": "Festa da Flor da Madeira (Visit Madeira, official)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d93-christmas-missas-do-parto",
+      "title": "Christmas & the Missas do Parto",
+      "month": 4,
+      "day": 93,
+      "week": 14,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-bureaucracy"
+      ],
+      "situation": {
+        "id": "sit-d93-christmas-missas-do-parto",
+        "title": "Christmas & the Missas do Parto",
+        "summary": "A Madeiran December: the Missas do Parto before dawn, the Mercadinho night, the lights in Funchal, what families cook, and being invited into the season.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-bureaucracy"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d93-christmas-missas-do-parto-1",
+            "base": "As Missas do Parto são {tempo}.",
+            "translation": "The Missas do Parto are {time}.",
+            "slots": [
+              {
+                "name": "tempo",
+                "description": "time/characteristic",
+                "options": [
+                  "muito cedo",
+                  "uma tradição bonita",
+                  "uma celebração especial"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d93-christmas-missas-do-parto-2",
+            "base": "Gostava de ir ao {evento} este ano.",
+            "translation": "I'd like to go to the {event} this year.",
+            "slots": [
+              {
+                "name": "evento",
+                "description": "Christmas event",
+                "options": [
+                  "Mercadinho",
+                  "Missas do Parto",
+                  "Natal na Madeira"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d93-christmas-missas-do-parto-3",
+            "base": "A minha família costuma cozinhar {comida} no Natal.",
+            "translation": "My family usually cooks {food} for Christmas.",
+            "slots": [
+              {
+                "name": "comida",
+                "description": "traditional dish",
+                "options": [
+                  "carne de vinho e alhos",
+                  "bacalhau",
+                  "bolo de mel"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "O que é que a tua família costuma cozinhar?",
+                "translation": "What does your family usually cook?",
+                "register": "informal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d93-christmas-missas-do-parto-4",
+            "base": "O ambiente de Natal no Funchal é {adjetivo}.",
+            "translation": "The Christmas atmosphere in Funchal is {adjective}.",
+            "slots": [
+              {
+                "name": "adjetivo",
+                "description": "adjective",
+                "options": [
+                  "mágico",
+                  "muito bonito",
+                  "especial"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "Missa do Parto",
+            "translation": "Pre-dawn Christmas Mass",
+            "pronunciation": "MEE-sah doo PAR-too",
+            "register": "neutral",
+            "note": "A unique Madeiran tradition, nine masses held before dawn from Dec 16-24."
+          },
+          {
+            "word": "Mercadinho (de Natal)",
+            "translation": "Christmas Market (Funchal's on Dec 23)",
+            "pronunciation": "mer-kah-DEE-nyoo",
+            "register": "neutral",
+            "note": "Refers to the lively Christmas Eve market in Funchal, especially on December 23rd."
+          },
+          {
+            "word": "carne de vinho e alhos",
+            "translation": "pork marinated in wine and garlic",
+            "pronunciation": "KAR-nuh duh VEE-nyoo ee AH-lyoos",
+            "register": "neutral",
+            "note": "A traditional Madeiran Christmas dish."
+          },
+          {
+            "word": "bolo de mel",
+            "translation": "honey cake",
+            "pronunciation": "BOH-loo duh MEL",
+            "register": "neutral",
+            "note": "Traditional Madeiran cake, especially popular at Christmas."
+          },
+          {
+            "word": "luzes de Natal",
+            "translation": "Christmas lights",
+            "pronunciation": "LOO-zesh duh nah-TAL",
+            "register": "neutral"
+          },
+          {
+            "word": "Lapinha",
+            "translation": "Nativity Scene (Madeiran style)",
+            "pronunciation": "lah-PEE-nyah",
+            "register": "neutral",
+            "note": "A Madeiran term for a nativity scene, often elaborate and incorporating local landscapes."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d93-christmas-missas-do-parto-1",
+            "title": "Christmas Plans with Maria",
+            "context": "You're chatting with your neighbour Maria about Christmas traditions in Madeira.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Bom dia! Então, já tens planos p'ra o Natal? Vais às Missas do Parto?",
+                "translation": "Good morning! So, do you have plans for Christmas? Are you going to the Missas do Parto?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Bom dia, Maria! Sim, gostava imenso de ir a uma Missa do Parto este ano.",
+                "translation": "Good morning, Maria! Yes, I'd really love to go to a Missa do Parto this year."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Pois é, são muito bonitas. E depois há sempre o chocolate quente e o bolo de mel. E o Mercadinho, vais lá?",
+                "translation": "That's right, they're very beautiful. And afterwards there's always hot chocolate and honey cake. And the Mercadinho, are you going there?"
+              },
+              {
+                "speaker": "Learner",
+                "voice_type": "teacher",
+                "text": "Provavelmente! Adoro as luzes de Natal no Funchal. São mágicas.",
+                "translation": "Probably! I love the Christmas lights in Funchal. They're magical."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "São mesmo! E a carne de vinho e alhos do Mercadinho é ótima, tens de experimentar!",
+                "translation": "They really are! And the carne de vinho e alhos from the Mercadinho is great, you have to try it!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Missas do Parto",
+            "body": "The 'Missas do Parto' (Childbirth Masses) are a unique Madeiran Christmas tradition. From December 16th to 24th, nine masses are celebrated before dawn, typically starting around 5 or 6 AM. They celebrate the Expectation of the Blessed Virgin Mary and the birth of Jesus. After each mass, it's common for communities to gather for hot chocolate, traditional Madeiran honey cake (bolo de mel), and other treats, often accompanied by traditional folk music. It's a very social and communal event, not just religious, and a key part of the Madeiran Christmas spirit."
+          },
+          {
+            "title": "The Mercadinho de Natal",
+            "body": "The 'Mercadinho de Natal' refers to the Christmas Eve market in Funchal, which is particularly vibrant on December 23rd. It's a huge street party with food stalls, traditional drinks like poncha, live music, and a festive atmosphere. Many Madeiran families visit to soak up the festive spirit, do last-minute shopping, and enjoy traditional Madeiran foods like 'carne de vinho e alhos' (pork marinated in wine and garlic) served in a 'bolo do caco' (local bread)."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are talking to your friendly neighbour, Dona Fátima, who is asking about your Christmas plans and inviting you to participate in some local traditions.",
+          "difficulty": 3,
+          "entry_node": "rp-d93-node-1",
+          "nodes": [
+            {
+              "id": "rp-d93-node-1",
+              "npc_text": "Bom dia! Então, já tens planos p'ra o Natal? Vais às Missas do Parto este ano?",
+              "npc_translation": "Good morning! So, do you have plans for Christmas? Are you going to the Missas do Parto this year?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia! Sim, gostava muito de ir a uma Missa do Parto.",
+                  "translation": "Good morning! Yes, I'd really like to go to a Missa do Parto.",
+                  "feedback": "Great start, you've expressed interest clearly.",
+                  "next": "rp-d93-node-2"
+                },
+                {
+                  "text": "Ainda não sei bem, mas quero ir ao Mercadinho de Natal.",
+                  "translation": "I don't know for sure yet, but I want to go to the Christmas Market.",
+                  "feedback": "Good, you've mentioned another key Madeiran Christmas event.",
+                  "next": "rp-d93-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d93-node-2",
+              "npc_text": "Ah, que bom! São lindas. Costumo ir à da igreja aqui ao lado, começa às cinco da manhã. Depois há chocolate quente e bolo de mel. Queres vir connosco um dia?",
+              "npc_translation": "Oh, that's good! They're beautiful. I usually go to the one at the church next door, it starts at five in the morning. Afterwards there's hot chocolate and honey cake. Do you want to come with us one day?",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Cinco da manhã? É mesmo muito cedo! Mas sim, adorava ir, obrigada pelo convite!",
+                  "translation": "Five in the morning? That's really early! But yes, I'd love to go, thank you for the invitation!",
+                  "feedback": "You acknowledged the early time and accepted politely. Excellent!",
+                  "next": "rp-d93-node-4"
+                },
+                {
+                  "text": "É um bocado cedo para mim, mas muito obrigada na mesma pelo convite.",
+                  "translation": "It's a bit early for me, but thank you very much for the invitation anyway.",
+                  "feedback": "A polite refusal, acknowledging the offer. Well done.",
+                  "next": "rp-d93-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d93-node-3",
+              "npc_text": "Ah, o Mercadinho da Véspera de Natal é sempre uma festa! Vais ver as luzes no Funchal?",
+              "npc_translation": "Ah, the Christmas Eve Market is always a party! Are you going to see the lights in Funchal?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, as luzes no Funchal são mágicas. Adoro o ambiente.",
+                  "translation": "Yes, the lights in Funchal are magical. I love the atmosphere.",
+                  "feedback": "You've expressed enthusiasm and used good descriptive language.",
+                  "next": "rp-d93-node-5"
+                },
+                {
+                  "text": "Vou sim, e quero provar a carne de vinho e alhos. Já ouvi dizer que é deliciosa.",
+                  "translation": "Yes, I am, and I want to try the carne de vinho e alhos. I've heard it's delicious.",
+                  "feedback": "You've shown interest in a specific traditional food. Great!",
+                  "next": "rp-d93-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d93-node-4",
+              "npc_text": "De nada! Depois falamos para combinar, sim? Tenho de ir, que o almoço não se faz sozinho! Até já!",
+              "npc_translation": "You're welcome! We'll talk later to arrange it, okay? I have to go, lunch doesn't make itself! See you soon!",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "rp-d93-node-5",
+              "npc_text": "É mesmo! A carne de vinho e alhos é ótima, e o bolo de mel também. É tudo tão bom no Natal! Mas agora tenho de ir. Fica bem!",
+              "npc_translation": "It really is! The carne de vinho e alhos is great, and the honey cake too. Everything is so good at Christmas! But now I have to go. Take care!",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Discuss Madeiran Christmas Traditions",
+          "prep": [
+            "Review vocabulary for Missas do Parto, Mercadinho, and traditional foods.",
+            "Practice expressing interest in local traditions and asking about family customs.",
+            "Rehearse polite acceptance or refusal of invitations."
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode repetir, por favor?",
+            "Não percebi bem, pode falar mais devagar?"
+          ],
+          "likely_responses": [
+            "Sim, é uma tradição muito antiga.",
+            "A minha família costuma cozinhar bacalhau e carne de vinho e alhos.",
+            "Não percas as luzes no Funchal!",
+            "Depois de ir à Missa do Parto, há sempre chocolate quente e bolo de mel."
+          ]
+        },
+        "goals": [
+          "Understand and discuss unique Madeiran Christmas traditions like Missas do Parto and the Mercadinho de Natal.",
+          "Express interest in local events and customs.",
+          "Ask about and describe typical Madeiran Christmas food.",
+          "Respond politely to invitations to participate in local festivities."
+        ],
+        "course": {
+          "month": 4,
+          "day": 93,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The Missas do Parto are {time}.",
+            "answer": "As Missas do Parto são {tempo}.",
+            "source_ref": "pp-sit-d93-christmas-missas-do-parto-1"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to go to the {event} this year.",
+            "answer": "Gostava de ir ao {evento} este ano.",
+            "source_ref": "pp-sit-d93-christmas-missas-do-parto-2"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My family usually cooks {food} for Christmas.",
+            "answer": "A minha família costuma cozinhar {comida} no Natal.",
+            "source_ref": "pp-sit-d93-christmas-missas-do-parto-3"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: The Christmas atmosphere in Funchal is {adjective}.",
+            "answer": "O ambiente de Natal no Funchal é {adjetivo}.",
+            "source_ref": "pp-sit-d93-christmas-missas-do-parto-4"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Pre-dawn Christmas Mass",
+            "answer": "Missa do Parto",
+            "source_ref": "Missa do Parto"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Christmas Market (Funchal's on Dec 23)",
+            "answer": "Mercadinho (de Natal)",
+            "source_ref": "Mercadinho (de Natal)"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: pork marinated in wine and garlic",
+            "answer": "carne de vinho e alhos",
+            "source_ref": "carne de vinho e alhos"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: honey cake",
+            "answer": "bolo de mel",
+            "source_ref": "bolo de mel"
+          },
+          {
+            "id": "rv-sit-d93-christmas-missas-do-parto-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d93-christmas-missas-do-parto-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d94-new-year-in-funchal",
+      "title": "New Year in Funchal",
+      "month": 4,
+      "day": 94,
+      "week": 14,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-bureaucracy",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d94-new-year-in-funchal",
+        "title": "New Year in Funchal",
+        "summary": "The famous fireworks: planning where to watch (baía, miradouros), inviting people, the midnight rituals, and the first conversations of the new year.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-bureaucracy",
+          "track-work"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d94-new-year-in-funchal-1",
+            "base": "Onde é que vais ver os fogos {location}?",
+            "translation": "Where are you going to watch the fireworks {location}?",
+            "slots": [
+              {
+                "name": "location",
+                "description": "Location for watching fireworks",
+                "options": [
+                  "na baía",
+                  "do miradouro das Neves",
+                  "em casa"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d94-new-year-in-funchal-2",
+            "base": "Já tens planos para a passagem de ano?",
+            "translation": "Do you already have plans for New Year's Eve?",
+            "variants": [
+              {
+                "text": "Tens planos para o Ano Novo?",
+                "translation": "Do you have plans for New Year?",
+                "register": "informal"
+              },
+              {
+                "text": "Já tens programas para o Réveillon?",
+                "translation": "Do you already have plans for New Year's Eve?",
+                "register": "neutral",
+                "note": "Réveillon is a common loanword in Portuguese."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d94-new-year-in-funchal-3",
+            "base": "Passa um bom Ano Novo!",
+            "translation": "Have a good New Year!",
+            "variants": [
+              {
+                "text": "Um feliz Ano Novo!",
+                "translation": "A happy New Year!",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d94-new-year-in-funchal-4",
+            "base": "Queres vir {activity} connosco?",
+            "translation": "Do you want to come {activity} with us?",
+            "slots": [
+              {
+                "name": "activity",
+                "description": "Activity to join",
+                "options": [
+                  "ver os fogos",
+                  "brindar à meia-noite"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "fogos de artifício",
+            "translation": "fireworks",
+            "pronunciation": "FOH-goosh dee ar-tee-FEE-see-oo",
+            "register": "neutral"
+          },
+          {
+            "word": "passagem de ano",
+            "translation": "New Year's Eve",
+            "pronunciation": "pah-SAH-zhehm dee AH-no",
+            "register": "neutral"
+          },
+          {
+            "word": "baía",
+            "translation": "bay",
+            "pronunciation": "bah-EE-ah",
+            "register": "neutral",
+            "note": "Refers to Funchal Bay for the fireworks."
+          },
+          {
+            "word": "miradouro",
+            "translation": "viewpoint",
+            "pronunciation": "mee-rah-DOH-roo",
+            "register": "neutral",
+            "note": "Common in Madeira for scenic views."
+          },
+          {
+            "word": "brindar",
+            "translation": "to toast (with drinks)",
+            "pronunciation": "breen-DAR",
+            "register": "neutral"
+          },
+          {
+            "word": "doze passas",
+            "translation": "twelve raisins",
+            "pronunciation": "DOH-zuh PAH-sahsh",
+            "register": "neutral",
+            "note": "Traditional to eat at midnight for good luck."
+          },
+          {
+            "word": "agasalho",
+            "translation": "warm clothing",
+            "pronunciation": "ah-gah-ZAH-lyoo",
+            "register": "neutral",
+            "note": "Common in Portugal, especially for colder weather."
+          },
+          {
+            "word": "meia-noite",
+            "translation": "midnight",
+            "pronunciation": "MAY-ah NOH-eet",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d94-new-year-in-funchal-1",
+            "title": "New Year's Plans with a Neighbour",
+            "context": "Maria and João, neighbours, meet on the street in Funchal a few days before New Year's Eve, discussing their plans.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Então, João, já tens planos para a passagem de ano?",
+                "translation": "So, João, do you already have plans for New Year's Eve?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Olá, Maria! Ainda não, estava a pensar em algo calmo. Talvez ir à baía, mas é sempre muita confusão.",
+                "translation": "Hi, Maria! Not yet, I was thinking of something calm. Maybe going to the bay, but it's always very chaotic."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "older",
+                "text": "Pois é, na baía é bonito, mas é uma multidão. Nós vamos para o miradouro das Neves este ano.",
+                "translation": "That's true, the bay is beautiful, but it's a crowd. We're going to the Neves viewpoint this year."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Ah, o das Neves é bom! E os fogos veem-se bem de lá?",
+                "translation": "Ah, Neves is good! And can you see the fireworks well from there?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Veem-se lindamente! Queres vir connosco? Leva um agasalho, que lá em cima faz sempre um bocado de frio.",
+                "translation": "You see them beautifully! Do you want to come with us? Bring some warm clothing, because it's always a bit cold up there."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "younger",
+                "text": "Obrigado, Maria! Vou pensar nisso e depois digo-te. É uma boa ideia!",
+                "translation": "Thanks, Maria! I'll think about it and then tell you. It's a good idea!"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "P'ra já! Até já!",
+                "translation": "You're welcome! See you soon!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "New Year's Eve in Funchal",
+            "body": "Funchal is famous worldwide for its spectacular New Year's Eve fireworks display, officially recognized by Guinness World Records in the past. The fireworks are launched from various points around Funchal Bay, creating a stunning visual spectacle. Locals and tourists often gather along the waterfront (na baía) or at one of the many viewpoints (miradouros) around the city, like Miradouro das Neves or Miradouro da Nazaré, to get the best view. It's common for families and friends to have a special dinner before heading out to watch the show."
+          },
+          {
+            "title": "Midnight Traditions",
+            "body": "At the stroke of midnight on New Year's Eve, several traditions are observed in Madeira, as in mainland Portugal. People typically eat twelve raisins (doze passas), one for each stroke of the clock, making a wish for each month of the new year. It's also customary to toast with sparkling wine (espumante) or champagne (champanhe) to welcome the Ano Novo. Wearing something blue for good luck is a popular belief, and some might even carry money in their hand or pocket to ensure financial prosperity."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at the local mercearia (small grocery store) and a neighbour, Senhora Ana, asks about your New Year's plans and invites you somewhere.",
+          "difficulty": 3,
+          "entry_node": "rp-d94-1",
+          "nodes": [
+            {
+              "id": "rp-d94-1",
+              "npc_text": "Olá! Já tens planos para a passagem de ano? Os fogos na baía são sempre espetaculares, não são?",
+              "npc_translation": "Hello! Do you already have plans for New Year's Eve? The fireworks in the bay are always spectacular, aren't they?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Senhora Ana! Ainda não, estava a pensar em algo mais calmo.",
+                  "translation": "Hello, Senhora Ana! Not yet, I was thinking of something calmer.",
+                  "feedback": "Good start, acknowledging her and expressing a preference.",
+                  "next": "rp-d94-2"
+                },
+                {
+                  "text": "Sim, Senhora Ana. Vou ver os fogos na baía, como sempre.",
+                  "translation": "Yes, Senhora Ana. I'm going to watch the fireworks in the bay, as always.",
+                  "feedback": "Clear answer, stating your preference for the bay.",
+                  "next": "rp-d94-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d94-2",
+              "npc_text": "Pois é, lá em baixo é bonito, mas é uma confusão! Nós este ano vamos para o miradouro da Nazaré. É mais calmo e vê-se tudo na mesma.",
+              "npc_translation": "That's true, down there it's beautiful, but it's chaotic! This year we're going to the Nazaré viewpoint. It's calmer and you see everything just the same.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Que boa ideia! Talvez mude de planos e vá para lá também.",
+                  "translation": "What a good idea! Maybe I'll change my plans and go there too.",
+                  "feedback": "Expressing interest in her suggestion.",
+                  "next": "rp-d94-4"
+                },
+                {
+                  "text": "Obrigado, Senhora Ana, mas prefiro ficar em casa este ano.",
+                  "translation": "Thank you, Senhora Ana, but I prefer to stay home this year.",
+                  "feedback": "Politely declining the implicit invitation.",
+                  "next": "rp-d94-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d94-3",
+              "npc_text": "Ah, na baía é sempre uma festa! Mas se gostas de mais sossego, o miradouro da Nazaré é uma boa opção. Queres vir connosco?",
+              "npc_translation": "Ah, the bay is always a party! But if you like more quiet, the Nazaré viewpoint is a good option. Do you want to come with us?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, Senhora Ana! Parece uma boa ideia. Que horas?",
+                  "translation": "Yes, Senhora Ana! It seems like a good idea. What time?",
+                  "feedback": "Accepting the invitation and asking for details.",
+                  "next": "rp-d94-4"
+                },
+                {
+                  "text": "Muito obrigado, mas já prometi ir com uns amigos para a baía.",
+                  "translation": "Thank you very much, but I already promised to go with some friends to the bay.",
+                  "feedback": "Politely declining with an explanation.",
+                  "next": "rp-d94-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d94-4",
+              "npc_text": "Fantástico! Leva um agasalho, que lá em cima faz sempre um bocado de frio. Encontramo-nos lá pelas onze e meia?",
+              "npc_translation": "Fantastic! Bring some warm clothing, because it's always a bit cold up there. Shall we meet there around half past eleven?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Combinado, Senhora Ana! Levo o agasalho. Até lá!",
+                  "translation": "Agreed, Senhora Ana! I'll bring the warm clothing. See you then!",
+                  "feedback": "Confirming the plan and showing enthusiasm. Roleplay ends here."
+                },
+                {
+                  "text": "Sim, onze e meia está ótimo! Muito obrigado pelo convite.",
+                  "translation": "Yes, half past eleven is great! Thank you very much for the invitation.",
+                  "feedback": "Confirming the time and expressing gratitude. Roleplay ends here."
+                }
+              ]
+            },
+            {
+              "id": "rp-d94-5",
+              "npc_text": "Não faz mal, percebo. O importante é passar um bom Ano Novo! Passa bem!",
+              "npc_translation": "No problem, I understand. The important thing is to have a good New Year! Have a good one!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Igualmente, Senhora Ana! Um feliz Ano Novo!",
+                  "translation": "You too, Senhora Ana! A happy New Year!",
+                  "feedback": "Returning the good wishes. Roleplay ends here."
+                },
+                {
+                  "text": "Obrigado! Para si também, Senhora Ana!",
+                  "translation": "Thank you! For you too, Senhora Ana!",
+                  "feedback": "Thanking her and returning the good wishes. Roleplay ends here."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Discuss New Year's plans with a local",
+          "prep": [
+            "Think about where you'd like to watch the fireworks in Funchal (e.g., 'na baía', 'num miradouro', 'em casa').",
+            "Practice asking and answering about plans for New Year's Eve using phrases like 'Já tens planos?' and 'Estava a pensar em...'.",
+            "Prepare to accept or politely decline an invitation."
+          ],
+          "fallback_phrases": [
+            "Ainda não sei bem.",
+            "Tenho de pensar.",
+            "Não tenho a certeza."
+          ],
+          "likely_responses": [
+            "Nós vamos para...",
+            "É uma boa ideia!",
+            "Vem connosco!",
+            "Onde é que vais?"
+          ]
+        },
+        "goals": [
+          "Discuss New Year's Eve plans and traditions in Funchal.",
+          "Formulate and respond to invitations for New Year's celebrations.",
+          "Use vocabulary related to festivals and local culture.",
+          "Understand and use polite forms of address and agreement in conversation with neighbours."
+        ],
+        "course": {
+          "month": 4,
+          "day": 94,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Where are you going to watch the fireworks {location}?",
+            "answer": "Onde é que vais ver os fogos {location}?",
+            "source_ref": "pp-sit-d94-new-year-in-funchal-1"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do you already have plans for New Year's Eve?",
+            "answer": "Já tens planos para a passagem de ano?",
+            "source_ref": "pp-sit-d94-new-year-in-funchal-2"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Have a good New Year!",
+            "answer": "Passa um bom Ano Novo!",
+            "source_ref": "pp-sit-d94-new-year-in-funchal-3"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do you want to come {activity} with us?",
+            "answer": "Queres vir {activity} connosco?",
+            "source_ref": "pp-sit-d94-new-year-in-funchal-4"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: fireworks",
+            "answer": "fogos de artifício",
+            "source_ref": "fogos de artifício"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: New Year's Eve",
+            "answer": "passagem de ano",
+            "source_ref": "passagem de ano"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: bay",
+            "answer": "baía",
+            "source_ref": "baía"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: viewpoint",
+            "answer": "miradouro",
+            "source_ref": "miradouro"
+          },
+          {
+            "id": "rv-sit-d94-new-year-in-funchal-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d94-new-year-in-funchal-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d95-santos-populares",
+      "title": "The Santos Populares",
+      "month": 4,
+      "day": 95,
+      "week": 14,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d95-santos-populares",
+        "title": "The Santos Populares",
+        "summary": "The saints’ festivals in June and the village festas: Santo António, São João, São Pedro — the marchas, the sardines and espetada stalls, and joining in as a newcomer.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d95-santos-populares-1",
+            "base": "Vai aos Santos Populares este ano?",
+            "translation": "Are you going to the Popular Saints' festivals this year?",
+            "variants": [
+              {
+                "text": "Vais aos Santos Populares este ano?",
+                "translation": "Are you going to the Popular Saints' festivals this year?",
+                "register": "informal",
+                "note": "Informal 'tu' form"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d95-santos-populares-2",
+            "base": "Gostava de ir à festa de {local}.",
+            "translation": "I'd like to go to the festival in {local}.",
+            "slots": [
+              {
+                "name": "local",
+                "description": "Name of a place or saint's festival",
+                "options": [
+                  "São João",
+                  "Santo António",
+                  "São Pedro",
+                  "Ponta do Sol",
+                  "Caniço"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d95-santos-populares-3",
+            "base": "Já comeu {food}?",
+            "translation": "Have you already eaten {food}?",
+            "slots": [
+              {
+                "name": "food",
+                "description": "Traditional Madeiran festival food",
+                "options": [
+                  "sardinhas assadas",
+                  "espetada",
+                  "bolo do caco"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Já comeste {food}?",
+                "translation": "Have you already eaten {food}?",
+                "register": "informal",
+                "note": "Informal 'tu' form"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d95-santos-populares-4",
+            "base": "É uma tradição muito {adjective} aqui na Madeira.",
+            "translation": "It's a very {adjective} tradition here in Madeira.",
+            "slots": [
+              {
+                "name": "adjective",
+                "description": "Adjective to describe a tradition",
+                "options": [
+                  "bonita",
+                  "antiga",
+                  "animada",
+                  "importante"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "Santos Populares",
+            "translation": "Popular Saints' festivals (June)",
+            "pronunciation": "SAHN-toosh poo-poo-LAH-resh",
+            "register": "neutral",
+            "note": "Collective term for June festivals (Santo António, São João, São Pedro)"
+          },
+          {
+            "word": "festa da aldeia",
+            "translation": "village festival",
+            "pronunciation": "FESH-tah dah al-DEH-yah",
+            "register": "neutral",
+            "note": "Common local community celebrations"
+          },
+          {
+            "word": "sardinhas assadas",
+            "translation": "grilled sardines",
+            "pronunciation": "sar-DEE-nyash ah-SAH-dash",
+            "register": "neutral",
+            "note": "Typical food during Santos Populares"
+          },
+          {
+            "word": "espetada",
+            "translation": "Madeiran beef skewer",
+            "pronunciation": "esh-peh-TAH-dah",
+            "register": "neutral",
+            "note": "Traditional Madeiran dish, often found at festivals"
+          },
+          {
+            "word": "poncha",
+            "translation": "Madeiran drink (aguardente, honey, lemon)",
+            "pronunciation": "PON-shah",
+            "register": "neutral",
+            "note": "Iconic Madeiran alcoholic beverage"
+          },
+          {
+            "word": "marchas",
+            "translation": "parades",
+            "pronunciation": "MAR-shash",
+            "register": "neutral",
+            "note": "Parades, often with music and dancing, part of the festivals"
+          },
+          {
+            "word": "arraial",
+            "translation": "outdoor festival / fair",
+            "pronunciation": "ah-RRAH-yal",
+            "register": "neutral",
+            "note": "Term for a lively outdoor celebration, often with food stalls and music"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d95-santos-populares-1",
+            "title": "Festival Plans",
+            "context": "Maria and João, neighbours, are chatting outside their homes about the upcoming June festivals.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Olá, João! Tudo bem? Já a pensar nos Santos Populares?",
+                "translation": "Hello, João! All good? Already thinking about the Popular Saints' festivals?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Olá, Maria! Pois é, claro que sim! É a melhor altura do ano, não é? Tu vais a alguma festa?",
+                "translation": "Hello, Maria! That's right, of course! It's the best time of the year, isn't it? Are you going to any festival?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Vou sim! Gostava de ir à festa de São João na Ponta do Sol. Dizem que as marchas lá são incríveis.",
+                "translation": "Yes, I am! I'd like to go to the São João festival in Ponta do Sol. They say the parades there are incredible."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "older",
+                "text": "Ah, sim, é verdade! E as sardinhas assadas, já provaste as de lá? São divinais!",
+                "translation": "Ah, yes, that's true! And the grilled sardines, have you tried the ones from there? They're divine!"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Ainda não, mas está nos planos! E tu, vais ao arraial de Santo António aqui perto?",
+                "translation": "Not yet, but it's in the plans! And you, are you going to the Santo António outdoor festival nearby?"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "local",
+                "text": "Claro que sim! É uma tradição muito bonita. Não perco por nada. Se fores, diz-me!",
+                "translation": "Of course! It's a very beautiful tradition. I wouldn't miss it for anything. If you go, tell me!"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Combinado! Quem sabe não nos encontramos por lá?",
+                "translation": "Agreed! Who knows, maybe we'll meet there?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Santos Populares in Madeira",
+            "body": "June is a month of celebration in Madeira, known for the 'Santos Populares' (Popular Saints' festivals). These include Santo António (June 13th), São João (June 24th), and São Pedro (June 29th). Each village and parish has its own 'festa' or 'arraial' (outdoor festival) with unique traditions. Common elements include lively music, folk dancing, 'marchas' (parades), bonfires (especially for São João), and plenty of traditional food like 'sardinhas assadas' (grilled sardines), 'espetada' (beef skewers), and 'bolo do caco' (Madeiran flatbread). It's a time for community, family, and friends to gather and celebrate."
+          },
+          {
+            "title": "Joining Local Festivities",
+            "body": "As a newcomer, showing interest in the 'Santos Populares' is a great way to connect with locals and feel part of the community. People are generally very proud of their traditions and happy to share them. Don't be shy to ask about specific festivals, what food to try, or where the best 'arraiais' are. Expressing your enjoyment of the festivities will be well-received and can open doors to deeper conversations and friendships."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at your local café in Madeira, enjoying a 'bica'. A friendly neighbour, Dona Fátima, strikes up a conversation about the upcoming Santos Populares. She's keen to know if you're joining in the festivities.",
+          "difficulty": 2,
+          "entry_node": "rp-d95-node-1",
+          "nodes": [
+            {
+              "id": "rp-d95-node-1",
+              "npc_text": "Olá! Já a pensar nos Santos Populares? É uma das melhores alturas do ano, não é? Há sempre tanta coisa para fazer!",
+              "npc_translation": "Hello! Already thinking about the Popular Saints' festivals? It's one of the best times of the year, isn't it? There's always so much to do!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Olá, Dona Fátima! Sim, é verdade. Estou muito entusiasmado/a.",
+                  "translation": "Hello, Dona Fátima! Yes, it's true. I'm very excited.",
+                  "feedback": "Great start! You acknowledged her and expressed enthusiasm.",
+                  "next": "rp-d95-node-2"
+                },
+                {
+                  "text": "Olá! Sim, parece uma tradição muito bonita. Quais são os seus planos?",
+                  "translation": "Hello! Yes, it seems like a very beautiful tradition. What are your plans?",
+                  "feedback": "Good! You showed interest and asked about her plans.",
+                  "next": "rp-d95-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d95-node-2",
+              "npc_text": "Que bom! Já pensou em ir a alguma festa em particular? A de São João na Ponta do Sol é sempre muito animada, com as marchas e tudo.",
+              "npc_translation": "That's good! Have you thought about going to any particular festival? The São João one in Ponta do Sol is always very lively, with the parades and everything.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, gostava de ir à festa de São João. Ouvi dizer que é muito boa.",
+                  "translation": "Yes, I'd like to go to the São João festival. I heard it's very good.",
+                  "feedback": "Excellent! You confirmed your interest and referred to what you've heard.",
+                  "next": "rp-d95-node-4"
+                },
+                {
+                  "text": "Ainda não sei bem. Há alguma festa que me recomende?",
+                  "translation": "I don't know yet. Is there any festival you recommend?",
+                  "feedback": "Good! Asking for a recommendation is a natural way to continue the conversation.",
+                  "next": "rp-d95-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d95-node-3",
+              "npc_text": "Ah, os meus planos... Bem, eu vou sempre ao arraial de Santo António aqui perto. É onde a gente se encontra com os vizinhos e come umas sardinhas. Já comeu sardinhas assadas?",
+              "npc_translation": "Ah, my plans... Well, I always go to the Santo António outdoor festival nearby. It's where we meet up with neighbours and eat some sardines. Have you already eaten grilled sardines?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Sim, adoro sardinhas assadas! É uma das minhas coisas favoritas.",
+                  "translation": "Yes, I love grilled sardines! It's one of my favourite things.",
+                  "feedback": "Perfect! You shared your opinion and connected with her experience.",
+                  "next": "rp-d95-node-4"
+                },
+                {
+                  "text": "Ainda não, mas gostava de provar. Onde posso encontrar as melhores?",
+                  "translation": "Not yet, but I'd like to try them. Where can I find the best ones?",
+                  "feedback": "Good! You expressed curiosity and asked for advice.",
+                  "next": "rp-d95-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d95-node-4",
+              "npc_text": "Pois é! É uma delícia. Se for à festa de São João ou ao arraial de Santo António, diga-me. Quem sabe não nos encontramos por lá? Seria giro!",
+              "npc_translation": "That's right! It's a delight. If you go to the São João festival or the Santo António outdoor festival, tell me. Who knows, maybe we'll meet there? That would be nice!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Combinado! Obrigada pela sugestão, Dona Fátima.",
+                  "translation": "Agreed! Thank you for the suggestion, Dona Fátima.",
+                  "feedback": "Excellent! You accepted the invitation and thanked her politely. Conversation ends naturally."
+                }
+              ]
+            },
+            {
+              "id": "rp-d95-node-5",
+              "npc_text": "Bem, para sardinhas assadas, o arraial de Santo António aqui perto é sempre uma boa aposta. Mas a festa de São Pedro no Porto Moniz também é famosa pela espetada. É uma tradição muito importante para nós. Pense nisso!",
+              "npc_translation": "Well, for grilled sardines, the Santo António outdoor festival nearby is always a good bet. But the São Pedro festival in Porto Moniz is also famous for its espetada. It's a very important tradition for us. Think about it!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Muito obrigada pelas dicas! Vou pensar nisso e talvez a gente se encontre.",
+                  "translation": "Thank you very much for the tips! I'll think about it and maybe we'll meet up.",
+                  "feedback": "Perfect! You thanked her for the advice and kept the possibility of meeting open. Conversation ends naturally."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Planear a Festa",
+          "prep": [
+            "Review the vocabulary for festivals and food.",
+            "Practice asking about and expressing interest in local events.",
+            "Mentally prepare to discuss your own (hypothetical) plans for the festivals."
+          ],
+          "fallback_phrases": [
+            "Não percebi bem.",
+            "Pode repetir, por favor?",
+            "Desculpe, como disse?"
+          ],
+          "likely_responses": [
+            "Ah, sim! É uma tradição muito bonita.",
+            "Vais a que festa?",
+            "Já provaste a poncha lá?",
+            "Eu vou sempre à festa de..."
+          ]
+        },
+        "goals": [
+          "Understand and discuss the 'Santos Populares' festivals in Madeira.",
+          "Express interest in local traditions and ask about festival plans.",
+          "Share your own (hypothetical) plans or preferences for attending festivals.",
+          "Engage in a simple conversation about community events with a neighbour."
+        ],
+        "course": {
+          "month": 4,
+          "day": 95,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d95-santos-populares-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Are you going to the Popular Saints' festivals this year?",
+            "answer": "Vai aos Santos Populares este ano?",
+            "source_ref": "pp-sit-d95-santos-populares-1"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I'd like to go to the festival in {local}.",
+            "answer": "Gostava de ir à festa de {local}.",
+            "source_ref": "pp-sit-d95-santos-populares-2"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Have you already eaten {food}?",
+            "answer": "Já comeu {food}?",
+            "source_ref": "pp-sit-d95-santos-populares-3"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's a very {adjective} tradition here in Madeira.",
+            "answer": "É uma tradição muito {adjective} aqui na Madeira.",
+            "source_ref": "pp-sit-d95-santos-populares-4"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Popular Saints' festivals (June)",
+            "answer": "Santos Populares",
+            "source_ref": "Santos Populares"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: village festival",
+            "answer": "festa da aldeia",
+            "source_ref": "festa da aldeia"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: grilled sardines",
+            "answer": "sardinhas assadas",
+            "source_ref": "sardinhas assadas"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Madeiran beef skewer",
+            "answer": "espetada",
+            "source_ref": "espetada"
+          },
+          {
+            "id": "rv-sit-d95-santos-populares-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d95-santos-populares-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d96-vindima-harvest",
+      "title": "Vindima & the Harvest",
+      "month": 4,
+      "day": 96,
+      "week": 14,
+      "level": 3,
+      "cefr": "B1",
+      "tracks": [
+        "track-structured-course",
+        "track-social",
+        "track-survival"
+      ],
+      "situation": {
+        "id": "sit-d96-vindima-harvest",
+        "title": "Vindima & the Harvest",
+        "summary": "Harvest time: grapes for Vinho Madeira, helping a neighbour with the vindima, harvest lunches, and the vocabulary of vines, baskets and pressing.",
+        "tracks": [
+          "track-structured-course",
+          "track-social",
+          "track-survival"
+        ],
+        "level": 3,
+        "cefr": "B1",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d96-vindima-harvest-1",
+            "base": "Já está a preparar-se p'ra vindima?",
+            "translation": "Are you already preparing for the grape harvest?",
+            "variants": [
+              {
+                "text": "Já se está a preparar para a vindima?",
+                "translation": "Are you already preparing for the grape harvest?",
+                "register": "neutral",
+                "note": "Slightly more formal, less common reduction 'p'ra'"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d96-vindima-harvest-2",
+            "base": "Este ano a colheita está {estado}.",
+            "translation": "This year the harvest is {state}.",
+            "slots": [
+              {
+                "name": "estado",
+                "description": "state of the harvest",
+                "options": [
+                  "boa",
+                  "muita",
+                  "pouca",
+                  "promete"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d96-vindima-harvest-3",
+            "base": "Podia dar uma ajuda com a vindima?",
+            "translation": "Could you help with the grape harvest?",
+            "variants": [
+              {
+                "text": "Preciso de ajuda na vindima.",
+                "translation": "I need help with the grape harvest.",
+                "register": "informal"
+              },
+              {
+                "text": "Gostaria de pedir uma ajuda para a vindima.",
+                "translation": "I'd like to ask for some help for the grape harvest.",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d96-vindima-harvest-4",
+            "base": "Depois há almoço no {local}.",
+            "translation": "Afterwards there's lunch at the {place}.",
+            "slots": [
+              {
+                "name": "local",
+                "description": "location for lunch",
+                "options": [
+                  "lagar",
+                  "campo",
+                  "quintal"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "vindima",
+            "translation": "grape harvest",
+            "pronunciation": "veen-DEE-mah",
+            "register": "neutral",
+            "note": "The act of harvesting grapes"
+          },
+          {
+            "word": "cesto",
+            "translation": "basket",
+            "pronunciation": "SESH-too",
+            "register": "neutral"
+          },
+          {
+            "word": "lagar",
+            "translation": "wine press / pressing room",
+            "pronunciation": "lah-GAR",
+            "register": "neutral",
+            "note": "Place where grapes are pressed to make wine or must"
+          },
+          {
+            "word": "colheita",
+            "translation": "harvest / crop",
+            "pronunciation": "ko-LYAY-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "bolo do caco",
+            "translation": "Madeiran flatbread",
+            "pronunciation": "BOH-loo doo KAH-koo",
+            "register": "neutral",
+            "note": "Traditional Madeiran bread, often served with garlic butter or cane honey"
+          },
+          {
+            "word": "espetada",
+            "translation": "meat skewer (Madeiran style)",
+            "pronunciation": "esh-peh-TAH-dah",
+            "register": "neutral",
+            "note": "Traditional Madeiran dish, usually beef on a laurel skewer"
+          },
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "informal",
+            "note": "Madeiran regionalism for 'batata'"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d96-vindima-harvest-1",
+            "title": "Harvest Talk",
+            "context": "Two neighbours, Dona Laura and Sr. Manuel, are chatting by the roadside about the upcoming grape harvest.",
+            "lines": [
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "older",
+                "text": "Bom dia, Sr. Manuel! Tudo bem? Já está a preparar-se p'ra vindima?",
+                "translation": "Good morning, Mr. Manuel! All good? Are you already preparing for the grape harvest?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "local",
+                "text": "Pois é, Dona Laura! Este ano a colheita promete, mas precisamos de mais mãos. A sua vizinha também vai ajudar.",
+                "translation": "That's right, Dona Laura! This year the harvest looks promising, but we need more hands. Your neighbour is also going to help."
+              },
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "older",
+                "text": "Ah, que bom! Eu posso dar uma ajuda, sem problema. E depois um almoço com espetada, não?",
+                "translation": "Oh, that's good! I can help, no problem. And afterwards a lunch with espetada, right?"
+              },
+              {
+                "speaker": "Sr. Manuel",
+                "voice_type": "local",
+                "text": "Claro! E bolo do caco com manteiga de alho. E um copo de vinho novo no lagar! Que tal no sábado de manhã?",
+                "translation": "Of course! And bolo do caco with garlic butter. And a glass of new wine in the pressing room! How about Saturday morning?"
+              },
+              {
+                "speaker": "Dona Laura",
+                "voice_type": "older",
+                "text": "Perfeito! Contem comigo. Até sábado, então!",
+                "translation": "Perfect! Count me in. See you Saturday, then!"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Communal Vindima",
+            "body": "In Madeira, the grape harvest (vindima) is often a community event, especially in rural areas. Families and neighbours frequently help each other, sharing the work and the joy. It's common for these efforts to be rewarded with a generous shared meal afterwards, celebrating the hard work and the bounty of the land. This tradition reinforces community bonds and local identity."
+          },
+          {
+            "title": "Harvest Meals and Treats",
+            "body": "Harvest lunches are a significant part of the vindima experience. Traditional Madeiran dishes like espetada (beef skewers), bolo do caco (flatbread often with garlic butter), and semilhas (potatoes) are commonly served. There's also the anticipation of 'vinho novo' (new wine) or 'mosto' (must) directly from the lagar (wine press), a fresh taste of the year's yield."
+          }
+        ],
+        "roleplay": {
+          "scenario": "Your neighbour, Sr. João, approaches you while you're tending to your garden. He's looking for help with his family's grape harvest this weekend.",
+          "difficulty": 3,
+          "entry_node": "rp-d96-node-1",
+          "nodes": [
+            {
+              "id": "rp-d96-node-1",
+              "npc_text": "Olá! Tudo bem? Olhe, ia perguntar se me podia dar uma ajuda com a vindima este fim de semana? Precisamos de mais mãos lá no lagar.",
+              "npc_translation": "Hello! All good? Look, I was going to ask if you could help me with the grape harvest this weekend? We need more hands down at the pressing room.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Claro, Sr. João! Em que dia e a que horas?",
+                  "translation": "Of course, Mr. João! On what day and at what time?",
+                  "feedback": "Great start! You've agreed to help and asked for important details.",
+                  "next": "rp-d96-node-2"
+                },
+                {
+                  "text": "Este fim de semana é um bocado complicado, mas posso noutro dia.",
+                  "translation": "This weekend is a bit complicated, but I can on another day.",
+                  "feedback": "Good, you've politely declined for now but offered an alternative.",
+                  "next": "rp-d96-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d96-node-2",
+              "npc_text": "Pois é, no sábado de manhã, lá p'ra as nove. Depois há almoço no lagar, com bolo do caco e espetada. É p'ra não faltar!",
+              "npc_translation": "That's right, Saturday morning, around nine. Afterwards there's lunch at the pressing room, with bolo do caco and espetada. You can't miss it!",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Combinado! Levo alguma coisa para ajudar?",
+                  "translation": "Agreed! Should I bring anything to help?",
+                  "feedback": "Excellent! You've confirmed and offered to contribute, showing initiative.",
+                  "next": "rp-d96-node-final-1"
+                },
+                {
+                  "text": "Perfeito! Até sábado, então. Muito obrigado pelo convite.",
+                  "translation": "Perfect! See you Saturday, then. Thank you very much for the invitation.",
+                  "feedback": "Solid confirmation and polite thanks. You're all set!",
+                  "next": "rp-d96-node-final-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-d96-node-3",
+              "npc_text": "Ah, que pena! E na próxima semana, consegue? É que precisamos mesmo de mais mãos, a colheita está boa.",
+              "npc_translation": "Oh, what a pity! And next week, can you manage? We really need more hands, the harvest is good.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, na próxima semana é melhor. Que dia sugere?",
+                  "translation": "Yes, next week is better. What day do you suggest?",
+                  "feedback": "Good, you've found a solution and asked for details.",
+                  "next": "rp-d96-node-4"
+                },
+                {
+                  "text": "Infelizmente, estou mesmo ocupado. Mas obrigado pelo convite!",
+                  "translation": "Unfortunately, I'm really busy. But thank you for the invitation!",
+                  "feedback": "A polite but firm refusal. It's okay to say no sometimes!",
+                  "next": "rp-d96-node-final-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d96-node-4",
+              "npc_text": "Pode ser na terça, de tarde? Umas três horas. A minha mulher vai fazer umas sandes de atum e sumo.",
+              "npc_translation": "Could it be on Tuesday, in the afternoon? Around three o'clock. My wife is going to make some tuna sandwiches and juice.",
+              "npc_voice_type": "local",
+              "options": [
+                {
+                  "text": "Sim, terça à tarde funciona. Contem comigo!",
+                  "translation": "Yes, Tuesday afternoon works. Count me in!",
+                  "feedback": "Excellent! You've confirmed the new plan.",
+                  "next": "rp-d96-node-final-1"
+                },
+                {
+                  "text": "Perfeito! Até terça, então. Obrigado!",
+                  "translation": "Perfect! See you Tuesday, then. Thanks!",
+                  "feedback": "Good, you've confirmed and thanked him.",
+                  "next": "rp-d96-node-final-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-d96-node-final-1",
+              "npc_text": "Muito obrigado pela ajuda! Tenha um bom dia!",
+              "npc_translation": "Thank you very much for the help! Have a good day!",
+              "npc_voice_type": "local",
+              "options": []
+            },
+            {
+              "id": "rp-d96-node-final-2",
+              "npc_text": "Ah, que pena! Fica p'ra próxima. Bom dia!",
+              "npc_translation": "Ah, what a pity! Maybe next time. Good day!",
+              "npc_voice_type": "local",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Help with the Harvest",
+          "prep": [
+            "Review vocabulary for harvest (vindima, cesto, lagar, colheita).",
+            "Practice offering help and asking for details (e.g., 'Em que dia e a que horas?').",
+            "Mentally prepare to discuss Madeiran food (bolo do caco, espetada) as part of the social aspect."
+          ],
+          "fallback_phrases": [
+            "Peço desculpa, não percebi bem.",
+            "Pode repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Muito obrigado pela ajuda!",
+            "Precisamos de mais mãos.",
+            "Há almoço no fim!",
+            "A colheita está boa este ano."
+          ]
+        },
+        "goals": [
+          "Discuss plans for the grape harvest (vindima) with a neighbour.",
+          "Offer or accept help for a community activity.",
+          "Use vocabulary related to the harvest and traditional Madeiran food.",
+          "Engage in a short, natural conversation about local events."
+        ],
+        "course": {
+          "month": 4,
+          "day": 96,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d96-vindima-harvest-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Are you already preparing for the grape harvest?",
+            "answer": "Já está a preparar-se p'ra vindima?",
+            "source_ref": "pp-sit-d96-vindima-harvest-1"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: This year the harvest is {state}.",
+            "answer": "Este ano a colheita está {estado}.",
+            "source_ref": "pp-sit-d96-vindima-harvest-2"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Could you help with the grape harvest?",
+            "answer": "Podia dar uma ajuda com a vindima?",
+            "source_ref": "pp-sit-d96-vindima-harvest-3"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Afterwards there's lunch at the {place}.",
+            "answer": "Depois há almoço no {local}.",
+            "source_ref": "pp-sit-d96-vindima-harvest-4"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: grape harvest",
+            "answer": "vindima",
+            "source_ref": "vindima"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: basket",
+            "answer": "cesto",
+            "source_ref": "cesto"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: wine press / pressing room",
+            "answer": "lagar",
+            "source_ref": "lagar"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: harvest / crop",
+            "answer": "colheita",
+            "source_ref": "colheita"
+          },
+          {
+            "id": "rv-sit-d96-vindima-harvest-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d96-vindima-harvest-1"
+          }
+        ]
+      }
+    }
+  ]
+}

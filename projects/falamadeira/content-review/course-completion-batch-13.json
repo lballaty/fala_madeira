@@ -1,0 +1,3039 @@
+{
+  "batch": 13,
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-10T14:03:43.797Z",
+  "renumber_changes": [],
+  "video_results": [
+    {
+      "week": 2,
+      "situationId": "sit-d13-daily-routines",
+      "url": "https://www.youtube.com/watch?v=mIb099ksEzE",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 4,
+      "situationId": "sit-d25-restaurant-ordering-a-full-meal",
+      "url": "https://www.youtube.com/watch?v=6in3Gknx5mU",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 5,
+      "situationId": "sit-d29-tu-vs-voce-informal-formal",
+      "url": "https://www.youtube.com/watch?v=RswhRINYA2I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 6,
+      "situationId": "sit-d37-reflexive-verbs-all-persons",
+      "url": "https://www.youtube.com/watch?v=odNIwTAZV8Q",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 7,
+      "situationId": "sit-d45-the-personal-infinitive",
+      "url": "https://www.youtube.com/watch?v=J6uXus6Uc0U",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 8,
+      "situationId": "sit-d50-at-the-market",
+      "url": "https://www.youtube.com/watch?v=xc8Ed0qSzO8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 9,
+      "situationId": "sit-d50-speed-automaticity",
+      "url": "https://www.youtube.com/watch?v=V3PCCEmqVxc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 10,
+      "situationId": "sit-d64-pharmacy-beyond-basics",
+      "url": "https://www.youtube.com/watch?v=DFQo1bfuy7M",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 11,
+      "situationId": "sit-d73-weather-and-seasons",
+      "url": "https://www.youtube.com/watch?v=r23FLvpe2yQ",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 12,
+      "situationId": "sit-d78-on-a-levada-walk",
+      "url": "https://www.youtube.com/watch?v=OtsqDk5qRQY",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 14,
+      "situationId": "sit-d92-festa-da-flor",
+      "url": "https://www.youtube.com/watch?v=Yd46273aTr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 15,
+      "situationId": "sit-d101-talking-recipes",
+      "url": "https://www.youtube.com/watch?v=nJx-nK0Lva0",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 16,
+      "situationId": "sit-d110-island-history-stories",
+      "url": "https://www.youtube.com/watch?v=yF4F6Cgm8Cc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 17,
+      "situationId": "sit-m5w1-complaint-politely",
+      "url": "https://www.youtube.com/watch?v=2IY3AdScUrA",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 18,
+      "situationId": "sit-d121-the-quote-that-grew",
+      "url": "https://www.youtube.com/watch?v=7WpHFATw33I",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 19,
+      "situationId": "sit-d127-missing-document-financas",
+      "url": "https://www.youtube.com/watch?v=0X-UTWjDjRM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 20,
+      "situationId": "sit-d134-client-wont-pay",
+      "url": "https://www.youtube.com/watch?v=UQKqIZq7BHc",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 21,
+      "situationId": "sit-d145-humour-and-irony",
+      "url": "https://www.youtube.com/watch?v=hcyagm9THr8",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 22,
+      "situationId": "sit-d151-official-phone-call",
+      "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 23,
+      "situationId": "sit-d155-news-and-local-politics",
+      "url": "https://www.youtube.com/watch?v=1hRDQy6I9nM",
+      "verified": true,
+      "action": "attached"
+    },
+    {
+      "week": 24,
+      "situationId": "sit-d165-extreme-listening",
+      "url": "https://www.youtube.com/watch?v=PWspg1XCF1k",
+      "verified": true,
+      "action": "attached"
+    }
+  ],
+  "count": 7,
+  "situations": [
+    {
+      "id": "sit-d147-reacting-to-stories",
+      "title": "Reacting to Stories Like a Native",
+      "month": 6,
+      "day": 147,
+      "week": 21,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d147-reacting-to-stories",
+        "title": "Reacting to Stories Like a Native",
+        "summary": "Back-channelling at full speed: ai é?, não acredito!, ora essa!, ainda bem — timing your reactions, asking the question the teller wants, and passing the story on.",
+        "tracks": [
+          "track-structured-course",
+          "track-social"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d147-reacting-to-stories-1",
+            "base": "Ai é? {Detalhe}?",
+            "translation": "Oh really? {Detail}?",
+            "slots": [
+              {
+                "name": "Detalhe",
+                "description": "A specific detail from the story to ask about",
+                "options": [
+                  "Não me digas",
+                  "A sério",
+                  "É verdade",
+                  "E como foi"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não me digas!",
+                "translation": "You don't say!",
+                "register": "informal",
+                "note": "A common expression of surprise or disbelief."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d147-reacting-to-stories-2",
+            "base": "Não acredito! {Motivo}?",
+            "translation": "I don't believe it! {Reason}?",
+            "slots": [
+              {
+                "name": "Motivo",
+                "description": "Reason for disbelief or a follow-up question",
+                "options": [
+                  "Como é que foi possível",
+                  "Quem diria",
+                  "Estás a brincar"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Não acredito!",
+                "translation": "I don't believe it!",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d147-reacting-to-stories-3",
+            "base": "Ora essa! Que {Adjetivo}!",
+            "translation": "Oh, come on! How {Adjective}!",
+            "slots": [
+              {
+                "name": "Adjetivo",
+                "description": "An adjective describing the situation",
+                "options": [
+                  "chatice",
+                  "coisa",
+                  "surpresa",
+                  "história"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Ora essa!",
+                "translation": "Oh, come on! / You're kidding!",
+                "register": "informal",
+                "note": "Used to express mild disbelief, disagreement, or to dismiss something."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d147-reacting-to-stories-4",
+            "base": "Ainda bem que {Resultado}.",
+            "translation": "It's a good thing that {Outcome}.",
+            "slots": [
+              {
+                "name": "Resultado",
+                "description": "The positive outcome of the situation",
+                "options": [
+                  "tudo acabou bem",
+                  "conseguiste resolver",
+                  "não foi pior",
+                  "já passou"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Ainda bem!",
+                "translation": "That's good! / Thank goodness!",
+                "register": "neutral"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "bica",
+            "translation": "espresso",
+            "pronunciation": "BEE-kah",
+            "register": "neutral",
+            "note": "Common term for espresso in Portugal, especially in Lisbon and Madeira."
+          },
+          {
+            "word": "semilha",
+            "translation": "potato",
+            "pronunciation": "seh-MEE-lyah",
+            "register": "neutral",
+            "note": "Madeiran regional word for 'potato' (batata)."
+          },
+          {
+            "word": "levar a mal",
+            "translation": "to take offense / to take badly",
+            "pronunciation": "leh-VAR ah MAL",
+            "register": "neutral",
+            "note": "Idiomatic expression."
+          },
+          {
+            "word": "passar a palavra",
+            "translation": "to pass the word / to spread the news",
+            "pronunciation": "pah-SAR ah pah-LAH-vrah",
+            "register": "neutral",
+            "note": "Common idiom for sharing information."
+          },
+          {
+            "word": "ficar a saber",
+            "translation": "to find out / to learn",
+            "pronunciation": "fee-KAR ah sah-BER",
+            "register": "neutral",
+            "note": "Used to describe the act of acquiring new information."
+          },
+          {
+            "word": "uma chatice",
+            "translation": "a nuisance / a bore",
+            "pronunciation": "OO-mah shah-TEE-seh",
+            "register": "informal",
+            "note": "Common expression for something annoying or bothersome."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d147-reacting-to-stories-1",
+            "title": "The Van Incident",
+            "context": "Two friends, Ricardo and Sofia, are having a coffee (bica) at a local café in Funchal. Ricardo is telling Sofia about a recent mishap with his work van.",
+            "lines": [
+              {
+                "speaker": "Ricardo",
+                "voice_type": "local",
+                "text": "Então, não vais acreditar no que me aconteceu ontem com a carrinha da empresa.",
+                "translation": "So, you won't believe what happened to me yesterday with the company van."
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "younger",
+                "text": "Ai é? Conta lá! O que se passou?",
+                "translation": "Oh really? Tell me! What happened?"
+              },
+              {
+                "speaker": "Ricardo",
+                "voice_type": "local",
+                "text": "Estava a subir a estrada das Romeiras, e de repente, ouço um barulho estranho no motor. Pensei: 'Pronto, é agora'.",
+                "translation": "I was going up the Romeiras road, and suddenly, I hear a strange noise in the engine. I thought: 'Right, this is it'."
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "younger",
+                "text": "Não acredito! E o que fizeste?",
+                "translation": "I don't believe it! And what did you do?"
+              },
+              {
+                "speaker": "Ricardo",
+                "voice_type": "local",
+                "text": "Estacionei como pude, liguei para o chefe. Ele disse p'ra ver se era só a correia. Mas não, era mais grave. Teve de vir o reboque!",
+                "translation": "I parked as best I could, called the boss. He said to see if it was just the belt. But no, it was more serious. The tow truck had to come!"
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "younger",
+                "text": "Ora essa! Que chatice! E a carrinha, já está arranjada?",
+                "translation": "Oh, come on! What a nuisance! And the van, is it fixed already?"
+              },
+              {
+                "speaker": "Ricardo",
+                "voice_type": "local",
+                "text": "Ainda não, está na oficina. Mas ainda bem que não foi na autoestrada, podia ter sido bem pior.",
+                "translation": "Not yet, it's at the garage. But it's a good thing it wasn't on the motorway, it could have been much worse."
+              },
+              {
+                "speaker": "Sofia",
+                "voice_type": "younger",
+                "text": "Pois é, tens razão. Que alívio! Queres mais uma bica?",
+                "translation": "That's true, you're right. What a relief! Do you want another espresso?"
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Art of Back-Channelling",
+            "body": "In Portuguese conversations, especially informal ones, active listening is often demonstrated through frequent 'back-channelling' – short verbal or non-verbal responses that show you are engaged. Phrases like 'Ai é?', 'Não acredito!', 'Pois é', 'A sério?' are essential for affirming the speaker, expressing surprise, or inviting them to continue. Timing these interjections naturally is key to sounding like a native speaker and showing genuine interest."
+          },
+          {
+            "title": "Expressing Disbelief and Empathy",
+            "body": "When someone shares a surprising or unfortunate story, it's common to express a degree of disbelief ('Não acredito!', 'Não me digas!') or empathy ('Que chatice!', 'Ora essa!'). These aren't necessarily literal statements of disbelief, but rather ways to acknowledge the impact of the story and validate the speaker's experience. Finishing with 'Ainda bem!' when a positive resolution is mentioned shows shared relief and support."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You're at a local mercado (market) in Funchal, buying some fresh fruit. The vendor, Dona Rosa, a friendly older woman, starts telling you about a peculiar incident involving a tourist and a very large banana. You need to react naturally, show interest, and keep the conversation flowing.",
+          "difficulty": 5,
+          "entry_node": "rp-sit-d147-reacting-to-stories-node-1",
+          "nodes": [
+            {
+              "id": "rp-sit-d147-reacting-to-stories-node-1",
+              "npc_text": "Bom dia! Tudo bem? Vai levar estas maçãs 'Bravo de Esmolfe'? São uma delícia! Ah, e não vais acreditar no que me aconteceu ontem aqui com um turista...",
+              "npc_translation": "Good morning! All good? Are you taking these 'Bravo de Esmolfe' apples? They are delicious! Oh, and you won't believe what happened to me yesterday here with a tourist...",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Bom dia, Dona Rosa! Sim, estas maçãs são ótimas. Diga lá, o que se passou com o turista?",
+                  "translation": "Good morning, Dona Rosa! Yes, these apples are great. Tell me, what happened with the tourist?",
+                  "feedback": "Excellent start! You acknowledge her greeting, compliment the product, and directly invite her to tell the story.",
+                  "next": "rp-sit-d147-reacting-to-stories-node-2"
+                },
+                {
+                  "text": "Ah, sim, bom dia. Pode ser um quilo. Turistas... o que fizeram agora?",
+                  "translation": "Ah, yes, good morning. A kilo please. Tourists... what did they do now?",
+                  "feedback": "A bit dismissive of the tourist part, but still leads to her telling the story. Try to show more direct interest next time.",
+                  "next": "rp-sit-d147-reacting-to-stories-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d147-reacting-to-stories-node-2",
+              "npc_text": "Então, um senhor, inglês, queria uma banana. Mas não era uma banana qualquer! Apontou para aquela banana gigante, da variedade 'Maçã', que está ali. Eu disse-lhe que era mais para cozinhar, mas ele insistiu que queria comer assim mesmo. E eu disse: 'Olhe, é grande, mas se quer...' Ele pagou, e saiu a comer a banana como se fosse um gelado!",
+              "npc_translation": "So, a gentleman, English, wanted a banana. But not just any banana! He pointed to that giant banana, of the 'Maçã' variety, that's over there. I told him it was more for cooking, but he insisted he wanted to eat it just like that. And I said: 'Look, it's big, but if you want...' He paid, and left eating the banana as if it were an ice cream!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não acredito! A sério? E ele comeu-a toda, assim crua?",
+                  "translation": "I don't believe it! Seriously? And he ate it all, just raw?",
+                  "feedback": "Perfect! You've used a strong reaction and a follow-up question, showing genuine surprise and engagement.",
+                  "next": "rp-sit-d147-reacting-to-stories-node-3"
+                },
+                {
+                  "text": "Ai é? Que engraçado! E ele gostou?",
+                  "translation": "Oh really? How funny! And he liked it?",
+                  "feedback": "Good, you're reacting, but 'Não acredito' or 'Não me digas' would show more impact for such a story.",
+                  "next": "rp-sit-d147-reacting-to-stories-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d147-reacting-to-stories-node-3",
+              "npc_text": "Sim, comeu-a toda! Com um sorriso na cara! Eu fiquei a olhar, sem saber se ria ou se lhe dizia que ia ficar com a barriga a doer. Mas ele parecia feliz, ora essa!",
+              "npc_translation": "Yes, he ate it all! With a smile on his face! I just watched, not knowing whether to laugh or tell him he'd get a tummy ache. But he seemed happy, oh well!",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Ora essa! Que figura! Ainda bem que ele gostou, mas é uma banana enorme para comer assim!",
+                  "translation": "Oh, come on! What a character! It's a good thing he liked it, but it's a huge banana to eat like that!",
+                  "feedback": "Excellent! You've used 'Ora essa' for mild disbelief/amusement and 'Ainda bem' for the positive outcome, plus a natural comment.",
+                  "next": "rp-sit-d147-reacting-to-stories-node-4"
+                },
+                {
+                  "text": "Pois, é um bocado estranho. Mas cada um é como é, não é?",
+                  "translation": "Well, it's a bit strange. But each to their own, isn't it?",
+                  "feedback": "This is a bit more neutral. While true, you could have shown more animated reaction to the 'figure' he made.",
+                  "next": "rp-sit-d147-reacting-to-stories-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-sit-d147-reacting-to-stories-node-4",
+              "npc_text": "É verdade! Mas pronto, são as histórias do dia a dia no mercado. Quer mais alguma coisa? Umas semilhas frescas para o jantar?",
+              "npc_translation": "That's true! But well, these are the daily stories at the market. Do you want anything else? Some fresh potatoes for dinner?",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Não, obrigada, Dona Rosa. Mas foi uma história muito engraçada! Vou passar a palavra aos meus amigos. Até amanhã!",
+                  "translation": "No, thank you, Dona Rosa. But that was a very funny story! I'll pass the word on to my friends. See you tomorrow!",
+                  "feedback": "Perfect ending! You thanked her, complimented the story, mentioned passing it on, and said goodbye naturally."
+                },
+                {
+                  "text": "Não, obrigada. Fico-me pelas maçãs. Adeus.",
+                  "translation": "No, thank you. I'll stick with the apples. Goodbye.",
+                  "feedback": "While polite, this is a very abrupt ending. You missed an opportunity to acknowledge the story and show continued warmth."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Share a Story and React",
+          "prep": [
+            "Think of a short, interesting or funny anecdote from your week.",
+            "Rehearse telling it in Portuguese, incorporating some pauses for reactions.",
+            "Practice reacting to potential stories from a friend using 'Ai é?', 'Não acredito!', 'Ora essa!', 'Ainda bem!' and follow-up questions."
+          ],
+          "fallback_phrases": [
+            "Não percebi bem, pode repetir?",
+            "O que significa isso?",
+            "Desculpe, pode falar um pouco mais devagar?"
+          ],
+          "likely_responses": [
+            "Pois é, não é?",
+            "Verdade, verdade!",
+            "E então, o que é que fizeste?",
+            "Que sorte!",
+            "Que azar!"
+          ]
+        },
+        "goals": [
+          "React spontaneously and appropriately to stories using a range of back-channelling phrases.",
+          "Ask relevant follow-up questions to show interest and keep the conversation flowing.",
+          "Understand and use common Madeiran expressions of surprise, disbelief, and relief.",
+          "Navigate a conversation where you are both a listener and a potential teller of anecdotes."
+        ],
+        "course": {
+          "month": 6,
+          "day": 147,
+          "category": "social"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d147-reacting-to-stories-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Oh really? {Detail}?",
+            "answer": "Ai é? {Detalhe}?",
+            "source_ref": "pp-sit-d147-reacting-to-stories-1"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I don't believe it! {Reason}?",
+            "answer": "Não acredito! {Motivo}?",
+            "source_ref": "pp-sit-d147-reacting-to-stories-2"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Oh, come on! How {Adjective}!",
+            "answer": "Ora essa! Que {Adjetivo}!",
+            "source_ref": "pp-sit-d147-reacting-to-stories-3"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: It's a good thing that {Outcome}.",
+            "answer": "Ainda bem que {Resultado}.",
+            "source_ref": "pp-sit-d147-reacting-to-stories-4"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: espresso",
+            "answer": "bica",
+            "source_ref": "bica"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: potato",
+            "answer": "semilha",
+            "source_ref": "semilha"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to take offense / to take badly",
+            "answer": "levar a mal",
+            "source_ref": "levar a mal"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to pass the word / to spread the news",
+            "answer": "passar a palavra",
+            "source_ref": "passar a palavra"
+          },
+          {
+            "id": "rv-sit-d147-reacting-to-stories-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d147-reacting-to-stories-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d148-formal-letters-requerimento",
+      "title": "Formal Letters & the Requerimento",
+      "month": 6,
+      "day": 148,
+      "week": 22,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d148-formal-letters-requerimento",
+        "title": "Formal Letters & the Requerimento",
+        "summary": "Writing to officialdom: the structure of a requerimento, formal openings and closings (Exmo. Senhor, Com os melhores cumprimentos), stating a request precisely, and reading replies.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-work"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d148-formal-letters-requerimento-1",
+            "base": "Exmo. Senhor {cargo},",
+            "translation": "Dear Sir/Madam {position},",
+            "slots": [
+              {
+                "name": "cargo",
+                "description": "position/title of the recipient",
+                "options": [
+                  "Presidente da Câmara",
+                  "Diretor dos Serviços",
+                  "Chefe de Divisão",
+                  "Administrador"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Exma. Senhora {cargo},",
+                "translation": "Dear Madam {position},",
+                "register": "formal",
+                "note": "Use for a female recipient"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d148-formal-letters-requerimento-2",
+            "base": "Venho por este meio {ação}.",
+            "translation": "I hereby {action}.",
+            "slots": [
+              {
+                "name": "ação",
+                "description": "the action or request",
+                "options": [
+                  "solicitar a V. Exa. uma cópia do documento",
+                  "requerer a emissão de uma licença",
+                  "apresentar uma reclamação formal",
+                  "pedir informações sobre o processo"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d148-formal-letters-requerimento-3",
+            "base": "Agradeço a V. Exa. a atenção dispensada.",
+            "translation": "I thank Your Excellency for the attention given."
+          },
+          {
+            "id": "pp-sit-d148-formal-letters-requerimento-4",
+            "base": "Com os melhores cumprimentos,",
+            "translation": "With best regards,"
+          },
+          {
+            "id": "pp-sit-d148-formal-letters-requerimento-5",
+            "base": "Anexo a este requerimento {documento}.",
+            "translation": "Attached to this application is {document}.",
+            "slots": [
+              {
+                "name": "documento",
+                "description": "the attached document",
+                "options": [
+                  "cópia do meu cartão de cidadão",
+                  "comprovativo de morada",
+                  "planta da habitação",
+                  "declaração de início de atividade"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "requerimento",
+            "translation": "application / formal petition",
+            "pronunciation": "heh-keh-ree-MEN-too",
+            "register": "formal",
+            "note": "A formal written request to an official body."
+          },
+          {
+            "word": "Exmo./Exma.",
+            "translation": "Your Excellency (abbreviation)",
+            "pronunciation": "ESH-moo / ESH-mah",
+            "register": "formal",
+            "note": "Used as a formal honorific, short for 'Excelentíssimo/a'."
+          },
+          {
+            "word": "deferir",
+            "translation": "to grant / to approve (a request)",
+            "pronunciation": "deh-feh-REER",
+            "register": "formal"
+          },
+          {
+            "word": "indeferir",
+            "translation": "to deny / to reject (a request)",
+            "pronunciation": "een-deh-feh-REER",
+            "register": "formal"
+          },
+          {
+            "word": "anexo",
+            "translation": "attachment / enclosed document",
+            "pronunciation": "ah-NEH-shoo",
+            "register": "neutral"
+          },
+          {
+            "word": "despacho",
+            "translation": "official decision / order",
+            "pronunciation": "des-PAH-shoo",
+            "register": "formal",
+            "note": "A formal administrative decision or ruling."
+          },
+          {
+            "word": "serviços camarários",
+            "translation": "municipal services",
+            "pronunciation": "ser-VEE-soosh kah-mah-RAH-ree-oosh",
+            "register": "neutral",
+            "note": "Services provided by the local city council (Câmara Municipal)."
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d148-formal-letters-requerimento-1",
+            "title": "Discussing a Formal Letter",
+            "context": "At a local café in Funchal, two neighbours, one local and one a resident for some time, are discussing a letter received from the Câmara Municipal.",
+            "lines": [
+              {
+                "speaker": "Amiga (local)",
+                "voice_type": "local",
+                "text": "Então, como é que correu com o despacho da Câmara? Deferiram o teu pedido, ou indeferiram?",
+                "translation": "So, how did it go with the City Council's decision? Did they grant your request, or deny it?"
+              },
+              {
+                "speaker": "Residente (learner)",
+                "voice_type": "younger",
+                "text": "Pois, recebi a carta, mas estou um bocado confuso com a linguagem. Diz 'foi deferido', o que significa que foi aceite, certo?",
+                "translation": "Well, I received the letter, but I'm a bit confused by the language. It says 'foi deferido', which means it was accepted, right?"
+              },
+              {
+                "speaker": "Amiga (local)",
+                "voice_type": "local",
+                "text": "Certo, sim! 'Deferido' quer dizer que aceitaram o teu requerimento. Parabéns! É sempre bom quando as coisas correm bem com os serviços camarários.",
+                "translation": "That's right, yes! 'Deferido' means they accepted your application. Congratulations! It's always good when things go well with municipal services."
+              },
+              {
+                "speaker": "Residente (learner)",
+                "voice_type": "younger",
+                "text": "Ufa! Que bom! E agora, preciso de responder ou está tudo tratado? A carta termina com 'Com os melhores cumprimentos'.",
+                "translation": "Phew! That's good! And now, do I need to reply or is everything handled? The letter ends with 'Com os melhores cumprimentos'."
+              },
+              {
+                "speaker": "Amiga (local)",
+                "voice_type": "local",
+                "text": "Não, não precisas de responder. Essa é só a forma formal de terminar a carta. Se tiveres de fazer mais alguma coisa, eles dizem. Mas se deferiram, é seguir em frente.",
+                "translation": "No, you don't need to reply. That's just the formal way to end the letter. If you have to do anything else, they'll tell you. But if they granted it, just move forward."
+              },
+              {
+                "speaker": "Residente (learner)",
+                "voice_type": "younger",
+                "text": "Entendido. Da próxima vez que precisar de escrever um requerimento, já sei que devo começar com 'Exmo. Senhor' ou 'Exma. Senhora' e ser bem claro no pedido.",
+                "translation": "Understood. Next time I need to write an application, I know I should start with 'Exmo. Senhor' or 'Exma. Senhora' and be very clear in the request."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The 'Requerimento' in Portuguese Bureaucracy",
+            "body": "A 'requerimento' is a formal written application or petition used to address official entities (e.g., city councils, government departments, courts). It's a standard and expected way to make formal requests, complaints, or provide information. The structure is usually quite rigid: formal address (e.g., 'Exmo. Senhor Presidente da Câmara'), identification of the applicant, a clear statement of the request or purpose, supporting documentation (anexos), and a formal closing. Knowing how to draft and interpret these is crucial for administrative tasks in Portugal."
+          },
+          {
+            "title": "Formal Address and Closings",
+            "body": "In formal correspondence, especially with official bodies, specific honorifics and closing expressions are mandatory. 'Exmo. Senhor/Senhora' (Excelentíssimo/a Senhor/a) is the standard opening, often followed by the recipient's title. 'V. Exa.' (Vossa Excelência) is a formal pronoun used to refer to the person addressed. Standard formal closings include 'Com os melhores cumprimentos' (With best regards) or 'Com a mais elevada consideração' (With the highest consideration). Using these correctly demonstrates respect and competence in a formal setting."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at the Câmara Municipal (City Council) information desk in Funchal. You need to submit a formal request for a minor permit, perhaps for a small renovation or a change to your property. You want to ensure you have all the correct information and documentation.",
+          "difficulty": 5,
+          "entry_node": "rp-d148-node-1",
+          "nodes": [
+            {
+              "id": "rp-d148-node-1",
+              "npc_text": "Bom dia. Em que posso ser útil?",
+              "npc_translation": "Good morning. How can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Gostaria de saber como devo proceder para apresentar um requerimento para uma pequena obra.",
+                  "translation": "Good morning. I'd like to know how I should proceed to submit an application for a small construction project.",
+                  "feedback": "Excellent, you clearly stated your purpose using formal language.",
+                  "next": "rp-d148-node-2"
+                },
+                {
+                  "text": "Olá. Preciso de uma licença para umas obras em casa.",
+                  "translation": "Hi. I need a permit for some work at home.",
+                  "feedback": "This is a bit too informal for the context. Try to use more precise and formal vocabulary like 'requerimento' and 'proceder'.",
+                  "next": "rp-d148-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d148-node-2",
+              "npc_text": "Certo. Para uma pequena obra, terá de preencher um requerimento formal e anexar a documentação necessária. Já tem o formulário?",
+              "npc_translation": "Understood. For a small construction project, you'll need to fill out a formal application and attach the necessary documentation. Do you already have the form?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Não, ainda não tenho. Onde posso obter o formulário e que documentação é necessária?",
+                  "translation": "No, I don't have it yet. Where can I get the form and what documentation is needed?",
+                  "feedback": "Good, you're asking for clarification on the next steps and required documents.",
+                  "next": "rp-d148-node-3"
+                },
+                {
+                  "text": "Qual formulário? Que documentos?",
+                  "translation": "Which form? What documents?",
+                  "feedback": "While direct, this is a bit abrupt. Try to phrase your questions more politely, perhaps starting with 'Poderia indicar...' or 'Gostaria de saber...'.",
+                  "next": "rp-d148-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d148-node-3",
+              "npc_text": "Pode descarregar o formulário no nosso site ou levantar uma cópia aqui. Quanto à documentação, geralmente pedimos cópia do cartão de cidadão, comprovativo de morada e uma breve descrição da obra. Poderá ser necessário um projeto, dependendo da natureza da intervenção.",
+              "npc_translation": "You can download the form from our website or pick up a copy here. Regarding documentation, we usually ask for a copy of your citizen card, proof of address, and a brief description of the work. A project plan might be necessary, depending on the nature of the intervention.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Agradeço a informação. Devo endereçar o requerimento ao Exmo. Senhor Presidente da Câmara ou a outro departamento?",
+                  "translation": "Thank you for the information. Should I address the application to the President of the City Council or another department?",
+                  "feedback": "Excellent, you're showing awareness of formal address and seeking to ensure correct protocol.",
+                  "next": "rp-d148-node-4"
+                },
+                {
+                  "text": "Ok, entendi. Para quem é o requerimento?",
+                  "translation": "Okay, I understood. Who is the application for?",
+                  "feedback": "Good, you're asking a relevant question. To make it more formal, you could say 'A quem devo endereçar o requerimento?'.",
+                  "next": "rp-d148-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d148-node-4",
+              "npc_text": "Para este tipo de assunto, deve endereçar ao Exmo. Senhor Chefe da Divisão de Urbanismo. Ele é o responsável por deferir ou indeferir estes pedidos. Não se esqueça de assinar no final.",
+              "npc_translation": "For this type of matter, you should address it to the Head of the Urban Planning Division. He is responsible for granting or denying these requests. Don't forget to sign at the end.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado pela sua ajuda e pela clareza das suas explicações. Com os melhores cumprimentos.",
+                  "translation": "Thank you very much for your help and the clarity of your explanations. With best regards.",
+                  "feedback": "Perfect! You used a polite and formal closing, showing appreciation. This concludes the interaction effectively."
+                },
+                {
+                  "text": "Ok, obrigado. Já posso ir fazer isso.",
+                  "translation": "Okay, thanks. I can go do that now.",
+                  "feedback": "While polite, 'Com os melhores cumprimentos' would be a more appropriate formal closing in this context."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Drafting a Requerimento for a Local Issue",
+          "prep": [
+            "Identify a hypothetical local issue in Madeira that would require a formal request to the Câmara Municipal (e.g., requesting a tree trimming, reporting a public light outage, asking for a copy of a property document).",
+            "Draft the opening of your requerimento using 'Exmo. Senhor/Senhora' and the appropriate title.",
+            "Formulate the body of your request clearly and concisely, using formal language.",
+            "Include a sentence mentioning any hypothetical 'anexos' (attachments).",
+            "Conclude with a formal closing, such as 'Com os melhores cumprimentos'."
+          ],
+          "fallback_phrases": [
+            "Peço desculpa, pode explicar de outra forma?",
+            "Não percebi bem o que devo fazer.",
+            "Poderia repetir, por favor?"
+          ],
+          "likely_responses": [
+            "Precisa de preencher este formulário.",
+            "Qual é o assunto do seu pedido?",
+            "Deve anexar a documentação comprovativa.",
+            "O prazo de resposta é de X dias.",
+            "O seu requerimento foi deferido/indeferido."
+          ]
+        },
+        "goals": [
+          "Understand the structure and purpose of a 'requerimento' in Portuguese administrative contexts.",
+          "Formulate and interpret formal openings and closings in written communication.",
+          "Express a precise request using appropriate formal vocabulary and syntax.",
+          "Identify key terms and outcomes in official replies (e.g., 'deferir', 'indeferir', 'despacho').",
+          "Navigate a formal interaction at a public service counter with confidence."
+        ],
+        "course": {
+          "month": 6,
+          "day": 148,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Dear Sir/Madam {position},",
+            "answer": "Exmo. Senhor {cargo},",
+            "source_ref": "pp-sit-d148-formal-letters-requerimento-1"
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I hereby {action}.",
+            "answer": "Venho por este meio {ação}.",
+            "source_ref": "pp-sit-d148-formal-letters-requerimento-2"
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I thank Your Excellency for the attention given.",
+            "answer": "Agradeço a V. Exa. a atenção dispensada.",
+            "source_ref": "pp-sit-d148-formal-letters-requerimento-3"
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: With best regards,",
+            "answer": "Com os melhores cumprimentos,",
+            "source_ref": "pp-sit-d148-formal-letters-requerimento-4"
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: application / formal petition",
+            "answer": "requerimento",
+            "source_ref": "requerimento"
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Your Excellency (abbreviation)",
+            "answer": "Exmo./Exma.",
+            "source_ref": "Exmo./Exma."
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to grant / to approve (a request)",
+            "answer": "deferir",
+            "source_ref": "deferir"
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to deny / to reject (a request)",
+            "answer": "indeferir",
+            "source_ref": "indeferir"
+          },
+          {
+            "id": "rv-sit-d148-formal-letters-requerimento-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d148-formal-letters-requerimento-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d149-reading-the-contract",
+      "title": "Reading the Contract",
+      "month": 6,
+      "day": 149,
+      "week": 22,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-host",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d149-reading-the-contract",
+        "title": "Reading the Contract",
+        "summary": "A lease or service contract in front of you: the clauses that matter (prazo, rescisão, fiador), asking for plain-language explanations, and querying a clause before signing.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-host",
+          "track-work"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d149-reading-the-contract-1",
+            "base": "Gostaria de pedir um esclarecimento sobre a cláusula {numero}.",
+            "translation": "I would like to ask for a clarification about clause {number}.",
+            "slots": [
+              {
+                "name": "numero",
+                "description": "Clause number",
+                "options": [
+                  "terceira",
+                  "quinta",
+                  "sétima",
+                  "décima"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Poderia, por favor, esclarecer esta cláusula?",
+                "translation": "Could you please clarify this clause?",
+                "register": "formal"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d149-reading-the-contract-2",
+            "base": "O que significa exatamente o termo '{termo}' nesta secção?",
+            "translation": "What exactly does the term '{term}' mean in this section?",
+            "slots": [
+              {
+                "name": "termo",
+                "description": "Contract term",
+                "options": [
+                  "prazo de fidelização",
+                  "renda",
+                  "caução",
+                  "denúncia"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Podia explicar-me o que quer dizer '{termo}'?",
+                "translation": "Could you explain to me what '{term}' means?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d149-reading-the-contract-3",
+            "base": "Qual é o prazo de duração deste contrato de {tipo_contrato}?",
+            "translation": "What is the duration of this {contract_type} contract?",
+            "slots": [
+              {
+                "name": "tipo_contrato",
+                "description": "Type of contract",
+                "options": [
+                  "arrendamento",
+                  "serviço",
+                  "trabalho"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d149-reading-the-contract-4",
+            "base": "E em relação à rescisão antecipada, quais são as condições?",
+            "translation": "And regarding early termination, what are the conditions?",
+            "variants": [
+              {
+                "text": "Se eu quiser rescindir antes do tempo, como é que funciona?",
+                "translation": "If I want to terminate early, how does it work?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d149-reading-the-contract-5",
+            "base": "É obrigatório ter um fiador para este tipo de contrato?",
+            "translation": "Is it mandatory to have a guarantor for this type of contract?",
+            "variants": [
+              {
+                "text": "Preciso mesmo de um fiador?",
+                "translation": "Do I really need a guarantor?",
+                "register": "informal",
+                "note": "More direct, less formal"
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "cláusula",
+            "translation": "clause",
+            "pronunciation": "CLAU-zoo-lah",
+            "register": "formal",
+            "note": "A specific article or condition in a contract."
+          },
+          {
+            "word": "prazo",
+            "translation": "term / duration",
+            "pronunciation": "PRAH-zoo",
+            "register": "neutral",
+            "note": "The period of time for which a contract is valid."
+          },
+          {
+            "word": "rescisão",
+            "translation": "termination / rescission",
+            "pronunciation": "reh-see-ZÃO",
+            "register": "formal",
+            "note": "The act of ending a contract."
+          },
+          {
+            "word": "fiador",
+            "translation": "guarantor",
+            "pronunciation": "fee-ah-DOR",
+            "register": "neutral",
+            "note": "A person who guarantees to pay a tenant's rent if they default."
+          },
+          {
+            "word": "caução",
+            "translation": "deposit / security deposit",
+            "pronunciation": "cow-SÃO",
+            "register": "neutral",
+            "note": "Money paid as a guarantee against damage or non-payment."
+          },
+          {
+            "word": "assinar",
+            "translation": "to sign",
+            "pronunciation": "ah-see-NAR",
+            "register": "neutral"
+          },
+          {
+            "word": "esclarecimento",
+            "translation": "clarification",
+            "pronunciation": "esh-clah-reh-see-MEN-too",
+            "register": "formal"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d149-reading-the-contract-1",
+            "title": "Lease Contract Discussion",
+            "context": "You are at a real estate agency in Funchal, reviewing a lease contract for an apartment. You're speaking with the agent, who is explaining some clauses.",
+            "lines": [
+              {
+                "speaker": "Agente Imobiliário",
+                "voice_type": "service",
+                "text": "Então, como vê, o contrato tem uma duração de três anos, renovável automaticamente por iguais períodos, a não ser que haja denúncia.",
+                "translation": "So, as you see, the contract has a duration of three years, automatically renewable for equal periods, unless there is a termination notice."
+              },
+              {
+                "speaker": "Arrendatário",
+                "voice_type": "local",
+                "text": "Pois, estou a ver. E em relação à cláusula quinta, sobre a rescisão antecipada, quais são as condições exatas?",
+                "translation": "Right, I see. And regarding clause five, about early termination, what are the exact conditions?"
+              },
+              {
+                "speaker": "Agente Imobiliário",
+                "voice_type": "service",
+                "text": "A rescisão antecipada pelo arrendatário, após os primeiros seis meses, exige um pré-aviso de 120 dias, por carta registada. Antes disso, há uma penalização.",
+                "translation": "Early termination by the tenant, after the first six months, requires 120 days' notice, by registered letter. Before that, there's a penalty."
+              },
+              {
+                "speaker": "Arrendatário",
+                "voice_type": "local",
+                "text": "Certo. E o que significa exatamente 'prazo de fidelização' na cláusula sétima? É diferente da duração do contrato?",
+                "translation": "Okay. And what exactly does 'loyalty period' mean in clause seven? Is it different from the contract duration?"
+              },
+              {
+                "speaker": "Agente Imobiliário",
+                "voice_type": "service",
+                "text": "Ah, sim. O prazo de fidelização é o período mínimo em que o contrato não pode ser rescindido sem penalização. Neste caso, é de 12 meses. É um bocado diferente do prazo total.",
+                "translation": "Ah, yes. The loyalty period is the minimum period during which the contract cannot be terminated without penalty. In this case, it's 12 months. It's a bit different from the total term."
+              },
+              {
+                "speaker": "Arrendatário",
+                "voice_type": "local",
+                "text": "Percebo. E quanto ao fiador? É estritamente necessário ou há alternativas?",
+                "translation": "I understand. And what about the guarantor? Is it strictly necessary or are there alternatives?"
+              },
+              {
+                "speaker": "Agente Imobiliário",
+                "voice_type": "service",
+                "text": "Para este imóvel, a proprietária exige fiador. Em alternativa, poderíamos negociar um aumento da caução, mas é menos comum. Diga-me se tem dificuldades.",
+                "translation": "For this property, the owner requires a guarantor. Alternatively, we could negotiate an increased deposit, but it's less common. Tell me if you have difficulties."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Understanding Contracts in Portugal",
+            "body": "In Portugal, as in many European countries, contracts (especially for long-term services like leases, internet, or mobile phones) often include 'prazos de fidelização' (loyalty periods) during which early termination incurs penalties. It's crucial to understand these terms. Asking for clarification on any clause is not only acceptable but expected, especially if the language is formal or technical. Don't be afraid to ask 'O que significa...?' or 'Poderia esclarecer...?'"
+          },
+          {
+            "title": "The Role of a 'Fiador'",
+            "body": "A 'fiador' (guarantor) is a common requirement for lease agreements in Portugal, particularly for tenants without a stable work history in the country or without a significant upfront payment. The fiador is legally responsible for the tenant's obligations if they fail to meet them. If you don't have a fiador, sometimes an increased security deposit ('caução') can be negotiated, but this depends on the landlord and agency."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at a utility company office in Funchal, trying to sign up for a new internet and TV package. The service agent has presented you with the contract, and you're reviewing it before signing. You notice a clause about 'instalação' (installation) that seems unclear.",
+          "difficulty": 5,
+          "entry_node": "rp-d149-node-1",
+          "nodes": [
+            {
+              "id": "rp-d149-node-1",
+              "npc_text": "Aqui está o contrato, como combinado. Peço que o leia com atenção antes de assinar. Se tiver alguma dúvida, diga, por favor.",
+              "npc_translation": "Here is the contract, as agreed. Please read it carefully before signing. If you have any questions, please say so.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Obrigado. Estou a ler. Em relação à cláusula sobre a instalação, gostaria de um esclarecimento.",
+                  "translation": "Thank you. I'm reading. Regarding the clause about installation, I would like a clarification.",
+                  "feedback": "Excellent start, polite and direct to the point.",
+                  "next": "rp-d149-node-2"
+                },
+                {
+                  "text": "Hum, isto é um bocado confuso. O que é esta parte da instalação?",
+                  "translation": "Hmm, this is a bit confusing. What's this part about installation?",
+                  "feedback": "Acceptable, but 'um bocado confuso' is less formal than 'gostaria de um esclarecimento'.",
+                  "next": "rp-d149-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d149-node-2",
+              "npc_text": "Claro. Qual é a sua dúvida específica sobre a instalação? Refere-se à taxa ou ao prazo?",
+              "npc_translation": "Of course. What is your specific question about the installation? Does it refer to the fee or the deadline?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Refere-se à taxa. A cláusula diz 'custos de instalação podem ser aplicados'. Isso significa que podem ou que serão aplicados?",
+                  "translation": "It refers to the fee. The clause says 'installation costs may be applied'. Does that mean they may or that they will be applied?",
+                  "feedback": "Very good, you've identified the ambiguity and asked for a precise explanation.",
+                  "next": "rp-d149-node-3"
+                },
+                {
+                  "text": "Não percebi bem se tenho de pagar a instalação. É grátis ou não?",
+                  "translation": "I didn't quite understand if I have to pay for the installation. Is it free or not?",
+                  "feedback": "Clear question, but slightly less formal than option 1. Still effective.",
+                  "next": "rp-d149-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d149-node-3",
+              "npc_text": "Ah, percebo a sua dúvida. 'Podem ser aplicados' significa que, para clientes novos, a instalação é gratuita. Apenas em casos de instalações especiais ou re-instalações é que há custos. Para si, será gratuita.",
+              "npc_translation": "Ah, I understand your question. 'May be applied' means that, for new customers, installation is free. Only in cases of special installations or re-installations are there costs. For you, it will be free.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Muito obrigado pelo esclarecimento. Fico mais tranquilo assim. Posso continuar a ler.",
+                  "translation": "Thank you very much for the clarification. I feel more at ease now. I can continue reading.",
+                  "feedback": "Excellent, showing appreciation and readiness to proceed. This is a good terminal point."
+                },
+                {
+                  "text": "Ok, entendi. Então não preciso de me preocupar com isso.",
+                  "translation": "Okay, I understood. So I don't need to worry about that.",
+                  "feedback": "Good, you've confirmed understanding. A bit less formal than option 1, but still effective."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Deciphering a Service Contract",
+          "prep": [
+            "Find a real-life service contract (e.g., mobile phone, internet, gym membership) in Portuguese, or ask a Portuguese friend to share one.",
+            "Identify three key clauses that you find important or potentially confusing (e.g., duration, cancellation, fees).",
+            "Formulate questions in Portuguese for each clause, using phrases like 'Gostaria de um esclarecimento sobre...', 'O que significa o termo...?', or 'Quais são as condições para...?'",
+            "Practice asking these questions aloud, imagining you are speaking to a service agent."
+          ],
+          "fallback_phrases": [
+            "Desculpe, não percebi bem. Poderia repetir, por favor?",
+            "Poderia explicar isso de outra forma?",
+            "Não entendi o que significa essa parte."
+          ],
+          "likely_responses": [
+            "Claro, explico novamente.",
+            "Significa que...",
+            "As condições são as seguintes...",
+            "Isso aplica-se apenas em casos específicos."
+          ]
+        },
+        "goals": [
+          "Understand common legal and administrative terms in contracts.",
+          "Be able to ask for clarification on specific clauses in a formal context.",
+          "Identify and query ambiguous or potentially problematic terms before signing a contract.",
+          "Feel confident navigating administrative interactions involving formal documents."
+        ],
+        "course": {
+          "month": 6,
+          "day": 149,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d149-reading-the-contract-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to ask for a clarification about clause {number}.",
+            "answer": "Gostaria de pedir um esclarecimento sobre a cláusula {numero}.",
+            "source_ref": "pp-sit-d149-reading-the-contract-1"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What exactly does the term '{term}' mean in this section?",
+            "answer": "O que significa exatamente o termo '{termo}' nesta secção?",
+            "source_ref": "pp-sit-d149-reading-the-contract-2"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is the duration of this {contract_type} contract?",
+            "answer": "Qual é o prazo de duração deste contrato de {tipo_contrato}?",
+            "source_ref": "pp-sit-d149-reading-the-contract-3"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: And regarding early termination, what are the conditions?",
+            "answer": "E em relação à rescisão antecipada, quais são as condições?",
+            "source_ref": "pp-sit-d149-reading-the-contract-4"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: clause",
+            "answer": "cláusula",
+            "source_ref": "cláusula"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: term / duration",
+            "answer": "prazo",
+            "source_ref": "prazo"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: termination / rescission",
+            "answer": "rescisão",
+            "source_ref": "rescisão"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: guarantor",
+            "answer": "fiador",
+            "source_ref": "fiador"
+          },
+          {
+            "id": "rv-sit-d149-reading-the-contract-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d149-reading-the-contract-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d150-speaking-in-meetings",
+      "title": "Speaking in Meetings",
+      "month": 6,
+      "day": 150,
+      "week": 22,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-work",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d150-speaking-in-meetings",
+        "title": "Speaking in Meetings",
+        "summary": "Holding your own in a meeting: taking the floor politely, interrupting and being interrupted, summarising a position, and disagreeing with a senior person acceptably.",
+        "tracks": [
+          "track-structured-course",
+          "track-work",
+          "track-social"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d150-speaking-in-meetings-1",
+            "base": "Gostaria de {intervir} neste ponto, se me permite.",
+            "translation": "I would like to intervene on this point, if you allow me.",
+            "slots": [
+              {
+                "name": "intervir",
+                "description": "to intervene/contribute",
+                "options": [
+                  "intervir",
+                  "acrescentar algo",
+                  "fazer uma pergunta"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Se me permite, gostaria de intervir neste ponto.",
+                "translation": "If you allow me, I would like to intervene on this point.",
+                "register": "formal",
+                "note": "Slightly more formal inversion."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d150-speaking-in-meetings-2",
+            "base": "Com o devido respeito, não {partilho} totalmente dessa {perspetiva}.",
+            "translation": "With due respect, I don't entirely share that perspective.",
+            "slots": [
+              {
+                "name": "partilho",
+                "description": "to share (opinion)",
+                "options": [
+                  "partilho",
+                  "concordo"
+                ]
+              },
+              {
+                "name": "perspetiva",
+                "description": "perspective",
+                "options": [
+                  "perspetiva",
+                  "opinião",
+                  "ideia"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d150-speaking-in-meetings-3",
+            "base": "Permitam-me {resumir} a nossa {proposta}.",
+            "translation": "Allow me to summarize our proposal.",
+            "slots": [
+              {
+                "name": "resumir",
+                "description": "to summarize",
+                "options": [
+                  "resumir",
+                  "clarificar"
+                ]
+              },
+              {
+                "name": "proposta",
+                "description": "proposal",
+                "options": [
+                  "proposta",
+                  "posição",
+                  "abordagem"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Para resumir, a nossa proposta é...",
+                "translation": "To summarize, our proposal is...",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d150-speaking-in-meetings-4",
+            "base": "Peço desculpa por {interromper}, mas {gostaria} de {colocar} uma questão.",
+            "translation": "I apologize for interrupting, but I would like to ask a question.",
+            "slots": [
+              {
+                "name": "interromper",
+                "description": "to interrupt",
+                "options": [
+                  "interromper",
+                  "intervir"
+                ]
+              },
+              {
+                "name": "gostaria",
+                "description": "I would like",
+                "options": [
+                  "gostaria",
+                  "preciso"
+                ]
+              },
+              {
+                "name": "colocar",
+                "description": "to place/ask",
+                "options": [
+                  "colocar",
+                  "fazer"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "ordem de trabalhos",
+            "translation": "agenda (of a meeting)",
+            "pronunciation": "OR-dem dee trah-BAH-lyoos",
+            "register": "formal",
+            "note": "Common in formal meetings."
+          },
+          {
+            "word": "ponto da situação",
+            "translation": "status update / current situation",
+            "pronunciation": "PON-too dah see-too-ah-SOW",
+            "register": "neutral",
+            "note": "Used to describe the current state of affairs."
+          },
+          {
+            "word": "proposta",
+            "translation": "proposal",
+            "pronunciation": "pro-POS-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "deliberar",
+            "translation": "to deliberate / to decide",
+            "pronunciation": "dee-lee-beh-RAR",
+            "register": "formal"
+          },
+          {
+            "word": "ata",
+            "translation": "minutes (of a meeting)",
+            "pronunciation": "AH-tah",
+            "register": "formal"
+          },
+          {
+            "word": "consenso",
+            "translation": "consensus",
+            "pronunciation": "kon-SEN-soo",
+            "register": "neutral"
+          },
+          {
+            "word": "intervenção",
+            "translation": "intervention / contribution",
+            "pronunciation": "een-ter-ven-SOW",
+            "register": "formal"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d150-speaking-in-meetings-1",
+            "title": "Community Project Meeting",
+            "context": "A meeting of the 'Associação de Moradores do Monte' (Residents' Association of Monte) to discuss a new community garden project.",
+            "lines": [
+              {
+                "speaker": "Dr. Silva (President)",
+                "voice_type": "older",
+                "text": "Bom dia a todos. O primeiro ponto da ordem de trabalhos é a avaliação do projeto 'Jardins Urbanos'. Alguém gostaria de intervir?",
+                "translation": "Good morning everyone. The first item on the agenda is the evaluation of the 'Urban Gardens' project. Would anyone like to intervene?"
+              },
+              {
+                "speaker": "Eng. Santos (Treasurer)",
+                "voice_type": "service",
+                "text": "Dr. Silva, se me permite, gostaria de apresentar um ponto da situação sobre a fase de implementação.",
+                "translation": "Dr. Silva, if you allow me, I would like to present a status update on the implementation phase."
+              },
+              {
+                "speaker": "Dr. Silva (President)",
+                "voice_type": "older",
+                "text": "Pois não, Eng. Santos. Faça favor.",
+                "translation": "Of course, Eng. Santos. Please do."
+              },
+              {
+                "speaker": "Eng. Santos (Treasurer)",
+                "voice_type": "service",
+                "text": "Em resumo, a equipa está a ter alguns desafios com a aquisição de materiais, mas a proposta de um fornecedor local poderá resolver a questão.",
+                "translation": "In summary, the team is facing some challenges with material acquisition, but the proposal for a local supplier might resolve the issue."
+              },
+              {
+                "speaker": "D. Fátima (Community Rep.)",
+                "voice_type": "local",
+                "text": "Ah, pois é! Isso do fornecedor local é uma boa ideia. Já devia ter sido feito há mais tempo!",
+                "translation": "Ah, that's right! That local supplier thing is a good idea. It should have been done ages ago!"
+              },
+              {
+                "speaker": "Dr. Silva (President)",
+                "voice_type": "older",
+                "text": "D. Fátima, agradeço a sua intervenção, mas peço que aguarde a sua vez. Eng. Santos, continue, por favor.",
+                "translation": "D. Fátima, I appreciate your intervention, but I ask that you wait your turn. Eng. Santos, please continue."
+              },
+              {
+                "speaker": "Eng. Santos (Treasurer)",
+                "voice_type": "service",
+                "text": "Com o devido respeito, Dr. Silva, não concordo totalmente que a culpa seja apenas da logística. Há também uma questão orçamental que precisa de ser revista.",
+                "translation": "With due respect, Dr. Silva, I don't entirely agree that the fault lies solely with logistics. There's also a budgetary issue that needs to be reviewed."
+              },
+              {
+                "speaker": "Dr. Silva (President)",
+                "voice_type": "older",
+                "text": "Compreendo a sua perspetiva, Eng. Santos. Vamos deliberar sobre isso mais tarde.",
+                "translation": "I understand your perspective, Eng. Santos. We will deliberate on that later."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Politeness and Indirectness in Meetings",
+            "body": "In Portuguese formal and administrative settings, especially in Madeira, direct disagreement or interruption can be perceived as impolite. Phrases like 'Com o devido respeito' (With due respect) or 'Se me permite' (If you allow me) are crucial for softening your input. When disagreeing, it's often preferred to state that you 'don't entirely share' a perspective rather than a blunt 'não concordo' (I don't agree), particularly with senior colleagues. Waiting for your turn to speak is generally expected, though polite interjections are sometimes tolerated if brief and apologetic."
+          },
+          {
+            "title": "Taking the Floor",
+            "body": "To take the floor in a meeting, you can either wait for the chair to invite contributions, or politely signal your intent. Common phrases include 'Gostaria de intervir' (I would like to intervene) or 'Se me permite' (If you allow me). In less formal settings, a simple raising of the hand might suffice, but verbal cues are safer in more structured environments."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are attending a meeting of the 'Associação de Moradores do Monte' (Residents' Association of Monte). The discussion is about funding for a new community garden project. You have a specific idea for securing sponsorships from local businesses.",
+          "difficulty": 5,
+          "entry_node": "rp-d150-node-1",
+          "nodes": [
+            {
+              "id": "rp-d150-node-1",
+              "npc_text": "Boa tarde a todos. O ponto seguinte na ordem de trabalhos é o financiamento do projeto do jardim comunitário. Alguém gostaria de intervir neste ponto?",
+              "npc_translation": "Good afternoon everyone. The next item on the agenda is the funding for the community garden project. Would anyone like to intervene on this point?",
+              "npc_voice_type": "teacher",
+              "options": [
+                {
+                  "text": "Eu gostaria de intervir, se me permite.",
+                  "translation": "I would like to intervene, if you allow me.",
+                  "feedback": "Excellent, you politely took the floor.",
+                  "next": "rp-d150-node-2"
+                },
+                {
+                  "text": "Não tenho nada a acrescentar de momento, obrigado.",
+                  "translation": "I have nothing to add at the moment, thank you.",
+                  "feedback": "You missed an opportunity to contribute. In a real meeting, it's good to speak up if you have a relevant point.",
+                  "next": "rp-d150-node-end-1"
+                }
+              ]
+            },
+            {
+              "id": "rp-d150-node-2",
+              "npc_text": "Faça favor. Estamos a ouvi-lo.",
+              "npc_translation": "Please do. We are listening to you.",
+              "npc_voice_type": "teacher",
+              "options": [
+                {
+                  "text": "A minha proposta é que procuremos patrocínios junto de empresas locais e pequenos negócios da zona.",
+                  "translation": "My proposal is that we seek sponsorships from local companies and small businesses in the area.",
+                  "feedback": "Clear and concise presentation of your idea. Well done.",
+                  "next": "rp-d150-node-3"
+                },
+                {
+                  "text": "Precisamos de mais tempo para analisar as opções de financiamento existentes.",
+                  "translation": "We need more time to analyze the existing funding options.",
+                  "feedback": "This defers the decision. While sometimes necessary, it doesn't advance your specific idea.",
+                  "next": "rp-d150-node-end-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d150-node-3",
+              "npc_text": "Com o devido respeito, a ideia dos patrocínios locais é interessante, mas duvido que seja suficiente para todo o projeto. Penso que devemos focar-nos mais em fundos europeus.",
+              "npc_translation": "With due respect, the idea of local sponsorships is interesting, but I doubt it will be sufficient for the entire project. I think we should focus more on European funds.",
+              "npc_voice_type": "older",
+              "options": [
+                {
+                  "text": "Com o devido respeito, não partilho totalmente dessa perspetiva. Penso que ambos os caminhos são importantes e complementares.",
+                  "translation": "With due respect, I don't entirely share that perspective. I think both approaches are important and complementary.",
+                  "feedback": "Excellent! You politely disagreed and offered a constructive compromise, showing flexibility.",
+                  "next": "rp-d150-node-4"
+                },
+                {
+                  "text": "Sim, talvez tenha razão. Os fundos europeus são, de facto, mais fiáveis.",
+                  "translation": "Yes, perhaps you are right. European funds are, in fact, more reliable.",
+                  "feedback": "You backed down too easily. It's good to be open, but you could have defended your point more.",
+                  "next": "rp-d150-node-end-3"
+                },
+                {
+                  "text": "Peço desculpa por interromper, mas os fundos europeus são muito burocráticos e demoram imenso tempo a aprovar!",
+                  "translation": "I apologize for interrupting, but European funds are very bureaucratic and take a huge amount of time to approve!",
+                  "feedback": "While your point is valid, the interruption was a bit abrupt. Remember to maintain a polite tone, especially when disagreeing.",
+                  "next": "rp-d150-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d150-node-4",
+              "npc_text": "Compreendo o seu ponto de vista. É uma questão complexa, mas a sua sugestão de abordar ambos os caminhos faz sentido. Vamos considerar ambas as abordagens.",
+              "npc_translation": "I understand your point of view. It's a complex issue, but your suggestion to approach both paths makes sense. We will consider both approaches.",
+              "npc_voice_type": "teacher",
+              "options": []
+            },
+            {
+              "id": "rp-d150-node-5",
+              "npc_text": "Peço que mantenha a calma e evite interrupções. No entanto, o seu ponto sobre a burocracia é válido e deve ser tido em conta.",
+              "npc_translation": "Please remain calm and avoid interruptions. However, your point about bureaucracy is valid and should be taken into account.",
+              "npc_voice_type": "teacher",
+              "options": []
+            },
+            {
+              "id": "rp-d150-node-end-1",
+              "npc_text": "Muito bem. Então passamos ao próximo ponto da ordem de trabalhos.",
+              "npc_translation": "Very well. Then we move on to the next item on the agenda.",
+              "npc_voice_type": "teacher",
+              "options": []
+            },
+            {
+              "id": "rp-d150-node-end-2",
+              "npc_text": "Certo. Vamos aguardar então. Alguém mais?",
+              "npc_translation": "Alright. We'll wait then. Anyone else?",
+              "npc_voice_type": "teacher",
+              "options": []
+            },
+            {
+              "id": "rp-d150-node-end-3",
+              "npc_text": "Exato. É preciso ser realista na gestão de fundos.",
+              "npc_translation": "Exactly. One needs to be realistic in fund management.",
+              "npc_voice_type": "older",
+              "options": []
+            }
+          ]
+        },
+        "mission": {
+          "title": "Propose an Idea at a Local Association Meeting",
+          "prep": [
+            "Identify a local association or group you could potentially join or observe (e.g., a residents' association, a sports club, a cultural group).",
+            "Prepare a simple, constructive idea or suggestion related to their activities.",
+            "Rehearse the phrases for taking the floor politely and for presenting your idea clearly.",
+            "Think about how you would politely disagree or offer a compromise if someone challenges your idea."
+          ],
+          "fallback_phrases": [
+            "Peço desculpa, pode repetir, por favor?",
+            "Não compreendi bem o que disse.",
+            "Pode explicar isso de outra forma?"
+          ],
+          "likely_responses": [
+            "Muito obrigado pela sua sugestão.",
+            "Vamos analisar a sua proposta com atenção.",
+            "É uma ideia interessante, mas temos algumas preocupações.",
+            "Alguém tem alguma questão sobre esta proposta?"
+          ]
+        },
+        "goals": [
+          "Politely take the floor in a formal meeting setting.",
+          "Present a clear and concise proposal or point of view.",
+          "Practice summarising a position effectively.",
+          "Disagree constructively and respectfully with a senior person or authority figure.",
+          "Navigate polite interruptions and being interrupted in a formal context."
+        ],
+        "course": {
+          "month": 6,
+          "day": 150,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to intervene on this point, if you allow me.",
+            "answer": "Gostaria de {intervir} neste ponto, se me permite.",
+            "source_ref": "pp-sit-d150-speaking-in-meetings-1"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: With due respect, I don't entirely share that perspective.",
+            "answer": "Com o devido respeito, não {partilho} totalmente dessa {perspetiva}.",
+            "source_ref": "pp-sit-d150-speaking-in-meetings-2"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Allow me to summarize our proposal.",
+            "answer": "Permitam-me {resumir} a nossa {proposta}.",
+            "source_ref": "pp-sit-d150-speaking-in-meetings-3"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I apologize for interrupting, but I would like to ask a question.",
+            "answer": "Peço desculpa por {interromper}, mas {gostaria} de {colocar} uma questão.",
+            "source_ref": "pp-sit-d150-speaking-in-meetings-4"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: agenda (of a meeting)",
+            "answer": "ordem de trabalhos",
+            "source_ref": "ordem de trabalhos"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: status update / current situation",
+            "answer": "ponto da situação",
+            "source_ref": "ponto da situação"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: proposal",
+            "answer": "proposta",
+            "source_ref": "proposta"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to deliberate / to decide",
+            "answer": "deliberar",
+            "source_ref": "deliberar"
+          },
+          {
+            "id": "rv-sit-d150-speaking-in-meetings-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d150-speaking-in-meetings-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d151-official-phone-call",
+      "title": "The Official Phone Call at Full Speed",
+      "month": 6,
+      "day": 151,
+      "week": 22,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-survival",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d151-official-phone-call",
+        "title": "The Official Phone Call at Full Speed",
+        "summary": "Phoning an institution and surviving: IVR menus, the fast-talking official, taking down reference numbers, spelling names, and confirming everything before hanging up.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-survival",
+          "track-work"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d151-official-phone-call-1",
+            "base": "Gostaria de falar com o departamento de {departamento}, por favor.",
+            "translation": "I would like to speak with the {department} department, please.",
+            "slots": [
+              {
+                "name": "departamento",
+                "description": "type of department",
+                "options": [
+                  "finanças",
+                  "urbanismo",
+                  "saúde",
+                  "apoio ao cliente",
+                  "recursos humanos"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Queria falar com o departamento de {departamento}, se faz favor.",
+                "translation": "I wanted to speak with the {department} department, please.",
+                "register": "neutral",
+                "note": "Slightly more common in everyday speech than 'Gostaria de'."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d151-official-phone-call-2",
+            "base": "Poderia repetir o {detalhe}, por favor?",
+            "translation": "Could you repeat the {detail}, please?",
+            "slots": [
+              {
+                "name": "detalhe",
+                "description": "type of detail",
+                "options": [
+                  "nome",
+                  "número de referência",
+                  "endereço",
+                  "contacto telefónico",
+                  "apelido"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Pode repetir, por favor?",
+                "translation": "Can you repeat, please?",
+                "register": "neutral"
+              },
+              {
+                "text": "Desculpe, não percebi. Pode repetir?",
+                "translation": "Sorry, I didn't understand. Can you repeat?",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d151-official-phone-call-3",
+            "base": "O meu nome é {nome}, soletrado {soletracao}.",
+            "translation": "My name is {name}, spelled {spelling}.",
+            "slots": [
+              {
+                "name": "nome",
+                "description": "a name",
+                "options": [
+                  "Silva",
+                  "Ferreira",
+                  "Rodrigues",
+                  "Gonçalves"
+                ]
+              },
+              {
+                "name": "soletracao",
+                "description": "the spelling of the name",
+                "options": [
+                  "S-I-L-V-A",
+                  "F-E-R-R-E-I-R-A",
+                  "R-O-D-R-I-G-U-E-S",
+                  "G-O-N-Ç-A-L-V-E-S"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d151-official-phone-call-4",
+            "base": "Qual é o número de {tipo_numero}?",
+            "translation": "What is the {type_of_number} number?",
+            "slots": [
+              {
+                "name": "tipo_numero",
+                "description": "type of number",
+                "options": [
+                  "referência",
+                  "processo",
+                  "contribuinte",
+                  "identificação"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "número de referência",
+            "translation": "reference number",
+            "pronunciation": "NOO-meh-roo deh reh-feh-REN-see-ah",
+            "register": "formal",
+            "note": "Crucial for official communications."
+          },
+          {
+            "word": "soletrar",
+            "translation": "to spell",
+            "pronunciation": "soh-leh-TRAR",
+            "register": "neutral"
+          },
+          {
+            "word": "menu de voz",
+            "translation": "IVR menu / voice menu",
+            "pronunciation": "MEH-noo deh VOSCH",
+            "register": "neutral",
+            "note": "Interactive Voice Response system."
+          },
+          {
+            "word": "departamento",
+            "translation": "department",
+            "pronunciation": "deh-par-tah-MEN-too",
+            "register": "neutral"
+          },
+          {
+            "word": "chamada",
+            "translation": "call (phone call)",
+            "pronunciation": "shah-MAH-dah",
+            "register": "neutral"
+          },
+          {
+            "word": "instituição",
+            "translation": "institution",
+            "pronunciation": "eens-tee-too-see-OWN",
+            "register": "formal"
+          },
+          {
+            "word": "confirmação",
+            "translation": "confirmation",
+            "pronunciation": "kohn-feer-mah-SOWN",
+            "register": "neutral"
+          },
+          {
+            "word": "serviço de atendimento",
+            "translation": "customer service",
+            "pronunciation": "ser-VEE-soo deh ah-ten-dee-MEN-too",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d151-official-phone-call-1",
+            "title": "Calling the Council",
+            "context": "A resident is calling the local council (Câmara Municipal) in Madeira to inquire about a permit application. They first encounter an automated menu.",
+            "lines": [
+              {
+                "speaker": "Sistema Automático",
+                "voice_type": "phone",
+                "text": "Bem-vindo à Câmara Municipal do Funchal. Para urbanismo, prima um. Para finanças, prima dois. Para apoio ao munícipe, prima três.",
+                "translation": "Welcome to Funchal City Council. For urban planning, press one. For finance, press two. For citizen support, press three."
+              },
+              {
+                "speaker": "Residente",
+                "voice_type": "local",
+                "text": "Urbanismo... Prima um, pois. (carrega no botão)",
+                "translation": "Urban planning... Press one, right. (presses button)"
+              },
+              {
+                "speaker": "Sistema Automático",
+                "voice_type": "phone",
+                "text": "Aguarde, por favor. Estamos a transferir a sua chamada para o departamento de Urbanismo.",
+                "translation": "Please wait. We are transferring your call to the Urban Planning department."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Serviço de Urbanismo, boa tarde, fala a Doutora Rodrigues. Em que posso ajudar?",
+                "translation": "Urban Planning Service, good afternoon, this is Dr. Rodrigues speaking. How can I help you?"
+              },
+              {
+                "speaker": "Residente",
+                "voice_type": "local",
+                "text": "Boa tarde, Doutora. O meu nome é João Silva e estou a ligar sobre o processo de licenciamento para a minha moradia. Tenho um número de referência, o 2023/12345.",
+                "translation": "Good afternoon, Doctor. My name is João Silva and I'm calling about the licensing process for my house. I have a reference number, 2023/12345."
+              },
+              {
+                "speaker": "Atendente",
+                "voice_type": "service",
+                "text": "Um momento, por favor. Vou verificar. João Silva, disse? E o número de referência é 2023/12345, correto?",
+                "translation": "One moment, please. I will check. João Silva, you said? And the reference number is 2023/12345, correct?"
+              },
+              {
+                "speaker": "Residente",
+                "voice_type": "local",
+                "text": "Isso mesmo, Doutora. Muito obrigado.",
+                "translation": "That's right, Doctor. Thank you very much."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "Formalities in Official Calls",
+            "body": "In Portugal, especially when dealing with official institutions or services, a formal register is expected. Using 'o senhor/a senhora' or 'Doutor/Doutora' (even if the person is not a medical doctor, it's a common courtesy title for professionals) is standard. Always start with 'Bom dia/Boa tarde' and end with 'Obrigado/Obrigada'. Be prepared to spell names and provide reference numbers clearly."
+          },
+          {
+            "title": "Navigating IVR Menus",
+            "body": "Interactive Voice Response (IVR) menus can be frustrating. Listen carefully to the options, as they are often read quickly. If you miss it, sometimes waiting will repeat the menu, or you might need to hang up and call again. Knowing key vocabulary like 'prima' (press) and common department names (finanças, urbanismo, saúde) is essential."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are calling a local service in Madeira to inquire about a bill you received. You need to get to the right department, provide your details, and understand the information given.",
+          "difficulty": 5,
+          "entry_node": "rp-d151-start",
+          "nodes": [
+            {
+              "id": "rp-d151-start",
+              "npc_text": "Bem-vindo ao Serviço de Águas e Resíduos da Madeira. Para faturação, prima um. Para avarias, prima dois. Para outras informações, prima três.",
+              "npc_translation": "Welcome to Madeira Water and Waste Services. For billing, press one. For breakdowns, press two. For other information, press three.",
+              "npc_voice_type": "phone",
+              "options": [
+                {
+                  "text": "Prima um para faturação.",
+                  "translation": "Press one for billing.",
+                  "feedback": "Good choice, you've selected the correct department.",
+                  "next": "rp-d151-billing-dept"
+                },
+                {
+                  "text": "Prima três para outras informações.",
+                  "translation": "Press three for other information.",
+                  "feedback": "That's not the most direct path. You'll likely be transferred again.",
+                  "next": "rp-d151-wrong-dept"
+                }
+              ]
+            },
+            {
+              "id": "rp-d151-wrong-dept",
+              "npc_text": "Aguarde, por favor. Estamos a transferir a sua chamada. (Depois de um momento) Boa tarde, em que posso ajudar?",
+              "npc_translation": "Please wait. We are transferring your call. (After a moment) Good afternoon, how can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Gostaria de falar com o departamento de faturação, por favor.",
+                  "translation": "I would like to speak with the billing department, please.",
+                  "feedback": "You successfully redirected yourself, but it took an extra step.",
+                  "next": "rp-d151-transfer"
+                }
+              ]
+            },
+            {
+              "id": "rp-d151-transfer",
+              "npc_text": "Um momento, por favor, vou transferir para o departamento de faturação. (Depois de um momento) Faturação, boa tarde. Qual é o seu número de cliente ou referência de fatura?",
+              "npc_translation": "One moment, please, I will transfer you to the billing department. (After a moment) Billing, good afternoon. What is your customer number or invoice reference?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "O meu número de cliente é o 123456789. Tenho uma fatura com o número 2024/00123.",
+                  "translation": "My customer number is 123456789. I have an invoice with the number 2024/00123.",
+                  "feedback": "Excellent, providing both numbers helps the attendant find your details quickly.",
+                  "next": "rp-d151-info-given"
+                }
+              ]
+            },
+            {
+              "id": "rp-d151-billing-dept",
+              "npc_text": "Faturação, boa tarde. Qual é o seu número de cliente ou referência de fatura?",
+              "npc_translation": "Billing, good afternoon. What is your customer number or invoice reference?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "O meu número de cliente é o 123456789. Tenho uma fatura com o número 2024/00123.",
+                  "translation": "My customer number is 123456789. I have an invoice with the number 2024/00123.",
+                  "feedback": "Perfect, you provided the necessary information clearly.",
+                  "next": "rp-d151-info-given"
+                }
+              ]
+            },
+            {
+              "id": "rp-d151-info-given",
+              "npc_text": "Certo, estou a ver aqui a fatura de maio. Parece que há um atraso no pagamento. Quer que eu lhe diga o valor e a data limite para regularizar?",
+              "npc_translation": "Okay, I see the May invoice here. It seems there's a delay in payment. Would you like me to tell you the amount and the deadline to settle it?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, por favor. Poderia repetir o valor e a data limite, e talvez um número de referência para o pagamento?",
+                  "translation": "Yes, please. Could you repeat the amount and the deadline, and perhaps a reference number for payment?",
+                  "feedback": "Good, you're asking for all the crucial details and a payment reference.",
+                  "next": "rp-d151-confirm"
+                },
+                {
+                  "text": "Sim, diga-me o valor e a data. É a fatura de maio, certo?",
+                  "translation": "Yes, tell me the amount and the date. It's the May invoice, right?",
+                  "feedback": "You're confirming the invoice, which is good. Remember to also ask for a payment reference.",
+                  "next": "rp-d151-confirm"
+                }
+              ]
+            },
+            {
+              "id": "rp-d151-confirm",
+              "npc_text": "O valor é de 45 euros e a data limite é 30 de junho. O número de referência para pagamento é 789123456. Confirmado?",
+              "npc_translation": "The amount is 45 euros and the deadline is June 30th. The payment reference number is 789123456. Confirmed?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, tudo confirmado. Muito obrigado pela sua ajuda, Doutora. Tenha um bom dia.",
+                  "translation": "Yes, all confirmed. Thank you very much for your help, Doctor. Have a good day.",
+                  "feedback": "Excellent! You confirmed the details and ended the call politely."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Navigate Official Phone Calls",
+          "prep": [
+            "Listen to the dialogues multiple times, focusing on the speed and intonation.",
+            "Practice spelling your own name and address using Portuguese alphabet pronunciation.",
+            "Write down the key phrases for asking for repetition and clarification.",
+            "Identify potential department names for services you might need in Madeira (e.g., saúde, finanças, águas)."
+          ],
+          "fallback_phrases": [
+            "Desculpe, pode falar mais devagar, por favor?",
+            "Pode repetir o {detalhe}, por favor?",
+            "Não percebi bem. Pode soletrar, por favor?",
+            "Qual é o número de referência que disse?"
+          ],
+          "likely_responses": [
+            "Qual é o seu número de contribuinte?",
+            "Em que posso ajudar?",
+            "Um momento, por favor.",
+            "Pode confirmar o seu nome/morada?"
+          ]
+        },
+        "goals": [
+          "Successfully navigate an IVR menu to reach the correct department.",
+          "Understand and respond appropriately to fast-talking officials on the phone.",
+          "Effectively ask for repetition and clarification when needed.",
+          "Provide and confirm personal details, including spelling names and reference numbers.",
+          "Conclude an official phone call politely and efficiently."
+        ],
+        "course": {
+          "month": 6,
+          "day": 151,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d151-official-phone-call-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would like to speak with the {department} department, please.",
+            "answer": "Gostaria de falar com o departamento de {departamento}, por favor.",
+            "source_ref": "pp-sit-d151-official-phone-call-1"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Could you repeat the {detail}, please?",
+            "answer": "Poderia repetir o {detalhe}, por favor?",
+            "source_ref": "pp-sit-d151-official-phone-call-2"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: My name is {name}, spelled {spelling}.",
+            "answer": "O meu nome é {nome}, soletrado {soletracao}.",
+            "source_ref": "pp-sit-d151-official-phone-call-3"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is the {type_of_number} number?",
+            "answer": "Qual é o número de {tipo_numero}?",
+            "source_ref": "pp-sit-d151-official-phone-call-4"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: reference number",
+            "answer": "número de referência",
+            "source_ref": "número de referência"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: to spell",
+            "answer": "soletrar",
+            "source_ref": "soletrar"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: IVR menu / voice menu",
+            "answer": "menu de voz",
+            "source_ref": "menu de voz"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: department",
+            "answer": "departamento",
+            "source_ref": "departamento"
+          },
+          {
+            "id": "rv-sit-d151-official-phone-call-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d151-official-phone-call-1"
+          }
+        ],
+        "media": [
+          {
+            "type": "video",
+            "url": "https://www.youtube.com/watch?v=wKCzfIt-Aco",
+            "caption": "How to answer the phone in Portugal — European Portuguese (Portuguese Lab)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d152-money-and-tax-talk",
+      "title": "Money & Tax Vocabulary",
+      "month": 6,
+      "day": 152,
+      "week": 22,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-work",
+        "track-social"
+      ],
+      "situation": {
+        "id": "sit-d152-money-and-tax-talk",
+        "title": "Money & Tax Vocabulary",
+        "summary": "Resident-level money talk: IRS and IVA in conversation, recibos and faturas com NIF, talking to the bank about rates and transfers, and understanding a contabilista.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-work",
+          "track-social"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d152-money-and-tax-talk-1",
+            "base": "Preciso de uma fatura com NIF, por favor.",
+            "translation": "I need an invoice with a tax ID, please.",
+            "variants": [
+              {
+                "text": "Pode passar-me uma fatura com o meu NIF?",
+                "translation": "Can you give me an invoice with my tax ID?",
+                "register": "neutral"
+              },
+              {
+                "text": "Queria um recibo com NIF.",
+                "translation": "I'd like a receipt with a tax ID.",
+                "register": "informal",
+                "note": "Often used interchangeably with 'fatura' in informal contexts, though technically different."
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d152-money-and-tax-talk-2",
+            "base": "Qual é a taxa de juro atual para {tipo_credito}?",
+            "translation": "What is the current interest rate for {type_of_loan}?",
+            "slots": [
+              {
+                "name": "tipo_credito",
+                "description": "type of loan/credit",
+                "options": [
+                  "um empréstimo pessoal",
+                  "um crédito à habitação",
+                  "uma conta poupança"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d152-money-and-tax-talk-3",
+            "base": "Tenho de declarar isto no IRS?",
+            "translation": "Do I have to declare this on my income tax?",
+            "variants": [
+              {
+                "text": "Isto é dedutível no IRS?",
+                "translation": "Is this deductible on the IRS?",
+                "register": "neutral"
+              },
+              {
+                "text": "O contabilista disse que preciso de declarar isto.",
+                "translation": "The accountant said I need to declare this.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d152-money-and-tax-talk-4",
+            "base": "Pode ajudar-me a fazer uma transferência bancária {tipo_transferencia}?",
+            "translation": "Can you help me make a {type_of_transfer} bank transfer?",
+            "slots": [
+              {
+                "name": "tipo_transferencia",
+                "description": "type of transfer",
+                "options": [
+                  "nacional",
+                  "internacional",
+                  "programada"
+                ]
+              }
+            ]
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "NIF",
+            "translation": "Tax ID number (Número de Identificação Fiscal)",
+            "pronunciation": "NIF",
+            "register": "neutral",
+            "note": "Essential for tax purposes, often requested when making purchases."
+          },
+          {
+            "word": "fatura com NIF",
+            "translation": "Invoice with tax ID",
+            "pronunciation": "fah-TOO-rah kohn NIF",
+            "register": "neutral",
+            "note": "Used to claim tax deductions on expenses."
+          },
+          {
+            "word": "recibo",
+            "translation": "Receipt",
+            "pronunciation": "reh-SEE-boh",
+            "register": "neutral",
+            "note": "A proof of payment, often distinct from a full invoice with NIF, though sometimes used informally."
+          },
+          {
+            "word": "IRS",
+            "translation": "Personal Income Tax (Imposto sobre o Rendimento das Pessoas Singulares)",
+            "pronunciation": "EE-err-ESS",
+            "register": "neutral",
+            "note": "The annual income tax declaration in Portugal."
+          },
+          {
+            "word": "IVA",
+            "translation": "VAT (Imposto sobre o Valor Acrescentado)",
+            "pronunciation": "EE-vah",
+            "register": "neutral",
+            "note": "Value Added Tax, included in most prices."
+          },
+          {
+            "word": "contabilista",
+            "translation": "Accountant",
+            "pronunciation": "kohn-tah-bee-LEESH-tah",
+            "register": "neutral"
+          },
+          {
+            "word": "taxa de juro",
+            "translation": "Interest rate",
+            "pronunciation": "TAH-shah deh ZHOO-roh",
+            "register": "neutral"
+          },
+          {
+            "word": "transferência bancária",
+            "translation": "Bank transfer",
+            "pronunciation": "trans-feh-REN-see-ah bahn-KAH-ree-ah",
+            "register": "neutral"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d152-money-and-tax-talk-1",
+            "title": "At the Café",
+            "context": "A resident is paying for their coffee and bolo do caco at a local café in Funchal.",
+            "lines": [
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Aqui está. E já agora, pode passar-me uma fatura com o meu NIF, por favor?",
+                "translation": "Here you go. And by the way, can you give me an invoice with my tax ID, please?"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "Claro! Qual é o seu NIF?",
+                "translation": "Of course! What's your tax ID?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "É o dois, cinco, sete, zero, um, dois, três, quatro, cinco. Obrigada!",
+                "translation": "It's two, five, seven, zero, one, two, three, four, five. Thank you!"
+              },
+              {
+                "speaker": "Empregado",
+                "voice_type": "service",
+                "text": "De nada. Já está. Tenha um bom dia!",
+                "translation": "You're welcome. It's done. Have a good day!"
+              }
+            ]
+          },
+          {
+            "id": "dlg-sit-d152-money-and-tax-talk-2",
+            "title": "Discussing Taxes with a Contabilista",
+            "context": "A resident is meeting with their accountant to discuss their annual IRS declaration.",
+            "lines": [
+              {
+                "speaker": "Contabilista",
+                "voice_type": "older",
+                "text": "Bom dia, o senhor trouxe os extratos bancários e as faturas das despesas de saúde?",
+                "translation": "Good morning, did you bring the bank statements and the health expense invoices?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Bom dia. Sim, trouxe tudo. Tenho aqui as faturas com o NIF e os comprovativos dos pagamentos.",
+                "translation": "Good morning. Yes, I brought everything. I have the invoices with the tax ID and the payment proofs here."
+              },
+              {
+                "speaker": "Contabilista",
+                "voice_type": "older",
+                "text": "Muito bem. Vamos ver. Este rendimento de arrendamento, tenho de o declarar no IRS, certo?",
+                "translation": "Very good. Let's see. This rental income, I have to declare it on the IRS, right?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Sim, tem de ser declarado. É importante para evitar problemas com as Finanças.",
+                "translation": "Yes, it must be declared. It's important to avoid problems with the Tax Authority."
+              },
+              {
+                "speaker": "Contabilista",
+                "voice_type": "older",
+                "text": "Pois é. E já agora, como é que está a questão do IVA para os serviços que presta?",
+                "translation": "Indeed. And by the way, how is the VAT issue for the services you provide?"
+              },
+              {
+                "speaker": "Cliente",
+                "voice_type": "local",
+                "text": "Estou a seguir o regime simplificado, o que facilita um bocado.",
+                "translation": "I'm following the simplified regime, which makes it a bit easier."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The Importance of NIF and Faturas",
+            "body": "In Portugal, including Madeira, having a NIF (Número de Identificação Fiscal) is crucial for almost any financial transaction. When you make a purchase, especially for services like health, education, or even at restaurants and mechanics, you are often asked if you want a 'fatura com NIF'. Providing your NIF allows you to deduct a percentage of these expenses from your annual IRS (income tax). This system is actively promoted by the government to combat tax evasion, and many people diligently collect their 'faturas com NIF' throughout the year. Always have your NIF handy, or memorize it!"
+          },
+          {
+            "title": "Understanding IRS and IVA",
+            "body": "IRS (Imposto sobre o Rendimento das Pessoas Singulares) is the personal income tax, declared annually. IVA (Imposto sobre o Valor Acrescentado) is the Value Added Tax, which is already included in the price of most goods and services. For residents, understanding which expenses are deductible for IRS purposes, and how to obtain the correct documentation (faturas with NIF), is a key aspect of managing finances in Portugal. A 'contabilista' (accountant) is often consulted for guidance on these matters, especially for self-employed individuals or those with complex financial situations."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You are at your bank in Funchal. You need to make an international bank transfer and also want to inquire about the interest rates for a new savings account.",
+          "difficulty": 5,
+          "entry_node": "rp-d152-node-1",
+          "nodes": [
+            {
+              "id": "rp-d152-node-1",
+              "npc_text": "Bom dia! Em que posso ajudá-lo hoje?",
+              "npc_translation": "Good morning! How can I help you today?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Bom dia. Queria fazer uma transferência bancária internacional, por favor.",
+                  "translation": "Good morning. I'd like to make an international bank transfer, please.",
+                  "feedback": "A good direct start. Now be prepared to provide details.",
+                  "next": "rp-d152-node-2"
+                },
+                {
+                  "text": "Olá. Gostaria de saber quais são as vossas taxas de juro para contas poupança.",
+                  "translation": "Hello. I'd like to know what your interest rates are for savings accounts.",
+                  "feedback": "Also a good start. You can ask about the transfer later.",
+                  "next": "rp-d152-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d152-node-2",
+              "npc_text": "Certo. Para que país e qual o valor? Tem o IBAN do beneficiário e o código SWIFT?",
+              "npc_translation": "Alright. To which country and what's the amount? Do you have the beneficiary's IBAN and SWIFT code?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, tenho tudo aqui. É para a Alemanha, dez mil euros. O IBAN é DE123... e o SWIFT é ABCD...",
+                  "translation": "Yes, I have everything here. It's for Germany, ten thousand euros. The IBAN is DE123... and the SWIFT is ABCD...",
+                  "feedback": "Excellent, providing all necessary details clearly.",
+                  "next": "rp-d152-node-3"
+                },
+                {
+                  "text": "Ah, esqueci-me do código SWIFT. Posso ir buscá-lo e volto mais tarde?",
+                  "translation": "Oh, I forgot the SWIFT code. Can I go get it and come back later?",
+                  "feedback": "It's okay to admit you're missing something. The bank will advise.",
+                  "next": "rp-d152-node-5"
+                }
+              ]
+            },
+            {
+              "id": "rp-d152-node-3",
+              "npc_text": "Muito bem, vou processar a transferência. Há mais alguma coisa em que o possa ajudar hoje?",
+              "npc_translation": "Very good, I'll process the transfer. Is there anything else I can help you with today?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, já agora, quais são as vossas taxas de juro para contas poupança?",
+                  "translation": "Yes, by the way, what are your interest rates for savings accounts?",
+                  "feedback": "Good, you remembered your other query.",
+                  "next": "rp-d152-node-4"
+                },
+                {
+                  "text": "Não, é tudo por agora. Muito obrigado!",
+                  "translation": "No, that's all for now. Thank you very much!",
+                  "feedback": "A polite and clear ending to the interaction."
+                }
+              ]
+            },
+            {
+              "id": "rp-d152-node-4",
+              "npc_text": "Para as contas poupança, temos uma taxa anual bruta de 0,5% para depósitos até 50.000 euros, e 0,7% acima desse valor.",
+              "npc_translation": "For savings accounts, we have a gross annual rate of 0.5% for deposits up to 50,000 euros, and 0.7% above that amount.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Compreendido. Muito obrigado pelas informações. Tenha um bom dia!",
+                  "translation": "Understood. Thank you very much for the information. Have a good day!",
+                  "feedback": "A polite way to end the conversation after getting the information."
+                }
+              ]
+            },
+            {
+              "id": "rp-d152-node-5",
+              "npc_text": "Sem problema. Pode trazer o código SWIFT e voltamos a fazer a transferência. Estamos abertos até às quatro da tarde.",
+              "npc_translation": "No problem. You can bring the SWIFT code and we'll do the transfer again. We're open until four in the afternoon.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "P'ra já! Muito obrigado e até já!",
+                  "translation": "Alright! Thank you very much and see you soon!",
+                  "feedback": "A natural Madeiran way to say 'OK, I'm on it!' and end the interaction."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Managing Your Money at the Bank",
+          "prep": [
+            "Review the vocabulary related to banking and transfers.",
+            "Practice asking for specific information about interest rates or types of accounts.",
+            "Rehearse how to clearly state the details for a bank transfer (country, amount, IBAN, SWIFT)."
+          ],
+          "fallback_phrases": [
+            "Peço desculpa, pode repetir, por favor?",
+            "Não percebi bem essa parte.",
+            "Pode explicar isso de outra forma?"
+          ],
+          "likely_responses": [
+            "Qual é o seu NIF?",
+            "Precisa de uma fatura com NIF?",
+            "Para que tipo de despesa é?",
+            "Já tem o código IBAN e SWIFT?",
+            "Qual o valor da transferência?"
+          ]
+        },
+        "goals": [
+          "Successfully request a 'fatura com NIF' in a daily transaction.",
+          "Confidently discuss bank services, such as transfers and interest rates, using appropriate vocabulary.",
+          "Understand common questions and provide necessary information when dealing with financial administration."
+        ],
+        "course": {
+          "month": 6,
+          "day": 152,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I need an invoice with a tax ID, please.",
+            "answer": "Preciso de uma fatura com NIF, por favor.",
+            "source_ref": "pp-sit-d152-money-and-tax-talk-1"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: What is the current interest rate for {type_of_loan}?",
+            "answer": "Qual é a taxa de juro atual para {tipo_credito}?",
+            "source_ref": "pp-sit-d152-money-and-tax-talk-2"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Do I have to declare this on my income tax?",
+            "answer": "Tenho de declarar isto no IRS?",
+            "source_ref": "pp-sit-d152-money-and-tax-talk-3"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Can you help me make a {type_of_transfer} bank transfer?",
+            "answer": "Pode ajudar-me a fazer uma transferência bancária {tipo_transferencia}?",
+            "source_ref": "pp-sit-d152-money-and-tax-talk-4"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Tax ID number (Número de Identificação Fiscal)",
+            "answer": "NIF",
+            "source_ref": "NIF"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Invoice with tax ID",
+            "answer": "fatura com NIF",
+            "source_ref": "fatura com NIF"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Receipt",
+            "answer": "recibo",
+            "source_ref": "recibo"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: Personal Income Tax (Imposto sobre o Rendimento das Pessoas Singulares)",
+            "answer": "IRS",
+            "source_ref": "IRS"
+          },
+          {
+            "id": "rv-sit-d152-money-and-tax-talk-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d152-money-and-tax-talk-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sit-d153-complaining-in-writing",
+      "title": "Complaining in Writing",
+      "month": 6,
+      "day": 153,
+      "week": 22,
+      "level": 5,
+      "cefr": "B2",
+      "tracks": [
+        "track-structured-course",
+        "track-bureaucracy",
+        "track-social",
+        "track-work"
+      ],
+      "situation": {
+        "id": "sit-d153-complaining-in-writing",
+        "title": "Complaining in Writing",
+        "summary": "The livro de reclamações and the formal complaint email: setting out facts, dates and requests in correct written register, and the follow-up when the reply is boilerplate.",
+        "tracks": [
+          "track-structured-course",
+          "track-bureaucracy",
+          "track-social",
+          "track-work"
+        ],
+        "level": 5,
+        "cefr": "B2",
+        "phrase_patterns": [
+          {
+            "id": "pp-sit-d153-complaining-in-writing-1",
+            "base": "Venho por este meio apresentar uma reclamação formal relativamente a {problema}.",
+            "translation": "I hereby wish to present a formal complaint regarding {problem}.",
+            "slots": [
+              {
+                "name": "problema",
+                "description": "The specific issue",
+                "options": [
+                  "o serviço prestado",
+                  "a demora na entrega",
+                  "o artigo defeituoso",
+                  "a faturação incorreta"
+                ]
+              }
+            ],
+            "variants": [
+              {
+                "text": "Escrevo para formalizar uma queixa sobre {problema}.",
+                "translation": "I am writing to formalize a complaint about {problem}.",
+                "register": "neutral"
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d153-complaining-in-writing-2",
+            "base": "Agradeço que me informem sobre as medidas que pretendem tomar para resolver a situação no prazo de {prazo}.",
+            "translation": "I would appreciate it if you would inform me about the measures you intend to take to resolve the situation within {deadline}.",
+            "slots": [
+              {
+                "name": "prazo",
+                "description": "The requested deadline for action/reply",
+                "options": [
+                  "10 dias úteis",
+                  "uma semana",
+                  "o mais brevemente possível"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d153-complaining-in-writing-3",
+            "base": "Em anexo, envio {documentos} como comprovativo.",
+            "translation": "Attached, I send {documents} as proof.",
+            "slots": [
+              {
+                "name": "documentos",
+                "description": "Supporting documents",
+                "options": [
+                  "a cópia da fatura",
+                  "o comprovativo de pagamento",
+                  "as fotografias do artigo"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "pp-sit-d153-complaining-in-writing-4",
+            "base": "Lamento informar que a vossa resposta foi genérica e não abordou os pontos específicos da minha reclamação.",
+            "translation": "I regret to inform you that your reply was generic and did not address the specific points of my complaint."
+          }
+        ],
+        "vocabulary": [
+          {
+            "word": "livro de reclamações",
+            "translation": "complaint book",
+            "pronunciation": "LEE-vroo dih reh-klah-mah-SOHYSH",
+            "register": "neutral",
+            "note": "A legally mandated physical or online book for formal complaints in Portugal."
+          },
+          {
+            "word": "reclamação formal",
+            "translation": "formal complaint",
+            "pronunciation": "reh-klah-mah-SOHM fohr-MAHL",
+            "register": "formal"
+          },
+          {
+            "word": "prazo de resposta",
+            "translation": "response deadline",
+            "pronunciation": "PRAH-zoo dih rehsh-POHSH-tah",
+            "register": "formal"
+          },
+          {
+            "word": "comprovativo",
+            "translation": "proof / receipt",
+            "pronunciation": "kohm-proh-vah-TEE-voo",
+            "register": "neutral"
+          },
+          {
+            "word": "em anexo",
+            "translation": "attached (as in an email)",
+            "pronunciation": "ehn ah-NEH-shoo",
+            "register": "formal"
+          },
+          {
+            "word": "resposta genérica",
+            "translation": "boilerplate/generic response",
+            "pronunciation": "rehsh-POHSH-tah zheh-NEH-ree-kah",
+            "register": "neutral"
+          },
+          {
+            "word": "entidade reguladora",
+            "translation": "regulatory body",
+            "pronunciation": "ehn-tee-DAH-dih reh-goo-lah-DOH-rah",
+            "register": "formal"
+          }
+        ],
+        "dialogues": [
+          {
+            "id": "dlg-sit-d153-complaining-in-writing-1",
+            "title": "Discussing a Complaint Reply",
+            "context": "Maria is talking to her neighbour, João, about a generic response she received to a complaint she filed.",
+            "lines": [
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Ai, João, não sabes o que me aconteceu. Enviei a reclamação formal sobre aquele problema com o frigorífico, sabes? E recebi uma resposta genérica, completamente inútil!",
+                "translation": "Oh, João, you won't believe what happened to me. I sent the formal complaint about that problem with the fridge, you know? And I received a generic, completely useless response!"
+              },
+              {
+                "speaker": "João",
+                "voice_type": "older",
+                "text": "Pois, é o que eles fazem muitas vezes. Não te dão atenção. Tens de insistir, Maria. Já lhes ligaste?",
+                "translation": "Well, that's what they often do. They don't pay attention to you. You have to insist, Maria. Have you called them yet?"
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Ainda não. Mas estou a pensar em escrever-lhes um e-mail a dizer que não estou satisfeita e que vou escalar a situação se não me derem uma resposta adequada no prazo de uma semana.",
+                "translation": "Not yet. But I'm thinking of writing them an email saying I'm not satisfied and that I'll escalate the situation if they don't give me an adequate response within a week."
+              },
+              {
+                "speaker": "João",
+                "voice_type": "older",
+                "text": "É isso mesmo! E lembra-te de mencionar o Livro de Reclamações, se foi por lá que fizeste a queixa inicial. Isso costuma fazer com que se mexam.",
+                "translation": "That's right! And remember to mention the Complaint Book, if that's where you made the initial complaint. That usually makes them get moving."
+              },
+              {
+                "speaker": "Maria",
+                "voice_type": "local",
+                "text": "Boa ideia! Vou fazer isso. Obrigada, João. É que estas coisas dão um trabalho imenso.",
+                "translation": "Good idea! I'll do that. Thanks, João. These things are a huge hassle."
+              }
+            ]
+          }
+        ],
+        "cultural_notes": [
+          {
+            "title": "The 'Livro de Reclamações' (Complaint Book)",
+            "body": "In Portugal, the 'Livro de Reclamações' is a legally mandated complaint book that all service providers (shops, restaurants, public services, etc.) must make available to consumers. It exists in both physical and online formats. Filing a complaint in this book (or online version) is a formal act that generates a unique reference number and automatically forwards a copy to the relevant regulatory authority. This gives complaints a legal weight that a simple email or phone call might not have, and companies are legally obliged to respond within a certain timeframe (usually 15 working days)."
+          },
+          {
+            "title": "Escalating a Complaint",
+            "body": "If an initial complaint (whether via the 'Livro de Reclamações' or directly to the company) receives a generic or unsatisfactory response, it's common practice to follow up in writing. This follow-up should explicitly state dissatisfaction, reiterate the specific points of the original complaint that were not addressed, and set a new, reasonable deadline for a satisfactory resolution. Mentioning the intention to escalate to a regulatory body (like ASAE for food safety/consumer rights, or specific sector regulators) can often prompt a more serious response."
+          }
+        ],
+        "roleplay": {
+          "scenario": "You have submitted a formal complaint via email to a local internet service provider (ISP) about recurring service outages. You received a generic, automated-sounding reply that did not address your specific issues. You are now calling their customer support to follow up.",
+          "difficulty": 5,
+          "entry_node": "rp-d153-node-1",
+          "nodes": [
+            {
+              "id": "rp-d153-node-1",
+              "npc_text": "Boa tarde, [Nome da Empresa], em que posso ajudar?",
+              "npc_translation": "Good afternoon, [Company Name], how can I help you?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Boa tarde. Liguei porque recebi uma resposta insatisfatória à minha reclamação formal sobre as interrupções de serviço.",
+                  "translation": "Good afternoon. I'm calling because I received an unsatisfactory response to my formal complaint about the service outages.",
+                  "feedback": "Good start, clearly stating the purpose of your call.",
+                  "next": "rp-d153-node-2"
+                },
+                {
+                  "text": "Olá. O meu serviço de internet continua a falhar e a vossa resposta por e-mail não ajudou em nada.",
+                  "translation": "Hello. My internet service keeps failing and your email response didn't help at all.",
+                  "feedback": "This is a bit informal for a follow-up to a formal complaint. Try to maintain a more formal tone.",
+                  "next": "rp-d153-node-2"
+                }
+              ]
+            },
+            {
+              "id": "rp-d153-node-2",
+              "npc_text": "Compreendo. Poderia, por favor, facultar o número da sua reclamação ou o seu número de cliente para que eu possa verificar o registo?",
+              "npc_translation": "I understand. Could you please provide your complaint number or customer number so I can check the record?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Sim, claro. O número da reclamação é [seu número de reclamação] e o meu número de cliente é [seu número de cliente].",
+                  "translation": "Yes, of course. The complaint number is [your complaint number] and my customer number is [your customer number].",
+                  "feedback": "Providing the requested information promptly is good.",
+                  "next": "rp-d153-node-3"
+                },
+                {
+                  "text": "Ah, sim. Espere um momento que vou procurar.",
+                  "translation": "Oh, yes. Wait a moment, I'll look for it.",
+                  "feedback": "A little hesitation is natural, but try to have these details ready when following up on a complaint.",
+                  "next": "rp-d153-node-3"
+                }
+              ]
+            },
+            {
+              "id": "rp-d153-node-3",
+              "npc_text": "Agradeço. Vejo aqui que recebeu uma resposta padrão. Qual é a sua principal preocupação que não foi abordada?",
+              "npc_translation": "Thank you. I see here that you received a standard response. What is your main concern that was not addressed?",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "A vossa resposta não apresentou nenhuma solução concreta para as falhas de serviço que continuo a ter, nem um prazo para a resolução.",
+                  "translation": "Your response did not present any concrete solution for the service failures I continue to experience, nor a deadline for resolution.",
+                  "feedback": "Clearly stating the lack of a solution and a deadline is effective.",
+                  "next": "rp-d153-node-4"
+                },
+                {
+                  "text": "Simplesmente não me disseram o que vão fazer e isso é inaceitável.",
+                  "translation": "They simply didn't tell me what they're going to do and that's unacceptable.",
+                  "feedback": "While true, try to be more specific and less emotional in a formal complaint follow-up.",
+                  "next": "rp-d153-node-4"
+                }
+              ]
+            },
+            {
+              "id": "rp-d153-node-4",
+              "npc_text": "Compreendo. Vou escalar o seu caso para o nosso departamento técnico para que possam analisar a situação em maior detalhe. Irá receber uma resposta nos próximos 5 dias úteis.",
+              "npc_translation": "I understand. I will escalate your case to our technical department so they can analyze the situation in more detail. You will receive a response within the next 5 working days.",
+              "npc_voice_type": "service",
+              "options": [
+                {
+                  "text": "Agradeço a sua diligência. No entanto, se não receber uma resposta satisfatória nesse prazo, serei obrigado a contactar a entidade reguladora.",
+                  "translation": "I appreciate your diligence. However, if I do not receive a satisfactory response within that timeframe, I will be obliged to contact the regulatory body.",
+                  "feedback": "This is a strong, appropriate escalation warning. Well done."
+                },
+                {
+                  "text": "Está bem, obrigado. Espero que desta vez resolvam o problema.",
+                  "translation": "Okay, thank you. I hope this time you solve the problem.",
+                  "feedback": "This is a polite but less firm response. You've given them an out without fully leveraging your position."
+                },
+                {
+                  "text": "Isso não é suficiente. Preciso de uma solução já, não de mais uma promessa.",
+                  "translation": "That's not enough. I need a solution now, not another promise.",
+                  "feedback": "While understandable, this might be perceived as overly aggressive. It's better to state consequences calmly."
+                }
+              ]
+            }
+          ]
+        },
+        "mission": {
+          "title": "Draft a Follow-Up Complaint Email",
+          "prep": [
+            "Review the formal complaint email you sent previously (or imagine you did).",
+            "Identify the specific points that were not addressed in the generic reply you received.",
+            "Decide on a reasonable new deadline for a satisfactory response (e.g., 7 working days)."
+          ],
+          "fallback_phrases": [
+            "Não estou satisfeito/a com a vossa resposta anterior.",
+            "A minha reclamação original não foi devidamente abordada.",
+            "Espero uma resolução concreta e atempada."
+          ],
+          "likely_responses": [
+            "Agradecemos o seu contacto e iremos reencaminhar a sua questão para o departamento competente.",
+            "Lamentamos o sucedido e faremos os possíveis para resolver a situação com a maior brevidade.",
+            "Para podermos analisar o seu caso em detalhe, por favor, envie-nos [informação adicional]."
+          ]
+        },
+        "goals": [
+          "Understand the process of formal complaints and follow-ups in Portugal.",
+          "Use appropriate formal language and register in written communication.",
+          "Effectively articulate dissatisfaction and escalate a complaint when a generic response is received."
+        ],
+        "course": {
+          "month": 6,
+          "day": 153,
+          "category": "work"
+        },
+        "review_items": [
+          {
+            "id": "rv-sit-d153-complaining-in-writing-say-1",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I hereby wish to present a formal complaint regarding {problem}.",
+            "answer": "Venho por este meio apresentar uma reclamação formal relativamente a {problema}.",
+            "source_ref": "pp-sit-d153-complaining-in-writing-1"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-say-2",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I would appreciate it if you would inform me about the measures you intend to take to resolve the situation within {deadline}.",
+            "answer": "Agradeço que me informem sobre as medidas que pretendem tomar para resolver a situação no prazo de {prazo}.",
+            "source_ref": "pp-sit-d153-complaining-in-writing-2"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-say-3",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: Attached, I send {documents} as proof.",
+            "answer": "Em anexo, envio {documentos} como comprovativo.",
+            "source_ref": "pp-sit-d153-complaining-in-writing-3"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-say-4",
+            "dimension": "say",
+            "prompt": "Say in Portuguese: I regret to inform you that your reply was generic and did not address the specific points of my complaint.",
+            "answer": "Lamento informar que a vossa resposta foi genérica e não abordou os pontos específicos da minha reclamação.",
+            "source_ref": "pp-sit-d153-complaining-in-writing-4"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-retrieve-1",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: complaint book",
+            "answer": "livro de reclamações",
+            "source_ref": "livro de reclamações"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-retrieve-2",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: formal complaint",
+            "answer": "reclamação formal",
+            "source_ref": "reclamação formal"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-retrieve-3",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: response deadline",
+            "answer": "prazo de resposta",
+            "source_ref": "prazo de resposta"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-retrieve-4",
+            "dimension": "retrieve",
+            "prompt": "Recall the Portuguese for: proof / receipt",
+            "answer": "comprovativo",
+            "source_ref": "comprovativo"
+          },
+          {
+            "id": "rv-sit-d153-complaining-in-writing-hear-1",
+            "dimension": "hear",
+            "prompt": "Listen to the dialogue at natural speed and answer: what is being asked for?",
+            "source_ref": "dlg-sit-d153-complaining-in-writing-1"
+          }
+        ]
+      }
+    }
+  ]
+}
