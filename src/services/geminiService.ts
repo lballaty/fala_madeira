@@ -1,226 +1,242 @@
-import { GoogleGenAI, Modality } from "@google/genai";
-import { Tutor } from "../types";
+// File: src/services/geminiService.ts
+// Description: Thin client for all AI features. Every call goes through the authenticated
+//   Supabase `gemini` edge function (actions: chat, generate-lesson, translate, tts) using
+//   the user's session JWT — the Gemini API key never reaches the client bundle. Account
+//   deletion routes through the `delete-account` edge function. Chat is stateless on the
+//   server: this module keeps the turn history locally and sends it with each message.
+// Author: Libor Ballaty <libor@arionetworks.com>
+// Created: 2026-07-09
+
+import { Lesson, Tutor, VocabResult } from "../types";
 import { audioCache } from "../lib/audioCache";
+import { getSupabase } from "../lib/supabase";
+import { logger, userMessage } from "../lib/logger";
+import { platform } from "../platform";
+import { config } from "../config";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+interface ChatTurn {
+  role: 'user' | 'model';
+  text: string;
+}
 
-const getSystemInstruction = (tutor?: Tutor, isHelpMode: boolean = false) => {
-  if (isHelpMode) {
-    return `You are the FalaMadeira App Guide. Your goal is to help users navigate and understand the application.
-    
-    APP STRUCTURE:
-    1. Dashboard (Home): Shows daily streak, total XP, and active month.
-    2. Curriculum (Learning): Lists lessons for the current month. Users can unlock months 1-6.
-    3. AI Tutor (Chat): Real-time conversational practice with different personalities.
-    4. Settings: Profile management, audio speed, tutor selection, user manual, and support.
-    
-    FEATURES:
-    - AI Practice: Interactive sessions based on specific lessons.
-    - Custom Lessons: Users can request specific themes (Premium).
-    - Voice Input: Users can speak to the tutor using the microphone icon.
-    - Pronunciation: Click the speaker icon to hear phrases.
-    
-    INSTRUCTIONS:
-    - Explain features clearly and concisely.
-    - If a user asks "How do I...", tell them exactly which tab to click.
-    - Be encouraging and helpful.
-    - Use Portuguese sparingly for app terms, but primarily English for explanations.`;
+/**
+ * Client-side mirror of the edge function's ErrorAnalystResult
+ * (supabase/functions/_shared/gemini.ts). The server type lives in Deno and cannot be imported
+ * into the browser bundle, so this shape is duplicated here — keep the two in sync. Consumed by
+ * the Coach's online narrative-enhancement layer (src/features/coach).
+ */
+export interface ErrorAnalystFinding {
+  category: 'tense' | 'gender' | 'word-order' | 'register' | 'vocabulary' | 'other';
+  /** Plain-English description of the recurring issue. */
+  pattern: string;
+  /** Verbatim learner phrases illustrating it. */
+  examples: string[];
+  /** The pt-PT correct form / recast. */
+  correct_form: string;
+  /** One calm, actionable next step for the coach. */
+  focus_suggestion: string;
+  severity: 'low' | 'medium' | 'high';
+}
+
+export interface ErrorAnalystResult {
+  findings: ErrorAnalystFinding[];
+  /** One calm, competence-framed sentence for the learner (never scolding). */
+  summary: string;
+}
+
+export interface ChatSession {
+  sendMessage(input: { message: string }): Promise<{ text: string }>;
+}
+
+// Invoke a Supabase edge function and unwrap the shared error envelope
+// ({ error: { code, message, requestId, details } }) into a thrown Error whose
+// message includes the server's human-readable text and a support Ref.
+const invokeEdgeFunction = async <T = unknown>(
+  name: string,
+  body?: Record<string, unknown>,
+): Promise<T> => {
+  const supabase = getSupabase();
+  if (!supabase) {
+    const event = logger.critical('edge_fn_unconfigured', 'Supabase client missing when invoking edge function', {
+      category: 'SYSTEM_HEALTH',
+      details: { function: name },
+    });
+    throw new Error(
+      userMessage('EDGE_FN_UNCONFIGURED', 'Connection is not configured. Please reload the app and try again.', event.request_id)
+    );
   }
 
-  const tutorInfo = tutor 
-    ? `Your name is ${tutor.name}, a ${tutor.age}-year-old ${tutor.gender} tutor from Madeira. Your personality is: ${tutor.personality}.`
-    : `You are a friendly and expert Portuguese language tutor specializing in European Portuguese, specifically the Madeiran dialect.`;
+  const { data, error } = await supabase.functions.invoke(name, { body });
 
-  return `${tutorInfo}
-Your goal is to help beginners achieve conversational fluency through a rigorous TRAINING SYSTEM.
+  if (error) {
+    let serverMessage = error.message || "The AI service failed. Please try again.";
+    let serverCode = 'EDGE_FN_ERROR';
+    let serverRequestId: string | undefined;
+    // FunctionsHttpError exposes the raw Response as error.context; read the
+    // structured envelope ({ error: { code, message, requestId, details } }) when available.
+    const ctx = (error as { context?: { json?: () => Promise<unknown> } }).context;
+    if (ctx && typeof ctx.json === 'function') {
+      try {
+        const payload = (await ctx.json()) as {
+          error?: { message?: string; code?: string; requestId?: string };
+        } | null;
+        if (payload?.error?.message) {
+          serverMessage = payload.error.message;
+          if (payload.error.code) serverCode = payload.error.code;
+          if (payload.error.requestId) serverRequestId = payload.error.requestId;
+        }
+      } catch {
+        // Body was not JSON — keep the default message and log it below.
+      }
+    }
+    // Single edge-function error choke point: log with the server requestId as the
+    // correlation ID so client and edge-function records join on the same flow.
+    const event = logger.error('edge_fn_failed', `Edge function ${name} failed`, {
+      category: 'AI_DECISION',
+      error,
+      correlationId: serverRequestId,
+      details: { function: name, action: body?.action, code: serverCode, serverRequestId },
+    });
+    throw new Error(userMessage(serverCode, serverMessage, serverRequestId ?? event.request_id));
+  }
 
-SIMULATION MECHANICS (Apply these in chat):
-1. INTERRUPTION RULE: Every 2nd repetition, interrupt yourself mid-sentence (after 3-5 words) and redirect without restarting.
-2. SCENARIO SWITCH RULE: Every 2-3 repetitions, change the physical setting (e.g., "Now we are at the pharmacy", "Now we are in a lift").
-3. MISUNDERSTANDING RULE: Every 3rd repetition, simulate "Diz?" or "Como?" — rephrase immediately and continue.
-4. CONTINUOUS SPEECH RULE: No silence > 2 seconds. Use recovery phrases: "como se diz...?", "a coisa que...", "não me lembro, mas...".
-5. ESCALATION RULE: Every 3 repetitions, add one element of complexity. Sentences grow longer.
-
-NATURALNESS RULE (Madeiran/European Portuguese):
-- Use Madeiran reductions: "tá" instead of "está", "p'ra" instead of "para".
-- Use "pois" or "pois é" for agreement.
-- Use "Diz?" as the primary response to not hearing something.
-- Use "imenso" for "a lot" and "um bocado" for "a little bit".
-- Use European Portuguese vocabulary: "pequeno-almoço" (not "café da manhã"), "autocarro" (not "ônibus"), "bica" (espresso).
-- NO articles before professions: "Sou professor" (not "Sou um professor").
-
-FORMATTING & TRANSLATION RULE:
-- Use clear Markdown formatting with AMPLE whitespace.
-- ALWAYS use double line breaks between different sections.
-- For translations, use the following structure:
-  
-  **Português:**
-  > [O texto em português aqui]
-  
-  **Pronunciation:**
-  > [Phonetic guide here]
-  
-  **English:**
-  > [The English translation here]
-  
-- Use bullet points for vocabulary lists or key patterns.
-- If providing a dialogue, use bold names and clear line breaks:
-  **Maria:** [Fala]
-  
-  **User:** [Fala]
-- Keep responses well-structured and avoid "wall of text" paragraphs.
-- If translating to another language (e.g., Czech), follow the same pattern.
-
-Current Curriculum Context:
-Month 1 focuses on Foundations & Daily Life (Greetings, Ordering, Numbers, Directions, Opinions, Self-Intro, Time, Past Tense, Third Person, TER, PODER, Shopping, Health, Connectors).
-Always stay in character as a local Madeiran. If the user is stuck, provide a hint in brackets [like this].`;
+  return data;
 };
 
-let audioContext: AudioContext | null = null;
-let currentSource: AudioBufferSourceNode | null = null;
+// Server TTS returns raw PCM at 24kHz mono s16le; playback goes through the
+// platform audio adapter (shared AudioContext on web, native shell later).
+const TTS_SAMPLE_RATE = config.audio.ttsSampleRateHz;
 
 export const geminiService = {
   async generateLesson(topic: string, tutor?: Tutor) {
-    try {
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: `Generate a language lesson for the topic: ${topic}. 
-        Include: 
-        - A catchy title
-        - 3 key conversational patterns with pronunciation guides
-        - 5 essential vocabulary words with translations and pronunciation guides
-        - A short practice dialogue.
-        Format as JSON.`,
-        config: {
-          systemInstruction: getSystemInstruction(tutor),
-          responseMimeType: "application/json",
-        }
-      });
-      return JSON.parse(response.text);
-    } catch (error) {
-      console.error("Generate lesson error:", error);
-      throw new Error("Failed to generate lesson. Please try again.");
-    }
+    const data = await invokeEdgeFunction<{ result?: Partial<Lesson> }>('gemini', { action: 'generate-lesson', topic, tutor });
+    return data.result;
   },
 
-  async startChat(tutor?: Tutor, isHelpMode: boolean = false) {
-    try {
-      return ai.chats.create({
-        model: "gemini-3-flash-preview",
-        config: {
-          systemInstruction: getSystemInstruction(tutor, isHelpMode),
-        },
-      });
-    } catch (error) {
-      console.error("Start chat error:", error);
-      throw new Error("Failed to start AI chat session.");
-    }
+  // Returns a chat session that keeps the conversation history client-side and
+  // replays it to the stateless `chat` edge-function action on every message.
+  async startChat(tutor?: Tutor, isHelpMode: boolean = false): Promise<ChatSession> {
+    const history: ChatTurn[] = [];
+    return {
+      async sendMessage({ message }: { message: string }) {
+        const turns = [...history, { role: 'user' as const, text: message }];
+        const data = await invokeEdgeFunction<{ text?: unknown }>('gemini', {
+          action: 'chat',
+          history: turns,
+          tutor,
+          isHelpMode,
+        });
+        const text = String(data?.text ?? '');
+        history.push({ role: 'user', text: message }, { role: 'model', text });
+        return { text };
+      },
+    };
   },
 
   async translateWord(word: string, tutor?: Tutor) {
-    try {
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: `Translate and explain the Portuguese word or phrase: "${word}". 
-        Provide:
-        - English translation
-        - Contextual usage in Madeira
-        - A short example sentence in Portuguese with English translation.
-        Format as JSON with keys: translation, explanation, example_pt, example_en.`,
-        config: {
-          systemInstruction: getSystemInstruction(tutor),
-          responseMimeType: "application/json",
-        }
-      });
-      return JSON.parse(response.text);
-    } catch (error) {
-      console.error("Translate word error:", error);
-      throw new Error("Failed to lookup word. Please try again.");
-    }
+    const data = await invokeEdgeFunction<{ result?: VocabResult }>('gemini', { action: 'translate', word, tutor });
+    return data.result;
+  },
+
+  // AI role: Error Analyst (CONTENT-ARCHITECTURE §6b/§7). Given recent learner
+  // utterances/mistakes, the server returns recurring-pattern findings + a calm summary
+  // (ErrorAnalystResult). This is the ONLINE narrative-enhancement layer for the Coach:
+  // callers (src/features/coach) enrich the deterministic templated suggestions with these
+  // findings and MUST fall back to the offline output on any failure — never block, never empty.
+  async analyzeErrors(utterances: string[], tutor?: Tutor): Promise<ErrorAnalystResult> {
+    const data = await invokeEdgeFunction<{ result?: ErrorAnalystResult }>('gemini', {
+      action: 'error-analyst',
+      utterances,
+      tutor,
+    });
+    return data.result ?? { findings: [], summary: '' };
+  },
+
+  // Deletes the signed-in user's account and data via the delete-account edge function.
+  async deleteAccount(): Promise<void> {
+    await invokeEdgeFunction('delete-account');
   },
 
   stopSpeech() {
-    if (currentSource) {
-      try {
-        currentSource.stop();
-      } catch (e) {
-        // Ignore
-      }
-      currentSource = null;
-    }
+    platform.audio.stop();
   },
 
   async playSpeech(text: string, tutor?: Tutor, speed: number = 1.0, onEnd?: () => void) {
-    try {
-      this.stopSpeech();
+    this.stopSpeech();
 
-      const cacheKey = `${text}_${tutor?.id || 'default'}_${speed}`;
-      let arrayBuffer = await audioCache.get(cacheKey);
+    // Cache key = provider:voice:hash(text), NO speed (speed is a playback param applied
+    // by the audio adapter's playbackRate, so one synthesized clip is reused at any speed).
+    // The client keys on the requested voice fingerprint (tutor id) with 'default' provider
+    // — the server resolves the actual provider/voice and returns them in metadata (logged);
+    // reads and writes for the same logical request agree because both use this key.
+    const arrayBuffer = await synthesizeCached(text, { tutorId: tutor?.id, tutor });
 
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-      }
-      
-      if (audioContext.state === 'suspended') {
-        await audioContext.resume();
-      }
-
-      if (!arrayBuffer) {
-        let voiceName = 'Kore';
-        if (tutor) {
-          if (tutor.gender === 'female') {
-            voiceName = tutor.age > 40 ? 'Zephyr' : 'Kore';
-          } else {
-            voiceName = tutor.age > 40 ? 'Charon' : 'Fenrir';
-          }
-        }
-
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash-preview-tts",
-          contents: [{ parts: [{ text: `Speak this naturally: ${text}` }] }],
-          config: {
-            responseModalities: [Modality.AUDIO],
-            speechConfig: {
-              voiceConfig: {
-                prebuiltVoiceConfig: { voiceName },
-              },
-            },
-          },
-        });
-
-        const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-        if (base64Audio) {
-          arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
-          await audioCache.set(cacheKey, arrayBuffer);
-        }
-      }
-
-      if (arrayBuffer) {
-        const buffer = audioContext.createBuffer(1, arrayBuffer.byteLength / 2, 24000);
-        const nowBuffering = buffer.getChannelData(0);
-        const dataView = new DataView(arrayBuffer.slice(0));
-        
-        for (let i = 0; i < buffer.length; i++) {
-          nowBuffering[i] = dataView.getInt16(i * 2, true) / 32768;
-        }
-        
-        const source = audioContext.createBufferSource();
-        source.buffer = buffer;
-        source.playbackRate.value = speed;
-        source.connect(audioContext.destination);
-        
-        source.onended = () => {
-          if (currentSource === source) {
-            currentSource = null;
-          }
-          if (onEnd) onEnd();
-        };
-
-        currentSource = source;
-        source.start();
-      }
-    } catch (error) {
-      console.error("Speech error:", error);
-    }
+    // Resolves once playback has started; onEnd fires when the clip finishes
+    // (or is stopped) — same contract as the pre-adapter implementation.
+    await platform.audio.playPcm16(arrayBuffer, TTS_SAMPLE_RATE, { rate: speed, onEnded: onEnd });
   }
+};
+
+// TTS response metadata (provider/voice resolved server-side; carried for cache-key
+// guidance and observability — see supabase/functions/gemini/index.ts tts action).
+interface TtsResponse {
+  audio?: string;
+  provider?: string;
+  voice?: string;
+  voiceType?: string;
+  requestId?: string;
+}
+
+export interface SynthesizeOptions {
+  /** Voice fingerprint for the cache key (tutor id or voice_type); 'default' when omitted. */
+  tutorId?: string;
+  /** Passed to the edge function so the server picks the right voice from the tutor. */
+  tutor?: Tutor;
+  /** voice_type override forwarded to the server (dialogue lines carry per-speaker types). */
+  voiceType?: string;
+  /** Provider fingerprint for the cache key; 'default' lets the server pick (default chain). */
+  provider?: string;
+}
+
+/**
+ * Fetch (or reuse from the bounded LRU cache) the PCM audio for `text`. Shared by
+ * playSpeech and the offline-download pre-generation (src/lib/audio-download.ts) so both
+ * key the cache identically. Throws a userMessage-wrapped Error on empty audio (the edge
+ * choke point in invokeEdgeFunction already logs transport failures with correlation IDs).
+ */
+export const synthesizeCached = async (text: string, options: SynthesizeOptions = {}): Promise<ArrayBuffer> => {
+  const voice = options.voiceType || options.tutorId || 'default';
+  const cacheKey = audioCache.buildKey(options.provider || 'default', voice, text);
+
+  const cached = await audioCache.get(cacheKey);
+  if (cached) return cached;
+
+  // Server picks the voice from the tutor/voiceType and enforces the daily voice limit;
+  // the response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
+  const data = await invokeEdgeFunction<TtsResponse>('gemini', {
+    action: 'tts',
+    text,
+    tutor: options.tutor,
+    voiceType: options.voiceType,
+    provider: options.provider,
+  });
+  const base64Audio = data?.audio;
+  if (!base64Audio) {
+    const event = logger.error('tts_empty_audio', 'TTS edge function returned no audio payload', {
+      category: 'AI_DECISION',
+      correlationId: data?.requestId,
+      details: { textLength: text.length, tutorId: options.tutorId, voiceType: options.voiceType },
+    });
+    throw new Error(userMessage('TTS_EMPTY_AUDIO', 'The voice service returned no audio. Please try again.', event.request_id));
+  }
+  const arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
+  const evicted = await audioCache.set(cacheKey, arrayBuffer);
+  if (evicted > 0) {
+    logger.debug('tts_cache_evicted', `bounded audio cache evicted ${evicted} least-recently-used clip(s)`, {
+      category: 'SYSTEM_HEALTH',
+      correlationId: data?.requestId,
+      details: { evicted, resolvedProvider: data?.provider, resolvedVoice: data?.voice },
+    });
+  }
+  return arrayBuffer;
 };

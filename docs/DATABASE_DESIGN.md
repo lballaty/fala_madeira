@@ -26,6 +26,8 @@ Stores user-specific profile information and progress.
 - `has_accepted_ai_usage`: `boolean` (Default: false)
 - `playback_speed`: `numeric` (Default: 1.0)
 - `is_sound_enabled`: `boolean` (Default: true)
+- `tts_provider`: `text` (NULL = platform default TTS chain azure→gemini; CHECK: 'azure', 'gemini', 'google', 'elevenlabs', 'openai', 'polly' or NULL — migration 00007)
+- `tts_byo_key_ref`: `text` (NULL; reference ONLY — the NAME of an admin-registered edge/Vault secret holding the user's bring-your-own provider key. Raw API keys must NEVER be stored in this column — migration 00007)
 
 ### `lessons`
 Stores both static curriculum lessons and user-created custom lessons.
@@ -97,6 +99,100 @@ User-submitted corrections for existing lessons.
 - `status`: `text` ('pending', 'approved', 'rejected')
 - `created_at`: `timestamp with time zone`
 
+## 1b. Content Model Tables (migration 00006, applied 2026-07-09)
+
+Modular content model per `docs/CONTENT-ARCHITECTURE.md` §9. Content lives as authoritative JSONB payloads (shapes defined in `src/content/schema.ts`) with denormalized scalar columns for querying. All timestamps `with time zone`; `updated_at` maintained by the shared `public.set_updated_at()` BEFORE UPDATE trigger.
+
+### `content_packs`
+The shippable, versioned modular content unit.
+- `id`: `text` (Primary Key, e.g. 'seed-course-v1')
+- `name`: `text`
+- `version`: `text` (pack version, e.g. '1.0.0')
+- `schema_version`: `text` (content schema the pack targets)
+- `status`: `text` (Default: 'draft'; CHECK: 'draft', 'published', 'deprecated', 'archived' — code enum uses 'deprecated', data-model doc says 'archived'; the CHECK accepts both, treat as synonyms)
+- `checksum`: `text` (sha256 hex of `canonicalPackPayload(pack)`)
+- `payload`: `jsonb` (authoritative ContentPack JSON; nullable)
+- `created_at` / `updated_at`: `timestamp with time zone`
+
+### `situations`
+Atomic content unit; `payload` is the full Situation JSON.
+- `id`: `text` (Primary Key)
+- `pack_id`: `text` (FK → `content_packs.id`, ON DELETE CASCADE)
+- `payload`: `jsonb` (NOT NULL — full Situation object)
+- `level`: `integer` (CHECK 0–5, practical levels)
+- `cefr`: `text` (CHECK: 'A1', 'A2', 'B1', 'B2')
+- `tracks`: `text[]` (track ids this situation serves; GIN-indexed)
+- `course_month` / `course_day`: `integer` (nullable; Structured Course placement)
+- `version`: `integer` (Default: 1)
+- `created_at` / `updated_at`: `timestamp with time zone`
+
+### `tracks`
+Goal-oriented ordered collection of situation refs.
+- `id`: `text` (Primary Key)
+- `pack_id`: `text` (FK → `content_packs.id`, ON DELETE CASCADE)
+- `name`: `text`
+- `goal`: `text`
+- `situation_ids`: `text[]` (curation order; soft, never a hard gate)
+- `payload`: `jsonb` (nullable)
+- `created_at` / `updated_at`: `timestamp with time zone`
+
+### `user_track_selection`
+Which goal track(s) a user picked. Design: history rows with `is_active` flag — PK `(user_id, track_id)`, and partial unique index `uq_user_track_selection_one_active` on `(user_id) WHERE is_active` enforces at most one active track per user while keeping switch history. `track_id` is a plain text ref (no FK) so selections survive pack re-publishes.
+- `user_id`: `uuid` (FK → `auth.users.id`, ON DELETE CASCADE)
+- `track_id`: `text`
+- `is_active`: `boolean` (Default: true)
+- `selected_at`: `timestamp with time zone`
+
+### `user_situation_progress`
+Per-situation, per-mode progress (non-linear). PK `(user_id, situation_id, mode)`.
+- `user_id`: `uuid` (FK → `auth.users.id`, ON DELETE CASCADE)
+- `situation_id`: `text`
+- `mode`: `text` (engine name: 'listening', 'roleplay', … — free text)
+- `status`: `text` (Default: 'in_progress')
+- `score`: `jsonb`
+- `updated_at`: `timestamp with time zone`
+
+### `mastery_items`
+SM-2 substrate with the 4-dimension weakness model. UNIQUE `(user_id, item_key, dimension)`; index on `(user_id, next_review)` for due queries.
+- `id`: `uuid` (Primary Key, `gen_random_uuid()`)
+- `user_id`: `uuid` (FK → `auth.users.id`, ON DELETE CASCADE)
+- `item_key`: `text` (points at content: vocab word, pattern id, review-item id)
+- `dimension`: `text` (CHECK: 'hear', 'say', 'retrieve', 'avoid')
+- `ease`: `double precision` (Default: 2.5)
+- `interval_days`: `double precision` (Default: 0)
+- `repetitions`: `integer` (Default: 0)
+- `next_review`: `timestamp with time zone`
+- `last_grade`: `integer`
+- `updated_at`: `timestamp with time zone`
+
+### `missions_log`
+Real-world mission attempts/completions.
+- `id`: `uuid` (Primary Key, `gen_random_uuid()`)
+- `user_id`: `uuid` (FK → `auth.users.id`, ON DELETE CASCADE)
+- `situation_id`: `text`
+- `status`: `text` (Default: 'planned')
+- `notes`: `text`
+- `completed_at`: `timestamp with time zone` (nullable)
+- `created_at`: `timestamp with time zone`
+
+### `pronunciation_attempts`
+Per-item pronunciation scoring history.
+- `id`: `uuid` (Primary Key, `gen_random_uuid()`)
+- `user_id`: `uuid` (FK → `auth.users.id`, ON DELETE CASCADE)
+- `item_key`: `text`
+- `score`: `jsonb`
+- `audio_ref`: `text` (nullable)
+- `created_at`: `timestamp with time zone`
+
+### `writing_submissions`
+Writing prompts + AI/human feedback.
+- `id`: `uuid` (Primary Key, `gen_random_uuid()`)
+- `user_id`: `uuid` (FK → `auth.users.id`, ON DELETE CASCADE)
+- `prompt_ref`: `text`
+- `content`: `text`
+- `feedback`: `jsonb` (nullable)
+- `created_at`: `timestamp with time zone`
+
 ## 2. Security Policies (RLS)
 
 Row Level Security is enabled on all tables to ensure data isolation.
@@ -119,6 +215,23 @@ Row Level Security is enabled on all tables to ensure data isolation.
 ### `global_settings`
 - **SELECT**: `true` (Publicly readable)
 - **ALL**: `(SELECT role FROM profiles WHERE id = auth.uid()) = 'admin'`
+
+### Content tables: `content_packs`, `situations`, `tracks` (migration 00006)
+- **SELECT**: pack `status = 'published'` (for `situations`/`tracks`: parent pack published via EXISTS subquery) OR `public.is_admin()`
+- **ALL** (write): `public.is_admin()` (USING + WITH CHECK)
+
+### User-state tables: `user_track_selection`, `user_situation_progress`, `mastery_items`, `missions_log` (migration 00006)
+Owner RLS:
+- **SELECT**: `auth.uid() = user_id` OR `public.is_admin()`
+- **INSERT**: `auth.uid() = user_id`
+- **UPDATE**: `auth.uid() = user_id` (USING + WITH CHECK)
+- **DELETE**: `auth.uid() = user_id`
+
+### `pronunciation_attempts` (migration 00006)
+Append-only history: SELECT (owner or admin), INSERT (owner), DELETE (owner). No UPDATE policy.
+
+### `writing_submissions` (migration 00006)
+SELECT (owner or admin), INSERT (owner), DELETE (owner); **UPDATE**: owner OR admin (admin attaches `feedback`).
 
 ## 3. Recommended Triggers & Functions
 

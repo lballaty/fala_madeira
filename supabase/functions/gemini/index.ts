@@ -1,19 +1,26 @@
 // File: supabase/functions/gemini/index.ts
-// Description: Authenticated server-side proxy for all Gemini access (chat, generate-lesson,
-//   translate, tts). Verifies the caller's Supabase JWT and enforces daily voice limits
-//   server-side. The GEMINI_API_KEY never leaves the server. Actions are selected via the
-//   `action` field in the JSON body.
+// Description: Authenticated server-side AI proxy (chat, generate-lesson, translate,
+//   scenario-generator, error-analyst, tts).
+//   Verifies the caller's Supabase JWT and enforces daily voice limits server-side. Provider
+//   API keys never leave the server. Actions are selected via the `action` field in the JSON
+//   body. The tts action routes through the provider adapter layer (_shared/tts/router.ts,
+//   default chain azure -> gemini); when no provider is available it returns a structured
+//   TTS_UNAVAILABLE error so the client can fall back to browser Web Speech.
 // Author: Libor Ballaty <libor@arionetworks.com>
 // Created: 2026-07-08
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import { corsHeaders, errorResponse, jsonResponse, newRequestId } from "../_shared/http.ts";
 import {
+  analyzeErrors,
+  generateScenario,
   generateText,
-  generateTts,
   getSystemInstruction,
+  type LearnerContext,
   type TutorLike,
 } from "../_shared/gemini.ts";
+import { routeTts } from "../_shared/tts/router.ts";
+import { TtsUnavailableError } from "../_shared/tts/types.ts";
 
 interface ChatMessage { role: "user" | "model"; text: string }
 
@@ -49,6 +56,17 @@ Deno.serve(async (req) => {
   const action = String(body.action ?? "");
   const tutor = body.tutor as TutorLike | undefined;
 
+  // Learner context for level-locking + vocab reuse (see _shared/gemini.ts).
+  // Accept `unlocked_level` (practical L0-L5) or `level`; known vocab and situation optional.
+  const rawLevel = body.unlocked_level ?? body.level;
+  const learner: LearnerContext = {
+    level: typeof rawLevel === "number" ? rawLevel : undefined,
+    knownVocab: Array.isArray(body.knownVocab)
+      ? (body.knownVocab as unknown[]).map(String)
+      : undefined,
+    situationContext: body.situationContext ? String(body.situationContext) : undefined,
+  };
+
   try {
     switch (action) {
       case "chat": {
@@ -59,9 +77,27 @@ Deno.serve(async (req) => {
         }));
         const text = await generateText({
           contents,
-          systemInstruction: getSystemInstruction(tutor, Boolean(body.isHelpMode)),
+          systemInstruction: getSystemInstruction(tutor, Boolean(body.isHelpMode), learner),
         });
         return jsonResponse({ text, requestId });
+      }
+
+      case "scenario-generator": {
+        const need = String(body.need ?? "").trim();
+        if (!need) return errorResponse("BAD_REQUEST", "Missing 'need' (the real-life need in English).", 400, requestId);
+        const result = await generateScenario({ need, tutor, learner });
+        return jsonResponse({ result, requestId });
+      }
+
+      case "error-analyst": {
+        const utterances = Array.isArray(body.utterances)
+          ? (body.utterances as unknown[]).map(String).filter((s) => s.trim().length > 0)
+          : [];
+        if (utterances.length === 0) {
+          return errorResponse("BAD_REQUEST", "Missing 'utterances' (array of recent learner utterances/mistakes).", 400, requestId);
+        }
+        const result = await analyzeErrors({ utterances, tutor, learner });
+        return jsonResponse({ result, requestId });
       }
 
       case "generate-lesson": {
@@ -76,7 +112,7 @@ Deno.serve(async (req) => {
                 `words with translations and pronunciation guides; a short practice dialogue. Format as JSON.`,
             }],
           }],
-          systemInstruction: getSystemInstruction(tutor),
+          systemInstruction: getSystemInstruction(tutor, false, learner),
           json: true,
         });
         return jsonResponse({ result: JSON.parse(text), requestId });
@@ -94,7 +130,7 @@ Deno.serve(async (req) => {
                 `English translation. Format as JSON with keys: translation, explanation, example_pt, example_en.`,
             }],
           }],
-          systemInstruction: getSystemInstruction(tutor),
+          systemInstruction: getSystemInstruction(tutor, false, learner),
           json: true,
         });
         return jsonResponse({ result: JSON.parse(text), requestId });
@@ -108,7 +144,10 @@ Deno.serve(async (req) => {
         const admin = createClient(supabaseUrl, serviceKey);
         const { data: profile } = await admin
           .from("profiles")
-          .select("subscription_tier, voice_limit, voice_usage_today, last_voice_usage_date")
+          .select(
+            "subscription_tier, voice_limit, voice_usage_today, last_voice_usage_date, " +
+              "tts_provider, tts_byo_key_ref",
+          )
           .eq("id", user.id)
           .single();
 
@@ -135,8 +174,31 @@ Deno.serve(async (req) => {
             .eq("id", user.id);
         }
 
-        const audio = await generateTts(text, tutor);
-        return jsonResponse({ audio, requestId });
+        // Route through the provider adapter layer (default chain: azure -> gemini).
+        // The caller's stored preference (profiles.tts_provider) is prepended to the chain
+        // when its platform secret is present OR its bring-your-own key ref resolves; the
+        // default chain always stays as fallback and a stale ref never fails TTS (router
+        // logs WARN and continues). Response stays backward-compatible with playSpeech
+        // (`audio` = base64 PCM); provider+voice metadata is included so the client can
+        // build its audio cache key from provider+voice (never speed) in a later step.
+        const result = await routeTts({
+          text,
+          voiceType: body.voiceType,
+          tutor,
+          provider: body.provider,
+          preferredProvider: profile?.tts_provider ?? undefined,
+          byoKeyRef: profile?.tts_byo_key_ref ?? undefined,
+          requestId,
+        });
+        return jsonResponse({
+          audio: result.audioBase64,
+          provider: result.provider,
+          voice: result.voice,
+          voiceType: result.voiceType,
+          mimeType: result.mimeType,
+          sampleRateHz: result.sampleRateHz,
+          requestId,
+        });
       }
 
       default:
@@ -144,6 +206,16 @@ Deno.serve(async (req) => {
     }
   } catch (e) {
     console.error(JSON.stringify({ level: "ERROR", requestId, userId: user.id, action, message: String(e) }));
+    if (e instanceof TtsUnavailableError) {
+      // Structured signal for the client to fall back to browser Web Speech.
+      return errorResponse(
+        "TTS_UNAVAILABLE",
+        "Server text-to-speech is unavailable. Falling back to device speech.",
+        503,
+        requestId,
+        { attempted: e.attempted },
+      );
+    }
     return errorResponse("GEMINI_ERROR", "The AI service failed. Please try again.", 502, requestId);
   }
 });

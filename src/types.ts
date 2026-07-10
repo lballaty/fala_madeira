@@ -67,7 +67,25 @@ export interface UserProfile {
   has_accepted_ai_usage?: boolean;
   playback_speed?: number;
   is_sound_enabled?: boolean;
+  // Preferred server-side TTS provider (null/undefined = platform default chain azure→gemini).
+  tts_provider?: TtsProviderId | null;
+  // Reference (NAME) of an admin-registered edge/Vault secret holding a bring-your-own
+  // provider key. NEVER the raw key itself (see migration 00007 column comment).
+  tts_byo_key_ref?: string | null;
 }
+
+// The 6 registered server-side TTS providers (mirrors ProviderId in
+// supabase/functions/_shared/tts/types.ts and the profiles.tts_provider CHECK).
+export const TTS_PROVIDERS = [
+  'azure',
+  'gemini',
+  'google',
+  'elevenlabs',
+  'openai',
+  'polly',
+] as const;
+
+export type TtsProviderId = (typeof TTS_PROVIDERS)[number];
 
 export interface VideoSuggestion {
   id: string;
@@ -102,6 +120,15 @@ export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
   timestamp: number;
+}
+
+// AI vocabulary lookup result returned by the gemini `translate` edge action
+// (rendered by VocabLookupModal).
+export interface VocabResult {
+  translation?: string;
+  explanation?: string;
+  example_pt?: string;
+  example_en?: string;
 }
 
 export interface LessonCorrection {

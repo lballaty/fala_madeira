@@ -1,0 +1,1322 @@
+<!doctype html>
+<!--
+  File: docs/ui-mockup/intended-ui-v3.html
+  Description: Intended-UI checkpoint v3 for FalaMadeira — an INTERACTIVE, clickable
+    single-phone simulation of the full product (replaces the static frames of v1/v2).
+    One self-contained HTML file (inline CSS+JS, no external deps) with a hash-free
+    screen router, simulated state (path type, track, streak, review-due, focus,
+    session progress), a flow-map sidebar for coverage verification, and light/dark.
+    Supersedes intended-ui-v2.html as the interactive checkpoint. Closes v2 gaps:
+      - Path choice at onboarding (Structured course / Goal track / Just start talking)
+        per CONTENT-ARCHITECTURE §5 (four path types, no hard gates)
+      - Goal Tracks (Survival/Host/Social/Bureaucracy/Work) + track detail with
+        soft-prereq hints and NO locks (§2.2, §5)
+      - Daily Session Player — the 6-segment ~30-min adaptive-guided session (§5)
+        ending in an After-Session Recap (§6b)
+      - Practice engines as working mini-interactions (§3): Listening, Pronunciation,
+        Pattern Builder, Situation Simulator L1–L5, Missions, Phrase Library,
+        Vocabulary SRS, Culture layer
+      - Coach/Focus loop (§6b): Home Focus card + one-tap actions + "why this?"
+        evidence reveal + after-session recap + weekly insight
+      - Offline degradation states (§10): simulation toggle marks online-only
+        features with an "online only" badge, keeps offline ones active
+      - Auth screen (email+password / magic link mock)
+    Guardrails honored (AGENTS.md §2): voice-first (audio/mic pulses everywhere),
+    non-linear (no locks, guided default), calm/honest competence-framed copy,
+    no gamification beyond streak+freeze.
+  Author: Libor Ballaty (via assistant)
+  Created: 2026-07-09
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FalaMadeira — Intended UI v3 (interactive simulation)</title>
+<style>
+  :root{
+    --blue:#007AFF; --bg:#F2F2F7; --card:#FFF; --text:#000;
+    --muted:#636366; --line:rgba(60,60,67,.14); --shadow:0 2px 8px rgba(0,0,0,.06);
+    --green:#248A3D; --amber:#B25000; --purple:#5856D6; --red:#FF3B30;
+  }
+  [data-theme="dark"]{--bg:#000;--card:#1C1C1E;--text:#FFF;--muted:#AEAEB2;--line:rgba(120,120,128,.32);--shadow:0 2px 10px rgba(0,0,0,.5);--green:#30D158;--amber:#FF9F0A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,Inter,sans-serif;background:#e5e5ea;color:#111;padding:20px}
+  [data-theme="dark"] body{background:#0a0a0a;color:#eee}
+  h1{font-size:20px;margin-bottom:4px}
+  .lead{color:#555;max-width:860px;line-height:1.5;font-size:13px;margin-bottom:14px}
+  [data-theme="dark"] .lead{color:#aaa}
+  .toolbar{position:fixed;top:14px;right:16px;z-index:10;display:flex;gap:8px}
+  .toolbar button{background:var(--blue);color:#fff;border:0;border-radius:20px;padding:8px 14px;cursor:pointer;font-size:13px}
+
+  .layout{display:flex;gap:26px;align-items:flex-start}
+  /* ---- flow map sidebar ---- */
+  .flowmap{width:230px;flex:none;background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.08);max-height:calc(100vh - 120px);overflow-y:auto;position:sticky;top:20px}
+  [data-theme="dark"] .flowmap{background:#1C1C1E}
+  .flowmap h3{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#888;margin:12px 0 4px}
+  .flowmap h3:first-child{margin-top:0}
+  .flowmap a{display:block;padding:5px 8px;border-radius:8px;font-size:13px;color:#111;cursor:pointer;text-decoration:none}
+  [data-theme="dark"] .flowmap a{color:#ddd}
+  .flowmap a:hover{background:rgba(0,122,255,.1)}
+  .flowmap a.here{background:var(--blue);color:#fff}
+
+  /* ---- device chrome ---- */
+  .devicewrap{flex:none}
+  .device{background:#0e0e10;border-radius:52px;padding:12px;box-shadow:0 18px 60px rgba(0,0,0,.35);width:344px;position:relative}
+  .device::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:110px;height:24px;background:#0e0e10;border-radius:14px;z-index:5}
+  .phone{width:320px;height:660px;background:var(--card);border-radius:40px;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;position:relative}
+  .screenarea{flex:1;background:var(--bg);overflow-y:auto;position:relative}
+  .statusbar{height:44px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 4px;font-size:12px;font-weight:600;color:var(--text);background:var(--bg);flex:none}
+  .statereadout{font-size:11px;color:#888;margin-top:10px;text-align:center;max-width:344px;line-height:1.6}
+
+  /* ---- shared components (v2 language) ---- */
+  .pad{padding:14px 16px 24px}
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:15px;margin-bottom:12px;color:var(--text)}
+  .row{display:flex;align-items:center;gap:12px}.between{justify-content:space-between}
+  .h2{font-size:25px;font-weight:800;color:var(--text);letter-spacing:-.5px}
+  .h3{font-size:16px;font-weight:700;color:var(--text)}
+  .muted{color:var(--muted);font-size:13px}
+  .tiny{font-size:11px}
+  .cta{display:block;width:100%;background:var(--blue);color:#fff;border:0;border-radius:14px;padding:14px;text-align:center;font-weight:700;font-size:15px;cursor:pointer;margin-top:4px}
+  .btn2{display:inline-block;background:rgba(0,122,255,.1);color:var(--blue);border:0;border-radius:12px;padding:11px 14px;text-align:center;font-weight:600;font-size:14px;cursor:pointer}
+  .btnfull{display:block;width:100%}
+  .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#007AFF,#5AC8FA);flex:none;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .tabbar{height:60px;background:var(--card);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-around;flex:none}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--muted);cursor:pointer;padding:4px 8px}
+  .tab.active{color:var(--blue)}.tab .ico{font-size:19px}
+  .pill{background:rgba(0,122,255,.12);color:var(--blue);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:600;border:0;cursor:pointer}
+  .pill.on{background:var(--blue);color:#fff}
+  .pillG{background:rgba(36,138,61,.14);color:var(--green)}
+  .pillA{background:rgba(178,80,0,.14);color:var(--amber)}
+  .modecard{display:flex;align-items:center;gap:13px;background:var(--card);border-radius:14px;padding:13px;margin-bottom:9px;box-shadow:var(--shadow);color:var(--text);cursor:pointer;border:0;width:100%;text-align:left;font:inherit}
+  .mico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;flex:none}
+  .select{background:var(--bg);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--text);margin-top:8px;cursor:pointer;border:1px solid transparent}
+  .select.on{border-color:var(--blue);background:rgba(0,122,255,.08)}
+  .toggle{width:44px;height:26px;border-radius:20px;background:rgba(120,120,128,.3);position:relative;flex:none;cursor:pointer;transition:background .15s}
+  .toggle.on{background:var(--green)}
+  .toggle::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+  .toggle.on::after{left:21px}
+  .list-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);color:var(--text);cursor:pointer;font-size:14px}
+  .list-item:last-child{border-bottom:0}
+  .subnav{display:flex;align-items:center;gap:8px;padding:8px 12px 2px;position:sticky;top:0;background:var(--bg);z-index:3}
+  .backbtn{background:none;border:0;color:var(--blue);font-size:15px;font-weight:600;cursor:pointer;padding:6px 4px}
+  .seg-ctrl{display:flex;background:rgba(120,120,128,.12);border-radius:10px;padding:3px;margin-bottom:12px}
+  .seg-ctrl button{flex:1;border:0;background:none;border-radius:8px;padding:7px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
+  .seg-ctrl button.on{background:var(--card);color:var(--text);box-shadow:var(--shadow)}
+  .chip{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:7px 13px;font-size:14px;color:var(--text);cursor:pointer;margin:3px}
+  .chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .slot{background:rgba(88,86,214,.16);color:var(--purple);border-radius:8px;padding:2px 7px;font-weight:700}
+  .choice{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:14px;color:var(--text);cursor:pointer;margin-top:8px;font:inherit}
+  .choice:hover{border-color:var(--blue)}
+  .choice.good{border-color:var(--green);background:rgba(36,138,61,.1)}
+  .choice.bad{border-color:var(--red);background:rgba(255,59,48,.08)}
+  .bubble{max-width:82%;border-radius:16px;padding:10px 13px;font-size:14px;margin-bottom:9px;line-height:1.45;position:relative}
+  .bub-npc{background:var(--card);color:var(--text);box-shadow:var(--shadow);border-bottom-left-radius:5px}
+  .bub-me{background:var(--blue);color:#fff;margin-left:auto;border-bottom-right-radius:5px}
+  .hint{font-size:11px;color:var(--muted);margin-top:4px;font-style:italic}
+  .spk{background:none;border:0;cursor:pointer;font-size:15px;padding:2px 4px;border-radius:50%}
+  .micbtn{width:64px;height:64px;border-radius:50%;background:var(--card);border:2px solid var(--red);color:var(--red);font-size:26px;cursor:pointer;display:block;margin:14px auto 6px}
+  .segbar{display:flex;gap:3px;margin:10px 0 4px}
+  .segbar div{height:6px;border-radius:3px;background:var(--line)}
+  .segbar div.done{background:var(--green)}
+  .segbar div.now{background:var(--blue)}
+  .rhythm{display:flex;gap:5px;align-items:flex-end;height:38px;margin:10px 0 4px}
+  .rhythm div{width:16px;border-radius:4px;background:var(--line)}
+  .rhythm div.hit{background:var(--green)}
+  .rhythm div.miss{background:var(--amber)}
+  .dl-track{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:8px}
+  .dl-fill{height:100%;width:0%;background:var(--blue);border-radius:4px;transition:width .25s linear}
+  .onlybadge{display:none;background:rgba(178,80,0,.15);color:var(--amber);border-radius:9px;padding:2px 8px;font-size:10px;font-weight:700;margin-left:6px;vertical-align:middle}
+  body[data-offline="1"] .needs-online .onlybadge{display:inline-block}
+  body[data-offline="1"] .needs-online{opacity:.75}
+  .whybox{background:var(--bg);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--muted);margin-top:10px;line-height:1.55;display:none}
+  .whybox.open{display:block}
+  .flash{background:var(--card);border-radius:16px;box-shadow:var(--shadow);min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:18px;text-align:center;margin-bottom:12px}
+  .gradebtns{display:flex;gap:6px}
+  .gradebtns button{flex:1;border:0;border-radius:10px;padding:10px 4px;font-weight:700;font-size:12px;cursor:pointer;color:#fff}
+  input[type=text],input[type=email],input[type=password],input[type=search]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-size:14px;background:var(--card);color:var(--text);margin-top:8px}
+  .field-note{font-size:11px;color:var(--muted);margin-top:5px}
+
+  /* ---- router ---- */
+  .appscreen{display:none;min-height:100%}
+  .appscreen.on{display:block}
+
+  /* ---- voice-first animations ---- */
+  @keyframes pulseblue{0%{box-shadow:0 0 0 0 rgba(0,122,255,.5)}100%{box-shadow:0 0 0 18px rgba(0,122,255,0)}}
+  .playing{animation:pulseblue .5s ease-out 2}
+  @keyframes pulsered{0%{box-shadow:0 0 0 0 rgba(255,59,48,.55)}100%{box-shadow:0 0 0 18px rgba(255,59,48,0)}}
+  .recording{animation:pulsered .55s ease-out 3;background:var(--red)!important;color:#fff!important;border-color:var(--red)!important}
+  .wave{display:inline-flex;gap:2px;align-items:flex-end;height:14px;margin-left:6px;vertical-align:middle}
+  .wave i{width:3px;background:var(--blue);border-radius:2px;height:4px}
+  .playing .wave i{animation:wv .5s ease-in-out infinite alternate}
+  .wave i:nth-child(2){animation-delay:.1s}.wave i:nth-child(3){animation-delay:.2s}.wave i:nth-child(4){animation-delay:.3s}
+  @keyframes wv{from{height:4px}to{height:14px}}
+</style>
+</head>
+<body data-theme="light" data-offline="0">
+<div class="toolbar"><button onclick="document.body.dataset.theme=document.body.dataset.theme==='light'?'dark':'light'">Toggle light / dark</button></div>
+<h1>FalaMadeira — Intended UI v3 (interactive simulation)</h1>
+<p class="lead">Click through the phone like the real product. The <b>flow map</b> on the left jumps straight to any screen (coverage check). Everything is simulated in-page: path choice, tracks, the ~30-min daily session, all practice engines, the Coach/Focus loop, offline degradation, and auth. No network, no build — one file.</p>
+
+<div class="layout">
+
+  <!-- ═══════════ FLOW MAP ═══════════ -->
+  <nav class="flowmap" id="flowmap">
+    <h3>Onboarding</h3>
+    <a data-s="onb-welcome" onclick="jump('onb-welcome')">Welcome</a>
+    <a data-s="onb-placement" onclick="jump('onb-placement')">Placement question</a>
+    <a data-s="onb-path" onclick="jump('onb-path')">Path choice</a>
+    <a data-s="onb-track" onclick="jump('onb-track')">Goal-track picker</a>
+    <a data-s="onb-firstwin" onclick="jump('onb-firstwin')">First win (60 s)</a>
+    <a data-s="onb-consent" onclick="jump('onb-consent')">Consent note</a>
+    <h3>Core</h3>
+    <a data-s="home" onclick="jump('home')">Home (Focus card)</a>
+    <a data-s="weekly" onclick="jump('weekly')">Weekly insight</a>
+    <a data-s="auth" onclick="jump('auth')">Auth (sign in)</a>
+    <h3>Daily session</h3>
+    <a data-s="session" onclick="jump('session')">Session player (6 seg)</a>
+    <a data-s="recap" onclick="jump('recap')">After-session recap</a>
+    <h3>Learn</h3>
+    <a data-s="learn" onclick="jump('learn')">Learn (course / tracks)</a>
+    <a data-s="track-detail" onclick="jump('track-detail')">Track detail (B · Host)</a>
+    <a data-s="situation" onclick="jump('situation')">Situation sheet</a>
+    <h3>Practice engines</h3>
+    <a data-s="practice" onclick="jump('practice')">Practice hub</a>
+    <a data-s="eng-listen" onclick="jump('eng-listen')">Listening</a>
+    <a data-s="eng-pron" onclick="jump('eng-pron')">Pronunciation</a>
+    <a data-s="eng-pattern" onclick="jump('eng-pattern')">Pattern builder</a>
+    <a data-s="eng-sim" onclick="jump('eng-sim')">Situation simulator</a>
+    <a data-s="eng-mission" onclick="jump('eng-mission')">Missions</a>
+    <a data-s="eng-phrases" onclick="jump('eng-phrases')">Phrase library</a>
+    <a data-s="eng-vocab" onclick="jump('eng-vocab')">Vocabulary (SRS)</a>
+    <a data-s="eng-culture" onclick="jump('eng-culture')">Culture layer</a>
+    <h3>Tutor</h3>
+    <a data-s="tutor" onclick="jump('tutor')">Tutor chat</a>
+    <a data-s="scenario" onclick="jump('scenario')">Scenario generator</a>
+    <h3>Account</h3>
+    <a data-s="you" onclick="jump('you')">You / Settings</a>
+  </nav>
+
+  <!-- ═══════════ DEVICE ═══════════ -->
+  <div class="devicewrap">
+  <div class="device"><div class="phone">
+    <div class="statusbar"><span>9:41</span><span id="sb-net">􀙇 100%</span></div>
+    <div class="screenarea" id="screenarea">
+
+    <!-- ── AUTH ── -->
+    <div class="appscreen" id="scr-auth"><div class="pad" style="padding-top:44px">
+      <div style="text-align:center;font-size:40px">🗣️</div>
+      <div class="h2" style="text-align:center;margin:8px 0 2px">FalaMadeira</div>
+      <div class="muted" style="text-align:center;margin-bottom:18px">Madeiran Portuguese for real life</div>
+      <div class="card">
+        <input type="email" placeholder="Email" value="libor@labguide.io">
+        <input type="password" placeholder="Password">
+        <button class="cta" style="margin-top:12px" onclick="go('home')">Sign in</button>
+        <button class="btn2 btnfull" style="margin-top:8px" onclick="magicLink(this)">Send magic link instead</button>
+        <div class="field-note" id="magic-note" style="display:none">Magic link sent — check your inbox. (Simulated: tap below.)</div>
+        <button class="btn2 btnfull" id="magic-open" style="display:none;margin-top:8px" onclick="go('onb-welcome')">Open magic link → first run</button>
+      </div>
+      <div class="muted tiny" style="text-align:center">New here? Signing in for the first time starts onboarding.</div>
+    </div></div>
+
+    <!-- ── ONBOARDING ── -->
+    <div class="appscreen" id="scr-onb-welcome"><div class="pad" style="padding-top:52px;text-align:center">
+      <div style="font-size:46px">🗣️</div>
+      <div class="h2" style="margin:10px 0 6px">Bem-vindo!</div>
+      <div class="muted" style="line-height:1.5;margin-bottom:26px">Learn to <b>understand and speak</b> the Portuguese people actually use in Madeira.<br>A 60-second start: one quick question, then your first real phrase.</div>
+      <button class="cta" onclick="go('onb-placement')">Let's start</button>
+      <button class="btn2 btnfull" style="margin-top:10px" onclick="go('auth')">I already have an account</button>
+    </div></div>
+
+    <div class="appscreen" id="scr-onb-placement"><div class="pad" style="padding-top:36px">
+      <div class="h2" style="margin-bottom:4px">Quick question</div>
+      <div class="muted" style="margin-bottom:14px">Sets a sensible starting point — you can jump anywhere later. Nothing is locked.</div>
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:6px">How much Portuguese do you have?</div>
+        <div class="select" onclick="setPlacement(this,'beginner')">Complete beginner <span class="muted">start at L0</span></div>
+        <div class="select" onclick="setPlacement(this,'few')">I know a few words <span class="muted">start at L1</span></div>
+        <div class="select" onclick="setPlacement(this,'chat')">I can hold a basic chat <span class="muted">start at L2–L3</span></div>
+      </div>
+      <button class="cta" onclick="go('onb-path')">Continue</button>
+    </div></div>
+
+    <div class="appscreen" id="scr-onb-path"><div class="pad" style="padding-top:30px">
+      <div class="h2" style="margin-bottom:4px">How do you want to learn?</div>
+      <div class="muted" style="margin-bottom:14px">All paths use the same content and share your progress. Switch anytime in Settings.</div>
+      <button class="modecard" onclick="choosePath('structured')"><div class="mico" style="background:#007AFF">📅</div><div><div style="font-weight:700">Follow the structured course</div><div class="muted">Month-by-month, day-by-day. The app leads.</div></div></button>
+      <button class="modecard" onclick="go('onb-track')"><div class="mico" style="background:#34C759">🎯</div><div><div style="font-weight:700">Pick a life goal</div><div class="muted">Host guests, handle bureaucracy, make friends…</div></div></button>
+      <button class="modecard" onclick="choosePath('adaptive')"><div class="mico" style="background:#5856D6">🗣️</div><div><div style="font-weight:700">Just start talking</div><div class="muted">A guided ~30-min daily session, built around you.</div></div></button>
+    </div></div>
+
+    <div class="appscreen" id="scr-onb-track"><div class="pad" style="padding-top:28px">
+      <div class="subnav" style="padding-left:0"><button class="backbtn" onclick="back()">‹ Back</button></div>
+      <div class="h2" style="margin-bottom:4px">What's your goal?</div>
+      <div class="muted" style="margin-bottom:14px">Situations are shared across goals — picking one just focuses your recommendations.</div>
+      <button class="modecard" onclick="chooseTrack('A')"><div class="mico" style="background:#FF9500">🧳</div><div><div style="font-weight:700">Survival Madeira</div><div class="muted">Arrive, eat, move around, be polite</div></div></button>
+      <button class="modecard" onclick="chooseTrack('B')"><div class="mico" style="background:#007AFF">🏠</div><div><div style="font-weight:700">Property owner / Rental host</div><div class="muted">Cleaners, tradespeople, guests, bills, repairs</div></div></button>
+      <button class="modecard" onclick="chooseTrack('C')"><div class="mico" style="background:#34C759">🎉</div><div><div style="font-weight:700">Social integration</div><div class="muted">Neighbors, festivals, humor, invitations</div></div></button>
+      <button class="modecard" onclick="chooseTrack('D')"><div class="mico" style="background:#5856D6">🏛️</div><div><div style="font-weight:700">Bureaucracy &amp; services</div><div class="muted">Finanças, Câmara, health center, banks</div></div></button>
+      <button class="modecard" onclick="chooseTrack('E')"><div class="mico" style="background:#8E8E93">💼</div><div><div style="font-weight:700">Work / business Madeira</div><div class="muted">Introductions, scheduling, scope, escalation</div></div></button>
+    </div></div>
+
+    <div class="appscreen" id="scr-onb-firstwin"><div class="pad" style="padding-top:34px;text-align:center">
+      <div class="muted" style="margin-bottom:6px">YOUR FIRST PHRASE</div>
+      <div class="card" style="padding:24px 16px">
+        <div style="font-size:28px;font-weight:800" id="fw-phrase">"Bom dia!"</div>
+        <div class="muted" style="margin:4px 0 14px">good morning — your all-day door-opener until lunch</div>
+        <button class="btn2" id="fw-play" onclick="speak(this);fwHeard()">🔊 Tap to hear it<span class="wave"><i></i><i></i><i></i><i></i></span></button>
+      </div>
+      <div class="card" id="fw-saycard" style="opacity:.5">
+        <div class="muted" style="margin-bottom:2px">Now say it back</div>
+        <button class="micbtn" id="fw-mic" onclick="fwSay(this)">🎙️</button>
+        <div class="muted tiny" id="fw-result">Hold the mic and say “Bom dia!”</div>
+      </div>
+      <button class="cta" id="fw-next" style="opacity:.5" onclick="go('onb-consent')">Continue</button>
+      <div class="muted tiny" style="margin-top:10px">That was real Portuguese out loud. It counts.</div>
+    </div></div>
+
+    <div class="appscreen" id="scr-onb-consent"><div class="pad" style="padding-top:40px">
+      <div class="h2" style="margin-bottom:8px">Before we start</div>
+      <div class="card">
+        <div class="list-item" style="cursor:default">📄 <span>Terms of use &amp; Privacy policy</span></div>
+        <div class="list-item" style="cursor:default">🤖 <span>AI use: tutor replies and feedback are AI-generated and can be wrong</span></div>
+        <div class="list-item" style="cursor:default">🎙️ <span>Mic recordings are used only for your feedback; delete anytime in Settings</span></div>
+        <div class="list-item" style="cursor:default">📴 <span>Core practice works offline; AI features need a connection</span></div>
+      </div>
+      <button class="cta" onclick="finishOnboarding()">Agree &amp; continue</button>
+      <div class="muted tiny" style="text-align:center;margin-top:10px">No tricks: you can export or delete your data whenever you want.</div>
+    </div></div>
+
+    <!-- ── HOME ── -->
+    <div class="appscreen" id="scr-home"><div class="pad">
+      <div class="muted">Bom dia,</div><div class="h2">Libor 👋</div>
+      <div class="card row between" style="margin-top:10px">
+        <div class="row">
+          <svg width="62" height="62" viewBox="0 0 66 66"><circle cx="33" cy="33" r="28" fill="none" stroke="var(--line)" stroke-width="7"/><circle cx="33" cy="33" r="28" fill="none" stroke="var(--blue)" stroke-width="7" stroke-dasharray="176" stroke-dashoffset="70" stroke-linecap="round" transform="rotate(-90 33 33)"/><text x="33" y="38" text-anchor="middle" font-size="14" font-weight="800" fill="var(--text)">60%</text></svg>
+          <div><div style="font-weight:700" id="home-prog-title">Track B · Host</div><div class="muted" id="home-prog-sub">Level L1 · 14 of 22 situations solid</div></div>
+        </div>
+        <div style="text-align:right"><div style="font-weight:800;font-size:17px">🔥 <span id="home-streak">7</span></div><div class="pill pillG tiny" style="cursor:default">❄️ <span id="home-freeze">2</span> freezes</div></div>
+      </div>
+      <div class="card" style="background:rgba(36,138,61,.10)">
+        <div class="muted tiny">YOU CAN NOW…</div>
+        <div style="font-weight:600;margin-top:3px;font-size:14px">greet people · order at the café · schedule the cleaner</div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--purple)" id="home-review-card">
+        <div class="row between"><div><div class="muted tiny">REVIEW DUE</div><div style="font-weight:700"><span id="home-due">5</span> items ready</div></div><button class="btn2" onclick="startReview()">Review</button></div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--blue)">
+        <div class="muted tiny" style="margin-bottom:6px">FOCUS · your fastest win today</div>
+        <div class="row between">
+          <div style="flex:1"><div style="font-weight:700;font-size:14px">Numbers 20–60</div><div class="muted tiny">missed 4× in listening this week</div></div>
+          <button class="btn2" onclick="go('eng-pattern')">Drill</button>
+        </div>
+        <div class="row between" style="margin-top:10px">
+          <div style="flex:1"><div style="font-weight:700;font-size:14px">Cleaner-call phrases</div><div class="muted tiny">felt shaky in Tuesday's roleplay</div></div>
+          <button class="btn2" onclick="go('eng-sim')">Roleplay</button>
+        </div>
+        <button class="btn2" style="background:none;padding:8px 0 0;font-size:12px" onclick="toggleWhy(this)">Why this? ▾</button>
+        <div class="whybox" id="focus-why">
+          <b>Evidence, not guesswork:</b><br>
+          · You missed numbers 4× this week in listening checks (natural speed)<br>
+          · Recall of 20–60 averaged 6.1 s — your slowest set<br>
+          · Numbers appear in 3 of your next Track B situations (bills, times, prices)<br>
+          · Cleaner roleplay Tue: 2 stalls, fell back to English once<br>
+          <span class="tiny">Acting on a suggestion shapes tomorrow's session. Computed on-device — works offline.</span>
+        </div>
+      </div>
+      <button class="cta" id="home-cta" onclick="homeCta()">Start today's session · ~30 min →</button>
+      <button class="btn2 btnfull" style="margin-top:10px" onclick="go('weekly')">📈 Weekly insight</button>
+    </div></div>
+
+    <!-- ── WEEKLY INSIGHT ── -->
+    <div class="appscreen" id="scr-weekly">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Back</button><div class="h3">This week</div></div>
+      <div class="pad" style="padding-top:6px">
+      <div class="card">
+        <div class="muted tiny">WHAT IMPROVED</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.7">
+          ✅ Listening at <b>natural speed</b>: 8/10 checks (was 5/10)<br>
+          ✅ <b>Café situations</b>: handled end-to-end without transcript<br>
+          ✅ 4 review items graduated to “solid”
+        </div>
+      </div>
+      <div class="card">
+        <div class="muted tiny">STILL SHAKY</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.7">
+          🟠 Numbers 20–60 — recognition and recall both slow<br>
+          🟠 Phone-call register (“Estou?”, “Olhe…”) — avoided twice
+        </div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--blue)">
+        <div class="muted tiny">NEXT FOCUS</div>
+        <div style="margin-top:6px;font-weight:700;font-size:14px">Numbers drill + one phone-style roleplay</div>
+        <div class="muted tiny" style="margin-top:4px">Tomorrow's session is already built around these.</div>
+        <button class="btn2 btnfull" style="margin-top:10px" onclick="go('session')">Start it now</button>
+      </div>
+      <div class="muted tiny" style="text-align:center">Honest numbers, no confetti. You're genuinely faster than last week.</div>
+    </div></div>
+
+    <!-- ── DAILY SESSION PLAYER ── -->
+    <div class="appscreen" id="scr-session">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Exit</button><div class="h3" id="sess-title">Today's session</div></div>
+      <div class="pad" style="padding-top:4px">
+        <div class="muted tiny" id="sess-sub">Built around: numbers + cleaner call · Situation: “The cleaner comes tomorrow”</div>
+        <div class="segbar" id="sess-bar"></div>
+        <div class="muted tiny" id="sess-seglabel" style="margin-bottom:10px"></div>
+        <div id="sess-body"></div>
+        <button class="cta" id="sess-next" onclick="segNext()">Next →</button>
+        <div class="muted tiny" style="text-align:center;margin-top:8px">No gates — skip any segment. The plan adapts either way.</div>
+      </div>
+    </div>
+
+    <!-- ── AFTER-SESSION RECAP ── -->
+    <div class="appscreen" id="scr-recap"><div class="pad" style="padding-top:30px">
+      <div class="h2">Session done ✅</div>
+      <div class="muted" style="margin-bottom:14px">28 minutes · 6 segments · all voice time counted</div>
+      <div class="card"><div class="muted tiny">STRONG TODAY</div>
+        <div style="margin-top:6px;font-size:14px;line-height:1.7">“A limpeza é <b>amanhã</b>” pattern — all 4 substitutions, no hesitation<br>Shadowing rhythm matched on 3/4 phrases</div></div>
+      <div class="card"><div class="muted tiny">STILL SHAKY</div>
+        <div style="margin-top:6px;font-size:14px;line-height:1.7">“às <b>dezasseis</b>” — heard it as “dezassete” once<br>Phone opener “Estou?” — hesitated</div></div>
+      <div class="card" style="border-left:4px solid var(--purple)"><div class="muted tiny">ADDED TO REVIEW</div>
+        <div style="margin-top:6px;font-size:14px">3 items (numbers ×2, phone opener ×1) — due tomorrow</div></div>
+      <button class="cta" onclick="go('home')">Back to Home</button>
+    </div></div>
+
+    <!-- ── LEARN ── -->
+    <div class="appscreen" id="scr-learn"><div class="pad">
+      <div class="h2" style="margin-bottom:10px">Learn</div>
+      <div class="seg-ctrl">
+        <button id="learn-tab-course" onclick="learnView('course')">Structured course</button>
+        <button id="learn-tab-tracks" onclick="learnView('tracks')">Goal tracks</button>
+      </div>
+      <div id="learn-course">
+        <div style="margin-bottom:8px">
+          <button class="pill on">Month 1</button> <button class="pill">2</button> <button class="pill">3</button> <button class="pill">4</button> <button class="pill">5</button> <button class="pill">6</button>
+        </div>
+        <div class="card" style="padding:6px 15px">
+          <div class="list-item" onclick="openSit('greet')"><span style="color:var(--green)">✓</span> Day 16 · Greetings all day long</div>
+          <div class="list-item" onclick="openSit('bica')"><span style="color:var(--green)">✓</span> Day 17 · At the café: ordering a bica</div>
+          <div class="list-item" onclick="openSit('intro')" style="font-weight:700"><span style="color:var(--blue)">●</span> Day 18 · Introducing yourself</div>
+          <div class="list-item" onclick="openSit('cleaner')"><span class="muted">○</span> Day 19 · The cleaner comes tomorrow</div>
+          <div class="list-item" onclick="openSit('guest')"><span class="muted">○</span> Day 20 · Guest arrival at 16:00</div>
+        </div>
+        <div class="muted tiny">Days are a suggested order, never a lock — tap any day.</div>
+      </div>
+      <div id="learn-tracks">
+        <button class="modecard" onclick="go('track-detail')"><div class="mico" style="background:#007AFF">🏠</div><div style="flex:1"><div class="row between"><span style="font-weight:700">B · Rental host</span><span class="pill pillG tiny" style="cursor:default">active</span></div><div class="muted">14/22 solid · next: cleaner &amp; guests</div></div></button>
+        <button class="modecard" onclick="go('track-detail')"><div class="mico" style="background:#FF9500">🧳</div><div><div style="font-weight:700">A · Survival Madeira</div><div class="muted">9/18 solid</div></div></button>
+        <button class="modecard" onclick="go('track-detail')"><div class="mico" style="background:#34C759">🎉</div><div><div style="font-weight:700">C · Social integration</div><div class="muted">2/20 solid</div></div></button>
+        <button class="modecard" onclick="go('track-detail')"><div class="mico" style="background:#5856D6">🏛️</div><div><div style="font-weight:700">D · Bureaucracy &amp; services</div><div class="muted">not started</div></div></button>
+        <button class="modecard" onclick="go('track-detail')"><div class="mico" style="background:#8E8E93">💼</div><div><div style="font-weight:700">E · Work / business</div><div class="muted">not started</div></div></button>
+        <div class="muted tiny">Situations are shared — progress in one track counts everywhere.</div>
+      </div>
+    </div></div>
+
+    <!-- ── TRACK DETAIL ── -->
+    <div class="appscreen" id="scr-track-detail">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Learn</button><div class="h3">🏠 Track B · Rental host</div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="muted" style="margin-bottom:12px">Cleaners, tradespeople, guests, bills, repairs. Ordered by level — <b>nothing is locked</b>.</div>
+      <div class="muted tiny" style="font-weight:700;margin-bottom:4px">L0 · TOURIST SURVIVAL</div>
+      <div class="card" style="padding:6px 15px">
+        <div class="list-item" onclick="openSit('greet')"><span style="color:var(--green)">✓</span> Greetings &amp; thanks</div>
+        <div class="list-item" onclick="openSit('bica')"><span style="color:var(--green)">✓</span> Ordering a bica</div>
+      </div>
+      <div class="muted tiny" style="font-weight:700;margin-bottom:4px">L1 · DAILY FUNCTION</div>
+      <div class="card" style="padding:6px 15px">
+        <div class="list-item" onclick="openSit('cleaner')" style="font-weight:700"><span style="color:var(--blue)">●</span> <div style="flex:1">The cleaner comes tomorrow<div class="muted tiny" style="font-weight:400">recommended next</div></div></div>
+        <div class="list-item" onclick="openSit('guest')"><span class="muted">○</span> <div style="flex:1">Guest arrival at 16:00<div class="muted tiny">builds on: The cleaner comes tomorrow — recommended, not required</div></div></div>
+      </div>
+      <div class="muted tiny" style="font-weight:700;margin-bottom:4px">L2 · HOUSE &amp; SERVICE MANAGEMENT</div>
+      <div class="card" style="padding:6px 15px">
+        <div class="list-item" onclick="openSit('plumber')"><span class="muted">○</span> <div style="flex:1">Calling a plumber<div class="muted tiny">builds on: phone openers — recommended, not required</div></div></div>
+        <div class="list-item" onclick="openSit('plumber')"><span class="muted">○</span> No hot water: explaining the problem</div>
+      </div>
+      <div class="muted tiny">L3–L5 continue: negotiating repairs, complaints with charm, resident-level phone calls.</div>
+    </div></div>
+
+    <!-- ── SITUATION SHEET ── -->
+    <div class="appscreen" id="scr-situation">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Back</button><div class="h3" id="sit-title">Situation</div></div>
+      <div class="pad" style="padding-top:4px" id="sit-body"></div>
+    </div>
+
+    <!-- ── PRACTICE HUB ── -->
+    <div class="appscreen" id="scr-practice"><div class="pad">
+      <div class="h2">Practice</div>
+      <div class="muted" style="margin-bottom:12px">Every mode works on the same situations. Pick your lens.</div>
+      <button class="modecard" onclick="go('eng-listen')"><div class="mico" style="background:#34C759">🎧</div><div><div style="font-weight:700">Listening</div><div class="muted">Real speech · slow → natural</div></div></button>
+      <button class="modecard" onclick="go('eng-pron')"><div class="mico" style="background:#FF3B30">🎙️</div><div style="flex:1"><div style="font-weight:700" class="needs-online">Pronunciation <span class="onlybadge">scoring online only</span></div><div class="muted">Record, compare, rhythm feedback</div></div></button>
+      <button class="modecard" onclick="go('eng-pattern')"><div class="mico" style="background:#5856D6">🧩</div><div><div style="font-weight:700">Pattern builder</div><div class="muted">One phrase, many situations</div></div></button>
+      <button class="modecard needs-online" onclick="go('eng-sim')"><div class="mico" style="background:#007AFF">💬</div><div><div style="font-weight:700">Situation simulator <span class="onlybadge">online only</span></div><div class="muted">Branching roleplay · L1 guided → L5 messy</div></div></button>
+      <button class="modecard" onclick="go('eng-mission')"><div class="mico" style="background:#FF9500">📍</div><div><div style="font-weight:700">Missions</div><div class="muted">Do it for real, out there</div></div></button>
+      <button class="modecard" onclick="S.reviewMode=false;go('eng-vocab')"><div class="mico" style="background:#AF52DE">🃏</div><div style="flex:1"><div class="row between"><span style="font-weight:700">Vocabulary</span><span class="pill tiny" id="prac-due" style="cursor:default">5 due</span></div><div class="muted">Spaced repetition · 4 dimensions</div></div></button>
+      <button class="modecard" onclick="go('eng-phrases')"><div class="mico" style="background:#8E8E93">📖</div><div><div style="font-weight:700">Phrase library</div><div class="muted">Search · formal ↔ informal · when to use</div></div></button>
+      <button class="modecard" onclick="go('eng-culture')"><div class="mico" style="background:#B25000">🫱</div><div><div style="font-weight:700">Culture</div><div class="muted">Register, indirectness, social code</div></div></button>
+      <div class="muted tiny needs-online" style="display:none" id="prac-offline-note">📴 Offline: everything above still works from cached packs except the badged items.</div>
+    </div></div>
+
+    <!-- ── LISTENING ENGINE ── -->
+    <div class="appscreen" id="scr-eng-listen">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Practice</button><div class="h3">🎧 Listening</div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="muted tiny" style="margin-bottom:8px">At the café · dialogue · 2 speakers</div>
+      <div style="margin-bottom:10px">
+        <button class="pill" onclick="lisSpeed(this,'slow')">slow</button>
+        <button class="pill on" onclick="lisSpeed(this,'normal')">normal</button>
+        <button class="pill" onclick="lisSpeed(this,'natural')">natural</button>
+      </div>
+      <div class="card">
+        <div class="row" style="margin-bottom:8px"><div class="avatar">👩</div><div class="muted tiny">Ana · service worker voice</div><button class="spk" style="margin-left:auto" onclick="speak(this)">🔊</button></div>
+        <div class="row"><div class="avatar" style="background:linear-gradient(135deg,#FF9500,#FFCC00)">👨</div><div class="muted tiny">Miguel · customer</div><button class="spk" style="margin-left:auto" onclick="speak(this)">🔊</button></div>
+        <button class="cta" style="margin-top:12px" onclick="speak(this)">▶ Play dialogue <span class="wave"><i></i><i></i><i></i><i></i></span></button>
+        <button class="btn2 btnfull" style="margin-top:8px" onclick="lisReveal()">Reveal transcript</button>
+        <div id="lis-transcript" style="display:none;margin-top:10px;font-size:14px;line-height:1.7">
+          <b>Ana:</b> Bom dia! O que deseja? <button class="spk" onclick="speak(this)">🔊</button><br>
+          <b>Miguel:</b> Bom dia. Uma bica e um galão, por favor. <button class="spk" onclick="speak(this)">🔊</button><br>
+          <b>Ana:</b> Mais alguma coisa?<br>
+          <b>Miguel:</b> Não, é tudo. Quanto é?
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:4px">What did you hear?</div>
+        <div class="muted tiny">How many drinks did Miguel order?</div>
+        <button class="choice" onclick="answer(this,false)">One — just a bica</button>
+        <button class="choice" onclick="answer(this,true)">Two — a bica and a galão</button>
+        <button class="choice" onclick="answer(this,false)">Three drinks</button>
+        <div class="muted tiny" id="lis-feedback" style="margin-top:8px"></div>
+      </div>
+    </div></div>
+
+    <!-- ── PRONUNCIATION ENGINE ── -->
+    <div class="appscreen" id="scr-eng-pron">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Practice</button><div class="h3">🎙️ Pronunciation</div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="card" style="text-align:center;padding:22px 16px">
+        <div style="font-size:20px;font-weight:800">“Obrigado, até amanhã.”</div>
+        <div class="muted tiny" style="margin:4px 0 12px">thanks, see you tomorrow · the -nh- is your target sound</div>
+        <button class="btn2" onclick="speak(this)">🔊 Target <span class="wave"><i></i><i></i><i></i><i></i></span></button>
+        <button class="micbtn" id="pron-mic" onclick="pronRecord(this)">🎙️</button>
+        <div class="muted tiny" id="pron-state">Tap to record</div>
+      </div>
+      <div class="card" id="pron-result" style="display:none">
+        <div class="row between" style="margin-bottom:6px">
+          <button class="btn2" onclick="speak(this)">🔊 Target</button>
+          <button class="btn2" onclick="speak(this)">🔊 You</button>
+        </div>
+        <div class="muted tiny" style="font-weight:700;margin-top:8px">RHYTHM &amp; STRESS</div>
+        <div class="rhythm"><div class="hit" style="height:60%"></div><div class="hit" style="height:100%"></div><div class="hit" style="height:45%"></div><div class="miss" style="height:80%"></div><div class="hit" style="height:55%"></div></div>
+        <div class="muted tiny">Good rhythm on “obrigado”. Stress landed early on “ama<b>nhã</b>” — it ends strong. Listen once more and go again.</div>
+        <div class="muted tiny needs-online" style="margin-top:8px;display:none" id="pron-offline-note">📴 Offline: recording saved; detailed scoring will run when you're back online.</div>
+      </div>
+    </div></div>
+
+    <!-- ── PATTERN BUILDER ── -->
+    <div class="appscreen" id="scr-eng-pattern">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Practice</button><div class="h3">🧩 Pattern builder</div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="muted tiny" style="margin-bottom:8px">One base phrase → many real situations. Tap a chip to swap the slot.</div>
+      <div class="card" style="text-align:center;padding:24px 14px">
+        <div style="font-size:19px;font-weight:700;line-height:1.5">A limpeza é <span class="slot" id="pat-slot">amanhã</span>.</div>
+        <div class="muted tiny" style="margin:4px 0 10px" id="pat-en">the cleaning is tomorrow</div>
+        <button class="btn2" onclick="speak(this)">🔊 Hear it <span class="wave"><i></i><i></i><i></i><i></i></span></button>
+      </div>
+      <div style="text-align:center">
+        <button class="chip on" onclick="patSet(this,'amanhã','tomorrow')">amanhã</button>
+        <button class="chip" onclick="patSet(this,'hoje','today')">hoje</button>
+        <button class="chip" onclick="patSet(this,'na sexta','on Friday')">na sexta</button>
+        <button class="chip" onclick="patSet(this,'depois do almoço','after lunch')">depois do almoço</button>
+      </div>
+      <div class="muted tiny" style="text-align:center;margin-top:12px">Say each one out loud — the pattern is the point, not the words.</div>
+    </div></div>
+
+    <!-- ── SITUATION SIMULATOR ── -->
+    <div class="appscreen" id="scr-eng-sim">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Practice</button><div class="h3">💬 Simulator <span class="onlybadge needs-online" style="position:static">online only</span></div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="muted tiny" style="margin-bottom:6px">The cleaner calls about tomorrow · pick your difficulty</div>
+      <div style="margin-bottom:10px" id="sim-levels">
+        <button class="pill on" onclick="simStart(1,this)">L1</button>
+        <button class="pill" onclick="simStart(2,this)">L2</button>
+        <button class="pill" onclick="simStart(3,this)">L3</button>
+        <button class="pill" onclick="simStart(4,this)">L4</button>
+        <button class="pill" onclick="simStart(5,this)">L5</button>
+        <span class="muted tiny" id="sim-levelnote">guided</span>
+      </div>
+      <div id="sim-offline-block" style="display:none" class="card">📴 <b>Online only.</b> The simulator needs the AI conversation service. Cached roleplays from your downloaded packs still work in the Daily Session.</div>
+      <div id="sim-chat"></div>
+      <div id="sim-choices"></div>
+    </div></div>
+
+    <!-- ── MISSIONS ── -->
+    <div class="appscreen" id="scr-eng-mission">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Practice</button><div class="h3">📍 Mission</div></div>
+      <div class="pad" style="padding-top:4px" id="mission-body">
+      <div class="card" style="border-left:4px solid var(--amber)">
+        <div class="muted tiny">THIS WEEK'S MISSION · REAL WORLD</div>
+        <div style="font-weight:800;font-size:17px;margin:4px 0">At the padaria: greet &amp; order</div>
+        <div class="muted" style="font-size:13px">Walk in, say bom dia, order one thing, ask the price. 90 seconds of real Portuguese.</div>
+      </div>
+      <div class="card">
+        <div class="muted tiny" style="font-weight:700">PREP PHRASES</div>
+        <div style="font-size:14px;line-height:2;margin-top:4px">
+          Bom dia! <button class="spk" onclick="speak(this)">🔊</button><br>
+          Queria um pão e uma bica, por favor. <button class="spk" onclick="speak(this)">🔊</button><br>
+          Quanto é? <button class="spk" onclick="speak(this)">🔊</button>
+        </div>
+        <div class="muted tiny" style="font-weight:700;margin-top:10px">IF YOU GET STUCK</div>
+        <div style="font-size:14px;margin-top:2px">Desculpe, pode repetir mais devagar? <button class="spk" onclick="speak(this)">🔊</button></div>
+        <div class="muted tiny" style="font-weight:700;margin-top:10px">WHAT THEY'LL LIKELY SAY</div>
+        <div style="font-size:14px;line-height:1.8;margin-top:2px">“Mais alguma coisa?” — anything else?<br>“São dois euros e dez.” — €2.10</div>
+      </div>
+      <button class="cta" onclick="missionDone()">I did it ✓</button>
+      <div class="muted tiny" style="text-align:center;margin-top:8px">No pressure, no deadline. It counts whenever you do it.</div>
+      </div>
+    </div>
+
+    <!-- ── PHRASE LIBRARY ── -->
+    <div class="appscreen" id="scr-eng-phrases">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Practice</button><div class="h3">📖 Phrase library</div></div>
+      <div class="pad" style="padding-top:4px">
+      <input type="search" id="ph-search" placeholder="Search phrases… (try: repeat, coffee)" oninput="phRender()">
+      <div class="row between" style="margin:10px 2px 8px"><span class="muted tiny">REGISTER</span>
+        <div><button class="pill on" id="ph-formal" onclick="phRegister(true)">formal</button> <button class="pill" id="ph-informal" onclick="phRegister(false)">informal</button></div>
+      </div>
+      <div id="ph-list"></div>
+    </div></div>
+
+    <!-- ── VOCABULARY / SRS ── -->
+    <div class="appscreen" id="scr-eng-vocab">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Back</button><div class="h3" id="vocab-title">🃏 Vocabulary</div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="row between" style="margin-bottom:8px"><span class="muted tiny" id="vocab-due-line">5 due</span><span class="muted tiny">tap card to flip</span></div>
+      <div id="vocab-area"></div>
+    </div></div>
+
+    <!-- ── CULTURE ── -->
+    <div class="appscreen" id="scr-eng-culture">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Practice</button><div class="h3">🫱 Culture</div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="card">
+        <div class="muted tiny">REGISTER · WHO IS “YOU”?</div>
+        <div style="font-weight:700;margin:4px 0">tu · você · o senhor / a senhora</div>
+        <div style="font-size:13px;line-height:1.6;color:var(--text)">With the cleaner and tradespeople, warm-formal wins: use <b>“o senhor / a senhora”</b> or just the verb without a pronoun. <b>“Tu”</b> is for friends and kids; jumping to it too early feels off. Madeirans forgive every grammar mistake — register mistakes they remember.</div>
+      </div>
+      <div class="card">
+        <div class="muted tiny">INDIRECTNESS · HOW TO ASK</div>
+        <div style="font-weight:700;margin:4px 0">“Queria…” beats “Quero…”</div>
+        <div style="font-size:13px;line-height:1.6;color:var(--text)">Requests soften: <b>“Queria uma bica”</b> (I'd like…) not “Quero” (I want). On the phone, open with <b>“Olhe, desculpe…”</b> (“look, sorry…”) before asking anything — it's oil for the conversation, not an actual apology.</div>
+      </div>
+      <div class="muted tiny">Cultural notes attach to situations — you'll meet these exactly where they matter.</div>
+    </div></div>
+
+    <!-- ── TUTOR ── -->
+    <div class="appscreen" id="scr-tutor"><div class="pad">
+      <div class="row between" style="margin-bottom:8px">
+        <div class="h2">Tutor</div>
+        <div class="row" style="gap:6px"><span class="muted tiny">Help mode</span><div class="toggle" id="help-toggle" onclick="toggleHelp(this)"></div></div>
+      </div>
+      <button class="modecard needs-online" onclick="go('scenario')" style="margin-bottom:12px"><div class="mico" style="background:#5856D6">✨</div><div><div style="font-weight:700">Scenario generator <span class="onlybadge">online only</span></div><div class="muted">Turn a real need into phrases + roleplay</div></div></button>
+      <div id="tutor-chat">
+        <div class="bubble bub-npc">Bom dia, Libor! Sobre o que quer falar hoje? <button class="spk" onclick="speak(this)">🔊</button><div class="hint tutor-hint" style="display:none">Good morning! What do you want to talk about today?</div></div>
+        <div class="bubble bub-me">How do I tell the cleaner the guests arrive at 16:00?</div>
+        <div class="bubble bub-npc">Diga: <b>“Os hóspedes chegam às dezasseis.”</b> <button class="spk" onclick="speak(this)">🔊</button><br>Ao telefone soa mais natural: <b>“Olhe, os hóspedes chegam às quatro da tarde.”</b> <button class="spk" onclick="speak(this)">🔊</button><div class="hint tutor-hint" style="display:none">Say: “The guests arrive at 16:00.” On the phone it's more natural to say “four in the afternoon”.</div></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <input type="text" placeholder="Type… or use the mic" style="margin-top:0">
+        <button class="spk" style="font-size:24px" id="tutor-mic" onclick="tutorMic(this)">🎙️</button>
+      </div>
+      <div class="muted tiny" style="margin-top:8px">AI tutor — can be wrong; corrections are suggestions, not verdicts.</div>
+    </div></div>
+
+    <!-- ── SCENARIO GENERATOR ── -->
+    <div class="appscreen" id="scr-scenario">
+      <div class="subnav"><button class="backbtn" onclick="back()">‹ Tutor</button><div class="h3">✨ Scenario generator</div></div>
+      <div class="pad" style="padding-top:4px">
+      <div class="muted tiny" style="margin-bottom:6px">Describe a real thing you need to say or handle:</div>
+      <input type="text" id="scen-input" value="Tell the cleaner guests arrive at 16:00">
+      <button class="cta" style="margin-top:10px" onclick="scenGen()">Generate</button>
+      <div id="scen-offline" class="card" style="display:none;margin-top:12px">📴 <b>Online only.</b> Scenario generation needs the AI service — try again when connected.</div>
+      <div id="scen-result" style="display:none;margin-top:12px">
+        <div class="card">
+          <div class="muted tiny">YOUR PHRASE</div>
+          <div style="font-size:17px;font-weight:800;margin:4px 0">“Olhe, os hóspedes chegam amanhã às dezasseis.” <button class="spk" onclick="speak(this)">🔊</button></div>
+          <div class="muted tiny">look, the guests arrive tomorrow at 16:00</div>
+          <div class="muted tiny" style="font-weight:700;margin-top:10px">VARIANTS</div>
+          <div style="font-size:13px;line-height:1.8;margin-top:2px">
+            More formal: “A senhora podia preparar a casa? Os hóspedes chegam às dezasseis.” <button class="spk" onclick="speak(this)">🔊</button><br>
+            WhatsApp-ready: “Bom dia! Os hóspedes chegam amanhã às 16h. Obrigado! 🙏”
+          </div>
+        </div>
+        <div class="card row between">
+          <div><div style="font-weight:700">Practice it live</div><div class="muted tiny">roleplay the call, L1–L5</div></div>
+          <button class="btn2" onclick="go('eng-sim')">Roleplay →</button>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- ── YOU / SETTINGS ── -->
+    <div class="appscreen" id="scr-you"><div class="pad">
+      <div class="h2">You</div>
+      <div class="card row" style="margin-top:8px"><div class="avatar" style="width:52px;height:52px">🙂</div><div><div style="font-weight:700">libor@labguide.io</div><div class="muted">Admin · 🔥 <span id="you-streak">7</span>-day streak · ❄️ 2 freezes</div></div></div>
+
+      <div class="muted tiny" style="font-weight:700;margin:8px 0 6px">LEARNING PATH</div>
+      <div class="card" id="path-switcher">
+        <div class="select" data-path="structured" onclick="setPath('structured')">📅 Structured course <span class="muted tiny">month-by-month</span></div>
+        <div class="select" data-path="goal" onclick="setPath('goal')">🎯 Goal track <span class="muted tiny">Track B · Host</span></div>
+        <div class="select" data-path="adaptive" onclick="setPath('adaptive')">🗣️ Adaptive guided <span class="muted tiny">daily session</span></div>
+        <div class="select" data-path="free" onclick="setPath('free')">🧭 Free / self-directed <span class="muted tiny">you drive</span></div>
+        <div class="muted tiny" style="margin-top:8px">Progress and mastery are shared — switching never loses anything.</div>
+      </div>
+
+      <div class="muted tiny" style="font-weight:700;margin:8px 0 6px">AUDIO &amp; VOICE</div>
+      <div class="card">
+        <div class="select" style="margin-top:0">Voice provider <span class="muted">Azure · pt-PT ›</span></div>
+        <div class="select">Tutor voice <span class="muted">Maria ›</span></div>
+        <div class="select">Playback speed <span class="muted">1.0× ›</span></div>
+      </div>
+
+      <div class="muted tiny" style="font-weight:700;margin:8px 0 6px">OFFLINE</div>
+      <div class="card">
+        <div class="row between"><span style="font-size:14px">Save audio on device</span><div class="toggle on"></div></div>
+        <div class="select">Storage limit <span class="muted">200 MB · used 34 MB ›</span></div>
+        <button class="btn2 btnfull" style="margin-top:10px" id="dl-btn" onclick="startDownload()">⬇ Download Survival track L0–L1</button>
+        <div class="dl-track" id="dl-track" style="display:none"><div class="dl-fill" id="dl-fill"></div></div>
+        <div class="muted tiny" id="dl-label" style="margin-top:5px;display:none"></div>
+        <div class="row between" style="margin-top:12px"><div><span style="font-size:14px">Simulate offline</span><div class="muted tiny">preview what degrades without a connection</div></div><div class="toggle" id="offline-toggle" onclick="toggleOffline(this)"></div></div>
+      </div>
+
+      <div class="muted tiny" style="font-weight:700;margin:8px 0 6px">ACCOUNT</div>
+      <div class="card">
+        <div class="list-item">📤 My submissions &amp; recordings</div>
+        <div class="list-item">📄 Terms · Privacy · AI use</div>
+        <div class="list-item">📲 Install app</div>
+        <div class="list-item" onclick="go('auth')">↩︎ Sign out</div>
+        <div class="list-item" style="color:var(--red)">Delete account &amp; all data</div>
+      </div>
+    </div></div>
+
+    </div><!-- /screenarea -->
+
+    <!-- ── TAB BAR ── -->
+    <div class="tabbar" id="tabbar">
+      <div class="tab" data-tab="home" onclick="go('home')"><span class="ico">🏠</span>Home</div>
+      <div class="tab" data-tab="learn" onclick="go('learn')"><span class="ico">📚</span>Learn</div>
+      <div class="tab" data-tab="practice" onclick="go('practice')"><span class="ico">🎧</span>Practice</div>
+      <div class="tab" data-tab="tutor" onclick="go('tutor')"><span class="ico">💬</span>Tutor</div>
+      <div class="tab" data-tab="you" onclick="go('you')"><span class="ico">👤</span>You</div>
+    </div>
+  </div></div><!-- /phone /device -->
+  <div class="statereadout" id="state-readout"></div>
+  </div>
+
+</div><!-- /layout -->
+
+<script>
+/* ═════════ STATE ═════════ */
+var S = {
+  path: null,            // 'structured' | 'goal' | 'adaptive' | 'free'
+  track: null,           // 'A'..'E'
+  placement: null,
+  streak: 7, freezes: 2,
+  reviewDue: 5,
+  seg: 0,                // daily-session segment index
+  offline: false,
+  help: false,
+  formal: true,          // phrase library register
+  vIdx: 0, vFlipped: false, reviewMode: false,
+  simLevel: 1, simStep: 0,
+  fwHeard: false, fwSaid: false
+};
+var hist = [];
+var current = null;
+
+var PATH_LABEL = {structured:'Structured course', goal:'Goal track', adaptive:'Adaptive guided', free:'Free / self-directed'};
+var TRACK_LABEL = {A:'A · Survival', B:'B · Host', C:'C · Social', D:'D · Bureaucracy', E:'E · Work'};
+
+/* screen → tab mapping; screens absent here hide the tab bar */
+var TAB_OF = {
+  home:'home', weekly:'home',
+  learn:'learn', 'track-detail':'learn', situation:'learn',
+  practice:'practice', 'eng-listen':'practice', 'eng-pron':'practice', 'eng-pattern':'practice',
+  'eng-sim':'practice', 'eng-mission':'practice', 'eng-phrases':'practice', 'eng-vocab':'practice', 'eng-culture':'practice',
+  tutor:'tutor', scenario:'tutor',
+  you:'you'
+};
+
+/* ═════════ ROUTER ═════════ */
+function go(id, push){
+  if (push === undefined) push = true;
+  var el = document.getElementById('scr-' + id);
+  if (!el) return;
+  if (current && push && current !== id) hist.push(current);
+  var scrs = document.querySelectorAll('.appscreen');
+  for (var i = 0; i < scrs.length; i++) scrs[i].classList.remove('on');
+  el.classList.add('on');
+  current = id;
+  document.getElementById('screenarea').scrollTop = 0;
+  // tab bar
+  var tab = TAB_OF[id];
+  document.getElementById('tabbar').style.display = tab ? 'flex' : 'none';
+  var tabs = document.querySelectorAll('.tab');
+  for (var j = 0; j < tabs.length; j++) tabs[j].classList.toggle('active', tabs[j].dataset.tab === tab);
+  // flow map highlight
+  var links = document.querySelectorAll('.flowmap a');
+  for (var k = 0; k < links.length; k++) links[k].classList.toggle('here', links[k].dataset.s === id);
+  // per-screen render hooks
+  if (RENDER[id]) RENDER[id]();
+  readout();
+}
+function back(){
+  var prev = hist.pop();
+  go(prev || (S.path ? 'home' : 'onb-welcome'), false);
+}
+/* flow-map jump: seeds sensible defaults so any screen works standalone */
+function jump(id){
+  if (!S.path && id !== 'auth' && id.indexOf('onb-') !== 0) { S.path = 'adaptive'; S.track = 'B'; }
+  go(id);
+}
+function readout(){
+  var r = 'screen: ' + (current || '—')
+    + ' · path: ' + (S.path ? PATH_LABEL[S.path] : 'not chosen')
+    + (S.track ? ' · track: ' + TRACK_LABEL[S.track] : '')
+    + ' · streak: ' + S.streak + ' · review due: ' + S.reviewDue
+    + (S.offline ? ' · 📴 OFFLINE SIM' : '');
+  document.getElementById('state-readout').textContent = 'Simulated state — ' + r;
+}
+
+/* ═════════ VOICE-FIRST HELPERS ═════════ */
+function speak(el){          // ~1s blue playback pulse
+  el.classList.remove('playing'); void el.offsetWidth;
+  el.classList.add('playing');
+  setTimeout(function(){ el.classList.remove('playing'); }, 1100);
+}
+function record(el, cb){     // ~1.6s red recording pulse
+  el.classList.add('recording');
+  setTimeout(function(){ el.classList.remove('recording'); if (cb) cb(); }, 1600);
+}
+
+/* ═════════ ONBOARDING ═════════ */
+function setPlacement(el, v){
+  S.placement = v;
+  var sibs = el.parentElement.querySelectorAll('.select');
+  for (var i = 0; i < sibs.length; i++) sibs[i].classList.remove('on');
+  el.classList.add('on');
+}
+function choosePath(p){ S.path = p; if (p === 'adaptive' && !S.track) S.track = 'B'; go('onb-firstwin'); }
+function chooseTrack(t){ S.track = t; S.path = 'goal'; go('onb-firstwin'); }
+function fwHeard(){
+  S.fwHeard = true;
+  document.getElementById('fw-saycard').style.opacity = '1';
+}
+function fwSay(el){
+  if (!S.fwHeard) { document.getElementById('fw-result').textContent = 'Hear it first — then say it back.'; return; }
+  record(el, function(){
+    S.fwSaid = true;
+    document.getElementById('fw-result').innerHTML = '<b style="color:var(--green)">✓ You just said your first Madeiran Portuguese.</b>';
+    document.getElementById('fw-next').style.opacity = '1';
+  });
+}
+function finishOnboarding(){ hist = []; go('home'); }
+
+/* ═════════ HOME / COACH ═════════ */
+function toggleWhy(btn){
+  var box = document.getElementById('focus-why');
+  box.classList.toggle('open');
+  btn.textContent = box.classList.contains('open') ? 'Why this? ▴' : 'Why this? ▾';
+}
+function homeCta(){
+  if (S.path === 'structured') openSit('intro');
+  else go('session');
+}
+function startReview(){ S.reviewMode = true; S.vIdx = 0; S.vFlipped = false; go('eng-vocab'); }
+
+/* ═════════ DAILY SESSION PLAYER ═════════ */
+var SEGS = [
+  {name:'Listening warmup', min:3, icon:'🎧'},
+  {name:'Shadowing', min:5, icon:'🗣️'},
+  {name:'Pattern drill', min:7, icon:'🧩'},
+  {name:'Roleplay', min:10, icon:'💬'},
+  {name:'Review', min:5, icon:'🔁'},
+  {name:'Real-world mission', min:2, icon:'📍'}
+];
+var sessRoleStep = 0, sessShadowCount = 0, sessRevIdx = 0;
+function renderSession(){
+  var bar = document.getElementById('sess-bar');
+  bar.innerHTML = '';
+  var total = 0; for (var i = 0; i < SEGS.length; i++) total += SEGS[i].min;
+  for (var j = 0; j < SEGS.length; j++){
+    var d = document.createElement('div');
+    d.style.flex = String(SEGS[j].min / total);
+    if (j < S.seg) d.className = 'done'; else if (j === S.seg) d.className = 'now';
+    bar.appendChild(d);
+  }
+  var sg = SEGS[S.seg];
+  document.getElementById('sess-seglabel').textContent =
+    'Segment ' + (S.seg + 1) + ' of 6 · ' + sg.icon + ' ' + sg.name + ' · ~' + sg.min + ' min';
+  document.getElementById('sess-body').innerHTML = segBody(S.seg);
+  document.getElementById('sess-next').textContent =
+    S.seg < 5 ? ('Next: ' + SEGS[S.seg + 1].name + ' →') : 'Finish session ✓';
+}
+function segBody(i){
+  if (i === 0) return '' +
+    '<div class="card"><div class="muted tiny">Warm your ear up — the cleaner leaves a voicemail.</div>' +
+    '<button class="cta" style="margin-top:10px" onclick="speak(this)">▶ Play voicemail <span class="wave"><i></i><i></i><i></i><i></i></span></button>' +
+    '<div style="font-weight:700;margin:12px 0 2px">When can she come?</div>' +
+    '<button class="choice" onclick="answer(this,false)">Today at 8</button>' +
+    '<button class="choice" onclick="answer(this,true)">Tomorrow at 8</button>' +
+    '<button class="choice" onclick="answer(this,false)">Friday after lunch</button></div>';
+  if (i === 1) return '' +
+    '<div class="card" style="text-align:center"><div style="font-size:18px;font-weight:800">“A limpeza é amanhã às oito.”</div>' +
+    '<div class="muted tiny" style="margin:4px 0 10px">the cleaning is tomorrow at eight</div>' +
+    '<button class="btn2" onclick="speak(this)">🔊 Listen <span class="wave"><i></i><i></i><i></i><i></i></span></button>' +
+    '<button class="micbtn" onclick="sessShadow(this)">🎙️</button>' +
+    '<div class="muted tiny" id="sess-shadow-state">Shadow it — speak along, 3 times</div></div>';
+  if (i === 2) return '' +
+    '<div class="card" style="text-align:center"><div style="font-size:18px;font-weight:700">A limpeza é <span class="slot" id="sess-pat-slot">amanhã</span>.</div>' +
+    '<div style="margin-top:10px">' +
+    '<button class="chip on" onclick="sessPat(this,\'amanhã\')">amanhã</button>' +
+    '<button class="chip" onclick="sessPat(this,\'hoje\')">hoje</button>' +
+    '<button class="chip" onclick="sessPat(this,\'na sexta\')">na sexta</button>' +
+    '<button class="chip" onclick="sessPat(this,\'depois do almoço\')">depois do almoço</button>' +
+    '</div><div class="muted tiny" style="margin-top:8px">Say each variation out loud as you tap.</div></div>';
+  if (i === 3) return '' +
+    '<div class="muted tiny" style="margin-bottom:6px">📞 The cleaner calls. Answer in Portuguese.</div><div id="sess-role"></div>';
+  if (i === 4) return '' +
+    '<div class="muted tiny" style="margin-bottom:6px">Quick review — 2 items due now.</div><div id="sess-rev"></div>';
+  return '' + // i === 5
+    '<div class="card" style="border-left:4px solid var(--amber)"><div class="muted tiny">TODAY\'S 2-MINUTE MISSION</div>' +
+    '<div style="font-weight:800;font-size:16px;margin:4px 0">Say “bom dia” to one real person</div>' +
+    '<div class="muted" style="font-size:13px">Neighbor, barista, anyone. Out loud, in the wild.</div>' +
+    '<button class="btn2 btnfull" style="margin-top:10px" id="sess-mission-btn" onclick="this.textContent=\'Accepted ✓ — it counts whenever you do it\';this.disabled=true">Accept mission</button></div>';
+}
+function segNext(){
+  if (S.seg < 5) { S.seg++; renderSession(); if (S.seg === 3) sessRoleRender(0); if (S.seg === 4) sessRevRender(0); }
+  else { S.seg = 0; S.reviewDue += 3; go('recap'); }
+}
+function sessShadow(el){
+  record(el, function(){
+    sessShadowCount = Math.min(3, sessShadowCount + 1);
+    var st = document.getElementById('sess-shadow-state');
+    if (st) st.innerHTML = sessShadowCount >= 3
+      ? '<b style="color:var(--green)">✓ 3/3 — rhythm is settling in</b>'
+      : sessShadowCount + '/3 repetitions — again';
+  });
+}
+function sessPat(el, w){
+  var chips = el.parentElement.querySelectorAll('.chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.remove('on');
+  el.classList.add('on');
+  var slot = document.getElementById('sess-pat-slot');
+  if (slot) slot.textContent = w;
+}
+var SESS_ROLE = [
+  {npc:'Estou? Bom dia, é da limpeza. Amanhã posso ir às oito?', en:'Hello? It\'s the cleaner. Can I come at 8 tomorrow?',
+   choices:['Bom dia! Às oito está ótimo.','Desculpe, pode ser às dez?']},
+  {npc:'Combinado! E deixo a chave onde, no fim?', en:'Deal! And where do I leave the key afterwards?',
+   choices:['Na caixa do correio, por favor.','Debaixo do vaso, como sempre.']},
+  {npc:'Perfeito. Até amanhã!', en:'Perfect. See you tomorrow!', choices:[]}
+];
+function sessRoleRender(step){
+  sessRoleStep = step;
+  var host = document.getElementById('sess-role');
+  if (!host) return;
+  var html = '';
+  for (var i = 0; i <= step; i++){
+    html += '<div class="bubble bub-npc">' + SESS_ROLE[i].npc + ' <button class="spk" onclick="speak(this)">🔊</button><div class="hint">' + SESS_ROLE[i].en + '</div></div>';
+    if (i < step) html += '<div class="bubble bub-me">' + SESS_ROLE[i].picked + '</div>';
+  }
+  var turn = SESS_ROLE[step];
+  if (turn.choices.length){
+    for (var c = 0; c < turn.choices.length; c++)
+      html += '<button class="choice" onclick="sessRolePick(' + c + ')">🎙️ ' + turn.choices[c] + '</button>';
+  } else {
+    html += '<div class="muted tiny" style="margin-top:6px"><b style="color:var(--green)">✓ Call handled in Portuguese.</b> In the real app you would speak these lines.</div>';
+  }
+  host.innerHTML = html;
+}
+function sessRolePick(c){
+  SESS_ROLE[sessRoleStep].picked = SESS_ROLE[sessRoleStep].choices[c];
+  sessRoleRender(sessRoleStep + 1);
+}
+var SESS_REV = [
+  {q:'os hóspedes', a:'the guests'},
+  {q:'quanto é?', a:'how much is it?'}
+];
+function sessRevRender(idx){
+  sessRevIdx = idx;
+  var host = document.getElementById('sess-rev');
+  if (!host) return;
+  if (idx >= SESS_REV.length){
+    host.innerHTML = '<div class="card" style="text-align:center"><b style="color:var(--green)">✓ Review clear for now.</b><div class="muted tiny" style="margin-top:4px">Next items resurface exactly when you\'re about to forget them.</div></div>';
+    return;
+  }
+  host.innerHTML = '<div class="flash" id="sess-flash" onclick="sessRevFlip()"><div style="font-size:20px;font-weight:800">' + SESS_REV[idx].q + ' <button class="spk" onclick="event.stopPropagation();speak(this)">🔊</button></div><div class="muted tiny" style="margin-top:6px">tap to reveal</div></div>' +
+    '<div class="gradebtns" id="sess-grades" style="visibility:hidden">' +
+    '<button style="background:#FF3B30" onclick="sessRevRender(' + (idx + 1) + ')">Again</button>' +
+    '<button style="background:#FF9500" onclick="sessRevRender(' + (idx + 1) + ')">Hard</button>' +
+    '<button style="background:#34C759" onclick="sessRevRender(' + (idx + 1) + ')">Good</button>' +
+    '<button style="background:#007AFF" onclick="sessRevRender(' + (idx + 1) + ')">Easy</button></div>';
+}
+function sessRevFlip(){
+  var f = document.getElementById('sess-flash');
+  f.innerHTML = '<div style="font-size:20px;font-weight:800">' + SESS_REV[sessRevIdx].a + '</div><div class="muted tiny" style="margin-top:6px">' + SESS_REV[sessRevIdx].q + '</div>';
+  document.getElementById('sess-grades').style.visibility = 'visible';
+}
+
+/* ═════════ GENERIC 3-CHOICE CHECK ═════════ */
+function answer(el, ok){
+  var sibs = el.parentElement.querySelectorAll('.choice');
+  for (var i = 0; i < sibs.length; i++) sibs[i].classList.remove('good','bad');
+  el.classList.add(ok ? 'good' : 'bad');
+  var fb = document.getElementById('lis-feedback');
+  if (fb && el.closest('#scr-eng-listen'))
+    fb.innerHTML = ok ? '<b style="color:var(--green)">✓ Right — “uma bica e um galão”.</b>'
+                      : 'Not quite — listen again for “e um galão”. No penalty; hearing it IS the exercise.';
+}
+
+/* ═════════ LEARN / TRACKS / SITUATIONS ═════════ */
+function learnView(v){
+  document.getElementById('learn-tab-course').classList.toggle('on', v === 'course');
+  document.getElementById('learn-tab-tracks').classList.toggle('on', v === 'tracks');
+  document.getElementById('learn-course').style.display = v === 'course' ? 'block' : 'none';
+  document.getElementById('learn-tracks').style.display = v === 'tracks' ? 'block' : 'none';
+}
+var SITS = {
+  greet:  {t:'Greetings all day long', lv:'L0', tr:'A · B · C', sum:'Bom dia until lunch, boa tarde until dark, boa noite after. The greeting IS the relationship opener in Madeira.',
+    phr:['Bom dia! / Boa tarde! / Boa noite!','Tudo bem?','Até logo!'], voc:['obrigado/a — thank you','até amanhã — see you tomorrow'],
+    dlg:['— Bom dia, vizinha!','— Bom dia! Tudo bem?'], cult:'Greet everyone entering a small shop — silence reads as rude.', mis:'Greet 3 people today with the right time-of-day greeting.'},
+  bica:   {t:'At the café: ordering a bica', lv:'L0', tr:'A · B', sum:'Order coffee like a local: a bica is the Madeiran espresso.',
+    phr:['Queria uma bica, por favor.','Mais alguma coisa? — Não, é tudo.','Quanto é?'], voc:['uma bica — espresso','um galão — milky coffee','a conta — the bill'],
+    dlg:['— O que deseja?','— Uma bica e um galão, por favor.'], cult:'“Queria…” (I\'d like) softens the request — “Quero” sounds blunt.', mis:'Order one coffee without pointing at the menu.'},
+  intro:  {t:'Introducing yourself', lv:'L1', tr:'A · C · E', sum:'Name, where you\'re from, why Madeira — the three questions everyone asks.',
+    phr:['Chamo-me Libor.','Sou da República Checa.','Vivo no Funchal há dois anos.'], voc:['chamo-me — my name is','vivo em — I live in'],
+    dlg:['— De onde é?','— Sou da República Checa, mas vivo cá.'], cult:'“Vivo cá” (I live here) instantly changes how people treat you — you\'re not a tourist.', mis:'Introduce yourself to one person you see regularly.'},
+  cleaner:{t:'The cleaner comes tomorrow', lv:'L1', tr:'B', sum:'Schedule, reschedule, and confirm with your cleaner — by phone and in person.',
+    phr:['A limpeza é amanhã às oito.','Pode ser às dez?','Deixo a chave na caixa do correio.'], voc:['a limpeza — the cleaning','a chave — the key','combinado — agreed/deal'],
+    dlg:['— Amanhã posso ir às oito?','— Às oito está ótimo. Combinado!'], cult:'Warm-formal register: “a senhora” with the cleaner, never “tu” at first.', mis:'Confirm your next cleaning date in Portuguese (call or WhatsApp).'},
+  guest:  {t:'Guest arrival at 16:00', lv:'L1', tr:'B', sum:'Tell the cleaner or greeter when guests land and what to prepare.',
+    phr:['Os hóspedes chegam às dezasseis.','Pode preparar a casa?','Chegam amanhã de manhã.'], voc:['os hóspedes — the guests','chegam — they arrive','preparar — to prepare'],
+    dlg:['— Olhe, os hóspedes chegam às quatro.','— Está bem, deixo tudo pronto.'], cult:'Times: locals say “às quatro da tarde” in speech, “às 16h” in writing.', mis:'Send your next guest-arrival message in Portuguese first, English second.'},
+  plumber:{t:'Calling a plumber', lv:'L2', tr:'B · D', sum:'Explain the problem, understand when they can come, agree on price range.',
+    phr:['Não há água quente.','Quando pode vir?','Quanto pode custar, mais ou menos?'], voc:['o canalizador — plumber','avariado — broken','o esquentador — water heater'],
+    dlg:['— Estou? Preciso de um canalizador…','— Posso ir na sexta de manhã.'], cult:'Open phone calls with “Olhe, desculpe…” — the polite runway before the ask.', mis:'Save your plumber\'s name in Portuguese and rehearse the opener.'}
+};
+function openSit(id){
+  var s = SITS[id];
+  document.getElementById('sit-title').textContent = s.t;
+  var h = '<div class="row" style="gap:6px;margin-bottom:8px"><span class="pill tiny" style="cursor:default">' + s.lv + '</span><span class="pill pillG tiny" style="cursor:default">tracks ' + s.tr + '</span></div>';
+  h += '<div class="muted" style="margin-bottom:12px">' + s.sum + '</div>';
+  h += '<div class="card"><div class="muted tiny" style="font-weight:700">KEY PHRASES</div><div style="font-size:14px;line-height:2;margin-top:4px">';
+  for (var i = 0; i < s.phr.length; i++) h += s.phr[i] + ' <button class="spk" onclick="speak(this)">🔊</button><br>';
+  h += '</div></div>';
+  h += '<div class="card"><div class="muted tiny" style="font-weight:700">VOCABULARY</div><div style="font-size:13px;line-height:1.9;margin-top:4px">' + s.voc.join('<br>') + '</div></div>';
+  h += '<div class="card"><div class="muted tiny" style="font-weight:700">DIALOGUE PREVIEW</div><div style="font-size:13px;line-height:1.9;margin-top:4px;font-style:italic">' + s.dlg.join('<br>') + '</div><button class="btn2" style="margin-top:8px" onclick="speak(this)">🔊 Hear it <span class="wave"><i></i><i></i><i></i><i></i></span></button></div>';
+  h += '<div class="card" style="background:rgba(178,80,0,.07)"><div class="muted tiny" style="font-weight:700">🫱 CULTURE</div><div style="font-size:13px;line-height:1.6;margin-top:4px">' + s.cult + '</div></div>';
+  h += '<div class="card" style="border-left:4px solid var(--amber)"><div class="muted tiny" style="font-weight:700">📍 MISSION</div><div style="font-size:13px;line-height:1.6;margin-top:4px">' + s.mis + '</div></div>';
+  h += '<div class="muted tiny" style="font-weight:700;margin:4px 0 8px">PRACTICE THIS WITH…</div>';
+  h += '<div class="row" style="flex-wrap:wrap;gap:8px">'
+     + '<button class="btn2" onclick="go(\'eng-listen\')">🎧 Listening</button>'
+     + '<button class="btn2" onclick="go(\'eng-pattern\')">🧩 Patterns</button>'
+     + '<button class="btn2" onclick="go(\'eng-sim\')">💬 Roleplay</button>'
+     + '<button class="btn2" onclick="go(\'eng-pron\')">🎙️ Pronunciation</button>'
+     + '<button class="btn2" onclick="go(\'eng-mission\')">📍 Mission</button></div>';
+  document.getElementById('sit-body').innerHTML = h;
+  go('situation');
+}
+
+/* ═════════ LISTENING ═════════ */
+function lisSpeed(el){
+  var pills = el.parentElement.querySelectorAll('.pill');
+  for (var i = 0; i < pills.length; i++) pills[i].classList.remove('on');
+  el.classList.add('on');
+}
+function lisReveal(){
+  var t = document.getElementById('lis-transcript');
+  t.style.display = t.style.display === 'none' ? 'block' : 'none';
+}
+
+/* ═════════ PRONUNCIATION ═════════ */
+function pronRecord(el){
+  document.getElementById('pron-state').textContent = 'Recording…';
+  record(el, function(){
+    document.getElementById('pron-state').textContent = 'Recorded ✓';
+    document.getElementById('pron-result').style.display = 'block';
+    document.getElementById('pron-offline-note').style.display = S.offline ? 'block' : 'none';
+  });
+}
+
+/* ═════════ PATTERN BUILDER ═════════ */
+function patSet(el, pt, en){
+  var chips = el.parentElement.querySelectorAll('.chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.remove('on');
+  el.classList.add('on');
+  document.getElementById('pat-slot').textContent = pt;
+  document.getElementById('pat-en').textContent = 'the cleaning is ' + en;
+}
+
+/* ═════════ SITUATION SIMULATOR ═════════ */
+var SIM = [
+  {npc:'Estou? Bom dia, é da limpeza. Amanhã posso ir às oito?',
+   npc5:'Tou? Bom dia, é da limpeza… (traffic noise, speaks fast) …manhã posso ir às oito, pode ser?',
+   en:'Hello? It\'s the cleaner. Can I come at 8 tomorrow?',
+   choices:['Bom dia! Às oito está ótimo.','Desculpe, pode ser às dez? Os hóspedes saem às nove.']},
+  {npc:'Está bem, às dez então. E os produtos, ainda há?',
+   npc5:'Tá, às dez então… (dog barking) …e os produtos, ainda há? Acabou o lixívia da última vez, não foi?',
+   en:'OK, ten then. And cleaning products — still stocked?',
+   choices:['Há, sim. Está tudo no armário.','Pode comprar? Eu pago depois.']},
+  {npc:'Combinado. Até amanhã!',
+   npc5:'Prontos, combinado… até ‘manhã! (hangs up quickly)',
+   en:'Deal. See you tomorrow!', choices:[]}
+];
+function simStart(level, el){
+  S.simLevel = level; S.simStep = 0;
+  if (el){
+    var pills = document.getElementById('sim-levels').querySelectorAll('.pill');
+    for (var i = 0; i < pills.length; i++) pills[i].classList.remove('on');
+    el.classList.add('on');
+  }
+  var notes = {1:'guided · slow · hints on', 2:'normal speed', 3:'less scaffolding', 4:'fast, colloquial', 5:'messy real life — noise, speed, reductions'};
+  document.getElementById('sim-levelnote').textContent = notes[level];
+  simRender();
+}
+function simRender(){
+  var offBlock = document.getElementById('sim-offline-block');
+  var chat = document.getElementById('sim-chat');
+  var choices = document.getElementById('sim-choices');
+  if (S.offline){ offBlock.style.display = 'block'; chat.innerHTML = ''; choices.innerHTML = ''; return; }
+  offBlock.style.display = 'none';
+  var html = '';
+  for (var i = 0; i <= S.simStep && i < SIM.length; i++){
+    var line = (S.simLevel === 5 ? SIM[i].npc5 : SIM[i].npc);
+    html += '<div class="bubble bub-npc">' + line + ' <button class="spk" onclick="speak(this)">🔊</button>'
+          + (S.simLevel <= 2 ? '<div class="hint">' + SIM[i].en + '</div>' : '') + '</div>';
+    if (i < S.simStep && SIM[i].picked) html += '<div class="bubble bub-me">' + SIM[i].picked + '</div>';
+  }
+  chat.innerHTML = html;
+  var turn = SIM[Math.min(S.simStep, SIM.length - 1)];
+  var ch = '';
+  if (S.simStep < SIM.length && turn.choices.length){
+    for (var c = 0; c < turn.choices.length; c++)
+      ch += '<button class="choice" onclick="simPick(' + c + ')">🎙️ ' + turn.choices[c] + '</button>';
+    ch += '<div class="muted tiny" style="margin-top:6px">In the real app you speak your reply — tapping simulates it here.</div>';
+  } else if (S.simStep >= SIM.length - 1){
+    ch = '<div class="card" style="margin-top:10px"><b style="color:var(--green)">✓ Handled.</b> <span class="muted tiny">2 phrases from this call were added to review. Try L' + Math.min(5, S.simLevel + 1) + ' next for more realism.</span></div>';
+  }
+  choices.innerHTML = ch;
+}
+function simPick(c){
+  SIM[S.simStep].picked = SIM[S.simStep].choices[c];
+  S.simStep++;
+  simRender();
+}
+
+/* ═════════ MISSIONS ═════════ */
+function missionDone(){
+  document.getElementById('mission-body').innerHTML = '' +
+    '<div class="card"><div class="muted tiny">AFTER-ACTION REVIEW</div>' +
+    '<div style="font-weight:700;margin:6px 0">How did it go?</div>' +
+    '<button class="choice" onclick="answer(this,true)">😊 Smooth — they understood me</button>' +
+    '<button class="choice" onclick="answer(this,true)">🙂 Managed — with some pointing</button>' +
+    '<button class="choice" onclick="answer(this,true)">😅 Struggled — switched to English</button>' +
+    '<div style="font-weight:700;margin:14px 0 4px">What tripped you up?</div>' +
+    '<div><button class="chip" onclick="this.classList.toggle(\'on\')">understanding the price</button>' +
+    '<button class="chip" onclick="this.classList.toggle(\'on\')">their follow-up question</button>' +
+    '<button class="chip" onclick="this.classList.toggle(\'on\')">my pronunciation</button>' +
+    '<button class="chip" onclick="this.classList.toggle(\'on\')">nothing</button></div></div>' +
+    '<button class="cta" onclick="missionLogged()">Save review</button>';
+}
+function missionLogged(){
+  document.getElementById('mission-body').innerHTML = '' +
+    '<div class="card" style="text-align:center;padding:26px 16px"><div style="font-size:34px">📍</div>' +
+    '<div style="font-weight:800;font-size:17px;margin:6px 0">Mission logged</div>' +
+    '<div class="muted" style="font-size:13px">Real-world use is the strongest signal we have — “price numbers” just moved up your focus list.</div>' +
+    '<button class="btn2" style="margin-top:14px" onclick="go(\'home\')">Back to Home</button></div>';
+}
+
+/* ═════════ PHRASE LIBRARY ═════════ */
+var PHRASES = [
+  {f:'Bom dia!', i:'Bom dia!', en:'good morning', use:'Until lunchtime. Greet everyone in small shops.'},
+  {f:'Obrigado. / Obrigada.', i:'Obrigado!', en:'thank you', use:'Match your own gender: men say obrigado, women obrigada.'},
+  {f:'Pode repetir, por favor?', i:'Podes repetir?', en:'can you repeat?', use:'Your #1 survival tool. Nobody minds — ever.'},
+  {f:'Pode falar mais devagar?', i:'Falas mais devagar?', en:'can you speak slower?', use:'Pairs with the one above. Smile while saying it.'},
+  {f:'Quanto é?', i:'Quanto é?', en:'how much is it?', use:'At the till or café counter. “Quanto custa?” for items on a shelf.'},
+  {f:'Queria uma bica, por favor.', i:'Dás-me uma bica?', en:'an espresso, please', use:'“Queria” softens it. The informal form is for places you\'re a regular.'},
+  {f:'A que horas abre?', i:'A que horas abre?', en:'what time does it open?', use:'Shops close for lunch — you will need this.'},
+  {f:'Onde é a casa de banho?', i:'Onde é a casa de banho?', en:'where is the bathroom?', use:'“Casa de banho”, never “banheiro” (that\'s Brazilian).'},
+  {f:'Está tudo bem?', i:'Tá tudo?', en:'all good?', use:'The informal version is what you\'ll actually hear in Madeira.'},
+  {f:'Até amanhã!', i:'Até amanhã!', en:'see you tomorrow', use:'Warm sign-off with the cleaner, neighbors, café staff.'}
+];
+function phRegister(formal){
+  S.formal = formal;
+  document.getElementById('ph-formal').classList.toggle('on', formal);
+  document.getElementById('ph-informal').classList.toggle('on', !formal);
+  phRender();
+}
+function phRender(){
+  var q = document.getElementById('ph-search').value.toLowerCase();
+  var h = '';
+  for (var i = 0; i < PHRASES.length; i++){
+    var p = PHRASES[i];
+    var hay = (p.f + ' ' + p.i + ' ' + p.en + ' ' + p.use).toLowerCase();
+    if (q && hay.indexOf(q) === -1) continue;
+    h += '<div class="card" style="padding:12px 14px"><div class="row between"><div style="font-weight:700;font-size:15px">' + (S.formal ? p.f : p.i) + '</div><button class="spk" onclick="speak(this)">🔊</button></div>'
+       + '<div class="muted tiny">' + p.en + '</div>'
+       + '<div class="tiny" style="color:var(--amber);margin-top:5px">when to use: ' + p.use + '</div></div>';
+  }
+  document.getElementById('ph-list').innerHTML = h || '<div class="muted" style="text-align:center;padding:20px">No matches — try another word.</div>';
+}
+
+/* ═════════ VOCABULARY / SRS ═════════ */
+var VOCAB = [
+  {q:'amanhã', a:'tomorrow'},
+  {q:'a chave', a:'the key'},
+  {q:'os hóspedes', a:'the guests'},
+  {q:'a limpeza', a:'the cleaning'},
+  {q:'quanto é?', a:'how much is it?'}
+];
+function renderVocab(){
+  document.getElementById('vocab-title').textContent = S.reviewMode ? '🔁 Review' : '🃏 Vocabulary';
+  document.getElementById('vocab-due-line').textContent = S.reviewDue + ' due';
+  var area = document.getElementById('vocab-area');
+  if (S.reviewDue <= 0 || S.vIdx >= VOCAB.length){
+    area.innerHTML = '<div class="card" style="text-align:center;padding:28px 16px"><div style="font-size:32px">✅</div><div style="font-weight:800;margin:6px 0">All caught up</div><div class="muted tiny">Nothing due. Items resurface exactly when you\'re about to forget them — that\'s the system working, not you slacking.</div></div>';
+    return;
+  }
+  var c = VOCAB[S.vIdx];
+  var face = S.vFlipped
+    ? '<div style="font-size:22px;font-weight:800">' + c.a + '</div><div class="muted tiny" style="margin-top:6px">' + c.q + '</div>'
+    : '<div style="font-size:22px;font-weight:800">' + c.q + ' <button class="spk" onclick="event.stopPropagation();speak(this)">🔊</button></div><div class="muted tiny" style="margin-top:6px">tap to flip</div>';
+  area.innerHTML = '<div class="flash" onclick="vFlip()">' + face + '</div>'
+    + '<div class="gradebtns" style="visibility:' + (S.vFlipped ? 'visible' : 'hidden') + '">'
+    + '<button style="background:#FF3B30" onclick="vGrade(0)">Again</button>'
+    + '<button style="background:#FF9500" onclick="vGrade(1)">Hard</button>'
+    + '<button style="background:#34C759" onclick="vGrade(2)">Good</button>'
+    + '<button style="background:#007AFF" onclick="vGrade(3)">Easy</button></div>'
+    + '<div class="muted tiny" style="text-align:center;margin-top:10px">Grades feed the 4-dimension model: hear · say · retrieve · avoid.</div>';
+}
+function vFlip(){ S.vFlipped = !S.vFlipped; renderVocab(); }
+function vGrade(g){
+  if (g > 0) S.reviewDue = Math.max(0, S.reviewDue - 1); // "Again" keeps it due
+  S.vIdx++; S.vFlipped = false;
+  renderVocab(); readout();
+  var pd = document.getElementById('prac-due'); if (pd) pd.textContent = S.reviewDue + ' due';
+  var hd = document.getElementById('home-due'); if (hd) hd.textContent = S.reviewDue;
+}
+
+/* ═════════ TUTOR ═════════ */
+function toggleHelp(el){
+  S.help = !S.help;
+  el.classList.toggle('on', S.help);
+  var hints = document.querySelectorAll('.tutor-hint');
+  for (var i = 0; i < hints.length; i++) hints[i].style.display = S.help ? 'block' : 'none';
+}
+function tutorMic(el){
+  record(el, function(){
+    var chat = document.getElementById('tutor-chat');
+    var me = document.createElement('div');
+    me.className = 'bubble bub-me';
+    me.innerHTML = '🎙️ “Os hóspedes chegam às… dezasseis?”';
+    chat.appendChild(me);
+    var re = document.createElement('div');
+    re.className = 'bubble bub-npc';
+    re.innerHTML = 'Muito bem! 👌 Só o ritmo: dez-a-<b>ssei</b>s — o acento cai no fim. Outra vez? <button class="spk" onclick="speak(this)">🔊</button><div class="hint tutor-hint" style="display:' + (S.help ? 'block' : 'none') + '">Very good! Just the rhythm: the stress falls at the end. Again?</div>';
+    chat.appendChild(re);
+    re.scrollIntoView({block:'nearest'});
+  });
+}
+
+/* ═════════ SCENARIO GENERATOR ═════════ */
+function scenGen(){
+  if (S.offline){ document.getElementById('scen-offline').style.display = 'block'; document.getElementById('scen-result').style.display = 'none'; return; }
+  document.getElementById('scen-offline').style.display = 'none';
+  document.getElementById('scen-result').style.display = 'block';
+}
+
+/* ═════════ SETTINGS ═════════ */
+function setPath(p){ S.path = p; renderYou(); renderHome(); readout(); }
+function renderYou(){
+  var sels = document.querySelectorAll('#path-switcher .select');
+  for (var i = 0; i < sels.length; i++) sels[i].classList.toggle('on', sels[i].dataset.path === S.path);
+  document.getElementById('offline-toggle').classList.toggle('on', S.offline);
+  document.getElementById('you-streak').textContent = S.streak;
+}
+function toggleOffline(el){
+  S.offline = !S.offline;
+  el.classList.toggle('on', S.offline);
+  document.body.dataset.offline = S.offline ? '1' : '0';
+  document.getElementById('sb-net').textContent = S.offline ? '📴 offline' : '􀙇 100%';
+  var note = document.getElementById('prac-offline-note');
+  if (note) note.style.display = S.offline ? 'block' : 'none';
+  readout();
+}
+var dlTimer = null;
+function startDownload(){
+  var fill = document.getElementById('dl-fill');
+  var label = document.getElementById('dl-label');
+  document.getElementById('dl-track').style.display = 'block';
+  label.style.display = 'block';
+  var pct = 0;
+  if (dlTimer) clearInterval(dlTimer);
+  dlTimer = setInterval(function(){
+    pct += 7;
+    if (pct >= 100){
+      pct = 100; clearInterval(dlTimer);
+      label.innerHTML = '<b style="color:var(--green)">✓ Survival L0–L1 downloaded</b> · 18 situations · 42 MB multi-voice audio · works fully offline';
+      document.getElementById('dl-btn').textContent = '✓ Survival track L0–L1 on device';
+    } else {
+      label.textContent = 'Downloading pack + pre-generating audio… ' + pct + '%';
+    }
+    fill.style.width = pct + '%';
+  }, 180);
+}
+
+/* ═════════ PER-SCREEN RENDER HOOKS ═════════ */
+function renderHome(){
+  var title = document.getElementById('home-prog-title');
+  var sub = document.getElementById('home-prog-sub');
+  var cta = document.getElementById('home-cta');
+  if (S.path === 'structured'){
+    title.textContent = 'Month 1';
+    sub.textContent = '17 / 28 lessons';
+    cta.textContent = 'Continue Day 18 — Introducing yourself →';
+  } else if (S.path === 'free'){
+    title.textContent = 'Self-directed';
+    sub.textContent = '23 situations touched · 14 solid';
+    cta.textContent = "Start today's session · ~30 min →";
+  } else {
+    title.textContent = 'Track ' + (TRACK_LABEL[S.track || 'B']);
+    sub.textContent = 'Level L1 · 14 of 22 situations solid';
+    cta.textContent = "Start today's session · ~30 min →";
+  }
+  document.getElementById('home-due').textContent = S.reviewDue;
+  document.getElementById('home-streak').textContent = S.streak;
+  document.getElementById('home-freeze').textContent = S.freezes;
+}
+var RENDER = {
+  home: renderHome,
+  session: function(){ S.seg = 0; sessShadowCount = 0; renderSession(); },
+  learn: function(){ learnView(S.path === 'structured' ? 'course' : 'tracks'); },
+  'eng-vocab': function(){ S.vIdx = 0; S.vFlipped = false; renderVocab(); },
+  'eng-sim': function(){ simStart(S.simLevel || 1, null); },
+  'eng-phrases': phRender,
+  you: renderYou,
+  practice: function(){
+    var pd = document.getElementById('prac-due'); if (pd) pd.textContent = S.reviewDue + ' due';
+    var note = document.getElementById('prac-offline-note'); if (note) note.style.display = S.offline ? 'block' : 'none';
+  },
+  recap: function(){ S.streak = 8; },
+  situation: function(){ S.reviewMode = false; }
+};
+
+/* ═════════ MISC ═════════ */
+function magicLink(btn){
+  btn.style.display = 'none';
+  document.getElementById('magic-note').style.display = 'block';
+  document.getElementById('magic-open').style.display = 'block';
+}
+function fwReset(){ S.fwHeard = false; S.fwSaid = false; }
+
+/* boot */
+go('onb-welcome', false);
+</script>
+</body>
+</html>

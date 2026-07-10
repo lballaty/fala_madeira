@@ -1,45 +1,213 @@
-plan_file: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/plans/plan-2026-07-08-production-readiness.yaml
-started_at: 2026-07-08T17:30:00Z
-last_updated: 2026-07-08T18:10:00Z
-checkpoint: "Phase 1->2 boundary. Phases 0 and 1 complete. Next eligible: Phase 2 edge functions (edge-fn-gemini, edge-fn-account-deletion) + Phase 3 engineering-standards/extract-static-data."
+# Plan execution state — plan-2026-07-09-full-product.yaml
+# Previous state (plan-2026-07-08-production-readiness.yaml, all Phase 0/1 succeeded)
+# is preserved in git history; that plan is SUPERSEDED and its delivered work is
+# validated by foundations-done below.
+plan_file: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/plans/plan-2026-07-09-full-product.yaml
+started_at: 2026-07-09T06:23:00Z
+last_updated: 2026-07-09T06:25:00Z
+mode: credential-free-first  # USER-GATE steps deferred to end where possible
 steps:
-  - id: rotate-gemini-key
+  - id: foundations-done
     status: succeeded
-    notes: "Dev key verified HTTP 200; prod rotation deferred (operator accepted, enforced at security-verification)."
-  - id: git-branch-baseline
-    status: succeeded
-    notes: "Committed WIP+plan to main (9dd7505), pushed origin. Working on main per operator directive."
-  - id: supabase-cli-link
-    status: succeeded
-    notes: "Linked gxlrmdfqcqimwwplrdgd (PortugueseMadeira) via SUPABASE_ACCESS_TOKEN (liborballaty account)."
-  - id: fix-build
-    status: succeeded
-    notes: "npm install resolved rollup optional-dep; build OK in ~1.7s, PWA sw generated."
-  - id: dependency-hygiene
-    status: succeeded
-    notes: "Moved express/pg/dotenv to devDeps via npm CLI (Edit on package.json is denied by guardrail). Prod audit: 1 low only (was 2 high/1 crit). Build OK."
-  - id: fix-migration-runner
-    status: succeeded
-    notes: "Converted apply-migrations.js to ESM (project is type:module), direct-connection host, argv file path, dotenv quiet. Verified connects+executes."
-  - id: promote-fixed-migration
-    status: succeeded
-    notes: "git mv missing_tables_fixed.sql -> 00003; git rm missing_tables.sql. 30 idempotency guards."
-  - id: apply-migration-00003
-    status: succeeded
-    notes: "Applied live. is_admin() confirmed present. Profile columns + trigger fix + hardened RLS live."
-  - id: migration-00004-rls-gaps
-    status: succeeded
-    notes: "Wrote+applied 00004 (UPDATE lesson_requests[uuid]/lesson_corrections[text], INSERT global_settings, DELETE profiles). Fixed a text=uuid type mismatch first."
-  - id: seed-admin-account
-    status: succeeded
-    notes: "Created liborballaty@gmail.com via Auth admin API (id ead858ac, email pre-confirmed), trigger created profile, promoted to role=admin. Temp pw in .admin-temp-credentials.txt (gitignored) — operator to change."
-  - id: db-docs-reconcile
-    status: succeeded
-    notes: "DATABASE_DESIGN.md fixed (selected_tutor_id 't1', video_suggestions/lesson_corrections lesson_id+user_id are TEXT). Created APPLIED.md migration log."
-  # --- Phase 2+ pending ---
-  - id: edge-fn-gemini
-    status: pending
-  - id: edge-fn-account-deletion
-    status: pending
+    finished_at: 2026-07-09T06:24:00Z
+    notes: "Re-validated: npm run build OK, dist/ present, gemini edge fn + CONTENT-ARCHITECTURE.md present."
   - id: client-gemini-refactor
+    status: succeeded
+    finished_at: 2026-07-09T06:50:00Z
+    notes: "geminiService rewritten over supabase.functions.invoke (chat=history-based ChatSession, deleteAccount added); GEMINI_API_KEY define removed from vite.config.ts; @google/genai uninstalled; validation passed (no key in src or dist). Orchestrator also added tsconfig exclude for supabase/functions so npm run lint passes (Deno files out of app tsc scope). Follow-ups noted: client-side voice-limit UX reconcile w/ server 429; logger hook point = invokeEdgeFunction."
+  - id: platform-adapter-layer
+    status: succeeded
+    finished_at: 2026-07-09T08:05:00Z
+    notes: "src/platform/{types.ts,index.ts,web/,native/} created; speech/audio/storage/notifications interfaces + web impls + native stubs; audioCache, App.tsx, geminiService migrated to the platform singleton. Legacy IndexedDB name preserved (FalaMadeiraAudioCache) so cached audio survives. tsc clean, build passes. OPERATOR CLEANUP: rm src/platform/web/probe.ts (leftover empty probe; rm deny-ruled for agent)."
+  - id: engineering-standards
+    status: succeeded
+    finished_at: 2026-07-09T06:35:00Z
+    notes: "docs/ENGINEERING-STANDARDS.md authored (12 sections + 48-item compliance checklist); grounded in current repo anti-patterns."
+  - id: extract-static-data
+    status: succeeded
+    finished_at: 2026-07-09T08:40:00Z
+    troubleshoot_invocations: 1
+    notes: "src/data/{lessons(937L, 56 lessons verbatim),tutors(54L),curriculum(13L)}.ts extracted byte-identical (diff-verified vs HEAD); App.tsx 4489->3504; lint passes. GATE DISCREPANCY: plan gate <3400 was miscalibrated (only 985 lines of static data existed; 3504 is the extraction floor — orchestrator re-verified no >15-line top-level literal remains). Accepted; split-app-components' <800 gate subsumes."
+  - id: split-app-components
+    status: succeeded
+    finished_at: 2026-07-09T09:55:00Z
+    troubleshoot_invocations: 0
+    notes: "App.tsx 3504->360 shell; slices auth/home/learning/practice/tutor/settings + src/components + src/hooks; 66 useState -> slice hooks + 2 reducers (tutorSession, authForm); React.lazy per-tab chunks; behavior-preserving (modal drafts survive tab switches via always-mounted slice hooks). Hit session limit mid-run, resumed via SendMessage. KEY NOTES: console.* error paths concentrated in useAuth/useTutorSession/useLessons/useSpeechPlayback/ErrorBoundary + handleSupabaseError choke point (for centralized-logger); MADEIRA2026 in useLessons.handleUnlockLevel (for config-and-flags); practice hub mounts at src/features/practice/."
+  - id: centralized-logger
+    status: succeeded
+    finished_at: 2026-07-09T10:20:00Z
+    notes: "src/lib/logger.ts: session/request/correlation IDs (client joins edge-fn requestId), 5 levels/5 categories, ring buffer 200 -> SupportModal diagnostics, batched ERROR/CRITICAL to existing public.logs (RLS-aware queue+flush), dev echo. userMessage(code,msg,ref) on all error toasts. 39 console.* swept to 0 unguarded; added src/vite-env.d.ts. Validation passed."
+  - id: config-and-flags
+    status: succeeded
+    finished_at: 2026-07-09T11:25:00Z
+    notes: "src/config.ts (ui/tutor/audio/voice/logging/dailySession values + featureFlags payments/nativeSpeech/offlineDownloads w/ re-entry docs). MADEIRA2026 out of src: unlock key now read from global_settings.level_unlock_key (00005 applied live+verified, ON CONFLICT DO NOTHING so operator can rotate); unreachable setting = DENY + SECURITY log, no fallback. APPLIED.md updated. Validation passed."
+  - id: lint-tooling
+    status: succeeded
+    finished_at: 2026-07-09T13:30:00Z
+    notes: "ESLint 9 flat config (ts-eslint + react-hooks + jsx-a11y + prettier-last) scoped to src; 89 errors -> 0 (71 no-explicit-any fixed with real types), 2 intentional warns deferred to accessibility-pass (HomeView clickable card); .prettierrc codifies existing style, NO repo reformat (54 files would churn — deferred). preserve-manual-memoization off (no React Compiler). All exhaustive-deps disables documented for later review. Validation + full build pass."
+last_updated: 2026-07-09T13:30:00Z
+checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). Phase C: schema+migrations done; NEXT ELIGIBLE: content-repository, then seed-content-migration (unblocks Phase D engine fan-out + practice-hub). Also eligible: payments-deferred, legal-pages, dark-mode-and-typescale, responsive-desktop, tts-user-choice, stt-speech-adapter, vertical-slice-map, prompt-hardening(after seed). Resume: /execute-plan --resume. 14/55 succeeded, 0 failed, 0 blocked."
+  - id: capacitor-setup
+    status: succeeded
+    finished_at: 2026-07-09T11:05:00Z
+    notes: "Capacitor 8 (SPM — CocoaPods NOT needed) init com.searchingfool.falamadeira, ios/ added, 4 plugins wired into src/platform/native: preferences+filesystem (storage), local-notifications, @capgo/capacitor-speech-recognition (SPM-compatible fork; community plugin was ObjC-only). Audio = justified WKWebView delegation. Dynamic imports keep web bundle clean; build+lint pass. Scaffold STAGED not committed. IOS-BUILD PREREQS: Info.plist needs NSSpeechRecognitionUsageDescription + NSMicrophoneUsageDescription; Xcode signing; optional AVAudioSession tuning."
+  - id: content-model-schema
+    status: succeeded
+    finished_at: 2026-07-09T10:35:00Z
+    notes: "src/content/schema.ts (Situation/Track/Pack + 7 voice types + roleplay branching + CourseSlot keeping Structured Course first-class; hand-rolled validator, browser-safe) + scripts/validate-content.mjs (pack integrity, EP/anti-Brazilian scan w/ 22-marker list + gerund regex, 17 self-tests) + docs/CONTENT-STANDARDS.md. Includes the 56-lesson->Situation field mapping table for seed-content-migration (in agent report + schema comments). Validation passed."
+  - id: content-db-migrations
+    status: succeeded
+    finished_at: 2026-07-09T12:15:00Z
+    notes: "00006_content_model.sql applied live + verified (9/9 tables, RLS all-on, owner/admin/published-pack policies, mastery dimension CHECK + due index, pronunciation append-only, track selection = history rows w/ single-active partial unique index). APPLIED.md + DATABASE_DESIGN.md updated. FOLLOW-UP: pack status vocab — schema.ts says 'deprecated', plan said 'archived'; DB CHECK accepts union; reconcile in content-repository or perf step."
+  - id: content-repository
+    status: succeeded
+    finished_at: 2026-07-09T14:30:00Z
+    notes: "src/content/{repository,bundled,index}.ts: memory->StorageAdapter cache->published DB packs->bundled defaults; SHA-256 (crypto.subtle) over canonicalPackPayload; write-then-swap w/ self-healing corrupt-cache discard; refresh() diffs (id,version); all failures logged w/ correlation IDs. Bundled seam for seed step: generated .ts module (no resolveJsonModule) + one import. PACK_STATUSES reconciled (+archived). Validation + build pass."
+  - id: seed-content-migration
+    status: succeeded
+    finished_at: 2026-07-09T16:10:00Z
+    notes: "56 lessons -> pack-seed-course v1.0.0 VERBATIM (56 situations/170 patterns/191 vocab/33 goals/11 cultural notes/3 media; integrity self-check hard-fails on transformation). NOTE: plan's ~450-vocab estimate was wrong — source has 191, all carried. Levels deterministic (L0:14 L1:25 L2:14 L3:3; A1/A2/B1). Published+live-verified (checksum match, spot-check byte-for-byte), idempotent w/ stale-projection cleanup; bundled via generated src/content/packs/seed-course.ts + content/packs/seed-course.json for validator. 14 validator warnings inherent to source (7 stress-test lessons <2 modes; você advisories). Validation+build pass."
+  - id: content-enrichment
+    status: pending
+  - id: tts-provider-adapters
+    status: succeeded
+    finished_at: 2026-07-09T08:20:00Z
+    notes: "supabase/functions/_shared/tts/ adapter layer (azure default, gemini w/ verbatim finishReason=OTHER hardening, google/elevenlabs/openai/polly) + router w/ 7-voice_type VOICE_MAP; gemini fn v3 deployed ACTIVE; live smoke tests passed (new voiceType + legacy tutor contracts). Chain today: gemini (Azure key absent). OPERATOR (credential gate, deferred): supabase secrets set AZURE_SPEECH_KEY + AZURE_SPEECH_REGION --project-ref gxlrmdfqcqimwwplrdgd — no redeploy needed. TTS response now carries provider/voice/sampleRateHz metadata for the cache key."
+  - id: stt-speech-adapter
+    status: succeeded
+    finished_at: 2026-07-09T15:40:00Z
+    notes: "Uniform recognize(opts)->Promise<string> via shared withRecognize() wrapper (both web+native impls); typed rejects unavailable/permission-denied/timeout(+1.5s native flush grace)/no-speech/aborted. Cloud-STT fallback SEAM only (CloudSttProvider + speechWithFallback, identity today — no provider, no edge fn yet; gated by future featureFlags.cloudStt). iOS Safari Web Speech unreliability rationale documented in speech.web.ts. Validation passed."
+  - id: tts-user-choice
+    status: succeeded
+    finished_at: 2026-07-10T06:25:00Z
+    notes: "Resumed+completed. 00007 applied+live-verified (tts_provider CHECK + tts_byo_key_ref REFERENCE-only w/ SQL comment). Edge fn buildChain: explicit override wins, else usable preferred provider prepended to azure->gemini default (usable = platform secret present OR BYO ref resolves via Deno.env; stale ref = WARN TTS_BYO_KEY_REF_UNRESOLVED, never raw key, never hard-fail). gemini redeployed v4 ACTIVE (2026-07-10 06:20). SettingsView Voice Provider card + BYO key-ref field (honest 'name not key' helper). tsc+eslint clean."
+  - id: engine-listening
+    status: succeeded
+    finished_at: 2026-07-10T00:10:00Z
+    notes: "src/features/practice/listening/ built; stub flipped available. Degrades to phrase-listening drill over the 170 populated patterns when dialogues empty (seed reality). Speed pills, transcript reveal, word replay, dictation, what-did-you-hear checks. COACH SIGNAL markers at result emissions. tsc+eslint+build clean (verified post-wave)."
+  - id: engine-speaking-pronunciation
+    status: succeeded
+    finished_at: 2026-07-10T00:55:00Z
+    notes: "Resumed+completed. src/features/practice/speaking/ (SpeakingView + 4 drills RepeatAfterMe/Shadowing/RecordCompare/ResponseSpeed + accuracy/attempts/items/referenceAudio/config/SharedControls) + stub flipped available. Deterministic word-accuracy scoring (pure accuracy.ts, unit-testable). Full capability degradation matrix (mic/no-mic x STT/no-STT — never a dead button). Persists pronunciation_attempts (append-only, audio_ref null seam). COACH SIGNAL on every result. Orchestrator's Shadowing ref-in-effect fix preserved. Full-tree gate (tsc+eslint+build) clean w/ all 8 engines integrated."
+  - id: engine-pattern-builder
+    status: succeeded
+    finished_at: 2026-07-10T00:10:00Z
+    notes: "src/features/practice/patterns/ built (6 files); stub flipped available. Full slot-substitution drill for slotted patterns + degrades to reveal/recall drill over 170 bare patterns (seed reality: slots empty). Deterministic, no AI. COACH SIGNAL at grading. tsc+eslint+build clean."
+  - id: engine-situation-simulator
+    status: succeeded
+    finished_at: 2026-07-10T00:40:00Z
+    notes: "Resumed+completed. src/features/practice/simulator/ (scenario/progress/useSimulator/SimulatorView) + stub flipped available (requiresOnline true). Scripted branching roleplay when roleplay data exists (L1-2 option buttons, L3+ hint-reveal + loose match) + free AI roleplay TODAY via geminiService.startChat built from real situation data w/ L1->L5 difficulty flavor. Mic via platform.speech.recognize(), TTS replies. Persists user_situation_progress {mode simulator, score{difficulty,turns,variant,hints,stalls}}. Offline online-only panel (§10). COACH SIGNAL stalls+hints. Own-scope tsc+eslint clean."
+  - id: engine-missions
+    status: succeeded
+    finished_at: 2026-07-10T00:10:00Z
+    notes: "src/features/practice/missions/ built; stub flipped available. Full prep->do->after-action flow when mission data exists + degrades to self-made-mission flow (prep sheet from real patterns/vocab, user writes own mission) when empty (seed reality). Writes missions_log. COACH SIGNAL at after-action grades. tsc+eslint+build clean."
+  - id: cultural-layer-and-phrase-library
+    status: succeeded
+    finished_at: 2026-07-10T00:10:00Z
+    notes: "src/features/phrases/ (4 files) + src/features/culture/ (2 files) built; both stubs flipped available. Fully functional TODAY (11 cultural_notes + 191 vocab + 170 patterns populated). Phrase Library: cross-situation aggregate, accent-insensitive live search, register/level/track filters, TTS, 'from: <situation>'. Culture: cultural_notes grouped + static register/indirectness explainers sourced from CONTENT-STANDARDS.md. tsc+eslint+build clean."
+  - id: prompt-hardening
+    status: succeeded
+    finished_at: 2026-07-10T06:55:00Z
+    notes: "_shared/gemini.ts: LearnerContext(level/knownVocab/situationContext) threaded into chat+generate-lesson+translate; level-lock (i+1, reuse known vocab), recast-first correction, PT_PT_ENFORCEMENT block (full anti-Brazilian wordlist + você/gerund forbidden). Two new actions wired w/ JWT+envelope: scenario-generator (need->phrases/variants/roleplay_seed/whatsapp_message) + error-analyst (utterances->findings[category,pattern,correct_form,focus_suggestion,severity]). TTS action + per-user chain PRESERVED. gemini v5 ACTIVE. Coach + content-enrichment consume the new actions."
+  - id: practice-hub-and-navigation
+    status: succeeded
+    finished_at: 2026-07-09T17:10:00Z
+    notes: "Practice tab (5th tab) + hub w/ 8 mode tiles + quiz entry; SituationPicker (track/level chips, soft-prereqs advisory only, nothing locked); usePractice routing {activeMode, situationId}; registry.ts + modes/*.stub.tsx w/ ENGINE INTEGRATION CONTRACT (each engine replaces own stub only — zero cross-agent contention). practiceConfig.softPrereqHintMax parked in registry.ts pending config.ts claim release. Lint+eslint+build pass."
+  - id: srs-adaptive-engine
+    status: succeeded
+    finished_at: 2026-07-09T16:45:00Z
+    notes: "src/lib/srs.ts pure+deterministic (SM-2 classic, now-as-param, config.srs constants) + dimension steering (reviewPriority = overdue x weakness x dimensionWeight) + dimensionSummary (4 keys always present, Coach input). src/hooks/useDueItems.ts w/ optimistic applyGrade + recordAvoidance; persistMastery = single marked OFFLINE SEAM for sync-queue step. Own-scope lint clean; full-tree gate re-verified after hub wave (hub stubs were mid-flight)."
+  - id: mode-vocab-review
+    status: succeeded
+    finished_at: 2026-07-10T00:10:00Z
+    notes: "src/features/practice/vocabulary/ built; stub flipped available. Flashcards over 191 vocab wired to src/lib/srs.ts via useDueItems (due-first then new via initialMasteryState); Again/Hard/Good/Easy -> applyGrade on 'retrieve' dim, audio-first variant grades 'hear'. item_key convention vocab:<situation_id>:<word>. Session summary. tsc+eslint+build clean. NOTE: hub tile due-badge is a documented seam (hub shows static tiles)."
+  - id: path-types
+    status: succeeded
+    finished_at: 2026-07-10T07:45:00Z
+    notes: "src/paths/ four LearningPath policies (pure, now-param, unit-testable): structured-course (RETAINED month/day, Continue Day N), goal-track (level+curation order, user_track_selection), adaptive-guided (daily-session composer scoring active-track+SRS weakness+due+placement), free (pass-through). config.dailySession.template = CONFIGURABLE segments (3/5/7/10/5/2=32min). usePathSelection() persists path+cursor to storage + active track to user_track_selection (one-active). src/features/session/DailySessionView mounts real engines via registry PracticeModeProps contract, minutes progress bar, recap STUB. App.tsx path-aware CTA routing; HomeView adaptive CTA; SettingsView Learning Path switcher. SEAMS: SessionRecap strengths/shaky/reviewAdded stubs marked COACH SIGNAL for coach step; usePathSelection/PATHS for onboarding step. tsc+build+eslint clean."
+  - id: coach-feedback-loop
+    status: succeeded
+    finished_at: 2026-07-10T08:10:00Z
+    notes: "src/lib/coach.ts deterministic/pure/offline: rankFocus (dimension + situation candidates scored severity x goalRelevance x reviewUrgency x recency/avoidance x completionDamp), buildSessionRecap (mastery-snapshot diff — engines report completion not results), buildWeeklyInsight, topFocus. config.coach. AI: geminiService.analyzeErrors -> error-analyst action, narrateFocus opt-in online w/ WARN fallback (never blocks/empties). Surfaces: FocusCard in HomeView (self-contained, no App.tsx change; one-tap -> practice hub), SessionRecap fills DailySessionView seam, WeeklyInsight, why-this evidence. adaptive-guided coachTopFocusSituationId() first-refusal seam. tsc+eslint clean. FOLLOW-UP for home-focus-progress: pass activeTrackId + openMode router to FocusCard via App.tsx (1-line) so goal-relevance + exact-engine routing activate (currently neutral + lands on hub)."
+  - id: dark-mode-and-typescale
+    status: succeeded
+    finished_at: 2026-07-10T09:25:00Z
+    notes: "data-theme strategy (mirrors mockup) + Tailwind 4 custom dark variant; --fm-* semantic tokens in index.css (light + [data-theme=dark] override, AA-fixed muted ~5.4-7:1); legacy ios-* aliases repointed so no call-site churn. useTheme hook (system/light/dark, localStorage — justified deviation from async platform.storage to avoid FOUC; pre-paint bootstrap in index.html). Settings Appearance segmented control. ~44 files color-migrated (zero bare gray-* left outside dark: variants). 5-step type scale in @theme. tsc+eslint+build+140 tests all pass. FLAGGED for accessibility-pass: verify amber/yellow status dark: variants, /10-/20 opacity tints on dark surfaces, toggle-knob + white-on-brand contrast."
+  - id: responsive-desktop
+    status: succeeded
+    finished_at: 2026-07-10T09:40:00Z
+    notes: "src/components/Sidebar.tsx (hidden md:flex, semantic tokens theme-correct) + App.tsx NAV_ITEMS single source driving both bottom bar (md:hidden) and sidebar; outer container flex-col md:flex-row, content md:max-w-5xl (unlocks 384px cap). Multi-column lg+: PracticeHub grid-cols-2/3, Home FocusCard+Continue grid-cols-2. LearningView left single-col (drag-reorder doesn't split cleanly — deferred). Mobile identical (all desktop rules are md:/lg: overrides). Same components, no behavior change. tsc+build pass; 2 HomeView a11y warnings remain for accessibility-pass."
+  - id: accessibility-pass
+    status: pending
+  - id: onboarding-flow
+    status: succeeded
+    finished_at: 2026-07-10T08:25:00Z
+    notes: "src/features/onboarding/ multi-step: welcome -> placement (L0/L1/L2, never locks) -> path choice (structured/goal/adaptive via usePathSelection) -> track picker (goal only, listTracks) -> 60s first win ('Bom dia!' playSpeech pulse + optional say-it-back via platform.speech, degrades to confirm) -> consent (Terms/Privacy/AI linking LegalPage, gated). App.tsx first-run gate after auth, before shell, waits isLoaded to avoid flash. Persistence: onboarding-complete+placement -> platform.storage per-user (documented seam: no profiles column yet); consent -> profiles.has_accepted_*; path+track -> usePathSelection/user_track_selection. config.onboarding. Full-tree tsc+eslint+build clean."
+  - id: home-focus-progress
+    status: succeeded
+    finished_at: 2026-07-10T08:40:00Z
+    notes: "HomeView + useHome: progress ring (path-scoped %), competence line 'You can now...' from completed situations' goals[], review-due card (useDueItems -> one-tap vocabulary), streak + freeze grace. CLOSED coach gap: FocusCard now gets activeTrackId + onAct openMode router (App.tsx threads supabase/pathContext/pathSelection/openMode) -> exact engine+situation + goal-relevance live. Streak-freeze client-side via platform.storage per-user (reconcileFreeze pure/now, once/day, bounded maxFreezeBridgeDays; documented profiles-column seam). config.home. Build clean; own-scope tsc clean (only tsc errors in tree were concurrent unit-tests agent's paths.test.ts mid-write)."
+  - id: admin-and-content-studio
+    status: succeeded
+    finished_at: 2026-07-10T07:05:00Z
+    notes: "src/features/admin/ (AdminView tabbed overlay, role='admin' gated + SECURITY log; useAdminQueues + AdminReviewQueues for lesson_corrections/lesson_requests/tickets/video_suggestions w/ optimistic approve-reject; useContentStudio + ContentStudio authoring loop using schema validateSituation/validateContentPack, sha256(canonicalPackPayload) checksum, upsert content_packs+situations+tracks, draft/publish). App.tsx: admin nav button (admin-only) + lazy AdminView mount. Existing settings AdminPanel left intact (separate entry). tsc+eslint clean."
+  - id: feedback-status-visibility
+    status: succeeded
+    finished_at: 2026-07-10T09:05:00Z
+    notes: "src/features/settings/MySubmissionsModal.tsx + useSettings loader: read-only 'My Submissions' bottom-sheet, 4 owner-RLS groups (lesson_corrections/lesson_requests/tickets/video_suggestions) w/ honest status pills + empty/loading/Ref'd-error states; 4 parallel owner-scoped SELECTs, logged. SettingsView row (Inbox) below Support. Orchestrator fixed 2 tsc errors in unit-tests' paths.test.ts (freePath.next()/sessionPlan() called with 0 args vs LearningPath 2-arg signature — added ctx()/selection()); tsc clean + 140 tests still green."
+  - id: payments-deferred
+    status: succeeded
+    finished_at: 2026-07-09T14:05:00Z
+    notes: "Upgrade/Stripe stub removed (App mount, tutor trigger -> limit toast, UserManual premium copy -> free-launch copy); entitlement seams kept (subscription_tier, voice_usage enforcement). Re-entry = 5-step checklist in src/config.ts; original modal JSX survives only at git f65b216:src/App.tsx ~L4280 (extracted file was never committed). OPERATOR CLEANUP: rm src/features/tutor/UpgradeModal.tsx (tombstone). Validation passed."
+  - id: legal-pages
+    status: succeeded
+    finished_at: 2026-07-09T15:05:00Z
+    notes: "src/features/legal/: Terms(13§)/Privacy(12§)/AI-disclosure(8§) as typed versioned constants (v0.1.0, DRAFT-banner), LegalPage bottom-sheet, clean index for onboarding step. Wired: Settings 3 rows + AuthScreen consent links (previously dead buttons). Accuracy: delete-account list verified in code; FLAGGED FOR LEGAL REVIEW: Gemini SCCs, per-processor DPAs, age-15 CZ threshold, Supabase region, numeric log retention. Validation passed."
+  - id: pwa-assets
+    status: succeeded
+    finished_at: 2026-07-09T07:15:00Z
+    notes: "Icons generated from logo.svg via scripts/generate-icons.mjs (192/512/maskable-512/apple-touch-180 opaque/#0284c7/favicon-48); manifest icons + includeAssets updated in vite.config.ts; index.html apple-touch + favicon links fixed. File checks passed; build check folded into the shared post-wave build."
+  - id: offline-audio-and-download
+    status: succeeded
+    finished_at: 2026-07-10T07:20:00Z
+    notes: "LRU blob cache in storage.web.ts (KV index {size,accessedAt}, evict-before-write on maxEntries/maxBytes, legacy names preserved) + types/native conformance. Cache key tts:{provider}:{voice}:{hash(text)} NO speed — single buildKey() shared by playSpeech + download. src/lib/audio-download.ts downloadForOffline({trackId,level}) multi-voice, progress+AbortSignal cancel, online-only, cache-full early-stop. SettingsView Offline Audio card (toggle/limit/usage/clear/download+progress+cancel). playSpeech delegates to synthesizeCached (shared key+LRU). config.audio/offline added. Full-tree tsc+eslint+build clean. NOTE: cache keyed on REQUESTED voice not server-resolved (deterministic hits)."
+  - id: offline-sync-queue
+    status: succeeded
+    finished_at: 2026-07-10T06:45:00Z
+    notes: "src/lib/sync-queue.ts (StorageAdapter-backed durable queue, last-write-wins by clientTs, crash-safe drain, bounded 500 + overflow WARN, auto-flush on online, contentRepository.refresh() on reconnect). Wired mastery persistMastery seam -> enqueue (optimistic preserved). initSyncQueue() in main.tsx. useOnlineStatus() shared hook created (simulator's inline dup noted as 1-line follow-up, not edited — in do-not-touch set). SEAMS: counter increments refused loudly (SYNC_QUEUE_INCREMENT_UNSUPPORTED — needs server RPC, no supabase.rpc exists); missions_log/user_situation_progress queue-capable, callers opt in. config.sync added. Own-scope tsc+eslint clean."
+  - id: offline-pwa-caching
+    status: succeeded
+    finished_at: 2026-07-10T06:45:00Z
+    notes: "vite.config.ts workbox runtimeCaching: static CacheFirst, content/audio StaleWhileRevalidate (rangeRequests for audio), Supabase /rest GET NetworkFirst (5s timeout+fallback). NEVER cached: /auth/**, /functions/v1/** (edge POSTs), non-GET mutations; navigateFallbackDenylist for those. SPA offline boot via navigateFallback. dist/sw.js emitted (48 precache entries). OfflineIndicator.tsx created as SEAM (unmounted — App.tsx owned by admin agent; 1-line mount documented in file). Build verified."
+  - id: perf-efficiency-stability-safety
+    status: pending
+  - id: author-tracks-and-curriculum
+    status: pending
+  - id: unit-tests
+    status: succeeded
+    finished_at: 2026-07-10T08:55:00Z
+    notes: "vitest + @testing-library + jsdom. 140 tests / 12 files all green (re-verified). Standalone vitest.config.ts (does NOT extend vite.config — avoids PWA/tailwind + App.tsx/HomeView load; import.meta.env stubbed). Covers schema validators, srs SM-2 + steering, coach scoring/recap/insight, all 4 path policies + daily-session composer, speaking accuracy, simulator similarity, patterns/missions/vocab/phrases helpers, LegalPage + Quiz components. 0 bugs found. GAPS for perf/preflight (documented): coach UI components, full-App/screen renders, repository chain, sync-queue, logger, async supabase-upsert helpers."
+  - id: vertical-slice-map
+    status: succeeded
+    finished_at: 2026-07-09T14:20:00Z
+    notes: "docs/TEST-VERTICAL-SLICES.md: 7 implemented slices (S1-S7, concrete hooks/tables/evidence) + 11 planned forward contracts (S8-S18 w/ owning step-ids). Gaps G1-G6 for e2e: happy paths persist no log rows (Send-Logs user_report row = session pivot), edge fns don't write public.logs, no x-correlation-id header yet, session_id not page-exposed, quiz evidence = array mutation, STT needs mocked adapter. FINDING: delete-account relies on ON DELETE CASCADE for 00006 tables — e2e must assert cascade."
+  - id: security-verification
+    status: succeeded
+    finished_at: 2026-07-10T07:55:00Z
+    notes: "scripts/verify-security.mjs (npm run verify:security) exit 0, no checks weakened. FATAL PASS: (1) bundle scan dist/ + ios public — no Gemini/service-role/provider keys; anon key + URL correctly allowlisted as public; (2) live anon RLS probes on gxlrmdfqcqimwwplrdgd — profiles/logs filter all rows, cross-user read empty, anon insert 401/42501, published content_packs + global_settings public-by-design return data; (3) gemini + delete-account reject no-JWT with 401. OPERATOR ADVISORIES (WARN): rotate dev Gemini key before prod; global_settings.level_unlock_key value (MADEIRA2026) is anon-readable per 00005 SELECT USING(true) — tighten policy if it must be confidential."
+  - id: vertical-slice-e2e
+    status: pending
+  - id: preflight-and-standards
+    status: pending
+  - id: local-server-test
+    status: pending
+  - id: ios-build
+    status: pending
+  - id: web-deploy-pipeline
+    status: pending
+  - id: verpex-deploy
+    status: pending
+  - id: post-deploy-smoke
+    status: pending
+  - id: docs-sync-and-release
     status: pending

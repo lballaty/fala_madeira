@@ -8,3 +8,6 @@ coverage/
 !.env.example
 
 .admin-temp-credentials.txt
+
+# Claude Code local settings
+.claude/settings.local.json

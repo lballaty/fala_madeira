@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, XCircle, ArrowRight, Volume2 } from 'lucide-react';
+import { XCircle, ArrowRight, Volume2 } from 'lucide-react';
 import { Lesson, QuizQuestion } from '../types';
 import { cn } from '../lib/utils';
 
@@ -82,10 +82,10 @@ export const Quiz: React.FC<QuizProps> = ({ lesson, onComplete, onClose, playSpe
   };
 
   return (
-    <div className="fixed inset-0 z-[60] bg-white flex flex-col">
-      <header className="p-6 border-b flex items-center justify-between">
+    <div className="fixed inset-0 z-[60] bg-surface text-text flex flex-col">
+      <header className="p-6 border-b border-line flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <button onClick={onClose} className="p-2 bg-ios-bg rounded-full">
+          <button onClick={onClose} aria-label="Close quiz" className="p-2 bg-ios-bg rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center">
             <XCircle className="w-6 h-6 text-ios-gray" />
           </button>
           <div>
@@ -118,9 +118,10 @@ export const Quiz: React.FC<QuizProps> = ({ lesson, onComplete, onClose, playSpe
             <div className="space-y-4 text-center">
               <h3 className="text-2xl font-bold tracking-tight">{currentQuestion.question}</h3>
               {currentQuestion.id.startsWith('p-') && (
-                <button 
+                <button
                   onClick={() => playSpeech(currentQuestion.answer)}
-                  className="p-3 bg-ios-blue/10 text-ios-blue rounded-full mx-auto flex items-center justify-center"
+                  aria-label="Play audio"
+                  className="p-3 bg-ios-blue/10 text-ios-blue rounded-full mx-auto flex items-center justify-center min-w-[44px] min-h-[44px]"
                 >
                   <Volume2 className="w-6 h-6" />
                 </button>
@@ -137,9 +138,9 @@ export const Quiz: React.FC<QuizProps> = ({ lesson, onComplete, onClose, playSpe
                       "p-5 rounded-2xl text-left font-bold transition-all border-2",
                       isAnswered 
                         ? opt === currentQuestion.answer 
-                          ? "bg-green-50 border-green-500 text-green-700"
+                          ? "bg-green-50 dark:bg-green-950/40 border-green-500 text-green-700 dark:text-green-300"
                           : opt === selectedOption 
-                            ? "bg-red-50 border-red-500 text-red-700"
+                            ? "bg-red-50 dark:bg-red-950/40 border-red-500 text-red-700 dark:text-red-300"
                             : "bg-ios-bg border-transparent opacity-50"
                         : "bg-ios-bg border-transparent hover:border-ios-blue/30 active:scale-95"
                     )}
@@ -184,7 +185,7 @@ export const Quiz: React.FC<QuizProps> = ({ lesson, onComplete, onClose, playSpe
         </AnimatePresence>
       </main>
 
-      <footer className="p-6 border-t">
+      <footer className="p-6 border-t border-line">
         <button 
           onClick={nextQuestion}
           disabled={!isAnswered}

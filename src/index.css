@@ -1,23 +1,134 @@
+/* File: src/index.css
+   Description: Global stylesheet + Tailwind 4 theme wiring for FalaMadeira. Defines the
+     semantic color token layer (surface/card/text/muted/border/brand + status colors) as
+     CSS custom properties with light defaults and a [data-theme="dark"] override block,
+     mirroring docs/ui-mockup/intended-ui-v3.html (AA-fixed muted ~5.4:1). Registers those
+     tokens plus a consistent type-scale (display/title/heading/body/caption) into Tailwind's
+     @theme so `bg-surface`, `text-muted`, `text-heading`, etc. resolve to utilities. Enables a
+     data-theme-driven `dark:` variant so components can use either the semantic tokens or
+     `dark:` utilities. Theme selection (system/light/dark) is owned by src/hooks/useTheme.ts,
+     which sets the data-theme attribute on <html>; an inline bootstrap in index.html applies it
+     before first paint to avoid a flash.
+   Author: Libor Ballaty (with assistant)
+   Created: 2026-07-10 */
+
 @import "tailwindcss";
 
+/* Dark variant driven by the data-theme attribute on <html> (set by useTheme). This lets
+   components opt into `dark:` utilities in addition to the semantic tokens below. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---- Semantic palette (light defaults) ----
+   Mirrors the v3 mockup palette. These raw vars (--fm-*) are the single source of truth that
+   flips under [data-theme="dark"]; the @theme block below aliases Tailwind's --color-* tokens
+   to them so `bg-surface` / `text-muted` / `border-line` utilities are theme-correct without a
+   `dark:` variant. `muted` is AA-fixed (~7:1 light / ~5.4:1 dark on the card). */
+:root {
+  --fm-brand: #007AFF;          /* iOS blue — primary action / accent */
+  --fm-surface: #F2F2F7;        /* app background (behind cards) */
+  --fm-card: #FFFFFF;           /* card / sheet / input background */
+  --fm-elevated: #FFFFFF;       /* modals, tab bar, popovers */
+  --fm-text: #000000;           /* primary foreground */
+  --fm-muted: #4B4B50;          /* secondary foreground — AA on card (~7:1) */
+  --fm-line: rgba(60, 60, 67, 0.14); /* hairline borders / dividers */
+
+  --fm-success: #248A3D;        /* green — solid / correct */
+  --fm-warning: #B25000;        /* amber — shaky / online-only */
+  --fm-accent: #5856D6;         /* purple — review / SRS */
+  --fm-danger: #FF3B30;         /* red — destructive / errors */
+
+  --shadow-ios: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ---- Dark overrides ----
+   Values mirror docs/ui-mockup/intended-ui-v3.html [data-theme="dark"]; muted raised to
+   #AEAEB2 (~5.4:1 on the #1C1C1E card) per the mockup's AA fix. */
+[data-theme="dark"] {
+  --fm-surface: #000000;
+  --fm-card: #1C1C1E;
+  --fm-elevated: #1C1C1E;
+  --fm-text: #FFFFFF;
+  --fm-muted: #AEAEB2;
+  --fm-line: rgba(120, 120, 128, 0.32);
+
+  --fm-success: #30D158;
+  --fm-warning: #FF9F0A;
+
+  --shadow-ios: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Register tokens + type-scale into Tailwind's theme so utilities are generated.
+   Colors alias the --fm-* vars above so `dark:` need not be repeated for token classes —
+   e.g. `bg-card text-muted` is dark-correct automatically. The type scale is a small,
+   calm set (display/title/heading/body/caption) migrated to from ad-hoc font sizes. */
 @theme {
   --font-sans: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-  
-  --color-ios-blue: #007AFF;
-  --color-ios-gray: #8E8E93;
-  --color-ios-bg: #F2F2F7;
-  --color-ios-card: #FFFFFF;
+
+  /* Semantic colors (alias the --fm-* vars, which flip under [data-theme="dark"]). */
+  --color-brand: var(--fm-brand);
+  --color-surface: var(--fm-surface);
+  --color-card: var(--fm-card);
+  --color-elevated: var(--fm-elevated);
+  --color-text: var(--fm-text);
+  --color-muted: var(--fm-muted);
+  --color-line: var(--fm-line);
+  --color-success: var(--fm-success);
+  --color-warning: var(--fm-warning);
+  --color-accent: var(--fm-accent);
+  --color-danger: var(--fm-danger);
+
+  /* Legacy iOS aliases (kept so existing bg-ios-blue / text-ios-gray keep working while
+     colors migrate; ios-bg/ios-card now flip with theme). */
+  --color-ios-blue: var(--fm-brand);
+  --color-ios-gray: var(--fm-muted);
+  --color-ios-bg: var(--fm-surface);
+  --color-ios-card: var(--fm-card);
+
+  /* Type scale — a calm 5-step ramp. Each maps a font-size + line-height. Use via
+     text-display / text-title / text-heading / text-body / text-caption. */
+  --text-display: 1.75rem;         /* 28px — first-win phrase, big numbers */
+  --text-display--line-height: 2.125rem;
+  --text-display--font-weight: 800;
+  --text-title: 1.5rem;            /* 24px — screen titles (h2 in mockup) */
+  --text-title--line-height: 1.875rem;
+  --text-title--font-weight: 800;
+  --text-heading: 1.0625rem;       /* 17px — card headings / section titles */
+  --text-heading--line-height: 1.375rem;
+  --text-heading--font-weight: 700;
+  --text-body: 0.875rem;           /* 14px — default body copy */
+  --text-body--line-height: 1.375rem;
+  --text-caption: 0.6875rem;       /* 11px — captions, field notes, labels */
+  --text-caption--line-height: 1rem;
 }
 
 @layer base {
+  html {
+    /* Default so the very first paint (before useTheme runs) is light unless the inline
+       bootstrap in index.html has already set data-theme from stored pref / system. */
+    color-scheme: light;
+  }
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
   body {
-    @apply bg-ios-bg text-black antialiased overflow-hidden;
+    @apply bg-surface text-text antialiased overflow-hidden;
     font-family: var(--font-sans);
+  }
+
+  /* WCAG 2.2 AA (ENGINEERING-STANDARDS §6 — visible focus, no keyboard traps). Guarantee a
+     visible keyboard-focus indicator on every focusable control even where a component applies
+     `outline-none` on inputs/buttons without its own replacement. Scoped to :focus-visible so it
+     shows for keyboard/AT users but not on mouse click. Components that set their own
+     `focus:ring-*` still win visually; this is the floor, not a ceiling. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
 .ios-shadow {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-ios);
 }
 
 .ios-blur {
@@ -43,11 +154,11 @@
 }
 
 .markdown-body blockquote {
-  border-left: 4px solid #007AFF;
+  border-left: 4px solid var(--color-brand);
   padding: 0.5rem 0.75rem;
   margin: 0.5rem 0 0.75rem 0;
   font-style: italic;
-  background: rgba(0, 122, 255, 0.05);
+  background: color-mix(in srgb, var(--color-brand) 5%, transparent);
   border-radius: 4px;
 }
 
