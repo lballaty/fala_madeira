@@ -74,8 +74,8 @@ Application-wide configurations.
 ### `video_suggestions`
 User-submitted video content suggestions.
 - `id`: `uuid` (Primary Key)
-- `lesson_id`: `text` (NB: TEXT in live DB, not a UUID FK — see migration 00007 plan to migrate)
-- `user_id`: `text` (NB: TEXT in live DB, not a UUID FK)
+- `lesson_id`: `text` (TEXT in live DB, not a UUID FK — holds STATIC string lesson ids, not `lessons.id` UUIDs, so a FK is unsafe; indexed `idx_video_suggestions_lesson_id` in 00008)
+- `user_id`: `text` (TEXT in live DB, no FK — 00001 RLS compares `user_id = auth.uid()::text`; FK deferred in 00008 to avoid breaking that; indexed `idx_video_suggestions_user_id`)
 - `video_url`: `text`
 - `note`: `text`
 - `status`: `text` ('pending', 'approved', 'rejected')
@@ -84,7 +84,7 @@ User-submitted video content suggestions.
 ### `lesson_requests`
 Requests for new lesson topics.
 - `id`: `uuid` (Primary Key)
-- `user_id`: `uuid`
+- `user_id`: `uuid` (FK → `auth.users.id` ON DELETE CASCADE — `lesson_requests_user_id_fkey`, added live by migration 00008; indexed `idx_lesson_requests_user_id`)
 - `theme`: `text`
 - `description`: `text`
 - `status`: `text` ('pending', 'reviewed', 'implemented')
@@ -93,8 +93,8 @@ Requests for new lesson topics.
 ### `lesson_corrections`
 User-submitted corrections for existing lessons.
 - `id`: `uuid` (Primary Key)
-- `lesson_id`: `text` (NB: TEXT in live DB, not a UUID FK — see migration 00007 plan to migrate)
-- `user_id`: `text` (NB: TEXT in live DB, not a UUID FK)
+- `lesson_id`: `text` (TEXT in live DB, not a UUID FK — holds STATIC string lesson ids, not `lessons.id` UUIDs, so a FK is unsafe; indexed `idx_lesson_corrections_lesson_id` in 00008)
+- `user_id`: `text` (TEXT in live DB, no FK — 00001 RLS compares `user_id = auth.uid()::text`; FK deferred in 00008 to avoid breaking that; indexed `idx_lesson_corrections_user_id`)
 - `correction_text`: `text`
 - `status`: `text` ('pending', 'approved', 'rejected')
 - `created_at`: `timestamp with time zone`

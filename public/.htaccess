@@ -1,0 +1,59 @@
+# File: public/.htaccess  (copied verbatim into dist/.htaccess by the Vite build)
+# Description: Apache config for the Verpex shared host serving FalaMadeira as an SPA from the
+#   single `falamadeira.searchingfool.com` document-root directory (AGENTS.md §5). Mirrors the
+#   local Verpex emulator scripts/static-server.mjs exactly, and encodes the rules captured by the
+#   `local-server-test` plan step (plans/.plan-state.yaml). It MUST provide, in this order:
+#     1. SPA fallback: any request that is not an existing file/dir -> index.html (client router
+#        resolves the route). Real missing assets keep 404 via the file/dir existence checks.
+#     2. Correct MIME for PWA-critical types Apache would otherwise get wrong:
+#          .webmanifest -> application/manifest+json   (else browser rejects the manifest)
+#          .js / .mjs   -> text/javascript
+#     3. Cache-Control: no-cache for sw.js / registerSW.js / index.html / manifest.webmanifest
+#        (so a new deploy is picked up and users aren't stuck on a stale service worker/shell);
+#        long immutable cache for content-hashed /assets/*.
+#   This file is NOT precached by Workbox (globPatterns has no matching extension) and is never
+#   served to clients — Apache reads it as server config.
+# Author: Libor Ballaty (with assistant)
+# Created: 2026-07-10
+
+# --- 2. MIME types (declare before serving; Apache defaults are wrong for these) ---------------
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType text/javascript .js .mjs
+</IfModule>
+
+# --- 1. SPA fallback: non-file, non-dir requests are served the app shell -----------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If the requested path is an existing file, serve it as-is.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  # If the requested path is an existing directory, serve it as-is.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Otherwise (client-side route) serve the SPA shell. index.html itself is excluded to avoid a
+  # rewrite loop; assets fell through above because they exist on disk.
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# --- 3. Cache-Control ---------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Must-revalidate surfaces: the service worker, its registrar, the shell, and the manifest.
+  # A stale one of these is the classic "users stuck on the old build" bug.
+  <FilesMatch "^(sw\.js|registerSW\.js|index\.html|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Vite emits content-hashed filenames under /assets — safe to cache forever.
+  <FilesMatch "\.(js|mjs|css|woff|woff2|ttf|png|svg|jpg|jpeg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # The immutable rule above is broad by extension; re-assert no-cache for the four revalidate
+  # surfaces so their (hashless) names are not caught by the immutable asset rule. Order matters:
+  # this block runs after, so it wins for these exact names.
+  <FilesMatch "^(sw\.js|registerSW\.js|index\.html|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

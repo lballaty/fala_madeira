@@ -6,8 +6,25 @@ coverage/
 *.log
 .env*
 !.env.example
+# Deploy credentials: .env.deploy is secret (git-ignored by .env* above); its template is committed.
+!.env.deploy.example
 
 .admin-temp-credentials.txt
 
+# Generated knowledge graph (graphify)
+graphify-out/
+
+# One-off DB inspection scratch scripts (safe to delete)
+inspect-fk-columns.js
+check2.mjs
+
 # Claude Code local settings
 .claude/settings.local.json
+
+# Playwright e2e artifacts (generated; never commit the live session state under .auth/)
+tests/e2e/.auth/
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+.probe-tmp.mjs

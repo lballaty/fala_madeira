@@ -68,7 +68,9 @@ checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). 
     finished_at: 2026-07-09T16:10:00Z
     notes: "56 lessons -> pack-seed-course v1.0.0 VERBATIM (56 situations/170 patterns/191 vocab/33 goals/11 cultural notes/3 media; integrity self-check hard-fails on transformation). NOTE: plan's ~450-vocab estimate was wrong — source has 191, all carried. Levels deterministic (L0:14 L1:25 L2:14 L3:3; A1/A2/B1). Published+live-verified (checksum match, spot-check byte-for-byte), idempotent w/ stale-projection cleanup; bundled via generated src/content/packs/seed-course.ts + content/packs/seed-course.json for validator. 14 validator warnings inherent to source (7 stress-test lessons <2 modes; você advisories). Validation+build pass."
   - id: content-enrichment
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T11:15:00Z
+    notes: "scripts/enrich-content.mjs (Gemini REST gemini-2.5-flash, fetch, resumable batches of 8, additive merge never overwriting verbatim originals — git-HEAD-verified zero drift). 56/56 enriched+validated+published: +104 dialogues, +56 roleplays (L-scaled), +56 missions, +402 review_items, +122 cultural_notes, pattern variants. Pack v1.0.0->v1.1.0 (checksum 59811fca), DB verified. EU-PT clean (49 warnings all você/vocês register incl. verbatim lessons that teach them); validator 0 errors, every situation now feeds 4+ modes. Video: replaced placeholder on sit-d16 w/ verified real pt-PT vid 5PonqyoB06E. Review files projects/falamadeira/content-review/enrichment-batch-1..7.json. Orchestrator regenerated bundled src/content/packs/seed-course.ts from enriched JSON (v1.1.0, tsc+validate+build pass). FOLLOW-UP for author-tracks: 2 dead seed videos S2_YmG_l-p4 (sit-d1, sit-d15) need re-curation."
   - id: tts-provider-adapters
     status: succeeded
     finished_at: 2026-07-09T08:20:00Z
@@ -138,7 +140,9 @@ checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). 
     finished_at: 2026-07-10T09:40:00Z
     notes: "src/components/Sidebar.tsx (hidden md:flex, semantic tokens theme-correct) + App.tsx NAV_ITEMS single source driving both bottom bar (md:hidden) and sidebar; outer container flex-col md:flex-row, content md:max-w-5xl (unlocks 384px cap). Multi-column lg+: PracticeHub grid-cols-2/3, Home FocusCard+Continue grid-cols-2. LearningView left single-col (drag-reorder doesn't split cleanly — deferred). Mobile identical (all desktop rules are md:/lg: overrides). Same components, no behavior change. tsc+build pass; 2 HomeView a11y warnings remain for accessibility-pass."
   - id: accessibility-pass
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T10:05:00Z
+    notes: "index.html viewport fixed (pinch-zoom restored). useFocusTrap hook (focus-in, Tab cycle, Esc close, focus restore) on 15 dialogs w/ role=dialog+aria-modal+labelledby. aria-labels on all icon-only buttons (close/audio/mic+aria-pressed/search/toggles); switches got role=switch+aria-checked. Contrast: dark-mode flagged pairs verified AA, no token change needed. Touch targets min 44px on icon buttons across modals+engines. HomeView clickable div -> real button; both jsx-a11y rules RE-ENABLED to error. Global :focus-visible floor in index.css. ESLINT NOW FULLY CLEAN (0 errors 0 warnings). tsc+build pass. Full-screen players (Quiz/session/onboarding) intentionally not trapped (flagged)."
   - id: onboarding-flow
     status: succeeded
     finished_at: 2026-07-10T08:25:00Z
@@ -180,9 +184,13 @@ checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). 
     finished_at: 2026-07-10T06:45:00Z
     notes: "vite.config.ts workbox runtimeCaching: static CacheFirst, content/audio StaleWhileRevalidate (rangeRequests for audio), Supabase /rest GET NetworkFirst (5s timeout+fallback). NEVER cached: /auth/**, /functions/v1/** (edge POSTs), non-GET mutations; navigateFallbackDenylist for those. SPA offline boot via navigateFallback. dist/sw.js emitted (48 precache entries). OfflineIndicator.tsx created as SEAM (unmounted — App.tsx owned by admin agent; 1-line mount documented in file). Build verified."
   - id: perf-efficiency-stability-safety
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T10:35:00Z
+    notes: "SafeMarkdown.tsx (react-markdown + rehypeSanitize) on both tutor AI-output sites (XSS). useLessons fetch parallelized (Promise.all). AudioContext already singleton (verified). useSettings prefs writes debounced 600ms (optimistic local mirror). src/lib/retry.ts withRetry (exp backoff + jitter, 4xx no-retry) into invokeEdgeFunction. src/lib/validation.ts (trim/empty/maxlen/url) into all user-text submits. config.net/settings/limits. 00008 applied+verified: indexes on video_suggestions/lesson_corrections/lesson_requests; ADDED lesson_requests_user_id_fkey (found 00001 inline REF never applied live — REAL fix); DEFERRED (documented, breaking): TEXT user_id->uuid FK on video_suggestions/lesson_corrections (RLS uses ::text; 0 rows), lesson_id->lessons (holds string ids like m1d1). 154 tests (14 new) + build + tsc pass. OPERATOR CLEANUP: rm inspect-fk-columns.js check2.mjs."
   - id: author-tracks-and-curriculum
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T11:45:00Z
+    notes: "scripts/generate-content.mjs. Phase1 re-tag (deterministic): 56 enriched situations -> 5 goal tracks (many-to-many; self-heal preserves authored tracks for generated). Phase2 authored 31 net-new FULL situations (0 fail): M4-6 course (12, days 57-134, L3-5/B1-B2) + track net-new 19 (Host boiler/guest-noise/handover/cleaner-brief/water-leak; Bureaucracy Finanças/health-centre/bank/utilities/Junta; Work site-visit/scope/quote/invoice/intros; Survival airport-taxi/SIM-bus; Social dinner-invite/weekend). Pack v1.1.0->v1.2.0, 87 situations/6 tracks, checksum matches DB, 0 orphan refs. Videos re-curated: sit-d1->pgC1ofHxm7s, sit-d15->6F1ld7zv7yM, festival->dd_NTKErny8 (all oEmbed-200; dead S2_YmG removed; no fabricated ids). Bug fixed mid-run (retag clobbering authored tracks). Orchestrator regenerated bundled seed-course.ts v1.2.0 (87 situ/6 tracks). validate + tsc + build + 154 tests all pass."
   - id: unit-tests
     status: succeeded
     finished_at: 2026-07-10T08:55:00Z
@@ -196,15 +204,23 @@ checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). 
     finished_at: 2026-07-10T07:55:00Z
     notes: "scripts/verify-security.mjs (npm run verify:security) exit 0, no checks weakened. FATAL PASS: (1) bundle scan dist/ + ios public — no Gemini/service-role/provider keys; anon key + URL correctly allowlisted as public; (2) live anon RLS probes on gxlrmdfqcqimwwplrdgd — profiles/logs filter all rows, cross-user read empty, anon insert 401/42501, published content_packs + global_settings public-by-design return data; (3) gemini + delete-account reject no-JWT with 401. OPERATOR ADVISORIES (WARN): rotate dev Gemini key before prod; global_settings.level_unlock_key value (MADEIRA2026) is anon-readable per 00005 SELECT USING(true) — tighten policy if it must be confidential."
   - id: vertical-slice-e2e
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T12:20:00Z
+    notes: "tests/e2e/ Playwright suite: 14 passed / 1 skipped (S10 STT per G6) / 0 failed, stable x2 cold runs, exit 0. global-setup mints real admin session (signInWithPassword, creds from .admin-temp-credentials.txt) -> storageState; onboarding pre-seeded via addInitScript (IndexedDB) + SW unregister for offline tests. Covers app-shell/auth/learning/practice(pattern-builder driven)/tutor(real edge call, requestId evidence)/coach/support+sendlogs(tickets+logs session-pivot rows)/offline(setOffline, online-only badges)/account-deletion(cancel-only, admin survives). Real backend evidence per G1-G6. scripts test:e2e/:smoke/:report. NOTE: hits LIVE Supabase + 1 real AI call + creates tickets/logs rows per run; uses admin acct. Orchestrator FIXED the real latent bug e2e surfaced: useTutorSession chat-init dep [user, profile?.selected_tutor_id] -> [user, profile?.id, profile?.selected_tutor_id] (restored session w/ no selected_tutor never inited free-chat); isolated from tested paths, tsc+eslint+build+154 tests pass. OPERATOR: rm 3 neutralized scratch files tests/e2e/_debug-tutor* _probe-coach* zzprobe-coach* (excluded via testIgnore); .gitignore updated for .auth/test-results."
   - id: preflight-and-standards
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T10:55:00Z
+    notes: "scripts/preflight.sh (6 hard gates: eslint, tsc, 154 vitest, build, npm audit [FAIL only prod high/crit], check-standards) + scripts/check-standards.sh (grep enforcement: no bare console.error, no key material, no unsanitized dangerouslySetInnerHTML, no localhost fallback, no MADEIRA2026 literal, App.tsx<800=561) + docs/STANDARDS-COMPLIANCE-REPORT.md (48 items walked). Independently re-run: PREFLIGHT PASS exit 0. Only advisory: 1 low dev-only Windows esbuild (below ship floor). NOT-YET per report: Playwright e2e (item 44), runtime a11y audit, exhaustive failure-path tests — all downstream/deferred. ALSO: orchestrator wired Situation.media[] video -> VideoPlayer in SituationPicker (closes the media render gap; legacy lesson.video_url path already worked)."
   - id: local-server-test
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T12:35:00Z
+    notes: "scripts/serve-local.sh + static-server.mjs (zero-dep node http, emulates Verpex: explicit MIME .webmanifest=application/manifest+json + .js=text/javascript, SPA fallback [extensionless->index.html 200, real missing asset->404], sw/index/manifest no-cache + /assets immutable, path-traversal guard). @smoke run vs static server (reuseExistingServer, NOT vite preview): 6 passed exit 0. Curl probes all OK. NO deploy blockers. DEPLOY .htaccess RULES captured for web-deploy-pipeline: RewriteCond !-f/!-d -> index.html; AddType manifest+json .webmanifest + text/javascript .js .mjs; Cache-Control no-cache for sw/registerSW/index/manifest, immutable for /assets; scope = single falamadeira.searchingfool.com dir."
   - id: ios-build
     status: pending
   - id: web-deploy-pipeline
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-10T12:55:00Z
+    notes: "scripts/ship.sh (npm run deploy = preflight then deploy-verpex, flags passthrough) + scripts/deploy-verpex.sh (rsync-over-ssh or sftp, uploads dist/ ONLY, HARD GUARD refuses if VERPEX_REMOTE_PATH unset/'/'/lacks 'falamadeira'; --dry-run credential-free + no network; fail-loud exit 1 without .env.deploy, no hardcoded creds) + public/.htaccess (-> dist/.htaccess 3240b, SPA fallback + MIME + Cache-Control per local-server-test; not SW-precached). .env.deploy.example committed (VERPEX_HOST/USER/SSH_KEY|PASS/PORT/REMOTE_PATH); .env.deploy gitignored. Dry-run gate PASS, no upload. OPERATOR (verpex-deploy): cp .env.deploy.example .env.deploy + fill; npm run deploy; set Supabase gxlrmdfqcqimwwplrdgd Auth Site URL + redirect to https://falamadeira.searchingfool.com. Password auth needs sshpass (absent) — SSH key recommended."
   - id: verpex-deploy
     status: pending
   - id: post-deploy-smoke
