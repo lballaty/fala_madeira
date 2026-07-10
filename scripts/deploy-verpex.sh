@@ -194,7 +194,9 @@ say "deploying dist/ -> ${REMOTE}"
 # Trailing slash on the source => copy the CONTENTS of dist/ into the remote dir (dist/ ONLY).
 if command -v rsync >/dev/null 2>&1; then
   say "transport: rsync over ssh"
-  RSYNC_CMD=(rsync -avz --delete -e "${RSYNC_SSH}" "${DIST_DIR}/" "${REMOTE}")
+  # Preserve cPanel/Verpex server-managed dirs: .well-known (AutoSSL/ACME cert renewal)
+  # and cgi-bin. --delete otherwise removes anything in the remote not in dist/.
+  RSYNC_CMD=(rsync -avz --delete --exclude '.well-known/' --exclude 'cgi-bin/' -e "${RSYNC_SSH}" "${DIST_DIR}/" "${REMOTE}")
   if [ "${USE_SSHPASS}" -eq 1 ]; then
     sshpass -p "${VERPEX_PASS}" "${RSYNC_CMD[@]}" || die "rsync upload failed"
   else
