@@ -40,13 +40,15 @@ Every capability must serve one of **understand · speak · use · belong**. Als
 - **Reliability/resilience/offline** — retry+backoff + graceful degradation on all network/AI calls; content packs + audio cached; offline write queue syncs on reconnect (see CONTENT-ARCHITECTURE §10).
 - **Accessibility** — WCAG 2.2 AA (contrast ≥4.5:1, labels, keyboard, 44–48px targets, pinch-zoom, reflow).
 - **Config, not magic values** — `src/config.ts`; feature flags for staged capabilities.
+- **Verification gate — `build` is NOT `typecheck`.** Vite/esbuild strip types without checking them, so a green build can hide type errors and un-awaited promises. Every code-step validation, `scripts/check-standards.sh`, and `scripts/preflight.sh` MUST run `npm run lint` (`tsc --noEmit`) AND `npm test -- --run` AND `npm run build` — never build alone. Run the whole-project gate per code-step (not only at the end); diff-scoped `/code-review`/`/error-review` do not catch cross-file type breakage. Use the `/verify-build` skill. (This rule closed the gap where 14 tsc errors accumulated behind build-only validations.)
 
 ## 4. Skill / workflow contract (which skills we use, when)
 
 - **Plan work:** `/plan` (+ `/decompose-work-packages` for dependency/parallel structure). Plans are executable and consumed by `/execute-plan`.
 - **Execute:** `/execute-plan <plan>` — autonomous DAG walk, checkpointed in `.plan-state.yaml`, resumable via `/execute-plan --resume`.
 - **On any failure:** `/troubleshoot` — structured, logging-first root-cause loop. Do NOT patch symptoms or guess request formats; isolate one variable, verify against canonical docs. (Used correctly for the Gemini TTS `OTHER` defect.)
-- **Quality:** `/error-review` (harden error paths after a fix or proactively), `/code-review` (correctness on the diff), `/simplify` (reuse/altitude cleanups).
+- **Quality:** `/verify-build` (whole-project compile+test+build gate — run per code-step and before commit/deploy; the mandatory gate, since `/code-review`/`/error-review` are diff-scoped and build ≠ typecheck), `/error-review` (harden error paths), `/code-review` (correctness on the diff), `/simplify` (cleanups).
+- **Release readiness:** `/release-readiness` — audit against the production-readiness shortlist (core journeys, data-loss, monitoring, backups/restore, safe deploy/rollback, security, load, dependency resilience, support, metrics); run before launch, at handoffs, or on a cadence to catch drift. Writes `docs/RELEASE-READINESS.md`.
 - **Docs & trackers:** `/update-docs` (Tiers 1/2/4 canonical/derived/architecture docs) and `/update-trackers` (Tier 3 trackers) after code changes; hard boundary between them.
 - **Coordination:** `shared-file-coordination` before editing shared/canonical files (global queue + queuectl).
 - **Versioning:** `/version-bump` in the commit-staging workflow when source changes (never via pre-commit hook).
