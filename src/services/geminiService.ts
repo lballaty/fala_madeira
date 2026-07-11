@@ -77,7 +77,13 @@ const invokeEdgeFunction = async <T = unknown>(
   };
   const { data, error } = await withRetry(
     async () => {
-      const res = await supabase.functions.invoke(name, { body });
+      // Per-attempt timeout: functions.invoke has no default, so without this a stalled fetch
+      // hangs forever and the caller's spinner never clears. AbortSignal.timeout aborts the
+      // attempt; the resulting FunctionsFetchError flows through res.error/reject like any other.
+      const res = await supabase.functions.invoke(name, {
+        body,
+        signal: AbortSignal.timeout(config.net.requestTimeoutMs),
+      });
       if (res.error) throw res.error; // throw so withRetry can decide to retry/give up
       return res;
     },

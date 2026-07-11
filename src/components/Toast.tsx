@@ -19,7 +19,10 @@ export const Toast = ({ toast, positionClassName }: { toast: ToastState, positio
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0 }}
     className={cn(
-      "fixed left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-bold shadow-xl z-50",
+      // z-[100] keeps the toast above every modal overlay (lesson-detail/correction/vocab are
+      // z-50, suggest-video is z-[60]); at z-50 the toast rendered *behind* open modals, so
+      // success/error feedback was invisible and submits looked like no-ops.
+      "fixed left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-white text-sm font-bold shadow-xl z-[100]",
       positionClassName,
       toast.type === 'success' ? "bg-green-500" : "bg-red-500"
     )}

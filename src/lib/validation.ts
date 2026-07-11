@@ -51,14 +51,23 @@ export const validateText = (
 export const validateUrl = (raw: string, label = 'Link'): ValidationResult => {
   const base = validateText(raw, label, config.limits.urlMax);
   if (!base.ok) return base;
+  // Accept scheme-less input (e.g. "youtube.com/watch?v=…", "www.youtube.com/…") — the most
+  // common paste — by defaulting to https:// when no http(s):// scheme is present. Without this,
+  // new URL() throws on scheme-less text and the submit silently rejected valid links.
+  const candidate = /^https?:\/\//i.test(base.value) ? base.value : `https://${base.value}`;
   let parsed: URL;
   try {
-    parsed = new URL(base.value);
+    parsed = new URL(candidate);
   } catch {
     return { ok: false, value: '', reason: `${label} must be a valid URL.` };
   }
   if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
     return { ok: false, value: '', reason: `${label} must start with http:// or https://.` };
   }
-  return { ok: true, value: base.value, reason: '' };
+  // A bare word ("hello") parses as https://hello with an empty-ish host — require a dotted host
+  // so we don't accept obvious non-URLs just because we prepended a scheme.
+  if (!parsed.hostname.includes('.')) {
+    return { ok: false, value: '', reason: `${label} must be a valid URL.` };
+  }
+  return { ok: true, value: candidate, reason: '' };
 };

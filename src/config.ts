@@ -58,6 +58,14 @@ export const config = {
     maxDelayMs: 4000,
     /** Full-jitter fraction (0..1): actual wait = backoff * (1 - jitter*random). */
     jitterRatio: 0.5,
+    /**
+     * Per-attempt request timeout (ms) for the edge-function choke point. supabase.functions.invoke
+     * has no default timeout, so a stalled fetch (cold start, slow generation, flaky mobile network)
+     * would hang forever — leaving spinners (e.g. vocab lookup) spinning and the awaiting `finally`
+     * never running. AbortSignal.timeout aborts each attempt so the promise always settles; withRetry
+     * then retries (transient) or surfaces the error. 15s is generous over the ~4s typical translate.
+     */
+    requestTimeoutMs: 15000,
   },
 
   settings: {
