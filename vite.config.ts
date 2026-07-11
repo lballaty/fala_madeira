@@ -17,6 +17,10 @@ export default defineConfig(({mode}) => {
           // App-shell precache: SPA shell (index.html) + built JS/CSS/img/fonts so the
           // app boots offline (CONTENT-ARCHITECTURE §10 "app-shell precached (PWA)").
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,ttf}'],
+          // The bundled 168-lesson content pack (offline default, §10) puts the content
+          // chunk near 3 MB — above Workbox's 2 MiB default, which HARD-FAILS the build.
+          // Precaching it is intentional (offline-first content); allow up to 5 MiB.
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
           // SPA fallback so any client-side route resolves to the precached shell offline.
           navigateFallback: 'index.html',
           // Never let the SW intercept Supabase auth or edge-function endpoints via the
@@ -105,6 +109,17 @@ export default defineConfig(({mode}) => {
     define: {
       'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL),
       'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY),
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: (id: string) => {
+            // The bundled offline content pack (~2.7 MB source) gets its own chunk so the
+            // app-shell chunk stays small and the pack loads/caches independently.
+            if (id.includes('content/packs/seed-course')) return 'content-pack';
+          },
+        },
+      },
     },
     resolve: {
       alias: {
