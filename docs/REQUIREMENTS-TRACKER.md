@@ -165,6 +165,16 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 - Azure Speech key needed before tts-provider-adapters can use Azure as live default (browser fallback works meanwhile).
 - Owner has additional design insight to provide (pending) before further build.
 
+## Live-testing bug queue (owner-found 2026-07-11, post-v1.0.0 deploy)
+
+| ID | Finding | Diagnosis so far | Status |
+|---|---|---|---|
+| LT1 | Suggest-a-video form "doesn't work at all" | Backend PROVEN working (direct insert into video_suggestions with the exact client shape succeeded + cleaned up). Bug is client-side in SuggestVideoModal/useLessonModals submit wiring — prime suspects: the validateUrl/validation layer or the a11y form refactor. | ⬜ open |
+| LT2 | Vocabulary lookup modal doesn't work | Not yet investigated (session context exhausted). Same class as LT1 — VocabLookupModal → geminiService.translateWord → edge `translate` action. Test the edge action directly first (pattern: the node auth+invoke probe used for chat/tts), then the modal wiring. | ⬜ open |
+| LT3 | Phrase audio icons appear dead | Chain verified WORKING — but first-play TTS latency is ~5.7s with no loading indicator. Fix: spinner on the icon + set Azure Speech key (sub-second TTS; adapter chain flips automatically). Cached replays are instant. | ⬜ open |
+| LT4 | "Tutor is preparing your lesson" very slow | Verified: generate-lesson 14.7s + 1.5s hardcoded sleep + second AI round-trip = 20-30s with only a spinner. Fix: staged progress copy, drop the sleep, parallelize, consider streaming. | ⬜ open |
+| LT5 | Report-correction form also doesn't work | Not yet investigated. THREE lesson-detail modals now broken (LT1 suggest-video, LT2 vocab lookup, LT5 correction) — all live in src/features/learning/useLessonModals.ts + LessonDetailModal wiring. Strong signal of a COMMON root cause in that slice (shared submit/validation/modal plumbing from the decomposition or hardening sweeps), NOT three separate bugs. Next session: reproduce one in-browser w/ devtools console, fix the shared cause, e2e-cover all three (S4 slice exists in docs/TEST-VERTICAL-SLICES.md but only ticket submission is currently automated). | ⬜ open |
+
 ## Future enhancements (owner-requested, post-v1.0.0)
 
 | ID | Requirement | Notes | Status |
