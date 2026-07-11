@@ -1,15 +1,19 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/hooks/useFocusTrap.ts
 // Description: Reusable modal/overlay accessibility hook (WCAG 2.2 AA — ENGINEERING-STANDARDS §6).
 //   Given a ref to the dialog container and an `active` flag, it: (1) moves focus into the
-//   dialog on open (first focusable element, else the container), (2) traps Tab/Shift+Tab so
-//   focus cycles within the dialog and never escapes to the page behind, (3) closes on Escape
-//   via the supplied onClose, and (4) restores focus to the element that had it before the
-//   dialog opened (the trigger) on close. Behavior-preserving: pair with role="dialog" +
-//   aria-modal="true" + aria-labelledby on the container element the ref points at.
+//   dialog on open, (2) traps Tab/Shift+Tab within the dialog, (3) closes on Escape via the
+//   supplied onClose, and (4) restores focus to the trigger on close.
+//   STACK-AWARE (LT1/LT2/LT5 fix): nested dialogs (e.g. Correction/SuggestVideo/VocabLookup
+//   opened from inside LessonDetailModal) each register on a module-level trap stack and only
+//   the TOPMOST trap enforces Tab/Escape — a parent trap never fights its child for focus.
+//   STABLE (LT1/LT2/LT5 fix): onClose is read through a ref so an inline arrow prop does NOT
+//   re-run the effect each render — previously every keystroke in a child form re-rendered the
+//   parent, re-ran its trap effect, and stole focus back mid-typing (the "can't type or paste"
+//   bug found in live testing 2026-07-11).
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-10
 
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 
 const FOCUSABLE_SELECTOR = [
   'a[href]',
@@ -20,16 +24,25 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(',');
 
+// Module-level stack of active trap containers; only the top entry enforces.
+const trapStack: HTMLElement[] = [];
+
 /**
  * Trap focus within `containerRef` while `active`, close on Escape, and restore focus to the
  * previously focused element on deactivation. `onClose` is called for Escape only; the caller
- * still owns backdrop-click / button close paths.
+ * still owns backdrop-click / button close paths. Safe to pass an inline arrow for `onClose`.
  */
 export function useFocusTrap(
   containerRef: RefObject<HTMLElement | null>,
   active: boolean,
   onClose?: () => void,
 ): void {
+  // Read the latest onClose through a ref so its identity never re-runs the trap effect.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     if (!active) return;
     if (typeof document === 'undefined') return;
@@ -38,6 +51,8 @@ export function useFocusTrap(
     if (!container) return;
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
+    trapStack.push(container);
+    const isTop = () => trapStack[trapStack.length - 1] === container;
 
     const getFocusable = (): HTMLElement[] =>
       Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
@@ -49,15 +64,16 @@ export function useFocusTrap(
     if (focusables.length > 0) {
       focusables[0].focus();
     } else {
-      // No focusable child — make the container itself focusable so focus doesn't stay behind.
       if (!container.hasAttribute('tabindex')) container.setAttribute('tabindex', '-1');
       container.focus();
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      // A trap lower in the stack stays mounted but inert while a child dialog is open.
+      if (!isTop()) return;
       if (e.key === 'Escape') {
         e.stopPropagation();
-        onClose?.();
+        onCloseRef.current?.();
         return;
       }
       if (e.key !== 'Tab') return;
@@ -88,10 +104,14 @@ export function useFocusTrap(
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown, true);
+      const idx = trapStack.lastIndexOf(container);
+      if (idx !== -1) trapStack.splice(idx, 1);
       // Restore focus to the trigger, if it's still in the document.
       if (previouslyFocused && document.contains(previouslyFocused)) {
         previouslyFocused.focus();
       }
     };
-  }, [active, containerRef, onClose]);
+    // onClose is intentionally NOT a dep (read via ref) — see header.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, containerRef]);
 }
