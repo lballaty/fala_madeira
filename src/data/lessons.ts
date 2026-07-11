@@ -29,7 +29,9 @@ export const INITIAL_LESSONS: Lesson[] = [
       'Practice pronunciation of nasal vowels'
     ],
     explanation: 'In Madeira, greetings are more than just words; they are a social ritual. Always respond to "Tudo bem?" with "Tudo bem, obrigado/a" before asking back.',
-    video_url: 'https://www.youtube.com/watch?v=S2_YmG_l-p4'
+    // Replaced dead S2_YmG_l-p4 (404) with the oEmbed-verified EU-PT greetings video
+    // curated for sit-d1 in the content pack (author-tracks step).
+    video_url: 'https://www.youtube.com/watch?v=pgC1ofHxm7s'
   },
   {
     id: 'd2',
@@ -264,7 +266,9 @@ export const INITIAL_LESSONS: Lesson[] = [
       'Master key irregular preterite forms'
     ],
     explanation: 'In Portugal, "ele" and "ela" are used freely, but often dropped when context is clear. "Foi" can mean both "he/she went" and "he/she was".',
-    video_url: 'https://www.youtube.com/watch?v=S2_YmG_l-p4'
+    // Replaced dead S2_YmG_l-p4 (404) with the oEmbed-verified EU-PT describing-people
+    // video curated for sit-d15 in the content pack (author-tracks step).
+    video_url: 'https://www.youtube.com/watch?v=6F1ld7zv7yM'
   },
   {
     id: 'd16',

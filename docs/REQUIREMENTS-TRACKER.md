@@ -164,3 +164,11 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 ## Open items
 - Azure Speech key needed before tts-provider-adapters can use Azure as live default (browser fallback works meanwhile).
 - Owner has additional design insight to provide (pending) before further build.
+
+## Future enhancements (owner-requested, post-v1.0.0)
+
+| ID | Requirement | Notes | Status |
+|---|---|---|---|
+| FE1 | **User-replaceable lesson videos** — wherever a video appears, let the learner swap in a YouTube video of their own choosing (per-user override, stored per situation/lesson; validated via oEmbed before accepting; original curated video restorable). Reduces reliance on our curation buildout. Requested 2026-07-11. Suggested shape: `user_video_overrides` table (user_id, situation_id, url) w/ owner RLS + a small "replace video" affordance on the VideoPlayer; admin/community promotion path later via the existing video_suggestions flow. | Owner: "if the user can put their own then we don't have to rely only on our buildout" | ⬜ |
+| FE2 | **Recurring video-link audit** — periodically re-verify every video URL (oEmbed 200 AND embeddable — note oEmbed 200 does not guarantee embedding is allowed) across BOTH the content pack media[] and the legacy lessons video_url; replace or drop dead links. First audit found S2_YmG_l-p4 dead in legacy data after the pack was already fixed (surfaces the dual-source risk — see FE3). Candidate: extend scripts/validate-content.mjs with a --check-videos flag + a scheduled run. | Found live by owner on lesson d1, 2026-07-11 | ⬜ |
+| FE3 | **Single video source of truth** — LessonDetailModal renders legacy `lesson.video_url` while SituationPicker renders pack `media[]`; converge the Learning tab onto the situation pack so video fixes land once. | Root cause of the d1 dead video | ⬜ |
