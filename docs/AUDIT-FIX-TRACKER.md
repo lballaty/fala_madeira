@@ -30,6 +30,23 @@ Status: ✅ resolved · 🔲 open · 🔎 verify · ⏳ planned (expected pendin
 | A7 | Seed situations carry no `dialogues`/`roleplay`/`mission`/`review_items` (engines run on fallbacks) | INFO | ⏳ planned | 0 matches in `src/content/packs/seed-course.ts` | Covered by the `content-enrichment` plan step — expected, not a defect. Engines degrade gracefully today. |
 | A8 | Confirm vitest pass count | — | ✅ resolved | 154 passed / 14 files (pass2) | none |
 
+## HIGH PRIORITY — Testing coverage (operator directive 2026-07-11)
+
+**T-COV1 — e2e is smoke/render-level, not functional.** Verified 2026-07-11: 13 specs, ~59 assertions, but **41 presence (`toBeVisible`) vs 8 correctness** assertions. Screens mount and controls exist, but features aren't validated end-to-end. Last run "passed" but that mostly means "renders". This is why manual testing finds broken features while e2e is green. `vertical-slice-e2e` was marked succeeded but NOT to the plan's stated depth ("drive REAL UI + assert backend evidence per slice") → **REOPEN it.**
+
+**T-COV2 — REQUIREMENT: every button, field, and link must be exercised by the full test suite.** Not presence-only — each interactive element must have a test that drives it and asserts the *outcome*:
+- **Buttons/controls:** click → assert the effect (navigation, modal open/close, state change, DB row + edge `correlation_id` where a backend write occurs).
+- **Fields/inputs:** type valid + invalid → assert validation message, persistence, and error handling.
+- **Links/nav:** click → assert destination/route.
+- **Toggles/sliders/selects:** change → assert persisted state.
+
+**Mechanism to make it enforceable (not aspirational):**
+1. **Convention:** every interactive element carries a stable `data-testid` (or an accessible role+name). Add an ESLint/jsx-a11y rule + review check so new controls can't ship without one.
+2. **Inventory:** a script enumerates every interactive element rendered per screen (crawl the running app / scan components for buttons/inputs/links/testids) → the authoritative control list.
+3. **Coverage gate:** `scripts/check-interactive-coverage.mjs` diffs the rendered-control inventory against the set of testids/roles exercised by specs, and **fails** if any control is untested (an "orphan control" check). Wire it into `scripts/preflight.sh` / `check-standards.sh` so coverage can't regress.
+4. **Per-slice functional specs:** rewrite `tests/e2e/*` so each core journey asserts outcomes + backend evidence, and add a per-screen "exercise every control" spec.
+Acceptance: coverage gate reports 100% of interactive elements exercised with at least one outcome assertion; e2e correctness-assertion ratio no longer presence-dominated.
+
 ## Reconciliation notes
 - Migrations on disk (`00001`–`00007`) exactly match `supabase/migrations/APPLIED.md`. ✅
 - Plan-state statuses that were optimistic at pass 1 (steps marked succeeded while tsc failed) are now consistent — tsc is green at pass 2.
