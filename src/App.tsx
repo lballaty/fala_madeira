@@ -253,10 +253,7 @@ export default function App() {
             }
           >
             <OnboardingFlow
-              supabase={supabase}
-              user={user}
-              profile={profile}
-              setProfile={setProfile}
+              onboarding={onboarding}
               pathControls={pathSelection}
               playSpeech={playSpeech}
               onFinish={() => setActiveTab('home')}

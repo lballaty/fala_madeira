@@ -16,7 +16,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ChevronRight, Volume2, Mic, Sparkles, Loader2 } from 'lucide-react';
-import type { SupabaseClient, User } from '@supabase/supabase-js';
 import { cn } from '../../lib/utils';
 import { config } from '../../config';
 import { logger } from '../../lib/logger';
@@ -25,9 +24,8 @@ import { contentRepository } from '../../content';
 import type { PracticalLevel } from '../../content/schema';
 import type { Track } from '../../content/schema';
 import type { PathType } from '../../paths';
-import type { UserProfile } from '../../types';
 import { LegalPage, type LegalDocId } from '../legal';
-import { useOnboarding } from './useOnboarding';
+import type { OnboardingApi } from './useOnboarding';
 
 // The path-selection surface the flow drives (a subset of usePathSelection's return). Kept as a
 // narrow prop contract so App.tsx passes its existing pathSelection without a new hook instance.
@@ -37,10 +35,12 @@ interface OnboardingPathControls {
 }
 
 interface OnboardingFlowProps {
-  supabase: SupabaseClient | null;
-  user: User | null;
-  profile: UserProfile | null;
-  setProfile: (profile: UserProfile) => void;
+  /**
+   * The App shell's OWN useOnboarding instance — the flow must commit through the same
+   * instance that gates rendering, or completing onboarding never un-gates the shell
+   * (the "stuck on Setting up…" bug: two instances, the gate one never saw complete()).
+   */
+  onboarding: OnboardingApi;
   pathControls: OnboardingPathControls;
   /** Routes through geminiService.playSpeech with the learner's tutor/speed (App-provided). */
   playSpeech: (text: string) => Promise<void> | void;
@@ -204,15 +204,11 @@ const ChoiceCard = ({
 // --- Flow -------------------------------------------------------------------
 
 export const OnboardingFlow = ({
-  supabase,
-  user,
-  profile,
-  setProfile,
+  onboarding,
   pathControls,
   playSpeech,
   onFinish,
 }: OnboardingFlowProps) => {
-  const onboarding = useOnboarding({ supabase, user, profile, setProfile });
 
   const [step, setStep] = useState<Step>('welcome');
   const [placement, setPlacement] = useState<PlacementOption | null>(null);

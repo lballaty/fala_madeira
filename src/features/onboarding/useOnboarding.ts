@@ -75,6 +75,8 @@ export interface OnboardingResult {
  * before the main tab shell; `isLoaded` prevents a flash of onboarding before the durable
  * record has been read. `complete()` commits placement + consent and flips the gate.
  */
+export type OnboardingApi = ReturnType<typeof useOnboarding>;
+
 export const useOnboarding = ({ supabase, user, profile, setProfile }: OnboardingDeps) => {
   const [record, setRecord] = useState<OnboardingRecord>(DEFAULT_RECORD);
   const [isLoaded, setIsLoaded] = useState(false);
