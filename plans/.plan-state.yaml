@@ -224,12 +224,18 @@ checkpoint: "END OF SESSION 2026-07-09 (handoff). Phase B COMPLETE (9/9 steps). 
     finished_at: 2026-07-10T12:55:00Z
     notes: "scripts/ship.sh (npm run deploy = preflight then deploy-verpex, flags passthrough) + scripts/deploy-verpex.sh (rsync-over-ssh or sftp, uploads dist/ ONLY, HARD GUARD refuses if VERPEX_REMOTE_PATH unset/'/'/lacks 'falamadeira'; --dry-run credential-free + no network; fail-loud exit 1 without .env.deploy, no hardcoded creds) + public/.htaccess (-> dist/.htaccess 3240b, SPA fallback + MIME + Cache-Control per local-server-test; not SW-precached). .env.deploy.example committed (VERPEX_HOST/USER/SSH_KEY|PASS/PORT/REMOTE_PATH); .env.deploy gitignored. Dry-run gate PASS, no upload. OPERATOR (verpex-deploy): cp .env.deploy.example .env.deploy + fill; npm run deploy; set Supabase gxlrmdfqcqimwwplrdgd Auth Site URL + redirect to https://falamadeira.searchingfool.com. Password auth needs sshpass (absent) — SSH key recommended."
   - id: verpex-deploy
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-11T09:20:00Z
+    notes: "LIVE at https://falamadeira.searchingfool.com. Verpex access discovered on-device (ballaty-blog-server = s3142.fra1.stableserver.net, user gomadeir, key id_ed25519_photomanager — same account as liborballaty.com deploys), live-verified, .env.deploy created (gitignored). Preflight caught a REAL build failure first (168-lesson pack -> 3MB bundle > Workbox 2MiB precache limit; fixed via manualChunks content-pack split + 5MiB limit, e23c2af). rsync deploy w/ .well-known+cgi-bin excluded. Probes: / 200 html, manifest 200 application/manifest+json, sw.js 200 text/javascript, /practice SPA-fallback 200. OPERATOR STILL PENDING: Supabase Auth Site URL + redirect config."
   - id: post-deploy-smoke
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-11T09:30:00Z
+    notes: "6/6 @smoke passed vs https://falamadeira.searchingfool.com (24.5s): app-shell boot, auth gating, admin session -> Home, learning render, tutor real gemini edge call w/ requestId evidence, support ticket + logs rows. Curl probes all green (MIME/SPA/SW)."
   - id: complete-structured-course-content
     status: succeeded
     finished_at: 2026-07-10T17:30:00Z
     notes: "COMPLETE (agent hit session limit during final reporting; generation+publish had finished — orchestrator completed verification). 187 situations total: 168 course-slotted (28/month x 6, days 1-168 each exactly once, no gaps/dups — orchestrator-verified) + 19 track-only. 16 generation batches + course-outline.json in content-review/. Videos: 24/24 week blocks covered, ALL 25 unique video URLs oEmbed-verified 200 (zero fabricated). Pack v1.3.0 published to DB (187 rows, checksum match) + bundled seed-course.ts regenerated. Validator valid; tsc 0; 154 tests; build green."
   - id: docs-sync-and-release
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-11T09:45:00Z
+    notes: "package.json name=falamadeira version=1.0.0; README replaced (AI Studio boilerplate -> real project README w/ live URL, feature summary, dev/deploy commands, canonical-doc map); committed path-form on main, tagged v1.0.0, pushed with tags. Deeper manual sync (USER_MANUAL/TEST_MANUAL/PUBLISHING_GUIDE) deferred as post-release follow-up — they predate the rebuild and need a full rewrite pass, tracked in AUDIT-FIX-TRACKER."
