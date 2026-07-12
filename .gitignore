@@ -18,6 +18,16 @@ graphify-out/
 inspect-fk-columns.js
 check2.mjs
 
+# Supabase DB backup snapshots — contain auth.users PII (emails + bcrypt hashes) and role
+# password hashes; never commit to git history. The runbook (README.md) and helper
+# (backup-restore.sh) at the supabase/backups/ root ARE tracked; only the timestamped
+# snapshot dirs are ignored. Force-add a snapshot only if you accept the secret exposure.
+supabase/backups/*/
+
+# Diagnostic probe scratch (session 2026-07-11; safe to delete)
+_probe-vocab-hang.mjs
+_probe-inserts.mjs
+
 # Claude Code local settings
 .claude/settings.local.json
 
