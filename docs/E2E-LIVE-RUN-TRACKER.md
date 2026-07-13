@@ -16,6 +16,10 @@
 
 ## Run log
 
+### Deploy — 2026-07-13 ~12:50 CEST — LT8 + LT9 shipped to production
+- `npm run deploy` (full ship gate incl. the new e2e coverage-contract step) → https://falamadeira.searchingfool.com — manifest 200, new bundle hash serving, **6/6 prod smoke green** (`BASE_URL=prod --grep @smoke`).
+- In prod now: offline practice grades persist + sync on reconnect; offline PWA reload keeps the session (LT9, 869dc7c); admin voice-limit clobber race closed (LT8, 715c9b7 — builder-authored, runner-reviewed). Users need a hard refresh / SW update cycle to pick up the new bundle.
+
 ### Run 5 — 2026-07-13 ~12:30 CEST — full suite (Lane B; LT9 fix verification)
 - 67 tests / 55 files · **58 passed · 9 failed (5.3m)** · artifacts: `artifacts/e2e-run5-2026-07-13/`.
 - **LT9/EF-29 FIXED (commit 869dc7c) — five sites, two layers.** Layer 1: the four engines' network `getUser()` → local `getSession()`; probe confirms the offline grade is durably enqueued (exact payload in `sync:queue`). Layer 2 (found during acceptance): the FIFTH site was `useAuth`'s boot check — an offline PWA reload landed signed-in users on the AuthScreen and left the replay without auth; fixed the same way. Dev-probe confirms the reconnect drain (`SYNC_QUEUE_FLUSHED synced 1`); user/30 passes solo; offline reload now keeps the session. Gates: tsc 0 · 154/154 unit · full suite 58/67.
