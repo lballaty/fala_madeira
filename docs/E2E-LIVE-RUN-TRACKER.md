@@ -184,6 +184,7 @@
 - **Reproducibility:** deterministic, worsening per run · **Likely owner:** **selector** (+ **data** for cleanup)
 - **Suggested fix:** same card-anchoring fix as EF-13, PLUS implement CS-8 now: afterEach delete seeded rows by nonce via evidence clients; also run a one-off sweep of accumulated `Admin queue…`/`Admin implemented…` rows.
 - **Status:** open — reproduced run 3 (now 15 matches). **CS-8 escalated to URGENT: pending queue nearly doubles per run; owner's real admin view is filling with test rows.**
+- **Runner sweep 2026-07-13 ~10:30:** Lane B deleted all accumulated seed rows live (single transaction; patterns `Admin…`/`E2E…`+nonce): 26 lesson_requests, 12 lesson_corrections, 12 tickets, 12 video_suggestions. Next run starts clean — but WITHOUT Lane A's afterEach teardown the pile regrows every run. Throwaway auth users (`falamadeira-e2e-*@example.test`) also accumulate; sweeping `auth.users` is more sensitive — Lane A should add global-teardown deletion via the account-deletion path, or the owner approves a one-off auth sweep.
 
 ### EF-15 · content-studio specs: `pickExistingSituation` finds no eligible situation (admin/06 + admin/07)
 - **Specs:** `admin/06-admin-content-studio-load-existing.spec.ts:108`, `admin/07-admin-content-studio-publish-guard.spec.ts:90` · **Failure type:** `expect(target).not.toBeNull()` — helper returned null against the live `content_packs` rows
