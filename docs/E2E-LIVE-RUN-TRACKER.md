@@ -4,7 +4,7 @@
 **Description:** Live defect queue from executing the Playwright e2e suite (T-COV mandate, commit 662541b). The test-building agent authors specs but cannot bind ports in its sandbox; the runner session executes the suite (local `vite preview` + LIVE Supabase) and records every discrete failure here. Two buckets: EXECUTION FAILURES (tests that exist but fail) and COVERAGE GAPS (surfaces/flows not yet exercised). Owners — **app** (product code, runner/product session fixes, mirrored to REQUIREMENTS-TRACKER), **harness** (fixtures/setup/technique), **selector** (locator defects), **data** (seed/state assumptions), **environment** (runner env / concurrency noise). Harness/selector/data items belong to the test-building agent.
 **Author:** Libor Ballaty (with assistant)
 **Created:** 2026-07-13
-**Last Updated:** 2026-07-13 (run 2 triaged: EF-1..12 verified, EF-13..24 filed, CG-1/3/12/14/15 closed)
+**Last Updated:** 2026-07-13 (run 3: 55/64 pass; EF-17..21 verified; EF-22 adjudicated selector/app-correct; EF-23/24 narrowed; EF-25 filed; CS-8 URGENT)
 **Last Updated By:** e2e runner session
 
 ## How to use this file
@@ -15,6 +15,13 @@
 - Writes to this file are coordinated via the global queue (`queuectl reserve`).
 
 ## Run log
+
+### Run 3 — 2026-07-13 ~10:15 CEST — full suite (Lane B rerun of EF-13…EF-24)
+- 64 tests / 53 files · **55 passed · 9 failed (4.4m)** · suite lock held throughout · artifacts: `artifacts/e2e-run3-2026-07-13/`.
+- **Verified this run:** EF-18 (user/15/16/23), EF-19 (user/17), EF-20 (user/18), EF-21 (user/19), EF-17 (storage-layer read — user/14 passes; user/24 got past the poll). PF-3/LT8 product fix (voice-limit dirty flag in `useSettings.ts`) reviewed by runner — correct. New preflight step `test:e2e:coverage` validated: exit 0, 127 controls.
+- **EF-22 adjudicated (Lane B code trace): TEST BUG, app correct.** `handleFocusAct` (HomeView.tsx:137) DOES auto-route via `openMode(engineId, situationId)`. The spec's `getByRole('button', { name: 'Practice' }).first()` resolves to the SIDEBAR nav button (earlier in DOM order than the FocusCard CTA, both named "Practice"), which only switches tabs. Fix: scope to `getByRole('main')` / the card container.
+- **Reproduced unchanged (deterministic):** EF-13 (now 7 matches), EF-14 (now **15** matches — seed garbage nearly doubles per run, CS-8 now URGENT), EF-15 (both content-studio specs), EF-16 (user/04 modal never opens).
+- **Progressed with new signatures:** EF-23 — overlay scoping fixed; NEW blocker: the typed-answer input is `disabled` after an answer is submitted; fill the next answer only after 'Next Question' resets it. EF-24 — roadmap navigation fixed; quiz now completes but junk answers score <3, so `/Quiz completed! Score: [3-5]/` never appears — the spec must source CORRECT answers from the pack content to pass and trigger the `completed_lessons` write. EF-25 filed (user/24 duplicate heading).
 
 ### Run 2 — 2026-07-13 ~09:35 CEST — full suite, local preview + live Supabase
 - Command: `npx playwright test --reporter=line` · Suite grew to **64 tests / 53 files** (all compile).
@@ -176,67 +183,72 @@
 - **Failure type:** strict-mode violation — 'Mark implemented' resolves to **8** buttons: the queue now holds 8 pending requests from prior runs (CS-8 evidence — the owner's real admin view is filling with `Admin queue …` test rows)
 - **Reproducibility:** deterministic, worsening per run · **Likely owner:** **selector** (+ **data** for cleanup)
 - **Suggested fix:** same card-anchoring fix as EF-13, PLUS implement CS-8 now: afterEach delete seeded rows by nonce via evidence clients; also run a one-off sweep of accumulated `Admin queue…`/`Admin implemented…` rows.
-- **Status:** open
+- **Status:** open — reproduced run 3 (now 15 matches). **CS-8 escalated to URGENT: pending queue nearly doubles per run; owner's real admin view is filling with test rows.**
 
 ### EF-15 · content-studio specs: `pickExistingSituation` finds no eligible situation (admin/06 + admin/07)
 - **Specs:** `admin/06-admin-content-studio-load-existing.spec.ts:108`, `admin/07-admin-content-studio-publish-guard.spec.ts:90` · **Failure type:** `expect(target).not.toBeNull()` — helper returned null against the live `content_packs` rows
 - **Reproducibility:** deterministic · **Likely owner:** **data** (helper's eligibility criteria don't match any live pack/situation shape)
 - **Suggested fix:** log WHICH criterion filtered everything out (pack status? draft fields? situation kind?) and align with the live pack (v1.3.0, 187 situations, status semantics in CONTENT-ARCHITECTURE); assert a helpful message instead of bare not-null so the next failure self-explains.
-- **Status:** open
+- **Status:** open — reproduced run 3 unchanged (both specs)
 
 ### EF-16 · user/04 (modified this round): lesson-detail modal never opened before 'Vocabulary Lookup' click
 - **Spec:** `tests/e2e/user/04-learning-feedback.spec.ts:81` · **Failure type:** click timeout; snapshot shows the Learning Plan WITHOUT the Lesson Details dialog — `openFirstLessonDetails(page)` didn't open it (likely interaction with the modals opened/closed earlier in the same test)
 - **Reproducibility:** new this round (spec was refactored; round-1 version passed) · **Likely owner:** **harness** (helper/flow state) — NOT a product regression: unmodified `user/03` opens the same modal and PASSED this run
 - **Suggested fix:** after closing the suggest-video modal, wait for the Learning Plan to be interactive again before calling the helper; have `openFirstLessonDetails` assert the dialog actually opened.
-- **Status:** open
+- **Status:** open — reproduced run 3 unchanged
 
 ### EF-17 · path-selection asserted in localStorage, but the app persists via platform.storage = IndexedDB (user/14 + user/24)
 - **Specs:** `user/14-settings-local-controls.spec.ts:35`, `user/24-daily-session-loop.spec.ts:25` · **Failure type:** poll `localStorage.getItem('paths:selection')` stays null
 - **Reproducibility:** deterministic · **Likely owner:** **harness** (wrong storage layer)
 - **Evidence:** the app writes `config.paths.selectionStorageKey` (`'paths:selection'`) via `platform.storage.set` (`src/paths/index.ts:134`), whose web adapter is **IndexedDB `FalaMadeiraAudioCache/kv`** (`src/platform/web/storage.web.ts`; localStorage only as `fm-kv:`-prefixed fallback). The UI part of user/14 passed — the 'Goal track' label fix worked; only the persistence read is wrong.
 - **Suggested fix:** read the IndexedDB kv store in `page.evaluate` (same DB/store the onboarding init-script already writes) — worth adding a tiny `readKv(page, key)` helper in fixtures.
-- **Status:** open
+- **Status:** verified — run 3: user/14 passes; user/24 got past the storage poll (its remaining failure is EF-25, a different defect)
 
 ### EF-18 · Settings screen heading is "Profile", not "Settings" (user/15 + user/16 + user/23)
 - **Specs:** `user/15-settings-signout.spec.ts:14`, `user/16-settings-password-surface.spec.ts:14`, `user/23-account-delete-cancel.spec.ts:23` · **Failure type:** `getByRole('heading', { name: 'Settings' })` not found
 - **Reproducibility:** deterministic · **Likely owner:** **selector**
 - **Evidence:** `SettingsView.tsx:140` — `<h1>Profile</h1>`. (Passing settings specs never asserted this heading.)
 - **Suggested fix:** assert `heading "Profile"` — or propose renaming the H1 if "Settings" is the intended product wording (owner call; nav button also says Profile, so the test should follow the product).
-- **Status:** open
+- **Status:** verified — run 3: all three specs pass
 
 ### EF-19 · auth mode toggle — 'Password' collides with 'Forgot Password?' (pitfall #6)
 - **Spec:** `tests/e2e/user/17-auth-mode-transitions.spec.ts:31` · **Failure type:** strict-mode violation (2 matches; element 1 is the exact-match tab)
 - **Reproducibility:** deterministic · **Likely owner:** **selector** · **Suggested fix:** `exact: true`.
-- **Status:** open
+- **Status:** verified — run 3: user/17 passes
 
 ### EF-20 · `/Version/i` strict violation copied into the NEW signup-consent spec (recurrence of EF-11)
 - **Spec:** `tests/e2e/user/18-auth-signup-consent-links.spec.ts:30` · same two-element collision EF-11 had; the fixed pattern from user/11 wasn't propagated to the new spec.
 - **Reproducibility:** deterministic · **Likely owner:** **selector** · **Suggested fix:** `getByText(/Version \d/)`; consider a shared `expectLegalDocOpen()` helper so the pattern exists once.
-- **Status:** open
+- **Status:** verified — run 3: user/18 passes
 
 ### EF-21 · offline pattern drill: after grading, the NEXT card is in Reveal state — spec expects a grade button or completion
 - **Spec:** `tests/e2e/user/19-offline-pattern-builder-drill.spec.ts:43` · **Failure type:** assertion timeout
 - **Reproducibility:** deterministic · **Likely owner:** **selector/data** (flow assumption)
 - **Evidence:** failure snapshot shows the drill correctly advanced offline to the next phrase: "Reveal the Portuguese" + "Reveal the phrase to grade your recall" — grade buttons only appear after Reveal. **Good product news: offline drilling WORKS** (this closes the product question in CG-16's read path).
 - **Suggested fix:** loop: reveal → grade → expect (next Reveal | Drill complete).
-- **Status:** open
+- **Status:** verified — run 3: user/19 passes (offline drill loop asserted correctly)
 
 ### EF-22 · coach Focus 'Practice' routing — Vocabulary Review heading never appears
 - **Spec:** `tests/e2e/user/20-home-coach-focus-actions.spec.ts:74` · **Failure type:** assertion timeout after clicking the Practice nav
 - **Reproducibility:** deterministic · **Likely owner:** **TBD (app-or-test)** — the why-panel and suggestion asserts PASSED; the open question is whether acting on a Focus suggestion is supposed to auto-route into the suggested mode (check `handleFocusAct` in `HomeView.tsx:85`) or the spec wrongly assumes the Practice tab lands inside the mode. If the product intends auto-routing and doesn't, that's a real app bug — needs a decision from the code, not a guess.
-- **Status:** open — needs `handleFocusAct` trace (runner will do this next round if the test agent doesn't get there first)
+- **Status:** open — ADJUDICATED run 3 (code trace): **owner = selector, app behavior correct.** `handleFocusAct` auto-routes via `openMode`; the spec's `.first()` clicks the sidebar nav 'Practice' (earlier in DOM order), not the FocusCard CTA (also named 'Practice'). Fix: scope to `getByRole('main').getByRole('button', { name: 'Practice', exact: true })` or the card container.
 
 ### EF-23 · quiz options clicked in `main`, but the quiz renders in a fixed z-60 overlay that intercepts pointer events
 - **Spec:** `tests/e2e/user/21-quiz-full-flow.spec.ts:34` · **Failure type:** click timeout — `locator('main button')…` targets a button BEHIND the quiz overlay (`div.fixed.inset-0.z-[60]` intercepts)
 - **Reproducibility:** deterministic · **Likely owner:** **selector**
 - **Suggested fix:** scope option clicks inside the quiz surface itself (role=dialog if it has one, else the z-60 container), not `main`.
-- **Status:** open
+- **Status:** open — progressed run 3: overlay scoping fixed; NEW blocker: typed-answer `input` is `disabled` after submitting an answer — fill the next answer only after 'Next Question' re-enables it (loop: answer → Next → answer).
 
 ### EF-24 · quiz progression: 'Greetings & Presence' button not found on the Learning Plan
 - **Spec:** `tests/e2e/user/25-learning-quiz-progression-write.spec.ts:44` · **Failure type:** click timeout
 - **Reproducibility:** deterministic · **Likely owner:** **selector/data** — the roadmap likely needs a month/day expansion first, or the day button's accessible name differs from the raw title (compare with `openFirstLessonDetails`, which works in user/03).
 - **Suggested fix:** reuse `openFirstLessonDetails`-style navigation (or expand Month 1 → Day 1 explicitly) instead of matching the lesson title at top level.
-- **Status:** open
+- **Status:** open — progressed run 3: navigation fixed, quiz completes; junk answers score <3 so `/Score: [3-5]/` never appears. Owner narrowed to **data**: source the CORRECT answers from the pack content (the test's purpose is the PASS path that writes `completed_lessons`).
+
+### EF-25 · user/24: "Today's Session" heading duplicated — strict violation after storage fix
+- **Spec:** `tests/e2e/user/24-daily-session-loop.spec.ts:28` · **Failure type:** strict-mode violation — `getByRole('heading', { name: "Today's Session" })` resolves to 2 elements (Home's session card AND the DailySessionView heading both render it)
+- **Reproducibility:** deterministic (run 3) · **Likely owner:** **selector** (scope to the session surface); minor product nit: two identical headings on one screen is also an a11y smell — Lane B will flag to product if scoping doesn't isolate cleanly
+- **Artifacts:** `artifacts/e2e-run3-2026-07-13/…user-24…` · **Status:** open
 
 ## Product findings (mirrored to REQUIREMENTS-TRACKER; runner/product session owns)
 
@@ -279,6 +291,116 @@
 - **CS-6 · One suite runner at a time (formalize E-1).** Concurrent runs share live DB + `.auth/` files and cross-contaminate (observed: global-setup re-ran mid-triage and swapped the throwaway user under my probes). Suggest: runner reserves a `queuectl` token named "e2e-suite-run" for the duration; both agents honor it. Owner: both agents + operator convention. HIGH confidence.
 - **CS-7 · Reproducibility protocol.** Local `retries: 0` + live backend means occasional network flakes will file false defects. Convention: before filing an EF item, re-run the single failing spec once (`npx playwright test <file> --repeat-each=2` for suspicion of flake); record "deterministic" vs "flaky (1/3)" in the reproducibility field. Owner: runner (adopted as of this review). MEDIUM confidence — revisit when flakes actually appear (run 1 had zero).
 - **CS-8 · Seed/teardown hygiene for queue specs.** admin/03/05 seed pending rows with nonce text but (as read) don't delete them; the live review queues accumulate `Admin queue …` junk across runs, and the owner's real admin view shows test garbage. Suggest afterEach cleanup via evidence clients (delete by nonce), or a dedicated tag prefix + periodic sweep script. Owner: test agent. HIGH confidence.
+
+## Coverage-governance program — "true 100%" closure plan
+
+> Added 2026-07-13 so the test-building agent and the live runner work against the same definition of completion. This section is the anti-drift program, not a one-off spec list.
+
+### Definition of done
+
+- `100%` means every user-visible page, modal, tab, route, screen, and stateful surface is rendered at least once.
+- Every interactive control must be exercised at a declared depth: `rendered` · `clicked` · `value-changed` · `outcome-asserted`.
+- Critical controls are not done at `rendered`; they must end at `outcome-asserted`.
+- Every DB-backed workflow must prove its outcome with a readback path when one exists (`profiles`, `mastery_items`, `user_situation_progress`, queue tables, etc.).
+- Audio/voice surfaces are done only when the seam we actually control is asserted: STT mock, audio-state UI, TTS success/failure handling, voice-limit handling.
+- Coverage must include both desktop and mobile primary layouts.
+- New interactive controls must fail the gate if they are not inventoried or not touched by a claiming spec.
+
+### Program phases
+
+1. **Harden the gate itself first**
+   - Implement CS-1 inventory-drift detection against the running app.
+   - Implement CS-2 touch verification so a spec cannot claim a control it never exercises.
+   - Finish migrating `covered_by` from legacy strings to `{ spec, depth }`.
+   - Escalate `rendered`-only claims from soft warning to fail/warn-by-tier once critical domains are migrated.
+
+2. **Close product domains systematically**
+   - Domains: auth/onboarding, home/progression, learning, practice hub, each practice engine, tutor, settings, admin, offline/PWA, account lifecycle, mobile layout.
+   - Each domain is only closed when all known controls are inventoried, each control has a spec, and each critical path has outcome evidence.
+
+3. **Promote high-risk flows from surface checks to evidence checks**
+   - Priority order: simulator, daily session/progression, offline write queue, speaking capability fallbacks, admin deep flows, PWA/service-worker drift, mobile sweep.
+
+4. **Add environment variants deliberately**
+   - Desktop.
+   - Mobile viewport.
+   - Offline / reconnect.
+   - STT available / unavailable.
+   - Recording supported / unsupported.
+   - Voice-limit exhausted.
+   - Admin and regular user.
+
+5. **Enforce in the ship gate in layers**
+   - Keep `npm run test:e2e:coverage` in preflight.
+   - Add curated Playwright `@smoke` only when the runner confirms it is stable enough to gate deploys.
+   - Full regression remains the live runner's job outside the sandbox.
+
+### Domain closure checklist
+
+- `render`: every page/modal/screen/state in the domain is reachable and asserted.
+- `controls`: every button/field/link/toggle/input in the domain is inventoried.
+- `depth`: every control has a declared depth; critical controls end at `outcome-asserted`.
+- `evidence`: DB/API/state readback exists for each persistence-bearing workflow.
+- `desktop`: domain passes in the desktop layout.
+- `mobile`: domain passes in the mobile layout if the domain is user-facing.
+- `degraded`: offline/capability-limit behavior is covered when relevant.
+
+### Current highest-priority remaining gaps after the latest buildout
+
+- **Simulator core loop** — still the largest uncovered real product surface; close scripted deterministic flow first, then free-roleplay seam coverage.
+- **Coverage-system truthfulness** — CS-1 and CS-2 remain the main structural blockers to trusting green status.
+- **Offline write queue** — read-path coverage exists; queued-write reconcile path still open.
+- **Daily session progression evidence** — entry/recap UI exists, but the strongest write/readback proof still needs expansion.
+- **Admin deep flows + cleanup hygiene** — selector anchoring and seeded-row cleanup remain open.
+- **PWA/service-worker reload behavior** — still untested.
+
+### Working rule for both agents
+
+- Do not call a domain `closed` because a spec file exists.
+- A domain closes only when the runner has executed it live, the tracker has no open EF/CG items for that surface, and the inventory/gate reflects the real control set.
+
+### Active lane split
+
+#### Lane A — Builder lane (Codex test-building agent)
+
+- Owns spec authoring, spec refactors, helpers, inventory, selectors, harness fixes, and coverage-gate implementation.
+- Current priorities:
+  - CS-1 inventory-drift detection.
+  - CS-2 control-touch verification.
+  - migrate legacy `covered_by` strings to structured `{ spec, depth }`.
+  - close CG-11 simulator core loop.
+  - close CG-16 offline write queue reconcile path.
+  - close CS-8 seed/teardown hygiene for admin queue specs.
+- Must not mark product surfaces closed without live runner verification.
+
+#### Lane B — Runner lane (live execution / unsandboxed validation)
+
+- Owns all live Playwright execution, reruns, DB/product verification requiring unsandboxed access, and tracker truth.
+- Immediate worklist:
+  - rerun the current suite or targeted failed specs for EF-13…EF-24.
+  - update each item with `verified`, `reopened`, or narrowed owner (`selector` / `harness` / `data` / `app` / `environment`).
+  - confirm whether EF-22 is a real app bug or a wrong test expectation.
+  - keep run artifacts and reproducibility notes current.
+  - confirm newly-added specs (user/24…28) against live behavior after each builder batch.
+- Should not edit `tests/e2e/**` unless explicitly taking over a builder-owned fix.
+
+#### Lane C — Subagent discovery lane (parallel read-only support)
+
+- Owns bounded discovery/mapping tasks with no shared writes unless explicitly assigned a disjoint slice.
+- Best uses:
+  - map simulator deterministic selectors + evidence paths.
+  - map offline write queue persistence path and readback seam.
+  - map PWA/service-worker reload testability.
+  - map admin queue cleanup strategy + stable card anchors.
+  - map remaining mobile-only controls not yet inventoried.
+- Output should be implementation briefs, not tracker truth changes.
+
+### Handoff protocol between lanes
+
+- Builder finishes a batch and names the affected specs/helpers/inventory entries.
+- Runner executes live, records EF/CG/CS outcomes, and feeds failures back through this tracker.
+- Subagents support whichever next batch is not on the immediate critical path.
+- No lane should infer closure from code alone; only the runner can confirm closure status here.
 
 ## Environment / process notes
 
