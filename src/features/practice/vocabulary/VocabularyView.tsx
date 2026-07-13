@@ -305,6 +305,9 @@ const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
   const [situations, setSituations] = useState<Situation[] | null>(null);
 
   // Resolve the signed-in user once (modes receive only PracticeModeProps from the hub).
+  // LT9: read the LOCAL persisted session (no network). auth.getUser() here made a network
+  // round-trip that fails offline, silently mounting the session signed-out and dropping
+  // every grade before the offline sync-queue could engage.
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve()
@@ -312,8 +315,8 @@ const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
         const supabase = getSupabase();
         if (!supabase) return { user: null };
         try {
-          const { data } = await supabase.auth.getUser();
-          return { user: data.user ?? null };
+          const { data } = await supabase.auth.getSession();
+          return { user: data.session?.user ?? null };
         } catch (err) {
           // Signed-out sessions are expected — practice continues without persistence.
           logger.warn('VOCAB_AUTH_UNAVAILABLE', 'Could not resolve auth user for vocabulary review', {

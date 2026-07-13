@@ -57,8 +57,10 @@ export const recordPronunciationAttempt = async (
   }
 
   try {
-    const { data, error: authError } = await supabase.auth.getUser();
-    if (authError || !data.user) {
+    // LT9: local session read (no network) — auth.getUser() fails offline and dropped
+    // pronunciation attempts even with a valid persisted session.
+    const { data, error: authError } = await supabase.auth.getSession();
+    if (authError || !data.session?.user) {
       logger.warn('PRONUNCIATION_PERSIST_SKIPPED', 'No signed-in user — pronunciation attempt not persisted', {
         category: 'DATA_PROCESSING',
         details: { itemKey, mode: score.mode },
@@ -71,7 +73,7 @@ export const recordPronunciationAttempt = async (
     // (storage bucket + offline queue step), record-and-compare passes its captured
     // Blob here and audio_ref carries the storage path — the row shape already fits.
     const { error } = await supabase.from('pronunciation_attempts').insert({
-      user_id: data.user.id,
+      user_id: data.session.user.id,
       item_key: itemKey,
       score,
       audio_ref: null,

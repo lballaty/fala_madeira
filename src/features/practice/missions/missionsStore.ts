@@ -134,12 +134,14 @@ const toEntry = (row: MissionRow, local: boolean): MissionLogEntry => ({
   local,
 });
 
+// LT9: local session read (no network) — auth.getUser() fails offline and silently
+// downgraded missions to device-local-only even with a valid persisted session.
 const getUserId = async (correlationId: string): Promise<string | null> => {
   const supabase = getSupabase();
   if (!supabase) return null;
   try {
-    const { data } = await supabase.auth.getUser();
-    return data.user?.id ?? null;
+    const { data } = await supabase.auth.getSession();
+    return data.session?.user?.id ?? null;
   } catch (error) {
     logger.warn('MISSIONS_AUTH_UNAVAILABLE', 'could not resolve the signed-in user — missions fall back to device-local storage', {
       category: 'DATA_PROCESSING',

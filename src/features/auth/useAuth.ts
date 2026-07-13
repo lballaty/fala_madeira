@@ -114,7 +114,12 @@ export const useAuth = ({ supabase, showToast, depsRef }: AuthDeps) => {
 
       try {
         logger.debug('auth_check', 'Checking current user');
-        const { data: { user } } = await supabase.auth.getUser();
+        // LT9: read the LOCAL persisted session (no network). The previous auth.getUser()
+        // made a network round-trip at boot, so reloading the app OFFLINE landed a validly
+        // signed-in user on the AuthScreen — and left queued offline writes unable to
+        // replay. onAuthStateChange below still handles real revocation when online.
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user ?? null;
         logger.debug('auth_check', 'Current user check result', { details: { userId: user?.id } });
         logger.setUser(user?.id ?? null);
         setUser(user);

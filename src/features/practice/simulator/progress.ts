@@ -41,7 +41,10 @@ export async function saveSimulatorCompletion(completion: SimulatorCompletion): 
   }
 
   try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    // LT9: local session read (no network) — auth.getUser() fails offline and dropped
+    // simulator completions even with a valid persisted session.
+    const { data: { session }, error: userError } = await supabase.auth.getSession();
+    const user = session?.user ?? null;
     if (userError || !user) {
       logger.warn('SIM_PROGRESS_NO_USER', 'no signed-in user — simulator completion not persisted', {
         category: 'DATA_PROCESSING',
