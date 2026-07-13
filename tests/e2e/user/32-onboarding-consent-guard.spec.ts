@@ -48,8 +48,15 @@ async function openLegalDocFromConsent(
   expectedHeading: RegExp,
 ) {
   await page.getByRole('button', { name: controlName }).click();
+  const legalDialog = page.getByRole('dialog');
   await expect(page.getByRole('heading', { name: expectedHeading })).toBeVisible();
-  await page.getByRole('button', { name: 'Close' }).click();
+  await legalDialog.getByRole('button', { name: 'Close' }).click();
+  // Wait for the LegalPage modal to FULLY detach, not merely for "One last thing" to be
+  // visible-through-the-fade. The modal is a fixed inset-0 z-[70] overlay with a framer-motion
+  // exit animation; while it is still exiting it covers the consent checkboxes, so a following
+  // force-click lands on the exiting overlay and the checkbox never toggles (the run-14
+  // failure). Asserting the dialog is detached guarantees the overlay is gone first.
+  await expect(legalDialog).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'One last thing' })).toBeVisible();
 }
 
@@ -57,10 +64,15 @@ async function toggleConsentRow(page: Page, rowText: RegExp, mode: 'check' | 'un
   const row = page.locator('label').filter({ hasText: rowText }).first();
   const checkbox = row.getByRole('checkbox');
   await expect(checkbox).toBeVisible();
-  if (mode === 'check') {
-    await checkbox.check({ force: true });
-  } else {
-    await checkbox.uncheck({ force: true });
+  const want = mode === 'check';
+  // The onboarding ConsentRow is a CONTROLLED React checkbox (checked={state}, onChange
+  // flips state). Playwright's .check()/.uncheck() force-click, then IMMEDIATELY re-read
+  // input.checked and throw "did not change its state" if it hasn't flipped yet — a race
+  // against React's re-render commit (pitfall #3, controlled-input tracker). Use a plain
+  // state-guarded .click() and let expect(...).toBeChecked() retry until React commits.
+  if ((await checkbox.isChecked()) !== want) {
+    await checkbox.click({ force: true });
+    await expect(checkbox).toBeChecked({ checked: want });
   }
 }
 

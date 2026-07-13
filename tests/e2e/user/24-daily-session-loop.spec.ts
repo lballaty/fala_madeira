@@ -47,7 +47,11 @@ test.describe('daily session loop', () => {
     coverage.touch('session.segment.skip', 'outcome-asserted');
 
     await expect(page.getByRole('heading', { name: 'Session done' })).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByText(/Nicely done/i)).toBeVisible();
+    // Assert the recap's unique segment-summary copy rather than the "Nicely done" label:
+    // a skipped-through session grades nothing, so the DailySessionView recap card AND the
+    // SessionRecap honest-empty-state BOTH render an identical "Nicely done" header (2 matches).
+    // The segment-count line is unique and also proves the recap carries real session data.
+    await expect(page.getByText(/You worked through \d+ of \d+ segments today/i)).toBeVisible();
     await page.getByRole('button', { name: 'Back to Home' }).click();
     await expect(page.getByRole('heading', { name: /Olá,/i })).toBeVisible();
     coverage.touch('session.recap.back_home', 'outcome-asserted');
