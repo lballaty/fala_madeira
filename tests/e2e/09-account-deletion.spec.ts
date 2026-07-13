@@ -1,21 +1,18 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/09-account-deletion.spec.ts
-// Description: S7 account-deletion slice — SAFE assertion only. Confirms the Settings destructive
-//   control exists ("Delete Account & Data") and that its confirmation modal opens with the
-//   correct destructive copy ("Delete Account?" → "Delete Everything" / "Keep My Account"), then
-//   CANCELS. It NEVER confirms deletion — the admin account (liborballaty@gmail.com) must survive
-//   (docs/TEST-VERTICAL-SLICES.md S7 uses a throwaway user for the real destructive path; this
-//   pre-ship gate only verifies the control + modal, per the task's explicit "DO NOT actually
-//   confirm deletion").
+// Description: S7 account-deletion slice. Because the suite now runs on a throwaway fake-email
+//   user, this spec can execute the REAL destructive flow at the end of the serial run: open the
+//   destructive control, confirm deletion, assert the app returns to AuthScreen, then assert a
+//   fresh sign-in with the deleted credentials fails.
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-10
 
-import { test, expect, landOnHome } from './support/fixtures';
+import { test, expect, landOnHome, captureEdgeRequestId } from './support/fixtures';
 
-test.describe('account deletion control (S7 — non-destructive)', () => {
-  test('delete control exists and confirmation modal opens, then cancel (no deletion)', async ({
+test.describe('account deletion (S7)', () => {
+  test('throwaway test user can delete the account and can no longer sign in', async ({
     page,
-    evidence,
-    admin,
+    browser,
+    testUser,
   }) => {
     await landOnHome(page);
     await page.getByRole('button', { name: 'Profile' }).first().click();
@@ -33,17 +30,26 @@ test.describe('account deletion control (S7 — non-destructive)', () => {
     ).toBeVisible();
     await expect(page.getByRole('button', { name: 'Delete Everything' })).toBeVisible();
 
-    // CANCEL — never confirm. The admin account must survive this run.
-    await page.getByRole('button', { name: 'Keep My Account' }).click();
-    await expect(page.getByRole('heading', { name: 'Delete Account?' })).toHaveCount(0);
+    const requestIdPromise = captureEdgeRequestId(page, 'delete-account', 30_000);
+    await page.getByRole('button', { name: 'Delete Everything' }).click();
 
-    // Backend evidence that nothing was deleted: the admin profile row still exists.
-    const { data, error } = await evidence
-      .from('profiles')
-      .select('id')
-      .eq('id', admin.userId)
-      .single();
-    expect(error, error?.message).toBeNull();
-    expect(data?.id).toBe(admin.userId);
+    const requestId = await requestIdPromise;
+    expect(requestId, 'delete-account did not echo a requestId').toBeTruthy();
+
+    await expect(page.getByRole('button', { name: 'Log In' })).toBeVisible({ timeout: 30_000 });
+    await expect(page.getByRole('button', { name: 'Sign Up' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Olá,/i })).toHaveCount(0);
+
+    const context = await browser.newContext({ storageState: { cookies: [], origins: [] } });
+    const loginPage = await context.newPage();
+    await loginPage.goto('/');
+    await loginPage.getByRole('button', { name: 'Log In' }).click();
+    await loginPage.getByPlaceholder('Email').fill(testUser.email);
+    await loginPage.getByPlaceholder('Password', { exact: true }).fill(testUser.password);
+    await loginPage.getByRole('button', { name: 'Log In' }).click();
+
+    await expect(loginPage.getByPlaceholder('Email')).toBeVisible({ timeout: 15_000 });
+    await expect(loginPage.getByRole('heading', { name: /Olá,/i })).toHaveCount(0);
+    await context.close();
   });
 });

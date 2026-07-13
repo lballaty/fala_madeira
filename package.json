@@ -19,7 +19,10 @@
     "test:e2e:report": "playwright show-report",
     "serve:local": "bash scripts/serve-local.sh",
     "test:local-artifact": "bash scripts/serve-local.sh",
-    "deploy": "bash scripts/ship.sh"
+    "deploy": "bash scripts/ship.sh",
+    "test:e2e:regression": "node scripts/run-e2e-regression.mjs",
+    "test:e2e:aidevops": "node scripts/run-e2e-aidevops.mjs",
+    "test:e2e:coverage": "node scripts/check-interactive-coverage.mjs"
   },
   "dependencies": {
     "@capacitor/cli": "^8.4.1",

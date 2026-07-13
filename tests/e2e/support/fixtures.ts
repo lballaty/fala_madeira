@@ -1,35 +1,44 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/support/fixtures.ts
-// Description: Shared Playwright fixtures for the vertical-slice e2e suite. Extends the base
-//   test with: (1) an onboarding IndexedDB seed injected via page.addInitScript BEFORE app
-//   boot — the admin's onboarding-complete record lives in IndexedDB (FalaMadeiraAudioCache/kv,
-//   key `onboarding:record:<uid>`) which storageState does NOT capture, so without the seed a
-//   fresh context re-triggers OnboardingFlow; (2) a service-worker guard (the PWA registers a
-//   SW that would serve cached content during context.setOffline tests) — unregistered on boot;
-//   (3) an RLS-scoped Supabase evidence client (anon key + the admin session) used by tests to
-//   read the rows the UI actions created (docs/TEST-VERTICAL-SLICES.md §4 domain-row evidence);
-//   (4) a network requestId capture helper for edge-function slices (the /functions/v1/* body
-//   echoes `requestId`). See global-setup.ts for how the session is minted.
+// Description: Shared Playwright fixtures for the regression e2e suite. Extends the base test
+//   with both role sessions (admin + throwaway test-user), onboarding seeding for either role,
+//   RLS-scoped evidence clients, and a network requestId capture helper for edge-function slices.
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-10
 
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { test as base, expect, type Page, type Response } from '@playwright/test';
+import { test as base, expect, type BrowserContext, type Page, type Response } from '@playwright/test';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { SUPABASE_URL, SUPABASE_ANON_KEY, REPO_ROOT_DIR } from './env';
+import {
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  REPO_ROOT_DIR,
+  ADMIN_SESSION_INFO_PATH,
+  ADMIN_STORAGE_STATE_PATH,
+  TEST_USER_SESSION_INFO_PATH,
+  TEST_USER_STORAGE_STATE_PATH,
+  type SessionInfo,
+} from './env';
 
 const ONBOARDING_KEY_PREFIX = 'onboarding:record:';
-const SESSION_INFO_PATH = resolve(REPO_ROOT_DIR, 'tests/e2e/.auth/admin-session.json');
+const ADMIN_SESSION_INFO_FALLBACK_PATH = resolve(REPO_ROOT_DIR, 'tests/e2e/.auth/admin-session.json');
+const TEST_USER_SESSION_INFO_FALLBACK_PATH = resolve(REPO_ROOT_DIR, 'tests/e2e/.auth/test-user-session.json');
+const ADMIN_STORAGE_STATE_FALLBACK_PATH = resolve(REPO_ROOT_DIR, 'tests/e2e/.auth/admin.json');
+const TEST_USER_STORAGE_STATE_FALLBACK_PATH = resolve(REPO_ROOT_DIR, 'tests/e2e/.auth/test-user.json');
 
-export interface AdminSessionInfo {
-  userId: string;
-  email: string;
-  access_token: string;
-  refresh_token: string;
+export type AdminSessionInfo = SessionInfo;
+export type TestUserSessionInfo = SessionInfo;
+
+function readSessionInfo(path: string): SessionInfo {
+  return JSON.parse(readFileSync(path, 'utf8')) as SessionInfo;
 }
 
 export function readAdminSessionInfo(): AdminSessionInfo {
-  return JSON.parse(readFileSync(SESSION_INFO_PATH, 'utf8')) as AdminSessionInfo;
+  return readSessionInfo(ADMIN_SESSION_INFO_PATH || ADMIN_SESSION_INFO_FALLBACK_PATH);
+}
+
+export function readTestUserSessionInfo(): TestUserSessionInfo {
+  return readSessionInfo(TEST_USER_SESSION_INFO_PATH || TEST_USER_SESSION_INFO_FALLBACK_PATH);
 }
 
 /**
@@ -76,42 +85,94 @@ function makeInitScript(userId: string): string {
 }
 
 type Fixtures = {
-  /** The page with onboarding pre-seeded + SW unregistered (admin lands on Home). */
+  /** Default page is the throwaway test user with onboarding pre-seeded. */
   page: Page;
-  /** RLS-scoped Supabase client authed as the admin (reads only the admin's own rows). */
+  /** Explicit test-user page (same role as the default page). */
+  userPage: Page;
+  /** Explicit admin page (separate browser context, admin session restored). */
+  adminPage: Page;
+  /** RLS-scoped Supabase client authed as the throwaway test user. */
   evidence: SupabaseClient;
-  /** The admin session info (userId etc.) for evidence queries. */
+  /** Alias for test-user evidence, used by role-specific specs. */
+  userEvidence: SupabaseClient;
+  /** RLS-scoped Supabase client authed as the admin. */
+  adminEvidence: SupabaseClient;
+  /** The throwaway test-user session info (userId etc.). */
+  testUser: TestUserSessionInfo;
+  /** The admin session info (userId etc.). */
   admin: AdminSessionInfo;
 };
+
+async function seedRoleContext(context: BrowserContext, userId: string): Promise<void> {
+  await context.addInitScript(makeInitScript(userId));
+}
+
+function makeEvidenceClient(info: SessionInfo): SupabaseClient {
+  const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  return client;
+}
 
 export const test = base.extend<Fixtures>({
   admin: async ({}, use) => {
     await use(readAdminSessionInfo());
   },
 
-  page: async ({ page }, use) => {
-    const admin = readAdminSessionInfo();
-    await page.addInitScript(makeInitScript(admin.userId));
-    await use(page);
+  testUser: async ({}, use) => {
+    await use(readTestUserSessionInfo());
   },
 
-  evidence: async ({ admin }, use) => {
-    const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: { persistSession: false, autoRefreshToken: false },
+  userPage: async ({ browser }, use) => {
+    const testUser = readTestUserSessionInfo();
+    const context = await browser.newContext({
+      storageState: TEST_USER_STORAGE_STATE_PATH || TEST_USER_STORAGE_STATE_FALLBACK_PATH,
     });
-    // Authenticate the Node-side client with the admin session so RLS scopes reads to the
-    // admin's own rows — the realistic "read the rows the user created" evidence path.
+    await seedRoleContext(context, testUser.userId);
+    const page = await context.newPage();
+    await use(page);
+    await context.close();
+  },
+
+  page: async ({ userPage }, use) => {
+    await use(userPage);
+  },
+
+  adminPage: async ({ browser, admin }, use) => {
+    const context = await browser.newContext({
+      storageState: ADMIN_STORAGE_STATE_PATH || ADMIN_STORAGE_STATE_FALLBACK_PATH,
+    });
+    await seedRoleContext(context, admin.userId);
+    const page = await context.newPage();
+    await use(page);
+    await context.close();
+  },
+
+  userEvidence: async ({ testUser }, use) => {
+    const client = makeEvidenceClient(testUser);
+    const { error } = await client.auth.setSession({
+      access_token: testUser.access_token,
+      refresh_token: testUser.refresh_token,
+    });
+    if (error) {
+      throw new Error(`evidence client setSession failed: ${error.message}`);
+    }
+    await use(client);
+  },
+
+  evidence: async ({ userEvidence }, use) => {
+    await use(userEvidence);
+  },
+
+  adminEvidence: async ({ admin }, use) => {
+    const client = makeEvidenceClient(admin);
     const { error } = await client.auth.setSession({
       access_token: admin.access_token,
       refresh_token: admin.refresh_token,
     });
     if (error) {
-      throw new Error(`evidence client setSession failed: ${error.message}`);
+      throw new Error(`admin evidence client setSession failed: ${error.message}`);
     }
-    // IMPORTANT: do NOT signOut() here — the evidence client shares the admin's refresh_token
-    // with the browser session (from global-setup). Calling signOut() revokes that token
-    // server-side and evicts the browser's restored session, kicking the app back to AuthScreen.
-    // The client is disposable per test; leaving the session intact keeps the shared session valid.
     await use(client);
   },
 });

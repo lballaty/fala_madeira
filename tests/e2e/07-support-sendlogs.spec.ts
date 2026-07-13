@@ -20,7 +20,7 @@ test.describe('support ticket + Send Logs (S5)', () => {
   test('@smoke submit ticket + send logs, then assert both backend rows (correlation_id evidence)', async ({
     page,
     evidence,
-    admin,
+    testUser,
   }) => {
     const stamp = Date.now();
     const subject = `e2e-vertical-slice ${stamp}`;
@@ -46,14 +46,14 @@ test.describe('support ticket + Send Logs (S5)', () => {
     // Success toast + modal closes on success.
     await expect(page.getByText('Ticket submitted successfully!')).toBeVisible({ timeout: 15_000 });
 
-    // Backend evidence (a): the ticket row exists for the admin with the unique subject.
+    // Backend evidence (a): the ticket row exists for the throwaway test user with the unique subject.
     await expect
       .poll(
         async () => {
           const { data } = await evidence
             .from('tickets')
             .select('id, subject, status, user_id')
-            .eq('user_id', admin.userId)
+            .eq('user_id', testUser.userId)
             .eq('subject', subject)
             .maybeSingle();
           return data?.subject ?? null;
@@ -77,7 +77,7 @@ test.describe('support ticket + Send Logs (S5)', () => {
 
     // Backend evidence (b): the user_report log row exists; its details JSON carries a sessionId
     // and a non-empty recentLogs snapshot (the session pivot — correlation_id evidence class).
-    const row = await pollForUserReport(evidence, admin.userId, beforeSend);
+    const row = await pollForUserReport(evidence, testUser.userId, beforeSend);
     expect(row, 'no user_report log row found after Send Logs').not.toBeNull();
 
     const details = JSON.parse(row!.details as string);

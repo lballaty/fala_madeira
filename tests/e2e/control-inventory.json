@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-07-11",
+  "controls": [
+    {
+      "screen": "auth",
+      "id": "auth.login.cta",
+      "selector": { "role": "button", "name": "Log In" },
+      "covered_by": ["tests/e2e/01-app-shell.spec.ts", "tests/e2e/02-auth.spec.ts"]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.signup.cta",
+      "selector": { "role": "button", "name": "Sign Up" },
+      "covered_by": ["tests/e2e/01-app-shell.spec.ts"]
+    },
+    {
+      "screen": "home",
+      "id": "home.unlock.open",
+      "selector": { "role": "button", "name": "Unlock Next Level" },
+      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts"]
+    },
+    {
+      "screen": "home",
+      "id": "home.continue_learning.see_all",
+      "selector": { "role": "button", "name": "See All" },
+      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts"]
+    },
+    {
+      "screen": "home",
+      "id": "home.continue_learning.card",
+      "selector": { "role": "button", "name": "Continue Learning" },
+      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.audio_speed.slider",
+      "selector": { "css": "input[type=\"range\"]" },
+      "covered_by": ["tests/e2e/user/09-settings-persistence.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.support.open",
+      "selector": { "role": "button", "name": "Support & Feedback" },
+      "covered_by": ["tests/e2e/07-support-sendlogs.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.tutor.open",
+      "selector": { "role": "button", "name": "Switch AI Tutor" },
+      "covered_by": ["tests/e2e/user/10-settings-readwrite.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.tutor.select",
+      "selector": { "role": "button", "name": "João, 45" },
+      "covered_by": ["tests/e2e/user/10-settings-readwrite.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.submissions.open",
+      "selector": { "role": "button", "name": "My Submissions" },
+      "covered_by": ["tests/e2e/user/10-settings-readwrite.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.user_manual.open",
+      "selector": { "role": "button", "name": "User Manual" },
+      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.tutorial.open",
+      "selector": { "role": "button", "name": "App Tutorial" },
+      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.tutorial.continue",
+      "selector": { "role": "button", "name": "Continue" },
+      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.legal.terms",
+      "selector": { "role": "button", "name": "Terms of Service" },
+      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.legal.privacy",
+      "selector": { "role": "button", "name": "Privacy Policy" },
+      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.legal.ai_disclosure",
+      "selector": { "role": "button", "name": "AI Disclosure" },
+      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.pattern_builder.tile",
+      "selector": { "text": "Pattern Builder" },
+      "covered_by": ["tests/e2e/04-practice.spec.ts", "tests/e2e/08-offline.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.request_theme.open",
+      "selector": { "role": "button", "name": "Request Theme" },
+      "covered_by": ["tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.request_theme.submit",
+      "selector": { "role": "button", "name": "Submit Request" },
+      "covered_by": ["tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.suggest_video.open",
+      "selector": { "role": "button", "name": "Suggest Video" },
+      "covered_by": ["tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.suggest_video.submit",
+      "selector": { "role": "button", "name": "Submit Suggestion" },
+      "covered_by": ["tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.correction.open",
+      "selector": { "role": "button", "name": "Correction" },
+      "covered_by": ["tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.correction.submit",
+      "selector": { "role": "button", "name": "Submit" },
+      "covered_by": ["tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.nav.open",
+      "selector": { "role": "button", "name": "Admin" },
+      "covered_by": ["tests/e2e/admin/01-admin-surfaces.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.mode.switch",
+      "selector": { "role": "switch", "name": "Admin Mode" },
+      "covered_by": ["tests/e2e/admin/01-admin-surfaces.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.overlay.content_studio_tab",
+      "selector": { "role": "button", "name": "Content Studio" },
+      "covered_by": ["tests/e2e/admin/01-admin-surfaces.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.settings.voice_limit.increment",
+      "selector": { "role": "button", "name": "+" },
+      "covered_by": ["tests/e2e/admin/02-admin-global-settings.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.settings.voice_limit.decrement",
+      "selector": { "role": "button", "name": "-" },
+      "covered_by": ["tests/e2e/admin/02-admin-global-settings.spec.ts"]
+    },
+    {
+      "screen": "home",
+      "id": "home.settings.open",
+      "selector": { "role": "button", "name": "Settings" },
+      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts", "tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+    }
+  ]
+}
