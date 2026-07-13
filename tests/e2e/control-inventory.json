@@ -1156,6 +1156,94 @@
       "covered_by": [
         { "spec": "tests/e2e/user/27-tutor-voice-limit.spec.ts", "depth": "outcome-asserted" }
       ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.correction.reject",
+      "selector": {"role": "button", "name": "Reject correction"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/09-admin-reject-correction.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.tutor.select_alt",
+      "selector": {"role": "button", "name": "Maria, 28"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/39-settings-tutor-theme.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.theme.light",
+      "selector": {"role": "button", "name": "Light"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/39-settings-tutor-theme.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.theme.system",
+      "selector": {"role": "button", "name": "System"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/39-settings-tutor-theme.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.grade_again",
+      "selector": {"role": "button", "name": "Again"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.grade_hard",
+      "selector": {"role": "button", "name": "Hard"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.grade_easy",
+      "selector": {"role": "button", "name": "Easy"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.pattern_builder.grade_almost",
+      "selector": {"role": "button", "name": "Almost"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.pattern_builder.grade_missed",
+      "selector": {"role": "button", "name": "Missed"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.review_mode.toggle",
+      "selector": {"role": "button", "name": "Review Mode"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/41-learning-review-and-phrase-filters.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.phrases.filter",
+      "selector": {"role": "button", "name": "informal"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/41-learning-review-and-phrase-filters.spec.ts", "depth": "outcome-asserted" }
+      ]
     }
   ]
 }
