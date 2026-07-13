@@ -879,7 +879,7 @@
       "id": "practice.vocabulary.done",
       "selector": { "role": "button", "name": "Done" },
       "covered_by": [
-        { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "rendered" }
+        { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "outcome-asserted" }
       ]
     },
     {
@@ -984,7 +984,7 @@
       "id": "practice.speaking.repeat.next_phrase",
       "selector": { "role": "button", "name": "Next phrase" },
       "covered_by": [
-        { "spec": "tests/e2e/10-speaking-stt.spec.ts", "depth": "rendered" }
+        { "spec": "tests/e2e/10-speaking-stt.spec.ts", "depth": "outcome-asserted" }
       ]
     },
     {
