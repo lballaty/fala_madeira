@@ -45,6 +45,17 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      // @mobile-tagged specs run only under the 'mobile' project below (no existing spec is
+      // @mobile, so this leaves the desktop lane's current behavior unchanged).
+      grepInvert: /@mobile/,
+    },
+    {
+      // CG-17: exercise the mobile bottom-bar layout (the product's primary form factor).
+      // Chromium engine at iPhone-scale width (< Tailwind md) so the bottom bar renders and
+      // the sidebar hides. Scoped via grep to @mobile-tagged specs to keep runtime bounded.
+      name: 'mobile',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 } },
+      grep: /@mobile/,
     },
   ],
 
