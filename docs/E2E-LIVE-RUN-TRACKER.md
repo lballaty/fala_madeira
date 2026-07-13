@@ -4,7 +4,7 @@
 **Description:** Live defect queue from executing the Playwright e2e suite (T-COV mandate, commit 662541b). The test-building agent authors specs but cannot bind ports in its sandbox; the runner session executes the suite (local `vite preview` + LIVE Supabase) and records every discrete failure here. Two buckets: EXECUTION FAILURES (tests that exist but fail) and COVERAGE GAPS (surfaces/flows not yet exercised). Owners — **app** (product code, runner/product session fixes, mirrored to REQUIREMENTS-TRACKER), **harness** (fixtures/setup/technique), **selector** (locator defects), **data** (seed/state assumptions), **environment** (runner env / concurrency noise). Harness/selector/data items belong to the test-building agent.
 **Author:** Libor Ballaty (with assistant)
 **Created:** 2026-07-13
-**Last Updated:** 2026-07-13 (runs 9-10; sync-queue hardening 78ddfd0; EF-31/LT10 filed — gotrue reconnect race on offline-reloaded pages, full evidence chain)
+**Last Updated:** 2026-07-13 (Gap Analysis v2: GA-1..3 + PF-10 — offline queue is mastery-only; journey chains, error-surface, PWA-update, axe gaps enumerated)
 **Last Updated By:** e2e runner session
 
 ## How to use this file
@@ -341,11 +341,45 @@
 - **PF-2 (= EF-3):** `lesson_requests` SELECT RLS lacks `OR is_admin()` → Admin Review "Requests" queue permanently empty for user submissions. Fix: policy migration.
 - **PF-3 (latent, found during EF-2 triage):** `useSettings.ts:289-300` — the admin global-voice-limit write-back effect runs whenever `profile` loads; if it fires before the run-once `fetchGlobalSettings` resolves, an admin's mount can upsert the localStorage/default value (30) OVER the DB value (5), silently reconfiguring production. Did NOT fire this run (`global_settings.updated_at` still 2026-07-10) but the race is real. Fix: skip the write-back until the fetched value has been applied (dirty-flag), or write only on explicit +/- interaction.
 - **PF-4 (a11y, minor, from EF-4):** the Continue Learning card button's accessible name is just the lesson title; consider `aria-label` including its function.
+- **PF-10 (gap analysis v2):** the offline write-queue wraps ONLY mastery_items — missions, simulator completions, pronunciation attempts, quiz completions, and profile prefs write directly and are lost offline (log-only). §10's promise is one-fifth implemented. Route them through the existing enqueue seam (it's proven); each is a small change now that LT9 fixed identity resolution.
 - **PF-6 (quiz architecture review, 2026-07-13, owner-prompted):** quiz questions are GENERATED client-side from the legacy `lesson.vocabulary`/`lesson.patterns` (random 5, `components/Quiz.tsx:22-48`); the pack schema's `review_items` (which the content validator actively encourages) are never read by the Quiz — the same dual-source class as FE3 videos. Authored quiz content is effectively dead data.
 - **PF-7 (quiz persistence):** NO per-answer persistence exists — no quiz_results store and, more importantly, no mastery/SRS emission: quiz answers never feed the 'retrieve' dimension, so the Coach is completely blind to quiz performance. The ONLY write is `profiles.completed_lessons` when score ≥3/5 (`usePractice.ts:73-86`), and it is a DIRECT supabase update, NOT routed through the offline sync-queue — **a quiz passed offline silently loses its completion** (one more LT9-class site; the write seam exists, it's just not used here). Optimistic local state is not rolled back on write failure (error is logged+Ref'd).
 - **PF-8 (quiz correctness nit):** scoring normalizes punctuation (`normalizeText`) but the inline feedback banner compares with plain lowercase/trim (`Quiz.tsx:173,177`) — the same typed answer can SCORE correct while the banner shows "Incorrect. The answer was: …". Also: accent-sensitive matching is deliberate (EU-PT) but undocumented — specs must type exact diacritics.
 - **PF-9 (quiz robustness, minor):** distractors are sampled only from the same lesson's vocabulary with a biased shuffle — lessons with <4 vocab items yield short option lists, and colliding translations can duplicate the correct answer among options. No XP/streak is awarded on quiz completion (gamification loop untouched by quizzes).
 - **PF-5 (from EF-25, escalated run 6):** Home's session card AND the daily-session surface rendered identical 'Today's Session' headings inside the same nearest `<section>` — duplicate identical headings were an a11y smell and made the surface un-anchorable for tests. Builder has patched the session-view heading to **"Daily session"** in `src/features/session/DailySessionView.tsx`; runner should verify the duplicate-heading collision is gone live and then close PF-5/EF-25 together.
+
+## Gap Analysis v2 — 2026-07-13 ~15:00 (owner-requested; suite at 58 spec files / 71 tests, inventory 141 controls)
+
+### Closed since the v1 review (verified by passing specs)
+CG-1 (STT mock), CG-3 (audio states), CG-4/CG-13 partially (quiz flow + progression write specs exist, 2 still red), CG-5 (coach actions), CG-7 (onboarding variants user/31 + consent guard user/32), **CG-8 (PWA SW registration — user/33)**, CG-10 (daily session spec exists, red on PF-5), CG-11 partial (scripted simulator user/29), CG-12 (response speed), CG-14 (unlock submit), CG-15 (voice limit), CG-16 read-path, **CG-17 (mobile viewport — user/28 smoke)**. Admin queue actions + requests-visibility + content-studio load/publish-guard all covered.
+
+### GA-1 · PRODUCT — offline write-queue covers ONLY mastery_items (mirrors PF-10)
+The §10 design promise ("offline write queue syncs on reconnect") is implemented solely for mastery grades. Verified zero `enqueue` usage in: missions server writes (`missionsStore.ts` — has a device-local fallback but never syncs it), simulator completions (`progress.ts`), pronunciation attempts (`attempts.ts`), quiz `completed_lessons` (PF-7), and profile prefs (`scheduleProfileWrite` direct). Offline, these are lost with only a log. **Biggest remaining logical gap — product work, then one e2e per write path.**
+
+### GA-2 · Logical gaps (no spec exercises these behaviors)
+- **Error-surface contract:** no spec injects a backend failure (route interception) and asserts the calm toast WITH Ref code — the observability contract's user-visible half is unverified.
+- **RLS negative via UI:** admin/01 covers UI gating; no spec proves user A cannot see user B's data through any UI surface (probes did it manually).
+- **Session expiry / re-auth:** token expires mid-session → expected recovery flow never exercised.
+- **Voice-usage increment accuracy:** user/27 covers the blocked state; the counting path (A5 counter-concurrency concern) unverified.
+- **Streak/XP mechanics:** streak-freeze effect (useHome) and any XP change have zero coverage (note: quizzes award no XP — PF-9).
+- **Pack refresh on reconnect:** contentRepository.refresh after a drain (§10 versioning) unasserted.
+- **PWA UPDATE cycle:** user/33 covers registration; new-SW-waiting → refresh behavior (the owner's "hard refresh" pain) uncovered.
+- **Accessibility pass:** roles are used implicitly everywhere, but no axe-core smoke or keyboard-only journey exists.
+
+### GA-3 · User-flow (journey) gaps — each is a chain of existing covered fragments
+- **Support round-trip as ONE journey:** user files ticket (07) → admin resolves THAT ticket (admin/05) → user sees the status flip (user/17). All three exist separately; chain them on one nonce row. Cheapest high-value journey.
+- **Video suggestion lifecycle:** suggest (user/04) → admin approve (admin/05) → approved video visible (RLS 'approved' read). End-to-end uncovered.
+- **Path switching journey:** switch path in Settings (user/14) → Home CTA/next-action actually changes (unasserted half).
+- **Coach feedback LOOP closure:** grade weak item → Focus suggestion updates/disappears — only the one-shot render/route is covered.
+- **Admin content lifecycle:** draft→validate→publish→learner sees new content. Publish intentionally unexercised (CG-6 decision still open: scratch pack vs out-of-scope).
+- **AI free-form paths:** tutor chat round-trip reply rendering and simulator FREE (non-scripted) conversation — need a Gemini edge mock or tolerance-based asserts; only deterministic halves covered.
+- **Multi-day journeys** (streak day-2, SRS next-day due): blocked on clock control — document as wont-cover-live, candidate for unit/integration with fake timers instead.
+
+### Recommended priority (Lane A unless marked)
+1. GA-1 product work (Lane B/product) — then per-table offline e2e.
+2. Support round-trip + video lifecycle journeys (cheap chains of existing steps).
+3. Error-surface contract spec (route interception; also finally tests logger's user-visible Ref promise).
+4. PWA update-cycle spec. 5. Path-switch journey second half. 6. axe smoke. 7. CG-6 publish decision (owner).
 
 ## Bucket 2 — COVERAGE GAPS (not yet exercised)
 
