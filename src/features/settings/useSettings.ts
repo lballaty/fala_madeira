@@ -71,6 +71,7 @@ export const useSettings = ({
     const saved = localStorage.getItem('global_voice_limit');
     return saved ? parseInt(saved) : config.voice.defaultDailyVoiceLimit;
   });
+  const [hasLoadedGlobalVoiceLimit, setHasLoadedGlobalVoiceLimit] = useState(false);
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [isTutorSelectionOpen, setIsTutorSelectionOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
@@ -288,7 +289,7 @@ export const useSettings = ({
 
   useEffect(() => {
     localStorage.setItem('global_voice_limit', globalVoiceLimit.toString());
-    if (profile?.role === 'admin' && supabase) {
+    if (hasLoadedGlobalVoiceLimit && profile?.role === 'admin' && supabase) {
       scheduleProfileWrite('global_voice_limit', () =>
         supabase
           .from('global_settings')
@@ -297,7 +298,7 @@ export const useSettings = ({
     }
     // supabase is a per-session singleton (getSupabase) and intentionally omitted.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- stable singleton omitted
-  }, [globalVoiceLimit, profile, scheduleProfileWrite]);
+  }, [globalVoiceLimit, hasLoadedGlobalVoiceLimit, profile, scheduleProfileWrite]);
 
   // Fetch global settings on mount
   useEffect(() => {
@@ -312,6 +313,7 @@ export const useSettings = ({
       if (data) {
         setGlobalVoiceLimit(parseInt(data.value));
       }
+      setHasLoadedGlobalVoiceLimit(true);
     };
     fetchGlobalSettings();
     // Intentional run-once fetch on mount; supabase is a per-session singleton.
