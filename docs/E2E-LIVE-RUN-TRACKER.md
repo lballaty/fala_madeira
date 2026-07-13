@@ -16,6 +16,13 @@
 
 ## Run log
 
+### Run 17 — 2026-07-13 ~18:45 CEST — new batch ef1c90f (functional tests for 11 previously-silent controls)
+- **83 passed · 4 failed of 87 (5.4m, exit 1).** Suite grew 80 → 87: batch adds admin/09 (reject-correction), user/39 (alt tutor + theme Light/System ×2 tests), user/40 (SRS grade-variants Again/Hard/Easy + Almost/Missed), user/41 (Learning review-mode toggle + Phrase-Library filter). Inventory 142 → 153.
+- **All 7 new batch tests PASS on the runner** (tutor→Maria persists `selected_tutor_id`; theme applies `<html data-theme>` + `fm_theme`; grade variants advance the deck; review-mode label flip + phrase filter narrows; reject-correction polls `lesson_corrections.status == 'rejected'`). Every pre-existing functional test still passes.
+- **The 4 failures are UNCHANGED from run 16 — the same axe `@a11y` smokes** (auth / home / profile-settings / practice-hub), i.e. the real product WCAG-AA violations tracked as PF-11 (color-contrast) + PF-12 (unnamed settings selects / unlabeled input). No new failures, no regressions from the batch.
+- **Net functional state: 83/83 green; the only red is the a11y smoke, which stays red until the design/app a11y fixes land** (owner decision still open per run 16: split `@a11y` into its own CI lane so the functional suite reports green independently).
+- **Artifacts:** `artifacts/e2e-run17-2026-07-13.tgz`.
+
 ### Run 16 — 2026-07-13 ~18:20 CEST — new batch a7089e2 (axe a11y smoke + mobile-viewport project, CG-17)
 - **76 passed · 4 failed of 80 (4.4m, exit 1).** Suite grew 75 → 80: the new `tests/e2e/11-accessibility.spec.ts` adds 4 `@a11y` axe smokes (auth / home / practice-hub / profile-settings) and the mobile-viewport project adds 1. **All 75 pre-existing functional tests still pass — no functional regressions.**
 - **The 4 failures are the new axe spec correctly catching REAL product a11y violations (product/design owner, NOT test defects):**
