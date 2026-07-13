@@ -138,7 +138,13 @@ export const useAuth = ({ supabase, showToast, depsRef }: AuthDeps) => {
     depsRef.current!.fetchApprovedVideos();
     checkUser();
 
-    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+    // LT10/EF-33: this callback MUST NOT await any Supabase call. gotrue awaits every
+    // subscriber inside its auth lock (including from _initialize on page load); a REST
+    // call in here awaits getSession → awaits initializePromise → awaits this very
+    // callback — a self-deadlock that wedges ALL Supabase traffic on the page (wire-proven:
+    // zero REST requests after a warm reload). Update state synchronously and defer any
+    // Supabase work to a macrotask so the lock is released first.
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
       logger.debug('auth_state_changed', `Auth state changed: ${event}`, {
         category: 'SECURITY',
         details: { event, userId: session?.user?.id },
@@ -160,8 +166,20 @@ export const useAuth = ({ supabase, showToast, depsRef }: AuthDeps) => {
       logger.setUser(currentUser?.id ?? null);
       setUser(currentUser);
       if (currentUser) {
-        const fetchedProfile = await fetchProfile(currentUser.id);
-        await depsRef.current!.fetchCustomLessons(currentUser.id, fetchedProfile?.role);
+        setTimeout(() => {
+          void (async () => {
+            try {
+              const fetchedProfile = await fetchProfile(currentUser.id);
+              await depsRef.current!.fetchCustomLessons(currentUser.id, fetchedProfile?.role);
+            } catch (err) {
+              logger.error('auth_state_followup_failed', 'Deferred profile/lessons fetch after auth change failed', {
+                category: 'DATA_PROCESSING',
+                error: err,
+                details: { event, userId: currentUser.id },
+              });
+            }
+          })();
+        }, 0);
       } else {
         setProfile(null);
       }

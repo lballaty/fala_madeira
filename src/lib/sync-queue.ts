@@ -75,6 +75,24 @@ const newCorrelationId = (): string =>
     ? crypto.randomUUID()
     : `${Date.now().toString(16)}-${Math.random().toString(16).slice(2, 10)}`;
 
+// Auth-readiness guard (LT10/EF-33): how long flush waits for gotrue introspection
+// calls before deferring the drain to the retry ladder. A wedged auth client must
+// never hang a drain (or pin the isFlushing re-entrancy latch).
+const AUTH_READY_TIMEOUT_MS = 5000;
+const TIMEOUT = Symbol('timeout');
+
+const withTimeout = async <T>(p: Promise<T>, ms: number): Promise<T | typeof TIMEOUT> => {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<typeof TIMEOUT>((resolve) => {
+    timer = setTimeout(() => resolve(TIMEOUT), ms);
+  });
+  try {
+    return await Promise.race([p, timeout]);
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
+  }
+};
+
 const looksLikeQueue = (value: unknown): value is SyncEntry[] =>
   Array.isArray(value) &&
   value.every(
@@ -271,13 +289,38 @@ export const flush = async (): Promise<void> => {
     return;
   }
 
-  // LT9 follow-through: await auth readiness before replaying. On a page reloaded
-  // offline, the 'online' flush races gotrue's async session restoration — replays
-  // went out unauthenticated (observed live: POST /mastery_items → 401, entry
-  // stranded until the next online event). getSession() awaits the client's init,
-  // guaranteeing the access token is loaded (or definitively absent) first.
+  // LT9/LT10 follow-through: await auth readiness before replaying, but NEVER trust it
+  // to settle. On a page reloaded offline, the 'online' flush races gotrue's async session
+  // restoration — replays went out unauthenticated (observed live: POST /mastery_items →
+  // 401). Worse (EF-33): a wedged gotrue init leaves getSession() pending FOREVER, and an
+  // unguarded await here would strand the drain and pin isFlushing. Timeout-guard both auth
+  // calls; on a wedge, abort THIS drain (entries stay queued — the reconnect retry ladder
+  // in initSyncQueue re-attempts at 3s/10s/30s, by which point the wedge has resolved or
+  // the page is dead anyway). A resolved-but-null session gets one guarded refreshSession()
+  // chance before we drain and let RLS failures surface loudly.
   try {
-    await supabase.auth.getSession();
+    const sessionResult = await withTimeout(supabase.auth.getSession(), AUTH_READY_TIMEOUT_MS);
+    if (sessionResult === TIMEOUT) {
+      logger.warn('SYNC_QUEUE_AUTH_WEDGED', `auth.getSession() did not settle within ${AUTH_READY_TIMEOUT_MS}ms — drain deferred to the retry ladder (entries retained)`, {
+        category: 'DATA_PROCESSING',
+      });
+      return;
+    }
+    if (!sessionResult.data.session) {
+      const refreshResult = await withTimeout(supabase.auth.refreshSession(), AUTH_READY_TIMEOUT_MS);
+      if (refreshResult === TIMEOUT) {
+        logger.warn('SYNC_QUEUE_AUTH_WEDGED', `auth.refreshSession() did not settle within ${AUTH_READY_TIMEOUT_MS}ms — drain deferred to the retry ladder (entries retained)`, {
+          category: 'DATA_PROCESSING',
+        });
+        return;
+      }
+      if (refreshResult.error || !refreshResult.data.session) {
+        logger.warn('SYNC_QUEUE_NO_SESSION', 'no session and refresh did not restore one — draining anyway; RLS-scoped replays will fail loudly and stay queued', {
+          category: 'DATA_PROCESSING',
+          error: refreshResult.error ?? undefined,
+        });
+      }
+    }
   } catch {
     // Signed-out/unrestorable is fine — RLS-scoped replays will fail loudly below
     // and stay queued; never block the drain on auth introspection errors.
@@ -356,17 +399,20 @@ export const initSyncQueue = (): void => {
   listenersBound = true;
   if (typeof window !== 'undefined') {
     window.addEventListener('online', () => {
-      // Reconnect drain — with two hardenings (LT9 follow-up, observed live on
+      // Reconnect drain — with two hardenings (LT9/LT10 follow-up, observed live on
       // offline-reloaded pages): (1) an empty in-memory cache is invalidated so the
       // durable queue is RE-READ (a failed boot-time read must not hide entries);
-      // (2) one bounded follow-up drain covers the race where the instant drain runs
-      // before auth-session restoration or storage has settled.
-      if (queue && queue.length === 0) queue = null;
-      void flush().catch(() => undefined);
-      setTimeout(() => {
+      // (2) a bounded retry ladder (3s/10s/30s) covers the races where the instant
+      // drain runs before auth-session restoration or storage has settled — 30s also
+      // outlives a gotrue wedge that resolves late (EF-33).
+      const drain = () => {
         if (queue && queue.length === 0) queue = null;
         void flush().catch(() => undefined);
-      }, 3000);
+      };
+      drain();
+      for (const delayMs of [3000, 10000, 30000]) {
+        setTimeout(drain, delayMs);
+      }
     });
   }
   // Drain anything left from a previous session as soon as we boot online.
