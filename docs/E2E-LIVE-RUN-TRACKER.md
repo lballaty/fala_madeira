@@ -4,7 +4,7 @@
 **Description:** Live defect queue from executing the Playwright e2e suite (T-COV mandate, commit 662541b). The test-building agent authors specs but cannot bind ports in its sandbox; the runner session executes the suite (local `vite preview` + LIVE Supabase) and records every discrete failure here. Two buckets: EXECUTION FAILURES (tests that exist but fail) and COVERAGE GAPS (surfaces/flows not yet exercised). Owners — **app** (product code, runner/product session fixes, mirrored to REQUIREMENTS-TRACKER), **harness** (fixtures/setup/technique), **selector** (locator defects), **data** (seed/state assumptions), **environment** (runner env / concurrency noise). Harness/selector/data items belong to the test-building agent.
 **Author:** Libor Ballaty (with assistant)
 **Created:** 2026-07-13
-**Last Updated:** 2026-07-13 (run 5: 58/67; LT9/EF-29 FIXED five-site commit 869dc7c; EF-14 verified; EF-30 filed)
+**Last Updated:** 2026-07-13 (run 6: 61/67; EF-15/27/28 verified; EF-22 reclassified data; EF-25 escalated to PF-5; no new product bugs)
 **Last Updated By:** e2e runner session
 
 ## How to use this file
@@ -15,6 +15,18 @@
 - Writes to this file are coordinated via the global queue (`queuectl reserve`).
 
 ## Run log
+
+### Run 6 — 2026-07-13 ~13:05 CEST — full suite (Lane B; post-deploy stability + builder batch)
+- 67 tests / 55 files · **61 passed · 6 failed (5.0m)** · artifacts: `artifacts/e2e-run6-2026-07-13/`. Best score yet (25→48→55→56→58→61).
+- **Verified this run:** EF-15 fully (admin/06 select-value assert passes; admin/07 already green), EF-27 (user/17), EF-28 (user/29 simulator scripted).
+- **Remaining 6, all known items, several with new signatures (builder mid-iteration):**
+  - EF-16 (user/04): spec now reaches the phrase grid; NEW blocker — clicking the "Play pronunciation" button times out on Playwright's STABILITY wait (the element keeps animating). If the audio icon has an idle/persistent pulse animation, buttons never go "stable" — click with `{ force: true }`, or product limits the pulse to the actually-playing state.
+  - EF-22 (user/20): the Focus-card CTA click now works; 'Vocabulary Review' STILL doesn't appear — because the TOP suggestion isn't necessarily the seeded vocab item: shared-user SRS rows from earlier specs can outrank it (same contamination family as EF-30). Reclassified **data**: assert the suggestion's engine label before clicking, or make setup state deterministic.
+  - EF-23 (user/21): choice-answer loop added; NEW — after answering, the loop re-clicks the already-answered (green) choice which is animating/disabled instead of advancing; click Next once the answer registers.
+  - EF-24 (user/25): 'Next Question' stays disabled — the answer wasn't accepted (same answer-loop sequencing family as EF-23).
+  - EF-25 (user/24): `ancestor::section[1]` STILL resolves 2 identical 'Today's Session' headings — the NEAREST section genuinely contains both. **Escalated to a small product change (PF-5): differentiate the two headings** (Home card summary vs session view title) — an a11y smell as well as untestable.
+  - EF-30 (user/30): unchanged (first-card assumption).
+- No new product bugs. LT8+LT9 deploy did not regress anything.
 
 ### Deploy — 2026-07-13 ~12:50 CEST — LT8 + LT9 shipped to production
 - `npm run deploy` (full ship gate incl. the new e2e coverage-contract step) → https://falamadeira.searchingfool.com — manifest 200, new bundle hash serving, **6/6 prod smoke green** (`BASE_URL=prod --grep @smoke`).
@@ -202,20 +214,20 @@
 - **Failure type:** strict-mode violation — 'Mark implemented' resolves to **8** buttons: the queue now holds 8 pending requests from prior runs (CS-8 evidence — the owner's real admin view is filling with `Admin queue …` test rows)
 - **Reproducibility:** deterministic, worsening per run · **Likely owner:** **selector** (+ **data** for cleanup)
 - **Suggested fix:** same card-anchoring fix as EF-13, PLUS implement CS-8 now: afterEach delete seeded rows by nonce via evidence clients; also run a one-off sweep of accumulated `Admin queue…`/`Admin implemented…` rows.
-- **Status:** fixed-pending-rerun — builder applied the same `queueCard()` selector anchoring in `tests/e2e/admin/05-admin-queue-actions.spec.ts` and added finally-block teardown for all seeded queue rows; rerun now needs to verify both the locator and cleanup behavior.
+- **Status:** fixed-pending-rerun — builder applied the same `queueCard()` selector anchoring in `tests/e2e/admin/05-admin-queue-actions.spec.ts`, added finally-block teardown for all seeded queue rows, and removed the brittle in-card `'in-progress'` text assert now that DB status polling already proves the state change.
 - **Runner sweep 2026-07-13 ~10:30:** Lane B deleted all accumulated seed rows live (single transaction; patterns `Admin…`/`E2E…`+nonce): 26 lesson_requests, 12 lesson_corrections, 12 tickets, 12 video_suggestions. Next run starts clean — but WITHOUT Lane A's afterEach teardown the pile regrows every run. Throwaway auth users (`falamadeira-e2e-*@example.test`) also accumulate; sweeping `auth.users` is more sensitive — Lane A should add global-teardown deletion via the account-deletion path, or the owner approves a one-off auth sweep.
 
 ### EF-15 · content-studio specs: `pickExistingSituation` finds no eligible situation (admin/06 + admin/07)
 - **Specs:** `admin/06-admin-content-studio-load-existing.spec.ts:108`, `admin/07-admin-content-studio-publish-guard.spec.ts:90` · **Failure type:** `expect(target).not.toBeNull()` — helper returned null against the live `content_packs` rows
 - **Reproducibility:** deterministic · **Likely owner:** **data** (helper's eligibility criteria don't match any live pack/situation shape)
 - **Suggested fix:** log WHICH criterion filtered everything out (pack status? draft fields? situation kind?) and align with the live pack (v1.3.0, 187 situations, status semantics in CONTENT-ARCHITECTURE); assert a helpful message instead of bare not-null so the next failure self-explains.
-- **Status:** fixed-pending-rerun — builder aligned both spec helpers with the live content-studio/schema contract by making `goals` optional and removing `goals.length > 0` from the candidate filter in `tests/e2e/admin/06-admin-content-studio-load-existing.spec.ts` and `tests/e2e/admin/07-admin-content-studio-publish-guard.spec.ts`.
+- **Status:** fixed-pending-rerun — builder aligned both spec helpers with the live content-studio/schema contract by making `goals` optional and removing `goals.length > 0` from the candidate filter in `tests/e2e/admin/06-admin-content-studio-load-existing.spec.ts` and `tests/e2e/admin/07-admin-content-studio-publish-guard.spec.ts`; run-4/run-5 follow-ups are also patched locally (`admin/06` now avoids native-option visibility checks AND no longer assumes the transient "Edit situation" `<select>` retains the chosen value after hydration, while `admin/07` scopes the duplicated `situation.phrase_patterns` validation text with `.first()`).
 
 ### EF-16 · user/04 (modified this round): lesson-detail modal never opened before 'Vocabulary Lookup' click
 - **Spec:** `tests/e2e/user/04-learning-feedback.spec.ts:81` · **Failure type:** click timeout; snapshot shows the Learning Plan WITHOUT the Lesson Details dialog — `openFirstLessonDetails(page)` didn't open it (likely interaction with the modals opened/closed earlier in the same test)
 - **Reproducibility:** new this round (spec was refactored; round-1 version passed) · **Likely owner:** **harness** (helper/flow state) — NOT a product regression: unmodified `user/03` opens the same modal and PASSED this run
 - **Suggested fix:** after closing the suggest-video modal, wait for the Learning Plan to be interactive again before calling the helper; have `openFirstLessonDetails` assert the dialog actually opened.
-- **Status:** fixed-pending-rerun — builder re-hardened the flow in `tests/e2e/user/04-learning-feedback.spec.ts` by reasserting the Learning Plan state and reopening Lesson Details before the correction path.
+- **Status:** fixed-pending-rerun — builder re-hardened the flow in `tests/e2e/user/04-learning-feedback.spec.ts` by reasserting the Learning Plan state, reopening Lesson Details before the correction path, making `openFirstLessonDetails()` retry once if the first click does not actually open the dialog, and correcting the live control name mismatch (`Vocab` opens the `Vocabulary Lookup` dialog; the old spec was clicking a non-existent `Vocabulary Lookup` button).
 
 ### EF-17 · path-selection asserted in localStorage, but the app persists via platform.storage = IndexedDB (user/14 + user/24)
 - **Specs:** `user/14-settings-local-controls.spec.ts:35`, `user/24-daily-session-loop.spec.ts:25` · **Failure type:** poll `localStorage.getItem('paths:selection')` stays null
@@ -251,34 +263,34 @@
 ### EF-22 · coach Focus 'Practice' routing — Vocabulary Review heading never appears
 - **Spec:** `tests/e2e/user/20-home-coach-focus-actions.spec.ts:74` · **Failure type:** assertion timeout after clicking the Practice nav
 - **Reproducibility:** deterministic · **Likely owner:** **TBD (app-or-test)** — the why-panel and suggestion asserts PASSED; the open question is whether acting on a Focus suggestion is supposed to auto-route into the suggested mode (check `handleFocusAct` in `HomeView.tsx:85`) or the spec wrongly assumes the Practice tab lands inside the mode. If the product intends auto-routing and doesn't, that's a real app bug — needs a decision from the code, not a guess.
-- **Status:** fixed-pending-rerun — builder applied the adjudicated selector fix in `tests/e2e/user/20-home-coach-focus-actions.spec.ts`, scoping the CTA to `main`.
+- **Status:** fixed-pending-rerun — builder tightened the adjudicated selector fix in `tests/e2e/user/20-home-coach-focus-actions.spec.ts` again for run 4: the `Practice` click is now scoped to the same suggestion card as the opened `Why this?` control, avoiding the three-card collision inside `main`.
 
 ### EF-23 · quiz options clicked in `main`, but the quiz renders in a fixed z-60 overlay that intercepts pointer events
 - **Spec:** `tests/e2e/user/21-quiz-full-flow.spec.ts:34` · **Failure type:** click timeout — `locator('main button')…` targets a button BEHIND the quiz overlay (`div.fixed.inset-0.z-[60]` intercepts)
 - **Reproducibility:** deterministic · **Likely owner:** **selector**
 - **Suggested fix:** scope option clicks inside the quiz surface itself (role=dialog if it has one, else the z-60 container), not `main`.
-- **Status:** fixed-pending-rerun — builder scoped interactions into the quiz overlay and now waits for the typed-answer input to be re-enabled after each `Next Question` in `tests/e2e/user/21-quiz-full-flow.spec.ts`.
+- **Status:** fixed-pending-rerun — builder scoped interactions into the quiz overlay and now branches per question type in `tests/e2e/user/21-quiz-full-flow.spec.ts`: translation questions use the text input + `Check Answer`, choice questions click an answer option inside the quiz grid with no typed-input wait assumption.
 
 ### EF-24 · quiz progression: 'Greetings & Presence' button not found on the Learning Plan
 - **Spec:** `tests/e2e/user/25-learning-quiz-progression-write.spec.ts:44` · **Failure type:** click timeout
 - **Reproducibility:** deterministic · **Likely owner:** **selector/data** — the roadmap likely needs a month/day expansion first, or the day button's accessible name differs from the raw title (compare with `openFirstLessonDetails`, which works in user/03).
 - **Suggested fix:** reuse `openFirstLessonDetails`-style navigation (or expand Month 1 → Day 1 explicitly) instead of matching the lesson title at top level.
-- **Status:** fixed-pending-rerun — builder switched the spec to the same first-lesson card navigation used elsewhere and now answers from `INITIAL_LESSONS[0].vocabulary` in `tests/e2e/user/25-learning-quiz-progression-write.spec.ts` so the pass/write path is the one under test.
+- **Status:** fixed-pending-rerun — builder switched the spec to the same first-lesson card navigation used elsewhere and replaced the junk-answer heuristic in `tests/e2e/user/25-learning-quiz-progression-write.spec.ts` with a deterministic answer path derived from the actual quiz implementation in `src/components/Quiz.tsx` plus `INITIAL_LESSONS[0]`. Multiple-choice questions use the real vocabulary prompt mapping, and typed questions now capture the quiz's own TTS request payload after `Play audio` and submit that exact text instead of guessing a pattern answer.
 
 ### EF-25 · user/24: "Today's Session" heading duplicated — strict violation after storage fix
 - **Spec:** `tests/e2e/user/24-daily-session-loop.spec.ts:28` · **Failure type:** strict-mode violation — `getByRole('heading', { name: "Today's Session" })` resolves to 2 elements (Home's session card AND the DailySessionView heading both render it)
 - **Reproducibility:** deterministic (run 3) · **Likely owner:** **selector** (scope to the session surface); minor product nit: two identical headings on one screen is also an a11y smell — Lane B will flag to product if scoping doesn't isolate cleanly
-- **Artifacts:** `artifacts/e2e-run3-2026-07-13/…user-24…` · **Status:** fixed-pending-rerun — builder now scopes the home assertion to the session card container before clicking the CTA in `tests/e2e/user/24-daily-session-loop.spec.ts`.
+- **Status:** fixed-pending-rerun — builder replaced the broad `locator('section').filter(...).first()` pattern in `tests/e2e/user/24-daily-session-loop.spec.ts`; the session card is now anchored from the actual `Start today's session` button to its nearest ancestor section before asserting/clicking, and the post-launch assert was corrected to the ACTIVE session UI that actually renders (`Skip` + `Segment N of M`) instead of incorrectly expecting a second `"Today's session"` heading after the player has already advanced into the first segment.
 
 ### EF-27 · my-submissions: 'approved' exact-text matches two status badges (first seen run 4)
 - **Spec:** `tests/e2e/user/17-my-submissions-statuses.spec.ts:11` · **Failure type:** strict-mode violation (2 matches — two seeded groups both carry an 'approved' badge)
 - **Reproducibility:** first failure in 3 runs of this spec (spec/seed change suspected) · **Likely owner:** **selector** — scope the badge assert to its group/row.
-- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-17…` · **Status:** open
+- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-17…` · **Status:** fixed-pending-rerun — builder scoped each status-pill assertion to the row anchored by its seeded primary text in `tests/e2e/user/17-my-submissions-statuses.spec.ts`, and now asserts the row's trailing status-pill node directly instead of text-matching an ambiguous badge string across the whole modal.
 
 ### EF-28 · simulator scripted branch: second exchange option 'Obrigado.' never appears
 - **Spec:** `tests/e2e/user/29-practice-simulator-scripted.spec.ts:38` · **Failure type:** click timeout after a successful first exchange (reply text WAS visible)
 - **Reproducibility:** deterministic (run 4, first run of this spec) · **Likely owner:** **data** — the scripted option text must match the pack's actual sit-d1 dialogue node options; verify against `content/packs/seed-course.json` (or the node graph exposes different L1 options after the first reply).
-- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-29…` · **Status:** open
+- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-29…` · **Status:** fixed-pending-rerun — builder verified the seeded sit-d1 scripted node data locally in `src/content/packs/seed-course.ts` (the `Obrigado.` option exists on the polite-response node) and relaxed the tap in `tests/e2e/user/29-practice-simulator-scripted.spec.ts` to wait for and click the first matching `Obrigado.` option instead of relying on a strict exact-name match.
 
 ### EF-29 · ⚠ PRODUCT BUG — offline grades silently dropped: engines resolve identity via network `getUser()`
 - **Spec:** `tests/e2e/user/30-offline-mastery-queue.spec.ts:26` (spec is CORRECT — do not change its expectation)
@@ -293,7 +305,7 @@
 - **Spec:** `tests/e2e/user/30-offline-mastery-queue.spec.ts` · **Failure type:** poll for `vocab:…:Bom dia|retrieve|4` never matches — the graded card was NOT 'Bom dia' (earlier suite specs, e.g. user/15 vocabulary session, write mastery rows for the shared user, reordering due/new selection; Lane B probe observed 'Boa tarde' as the first card under similar state)
 - **Reproducibility:** in-suite deterministic-ish (state-dependent); passes solo · **Likely owner:** **data**
 - **Suggested fix (Lane A):** read the visible front-of-card word and assert THAT item key (grade what the app actually shows), or delete ALL `mastery_items` for the situation's items in setup, not just the 'Bom dia' row.
-- **Artifacts:** `artifacts/e2e-run5-2026-07-13/…user-30…` · **Status:** open
+- **Artifacts:** `artifacts/e2e-run5-2026-07-13/…user-30…` · **Status:** fixed-pending-rerun — builder now deletes ALL retrieve-dimension `mastery_items` for the greetings situation in setup, reads the actual visible vocabulary card word from the flashcard face, and asserts the flushed DB row against the dynamically derived `vocabItemKey(...)` instead of a hard-coded `Bom dia` assumption.
 
 ## Product findings (mirrored to REQUIREMENTS-TRACKER; runner/product session owns)
 
@@ -301,6 +313,7 @@
 - **PF-2 (= EF-3):** `lesson_requests` SELECT RLS lacks `OR is_admin()` → Admin Review "Requests" queue permanently empty for user submissions. Fix: policy migration.
 - **PF-3 (latent, found during EF-2 triage):** `useSettings.ts:289-300` — the admin global-voice-limit write-back effect runs whenever `profile` loads; if it fires before the run-once `fetchGlobalSettings` resolves, an admin's mount can upsert the localStorage/default value (30) OVER the DB value (5), silently reconfiguring production. Did NOT fire this run (`global_settings.updated_at` still 2026-07-10) but the race is real. Fix: skip the write-back until the fetched value has been applied (dirty-flag), or write only on explicit +/- interaction.
 - **PF-4 (a11y, minor, from EF-4):** the Continue Learning card button's accessible name is just the lesson title; consider `aria-label` including its function.
+- **PF-5 (from EF-25, escalated run 6):** Home's session card AND the daily-session surface render identical 'Today's Session' headings inside the same nearest `<section>` — duplicate identical headings are an a11y smell and make the surface un-anchorable for tests. Differentiate them (e.g. card: "Today's Session" summary label; view: a distinct h1). Small product change, runner/product session can take it with Lane A coordination on the spec side.
 
 ## Bucket 2 — COVERAGE GAPS (not yet exercised)
 
