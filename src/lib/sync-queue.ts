@@ -94,14 +94,17 @@ const loadQueue = async (): Promise<SyncEntry[]> => {
         const raw = await platform.storage.get<unknown>(QUEUE_KEY);
         queue = looksLikeQueue(raw) ? raw : [];
       } catch (error) {
-        // Durable read failed — start empty this session rather than crashing the
-        // caller. The queue is best-effort durability; nothing is lost silently
-        // because the failure is logged.
-        logger.warn('SYNC_QUEUE_READ_FAILED', 'could not read the offline write queue — starting empty this session', {
+        // Durable read failed — serve empty to THIS caller but do NOT cache it:
+        // a transient failure (e.g. IDB opening during a reload boot storm) must
+        // not poison the cache as permanently-empty, or queued offline writes
+        // become invisible to every later flush (observed live: reload → early
+        // failed read → online flush saw [] and never drained — LT9 follow-up).
+        logger.warn('SYNC_QUEUE_READ_FAILED', 'could not read the offline write queue — treating as empty for this call, will re-read next time', {
           category: 'DATA_PROCESSING',
           error,
         });
-        queue = [];
+        queue = null;
+        return [];
       }
       return queue;
     })().finally(() => {
@@ -141,6 +144,10 @@ export const enqueue = async (
 ): Promise<void> => {
   const correlationId = newCorrelationId();
   const q = await loadQueue();
+  // Re-anchor the cache to the array we are about to mutate: when the durable read
+  // failed, loadQueue serves a detached [] without caching it — persisting through
+  // the stale module cache would overwrite real entries with an empty queue.
+  queue = q;
 
   if (entry.op === 'increment') {
     // COUNTER SEAM (§10 "conflict-safe for counters via server-side increments"):
@@ -264,6 +271,18 @@ export const flush = async (): Promise<void> => {
     return;
   }
 
+  // LT9 follow-through: await auth readiness before replaying. On a page reloaded
+  // offline, the 'online' flush races gotrue's async session restoration — replays
+  // went out unauthenticated (observed live: POST /mastery_items → 401, entry
+  // stranded until the next online event). getSession() awaits the client's init,
+  // guaranteeing the access token is loaded (or definitively absent) first.
+  try {
+    await supabase.auth.getSession();
+  } catch {
+    // Signed-out/unrestorable is fine — RLS-scoped replays will fail loudly below
+    // and stay queued; never block the drain on auth introspection errors.
+  }
+
   const correlationId = newCorrelationId();
   isFlushing = true;
   let synced = 0;
@@ -337,7 +356,17 @@ export const initSyncQueue = (): void => {
   listenersBound = true;
   if (typeof window !== 'undefined') {
     window.addEventListener('online', () => {
+      // Reconnect drain — with two hardenings (LT9 follow-up, observed live on
+      // offline-reloaded pages): (1) an empty in-memory cache is invalidated so the
+      // durable queue is RE-READ (a failed boot-time read must not hide entries);
+      // (2) one bounded follow-up drain covers the race where the instant drain runs
+      // before auth-session restoration or storage has settled.
+      if (queue && queue.length === 0) queue = null;
       void flush().catch(() => undefined);
+      setTimeout(() => {
+        if (queue && queue.length === 0) queue = null;
+        void flush().catch(() => undefined);
+      }, 3000);
     });
   }
   // Drain anything left from a previous session as soon as we boot online.
