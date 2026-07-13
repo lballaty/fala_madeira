@@ -4,7 +4,7 @@
 **Description:** Live defect queue from executing the Playwright e2e suite (T-COV mandate, commit 662541b). The test-building agent authors specs but cannot bind ports in its sandbox; the runner session executes the suite (local `vite preview` + LIVE Supabase) and records every discrete failure here. Two buckets: EXECUTION FAILURES (tests that exist but fail) and COVERAGE GAPS (surfaces/flows not yet exercised). Owners — **app** (product code, runner/product session fixes, mirrored to REQUIREMENTS-TRACKER), **harness** (fixtures/setup/technique), **selector** (locator defects), **data** (seed/state assumptions), **environment** (runner env / concurrency noise). Harness/selector/data items belong to the test-building agent.
 **Author:** Libor Ballaty (with assistant)
 **Created:** 2026-07-13
-**Last Updated:** 2026-07-13 (coverage review: Bucket 2 expanded CG-10…17, new CS-1…8 coverage-system section)
+**Last Updated:** 2026-07-13 (run 2 triaged: EF-1..12 verified, EF-13..24 filed, CG-1/3/12/14/15 closed)
 **Last Updated By:** e2e runner session
 
 ## How to use this file
@@ -16,7 +16,14 @@
 
 ## Run log
 
-### Run 2026-07-13 07:35 CEST — full suite, local preview (127.0.0.1:4173) + live Supabase
+### Run 2 — 2026-07-13 ~09:35 CEST — full suite, local preview + live Supabase
+- Command: `npx playwright test --reporter=line` · Suite grew to **64 tests / 53 files** (all compile).
+- Pre-run: runner reviewed + applied **migration 00009 live** (authored by test agent, whose sandbox cannot reach the DB; APPLIED.md claimed it but live lacked it — column + policy now verified live). Runner held the suite-run queue claim for the whole run (CS-6) — no mid-run contamination this time.
+- **Result: 48 passed · 16 failed (5.7m).** Round-1 scoreboard: **EF-1, EF-2, EF-4…EF-12 all `verified`** (10 items closed); EF-3's product half verified fixed (seeded request now visible to admin — RLS works; a selector defect remains, split to EF-13). **Tutor switching works end-to-end (EF-10/LT6 closed). Admin Requests queue works (LT7 closed).** STT mock landed: 10-speaking-stt + response-speed now RUN and PASS (CG-1, CG-12 closed); audio-state (CG-3), unlock-key (CG-14), voice-limit (CG-15) specs pass — closed.
+- The 16 round-2 failures are ALL in new/modified specs — triaged as EF-13…EF-24 below. None is a new product bug; one is good product news (offline drilling verified working).
+- Artifacts: `artifacts/e2e-run2-2026-07-13/` (tgz snapshots).
+
+### Run 1 — 2026-07-13 07:35 CEST — full suite, local preview (127.0.0.1:4173) + live Supabase
 - Command: `npx playwright test --reporter=line` (this machine binds ports fine; webServer built dist/ and served preview)
 - Tree: origin/main @ e59755a + test agent's uncommitted specs. `--list` OK: 38 tests / 28 files, all compile.
 - Global setup: OK (admin session + throwaway user minted).
@@ -37,7 +44,7 @@
 - **Evidence:** `fixtures.ts` overrides `page` → `userPage`, created from a **new** `browser.newContext(...)`; the spec's `context` fixture is still Playwright's built-in default context, so `context.setOffline(true)` toggled an unrelated, pageless context. Runner probe confirmed Playwright's `setOffline` DOES flip `navigator.onLine` + fires the `offline` event in this Chromium when applied to the right context. App code is correct (`SimulatorView.tsx:30` useIsOnline; guard at `:122`).
 - **Suggested fix (test agent):** use `page.context().setOffline(true)` in the spec, or make fixtures override `context` to be the userPage's context. Audit any other spec that destructures `{ context }`.
 - **Artifacts:** `08-offline-offline-behavio-aa009-…/` (screenshot, error-context.md, trace.zip)
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes after fixtures context fix
 
 ### EF-2 · Global Voice Limit panel — locator resolves to the whole page
 - **Spec:** `tests/e2e/admin/02-admin-global-settings.spec.ts:21`
@@ -48,7 +55,7 @@
 - **Suggested fix (test agent):** anchor on the control itself, e.g. `getByText('Global Voice Limit').locator('xpath=ancestor::div[1]')` or a tight `.filter({ has: … })` on the innermost card; or read the value node directly.
 - **Related product finding:** PF-3 below (mount-time write-back race in the same control — separate item, did not fire this run).
 - **Artifacts:** `admin-02-admin-global-sett-90145-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-3 · Admin Review Queues never shows users' lesson requests — live RLS gap
 - **Spec:** `tests/e2e/admin/03-admin-review-queues.spec.ts:11`
@@ -59,7 +66,7 @@
 - **Evidence (runner, pg-direct + REST):** seeded row EXISTS in `lesson_requests` (RLS-bypassed count = 1). Live SELECT policy is `auth.uid() = user_id` with **no `OR is_admin()`** — unlike `lesson_corrections` (`… OR is_admin()`), `tickets` (has it), `video_suggestions` (has it). Admin REST probe: 0 rows from `lesson_requests`, 1 row from `lesson_corrections`. So the Requests queue in Admin Review is permanently empty for other users' rows in production.
 - **Fix (runner/product session):** migration 00009 — recreate the `lesson_requests` SELECT policy as `((auth.uid() = user_id) OR is_admin())`; log in `supabase/migrations/APPLIED.md`. Test should pass unchanged afterward (later assertions on tickets/videos already have working policies).
 - **Artifacts:** `admin-03-admin-review-queu-777b3-…/`
-- **Status:** open (product fix owned by runner session)
+- **Status:** verified (product) — migration 00009 applied live by runner 2026-07-13; seeded request now visible to admin in run 2. Remaining selector defect split to EF-13.
 
 ### EF-4 · Home "Continue Learning" — button is named by the lesson title, not the heading
 - **Spec:** `tests/e2e/user/01-home-navigation.spec.ts:11`
@@ -69,7 +76,7 @@
 - **Likely owner:** **selector** — "Continue Learning" is a sibling `h2` (`HomeView.tsx:304`); the actual card IS a `<button>` but its accessible name is the lesson title + "Month N • category". Optional app improvement: add `aria-label="Continue Learning: {title}"` to the card button, but the selector fix is sufficient.
 - **Suggested fix (test agent):** locate the card via the section, e.g. `page.getByRole('heading', { name: 'Continue Learning' })` then the adjacent button, or `getByRole('button', { name: /Month \d/ }).first()`.
 - **Artifacts:** `user-01-home-navigation-ho-d3659-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-5 · Lesson-detail modals — `Close` strict-mode violation (parent + child dialogs)
 - **Spec:** `tests/e2e/user/03-learning-detail-surfaces.spec.ts:11` (line 24)
@@ -79,7 +86,7 @@
 - **Likely owner:** **selector**
 - **Suggested fix (test agent):** scope to the child: `page.getByRole('dialog', { name: 'Vocabulary Lookup' }).getByLabel('Close')`. (Positive signal: both dialogs render with proper roles/names — the focus-trap stack works.)
 - **Artifacts:** `user-03-learning-detail-su-08a1c-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-6 · Practice browse — `Culture` matches 6 buttons
 - **Spec:** `tests/e2e/user/05-practice-browse-and-quiz.spec.ts:11` (line 24)
@@ -89,7 +96,7 @@
 - **Likely owner:** **selector**
 - **Suggested fix (test agent):** `getByRole('button', { name: 'Culture', exact: true })` (element #1 in the violation list is exactly that).
 - **Artifacts:** `user-05-practice-browse-an-e03a7-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-7 · Practice mode routing — sidebar "Practice" does not close an active mode
 - **Spec:** `tests/e2e/user/07-practice-mode-routing.spec.ts:11` (line 20)
@@ -99,7 +106,7 @@
 - **Likely owner:** **selector/data (navigation assumption)** — clicking the sidebar Practice nav only switches tabs; it does NOT reset the active mode route (documented in `08-offline.spec.ts:46-48`). The page was still inside Vocabulary Review, so the tile grid never rendered.
 - **Suggested fix (test agent):** exit each mode via the mode-chrome back button (chevron-left) before opening the next tile — same pattern 08-offline uses.
 - **Artifacts:** `user-07-practice-mode-rout-1b86d-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-8 · Tutor practice modal — "Type in Portuguese..." matches 2 inputs
 - **Spec:** `tests/e2e/user/08-tutor-practice-modal-controls.spec.ts:11` (line 35)
@@ -109,7 +116,7 @@
 - **Likely owner:** **selector**
 - **Suggested fix (test agent):** scope to `getByRole('dialog', { name: /Tutor/ }).getByPlaceholder('Type in Portuguese...')` (the violation output shows the dialog is named "AI Maria Tutor" — consider `/Tutor/` since tutor name varies).
 - **Artifacts:** `user-08-tutor-practice-mod-ff2c9-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-9 · Playback-speed slider — direct `input.value=` is swallowed by React
 - **Spec:** `tests/e2e/user/09-settings-persistence.spec.ts:11` (line 26)
@@ -119,7 +126,7 @@
 - **Likely owner:** **harness (technique)** — the spec sets `input.value = '1.3'` then dispatches `input`/`change`. React's controlled-input value tracker dedupes direct value writes, so the state never changes (`SettingsView.tsx:241` renders `{playbackSpeed}x` from React state).
 - **Suggested fix (test agent):** use the native setter trick inside `evaluate`: `Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set.call(el, '1.3')` then dispatch `input` (bubbles) — or drive the slider with keyboard (`slider.focus()` + ArrowRight presses), which is closer to real usage. Also verify `input[type="range"]` `.first()` is actually the playback slider.
 - **Artifacts:** `user-09-settings-persisten-4b019-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-10 · Switch AI Tutor — `profiles.selected_tutor_id` column DOES NOT EXIST in live DB
 - **Spec:** `tests/e2e/user/10-settings-readwrite.spec.ts:11` (line 34)
@@ -130,7 +137,7 @@
 - **Evidence (runner):** PATCH `profiles.selected_tutor_id` as the e2e user → `400 PGRST204 "Could not find the 'selected_tutor_id' column"`. Live `profiles` columns verified: no `selected_tutor_id`. App code writes it (`useSettings.ts:332`) and only closes the modal on success (`:338`) — so every tutor switch fails for every user, the error is logged but the modal just sticks open. This exactly matches the "modal seems stuck" class the owner saw in live testing.
 - **Fix (runner/product session):** migration 00009 — `ALTER TABLE profiles ADD COLUMN selected_tutor_id text` (nullable; app defaults to Maria when null); log in APPLIED.md. Optional hardening: on update error show the Ref-carrying toast instead of a silent stuck modal.
 - **Artifacts:** `user-10-settings-readwrite-29368-…/`
-- **Status:** open (product fix owned by runner session)
+- **Status:** verified — migration 00009 applied live by runner 2026-07-13 (column + 't1' default verified); run 2: tutor switch persists and restores end-to-end.
 
 ### EF-11 · Terms of Service — `/Version/i` strict-mode violation
 - **Spec:** `tests/e2e/user/11-settings-static-surfaces.spec.ts:10` (line 36)
@@ -140,7 +147,7 @@
 - **Likely owner:** **selector**
 - **Suggested fix (test agent):** `getByText(/Version \d/)` or `.first()`.
 - **Artifacts:** `user-11-settings-static-su-ce3f6-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes
 
 ### EF-12 · Settings path control — "Learn by goal" is the ONBOARDING label, not Settings'
 - **Spec:** `tests/e2e/user/14-settings-local-controls.spec.ts:11` (line 24)
@@ -149,9 +156,87 @@
 - **Reproducibility:** deterministic
 - **Likely owner:** **selector/data** — "Learn by goal" exists only in `OnboardingFlow.tsx:92`. The Settings path selector uses the path-policy names (comment at `SettingsView.tsx:193`: "Structured course / Goal track / Adaptive guided / Free"). Check the rendered button labels in SettingsView and target those.
 - **Artifacts:** `user-14-settings-local-con-49ca6-…/`
-- **Status:** open
+- **Status:** verified — run 2 (2026-07-13): spec passes past the label click (new storage-layer issue split to EF-17)
 
 ---
+
+---
+
+## Round-2 execution failures (2026-07-13 run 2 — all in new/modified specs; no new product bugs)
+
+### EF-13 · admin queue action buttons — `filter().first()` ancestor trap (recurrence of pitfall #2)
+- **Spec:** `tests/e2e/admin/03-admin-review-queues.spec.ts:69` · **Test:** admin can read seeded pending items and resolve queue actions
+- **Failure type:** strict-mode violation — `locator('div').filter({ hasText: correctionText }).first().getByRole('button', { name: 'Approve correction' })` resolves to 5 buttons (the `.first()` div is an outer container holding ALL queue cards)
+- **Reproducibility:** deterministic · **Likely owner:** **selector**
+- **Suggested fix:** anchor the card on its innermost container: `getByText(correctionText).locator('xpath=ancestor::div[1]')` or `.locator('div').filter({ hasText: x }).last()`; same pattern as EF-2's fix. See repo-specs/testing/playwright Known Pitfalls #2.
+- **Artifacts:** `artifacts/e2e-run2-2026-07-13/…admin-03…` · **Status:** open
+
+### EF-14 · admin/05 same ancestor trap — and seed garbage is accumulating
+- **Spec:** `tests/e2e/admin/05-admin-queue-actions.spec.ts:90` · **Test:** admin can resolve request, ticket, and video actions beyond the default happy path
+- **Failure type:** strict-mode violation — 'Mark implemented' resolves to **8** buttons: the queue now holds 8 pending requests from prior runs (CS-8 evidence — the owner's real admin view is filling with `Admin queue …` test rows)
+- **Reproducibility:** deterministic, worsening per run · **Likely owner:** **selector** (+ **data** for cleanup)
+- **Suggested fix:** same card-anchoring fix as EF-13, PLUS implement CS-8 now: afterEach delete seeded rows by nonce via evidence clients; also run a one-off sweep of accumulated `Admin queue…`/`Admin implemented…` rows.
+- **Status:** open
+
+### EF-15 · content-studio specs: `pickExistingSituation` finds no eligible situation (admin/06 + admin/07)
+- **Specs:** `admin/06-admin-content-studio-load-existing.spec.ts:108`, `admin/07-admin-content-studio-publish-guard.spec.ts:90` · **Failure type:** `expect(target).not.toBeNull()` — helper returned null against the live `content_packs` rows
+- **Reproducibility:** deterministic · **Likely owner:** **data** (helper's eligibility criteria don't match any live pack/situation shape)
+- **Suggested fix:** log WHICH criterion filtered everything out (pack status? draft fields? situation kind?) and align with the live pack (v1.3.0, 187 situations, status semantics in CONTENT-ARCHITECTURE); assert a helpful message instead of bare not-null so the next failure self-explains.
+- **Status:** open
+
+### EF-16 · user/04 (modified this round): lesson-detail modal never opened before 'Vocabulary Lookup' click
+- **Spec:** `tests/e2e/user/04-learning-feedback.spec.ts:81` · **Failure type:** click timeout; snapshot shows the Learning Plan WITHOUT the Lesson Details dialog — `openFirstLessonDetails(page)` didn't open it (likely interaction with the modals opened/closed earlier in the same test)
+- **Reproducibility:** new this round (spec was refactored; round-1 version passed) · **Likely owner:** **harness** (helper/flow state) — NOT a product regression: unmodified `user/03` opens the same modal and PASSED this run
+- **Suggested fix:** after closing the suggest-video modal, wait for the Learning Plan to be interactive again before calling the helper; have `openFirstLessonDetails` assert the dialog actually opened.
+- **Status:** open
+
+### EF-17 · path-selection asserted in localStorage, but the app persists via platform.storage = IndexedDB (user/14 + user/24)
+- **Specs:** `user/14-settings-local-controls.spec.ts:35`, `user/24-daily-session-loop.spec.ts:25` · **Failure type:** poll `localStorage.getItem('paths:selection')` stays null
+- **Reproducibility:** deterministic · **Likely owner:** **harness** (wrong storage layer)
+- **Evidence:** the app writes `config.paths.selectionStorageKey` (`'paths:selection'`) via `platform.storage.set` (`src/paths/index.ts:134`), whose web adapter is **IndexedDB `FalaMadeiraAudioCache/kv`** (`src/platform/web/storage.web.ts`; localStorage only as `fm-kv:`-prefixed fallback). The UI part of user/14 passed — the 'Goal track' label fix worked; only the persistence read is wrong.
+- **Suggested fix:** read the IndexedDB kv store in `page.evaluate` (same DB/store the onboarding init-script already writes) — worth adding a tiny `readKv(page, key)` helper in fixtures.
+- **Status:** open
+
+### EF-18 · Settings screen heading is "Profile", not "Settings" (user/15 + user/16 + user/23)
+- **Specs:** `user/15-settings-signout.spec.ts:14`, `user/16-settings-password-surface.spec.ts:14`, `user/23-account-delete-cancel.spec.ts:23` · **Failure type:** `getByRole('heading', { name: 'Settings' })` not found
+- **Reproducibility:** deterministic · **Likely owner:** **selector**
+- **Evidence:** `SettingsView.tsx:140` — `<h1>Profile</h1>`. (Passing settings specs never asserted this heading.)
+- **Suggested fix:** assert `heading "Profile"` — or propose renaming the H1 if "Settings" is the intended product wording (owner call; nav button also says Profile, so the test should follow the product).
+- **Status:** open
+
+### EF-19 · auth mode toggle — 'Password' collides with 'Forgot Password?' (pitfall #6)
+- **Spec:** `tests/e2e/user/17-auth-mode-transitions.spec.ts:31` · **Failure type:** strict-mode violation (2 matches; element 1 is the exact-match tab)
+- **Reproducibility:** deterministic · **Likely owner:** **selector** · **Suggested fix:** `exact: true`.
+- **Status:** open
+
+### EF-20 · `/Version/i` strict violation copied into the NEW signup-consent spec (recurrence of EF-11)
+- **Spec:** `tests/e2e/user/18-auth-signup-consent-links.spec.ts:30` · same two-element collision EF-11 had; the fixed pattern from user/11 wasn't propagated to the new spec.
+- **Reproducibility:** deterministic · **Likely owner:** **selector** · **Suggested fix:** `getByText(/Version \d/)`; consider a shared `expectLegalDocOpen()` helper so the pattern exists once.
+- **Status:** open
+
+### EF-21 · offline pattern drill: after grading, the NEXT card is in Reveal state — spec expects a grade button or completion
+- **Spec:** `tests/e2e/user/19-offline-pattern-builder-drill.spec.ts:43` · **Failure type:** assertion timeout
+- **Reproducibility:** deterministic · **Likely owner:** **selector/data** (flow assumption)
+- **Evidence:** failure snapshot shows the drill correctly advanced offline to the next phrase: "Reveal the Portuguese" + "Reveal the phrase to grade your recall" — grade buttons only appear after Reveal. **Good product news: offline drilling WORKS** (this closes the product question in CG-16's read path).
+- **Suggested fix:** loop: reveal → grade → expect (next Reveal | Drill complete).
+- **Status:** open
+
+### EF-22 · coach Focus 'Practice' routing — Vocabulary Review heading never appears
+- **Spec:** `tests/e2e/user/20-home-coach-focus-actions.spec.ts:74` · **Failure type:** assertion timeout after clicking the Practice nav
+- **Reproducibility:** deterministic · **Likely owner:** **TBD (app-or-test)** — the why-panel and suggestion asserts PASSED; the open question is whether acting on a Focus suggestion is supposed to auto-route into the suggested mode (check `handleFocusAct` in `HomeView.tsx:85`) or the spec wrongly assumes the Practice tab lands inside the mode. If the product intends auto-routing and doesn't, that's a real app bug — needs a decision from the code, not a guess.
+- **Status:** open — needs `handleFocusAct` trace (runner will do this next round if the test agent doesn't get there first)
+
+### EF-23 · quiz options clicked in `main`, but the quiz renders in a fixed z-60 overlay that intercepts pointer events
+- **Spec:** `tests/e2e/user/21-quiz-full-flow.spec.ts:34` · **Failure type:** click timeout — `locator('main button')…` targets a button BEHIND the quiz overlay (`div.fixed.inset-0.z-[60]` intercepts)
+- **Reproducibility:** deterministic · **Likely owner:** **selector**
+- **Suggested fix:** scope option clicks inside the quiz surface itself (role=dialog if it has one, else the z-60 container), not `main`.
+- **Status:** open
+
+### EF-24 · quiz progression: 'Greetings & Presence' button not found on the Learning Plan
+- **Spec:** `tests/e2e/user/25-learning-quiz-progression-write.spec.ts:44` · **Failure type:** click timeout
+- **Reproducibility:** deterministic · **Likely owner:** **selector/data** — the roadmap likely needs a month/day expansion first, or the day button's accessible name differs from the raw title (compare with `openFirstLessonDetails`, which works in user/03).
+- **Suggested fix:** reuse `openFirstLessonDetails`-style navigation (or expand Month 1 → Day 1 explicitly) instead of matching the lesson title at top level.
+- **Status:** open
 
 ## Product findings (mirrored to REQUIREMENTS-TRACKER; runner/product session owns)
 
@@ -164,22 +249,22 @@
 
 > Reviewed 2026-07-13 ~08:15 against the CURRENT tree (spec set grew to **51 tests / 41 files** while the test agent works — items marked "in progress by test agent" have new specs whose first live execution is pending). App interactive surface for scale: ~235 button JSX sites + ~40 input/textarea/select sites across 49 components; inventory = 99 controls.
 
-- **CG-1 · Speaking/pronunciation STT path** — `10-speaking-stt.spec.ts` intentionally skipped (needs mocked STT; TEST-VERTICAL-SLICES G6). Also uncovered for the same reason: `RecordCompare` mic flows and Simulator dictation. Owner: harness (mock design — suggest a `page.addInitScript` stub of `platform.speech.recognize` returning a canned transcript; the platform seam exists precisely for this). Status: open.
-- **CG-2 · Feedback forms — TYPE-and-submit regression class (LT1/LT2/LT5)** — user/04 types + asserts rows persist ✅ for correction/suggest-video/request-theme. Vocab-lookup TYPING still blocked by EF-5's selector fix. Status: mostly closed; verify after EF-5.
-- **CG-3 · Audio playback state** — still no spec asserts a phrase-audio icon transitions idle→loading→playing (LT3 surface). Suggest asserting a `data-state`/aria attr or the spinner element once the LT3 spinner lands (coordinate: product adds the state attr, spec asserts it). Status: open.
-- **CG-4 · Quiz full flow** — `user/21-quiz-full-flow.spec.ts` now exists (answering, progression, scoring toast, close). Status: in progress by test agent — pending first live run.
-- **CG-5 · Coach Focus card actions** — `user/20-home-coach-focus-actions.spec.ts` now exists (seeded due review → suggestion → why-panel → Practice routing). Status: in progress by test agent — pending first live run.
+- **CG-1 · Speaking/pronunciation STT path** — `10-speaking-stt.spec.ts` intentionally skipped (needs mocked STT; TEST-VERTICAL-SLICES G6). Also uncovered for the same reason: `RecordCompare` mic flows and Simulator dictation. Owner: harness. Status: **closed run 2** — `support/mockSpeechRecognition.ts` landed; 10-speaking-stt + user/26 response-speed run and PASS.
+- **CG-2 · Feedback forms — TYPE-and-submit regression class (LT1/LT2/LT5)** — user/04 types + asserts rows persist ✅ for correction/suggest-video/request-theme. Vocab-lookup TYPING still blocked by EF-5's selector fix. Status: vocab-lookup typing still blocked, now by EF-16 (helper flow), not the selector.
+- **CG-3 · Audio playback state** — still no spec asserts a phrase-audio icon transitions idle→loading→playing (LT3 surface). Status: **closed run 2** — user/22-audio-state-surfaces passes (Listen→Playing toggle + Hear-it pulse asserted).
+- **CG-4 · Quiz full flow** — `user/21-quiz-full-flow.spec.ts` now exists (answering, progression, scoring toast, close). Status: spec exists; failing on EF-23 (overlay-scoped clicks). Product flow unproven until it passes.
+- **CG-5 · Coach Focus card actions** — `user/20-home-coach-focus-actions.spec.ts` now exists (seeded due review → suggestion → why-panel → Practice routing). Status: spec exists; why-panel + suggestion pass, routing assert failing (EF-22 — may be a real app gap).
 - **CG-6 · Admin content studio deep flows** — admin/04 + new admin/06 (load existing). Publish/checksum-reconcile still unexercised (arguably right — publish mutates the live pack; if covered, needs a scratch pack + cleanup). Status: open (needs a decision: cover with scratch pack, or declare out-of-e2e-scope and note it).
 - **CG-7 · Onboarding variants** — user/12 covers the goal-path happy flow ✅ (passed run 1); user/17/18 add auth-mode transitions + consent links. Still uncovered: Structured-course and Just-start-talking path choices, declining consent, reload-mid-onboarding resume. Status: partially closed.
 - **CG-8 · PWA/service-worker reload behavior** — all specs unregister the SW by design, so the "stale SW serves old bundle after deploy" class (owner hit this live) has zero coverage. Suggest ONE dedicated spec that does NOT unregister the SW: load, assert SW controls the page, reload, assert fresh content. Status: open.
 - **CG-9 · iOS Capacitor shell** — out of e2e scope (manual/Xcode). Status: wont-fix here; tracked in REQUIREMENTS-TRACKER cross-platform section.
-- **CG-10 · Daily Session loop (NEW)** — `DailySessionView` (6 interactive sites) + `useDailySession` + `SessionRecap`: ZERO spec references, yet it's the adaptive-guided path's core loop, wired from Home's pathNextAction (App.tsx mount). Highest-value uncovered surface in the app. Status: open.
+- **CG-10 · Daily Session loop (NEW)** — `DailySessionView` (6 interactive sites) + `useDailySession` + `SessionRecap`: ZERO spec references, yet it's the adaptive-guided path's core loop, wired from Home's pathNextAction (App.tsx mount). Highest-value uncovered surface in the app. Status: spec user/24 exists; failing on EF-17 (IndexedDB vs localStorage read) before reaching the session.
 - **CG-11 · Situation Simulator ONLINE conversation (NEW)** — only the offline panel (EF-1, currently broken) and tile render are attempted. The actual roleplay (pick difficulty → converse via options/text → hint toggle → end/replay) — 14 interactive sites — is untested. AI replies make it nondeterministic; the deterministic parts (difficulty pick renders nodes, hint toggles, end/replay controls) can still be asserted. Status: open.
-- **CG-12 · Speaking Response-Speed drill (NEW)** — `ResponseSpeed.tsx`: zero references (user/08 covers repeat + shadowing only). Status: open.
-- **CG-13 · Progression/gamification writes (NEW)** — nothing asserts streak increments, XP awards, or `completed_lessons` writes after finishing a lesson/quiz ("Mark Complete"/completion CTA unexercised; grep finds no spec touching streak/XP). This is the retention loop — a silent write failure here would be invisible to the suite. Suggest: complete one lesson end-to-end, then assert the profiles row deltas (xp, completed_lessons, streak/last_active) via evidence client. Status: open.
-- **CG-14 · Level-unlock key submit (NEW)** — user/01 opens the unlock modal; no spec SUBMITS the key and asserts `unlocked_level` increments (M1 in the deferred list — server-side decision pending; the e2e would pin current behavior). Status: open.
-- **CG-15 · Voice-limit enforcement (NEW)** — no spec exercises the daily voice-usage limit path (voice_usage_today increment, limit-hit UX in tutor). Needs a seeded near-limit profile. Status: open.
-- **CG-16 · Offline WRITE queue (NEW)** — user/19 covers offline pattern-drill (read path). The sync-queue (queue writes offline → reconcile on reconnect, last-write-wins) has no e2e; it also has no unit tests (deferred item). One e2e: go offline (via `page.context().setOffline` — EF-1 fix prerequisite), perform a queued write (e.g. complete a drill), go online, assert the row lands. Status: open (blocked by EF-1 fix).
+- **CG-12 · Speaking Response-Speed drill** — Status: **closed run 2** — user/26 passes with the STT mock.
+- **CG-13 · Progression/gamification writes (NEW)** — nothing asserts streak increments, XP awards, or `completed_lessons` writes after finishing a lesson/quiz ("Mark Complete"/completion CTA unexercised; grep finds no spec touching streak/XP). This is the retention loop — a silent write failure here would be invisible to the suite. Status: spec user/25 exists; failing on EF-24 (roadmap navigation) before the write assert. Completion-write still unproven.
+- **CG-14 · Level-unlock key submit (NEW)** — user/01 opens the unlock modal; no spec SUBMITS the key and asserts `unlocked_level` increments (M1 in the deferred list — server-side decision pending; the e2e would pin current behavior). Status: **closed run 2** — user/24-unlock-level-submit passes (unlocked_level increments).
+- **CG-15 · Voice-limit enforcement (NEW)** — no spec exercises the daily voice-usage limit path (voice_usage_today increment, limit-hit UX in tutor). Status: **closed run 2** — user/27-tutor-voice-limit passes (blocked with clear toast at limit).
+- **CG-16 · Offline WRITE queue (NEW)** — user/19 covers offline pattern-drill (read path). The sync-queue (queue writes offline → reconcile on reconnect, last-write-wins) has no e2e; it also has no unit tests (deferred item). One e2e: go offline (via `page.context().setOffline` — EF-1 fix prerequisite), perform a queued write (e.g. complete a drill), go online, assert the row lands. Status: partially closed — EF-1 fixed; user/19 proves offline READ path incl. drill interaction (EF-21 is just a flow assert). The offline WRITE queue reconcile-on-reconnect remains unexercised.
 - **CG-17 · Mobile viewport layout (NEW)** — config pins 1280×900 desktop (sidebar nav); the mobile bottom-bar layout — the PRIMARY form factor for this product — is never rendered in any spec. Suggest a small `@mobile` project (`devices['iPhone 14']`) running the smoke set. Status: open.
 
 ## Coverage-SYSTEM improvements (how the gate itself must get stronger)
