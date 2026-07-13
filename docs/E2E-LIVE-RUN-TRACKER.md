@@ -4,8 +4,8 @@
 **Description:** Live defect queue from executing the Playwright e2e suite (T-COV mandate, commit 662541b). The test-building agent authors specs but cannot bind ports in its sandbox; the runner session executes the suite (local `vite preview` + LIVE Supabase) and records every discrete failure here. Two buckets: EXECUTION FAILURES (tests that exist but fail) and COVERAGE GAPS (surfaces/flows not yet exercised). Owners — **app** (product code, runner/product session fixes, mirrored to REQUIREMENTS-TRACKER), **harness** (fixtures/setup/technique), **selector** (locator defects), **data** (seed/state assumptions), **environment** (runner env / concurrency noise). Harness/selector/data items belong to the test-building agent.
 **Author:** Libor Ballaty (with assistant)
 **Created:** 2026-07-13
-**Last Updated:** 2026-07-13 (Gap Analysis v2: GA-1..3 + PF-10 — offline queue is mastery-only; journey chains, error-surface, PWA-update, axe gaps enumerated)
-**Last Updated By:** e2e runner session
+**Last Updated:** 2026-07-13 (builder handoff batch: support/video/path journeys + tutor Ref-toast spec + inventory migration checkpoint)
+**Last Updated By:** e2e builder session
 
 ## How to use this file
 
@@ -15,6 +15,29 @@
 - Writes to this file are coordinated via the global queue (`queuectl reserve`).
 
 ## Run log
+
+### Run 12 — 2026-07-13 ~15:30 CEST — full suite (Lane B; validates the 16:05 builder batch)
+- **69 passed · 6 failed of 75 (5.7m, exit 1).** Suite grew 71 → 75 (user/34, 35, 36, 37 new). Failures: user/04, 24, 30, 32, 34, 35. Artifacts: `artifacts/e2e-run12-2026-07-13.tgz` (includes the standalone 34+35 rerun log).
+- **Fixed-verified this run (close):** user/21 (EF-23 quiz overlay scoping ✅), user/25 (EF-24 ✅), user/17 (EF-27 ✅), user/29 (EF-28 ✅), user/30 first-card revision (EF-30 ✅ — its residual failure is purely EF-31 now). The owner-requested targets all validated: **user/08 ✅, user/36 ✅, user/37 ✅** (error-surface Ref contract now covered — closes that Gap-Analysis logical item), updated **admin/02–08 ✅**, **user/09 ✅, user/11 ✅**.
+- **PF-5 verified live:** session-view heading now renders "Daily session" — the duplicate-heading a11y collision is gone. user/24's remaining failure is a NEW spec-side strict violation (see EF-25 update).
+- **NEW EF-32** (user/32): consent-row locator text doesn't match the real copy. **NEW EF-33** (user/34 + 35): My Submissions refresh permanently disabled after the mid-test reload — wire-proven supabase-js wedge, LT10 family, now on an ONLINE reload. Reproduced ×2 (in-suite + standalone rerun).
+- **Data hygiene:** admin Review Queues showed **131 item(s) awaiting action** during the 34-failure snapshot — e2e residue (11+ `e2e-lesson-*` corrections, dozens of open tickets/suggestions) has re-accumulated since the 62-row sweep. Failed specs leak their rows when they die before `finally` cleanup fires on the ADMIN side; a periodic sweep or a global `e2e-*` cleanup in teardown is warranted (extends EF-14's observation).
+
+### Builder batch — 2026-07-13 ~16:05 CEST — coverage expansion + handoff checkpoint (validated by run 12 above)
+- **No live execution in this lane.** This batch is builder-only and needs runner validation before any domain is marked closed.
+- **New journey specs added:**
+  - `tests/e2e/user/34-support-ticket-roundtrip.spec.ts` — user files ticket → admin closes exact row → user refreshes My Submissions and sees `closed`.
+  - `tests/e2e/user/35-video-suggestion-roundtrip.spec.ts` — user suggests video from Lesson Details → admin approves exact row → user refreshes My Submissions and sees `approved`.
+  - `tests/e2e/user/36-path-switch-home-cta.spec.ts` — switch path in Settings and prove Home CTA changes for adaptive / goal-track / structured.
+  - `tests/e2e/user/37-tutor-error-ref-toast.spec.ts` — forced tutor edge failure via route interception; asserts calm toast with short `Ref` while the Tutor surface remains mounted.
+- **Existing specs hardened with explicit touch evidence / outcome assertions:** `user/01`, `user/08`, `user/10`, `user/14`, `user/17`, `admin/05`.
+- **Coverage-system progress:**
+  - inventory now **142 controls** (was 141 at the prior builder checkpoint);
+  - `npm run test:e2e:coverage` passes;
+  - warnings reduced to **46 legacy `covered_by` strings** and **1 rendered-only control** (`tutor.model.listen`);
+  - the earlier "structured claim could not be verified by selector-text grep" warning is now **gone**.
+- **Local verification in builder lane:** `npx tsc --noEmit` ✅, `npm run test:e2e:coverage` ✅. No Playwright/browser execution from this sandboxed lane.
+- **Runner-targeted next batch:** execute `user/34`, `user/35`, `user/36`, `user/37`, plus the updated `user/08`, `user/10`, `user/14`, `user/17`, and `admin/05` to validate the new touch claims and journey closures.
 
 ### Run 11 — 2026-07-13 ~15:10 CEST — stability confirmation
 - **66 passed · 5 failed (4.7m) — identical to run 10** (user/04, 21, 24, 30, 32). No new Lane A batch; determinism re-confirmed. Open items: 3 Lane A spec fixes (04/21 quiz-loop family, 32 new-spec iteration), PF-5 product tweak (blocks 24), LT10/EF-31 product follow-up (blocks 30).
@@ -250,6 +273,7 @@
 - **Reproducibility:** new this round (spec was refactored; round-1 version passed) · **Likely owner:** **harness** (helper/flow state) — NOT a product regression: unmodified `user/03` opens the same modal and PASSED this run
 - **Suggested fix:** after closing the suggest-video modal, wait for the Learning Plan to be interactive again before calling the helper; have `openFirstLessonDetails` assert the dialog actually opened.
 - **Status:** fixed-pending-rerun — builder re-hardened the flow in `tests/e2e/user/04-learning-feedback.spec.ts` by reasserting the Learning Plan state, reopening Lesson Details before the correction path, making `openFirstLessonDetails()` retry once if the first click does not actually open the dialog, correcting the live control name mismatch (`Vocab` opens the `Vocabulary Lookup` dialog), and scoping the quiz helper into the fixed overlay so its fallback answer click cannot escape to the animated lesson-detail pronunciation buttons underneath. Run-8 follow-up is also patched locally: progression detection now polls the quiz progress-dot index after each multiple-choice `Next Question` click, so the helper cannot re-click an already-answered prior card when consecutive typed questions reuse the same heading text.
+- **Run-12 update (15:05 revision): still failing, NEW layer.** After "Suggestion submitted for review!" succeeds, the spec's next click (the `[class*="cursor-pointer"]` Day item) is intercepted for the FULL 15s by a `div.fixed.inset-0.z-[60]` overlay (plus transiently the success toast). App-side the suggest-video modal DOES close on success (`useLessonModals.ts:114` sets `isSuggestionModalOpen=false` BEFORE the toast) — so the lingering z-60 overlay is a DIFFERENT dialog still mounted (stacked-dialog family, pitfall #4): most likely the Lesson Details dialog the suggest modal was opened from. Close/dismiss the parent dialog (or act inside it) before touching the Learning Plan list. Also note this spec's failure leaks its seeded rows into the live queues when it dies before cleanup — see the run-12 data-hygiene note. Artifacts: `artifacts/e2e-run12-2026-07-13.tgz` → `user-04-learning-feedback…`.
 
 ### EF-17 · path-selection asserted in localStorage, but the app persists via platform.storage = IndexedDB (user/14 + user/24)
 - **Specs:** `user/14-settings-local-controls.spec.ts:35`, `user/24-daily-session-loop.spec.ts:25` · **Failure type:** poll `localStorage.getItem('paths:selection')` stays null
@@ -291,28 +315,29 @@
 - **Spec:** `tests/e2e/user/21-quiz-full-flow.spec.ts:34` · **Failure type:** click timeout — `locator('main button')…` targets a button BEHIND the quiz overlay (`div.fixed.inset-0.z-[60]` intercepts)
 - **Reproducibility:** deterministic · **Likely owner:** **selector**
 - **Suggested fix:** scope option clicks inside the quiz surface itself (role=dialog if it has one, else the z-60 container), not `main`.
-- **Status:** fixed-pending-rerun — builder scoped interactions into the quiz overlay and now branches per question type in `tests/e2e/user/21-quiz-full-flow.spec.ts`: translation questions use the text input + `Check Answer`, choice questions click an answer option inside the quiz grid with no typed-input wait assumption. Run-8 follow-up is also patched locally: after each `Next Question` click the spec now polls the active quiz progress-dot index, not the reused typed-question heading text, so consecutive translation questions no longer produce a false "did not advance" failure.
+- **Status:** VERIFIED-CLOSED (run 12) — user/21 passes. Builder scoped interactions into the quiz overlay and branches per question type in `tests/e2e/user/21-quiz-full-flow.spec.ts`: translation questions use the text input + `Check Answer`, choice questions click an answer option inside the quiz grid with no typed-input wait assumption. Run-8 follow-up is also patched locally: after each `Next Question` click the spec now polls the active quiz progress-dot index, not the reused typed-question heading text, so consecutive translation questions no longer produce a false "did not advance" failure.
 
 ### EF-24 · quiz progression: 'Greetings & Presence' button not found on the Learning Plan
 - **Spec:** `tests/e2e/user/25-learning-quiz-progression-write.spec.ts:44` · **Failure type:** click timeout
 - **Reproducibility:** deterministic · **Likely owner:** **selector/data** — the roadmap likely needs a month/day expansion first, or the day button's accessible name differs from the raw title (compare with `openFirstLessonDetails`, which works in user/03).
 - **Suggested fix:** reuse `openFirstLessonDetails`-style navigation (or expand Month 1 → Day 1 explicitly) instead of matching the lesson title at top level.
-- **Status:** fixed-pending-rerun — builder switched the spec to the same first-lesson card navigation used elsewhere and replaced the junk-answer heuristic in `tests/e2e/user/25-learning-quiz-progression-write.spec.ts` with a deterministic answer path derived from the actual quiz implementation in `src/components/Quiz.tsx` plus `INITIAL_LESSONS[0]`. Multiple-choice questions use the real vocabulary prompt mapping, typed questions capture the quiz's own TTS request payload after `Play audio`, and the loop now waits for the `h3` question text to change after each `Next Question` click so it cannot re-act on the prior answered state.
+- **Status:** VERIFIED-CLOSED (run 12) — user/25 passes. Builder switched the spec to the same first-lesson card navigation used elsewhere and replaced the junk-answer heuristic in `tests/e2e/user/25-learning-quiz-progression-write.spec.ts` with a deterministic answer path derived from the actual quiz implementation in `src/components/Quiz.tsx` plus `INITIAL_LESSONS[0]`. Multiple-choice questions use the real vocabulary prompt mapping, typed questions capture the quiz's own TTS request payload after `Play audio`, and the loop now waits for the `h3` question text to change after each `Next Question` click so it cannot re-act on the prior answered state.
 
 ### EF-25 · user/24: "Today's Session" heading duplicated — strict violation after storage fix
 - **Spec:** `tests/e2e/user/24-daily-session-loop.spec.ts:28` · **Failure type:** strict-mode violation — `getByRole('heading', { name: "Today's Session" })` resolves to 2 elements (Home's session card AND the DailySessionView heading both render it)
 - **Reproducibility:** deterministic (run 3) · **Likely owner:** **selector** (scope to the session surface); minor product nit: two identical headings on one screen is also an a11y smell — Lane B will flag to product if scoping doesn't isolate cleanly
 - **Status:** fixed-pending-rerun — builder replaced the broad `locator('section').filter(...).first()` pattern in `tests/e2e/user/24-daily-session-loop.spec.ts`; the session card is now anchored from the actual `Start today's session` button to its nearest ancestor section before asserting/clicking, the post-launch assert was corrected to the ACTIVE session UI that actually renders (`Skip` + `Segment N of M`), and the product copy has now been differentiated in `src/features/session/DailySessionView.tsx` from `"Today's session"` to `"Daily session"` so the duplicate-heading/a11y collision no longer exists in the live surface.
+- **Run-12 update: app half VERIFIED (PF-5 closes — "Daily session" renders live), spec half still fails — NEW strict violation.** `homeSessionSection.getByRole('heading', { name: "Today's Session" })` (spec line 32) resolves to 2 elements: the Home card's h2 "Today's Session" AND the h3 "Start today's session" INSIDE the CTA button (getByRole name matching is case-insensitive substring by default — pitfall #6, non-exact name collision). Fix (high confidence, one token): `{ name: "Today's Session", exact: true }`. Owner: Lane A. Artifacts: `artifacts/e2e-run12-2026-07-13.tgz` → `user-24-daily-session-loop…`.
 
 ### EF-27 · my-submissions: 'approved' exact-text matches two status badges (first seen run 4)
 - **Spec:** `tests/e2e/user/17-my-submissions-statuses.spec.ts:11` · **Failure type:** strict-mode violation (2 matches — two seeded groups both carry an 'approved' badge)
 - **Reproducibility:** first failure in 3 runs of this spec (spec/seed change suspected) · **Likely owner:** **selector** — scope the badge assert to its group/row.
-- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-17…` · **Status:** fixed-pending-rerun — builder scoped each status-pill assertion to the row anchored by its seeded primary text in `tests/e2e/user/17-my-submissions-statuses.spec.ts`, and now asserts the row's trailing status-pill node directly instead of text-matching an ambiguous badge string across the whole modal.
+- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-17…` · **Status:** VERIFIED-CLOSED (run 12) — user/17 passes. Builder scoped each status-pill assertion to the row anchored by its seeded primary text in `tests/e2e/user/17-my-submissions-statuses.spec.ts`, and now asserts the row's trailing status-pill node directly instead of text-matching an ambiguous badge string across the whole modal.
 
 ### EF-28 · simulator scripted branch: second exchange option 'Obrigado.' never appears
 - **Spec:** `tests/e2e/user/29-practice-simulator-scripted.spec.ts:38` · **Failure type:** click timeout after a successful first exchange (reply text WAS visible)
 - **Reproducibility:** deterministic (run 4, first run of this spec) · **Likely owner:** **data** — the scripted option text must match the pack's actual sit-d1 dialogue node options; verify against `content/packs/seed-course.json` (or the node graph exposes different L1 options after the first reply).
-- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-29…` · **Status:** fixed-pending-rerun — builder verified the seeded sit-d1 scripted node data locally in `src/content/packs/seed-course.ts` (the `Obrigado.` option exists on the polite-response node) and relaxed the tap in `tests/e2e/user/29-practice-simulator-scripted.spec.ts` to wait for and click the first matching `Obrigado.` option instead of relying on a strict exact-name match.
+- **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-29…` · **Status:** VERIFIED-CLOSED (run 12) — both user/29 tests pass. Builder verified the seeded sit-d1 scripted node data locally in `src/content/packs/seed-course.ts` (the `Obrigado.` option exists on the polite-response node) and relaxed the tap in `tests/e2e/user/29-practice-simulator-scripted.spec.ts` to wait for and click the first matching `Obrigado.` option instead of relying on a strict exact-name match.
 
 ### EF-29 · ⚠ PRODUCT BUG — offline grades silently dropped: engines resolve identity via network `getUser()`
 - **Spec:** `tests/e2e/user/30-offline-mastery-queue.spec.ts:26` (spec is CORRECT — do not change its expectation)
@@ -327,7 +352,7 @@
 - **Spec:** `tests/e2e/user/30-offline-mastery-queue.spec.ts` · **Failure type:** poll for `vocab:…:Bom dia|retrieve|4` never matches — the graded card was NOT 'Bom dia' (earlier suite specs, e.g. user/15 vocabulary session, write mastery rows for the shared user, reordering due/new selection; Lane B probe observed 'Boa tarde' as the first card under similar state)
 - **Reproducibility:** in-suite deterministic-ish (state-dependent); passes solo · **Likely owner:** **data**
 - **Suggested fix (Lane A):** read the visible front-of-card word and assert THAT item key (grade what the app actually shows), or delete ALL `mastery_items` for the situation's items in setup, not just the 'Bom dia' row.
-- **Artifacts:** `artifacts/e2e-run5-2026-07-13/…user-30…` · **Status:** fixed-pending-rerun — builder now deletes the shared user's retrieve-dimension `mastery_items` up front, flips the card offline first, reads the authoritative Portuguese word from the BACK face (so the key does not depend on whichever front-face variant the SRS selected), asserts the flushed DB row against the dynamically derived `vocabItemKey(...)`, and cleans the retrieve rows back up after the spec so it cannot contaminate later SRS-driven surfaces. Run-8 follow-up is also patched locally: the spec now re-locates the flipped card by its BACK-face accessible name before reading `p.text-2xl`, which avoids stale pre-flip locators on the audio-first variant.
+- **Artifacts:** `artifacts/e2e-run5-2026-07-13/…user-30…` · **Status:** VERIFIED-CLOSED (run 12) — the deck-order/first-card layer no longer fires; user/30's sole remaining failure is EF-31's reconnect stall. Builder now deletes the shared user's retrieve-dimension `mastery_items` up front, flips the card offline first, reads the authoritative Portuguese word from the BACK face (so the key does not depend on whichever front-face variant the SRS selected), asserts the flushed DB row against the dynamically derived `vocabItemKey(...)`, and cleans the retrieve rows back up after the spec so it cannot contaminate later SRS-driven surfaces. Run-8 follow-up is also patched locally: the spec now re-locates the flipped card by its BACK-face accessible name before reading `p.text-2xl`, which avoids stale pre-flip locators on the audio-first variant.
 
 ### EF-31 · ⚠ PRODUCT (narrow) — reconnect replay stalls on offline-reloaded pages: gotrue session-restoration race
 - **Spec:** `tests/e2e/user/30-offline-mastery-queue.spec.ts` (spec CORRECT — keep its expectation; it passes when the page is NOT reloaded offline)
@@ -336,7 +361,24 @@
 - **Evidence (Lane B instrumented probes + trace forensics, 2026-07-13):** two failure modes observed on the same code: (a) replay POST goes out UNAUTHENTICATED → 401 (wire-captured; page shows Home, parallel authed PATCHes succeed — gotrue getSession transiently null right after offline reload); (b) replay never reaches the network (spec trace: ZERO POSTs; flush re-reads queue then blocks — consistent with gotrue's internal navigator-lock held by an offline-started refresh retry). Dev-server probe (no reload) drains perfectly: `SYNC_QUEUE_FLUSHED synced 1`.
 - **Shipped hardening (78ddfd0):** flush auth-await, read-failure no longer poisons the cache empty, enqueue re-anchors the cache, online handler invalidates empty cache + one +3s follow-up drain. Necessary, not sufficient.
 - **Remaining fix (high confidence, scoped):** on reconnect, if `getSession()` (timeout-guarded, e.g. `Promise.race` 5s) yields no session but a refresh token exists, call `supabase.auth.refreshSession()` once (also timeout-guarded), THEN drain; extend the retry ladder (3s → 10s → 30s) so a late gotrue recovery still drains. Alternatively/additionally raise with supabase-js: offline-boot `_recoverAndRefresh` leaving the lock held is arguably an upstream bug.
-- **Artifacts:** probe transcripts in run-log entries; traces under `test-results/…user-30…` snapshots runs 4–10 · **Status:** open — product follow-up (fresh session recommended; all evidence linked)
+- **Artifacts:** probe transcripts in run-log entries; traces under `test-results/…user-30…` snapshots runs 4–10 · **Status:** open — product follow-up (fresh session recommended; all evidence linked) · Reproduced again run 12 (same poll timeout). **EF-33 below is very likely the same underlying defect on an ONLINE reload — fix them together.**
+
+### EF-32 · user/32 consent guard: locator text doesn't match the real consent copy
+- **Spec:** `tests/e2e/user/32-onboarding-consent-guard.spec.ts:59` (via `toggleConsentRow`, called from :89) · **Failure type:** element not found — `locator('label').filter({ hasText: /I have read and accept the Terms of Service and Privacy Policy/i })`
+- **Reproducibility:** deterministic (runs 8–12 of this spec family) · **Likely owner:** **selector** (copy mismatch)
+- **Evidence:** the real copy (`OnboardingFlow.tsx` ConsentRow, ~line 414) is **"I agree to the Terms of Service and Privacy Policy (GDPR compliant)."** and **"I understand I am interacting with an AI system (EU AI Act disclosure)…"**. The markup is test-friendly (real `<label>` wrapping a real `input[type=checkbox]`) — only the filter text is wrong.
+- **Suggested fix (high confidence):** filter on `/I agree to the/i` and `/I understand I am interacting with an/i` (or `/Terms of Service/` scoped to `label`). Keep the `getByRole('checkbox')` part — it resolves fine once the label matches.
+- **Status:** open — Lane A
+
+### EF-33 · ⚠ PRODUCT (LT10 family) — My Submissions load wedges after an ONLINE mid-test reload; refresh button disabled forever (user/34 + user/35)
+- **Specs:** `tests/e2e/user/34-support-ticket-roundtrip.spec.ts:79`, `tests/e2e/user/35-video-suggestion-roundtrip.spec.ts` (same point) · **Failure type:** click timeout — `Refresh submissions` button stays `disabled` for the full 15s
+- **Reproducibility:** deterministic ×2 (run 12 in-suite AND standalone rerun of just 34+35 — identical signature in all four executions) · **Likely owner:** **app** — same wedge family as EF-31/LT10, now WITHOUT offline involvement
+- **Evidence (trace forensics, run 12):** the button is `disabled={isLoading}`; `loadMySubmissions` (`useSettings.ts:470`) sets `isLoading=true` then awaits a `Promise.all` of four owner-filtered SELECTs with a `finally` that clears it — so a stuck-disabled button means the queries NEVER settle. Wire truth from `trace.zip → 1-trace.network` (user context): after the spec's second `landOnHome(page)` (= `page.goto('/')`, a full ONLINE reload), the user page issues **ZERO Supabase REST requests of any kind** — not even the boot profile fetch — while the UI still renders (greeting comes up, modal opens). Every supabase-js call on the reloaded page hangs before the network layer: the gotrue session-restoration lock signature of EF-31, triggered here by a plain online reload after ~30–60s of another context's activity. The sequence: boot ✓ (full REST batch) → `POST tickets → 201` ✓ → reload → silence.
+- **Forensics caveat:** the Playwright `error-context.md` page snapshot for these failures shows the ADMIN page (Admin dialog + queues), not the failing user page — don't be misled; the click log itself confirms the resolved element is MySubmissionsModal's aria-labelled refresh button on the user page.
+- **Why the passing spec differs:** `user/17-my-submissions-statuses` opens My Submissions right after the FIRST boot (no mid-test reload) and passes — the reload is the trigger, exactly as in EF-31.
+- **Suggested fix:** same scoped fix as LT10 (timeout-guarded `getSession()` → one timeout-guarded `refreshSession()` → proceed), but applied at the supabase-client/init seam rather than only inside sync-queue — EF-33 proves the wedge blocks ALL post-reload REST traffic, not just queue replay. Consider a supabase-js upstream issue with both wire captures. Product impact if real for users: any reload that hits this race renders the app permanently read-only (infinite spinners) until another reload.
+- **Spec-side note (Lane A, secondary):** clicking Refresh immediately after the heading appears also races the auto-load fired by `openMySubmissions` even when healthy; wait for the button to be enabled (or for the initial load to settle) before clicking. This does NOT explain the 15s hang — the product wedge does.
+- **Artifacts:** `artifacts/e2e-run12-2026-07-13.tgz` → `user-34-support-ticket-rou…`, `user-35-video-suggestion-r…` (each with trace.zip + two screenshots) + `/tmp/e2e-rerun-3435.log` snapshot inside the tgz · **Status:** open — product; fold into the LT10 work item
 
 ## Product findings (mirrored to REQUIREMENTS-TRACKER; runner/product session owns)
 
@@ -349,7 +391,7 @@
 - **PF-7 (quiz persistence):** NO per-answer persistence exists — no quiz_results store and, more importantly, no mastery/SRS emission: quiz answers never feed the 'retrieve' dimension, so the Coach is completely blind to quiz performance. The ONLY write is `profiles.completed_lessons` when score ≥3/5 (`usePractice.ts:73-86`), and it is a DIRECT supabase update, NOT routed through the offline sync-queue — **a quiz passed offline silently loses its completion** (one more LT9-class site; the write seam exists, it's just not used here). Optimistic local state is not rolled back on write failure (error is logged+Ref'd).
 - **PF-8 (quiz correctness nit):** scoring normalizes punctuation (`normalizeText`) but the inline feedback banner compares with plain lowercase/trim (`Quiz.tsx:173,177`) — the same typed answer can SCORE correct while the banner shows "Incorrect. The answer was: …". Also: accent-sensitive matching is deliberate (EU-PT) but undocumented — specs must type exact diacritics.
 - **PF-9 (quiz robustness, minor):** distractors are sampled only from the same lesson's vocabulary with a biased shuffle — lessons with <4 vocab items yield short option lists, and colliding translations can duplicate the correct answer among options. No XP/streak is awarded on quiz completion (gamification loop untouched by quizzes).
-- **PF-5 (from EF-25, escalated run 6):** Home's session card AND the daily-session surface rendered identical 'Today's Session' headings inside the same nearest `<section>` — duplicate identical headings were an a11y smell and made the surface un-anchorable for tests. Builder has patched the session-view heading to **"Daily session"** in `src/features/session/DailySessionView.tsx`; runner should verify the duplicate-heading collision is gone live and then close PF-5/EF-25 together.
+- **PF-5 (from EF-25, escalated run 6):** Home's session card AND the daily-session surface rendered identical 'Today's Session' headings inside the same nearest `<section>` — duplicate identical headings were an a11y smell and made the surface un-anchorable for tests. Builder patched the session-view heading to **"Daily session"** in `src/features/session/DailySessionView.tsx`; **runner VERIFIED live in run 12 — PF-5 CLOSED.** (EF-25's remaining failure is a spec-side non-exact-name strict violation, not this.)
 
 ## Gap Analysis v2 — 2026-07-13 ~15:00 (owner-requested; suite at 58 spec files / 71 tests, inventory 141 controls)
 
@@ -360,7 +402,7 @@ CG-1 (STT mock), CG-3 (audio states), CG-4/CG-13 partially (quiz flow + progress
 The §10 design promise ("offline write queue syncs on reconnect") is implemented solely for mastery grades. Verified zero `enqueue` usage in: missions server writes (`missionsStore.ts` — has a device-local fallback but never syncs it), simulator completions (`progress.ts`), pronunciation attempts (`attempts.ts`), quiz `completed_lessons` (PF-7), and profile prefs (`scheduleProfileWrite` direct). Offline, these are lost with only a log. **Biggest remaining logical gap — product work, then one e2e per write path.**
 
 ### GA-2 · Logical gaps (no spec exercises these behaviors)
-- **Error-surface contract:** no spec injects a backend failure (route interception) and asserts the calm toast WITH Ref code — the observability contract's user-visible half is unverified.
+- **Error-surface contract:** builder added `tests/e2e/user/37-tutor-error-ref-toast.spec.ts` to inject a tutor edge failure and assert the calm toast WITH `Ref`. Status: **pending live runner execution**; the broader contract still needs at least one non-tutor surface.
 - **RLS negative via UI:** admin/01 covers UI gating; no spec proves user A cannot see user B's data through any UI surface (probes did it manually).
 - **Session expiry / re-auth:** token expires mid-session → expected recovery flow never exercised.
 - **Voice-usage increment accuracy:** user/27 covers the blocked state; the counting path (A5 counter-concurrency concern) unverified.
@@ -370,9 +412,9 @@ The §10 design promise ("offline write queue syncs on reconnect") is implemente
 - **Accessibility pass:** roles are used implicitly everywhere, but no axe-core smoke or keyboard-only journey exists.
 
 ### GA-3 · User-flow (journey) gaps — each is a chain of existing covered fragments
-- **Support round-trip as ONE journey:** user files ticket (07) → admin resolves THAT ticket (admin/05) → user sees the status flip (user/17). All three exist separately; chain them on one nonce row. Cheapest high-value journey.
-- **Video suggestion lifecycle:** suggest (user/04) → admin approve (admin/05) → approved video visible (RLS 'approved' read). End-to-end uncovered.
-- **Path switching journey:** switch path in Settings (user/14) → Home CTA/next-action actually changes (unasserted half).
+- **Support round-trip as ONE journey:** builder added `tests/e2e/user/34-support-ticket-roundtrip.spec.ts`. Status: **pending live runner execution**.
+- **Video suggestion lifecycle:** builder added `tests/e2e/user/35-video-suggestion-roundtrip.spec.ts`. Status: **pending live runner execution**.
+- **Path switching journey:** builder added `tests/e2e/user/36-path-switch-home-cta.spec.ts`. Status: **pending live runner execution**.
 - **Coach feedback LOOP closure:** grade weak item → Focus suggestion updates/disappears — only the one-shot render/route is covered.
 - **Admin content lifecycle:** draft→validate→publish→learner sees new content. Publish intentionally unexercised (CG-6 decision still open: scratch pack vs out-of-scope).
 - **AI free-form paths:** tutor chat round-trip reply rendering and simulator FREE (non-scripted) conversation — need a Gemini edge mock or tolerance-based asserts; only deterministic halves covered.
@@ -380,9 +422,9 @@ The §10 design promise ("offline write queue syncs on reconnect") is implemente
 
 ### Recommended priority (Lane A unless marked)
 1. GA-1 product work (Lane B/product) — then per-table offline e2e.
-2. Support round-trip + video lifecycle journeys (cheap chains of existing steps).
-3. Error-surface contract spec (route interception; also finally tests logger's user-visible Ref promise).
-4. PWA update-cycle spec. 5. Path-switch journey second half. 6. axe smoke. 7. CG-6 publish decision (owner).
+2. Runner validation of `user/34..37` plus the updated touch-claim specs (`user/08`, `user/10`, `user/14`, `user/17`, `admin/05`).
+3. Finish inventory migration (remaining 46 legacy claims) and eliminate the last rendered-only control (`tutor.model.listen`).
+4. PWA update-cycle spec. 5. axe smoke. 6. CG-6 publish decision (owner).
 
 ## Bucket 2 — COVERAGE GAPS (not yet exercised)
 
@@ -495,6 +537,7 @@ The §10 design promise ("offline write queue syncs on reconnect") is implemente
   - CS-1 inventory-drift detection.
   - CS-2 control-touch verification.
   - migrate legacy `covered_by` strings to structured `{ spec, depth }`.
+  - convert the final rendered-only control (`tutor.model.listen`) into an outcome/asserted interaction.
   - close CG-11 simulator core loop.
   - close CG-16 offline write queue reconcile path.
   - close CS-8 seed/teardown hygiene for admin queue specs.
