@@ -4,7 +4,7 @@
 **Description:** Live defect queue from executing the Playwright e2e suite (T-COV mandate, commit 662541b). The test-building agent authors specs but cannot bind ports in its sandbox; the runner session executes the suite (local `vite preview` + LIVE Supabase) and records every discrete failure here. Two buckets: EXECUTION FAILURES (tests that exist but fail) and COVERAGE GAPS (surfaces/flows not yet exercised). Owners — **app** (product code, runner/product session fixes, mirrored to REQUIREMENTS-TRACKER), **harness** (fixtures/setup/technique), **selector** (locator defects), **data** (seed/state assumptions), **environment** (runner env / concurrency noise). Harness/selector/data items belong to the test-building agent.
 **Author:** Libor Ballaty (with assistant)
 **Created:** 2026-07-13
-**Last Updated:** 2026-07-13 (run 4: 56/67; EF-13 verified; EF-29 PRODUCT BUG — offline grades dropped, 4 engines affected; EF-27/28 filed)
+**Last Updated:** 2026-07-13 (run 5: 58/67; LT9/EF-29 FIXED five-site commit 869dc7c; EF-14 verified; EF-30 filed)
 **Last Updated By:** e2e runner session
 
 ## How to use this file
@@ -15,6 +15,13 @@
 - Writes to this file are coordinated via the global queue (`queuectl reserve`).
 
 ## Run log
+
+### Run 5 — 2026-07-13 ~12:30 CEST — full suite (Lane B; LT9 fix verification)
+- 67 tests / 55 files · **58 passed · 9 failed (5.3m)** · artifacts: `artifacts/e2e-run5-2026-07-13/`.
+- **LT9/EF-29 FIXED (commit 869dc7c) — five sites, two layers.** Layer 1: the four engines' network `getUser()` → local `getSession()`; probe confirms the offline grade is durably enqueued (exact payload in `sync:queue`). Layer 2 (found during acceptance): the FIFTH site was `useAuth`'s boot check — an offline PWA reload landed signed-in users on the AuthScreen and left the replay without auth; fixed the same way. Dev-probe confirms the reconnect drain (`SYNC_QUEUE_FLUSHED synced 1`); user/30 passes solo; offline reload now keeps the session. Gates: tsc 0 · 154/154 unit · full suite 58/67.
+- **Passed this run (previously failing):** admin/05 (EF-14 — card anchoring + the seed sweep removed the ambiguity pile), admin/07 (EF-15 second half), user/30 solo-verified (see EF-30 for its in-suite data flake).
+- **Still failing (all pre-known Lane A items):** admin/06 (EF-15 select-option visibility), user/04 (EF-16), user/17 (EF-27), user/20 (EF-22), user/21 (EF-23), user/24 (EF-25), user/25 (EF-24), user/29 (EF-28).
+- **New: EF-30** — user/30 in-suite failure is a spec DATA assumption: it expects the first flashcard to be 'Bom dia', but SRS state written by earlier suite specs reorders the deck (Lane B probe once enqueued 'Boa tarde' as first card). Product path verified working; fix the spec to grade the card it actually shows (read the visible word, assert that item key) or reset the situation's mastery rows in setup.
 
 ### Run 4 — 2026-07-13 ~11:30 CEST — full suite (Lane B; builder batch incl. user/29-30)
 - 67 tests / 55 files · **56 passed · 11 failed (5.0m)** · suite lock held · artifacts: `artifacts/e2e-run4-2026-07-13/`.
@@ -277,6 +284,12 @@
 - **Blast radius (same pattern):** `missions/missionsStore.ts:141`, `simulator/progress.ts:44`, `speaking/attempts.ts:60` — all four engines lose persistence when offline or when the auth endpoint is slow/unreachable.
 - **Fix (product, high confidence):** replace network `getUser()` with local `auth.getSession()` (persisted session read, no fetch) — or thread the authenticated user down from App state; grades/attempts/progress must enqueue whenever a local session exists. Optional hardening: surface a "practice saved locally, will sync" note instead of silent signed-out downgrade.
 - **Artifacts:** `artifacts/e2e-run4-2026-07-13/…user-30…` + probe transcript in run log · **Status:** open — product fix pending assignment
+
+### EF-30 · user/30 in-suite: first-card assumption — deck order depends on prior suite specs' SRS writes
+- **Spec:** `tests/e2e/user/30-offline-mastery-queue.spec.ts` · **Failure type:** poll for `vocab:…:Bom dia|retrieve|4` never matches — the graded card was NOT 'Bom dia' (earlier suite specs, e.g. user/15 vocabulary session, write mastery rows for the shared user, reordering due/new selection; Lane B probe observed 'Boa tarde' as the first card under similar state)
+- **Reproducibility:** in-suite deterministic-ish (state-dependent); passes solo · **Likely owner:** **data**
+- **Suggested fix (Lane A):** read the visible front-of-card word and assert THAT item key (grade what the app actually shows), or delete ALL `mastery_items` for the situation's items in setup, not just the 'Bom dia' row.
+- **Artifacts:** `artifacts/e2e-run5-2026-07-13/…user-30…` · **Status:** open
 
 ## Product findings (mirrored to REQUIREMENTS-TRACKER; runner/product session owns)
 
