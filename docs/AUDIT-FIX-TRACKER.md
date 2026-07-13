@@ -47,6 +47,8 @@ Status: ✅ resolved · 🔲 open · 🔎 verify · ⏳ planned (expected pendin
 4. **Per-slice functional specs:** rewrite `tests/e2e/*` so each core journey asserts outcomes + backend evidence, and add a per-screen "exercise every control" spec.
 Acceptance: coverage gate reports 100% of interactive elements exercised with at least one outcome assertion; e2e correctness-assertion ratio no longer presence-dominated.
 
+**Status 2026-07-13 (first live execution + coverage review):** the suite now RUNS on the runner machine — run 1: 25 passed / 12 failed / 1 skipped of 38 tests (spec set has since grown to 51/41 and expansion continues). Every failure is triaged as a discrete item, and the coverage review (gaps CG-1…17 + gate-hardening items CS-1…8 — including "the gate cannot see uninventoried controls" and "covered_by is never verified") lives in **`docs/E2E-LIVE-RUN-TRACKER.md`** — the live worklist for T-COV1/T-COV2 from here. Three REAL product bugs found by the suite are mirrored as LT6–LT8 in REQUIREMENTS-TRACKER (tutor switching broken in prod: `profiles.selected_tutor_id` column missing; admin Requests queue always empty: `lesson_requests` RLS lacks `OR is_admin()`; latent voice-limit clobber race). T-COV1's central claim is now empirically confirmed: the tutor-switch control was "covered" green at render level while 100% broken in production.
+
 ## Reconciliation notes
 - Migrations on disk (`00001`–`00007`) exactly match `supabase/migrations/APPLIED.md`. ✅
 - Plan-state statuses that were optimistic at pass 1 (steps marked succeeded while tsc failed) are now consistent — tsc is green at pass 2.
