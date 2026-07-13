@@ -6,103 +6,486 @@
       "screen": "auth",
       "id": "auth.login.cta",
       "selector": { "role": "button", "name": "Log In" },
-      "covered_by": ["tests/e2e/01-app-shell.spec.ts", "tests/e2e/02-auth.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/01-app-shell.spec.ts", "depth": "rendered" },
+        { "spec": "tests/e2e/user/17-auth-mode-transitions.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "auth",
       "id": "auth.signup.cta",
       "selector": { "role": "button", "name": "Sign Up" },
-      "covered_by": ["tests/e2e/01-app-shell.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/01-app-shell.spec.ts", "depth": "rendered" },
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.welcome.lets_go",
+      "selector": { "role": "button", "name": "Let's go" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.placement.continue",
+      "selector": { "role": "button", "name": "Continue" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.placement.a_few_words",
+      "selector": { "role": "button", "name": "A few words" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.path.goal",
+      "selector": { "role": "button", "name": "Learn by goal" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.path.structured",
+      "selector": { "role": "button", "name": "Follow the structured course" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/31-onboarding-path-variants.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.path.adaptive_guided",
+      "selector": { "role": "button", "name": "Just start talking" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/31-onboarding-path-variants.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.track.pick_goal",
+      "selector": { "role": "button", "name": "Survival" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.first_win.skip",
+      "selector": { "role": "button", "name": "Skip for now" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.consent.start_learning",
+      "selector": { "role": "button", "name": "Start learning" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.consent.terms_link",
+      "selector": { "role": "button", "name": "Terms of Service" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/32-onboarding-consent-guard.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.consent.privacy_link",
+      "selector": { "role": "button", "name": "Privacy Policy" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/32-onboarding-consent-guard.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.consent.ai_disclosure_link",
+      "selector": { "role": "button", "name": "AI system" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/32-onboarding-consent-guard.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.consent.terms_checkbox",
+      "selector": { "role": "checkbox", "name": "I agree to the Terms of Service and Privacy Policy" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "value-changed" },
+        { "spec": "tests/e2e/user/32-onboarding-consent-guard.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.consent.ai_checkbox",
+      "selector": { "role": "checkbox", "name": "I understand I am interacting with an AI system" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/12-onboarding-fresh-flow.spec.ts", "depth": "value-changed" },
+        { "spec": "tests/e2e/user/32-onboarding-consent-guard.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "nav",
+      "id": "nav.home",
+      "selector": { "role": "button", "name": "Home" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/28-mobile-home-profile-smoke.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "nav",
+      "id": "nav.tutor",
+      "selector": { "role": "button", "name": "Tutor" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/28-mobile-home-profile-smoke.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "nav",
+      "id": "nav.profile",
+      "selector": { "role": "button", "name": "Profile" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/28-mobile-home-profile-smoke.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "home",
       "id": "home.unlock.open",
       "selector": { "role": "button", "name": "Unlock Next Level" },
-      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/01-home-navigation.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "home",
       "id": "home.continue_learning.see_all",
       "selector": { "role": "button", "name": "See All" },
-      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/01-home-navigation.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "home",
       "id": "home.continue_learning.card",
       "selector": { "role": "button", "name": "Continue Learning" },
-      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/01-home-navigation.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.audio_speed.slider",
       "selector": { "css": "input[type=\"range\"]" },
-      "covered_by": ["tests/e2e/user/09-settings-persistence.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/09-settings-persistence.spec.ts", "depth": "value-changed" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.support.open",
       "selector": { "role": "button", "name": "Support & Feedback" },
-      "covered_by": ["tests/e2e/07-support-sendlogs.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/07-support-sendlogs.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/34-support-ticket-roundtrip.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.tutor.open",
       "selector": { "role": "button", "name": "Switch AI Tutor" },
-      "covered_by": ["tests/e2e/user/10-settings-readwrite.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/10-settings-readwrite.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.tutor.select",
       "selector": { "role": "button", "name": "João, 45" },
-      "covered_by": ["tests/e2e/user/10-settings-readwrite.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/10-settings-readwrite.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.submissions.open",
       "selector": { "role": "button", "name": "My Submissions" },
-      "covered_by": ["tests/e2e/user/10-settings-readwrite.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/10-settings-readwrite.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.user_manual.open",
       "selector": { "role": "button", "name": "User Manual" },
-      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/11-settings-static-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.theme.dark",
+      "selector": { "role": "button", "name": "Dark" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/14-settings-local-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.path.goal_track",
+      "selector": { "role": "button", "name": "Goal track" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/14-settings-local-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.offline.save_audio_switch",
+      "selector": { "role": "switch", "name": "Save audio on device" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/14-settings-local-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.offline.clear_cache",
+      "selector": { "role": "button", "name": "Clear cache" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/14-settings-local-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.tutorial.open",
       "selector": { "role": "button", "name": "App Tutorial" },
-      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/11-settings-static-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.tutorial.continue",
       "selector": { "role": "button", "name": "Continue" },
-      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/11-settings-static-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.legal.terms",
       "selector": { "role": "button", "name": "Terms of Service" },
-      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/11-settings-static-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.legal.privacy",
       "selector": { "role": "button", "name": "Privacy Policy" },
-      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/11-settings-static-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "settings",
       "id": "settings.legal.ai_disclosure",
       "selector": { "role": "button", "name": "AI Disclosure" },
-      "covered_by": ["tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/11-settings-static-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "practice",
       "id": "practice.pattern_builder.tile",
       "selector": { "text": "Pattern Builder" },
-      "covered_by": ["tests/e2e/04-practice.spec.ts", "tests/e2e/08-offline.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/04-practice.spec.ts", "depth": "clicked" },
+        { "spec": "tests/e2e/08-offline.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.browse_situations.open",
+      "selector": { "role": "button", "name": "Browse situations" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/05-practice-browse-and-quiz.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.situation.expand",
+      "selector": { "css": "button[aria-expanded]" },
+      "covered_by": ["tests/e2e/user/05-practice-browse-and-quiz.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.situation.mode_culture",
+      "selector": { "role": "button", "name": "Culture" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/05-practice-browse-and-quiz.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.situation.mode_simulator",
+      "selector": { "role": "button", "name": "Situation Simulator" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/29-practice-simulator-scripted.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.lesson_quiz.cta",
+      "selector": { "role": "button", "name": "Lesson Quiz" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/05-practice-browse-and-quiz.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.tile",
+      "selector": { "text": "Vocabulary Review" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/07-practice-mode-routing.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/30-offline-mastery-queue.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.listening.tile",
+      "selector": { "text": "Listening" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.listening.speed_natural",
+      "selector": { "role": "button", "name": "natural" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.listening.reveal_transcript",
+      "selector": { "role": "button", "name": "Reveal transcript" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.listening.dictation_check",
+      "selector": { "role": "button", "name": "Check" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.listening.dictation_next_line",
+      "selector": { "role": "button", "name": "Next line" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.tile",
+      "selector": { "text": "Missions" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.new_mission",
+      "selector": { "role": "button", "name": "New mission" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.start",
+      "selector": { "role": "button", "name": "I'm doing it" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.review_not_yet",
+      "selector": { "role": "button", "name": "Not yet" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.review_save",
+      "selector": { "role": "button", "name": "Save review" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.repeat_drill",
+      "selector": { "role": "button", "name": "Repeat after me" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.all_drills",
+      "selector": { "role": "button", "name": "All drills" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.shadowing_drill",
+      "selector": { "role": "button", "name": "Shadowing" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.shadowing_loop",
+      "selector": { "role": "button", "name": "Loop" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-practice-engine-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.phrases.tile",
+      "selector": { "text": "Phrase Library" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/07-practice-mode-routing.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.tile",
+      "selector": { "text": "Speaking & Pronunciation" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/07-practice-mode-routing.spec.ts", "depth": "outcome-asserted" }
+      ]
     },
     {
       "screen": "learning",
@@ -121,6 +504,18 @@
       "id": "learning.lesson.suggest_video.open",
       "selector": { "role": "button", "name": "Suggest Video" },
       "covered_by": ["tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.vocab.open",
+      "selector": { "role": "button", "name": "Vocab" },
+      "covered_by": ["tests/e2e/user/03-learning-detail-surfaces.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.quiz.open",
+      "selector": { "role": "button", "name": "Start Practice Quiz" },
+      "covered_by": ["tests/e2e/user/03-learning-detail-surfaces.spec.ts"]
     },
     {
       "screen": "learning",
@@ -160,6 +555,36 @@
     },
     {
       "screen": "admin",
+      "id": "admin.studio.pack_select",
+      "selector": { "css": "select" },
+      "covered_by": ["tests/e2e/admin/04-admin-content-studio.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.studio.new_situation",
+      "selector": { "role": "button", "name": "New" },
+      "covered_by": ["tests/e2e/admin/04-admin-content-studio.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.studio.validate",
+      "selector": { "role": "button", "name": "Validate" },
+      "covered_by": ["tests/e2e/admin/04-admin-content-studio.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.correction.approve",
+      "selector": { "role": "button", "name": "Approve correction" },
+      "covered_by": ["tests/e2e/admin/03-admin-review-queues.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.ticket.close",
+      "selector": { "role": "button", "name": "Close ticket" },
+      "covered_by": ["tests/e2e/admin/03-admin-review-queues.spec.ts"]
+    },
+    {
+      "screen": "admin",
       "id": "admin.settings.voice_limit.increment",
       "selector": { "role": "button", "name": "+" },
       "covered_by": ["tests/e2e/admin/02-admin-global-settings.spec.ts"]
@@ -174,7 +599,467 @@
       "screen": "home",
       "id": "home.settings.open",
       "selector": { "role": "button", "name": "Settings" },
-      "covered_by": ["tests/e2e/user/01-home-navigation.spec.ts", "tests/e2e/user/11-settings-static-surfaces.spec.ts"]
+      "covered_by": [
+        { "spec": "tests/e2e/user/01-home-navigation.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/11-settings-static-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.empty.just_chat",
+      "selector": { "role": "button", "name": "Just Want to Chat" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/06-tutor-static-surfaces.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/13-tutor-chat-input-state.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.model.listen",
+      "selector": { "role": "button", "name": "Listen" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/06-tutor-static-surfaces.spec.ts", "depth": "rendered" },
+        { "spec": "tests/e2e/user/13-tutor-chat-input-state.spec.ts", "depth": "rendered" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.empty.start_todays_lesson",
+      "selector": { "role": "button", "name": "Start Today's Lesson" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-tutor-practice-modal-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.practice.help_toggle",
+      "selector": { "role": "button", "name": "Turn on help mode" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-tutor-practice-modal-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.practice.audio_toggle",
+      "selector": { "role": "button", "name": "Mute tutor audio" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-tutor-practice-modal-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.practice.send_message",
+      "selector": { "role": "button", "name": "Send message" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-tutor-practice-modal-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.practice.close_session",
+      "selector": { "role": "button", "name": "Close practice session" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/08-tutor-practice-modal-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.chat.send_message",
+      "selector": { "css": "div.absolute.bottom-0 button" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/37-tutor-error-ref-toast.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.request.implemented",
+      "selector": { "role": "button", "name": "Mark implemented" },
+      "covered_by": [
+        { "spec": "tests/e2e/admin/05-admin-queue-actions.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.request.reviewed",
+      "selector": { "role": "button", "name": "Mark reviewed" },
+      "covered_by": [
+        { "spec": "tests/e2e/admin/05-admin-queue-actions.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.ticket.in_progress",
+      "selector": { "role": "button", "name": "Mark in-progress" },
+      "covered_by": [
+        { "spec": "tests/e2e/admin/05-admin-queue-actions.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.video.approve",
+      "selector": { "role": "button", "name": "Approve video" },
+      "covered_by": [
+        { "spec": "tests/e2e/admin/05-admin-queue-actions.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/35-video-suggestion-roundtrip.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.video.reject",
+      "selector": { "role": "button", "name": "Reject video" },
+      "covered_by": [
+        { "spec": "tests/e2e/admin/05-admin-queue-actions.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.studio.edit_situation_select",
+      "selector": { "css": "select" },
+      "covered_by": ["tests/e2e/admin/06-admin-content-studio-load-existing.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.roadmap.activate",
+      "selector": { "role": "button", "name": "Activate" },
+      "covered_by": ["tests/e2e/user/15-learning-roadmap-activation.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.start_practice_session",
+      "selector": { "role": "button", "name": "Start Practice Session" },
+      "covered_by": ["tests/e2e/user/16-learning-detail-start-practice-session.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.submissions.refresh",
+      "selector": { "role": "button", "name": "Refresh submissions" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/17-my-submissions-statuses.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/34-support-ticket-roundtrip.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/35-video-suggestion-roundtrip.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.auth.sign_out",
+      "selector": { "role": "button", "name": "Sign Out" },
+      "covered_by": ["tests/e2e/user/15-settings-signout.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.auth.change_password",
+      "selector": { "role": "button", "name": "Change Password" },
+      "covered_by": ["tests/e2e/user/16-settings-password-surface.spec.ts"]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.mode.magic_link",
+      "selector": { "role": "button", "name": "Magic Link" },
+      "covered_by": ["tests/e2e/user/17-auth-mode-transitions.spec.ts"]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.reset.send_link",
+      "selector": { "role": "button", "name": "Send Reset Link" },
+      "covered_by": ["tests/e2e/user/17-auth-mode-transitions.spec.ts"]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.verify.submit",
+      "selector": { "role": "button", "name": "Verify Code" },
+      "covered_by": ["tests/e2e/user/17-auth-mode-transitions.spec.ts"]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.signup.terms_link",
+      "selector": { "role": "button", "name": "Terms of Service" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/18-auth-signup-consent-links.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.signup.privacy_link",
+      "selector": { "role": "button", "name": "Privacy Policy" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/18-auth-signup-consent-links.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.signup.ai_disclosure_link",
+      "selector": { "role": "button", "name": "AI system" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/18-auth-signup-consent-links.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.flashcard",
+      "selector": { "role": "button", "name": "Flashcard — tap to flip" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/30-offline-mastery-queue.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.grade_good",
+      "selector": { "role": "button", "name": "Good" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "outcome-asserted" },
+        { "spec": "tests/e2e/user/30-offline-mastery-queue.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.review_again",
+      "selector": { "role": "button", "name": "Review again" },
+      "covered_by": ["tests/e2e/user/15-practice-vocabulary-session.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.done",
+      "selector": { "role": "button", "name": "Done" },
+      "covered_by": ["tests/e2e/user/15-practice-vocabulary-session.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.pattern_builder.offline_grade",
+      "selector": { "role": "button", "name": "Got it" },
+      "covered_by": ["tests/e2e/user/19-offline-pattern-builder-drill.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.simulator.difficulty_l3",
+      "selector": { "role": "button", "name": "L3" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/29-practice-simulator-scripted.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.simulator.start_conversation",
+      "selector": { "role": "button", "name": "Start the conversation" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/29-practice-simulator-scripted.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.simulator.reply_input",
+      "selector": { "css": "input[placeholder=\"Type your reply in Portuguese…\"]" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/29-practice-simulator-scripted.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.simulator.send_reply",
+      "selector": { "role": "button", "name": "Send reply" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/29-practice-simulator-scripted.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.simulator.hint_toggle",
+      "selector": { "role": "button", "name": "Need a hint?" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/29-practice-simulator-scripted.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "coach",
+      "id": "coach.focus.why_this",
+      "selector": { "role": "button", "name": "Why this?" },
+      "covered_by": ["tests/e2e/user/20-home-coach-focus-actions.spec.ts"]
+    },
+    {
+      "screen": "coach",
+      "id": "coach.focus.practice",
+      "selector": { "role": "button", "name": "Practice" },
+      "covered_by": ["tests/e2e/user/20-home-coach-focus-actions.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.quiz.check_answer",
+      "selector": { "role": "button", "name": "Check Answer" },
+      "covered_by": ["tests/e2e/user/21-quiz-full-flow.spec.ts", "tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.quiz.next",
+      "selector": { "role": "button", "name": "Next Question" },
+      "covered_by": ["tests/e2e/user/21-quiz-full-flow.spec.ts", "tests/e2e/user/04-learning-feedback.spec.ts"]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.quiz.finish",
+      "selector": { "role": "button", "name": "Finish Quiz" },
+      "covered_by": ["tests/e2e/user/21-quiz-full-flow.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.repeat.speak",
+      "selector": { "role": "button", "name": "Speak" },
+      "covered_by": ["tests/e2e/10-speaking-stt.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.repeat.next_phrase",
+      "selector": { "role": "button", "name": "Next phrase" },
+      "covered_by": ["tests/e2e/10-speaking-stt.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.support.submit_ticket",
+      "selector": { "role": "button", "name": "Submit Ticket" },
+      "covered_by": ["tests/e2e/07-support-sendlogs.spec.ts", "tests/e2e/user/22-settings-support-validation.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.support.send_logs",
+      "selector": { "role": "button", "name": "Send Logs" },
+      "covered_by": ["tests/e2e/07-support-sendlogs.spec.ts", "tests/e2e/user/22-settings-support-validation.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.support.send_logs_cancel",
+      "selector": { "role": "button", "name": "No, Cancel" },
+      "covered_by": ["tests/e2e/user/22-settings-support-validation.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.account.delete_cancel",
+      "selector": { "role": "button", "name": "Keep My Account" },
+      "covered_by": ["tests/e2e/user/23-account-delete-cancel.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.studio.save_draft",
+      "selector": { "role": "button", "name": "Save draft" },
+      "covered_by": ["tests/e2e/admin/07-admin-content-studio-publish-guard.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.studio.publish",
+      "selector": { "role": "button", "name": "Publish" },
+      "covered_by": ["tests/e2e/admin/07-admin-content-studio-publish-guard.spec.ts"]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.requests.pending_visibility",
+      "selector": { "text": "Lesson Requests" },
+      "covered_by": ["tests/e2e/admin/08-admin-review-requests-visibility.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.audio.repeat_listen",
+      "selector": { "role": "button", "name": "Listen" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/22-audio-state-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.audio.repeat_playing",
+      "selector": { "role": "button", "name": "Playing…" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/22-audio-state-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.audio.pattern_hear_it",
+      "selector": { "role": "button", "name": "Hear it" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/22-audio-state-surfaces.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.review_went_well",
+      "selector": { "role": "button", "name": "Went well" },
+      "covered_by": ["tests/e2e/user/23-missions-complete-branch.spec.ts"]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.logged_success",
+      "selector": { "role": "heading", "name": "Mission logged" },
+      "covered_by": ["tests/e2e/user/23-missions-complete-branch.spec.ts"]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.path.adaptive_guided",
+      "selector": { "role": "button", "name": "Adaptive guided" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/24-daily-session-loop.spec.ts", "depth": "clicked" }
+      ]
+    },
+    {
+      "screen": "home",
+      "id": "home.daily_session.start",
+      "selector": { "role": "button", "name": "Start today's session" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/24-daily-session-loop.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "session",
+      "id": "session.segment.skip",
+      "selector": { "role": "button", "name": "Skip" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/24-daily-session-loop.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "session",
+      "id": "session.recap.back_home",
+      "selector": { "role": "button", "name": "Back to Home" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/24-daily-session-loop.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "home",
+      "id": "home.unlock.key_input",
+      "selector": { "css": "input[placeholder=\"Enter Key...\"]" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/24-unlock-level-submit.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "home",
+      "id": "home.unlock.submit",
+      "selector": { "role": "button", "name": "Unlock Level" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/24-unlock-level-submit.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.speed.start",
+      "selector": { "role": "button", "name": "Start" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/26-speaking-response-speed.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.speaking.speed.next_prompt",
+      "selector": { "role": "button", "name": "Next prompt" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/26-speaking-response-speed.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.practice.start_recording",
+      "selector": { "role": "button", "name": "Start recording" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/27-tutor-voice-limit.spec.ts", "depth": "outcome-asserted" }
+      ]
     }
   ]
 }
