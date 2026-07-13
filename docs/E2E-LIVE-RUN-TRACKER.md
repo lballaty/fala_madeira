@@ -16,6 +16,10 @@
 
 ## Run log
 
+### Run 7 — 2026-07-13 ~12:45 CEST — stability confirmation
+- **61 passed · 6 failed (4.8m) — IDENTICAL failure set to run 6** (user/04, 20, 21, 24, 25, 30). The 12:29 fixture/spec edits were already in run 6's build; no new Lane A fixes had landed.
+- Reproducibility upgraded: all six remaining items confirmed deterministic across two identical back-to-back runs — zero flake in the suite. Diagnoses in the run-6 entry stand unchanged.
+
 ### Run 6 — 2026-07-13 ~13:05 CEST — full suite (Lane B; post-deploy stability + builder batch)
 - 67 tests / 55 files · **61 passed · 6 failed (5.0m)** · artifacts: `artifacts/e2e-run6-2026-07-13/`. Best score yet (25→48→55→56→58→61).
 - **Verified this run:** EF-15 fully (admin/06 select-value assert passes; admin/07 already green), EF-27 (user/17), EF-28 (user/29 simulator scripted).
