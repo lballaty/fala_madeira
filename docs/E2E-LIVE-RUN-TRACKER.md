@@ -16,6 +16,9 @@
 
 ## Run log
 
+### Run 11 — 2026-07-13 ~15:10 CEST — stability confirmation
+- **66 passed · 5 failed (4.7m) — identical to run 10** (user/04, 21, 24, 30, 32). No new Lane A batch; determinism re-confirmed. Open items: 3 Lane A spec fixes (04/21 quiz-loop family, 32 new-spec iteration), PF-5 product tweak (blocks 24), LT10/EF-31 product follow-up (blocks 30).
+
 ### Runs 9–10 — 2026-07-13 ~14:05–14:45 CEST — builder batch + sync-queue hardening validation
 - Run 9: 69 tests, **65 passed · 4 failed**. Verified: EF-16's earlier layers, user/22 audio revisions, NEW user/31 onboarding-path-variants passes (CG-7 closes further).
 - Run 10 (validation of sync-queue hardening 78ddfd0): 71 tests, **66 passed · 5 failed** — no regressions; 5th failure is the brand-new user/32 consent-guard spec (first run, Lane A iterating).
