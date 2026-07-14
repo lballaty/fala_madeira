@@ -47,9 +47,11 @@
 - **Owed to reach testers:** merge `develop`→`main` + web deploy.
 - **Status:** DONE (fixed + regression-tested on develop; awaiting promotion).
 
----
-
-## Support-ticket workstream
+### TB-4 — Mobile: stuck on first screen after password login, can't scroll (reporter: mobile tester) — `OPEN (investigating)`
+- **Report:** "Normal process with PW works but then I am stuck on first screen and can't scroll further." Password login succeeds, then the first post-login screen doesn't scroll on mobile.
+- **Hypothesis (to confirm):** mobile viewport/overflow — the first post-login screen (likely the onboarding "Bem-vindo" welcome or Home) has a non-scrolling container (e.g. `height:100vh`/`overflow-hidden`/missing `overflow-y-auto`) that traps content below the fold on small viewports. May compound with TB-3 (onboarding gate). Check the `@mobile` project + onboarding/home layout.
+- **Owed:** reproduce on `@mobile`, root-cause, fix + regression test. Branch: `fix/*` (support worktree).
+- **Status:** OPEN, investigating next.
 
 ### SW-1 — Admin "all tickets" triage console — `DONE (on develop, unverified in full suite)`
 - Built on `develop`, commit `b439439`: admin sees ALL tickets (all statuses), status filter + text search, submitter/date, Reopen for closed. `resolveTicket` widened to accept `open`. tsc + lint clean. e2e `tests/e2e/admin/10-admin-all-tickets.spec.ts` added.
@@ -86,6 +88,11 @@
 
 ### INFRA-3 — dotfiles template fix push — `DEFERRED (owner/dotfiles)`
 - `commit-and-sync` co-author-trailer fix committed locally in `~/.ai-dev-dotfiles` (`238bb82`), unpushed (6 local commits, only 1 mine).
+
+### INFRA-4 — Staging / pre-release deploy (test URL) — `OPEN (coordinate with other agent)`
+- Other agent is building a pre-release deploy to a **TEST URL (staging)** as a verify step before prod. Committed deploy scripts ship prod-only (`falamadeira.searchingfool.com`) today.
+- Slotted into the release flow (`MULTI-AGENT-WORKFLOW.md` §3/§7): `develop`→`main` → deploy to test URL (staging) → verify → deploy to prod. Runs from the release worktree (on `main`).
+- **Owed:** get the staging details from the other agent (test URL, deploy flag/target, branch/worktree); wire `scripts/deploy-verpex.sh` to support the target; finalize the workflow doc §7/§8.
 
 ---
 
