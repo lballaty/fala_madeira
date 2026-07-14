@@ -81,6 +81,12 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
   const [record, setRecord] = useState<OnboardingRecord>(DEFAULT_RECORD);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Key hydration on the stable userId STRING, not the `user` object (TB-3): gotrue returns a NEW
+  // user object on every TOKEN_REFRESHED (tab-focus / "switch pages and go back"). When this effect
+  // depended on `user`, that churn re-ran it, toggled isLoaded, and remounted the lazy gate back to
+  // step 1 ("Bem-vindo"). Keying on userId re-hydrates only on a real sign-in / user switch.
+  const userId = user?.id ?? null;
+
   // Load the durable per-user record. Signed-out / no-user renders never gate on onboarding
   // (App.tsx already shows the auth screen), so we simply mark loaded with defaults.
   useEffect(() => {
@@ -89,7 +95,7 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
     // never call setState synchronously in the effect body (react-hooks/set-state-in-effect); the
     // resolved promise defers the update off the current render, same effect-safe shape as the
     // storage path below.
-    if (!user) {
+    if (!userId) {
       void Promise.resolve().then(() => {
         if (cancelled) return;
         setRecord(DEFAULT_RECORD);
@@ -105,7 +111,7 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
       if (!cancelled) setIsLoaded(false);
     });
     void platform.storage
-      .get<unknown>(storageKeyFor(user.id))
+      .get<unknown>(storageKeyFor(userId))
       .then((raw) => {
         if (cancelled) return;
         setRecord(coerceRecord(raw));
@@ -123,7 +129,7 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
     return () => {
       cancelled = true;
     };
-  }, [user]);
+  }, [userId]);
 
   /** Persist consent to the profiles row (DB source of truth) and mirror onto the profile state. */
   const persistConsent = useCallback(
