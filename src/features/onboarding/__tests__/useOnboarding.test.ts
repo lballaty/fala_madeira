@@ -12,13 +12,13 @@ import { renderHook, waitFor } from '@testing-library/react';
 import type { User } from '@supabase/supabase-js';
 
 const storageGet = vi.fn();
-const storageSet = vi.fn(async () => undefined);
+const storageSet = vi.fn();
 
 vi.mock('../../../platform', () => ({
   platform: {
     storage: {
-      get: (...args: unknown[]) => storageGet(...args),
-      set: (...args: unknown[]) => storageSet(...args),
+      get: (key: string) => storageGet(key),
+      set: (key: string, value: unknown) => storageSet(key, value),
     },
   },
 }));
