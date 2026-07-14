@@ -16,6 +16,16 @@
 
 ## Run log
 
+### Run 19 — 2026-07-14 — batches through ae7181c (user/46, user/47 @clean guard); a11y Home REGRESSION + 429 guard hit
+- **101 passed · 4 failed of 105 (6.6m).** Suite grew 87→105 across the latest Lane A batches (user/46 assorted-input, user/47 @clean error-guard project, schema-drift gate).
+- **The 4 failures:**
+  1. **⚠ a11y Home REGRESSION** — `11-accessibility.spec.ts:36` fails again (was 4/4 green after 9aed0db). **State-dependent:** my PF-11 fix was verified against the EMPTY-state Home; run 19 hit the POPULATED state (coach wins/streak data from earlier specs), which renders green status pills (`bg-green-50`/`bg-green-500/10 text-green-700` ≈ #2b9658/#2c7f53 at 3.53–4.13:1) and a blue element (#2b7cd5 ≈ 3.8–4.17:1) still below 4.5. My fix did NOT cover these. **PF-11 REOPENED (partial):** darken the populated-Home green pills + that blue element; also seed a deterministic Home state so the a11y smoke isn't data-dependent. Owner: app/design.
+  2. **user/44 (EF-34)** — unchanged (vocab deck-sourcing).
+  3. **user/45 (EF-35)** — unchanged (all 187 situations mission-ready → self-made path unreachable).
+  4. **user/47 (NEW @clean error-guard)** — caught `console.error: HTTP 429 (Too Many Requests)` during Home→Learning(+audio)→Practice→Tutor→Profile (+~3 other console errors). Likely environmental (full-suite TTS/edge rate-limit) and/or missing 429 backoff in the client. Triage: does it reproduce at low load (real UX gap) or only under suite hammering (test-env)? Owner: app (429 handling) + test-env.
+- **Not regressions in the deployed product from this session** except the state-dependent a11y-Home gap (my a11y fix was incomplete for populated Home). EF-33/LT10 + deployed a11y (empty-state) hold.
+- **Artifacts:** `artifacts/e2e-run19-2026-07-14.tgz`.
+
 ### Deploy — 2026-07-14 ~ CEST — EF-33/LT10 + a11y fixes shipped to production
 - **`npm run deploy` PASSED the full ship gate** (tsc + vitest + build + e2e coverage contract) and rsynced dist to Verpex. Prod smoke `@smoke` = **6/6 green**; `manifest.webmanifest` HTTP 200. Live at https://falamadeira.searchingfool.com.
 - **Ships:** EF-33/LT10 supabase-js post-reload deadlock fix (024683b), and the a11y fixes (9aed0db — PF-11 contrast + PF-12 control labels). Owner: hard-refresh once post-deploy (service worker).
