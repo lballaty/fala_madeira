@@ -1,0 +1,38 @@
+plan_file: plans/plan-2026-07-14-observability.yaml
+started_at: 2026-07-14T00:00:00Z
+last_updated: 2026-07-14T00:00:00Z
+mode: coordinated-shared-tree
+steps:
+  - id: obs-schema
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
+    troubleshoot_invocations: 0
+    notes: "Migration 00010 applied to live DB; verified all 7 observability columns present on public.logs (level, category, event_type, session_id, request_id, correlation_id, trace_id) + correlation/request indexes. user_id already nullable (pre-auth rows). Only one DB env (prod) — no separate cloud-dev to reconcile; two-pass N/A."
+  - id: obs-log-sink
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-client-sink
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-global-handlers
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-edge-persist
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-trace
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-client-sites
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-tts-fallback
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-ci-gate
+    status: pending
+    troubleshoot_invocations: 0
+  - id: obs-verify
+    status: pending
+    troubleshoot_invocations: 0
+checkpoint: "obs-schema DONE (live migration verified). 9 code steps remain (log-sink edge fn, client->sink, global handlers, edge persist, trace, client sites, tts fallback, ci gate, verify)."
