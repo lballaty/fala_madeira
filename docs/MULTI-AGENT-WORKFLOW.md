@@ -121,3 +121,32 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
 - **Model B — a worktree per agent (pictured above):** each agent gets its own folder + feature branch. *True isolation, no working-tree contention; costs one `node_modules` per folder + merges into develop.* **Recommended for genuinely independent parallel agents.**
 
 **Adopted: Model B.** The branch guard (`npm run check:branch` + the `.githooks/pre-commit` hook) enforces its rules: base = `develop`, feature worktrees = a topic branch (never `develop`/`main`), `*-release` = `main`.
+
+---
+
+## 9. Agent roles & orchestration (read this to coordinate the fleet)
+
+An **orchestrator** agent coordinates the others: it reads the trackers, assigns each open item to a role, sequences merges + release cuts, and audits branch discipline. It does not write feature code itself.
+
+### Roles
+| Role | Worktree / branch | Owns | Picks up work from | Merges to |
+|---|---|---|---|---|
+| **Orchestrator** | any (read-mostly) | assignment, sequencing, release timing, audits (`npm run check:branch`) | the trackers | — |
+| **E — enhancements** | `fala_madeira-feat/` · `feat/*` | new features (`src/features/*`) | REQUIREMENTS-TRACKER, owner requests | `develop` |
+| **S — support/bugs** | `fala_madeira-support/` · `fix/*` | tester bug fixes | TESTER-FEEDBACK-TRACKER (`TB-*`) | `develop` |
+| **C — content** | `fala_madeira-content/` · `content/*` | lesson content (`src/content/**`, situations/packs) | TESTER-FEEDBACK-TRACKER (content), coach feedback | `develop` |
+| **D — design/docs** | base · `develop` | design docs, plans, requirements | owner, plans | `develop` |
+| **T — tests/QA** | base · `develop` (or a feature worktree pre-merge) | regression runs, test hardening | E2E-LIVE-RUN-TRACKER | `develop` (test files) |
+| **Release** | `fala_madeira-release/` · `main` | merge `develop`→`main`, bump/tag, `npm run deploy` | orchestrator signal (develop green) | `main` (+ back-merge `develop`) |
+
+### Orchestration loop
+1. **Read the three trackers** → the open-work list + statuses (TESTER-FEEDBACK, E2E-LIVE-RUN, REQUIREMENTS).
+2. **Assign** each item to a role by type (bug→S, feature→E, content→C, design→D); record the assignment + owner in the tracker.
+3. Each role **reserves its files** (`queuectl`), works in its own worktree, updates the tracker, **merges to `develop`** when green.
+4. **T runs `npm run test:e2e` on `develop`** after merges; logs results in E2E-LIVE-RUN-TRACKER.
+5. When `develop` is green and a shipment is wanted, the orchestrator **signals a release cut** (tracker note "cutting release"); the **Release** role merges `develop`→`main` in the release worktree, bumps/tags, deploys, back-merges. Nobody else pauses (§4 snapshot).
+6. Orchestrator periodically runs **`npm run check:branch`** to confirm every worktree is on its allowed branch.
+
+### What every agent reads first
+`AGENTS.md` (repo contract) → §7 (coordination) → **this doc** for its role + the flow → the **trackers** for current work. Reserve before writing; log every deferral (never "not our lane").
+
