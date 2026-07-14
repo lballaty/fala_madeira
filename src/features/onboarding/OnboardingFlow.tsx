@@ -466,7 +466,10 @@ const ConsentRow = ({
 
 // --- 60-second first win ----------------------------------------------------
 
-type SayItBackState = 'idle' | 'listening' | 'done' | 'unavailable';
+// 'done' = success (with heardText → echo what we heard; without → honest self-confirm when
+// recognition is unavailable on the platform). 'retry' = heard nothing / transient miss, let them
+// try again. 'unavailable' = mic/permission/platform blocked recognition → offer a self-confirm.
+type SayItBackState = 'idle' | 'listening' | 'done' | 'retry' | 'unavailable';
 
 interface FirstWinStepProps {
   stepIndex: number;
@@ -477,16 +480,19 @@ interface FirstWinStepProps {
 
 /**
  * The "60-second first win": the learner hears "Bom dia!" (tap-to-hear, pulsing while it plays)
- * and can optionally say it back through platform.speech. Recognition degrades gracefully — when
- * it's unavailable or errors, the say-it-back collapses to a friendly "Nice!" confirm so the
- * learner always reaches a win (§12: voice-first, but never a hard gate).
+ * and can say it back through platform.speech. It genuinely LISTENS: on success it echoes what it
+ * heard ("Nice — I heard you!" + the transcript), so the learner sees it actually recognised their
+ * speech (TB-6). If nothing is heard it offers a retry; if the mic/recognition is unavailable
+ * (e.g. Brave disables the Web Speech API, or permission denied) it honestly says so and offers a
+ * self-confirm — never a fake "Nice!" that ignored the mic. Never a hard gate (§12: voice-first).
  */
-const FirstWinStep = ({ stepIndex, totalSteps, playSpeech, onContinue }: FirstWinStepProps) => {
+export const FirstWinStep = ({ stepIndex, totalSteps, playSpeech, onContinue }: FirstWinStepProps) => {
   const phrase = config.onboarding.firstWinPhrase;
   const translation = config.onboarding.firstWinTranslation;
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasHeard, setHasHeard] = useState(false);
   const [sayState, setSayState] = useState<SayItBackState>('idle');
+  const [heardText, setHeardText] = useState<string | null>(null);
 
   const speechAvailable = useMemo(() => {
     try {
@@ -513,24 +519,36 @@ const FirstWinStep = ({ stepIndex, totalSteps, playSpeech, onContinue }: FirstWi
 
   const handleSayItBack = useCallback(async () => {
     if (!speechAvailable) {
-      // Graceful degrade: no recognition on this platform — confirm the win without it.
+      // No recognition on this platform — honest self-confirm (the button reads "I said it").
       setSayState('done');
       return;
     }
+    setHeardText(null);
     setSayState('listening');
     try {
-      await platform.speech.recognize({
-        language: config.onboarding.firstWinRecognitionLanguage,
-        timeoutMs: config.onboarding.firstWinRecognitionTimeoutMs,
-      });
+      const transcript = (
+        await platform.speech.recognize({
+          language: config.onboarding.firstWinRecognitionLanguage,
+          timeoutMs: config.onboarding.firstWinRecognitionTimeoutMs,
+        })
+      ).trim();
+      if (transcript === '') {
+        // Session ended having heard nothing — let them try again rather than fake a win.
+        setSayState('retry');
+        return;
+      }
+      // Success: echo what we actually heard so the learner sees it listened (TB-6).
+      setHeardText(transcript);
       setSayState('done');
     } catch (error) {
-      // Any recognition failure still resolves to a win — the point is the try, not the score.
-      logger.debug('onboarding_say_it_back', 'say-it-back recognition did not complete — confirming the win anyway', {
+      // Mic/permission/platform blocked → honest self-confirm path; a transient miss → retry.
+      const code = (error as { code?: string } | null)?.code;
+      const blocked = code === 'unavailable' || code === 'not-implemented' || code === 'permission-denied';
+      setSayState(blocked ? 'unavailable' : 'retry');
+      logger.debug('onboarding_say_it_back', 'say-it-back recognition did not complete', {
         category: 'USER_ACTION',
         error,
       });
-      setSayState('done');
     }
   }, [speechAvailable]);
 
@@ -568,26 +586,54 @@ const FirstWinStep = ({ stepIndex, totalSteps, playSpeech, onContinue }: FirstWi
         {hasHeard && (
           <div className="w-full pt-2 border-t border-ios-bg">
             {sayState === 'done' ? (
-              <p className="text-sm font-bold text-green-600 flex items-center justify-center gap-2 pt-3">
-                <Check className="w-4 h-4" /> Nice! You just said your first Madeiran words.
-              </p>
+              heardText ? (
+                <div className="pt-3 text-center space-y-1">
+                  <p className="text-sm font-bold text-green-600 flex items-center justify-center gap-2">
+                    <Check className="w-4 h-4" /> Nice — I heard you!
+                  </p>
+                  <p className="text-sm text-ios-gray">“{heardText}”</p>
+                </div>
+              ) : (
+                <p className="text-sm font-bold text-green-600 flex items-center justify-center gap-2 pt-3">
+                  <Check className="w-4 h-4" /> Nice! You just said your first Madeiran words.
+                </p>
+              )
+            ) : sayState === 'unavailable' ? (
+              <div className="pt-3 space-y-2">
+                <p className="text-xs text-ios-gray text-center leading-relaxed">
+                  Couldn’t reach the microphone on this device — that’s okay.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSayState('done')}
+                  className="w-full py-3 rounded-xl bg-ios-bg font-bold text-sm text-ios-blue flex items-center justify-center gap-2"
+                >
+                  <Check className="w-4 h-4" /> I said it
+                </button>
+              </div>
             ) : (
-              <button
-                type="button"
-                onClick={() => void handleSayItBack()}
-                disabled={sayState === 'listening'}
-                className="mt-3 w-full py-3 rounded-xl bg-ios-bg font-bold text-sm text-ios-blue flex items-center justify-center gap-2"
-              >
-                {sayState === 'listening' ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" /> Listening…
-                  </>
-                ) : (
-                  <>
-                    <Mic className="w-4 h-4" /> {speechAvailable ? 'Say it back' : "I said it"}
-                  </>
+              <div className="space-y-2">
+                {sayState === 'retry' && (
+                  <p className="text-xs text-ios-gray text-center pt-3">Didn’t catch that — try again.</p>
                 )}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => void handleSayItBack()}
+                  disabled={sayState === 'listening'}
+                  className="mt-1 w-full py-3 rounded-xl bg-ios-bg font-bold text-sm text-ios-blue flex items-center justify-center gap-2"
+                >
+                  {sayState === 'listening' ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" /> Listening…
+                    </>
+                  ) : (
+                    <>
+                      <Mic className="w-4 h-4" />{' '}
+                      {sayState === 'retry' ? 'Try again' : speechAvailable ? 'Say it back' : 'I said it'}
+                    </>
+                  )}
+                </button>
+              </div>
             )}
           </div>
         )}
