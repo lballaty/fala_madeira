@@ -99,6 +99,16 @@
 
 ---
 
+## Enhancements (future releases — backlog)
+
+### EN-1 — Audio buttons need immediate click feedback (loading/playing state) — `OPEN (backlog, future release)`
+- **Report (owner):** clicking any audio icon gives no feedback, so if playback takes a moment a user clicks repeatedly instead of waiting. Add an immediate visual state (spinner / pulsing / disabled-while-loading) on tap.
+- **Scope:** app-wide — every audio play control (phrases speaker, Vocabulary "Play the word", Simulator "Play line", Listening, speaking reference, drill audio, tutor/coach TTS). Today playback is fire-and-forget with no DOM "playing" indicator (confirmed in e2e specs 44/45 + `usePractice`/vocab `playText`).
+- **Implementation hint:** centralize at the shared audio seam — `src/hooks/useSpeechPlayback.ts` / `geminiService.playSpeech` (resolves when playback STARTS, `onEnded` when it stops) — expose a `status: idle|loading|playing` and a shared `AudioButton` that reflects it + guards double-taps. One change covers all call sites.
+- **Owner:** Agent E (`feat/*`). Priority: future release (not blocking). **Status:** OPEN (backlog).
+
+---
+
 ## Cross-references (owned elsewhere, not buried)
 - **Versioning rollout** → `aidevops/plans/plan-2026-07-14-versioning-rollout.yaml` (TODO #122).
 - **PF-13 schema drift, observability** → other agent (DB).
