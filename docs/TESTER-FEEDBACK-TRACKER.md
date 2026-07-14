@@ -92,10 +92,10 @@
 ### INFRA-3 — dotfiles template fix push — `DEFERRED (owner/dotfiles)`
 - `commit-and-sync` co-author-trailer fix committed locally in `~/.ai-dev-dotfiles` (`238bb82`), unpushed (6 local commits, only 1 mine).
 
-### INFRA-4 — Staging / pre-release deploy (test URL) — `OPEN (coordinate with other agent)`
-- Other agent is building a pre-release deploy to a **TEST URL (staging)** as a verify step before prod. Committed deploy scripts ship prod-only (`falamadeira.searchingfool.com`) today.
-- Slotted into the release flow (`MULTI-AGENT-WORKFLOW.md` §3/§7): `develop`→`main` → deploy to test URL (staging) → verify → deploy to prod. Runs from the release worktree (on `main`).
-- **Owed:** get the staging details from the other agent (test URL, deploy flag/target, branch/worktree); wire `scripts/deploy-verpex.sh` to support the target; finalize the workflow doc §7/§8.
+### INFRA-4 — Staging / pre-release deploy — `OPEN (coordinate with other agent)`
+- **Staging URL confirmed: `testfalamadeira.searchingfool.com`** (owner, 2026-07-14). Pre-release verify step before prod (`falamadeira.searchingfool.com`).
+- Slotted into the release flow (`MULTI-AGENT-WORKFLOW.md` §3/§7): `develop`→`main` → deploy to `testfalamadeira` (staging) → verify → deploy to prod. Runs from the release worktree (on `main`).
+- **Owed:** get the deploy mechanism from the other agent (how staging is targeted — flag/`VERPEX_REMOTE_PATH`/separate `.env`); wire `scripts/deploy-verpex.sh` to support both targets; finalize the workflow doc §8. Supabase Auth Site/Redirect URLs must include the staging origin.
 
 ---
 
