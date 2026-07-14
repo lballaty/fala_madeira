@@ -15,6 +15,11 @@ import { test, expect, landOnHome } from './support/fixtures';
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 async function assertNoSeriousViolations(page: Page, label: string) {
+  // Let framer-motion entrance fades (App tab wrapper + HomeView: initial opacity 0 → 1, ~0.3s)
+  // settle before the snapshot. axe computes EFFECTIVE colour including opacity, so scanning
+  // mid-fade caught e.g. Home's "See All" (--fm-brand #0057B7) at ~83% opacity = 4.44:1 — a false
+  // serious color-contrast violation; at rest it is ~5.6:1 (passes AA). Audit the settled UI.
+  await page.waitForTimeout(600);
   const results = await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze();
   const blocking = results.violations.filter((v) => v.impact === 'critical' || v.impact === 'serious');
   const summary = blocking
