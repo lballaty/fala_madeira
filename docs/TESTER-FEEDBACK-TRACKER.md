@@ -10,7 +10,7 @@
 ---
 
 ## Status legend
-`OPEN` active · `IN PROGRESS` being worked · `DEFERRED` parked-but-tracked (never "dropped") · `DONE` complete/verified · `NEEDS DECISION` blocked on a product/owner call
+`OPEN` active · `IN PROGRESS` being worked · `DEFERRED` parked-but-tracked (never "dropped") · `DONE` complete/verified · `NEEDS DECISION` blocked on a product/owner call · `NEEDS REQUIREMENTS` captured from feedback but **not buildable** until a written spec is drafted AND owner-approved (AGENTS §3 requirements gate — no coding before then)
 
 ---
 
@@ -122,6 +122,16 @@
   4. **Bulk approve / bulk reject:** multi-select checkboxes + bulk actions on the corrections queue (extend the pattern to the other queues).
 - **Constraints:** the approve→ticket insert and any schema change are **DB writes** → coordinate with the DB-owning agent (Lane B does not write DB). The admin-UI rows/bulk-actions and the submission-modal guidance are client-side.
 - **Owner/lane:** Agent S/E (admin + submission UI) + DB agent (ticket-on-approve + optional structured columns) + content (what "followed up" resolves to). Priority: owner to sequence. **Status:** OPEN.
+
+### CS-1 — Content Studio is unexplained: jargon, no purpose, raw-JSON editing — `NEEDS REQUIREMENTS (then owner approval before any coding)`
+- **Report (owner 2026-07-14):** not clear what Content Studio does / what it's for / what to expect; **"nobody knows what a content pack is"** (same for *situation*, *track*, *enrichable field* — unexplained jargon); "and so on". Raw-JSON editing is opaque.
+- **Findings (code-read):** Content Studio (`src/features/admin/ContentStudio.tsx` + `useContentStudio.ts`) is the admin authoring loop over the modular content model (**packs → situations → tracks**): load packs incl. drafts → edit scalar fields + nested enrichable fields (`phrase_patterns`/`vocabulary`/`cultural_notes`) as **JSON textareas** → validate (schema) → **publish** (upserts the versioned pack + re-projects `situations`/`tracks`, migration 00006, stamps version/checksum/status). Ref `docs/CONTENT-ARCHITECTURE.md §8`. There is **no in-tool explanation** and domain terms are undefined in the UI.
+- **Direction (NOT a build order yet):** in-tool purpose/explainer + a plain-language **glossary** of domain terms; friendlier **structured editing** instead of raw JSON; empty-state guidance. → Needs a **written spec + owner approval before coding** (AGENTS §3 requirements gate).
+- **Owner/lane:** Agent D/E (spec) → owner approval → Agent E build. **Status:** NEEDS REQUIREMENTS.
+
+### CS-2 — Wire Content Studio into the correction follow-up (SW-8) — `NEEDS REQUIREMENTS (then owner approval before any coding)`
+- **Gap:** the correction approve→ticket flow (SW-8) has no link to *where the fix is actually applied* (Content Studio). Define how an approved correction/ticket routes an editor to the relevant situation in Content Studio and back to closing the ticket. Depends on SW-8. → Needs a written spec + approval before coding.
+- **Owner/lane:** Agent E + content, after SW-8. **Status:** NEEDS REQUIREMENTS.
 
 ---
 
