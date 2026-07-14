@@ -232,7 +232,15 @@ export const enqueue = async (
 
   // Opportunistic drain when we appear to be online — fire-and-forget.
   if (typeof navigator === 'undefined' || navigator.onLine) {
-    void flush().catch(() => undefined);
+    void flush().catch((e) => {
+      // Best-effort drain: flush already logs per-entry failures, but never let an
+      // unexpected throw from the drain itself go unrecorded (still swallowed here).
+      logger.warn('sync_queue_flush_failed', 'opportunistic drain after enqueue threw — retained for next tick', {
+        category: 'DATA_PROCESSING',
+        correlationId,
+        error: e,
+      });
+    });
   }
 };
 
@@ -378,7 +386,14 @@ export const flush = async (): Promise<void> => {
           });
         }
       })
-      .catch(() => undefined);
+      .catch((e) => {
+        // Reconnect content refresh is best-effort — never throws into the drain.
+        logger.warn('sync_queue_flush_failed', 'reconnect content refresh failed — pack versions unchanged this session', {
+          category: 'DATA_PROCESSING',
+          correlationId,
+          error: e,
+        });
+      });
   }
 };
 
@@ -393,7 +408,14 @@ export const flush = async (): Promise<void> => {
  */
 export const initSyncQueue = (): void => {
   if (listenersBound) {
-    void flush().catch(() => undefined);
+    void flush().catch((e) => {
+      // Best-effort re-drain on a repeat init — flush logs per-entry failures itself;
+      // this guards an unexpected throw from the drain (still swallowed).
+      logger.warn('sync_queue_flush_failed', 'drain on repeat initSyncQueue threw — retained for next tick', {
+        category: 'DATA_PROCESSING',
+        error: e,
+      });
+    });
     return;
   }
   listenersBound = true;
@@ -407,7 +429,14 @@ export const initSyncQueue = (): void => {
       // outlives a gotrue wedge that resolves late (EF-33).
       const drain = () => {
         if (queue && queue.length === 0) queue = null;
-        void flush().catch(() => undefined);
+        void flush().catch((e) => {
+          // Best-effort reconnect drain — flush logs per-entry failures itself; this
+          // guards an unexpected throw from the drain (still swallowed, retry ladder covers it).
+          logger.warn('sync_queue_flush_failed', 'reconnect drain threw — retained for the retry ladder', {
+            category: 'DATA_PROCESSING',
+            error: e,
+          });
+        });
       };
       drain();
       for (const delayMs of [3000, 10000, 30000]) {
@@ -416,7 +445,14 @@ export const initSyncQueue = (): void => {
     });
   }
   // Drain anything left from a previous session as soon as we boot online.
-  void flush().catch(() => undefined);
+  void flush().catch((e) => {
+    // Best-effort boot drain — flush logs per-entry failures itself; this guards an
+    // unexpected throw from the drain (still swallowed).
+    logger.warn('sync_queue_flush_failed', 'boot-time drain threw — retained for next tick', {
+      category: 'DATA_PROCESSING',
+      error: e,
+    });
+  });
 };
 
 /** Pending (not-yet-synced) entry count — diagnostics / offline UI badges. */

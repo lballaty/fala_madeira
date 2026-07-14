@@ -118,6 +118,15 @@ export interface AudioPlayOptions {
   onEnded?: () => void;
 }
 
+export interface SpeechSynthesisOptions {
+  // BCP-47 tag for the synthesized voice, e.g. 'pt-PT'. Defaults to 'pt-PT'.
+  lang?: string;
+  // Speaking rate; 1.0 = normal speed.
+  rate?: number;
+  // Invoked once when speech finishes (or is stopped/cancelled).
+  onEnded?: () => void;
+}
+
 export interface AudioAdapter {
   isAvailable(): boolean;
   // Play an audio URL or Blob (compressed formats via the platform's media
@@ -128,6 +137,12 @@ export interface AudioAdapter {
   // context — used for server TTS audio (24kHz s16le). Resolves once playback
   // has started; `options.onEnded` fires when it finishes.
   playPcm16(data: ArrayBuffer, sampleRate: number, options?: AudioPlayOptions): Promise<void>;
+  // Text-to-speech via the platform's built-in speech-synthesis engine. This is the graceful
+  // fallback when SERVER TTS is unavailable (edge TTS_UNAVAILABLE) — degraded quality but still
+  // audible, per the TTS design. Resolves once speech has started; options.onEnded fires when it
+  // finishes (or is stopped). Rejects PlatformError('audio','unavailable') when the platform has
+  // no speech synthesis. stop() also cancels in-progress synthesis.
+  speak(text: string, options?: SpeechSynthesisOptions): Promise<void>;
   pause(): void;
   // Resume a paused playback (also resumes a suspended audio context).
   resume(): Promise<void>;

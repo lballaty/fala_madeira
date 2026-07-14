@@ -21,6 +21,23 @@ interface ChatTurn {
 }
 
 /**
+ * Error thrown by invokeEdgeFunction. Carries the machine-readable server `code` (e.g.
+ * 'TTS_UNAVAILABLE') and the support `ref` alongside the user-facing message, so callers can
+ * branch on the code (e.g. degrade TTS to device speech) while still surfacing `.message`
+ * (already the userMessage("…", ref) string) to the UI.
+ */
+export class EdgeFunctionError extends Error {
+  readonly code: string;
+  readonly ref?: string;
+  constructor(code: string, message: string, ref?: string) {
+    super(userMessage(code, message, ref));
+    this.name = 'EdgeFunctionError';
+    this.code = code;
+    this.ref = ref;
+  }
+}
+
+/**
  * Client-side mirror of the edge function's ErrorAnalystResult
  * (supabase/functions/_shared/gemini.ts). The server type lives in Deno and cannot be imported
  * into the browser bundle, so this shape is duplicated here — keep the two in sync. Consumed by
@@ -49,6 +66,25 @@ export interface ChatSession {
   sendMessage(input: { message: string }): Promise<{ text: string }>;
 }
 
+// Generate a W3C `traceparent` for one request-level flow (OBSERVABILITY-CONTRACT §8):
+// `00-<32hex trace-id>-<16hex span-id>-01`. Sent as a header on the edge call so the edge
+// function threads the same trace_id into its logs + error envelope, letting a single flow be
+// reconstructed across client, edge, and DB beyond correlation_id.
+const randomHex = (bytes: number): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    const arr = new Uint8Array(bytes);
+    crypto.getRandomValues(arr);
+    return Array.from(arr, (b) => b.toString(16).padStart(2, '0')).join('');
+  }
+  let out = '';
+  for (let i = 0; i < bytes * 2; i++) out += Math.floor(Math.random() * 16).toString(16);
+  return out;
+};
+const newTraceparent = (): { traceparent: string; traceId: string } => {
+  const traceId = randomHex(16); // 16 bytes = 32 hex chars
+  return { traceparent: `00-${traceId}-${randomHex(8)}-01`, traceId };
+};
+
 // Invoke a Supabase edge function and unwrap the shared error envelope
 // ({ error: { code, message, requestId, details } }) into a thrown Error whose
 // message includes the server's human-readable text and a support Ref.
@@ -62,9 +98,7 @@ const invokeEdgeFunction = async <T = unknown>(
       category: 'SYSTEM_HEALTH',
       details: { function: name },
     });
-    throw new Error(
-      userMessage('EDGE_FN_UNCONFIGURED', 'Connection is not configured. Please reload the app and try again.', event.request_id)
-    );
+    throw new EdgeFunctionError('EDGE_FN_UNCONFIGURED', 'Connection is not configured. Please reload the app and try again.', event.request_id);
   }
 
   // Transport-level retry (ENGINEERING-STANDARDS §5): re-attempt on transient failures
@@ -75,6 +109,8 @@ const invokeEdgeFunction = async <T = unknown>(
     const ctx = (err as { context?: { status?: number } })?.context;
     return typeof ctx?.status === 'number' ? ctx.status : undefined;
   };
+  // One trace per logical flow — shared across retry attempts so the whole flow joins on it.
+  const { traceparent, traceId } = newTraceparent();
   const { data, error } = await withRetry(
     async () => {
       // Per-attempt timeout: functions.invoke has no default, so without this a stalled fetch
@@ -82,6 +118,7 @@ const invokeEdgeFunction = async <T = unknown>(
       // attempt; the resulting FunctionsFetchError flows through res.error/reject like any other.
       const res = await supabase.functions.invoke(name, {
         body,
+        headers: { traceparent },
         signal: AbortSignal.timeout(config.net.requestTimeoutMs),
       });
       if (res.error) throw res.error; // throw so withRetry can decide to retry/give up
@@ -129,9 +166,9 @@ const invokeEdgeFunction = async <T = unknown>(
       category: 'AI_DECISION',
       error,
       correlationId: serverRequestId,
-      details: { function: name, action: body?.action, code: serverCode, serverRequestId },
+      details: { function: name, action: body?.action, code: serverCode, serverRequestId, traceId },
     });
-    throw new Error(userMessage(serverCode, serverMessage, serverRequestId ?? event.request_id));
+    throw new EdgeFunctionError(serverCode, serverMessage, serverRequestId ?? event.request_id);
   }
 
   return data as T;
@@ -198,16 +235,33 @@ export const geminiService = {
   async playSpeech(text: string, tutor?: Tutor, speed: number = 1.0, onEnd?: () => void) {
     this.stopSpeech();
 
-    // Cache key = provider:voice:hash(text), NO speed (speed is a playback param applied
-    // by the audio adapter's playbackRate, so one synthesized clip is reused at any speed).
-    // The client keys on the requested voice fingerprint (tutor id) with 'default' provider
-    // — the server resolves the actual provider/voice and returns them in metadata (logged);
-    // reads and writes for the same logical request agree because both use this key.
-    const arrayBuffer = await synthesizeCached(text, { tutorId: tutor?.id, tutor });
+    try {
+      // Cache key = provider:voice:hash(text), NO speed (speed is a playback param applied
+      // by the audio adapter's playbackRate, so one synthesized clip is reused at any speed).
+      // The client keys on the requested voice fingerprint (tutor id) with 'default' provider
+      // — the server resolves the actual provider/voice and returns them in metadata (logged);
+      // reads and writes for the same logical request agree because both use this key.
+      const arrayBuffer = await synthesizeCached(text, { tutorId: tutor?.id, tutor });
 
-    // Resolves once playback has started; onEnd fires when the clip finishes
-    // (or is stopped) — same contract as the pre-adapter implementation.
-    await platform.audio.playPcm16(arrayBuffer, TTS_SAMPLE_RATE, { rate: speed, onEnded: onEnd });
+      // Resolves once playback has started; onEnd fires when the clip finishes
+      // (or is stopped) — same contract as the pre-adapter implementation.
+      await platform.audio.playPcm16(arrayBuffer, TTS_SAMPLE_RATE, { rate: speed, onEnded: onEnd });
+    } catch (err) {
+      // Graceful degradation (OBSERVABILITY-CONTRACT §10 / TTS design): when SERVER TTS is
+      // unavailable (edge returns 503 TTS_UNAVAILABLE), fall back to the platform's built-in
+      // speech synthesis instead of surfacing an error. Logged as WARN, not ERROR — this is an
+      // expected degradation, not a fault.
+      if (err instanceof EdgeFunctionError && err.code === 'TTS_UNAVAILABLE') {
+        logger.warn('tts_fallback_web_speech', 'Server TTS unavailable; using device speech synthesis', {
+          category: 'AI_DECISION',
+          correlationId: err.ref,
+          details: { textLength: text.length, tutorId: tutor?.id },
+        });
+        await platform.audio.speak(text, { lang: 'pt-PT', rate: speed, onEnded: onEnd });
+        return;
+      }
+      throw err;
+    }
   }
 };
 

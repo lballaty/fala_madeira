@@ -58,9 +58,11 @@ const SESSION_ID = uuid();
 const RING_BUFFER_MAX = config.logging.ringBufferMax;
 const ringBuffer: LogEvent[] = [];
 
-// Tier (b): ERROR/CRITICAL persistence queue → public.logs (batched, best-effort).
-// RLS on public.logs requires auth.uid() = user_id, so flushing needs a signed-in user;
-// events queue locally until one is available (offline/signed-out safe).
+// Tier (b): ERROR/CRITICAL persistence queue → the service-role `log-sink` edge function
+// (batched, best-effort). The sink inserts with service-role, so anonymous/pre-auth events
+// (user_id = null) persist too — the old direct table insert was RLS-gated on
+// auth.uid() = user_id and silently dropped signed-out events (OBSERVABILITY-CONTRACT §6/§7).
+// Events still queue locally while offline and flush on the next timer tick.
 const PERSIST_QUEUE_MAX = config.logging.persistQueueMax;
 const FLUSH_INTERVAL_MS = config.logging.flushIntervalMs;
 const FLUSH_BATCH_TRIGGER = config.logging.flushBatchTrigger;
@@ -109,12 +111,14 @@ const scheduleFlush = () => {
   }, FLUSH_INTERVAL_MS);
 };
 
-/** Best-effort batched write of queued ERROR/CRITICAL events to public.logs. Never throws. */
+/** Best-effort batched write of queued ERROR/CRITICAL events to the log-sink. Never throws. */
 export const flushPersistQueue = async (): Promise<void> => {
   if (isFlushing || persistQueue.length === 0) return;
   const supabase = getSupabase();
-  // public.logs INSERT policy requires auth.uid() = user_id — hold events until signed in.
-  if (!supabase || !currentUserId) {
+  // No client yet (very early boot) — hold and retry on the next tick. NOTE: unlike before, we
+  // no longer gate on a signed-in user: the log-sink writes with service-role, so pre-auth and
+  // signed-out events (user_id = null) now persist too (OBSERVABILITY-CONTRACT §7).
+  if (!supabase) {
     scheduleFlush();
     return;
   }
@@ -122,22 +126,9 @@ export const flushPersistQueue = async (): Promise<void> => {
   isFlushing = true;
   const batch = persistQueue.splice(0, persistQueue.length);
   try {
-    const rows = batch.map(e => ({
-      user_id: currentUserId,
-      event: e.event_type,
-      details: JSON.stringify({
-        level: e.level,
-        category: e.category,
-        message: e.message,
-        session_id: e.session_id,
-        request_id: e.request_id,
-        correlation_id: e.correlation_id,
-        details: e.details ?? null,
-      }),
-      device_info: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
-      timestamp: e.timestamp,
-    }));
-    const { error } = await supabase.from('logs').insert(rows);
+    // Post the events verbatim; the sink validates, size/rate-caps, and maps them onto the
+    // public.logs schema (level/category/event_type/correlation IDs/trace_id + details).
+    const { error } = await supabase.functions.invoke('log-sink', { body: { events: batch } });
     if (error) {
       // Requeue (bounded) so the next timer tick retries — e.g. transient offline.
       persistQueue.unshift(...batch.slice(0, PERSIST_QUEUE_MAX - persistQueue.length));

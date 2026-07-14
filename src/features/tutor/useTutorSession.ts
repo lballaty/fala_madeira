@@ -195,6 +195,10 @@ export const useTutorSession = ({
     });
 
     platform.speech.onError((err) => {
+      logger.warn('speech_recognition_error', 'tutor speech recognition reported an error', {
+        category: 'AI_DECISION',
+        details: { code: err.code, detail: err.detail },
+      });
       if (err.code === 'permission-denied') {
         showToast("Microphone access denied. Please check your browser settings.", "error");
       } else if (err.code === 'no-speech') {

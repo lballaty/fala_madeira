@@ -120,7 +120,11 @@ export const usePathSelection = ({ supabase, user }: PathSelectionDeps) => {
           setIsLoaded(true);
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        logger.warn('storage_read_failed', 'could not read the local path selection mirror — defaults stand', {
+          category: 'SYSTEM_HEALTH',
+          error,
+        });
         if (!cancelled) setIsLoaded(true); // storage read failed (already tolerated) — defaults stand
       });
     return () => {

@@ -6,10 +6,12 @@
 // Created: 2026-07-08
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
-import { corsHeaders, errorResponse, jsonResponse, newRequestId } from "../_shared/http.ts";
+import { corsHeaders, errorResponse, jsonResponse, newRequestId, parseTraceparent } from "../_shared/http.ts";
+import { persistLog } from "../_shared/persistLog.ts";
 
 Deno.serve(async (req) => {
   const requestId = newRequestId();
+  const trace = parseTraceparent(req.headers.get("traceparent"));
 
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") {
@@ -47,7 +49,21 @@ Deno.serve(async (req) => {
 
     return jsonResponse({ deleted: true, requestId });
   } catch (e) {
-    console.error(JSON.stringify({ level: "ERROR", requestId, userId: uid, message: String(e) }));
-    return errorResponse("DELETE_FAILED", "Could not fully delete the account. Contact support.", 500, requestId);
+    // Account deletion is security/data-critical: persist the failure with correlation IDs
+    // (OBSERVABILITY-CONTRACT §5) so support can trace a partially-deleted account.
+    await persistLog({
+      level: "ERROR",
+      category: "SECURITY",
+      eventType: "account_delete_failed",
+      message: String(e),
+      requestId,
+      correlationId: requestId,
+      traceId: trace?.traceId,
+      userId: uid,
+      details: {},
+    });
+    return errorResponse("DELETE_FAILED", "Could not fully delete the account. Contact support.", 500, requestId, {
+      traceId: trace?.traceId,
+    });
   }
 });

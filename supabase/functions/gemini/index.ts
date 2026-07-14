@@ -10,7 +10,8 @@
 // Created: 2026-07-08
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
-import { corsHeaders, errorResponse, jsonResponse, newRequestId } from "../_shared/http.ts";
+import { corsHeaders, errorResponse, jsonResponse, newRequestId, parseTraceparent } from "../_shared/http.ts";
+import { persistLog } from "../_shared/persistLog.ts";
 import {
   analyzeErrors,
   generateScenario,
@@ -26,6 +27,8 @@ interface ChatMessage { role: "user" | "model"; text: string }
 
 Deno.serve(async (req) => {
   const requestId = newRequestId();
+  // W3C trace context from the client (OBSERVABILITY-CONTRACT §8); null when absent.
+  const trace = parseTraceparent(req.headers.get("traceparent"));
 
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") {
@@ -205,17 +208,42 @@ Deno.serve(async (req) => {
         return errorResponse("UNKNOWN_ACTION", `Unknown action: ${action}`, 400, requestId);
     }
   } catch (e) {
-    console.error(JSON.stringify({ level: "ERROR", requestId, userId: user.id, action, message: String(e) }));
     if (e instanceof TtsUnavailableError) {
-      // Structured signal for the client to fall back to browser Web Speech.
+      // Expected degradation, not a system fault: persist as WARN and signal the client to fall
+      // back to browser Web Speech.
+      await persistLog({
+        level: "WARN",
+        category: "AI_DECISION",
+        eventType: "tts_unavailable",
+        message: "Server TTS unavailable; client will fall back to device speech.",
+        requestId,
+        correlationId: requestId,
+        traceId: trace?.traceId,
+        userId: user.id,
+        details: { action, attempted: e.attempted },
+      });
       return errorResponse(
         "TTS_UNAVAILABLE",
         "Server text-to-speech is unavailable. Falling back to device speech.",
         503,
         requestId,
-        { attempted: e.attempted },
+        { attempted: e.attempted, traceId: trace?.traceId },
       );
     }
-    return errorResponse("GEMINI_ERROR", "The AI service failed. Please try again.", 502, requestId);
+    // Every ERROR/CRITICAL edge event persists to public.logs (OBSERVABILITY-CONTRACT §5).
+    await persistLog({
+      level: "ERROR",
+      category: "AI_DECISION",
+      eventType: "gemini_error",
+      message: String(e),
+      requestId,
+      correlationId: requestId,
+      traceId: trace?.traceId,
+      userId: user.id,
+      details: { action },
+    });
+    return errorResponse("GEMINI_ERROR", "The AI service failed. Please try again.", 502, requestId, {
+      traceId: trace?.traceId,
+    });
   }
 });

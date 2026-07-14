@@ -7,11 +7,16 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
-import { AudioAdapter, AudioPlayOptions, PlatformError } from '../types';
+import { AudioAdapter, AudioPlayOptions, PlatformError, SpeechSynthesisOptions } from '../types';
 
-// Typed view of globalThis with the legacy WebKit AudioContext alias. Guarded
-// property access keeps this module safe in environments without Web Audio.
-const g = globalThis as typeof globalThis & { webkitAudioContext?: typeof AudioContext };
+// Typed view of globalThis with the legacy WebKit AudioContext alias and the speech-synthesis
+// globals. Guarded property access keeps this module safe in environments without Web Audio or
+// speech synthesis (e.g. jsdom in unit tests).
+const g = globalThis as typeof globalThis & {
+  webkitAudioContext?: typeof AudioContext;
+  speechSynthesis?: SpeechSynthesis;
+  SpeechSynthesisUtterance?: typeof SpeechSynthesisUtterance;
+};
 
 export const createWebAudioAdapter = (): AudioAdapter => {
   // Shared AudioContext for all PCM playback — created lazily on first use so
@@ -150,6 +155,28 @@ export const createWebAudioAdapter = (): AudioAdapter => {
       }
     },
 
+    async speak(text: string, options?: SpeechSynthesisOptions): Promise<void> {
+      const synth = g.speechSynthesis;
+      const Utterance = g.SpeechSynthesisUtterance;
+      if (!synth || typeof Utterance !== 'function') {
+        throw new PlatformError('audio', 'unavailable', 'Speech synthesis is not supported in this browser.');
+      }
+      // Take over the audio channel: stop any server-audio playback and clear any queued/ongoing
+      // synthesis so this utterance is the only thing speaking.
+      stopPcmSource();
+      stopElement();
+      synth.cancel();
+
+      const utterance = new Utterance(text);
+      utterance.lang = options?.lang ?? 'pt-PT';
+      utterance.rate = options?.rate ?? 1.0;
+      utterance.onend = () => options?.onEnded?.();
+      // onerror fires after speak() has already resolved (async), so it cannot reject here; the
+      // onEnded contract still fires so callers' spinners clear.
+      utterance.onerror = () => options?.onEnded?.();
+      synth.speak(utterance);
+    },
+
     pause() {
       audioElement?.pause();
       // Buffer sources cannot pause; suspend the context instead.
@@ -179,6 +206,8 @@ export const createWebAudioAdapter = (): AudioAdapter => {
     stop() {
       stopPcmSource();
       stopElement();
+      // Cancel any in-progress speech-synthesis fallback too.
+      g.speechSynthesis?.cancel();
       // Leave a suspended context ready for the next playback.
       if (audioContext && audioContext.state === 'suspended') {
         void audioContext.resume();

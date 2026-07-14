@@ -9,30 +9,48 @@ steps:
     troubleshoot_invocations: 0
     notes: "Migration 00010 applied to live DB; verified all 7 observability columns present on public.logs (level, category, event_type, session_id, request_id, correlation_id, trace_id) + correlation/request indexes. user_id already nullable (pre-auth rows). Only one DB env (prod) — no separate cloud-dev to reconcile; two-pass N/A."
   - id: obs-log-sink
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "Created supabase/functions/log-sink/index.ts — service-role insert, anonymous-capable (user_id null via UUID guard against the auth.users FK), batch cap (100), body cap (256KB), per-event details cap, best-effort per-IP throttle. Uses _shared/http errorResponse envelope + per-request requestId. NEEDS DEPLOY: supabase functions deploy log-sink."
   - id: obs-client-sink
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "logger.ts flushPersistQueue now POSTs batched events to the log-sink edge fn (functions.invoke) and dropped the currentUserId RLS gate — pre-auth/signed-out events (user_id null) now persist. Ring buffer + dev echo + batching preserved."
   - id: obs-global-handlers
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "src/main.tsx installs window 'error' + 'unhandledrejection' listeners BEFORE mount, routed to logger.critical (SYSTEM_HEALTH) with filename/lineno/colno + reason."
   - id: obs-edge-persist
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "New _shared/persistLog.ts (best-effort service-role insert, never throws). Wired into gemini/index.ts (WARN tts_unavailable + ERROR gemini_error) and delete-account/index.ts (SECURITY account_delete_failed). Replaced the bare console.error choke points. NEEDS DEPLOY: supabase functions deploy gemini delete-account."
   - id: obs-trace
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "geminiService generates a W3C traceparent per edge flow (shared across retries), sends it as a header on functions.invoke, and threads trace_id into the client error log. _shared/http.ts parseTraceparent parses it; both edge fns include trace_id in persisted rows + errorResponse details."
   - id: obs-client-sites
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "Routed 6 unlogged client sites through logger (subagent): useTutorSession speech onError, ResponseSpeed speech onError, ListeningView playback x2 (ERROR), sync-queue 5 silent .catch(() => undefined) swallows -> logger.warn (grep now zero), paths/index storage read -> logger.warn. Behavior preserved (still best-effort)."
   - id: obs-tts-fallback
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "Added AudioAdapter.speak() (Web Speech synthesis) to types + web adapter (native delegates); stop() cancels synthesis. geminiService throws typed EdgeFunctionError carrying code; playSpeech catches TTS_UNAVAILABLE and degrades to platform.audio.speak() with a WARN log instead of an error toast."
   - id: obs-ci-gate
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
+    notes: "scripts/check-observability.mjs enforces §9 (bare console in error paths, showToast error w/o paired logger, hardcoded fallback URLs); WARN mode default, --strict to fail. Wired into preflight.sh as a non-fatal WARN stage invoked directly (node), NOT via npm script — package.json edit is DENIED by permission settings, so the test:observability npm script is DEFERRED pending owner approval. Current scan: 0 hardcoded fallbacks, 2 edge console (tts/router.ts, advisory), 21 toast-no-log (mostly validation-gate false positives)."
   - id: obs-verify
-    status: pending
+    status: succeeded
+    finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
-checkpoint: "obs-schema DONE (live migration verified). 9 code steps remain (log-sink edge fn, client->sink, global handlers, edge persist, trace, client sites, tts fallback, ci gate, verify)."
+    notes: "Whole-project gate GREEN: tsc --noEmit clean; eslint 0 errors (1 pre-existing unrelated warning in useFocusTrap.ts); 154/154 unit+component tests pass; vite build succeeds. Deno not installed locally — edge fns type-checked by manual review, deploy on Supabase Deno runtime. logs schema live-verified in obs-schema (single prod env; two-pass N/A)."
+checkpoint: "PLAN COMPLETE — all 10 steps succeeded. FOLLOW-UPS: (1) deploy edge fns: supabase functions deploy log-sink gemini delete-account; (2) owner-approve package.json edit for the test:observability npm script; (3) unrelated: PF-13 profiles schema drift ALTER TABLE still open."

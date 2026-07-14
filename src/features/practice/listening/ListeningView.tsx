@@ -135,6 +135,10 @@ const ListeningView = ({ situationId, onExit }: PracticeModeProps) => {
           if (playSeqRef.current === token) setPlayingItemId(null);
         });
       } catch (error) {
+        logger.error('listening_playback_failed', 'listening audio playback failed', {
+          category: 'AI_DECISION',
+          error,
+        });
         if (playSeqRef.current === token) {
           setPlayingItemId(null);
           setAudioError(errorMessage(error) ?? 'Playback failed. Please try again.');
@@ -165,6 +169,10 @@ const ListeningView = ({ situationId, onExit }: PracticeModeProps) => {
       try {
         await playListeningText(item.text, item.voiceType, rate, () => void step(index + 1));
       } catch (error) {
+        logger.error('listening_playback_failed', 'listening audio playback failed', {
+          category: 'AI_DECISION',
+          error,
+        });
         if (playSeqRef.current === token) {
           setIsPlayingAll(false);
           setPlayingItemId(null);

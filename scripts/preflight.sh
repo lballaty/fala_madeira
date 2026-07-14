@@ -132,8 +132,21 @@ run_hard "eslint (npm run lint:eslint)"      npm run lint:eslint
 run_hard "typecheck (npm run lint / tsc)"    npm run lint
 run_hard "unit+component tests (npm run test:run)" npm run test:run
 run_hard "build (npm run build)"             npm run build
+run_hard "e2e coverage contract (npm run test:e2e:coverage)" npm run test:e2e:coverage
 run_audit
 run_hard "standards (scripts/check-standards.sh)" bash "${SCRIPT_DIR}/check-standards.sh"
+
+# Observability §9 forbidden-pattern check — WARN mode during rollout (advisory, never blocks).
+# Invoked directly (not via an npm script) so it needs no package.json change; flip to
+# `node scripts/check-observability.mjs --strict` here to make it a hard gate later.
+banner "STAGE: observability (§9 forbidden patterns, WARN mode)"
+if node "${SCRIPT_DIR}/check-observability.mjs"; then
+  printf '%s[STAGE WARN]%s observability check advisory (see artifacts/observability-report.json)\n' "$Y" "$N"
+  STAGES+=("observability (§9 forbidden patterns)|WARN")
+else
+  printf '%s[STAGE WARN]%s observability check reported issues (advisory during rollout)\n' "$Y" "$N"
+  STAGES+=("observability (§9 forbidden patterns)|WARN")
+fi
 
 if [ "${WITH_SECURITY}" -eq 1 ]; then
   run_hard "security probes (scripts/verify-security.mjs)" npm run verify:security

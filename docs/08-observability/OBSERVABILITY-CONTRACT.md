@@ -21,7 +21,7 @@ Every log event and every user-facing error carries the same ID set so a user's 
 | `request_id` | one invocation | per `logger.record()` / per edge request (`_shared/http.ts`) | ✅ implemented |
 | `correlation_id` | one request-level flow | client defaults to `request_id`; overridden with the edge `requestId` to join client↔edge | ✅ implemented |
 | `user_id` | authenticated caller | `logger.setUser()` at auth transitions | ✅ implemented |
-| `trace_id` / `span_id` | end-to-end request | W3C `traceparent` header, client→edge→log | ❌ **to add** |
+| `trace_id` / `span_id` | end-to-end request | W3C `traceparent` header, client→edge→log | ✅ implemented (plan `obs-trace`) |
 | `org_id` / tenant | n/a | single-tenant consumer app | ⛔ out of scope (record the decision here) |
 
 ## 3. The two mandatory surfaces
@@ -40,11 +40,11 @@ Every log event and every user-facing error carries the same ID set so a user's 
 - Supabase data errors → `handleSupabaseError(error, operation, path)` → `logger.error` + `userMessage` toast. ✅
 - Edge-function errors → single choke point in `geminiService.invokeEdgeFunction` → `logger.error('edge_fn_failed', …, correlationId: serverRequestId)` + throw `userMessage(code, message, ref)`. ✅
 - Uncaught render errors → `ErrorBoundary.componentDidCatch` → `logger.critical`. ✅
-- **Uncaught runtime errors & promise rejections → `window.onerror` / `unhandledrejection` → `logger.critical`. ❌ to add (installed in `main.tsx` before mount).**
+- Uncaught runtime errors & promise rejections → `window.addEventListener('error'|'unhandledrejection')` → `logger.critical`. ✅ implemented (plan `obs-global-handlers`; installed in `main.tsx` before mount).
 
 **Edge functions:**
 - All handlers return the `errorResponse(...)` envelope. ✅
-- **Every `ERROR`/`CRITICAL` also persists to `public.logs` via the service-role client. ❌ to add (currently console-only).**
+- Every `ERROR`/`CRITICAL`/degradation-`WARN` also persists to `public.logs` via the service-role client (`_shared/persistLog.ts`). ✅ implemented (plan `obs-edge-persist`; `gemini` + `delete-account`).
 
 ## 6. Persistence model
 
@@ -75,14 +75,18 @@ Client generates a `traceparent` per request-level flow, sends it as a header on
 
 **Strong / done:** client 3-tier logger, correlation IDs, `setUser` linkage, `handleSupabaseError`, edge `errorResponse` envelope + `requestId`, `ErrorBoundary`, sync-queue logging, dual-surface via `userMessage`.
 
-**Gaps (closed by the plan):**
-1. No global `window.onerror` / `unhandledrejection` handlers. (WP-GLOBAL)
-2. Edge functions never persist to `public.logs` (console-only). (WP-EDGE-PERSIST)
-3. Pre-auth/anonymous events can't flush (RLS). (WP-SCHEMA + WP-SINK + WP-CLIENT-SINK)
-4. No W3C trace context. (WP-TRACE)
-5. Unlogged client sites: speech `onError` (`useTutorSession.ts:197`, `ResponseSpeed.tsx:93`), listening playback (`ListeningView.tsx:137/167`), swallowed sync-queue flushes (`sync-queue.ts:235/396/410/419`), storage read (`paths/index.ts:123`). (WP-CLIENT-SITES)
-6. TTS `503 TTS_UNAVAILABLE` should degrade to Web Speech, not surface an error — verify/fix. (WP-TTS-FALLBACK)
-7. `logs` schema stuffs everything into `details` text — poor queryability. (WP-SCHEMA)
+**Gaps — CLOSED by `plans/plan-2026-07-14-observability.yaml` (all 10 steps succeeded 2026-07-14):**
+1. ✅ Global `window` `error` / `unhandledrejection` handlers → `logger.critical` before mount. (`obs-global-handlers`)
+2. ✅ Edge functions persist ERROR/CRITICAL/degradation-WARN to `public.logs` via `_shared/persistLog.ts`. (`obs-edge-persist`)
+3. ✅ Pre-auth/anonymous events flush through the service-role `log-sink` edge function (user_id null). (`obs-schema` + `obs-log-sink` + `obs-client-sink`)
+4. ✅ W3C trace context: client generates `traceparent`, edge parses + threads `trace_id`. (`obs-trace`)
+5. ✅ The 6 unlogged client sites now route through `logger` (speech onError x2, listening playback x2, 5 sync-queue swallows, storage read). (`obs-client-sites`)
+6. ✅ TTS `503 TTS_UNAVAILABLE` degrades to browser Web Speech (`AudioAdapter.speak()`), WARN-logged, no error toast. (`obs-tts-fallback`)
+7. ✅ `logs` schema first-classed the observability fields (level/category/event_type/session_id/request_id/correlation_id/trace_id + indexes). (`obs-schema`, migration 00010, live-applied)
+
+**Enforcement:** `scripts/check-observability.mjs` (`obs-ci-gate`) statically checks the §9 forbidden patterns; wired into `scripts/preflight.sh` in WARN mode during rollout (flip to `--strict` to make it a hard gate).
+
+**Deploy dependency:** the edge changes (`log-sink`, `gemini`, `delete-account`) require `supabase functions deploy` to take effect in prod; the client changes ship with the normal web build.
 
 ## 11. Implementation
 

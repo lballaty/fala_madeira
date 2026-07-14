@@ -16,6 +16,17 @@ export function newRequestId(): string {
   return crypto.randomUUID();
 }
 
+// Parse a W3C `traceparent` header (version-format 00): `00-<32hex traceId>-<16hex spanId>-<2hex flags>`.
+// Returns null on absence or malformed input so callers can thread trace_id when present and
+// simply omit it otherwise. See OBSERVABILITY-CONTRACT §8.
+export function parseTraceparent(
+  header: string | null,
+): { traceId: string; spanId: string } | null {
+  if (!header) return null;
+  const m = /^00-([0-9a-f]{32})-([0-9a-f]{16})-[0-9a-f]{2}$/i.exec(header.trim());
+  return m ? { traceId: m[1], spanId: m[2] } : null;
+}
+
 export function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,

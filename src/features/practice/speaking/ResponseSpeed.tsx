@@ -12,7 +12,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronRight, Timer } from 'lucide-react';
 import { platform, PlatformError, SpeechResult } from '../../../platform';
-import { errorMessage } from '../../../lib/logger';
+import { errorMessage, logger } from '../../../lib/logger';
 import { SpeakingItem } from './speakingItems';
 import { speakingConfig } from './speakingConfig';
 import { AttemptPersistStatus, recordPronunciationAttempt } from './attempts';
@@ -92,6 +92,10 @@ export const ResponseSpeed = ({ items, sttAvailable }: ResponseSpeedProps) => {
     });
     platform.speech.onError((err: PlatformError) => {
       if (cancelledRef.current) return;
+      logger.warn('speech_recognition_error', 'response-speed speech recognition reported an error', {
+        category: 'AI_DECISION',
+        details: { code: err.code, detail: err.detail },
+      });
       clearSpeechCallbacks();
       setPhase('ready');
       setMessage(
