@@ -10,7 +10,7 @@
 ---
 
 ## Status legend
-`OPEN` active · `IN PROGRESS` being worked · `DEFERRED` parked-but-tracked (never "dropped") · `DONE` complete/verified · `NEEDS DECISION` blocked on a product/owner call
+`OPEN` active · `IN PROGRESS` being worked · `DEFERRED` parked-but-tracked (never "dropped") · `DONE` complete/verified · `NEEDS DECISION` blocked on a product/owner call · `NEEDS REQUIREMENTS` captured from feedback but **not buildable** until a written spec is drafted AND owner-approved (AGENTS §3 requirements gate — no coding before then)
 
 ---
 
@@ -78,6 +78,14 @@
 - **Owed:** decision → fix → regression test (onboarding say-it-back: transcript echoed on success; graceful "couldn't hear" on `no-speech`/`unavailable`, mocking `platform.speech`). Owner: Agent S (`fix/*`) + product decision.
 - **Status:** OPEN (root cause confirmed by code-read; a live-mic repro would confirm the Brave/STT-availability angle).
 
+### TB-7 — App restarts onboarding (and re-asks Terms) on every login instead of continuing (reporter: owner, staging 2026-07-14) — `OPEN (root cause confirmed; foundational — see REQUIREMENTS DF11)`
+- **Report (owner, verifying staging `2026.07.14.2`):** "why does it start all over every time you log in even if you have already been signed up… where you were last time should persist… it asks again for terms of service which you already answered." Broadened by owner to a general app requirement: returning users must continue, not restart; config/choices/progress/results must persist and be recalled; expect interruptions mid-flow.
+- **Root cause (confirmed by code-read):** the onboarding gate in `src/App.tsx:244` renders `OnboardingFlow` whenever `onboarding.isLoaded && !onboarding.isComplete`. `isComplete` comes from `useOnboarding` (`src/features/onboarding/useOnboarding.ts`), which reads the completion flag + placement level **only** from client `platform.storage` (`storageKeyFor(userId)` → `onboarding:record:<userId>`, `useOnboarding.ts:57,113`). **This flag is never written to the DB** (the hook's own header, L4-9, documents that `profiles` has no onboarding-complete/placement column). So on any context where that client record is absent — **new device/browser, cleared site data, private/incognito, or IndexedDB+localStorage unavailable → in-memory fallback lost on reload** — `isComplete=false` and the FULL first-run flow re-runs. Consent is re-asked because the flow is gated by this client-only flag and never consults `profiles.has_accepted_terms` (already `true` in the DB) to skip the consent step. `signOut`/`onLogoutCleanup` (`src/App.tsx:207`) does NOT wipe the record, so same-device logout→login *should* persist — **needs empirical confirmation** whether staging hits the IndexedDB→memory fallback (which would explain "every login").
+- **Broader interruption gap (same requirement, from the flow map):** Daily Session (`useDailySession`), every Practice engine, Quiz (`PracticeQuiz`), Tutor free-chat + AI-Practice (`useTutorSession`), and Learning modal drafts hold progress in **component memory only** → lost on tab-switch/reload. Last-active tab is not persisted (always boots to Home, `App.tsx:79`).
+- **Fix direction (see DF11 + docs/USER-WORKFLOWS-AND-STORIES.md):** persist onboarding-complete + placement to a `profiles` column and gate on the DB signal (client mirror as fallback); short-circuit already-answered steps from existing DB state (consent, active track); restore last route on login; persist resumable state for interruptible flows.
+- **Owner:** Agent S / E (`fix/*` for the gate; broader persistence is an E feature). **Severity:** HIGH — re-consent-every-login is also a consent-integrity smell. **Release note:** present in staged `2026.07.14.2`; owner to decide whether it gates the prod promotion.
+- **Status:** OPEN (root cause confirmed; foundational requirement logged as DF11).
+
 ### SW-1 — Admin "all tickets" triage console — `DONE (on develop, unverified in full suite)`
 - Built on `develop`, commit `b439439`: admin sees ALL tickets (all statuses), status filter + text search, submitter/date, Reopen for closed. `resolveTicket` widened to accept `open`. tsc + lint clean. e2e `tests/e2e/admin/10-admin-all-tickets.spec.ts` added.
 - **Owed before it reaches testers:** full regression (SW-5) → merge `develop`→`main` → deploy (SW-6).
@@ -100,6 +108,30 @@
 
 ### SW-7 — Support design doc — `DEFERRED (owed)`
 - `docs/SUPPORT-TICKETS-DESIGN.md` + `REQUIREMENTS-TRACKER.md` entry capturing SW-1..SW-4, per methodology. Deferred while shipping the critical console first.
+
+### SW-8 — Lesson-correction review queue: low-value rows, approve/reject is a no-op, no format guidance, no bulk actions — `OPEN (owner-reported 2026-07-14)`
+- **Report (owner):** correction review items give very little info; unclear what checking approved vs not-approved does; the submission modal needs format guidance ("has … xyz but should have zdef …"); need **bulk approve + bulk reject**. **Approve semantics (owner): approving a correction should end up as a support ticket to be followed up.**
+- **Findings (code-read 2026-07-14):**
+  - **Data model** (`src/types.ts:134`): `lesson_corrections` = a single free-text `correction_text` + `lesson_id` / `user_id` / `status` / `created_at`. No structured "current vs should-be" → that's why rows carry so little.
+  - **Approve/reject** (`useAdminQueues.ts` `resolveCorrection`): ONLY flips `status` → `approved`/`rejected` via an RLS `UPDATE`. **No** content change, **no** ticket, **no** notification. That is the entire effect — hence "unclear what happens": functionally almost nothing.
+  - **Submission** (`src/features/learning/CorrectionModal.tsx`): placeholder is just "Describe the correction needed…" — no format guidance.
+- **Scope to build:**
+  1. **Approve → create a support ticket (owner-defined follow-up):** on approve, insert a `tickets` row (category=content/correction; body = the correction text + lesson reference + submitter; status=open) so it lands in the all-tickets triage console (SW-1) and gets followed up. Set correction `status=approved`. Reject → `status=rejected` (+ optional reason; consider notifying the submitter). **Confirmation + explanatory copy** so the admin knows what each button does.
+  2. **Richer queue rows:** resolve `lesson_id`→lesson **title**, show submitter, timestamp, the full `correction_text`, and a deep-link to the lesson.
+  3. **Submission format guidance:** structured prompt — "What does it say now?" + "What should it say?" with an example ("e.g. shows 'bom dia' but should be 'Bom dia!'"). Cheap: two client-side fields + example placeholder. Richer: add `original_text` / `suggested_text` columns (DB migration).
+  4. **Bulk approve / bulk reject:** multi-select checkboxes + bulk actions on the corrections queue (extend the pattern to the other queues).
+- **Constraints:** the approve→ticket insert and any schema change are **DB writes** → coordinate with the DB-owning agent (Lane B does not write DB). The admin-UI rows/bulk-actions and the submission-modal guidance are client-side.
+- **Owner/lane:** Agent S/E (admin + submission UI) + DB agent (ticket-on-approve + optional structured columns) + content (what "followed up" resolves to). Priority: owner to sequence. **Status:** OPEN.
+
+### CS-1 — Content Studio is unexplained: jargon, no purpose, raw-JSON editing — `NEEDS REQUIREMENTS (then owner approval before any coding)`
+- **Report (owner 2026-07-14):** not clear what Content Studio does / what it's for / what to expect; **"nobody knows what a content pack is"** (same for *situation*, *track*, *enrichable field* — unexplained jargon); "and so on". Raw-JSON editing is opaque.
+- **Findings (code-read):** Content Studio (`src/features/admin/ContentStudio.tsx` + `useContentStudio.ts`) is the admin authoring loop over the modular content model (**packs → situations → tracks**): load packs incl. drafts → edit scalar fields + nested enrichable fields (`phrase_patterns`/`vocabulary`/`cultural_notes`) as **JSON textareas** → validate (schema) → **publish** (upserts the versioned pack + re-projects `situations`/`tracks`, migration 00006, stamps version/checksum/status). Ref `docs/CONTENT-ARCHITECTURE.md §8`. There is **no in-tool explanation** and domain terms are undefined in the UI.
+- **Direction (NOT a build order yet):** in-tool purpose/explainer + a plain-language **glossary** of domain terms; friendlier **structured editing** instead of raw JSON; empty-state guidance. → Needs a **written spec + owner approval before coding** (AGENTS §3 requirements gate).
+- **Owner/lane:** Agent D/E (spec) → owner approval → Agent E build. **Status:** NEEDS REQUIREMENTS.
+
+### CS-2 — Wire Content Studio into the correction follow-up (SW-8) — `NEEDS REQUIREMENTS (then owner approval before any coding)`
+- **Gap:** the correction approve→ticket flow (SW-8) has no link to *where the fix is actually applied* (Content Studio). Define how an approved correction/ticket routes an editor to the relevant situation in Content Studio and back to closing the ticket. Depends on SW-8. → Needs a written spec + approval before coding.
+- **Owner/lane:** Agent E + content, after SW-8. **Status:** NEEDS REQUIREMENTS.
 
 ---
 
