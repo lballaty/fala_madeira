@@ -13,6 +13,11 @@
 //       source of truth), updated through the existing profile row + setProfile.
 //   Every failure routes through the logger with correlation IDs; a storage/DB write failure is
 //   logged, never silent, and the local completion still stands so the learner is not re-gated.
+//   TB-7 / DF11: the gate ALSO reads the DB consent flags as a returning-user signal — consent is
+//   the terminal onboarding step, so `has_accepted_terms && has_accepted_ai_usage` proves prior
+//   completion even with no local record (new device / cleared storage). This is what stops the app
+//   re-running the whole first-run flow (and re-asking Terms) on every login; a heal effect then
+//   writes the local mirror so it never flashes again on that device. Full spec: docs/USER-WORKFLOWS-AND-STORIES.md.
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-10
 
@@ -131,6 +136,42 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
     };
   }, [userId]);
 
+  // Returning-user gate (TB-7 / DF11): the consent step is the TERMINAL onboarding step, so a
+  // profile with BOTH consent flags set is proof onboarding was already completed — even on a
+  // device with no local record (new device / cleared storage / private mode). Deriving the gate
+  // from this DB signal is what stops the app re-running the whole first-run flow (and re-asking
+  // Terms) on every login. On cold boot the profile is loaded before this gate renders
+  // (useAuth.checkUser awaits fetchProfile); on post-login it lands a beat later (deferred), so a
+  // new-device sign-in may briefly show the flow until the profile arrives — the heal effect below
+  // then writes the local mirror so it never recurs on that device.
+  const consentComplete =
+    profile?.has_accepted_terms === true && profile?.has_accepted_ai_usage === true;
+
+  // Heal the local mirror: once the DB tells us a user without a local record has already completed
+  // onboarding, write the durable record so subsequent loads on THIS device are instant (no flash)
+  // and downstream reads see completion. Functional update + guard so it settles after one heal and
+  // never loops. Deferred set stays effect-safe (react-hooks/set-state-in-effect), matching the
+  // load effect above.
+  useEffect(() => {
+    if (!userId || record.complete || !consentComplete) return;
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+      setRecord((prev) => (prev.complete ? prev : { ...prev, complete: true }));
+    });
+    void platform.storage
+      .set(storageKeyFor(userId), { ...record, complete: true })
+      .catch((error) => {
+        logger.warn('ONBOARDING_RECORD_HEAL_FAILED', 'could not heal the onboarding record from the profile consent signal', {
+          category: 'DATA_PROCESSING',
+          error,
+        });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [userId, record, consentComplete]);
+
   /** Persist consent to the profiles row (DB source of truth) and mirror onto the profile state. */
   const persistConsent = useCallback(
     async (result: OnboardingResult): Promise<void> => {
@@ -203,8 +244,12 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
   );
 
   return {
-    /** Gate signal for App.tsx: only show the flow to a signed-in, not-yet-onboarded user. */
-    isComplete: record.complete,
+    /**
+     * Gate signal for App.tsx: only show the flow to a signed-in, not-yet-onboarded user.
+     * True if the local record says complete OR the DB profile shows consent was already given
+     * (TB-7): a returning user — on any device — skips the whole first-run flow, never re-consents.
+     */
+    isComplete: record.complete || consentComplete,
     /** True once the durable record has been read (prevents a flash of onboarding). */
     isLoaded,
     /** The placement chosen previously (defaults to L0 for a fresh user). */
