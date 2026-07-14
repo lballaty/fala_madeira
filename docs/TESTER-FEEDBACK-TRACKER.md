@@ -64,6 +64,18 @@
 - **Owner:** Agent S (`fix/*`). **Status:** OPEN (needs owner default decision).
 - **Status:** DONE (fixed on develop; @mobile regression test + deploy owed).
 
+### TB-6 — Onboarding "Say it back" (first-words screen) doesn't listen to what I say (reporter: owner) — `OPEN (root cause confirmed by code-read; needs product decision)`
+- **Report (owner 2026-07-14):** "the 'say it back' button on the your first words screen doesn't really listen to what I say."
+- **Root cause (confirmed, code-read — `src/features/onboarding/OnboardingFlow.tsx` `FirstWinStep`/`handleSayItBack` L514):** the say-it-back is **by design a no-op on content** — it calls `platform.speech.recognize({ language:'pt-PT', timeoutMs:6000 })` and **discards the transcript**. On success it does `setSayState('done')`; on **any** error (`no-speech`, `timeout`, `unavailable`, mic-permission) the catch **also** does `setSayState('done')` (comment: "the point is the try, not the score"). Either way it shows *"Nice! You just said your first Madeiran words."* It never compares your speech to "Bom dia!", never echoes what it heard, and never signals failure → so whatever you say (or if nothing is captured) you get the same success message. That is exactly why it "doesn't really listen."
+- **Likely compounding (needs live-mic confirm):** on **Brave** (an earlier tester's browser) the Web Speech API is **disabled by default** (Brave blocks Google's speech endpoint), and iOS Safari/WebView `webkitSpeechRecognition` is intermittent (noted in `speech.web.ts` header). In those cases recognition never starts/returns — but the unconditional "Nice!" masks it. `pt-PT` also depends on the browser's server-side model + network + mic permission.
+- **Decision needed (product):**
+  - (A) **Make it actually listen:** compare the final transcript to the phrase (fuzzy/loose match), echo *"I heard: …"* + a match indicator. Real feedback; heavier (STT reliability varies by browser).
+  - (B) **Keep it low-stakes but honest:** if a transcript comes back, show *"I heard: …"*; if recognition is unavailable/empty, say so gently (e.g. *"Couldn't hear that — tap I said it"*) instead of a blanket "Nice!". Copy stops over-promising.
+  - (C) Leave behavior, but only show "Say it back" when `platform.speech.isAvailable()` AND a transcript is likely (hide on Brave/unsupported) so it never appears to listen when it can't.
+  - Recommend **B** (honest, low effort) as a first step; **A** if we want genuine pronunciation feedback (ties the broader speaking-practice STT).
+- **Owed:** decision → fix → regression test (onboarding say-it-back: transcript echoed on success; graceful "couldn't hear" on `no-speech`/`unavailable`, mocking `platform.speech`). Owner: Agent S (`fix/*`) + product decision.
+- **Status:** OPEN (root cause confirmed by code-read; a live-mic repro would confirm the Brave/STT-availability angle).
+
 ### SW-1 — Admin "all tickets" triage console — `DONE (on develop, unverified in full suite)`
 - Built on `develop`, commit `b439439`: admin sees ALL tickets (all statuses), status filter + text search, submitter/date, Reopen for closed. `resolveTicket` widened to accept `open`. tsc + lint clean. e2e `tests/e2e/admin/10-admin-all-tickets.spec.ts` added.
 - **Owed before it reaches testers:** full regression (SW-5) → merge `develop`→`main` → deploy (SW-6).
