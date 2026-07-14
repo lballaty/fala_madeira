@@ -109,6 +109,20 @@
 ### SW-7 — Support design doc — `DEFERRED (owed)`
 - `docs/SUPPORT-TICKETS-DESIGN.md` + `REQUIREMENTS-TRACKER.md` entry capturing SW-1..SW-4, per methodology. Deferred while shipping the critical console first.
 
+### SW-8 — Lesson-correction review queue: low-value rows, approve/reject is a no-op, no format guidance, no bulk actions — `OPEN (owner-reported 2026-07-14)`
+- **Report (owner):** correction review items give very little info; unclear what checking approved vs not-approved does; the submission modal needs format guidance ("has … xyz but should have zdef …"); need **bulk approve + bulk reject**. **Approve semantics (owner): approving a correction should end up as a support ticket to be followed up.**
+- **Findings (code-read 2026-07-14):**
+  - **Data model** (`src/types.ts:134`): `lesson_corrections` = a single free-text `correction_text` + `lesson_id` / `user_id` / `status` / `created_at`. No structured "current vs should-be" → that's why rows carry so little.
+  - **Approve/reject** (`useAdminQueues.ts` `resolveCorrection`): ONLY flips `status` → `approved`/`rejected` via an RLS `UPDATE`. **No** content change, **no** ticket, **no** notification. That is the entire effect — hence "unclear what happens": functionally almost nothing.
+  - **Submission** (`src/features/learning/CorrectionModal.tsx`): placeholder is just "Describe the correction needed…" — no format guidance.
+- **Scope to build:**
+  1. **Approve → create a support ticket (owner-defined follow-up):** on approve, insert a `tickets` row (category=content/correction; body = the correction text + lesson reference + submitter; status=open) so it lands in the all-tickets triage console (SW-1) and gets followed up. Set correction `status=approved`. Reject → `status=rejected` (+ optional reason; consider notifying the submitter). **Confirmation + explanatory copy** so the admin knows what each button does.
+  2. **Richer queue rows:** resolve `lesson_id`→lesson **title**, show submitter, timestamp, the full `correction_text`, and a deep-link to the lesson.
+  3. **Submission format guidance:** structured prompt — "What does it say now?" + "What should it say?" with an example ("e.g. shows 'bom dia' but should be 'Bom dia!'"). Cheap: two client-side fields + example placeholder. Richer: add `original_text` / `suggested_text` columns (DB migration).
+  4. **Bulk approve / bulk reject:** multi-select checkboxes + bulk actions on the corrections queue (extend the pattern to the other queues).
+- **Constraints:** the approve→ticket insert and any schema change are **DB writes** → coordinate with the DB-owning agent (Lane B does not write DB). The admin-UI rows/bulk-actions and the submission-modal guidance are client-side.
+- **Owner/lane:** Agent S/E (admin + submission UI) + DB agent (ticket-on-approve + optional structured columns) + content (what "followed up" resolves to). Priority: owner to sequence. **Status:** OPEN.
+
 ---
 
 ## Infra / process deferrals
