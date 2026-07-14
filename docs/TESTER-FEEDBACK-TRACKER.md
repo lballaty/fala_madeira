@@ -197,19 +197,21 @@
 - **Recommendation:** one profile per worktree/role (`-feat-dev`/`-support-dev`/`-content-dev`/`-release-dev`) scoped to its folder + per-role perms; provision secrets least-privilege — `.env.local` to worktrees needing Supabase, **`.env.deploy` ONLY to the release worktree**, `npm install` per worktree; a `scripts/setup-worktree.sh` could automate. Coordinate w/ Lane B + ai-dev-dotfiles.
 - **Status:** OPEN.
 
-### INFRA-6 — Instantiate the worktree fleet (NEXT SESSION — ready-to-run) — `OPEN`
-- **Reality verified 2026-07-14:** the fleet is **designed + documented (MULTI-AGENT-WORKFLOW) + enforced (branch guard, staged-deploy gate) but NOT stood up**. `git worktree list` shows ONLY the base `fala_madeira` on `develop`; there are **no `-feat`/`-support`/`-content`/`-release` folders and no `feat/*`/`fix/*`/`content/*` branches**. All work to date runs in the single `develop` checkout. (The earlier "add content worktree" commit added config/docs, not an actual worktree.)
-- **Do (from the base repo, one-time):**
+### INFRA-6 — Instantiate the worktree fleet — `DONE (2026-07-14)`
+- **Reality verified 2026-07-14 (before):** the fleet was **designed + documented (MULTI-AGENT-WORKFLOW) + enforced (branch guard, staged-deploy gate) but NOT stood up** — `git worktree list` showed ONLY the base `fala_madeira` on `develop`.
+- **DONE 2026-07-14 — `git worktree list` now shows all 5:**
   ```
-  git worktree add ../fala_madeira-feat    -b feat/scratch      # Agent E
-  git worktree add ../fala_madeira-support -b fix/scratch       # Agent S
-  git worktree add ../fala_madeira-content -b content/scratch   # Agent C
-  git worktree add ../fala_madeira-release main                 # Release (on main)
+  fala_madeira          develop          # base — Agent D (docs) / T (tests)
+  fala_madeira-feat     feat/scratch     # Agent E (rename per task)
+  fala_madeira-support  fix/scratch      # Agent S
+  fala_madeira-content  content/scratch  # Agent C
+  fala_madeira-release  main             # Release (deploy ONLY)
   ```
-  (topic branches renamed per task; base `fala_madeira/` stays on `develop` for D/T.)
-- **Provision each (INFRA-5):** `cp ../fala_madeira/.env.local .` into feat/support/content; **`.env.deploy` into `-release` ONLY**; `npm install` in each. Verify with `npm run check:branch` per folder + `git worktree list` (expect 5).
-- **Then (INFRA-5):** add `scripts/setup-worktree.sh <role>` to automate the above + per-role launcher profiles so an agent boots knowing its role.
-- **Owner:** next session (owner-driven). **Status:** OPEN — instantiation pending.
+  (topic branches renamed per task; base stays on `develop`.)
+- **Provisioned:** `node_modules` installed in all four new worktrees (`npm install`, exit 0). `.env.local` copied into **feat/support/content AND release** — *refinement of the original line:* release needs `.env.local` because `deploy-verpex.sh` runs `npm run build` (bakes `VITE_SUPABASE_*`); `.env.local` also carries `SUPABASE_DB_PASSWORD`/`SUPABASE_ACCESS_TOKEN`/`GEMINI_API_KEY`. `.env.deploy` (Verpex SSH secret) copied into **`-release` ONLY** (least-privilege — only the release worktree deploys). All `.env*` remain gitignored in every worktree (no commit risk). *Secret copies were run by the operator via `!` — the harness hard-denies agent `cp` of `.env*`.*
+- **Verified:** `npm run check:branch` = OK in base/feat/support/content. Release is on `main` and the guard *rule* is satisfied, but **`main` is stale** (at `1d16e6f`, behind `develop`) so it lacks the `check:branch` script + staged-deploy tooling. Those land on the **first `develop`→`main` release cut**, which happens *in* the release worktree before it deploys (MULTI-AGENT-WORKFLOW §7) — so the sequence is self-consistent; not a defect.
+- **Still open (rolled into INFRA-5):** `scripts/setup-worktree.sh <role>` automation + per-role launcher profiles so an agent boots knowing its role.
+- **Owner:** Lane A. **Status:** DONE (instantiation + provisioning + verification complete).
 
 ### EN-6 — Quiz checking: more flexible / AI-driven grading — `OPEN (backlog; owner wants to discuss)`
 - **Report (owner 2026-07-14):** quiz checking is too strict. For a **listening** exercise, a missing exclamation mark (or other punctuation/case) should NOT be marked wrong — we're testing listening comprehension, not punctuation. Don't fixate on the wrong things. Wants more flexible matching, potentially **AI-driven**.
