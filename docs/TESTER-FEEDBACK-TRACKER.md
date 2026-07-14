@@ -319,6 +319,16 @@
 - **Direction:** (1) admin UI to set a **per-user** `voice_limit` override (e.g. from the admin console / a user's profile), falling back to the global default when null — the enforcement precedence is already correct; (2) surface the **effective** limit (per-user if set, else global) read-only to each user; (3) clarify labels ("your daily voice limit" vs the admin "global default"); (4) keep `subscription_tier==='unlimited'` and `role==='admin'` bypasses as-is. Ties TB-8 (client hardening) + AUTH/monetization (tiers). 
 - **Owner:** Agent E (`feat/*`) + admin console. Test: enforcement precedence (per-user beats global; null falls back), effective-limit display. **Status:** OPEN.
 
+### EN-12 — Admin log viewer: CLI / in-app admin page / separate admin subapp over `public.logs` — `OPEN (owner-requested 2026-07-14)`
+- **Report (owner):** view logs via a CLI interface (not the normal UI) — in admin mode click a link to open a CLI-type, menu-driven (or agent-assisted) interface to examine logs; alternatively a web page in admin mode, or a separate admin subapp accessible via the admin login. "The logs are in the database so it should be possible."
+- **Feasibility (thought through):** a browser/PWA **cannot spawn the OS terminal** (sandbox) — so "click a link → opens macOS Terminal" isn't directly possible from the web app. Realistic forms, best-first:
+  - **(a) In-app admin log viewer (web, admin-mode)** — a page/subapp querying `public.logs` with filters (level, category, `correlation_id`/`session_id`/`request_id`/`trace_id`, time range, user), full-text search on message/details, auto-refresh/tail, and **drill-down by `correlation_id`** (pivot to every event in one request). No extra infra; ships on-device. Most feasible.
+  - **(b) Repo CLI (`scripts/logs-cli.mjs`)** — a Node CLI (menu-driven or query-args) that connects to the DB and prints/queries logs, for use in a real terminal by an admin or an agent. Matches the "CLI in a terminal" intent; pair with an **agent skill** for natural-language log triage ("show me errors for correlation X").
+  - **(c) Separate admin subapp** — a distinct admin route/build gated by admin login hosting (a)/(b).
+- **Recommendation:** ship (a) first (in-app admin viewer), add (b) the repo CLI + optional agent skill for terminal/AI-assisted analysis; document the CLI command in place of the (infeasible) "open Terminal from a link." 
+- **Access/RLS:** `public.logs` must be **admin-readable** (verify/add an RLS policy) and the viewer must use an admin-authenticated path; the CLI uses a service-role/DB path (same DB-access design point as **SW-4** agent-ticket skill). Ties the observability contract (correlation IDs are the pivot key).
+- **Owner:** Agent E (in-app viewer) + tooling (CLI/skill) + ops (RLS). **Status:** OPEN.
+
 ## Security backlog (owner-requested 2026-07-14)
 
 ### SEC-1 — Rate limiting on edge functions (DoS / abuse protection) — `OPEN (HIGH — security, owner-requested 2026-07-14)`
