@@ -24,7 +24,7 @@
    to them so `bg-surface` / `text-muted` / `border-line` utilities are theme-correct without a
    `dark:` variant. `muted` is AA-fixed (~7:1 light / ~5.4:1 dark on the card). */
 :root {
-  --fm-brand: #0063CE;          /* iOS blue, darkened from #007AFF for WCAG AA — ~5.7:1 on white (was 4.01:1, failed). Used as both bg (white text) and text (white bg), incl. the pale bg-brand/10 badge. */
+  --fm-brand: #0057B7;          /* iOS blue, darkened from #007AFF→#0063CE→#0057B7 for WCAG AA. #0063CE passed on white but the 9px-bold text on the pale bg-brand/10 badge (PracticeHubView "online" pill) rendered ~4.33:1 (axe run 21) — this darker value clears 4.5:1 on that tint with margin while only improving white-on-brand contrast. Used as both bg (white text) and text (white bg), incl. the pale bg-brand/10 badge. */
   --fm-surface: #F2F2F7;        /* app background (behind cards) */
   --fm-card: #FFFFFF;           /* card / sheet / input background */
   --fm-elevated: #FFFFFF;       /* modals, tab bar, popovers */
