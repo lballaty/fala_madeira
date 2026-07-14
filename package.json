@@ -28,7 +28,8 @@
     "test:schema-drift": "node scripts/check-schema-drift.mjs",
     "test:observability": "node scripts/check-observability.mjs",
     "test:cors": "node scripts/check-cors-headers.mjs",
-    "test:e2e:clean": "playwright test --project=clean"
+    "test:e2e:clean": "playwright test --project=clean",
+    "check:branch": "node scripts/check-branch-discipline.mjs"
   },
   "dependencies": {
     "@capacitor/cli": "^8.4.1",

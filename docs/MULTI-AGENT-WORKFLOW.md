@@ -113,9 +113,9 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
 
 ---
 
-## 8. Two setup choices (pick one)
+## 8. Setup choice — **Model B adopted (2026-07-14)**
 
 - **Model A — shared develop:** feature agents all work in the base `fala_madeira/` on `develop`, isolated only by `queuectl` file reservations. *Simplest (one `node_modules`), but agents share one working tree — more reservation traffic, and a test build can read files another agent is mid-edit.*
 - **Model B — a worktree per agent (pictured above):** each agent gets its own folder + feature branch. *True isolation, no working-tree contention; costs one `node_modules` per folder + merges into develop.* **Recommended for genuinely independent parallel agents.**
 
-The branch guard's expected-branch rules are set to match whichever model you pick.
+**Adopted: Model B.** The branch guard (`npm run check:branch` + the `.githooks/pre-commit` hook) enforces its rules: base = `develop`, feature worktrees = a topic branch (never `develop`/`main`), `*-release` = `main`.

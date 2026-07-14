@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# File: .githooks/pre-commit
+# Description: FalaMadeira branch-discipline guard (AGENTS.md §7). Blocks a commit if the current
+#   worktree is on the wrong branch (base checkout must be develop; *-release worktree must be main).
+#   Prevents agents in the shared multi-agent checkout from accidentally committing to the wrong
+#   branch. Enable once per machine with: git config core.hooksPath .githooks
+# Author: Lane B (with assistant)
+# Created: 2026-07-14
+set -euo pipefail
+ROOT="$(git rev-parse --show-toplevel)"
+if [ -f "${ROOT}/scripts/check-branch-discipline.mjs" ]; then
+  node "${ROOT}/scripts/check-branch-discipline.mjs" --current || exit 1
+fi
