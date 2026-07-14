@@ -115,6 +115,16 @@
 - **Implementation:** `platform.storage` needs `enumerate`/`clear` helpers over `KV_STORE` + `BLOB_STORE` + the `localStorage` prefix + SW `caches`. Fits the "calm, honest, real consent" principle (data transparency).
 - **Owner:** Agent E (`feat/*`). Priority: future release. **Status:** OPEN (backlog).
 
+### EN-3 — In-app PWA "update available" prompt — `OPEN (backlog; offered, not yet confirmed)`
+- PWA is `registerType: 'autoUpdate'` with no in-app prompt → new versions land silently on next relaunch; testers must fully close/reopen to get a fix. Add a `needRefresh` toast ("New version available — reload") via `useRegisterSW` so updates are visible/one-tap. Owner: Agent E (`feat/*`). Priority: future release.
+
+### EN-4 — In-app "About": release version + release notes — `OPEN (backlog, future release)`
+- **Report (owner):** users need to see the release version + release notes in the app (an "About" link or similar).
+- **Sources exist:** `VERSION` (CalVer `2026.07.14.1`) + `CHANGELOG.md` are the version + release-notes sources. Version is **not yet exposed to the client at runtime** (vite has a `define:` block but no version define); no About/version UI exists.
+- **Feature:** inject the version at build (vite `define` `__APP_VERSION__` from `VERSION`), add an "About" entry in Settings showing version/build + release notes (rendered from `CHANGELOG.md` entries).
+- **Deployment-workflow tie-in (owner ask):** the release cut MUST bump `VERSION` + add a `CHANGELOG.md` entry (release notes) — already in the MULTI-AGENT-WORKFLOW §7 release checklist; About surfaces exactly those. Make the CHANGELOG entry a **hard release gate** so About always shows current notes. (Cross-refs the versioning rollout, TODO #122.)
+- **Owner:** Agent E (`feat/*`) + release-workflow. Priority: future release. **Status:** OPEN (backlog).
+
 ---
 
 ## Cross-references (owned elsewhere, not buried)
