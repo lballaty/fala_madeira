@@ -45,9 +45,9 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      // @mobile-tagged specs run only under the 'mobile' project below (no existing spec is
-      // @mobile, so this leaves the desktop lane's current behavior unchanged).
-      grepInvert: /@mobile/,
+      // @mobile and @clean specs run only under their own projects below, so the functional
+      // desktop lane stays green independent of those design/runtime-track lanes.
+      grepInvert: /@mobile|@clean/,
     },
     {
       // CG-17: exercise the mobile bottom-bar layout (the product's primary form factor).
@@ -56,6 +56,14 @@ export default defineConfig({
       name: 'mobile',
       use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 } },
       grep: /@mobile/,
+    },
+    {
+      // Error-guard lane: @clean specs assert the app emits no console/page/network errors
+      // during core journeys. Kept in its own lane so a real runtime error (e.g. the gemini
+      // 503) fails here without conflating with functional pass/fail — same pattern as @mobile.
+      name: 'clean',
+      use: { ...devices['Desktop Chrome'] },
+      grep: /@clean/,
     },
   ],
 
