@@ -136,7 +136,7 @@ export const PracticeHubView = ({
           </div>
           <div>
             <span className="font-bold block text-sm">Browse situations</span>
-            <span className="text-blue-100 text-xs">Any track · any level · nothing locked</span>
+            <span className="text-blue-50 text-xs">Any track · any level · nothing locked</span>
           </div>
         </div>
         <ChevronRight className="w-5 h-5 opacity-70" />

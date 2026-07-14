@@ -24,7 +24,7 @@
    to them so `bg-surface` / `text-muted` / `border-line` utilities are theme-correct without a
    `dark:` variant. `muted` is AA-fixed (~7:1 light / ~5.4:1 dark on the card). */
 :root {
-  --fm-brand: #007AFF;          /* iOS blue — primary action / accent */
+  --fm-brand: #0063CE;          /* iOS blue, darkened from #007AFF for WCAG AA — ~5.7:1 on white (was 4.01:1, failed). Used as both bg (white text) and text (white bg), incl. the pale bg-brand/10 badge. */
   --fm-surface: #F2F2F7;        /* app background (behind cards) */
   --fm-card: #FFFFFF;           /* card / sheet / input background */
   --fm-elevated: #FFFFFF;       /* modals, tab bar, popovers */
@@ -44,6 +44,7 @@
    Values mirror docs/ui-mockup/intended-ui-v3.html [data-theme="dark"]; muted raised to
    #AEAEB2 (~5.4:1 on the #1C1C1E card) per the mockup's AA fix. */
 [data-theme="dark"] {
+  --fm-brand: #0A84FF;          /* iOS dark-mode systemBlue — lighter than the light-mode brand so it stays AA-legible on the near-black card */
   --fm-surface: #000000;
   --fm-card: #1C1C1E;
   --fm-elevated: #1C1C1E;

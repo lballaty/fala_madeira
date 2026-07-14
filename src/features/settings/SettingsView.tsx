@@ -155,7 +155,7 @@ export const SettingsView = ({
             </div>
             <div className="bg-ios-bg px-4 py-2 rounded-2xl">
               <p className="text-[10px] uppercase tracking-wider font-bold text-ios-gray">Streak</p>
-              <p className="text-lg font-bold text-orange-500">{profile?.streak || 0}d</p>
+              <p className="text-lg font-bold text-orange-800">{profile?.streak || 0}d</p>
             </div>
           </div>
         </div>
@@ -247,6 +247,7 @@ export const SettingsView = ({
           step="0.1"
           value={playbackSpeed}
           onChange={(e) => setPlaybackSpeed(parseFloat(e.target.value))}
+          aria-label="Audio speed"
           className="w-full accent-ios-blue"
         />
         <div className="flex justify-between text-[10px] font-bold text-ios-gray uppercase tracking-widest">
@@ -268,6 +269,7 @@ export const SettingsView = ({
               e.target.value ? (e.target.value as (typeof TTS_PROVIDERS)[number]) : null,
             )
           }
+          aria-label="Voice Provider"
           className="w-full p-3 rounded-2xl bg-ios-bg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ios-blue"
         >
           <option value="">Default (automatic)</option>
@@ -342,6 +344,7 @@ export const SettingsView = ({
             value={cacheLimitBytes}
             onChange={(e) => setCacheLimitBytes(parseInt(e.target.value, 10))}
             disabled={!saveAudioOnDevice}
+            aria-label="Storage limit"
             className="p-2 rounded-xl bg-ios-bg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ios-blue disabled:opacity-40"
           >
             {config.audio.cacheLimitOptionsBytes.map((bytes) => (
@@ -363,7 +366,7 @@ export const SettingsView = ({
         <div className="pt-2 border-t border-ios-bg space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Download for offline</span>
-            <span className="text-[10px] uppercase tracking-wider font-bold text-orange-500">
+            <span className="text-[10px] uppercase tracking-wider font-bold text-orange-700">
               Online only
             </span>
           </div>
@@ -371,6 +374,7 @@ export const SettingsView = ({
             value={downloadTrackId}
             onChange={(e) => setDownloadTrackId(e.target.value)}
             disabled={!saveAudioOnDevice || isDownloading}
+            aria-label="Download for offline"
             className="w-full p-3 rounded-2xl bg-ios-bg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ios-blue disabled:opacity-40"
           >
             <option value="">All levels (every track)</option>

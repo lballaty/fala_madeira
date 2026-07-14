@@ -208,7 +208,7 @@ export const HomeView = ({
           {competencePhrases.join(' · ')}
         </p>
       ) : (
-        <p className="font-medium mt-1 text-sm text-green-800/80 dark:text-green-300/80 leading-snug">
+        <p className="font-medium mt-1 text-sm text-green-800 dark:text-green-300/80 leading-snug">
           Finish your first situation and your real-world wins show up here.
         </p>
       )}
@@ -252,7 +252,7 @@ export const HomeView = ({
             <>
               <div>
                 <h3 className="text-2xl font-bold">{pathNextAction.label}</h3>
-                <p className="text-blue-100 text-sm opacity-90">
+                <p className="text-blue-50 text-sm">
                   {pathNextAction.detail ?? 'Same content, shared progress — the app leads.'}
                 </p>
               </div>
@@ -268,7 +268,7 @@ export const HomeView = ({
             <>
               <div>
                 <h3 className="text-2xl font-bold">Ready for Day {profile?.unlocked_level || 1}?</h3>
-                <p className="text-blue-100 text-sm opacity-90">Continue your journey with your AI tutor.</p>
+                <p className="text-blue-50 text-sm">Continue your journey with your AI tutor.</p>
               </div>
               <button
                 onClick={() => {
