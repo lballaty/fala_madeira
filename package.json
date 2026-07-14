@@ -27,6 +27,7 @@
     "test:e2e:drift": "node scripts/check-inventory-drift.mjs",
     "test:schema-drift": "node scripts/check-schema-drift.mjs",
     "test:observability": "node scripts/check-observability.mjs",
+    "test:cors": "node scripts/check-cors-headers.mjs",
     "test:e2e:clean": "playwright test --project=clean"
   },
   "dependencies": {
