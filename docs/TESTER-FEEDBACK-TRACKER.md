@@ -47,11 +47,12 @@
 - **Owed to reach testers:** merge `develop`→`main` + web deploy.
 - **Status:** DONE (fixed + regression-tested on develop; awaiting promotion).
 
-### TB-4 — Mobile: stuck on first screen after password login, can't scroll (reporter: mobile tester) — `OPEN (investigating)`
-- **Report:** "Normal process with PW works but then I am stuck on first screen and can't scroll further." Password login succeeds, then the first post-login screen doesn't scroll on mobile.
-- **Hypothesis (to confirm):** mobile viewport/overflow — the first post-login screen (likely the onboarding "Bem-vindo" welcome or Home) has a non-scrolling container (e.g. `height:100vh`/`overflow-hidden`/missing `overflow-y-auto`) that traps content below the fold on small viewports. May compound with TB-3 (onboarding gate). Check the `@mobile` project + onboarding/home layout.
-- **Owed:** reproduce on `@mobile`, root-cause, fix + regression test. Branch: `fix/*` (support worktree).
-- **Status:** OPEN, investigating next.
+### TB-4 — Mobile: stuck on first screen after password login, can't scroll (reporter: mobile tester) — `DONE (fixed on develop; regression test owed)`
+- **Report:** "Normal process with PW works but then I am stuck on first screen and can't scroll further." **Env: Android 14, reproduced on both Brave and Chrome** (both Chromium).
+- **Root cause (confirmed, code-read 2026-07-14):** the app shell (`src/App.tsx` lines 222/247/272) used `h-screen` = `100vh`. On Chromium/Android, `100vh` **includes the area behind the URL bar**, so the shell is taller than the visible viewport. The onboarding `StepShell` footer holding the primary button (Continue / "Let's go") is a `shrink-0` region **outside** the `flex-1 overflow-y-auto` scroll area, pinned to the bottom of the 100vh shell → it sits **below the visible fold**, unreachable, while only the middle content scrolls. Brave + Chrome share this because both are Chromium.
+- **Fix (commit `9c73629`, `develop`):** app shell `h-screen` → `h-dvh` (dynamic viewport height) on all three shell containers — matches the *visible* viewport so the footer stays on-screen. Shell-level, so it covers whichever first screen (onboarding welcome or Home). Verified: `.h-dvh`/`100dvh` generated in the built CSS; build green.
+- **Owed:** an `@mobile` regression test asserting the onboarding primary button is within the viewport / clickable on a small viewport; then promote (deploy) to reach the tester.
+- **Status:** DONE (fixed on develop; @mobile regression test + deploy owed).
 
 ### SW-1 — Admin "all tickets" triage console — `DONE (on develop, unverified in full suite)`
 - Built on `develop`, commit `b439439`: admin sees ALL tickets (all statuses), status filter + text search, submitter/date, Reopen for closed. `resolveTicket` widened to accept `open`. tsc + lint clean. e2e `tests/e2e/admin/10-admin-all-tickets.spec.ts` added.
