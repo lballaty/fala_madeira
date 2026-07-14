@@ -1,0 +1,24 @@
+// File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/user/15-settings-signout.spec.ts
+// Description: Deterministic sign-out coverage from Settings. Verifies the shared authenticated
+//   user can sign out via the real control and lands on the unauthenticated auth landing without
+//   stale signed-in shell content remaining visible.
+// Author: Codex
+// Created: 2026-07-13
+
+import { test, expect, landOnHome } from '../support/fixtures';
+
+test.describe('settings sign-out flow', () => {
+  test('Sign Out returns the user to the auth landing', async ({ page }) => {
+    await landOnHome(page);
+    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Sign Out' }).click();
+
+    await expect(page.getByRole('button', { name: 'Log In' })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByRole('button', { name: 'Sign Up' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'FalaMadeira' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Olá,/i })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Profile' })).toHaveCount(0);
+  });
+});

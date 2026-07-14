@@ -6,14 +6,13 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-10
 
-import { test, expect, landOnHome, captureEdgeRequestId } from './support/fixtures';
+import { test, expect, landOnHome, captureEdgeRequestId, createThrowawayUserContext } from './support/fixtures';
 
 test.describe('account deletion (S7)', () => {
   test('throwaway test user can delete the account and can no longer sign in', async ({
-    page,
     browser,
-    testUser,
   }) => {
+    const { context: userContext, page, session } = await createThrowawayUserContext(browser);
     await landOnHome(page);
     await page.getByRole('button', { name: 'Profile' }).first().click();
 
@@ -40,16 +39,18 @@ test.describe('account deletion (S7)', () => {
     await expect(page.getByRole('button', { name: 'Sign Up' })).toBeVisible();
     await expect(page.getByRole('heading', { name: /Olá,/i })).toHaveCount(0);
 
-    const context = await browser.newContext({ storageState: { cookies: [], origins: [] } });
-    const loginPage = await context.newPage();
+    const loginContext = await browser.newContext({ storageState: { cookies: [], origins: [] } });
+    const loginPage = await loginContext.newPage();
     await loginPage.goto('/');
     await loginPage.getByRole('button', { name: 'Log In' }).click();
-    await loginPage.getByPlaceholder('Email').fill(testUser.email);
-    await loginPage.getByPlaceholder('Password', { exact: true }).fill(testUser.password);
+    await loginPage.getByPlaceholder('Email').fill(session.email);
+    await loginPage.getByPlaceholder('Password', { exact: true }).fill(session.password);
     await loginPage.getByRole('button', { name: 'Log In' }).click();
 
     await expect(loginPage.getByPlaceholder('Email')).toBeVisible({ timeout: 15_000 });
     await expect(loginPage.getByRole('heading', { name: /Olá,/i })).toHaveCount(0);
-    await context.close();
+    await loginContext.close();
+    await page.close();
+    await userContext.close();
   });
 });

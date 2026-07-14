@@ -32,17 +32,20 @@ test.describe('admin global settings', () => {
     await adminPage.getByRole('button', { name: 'Profile' }).first().click();
     await adminPage.getByRole('switch', { name: 'Admin Mode' }).click();
 
-    const panel = adminPage.locator('div').filter({ hasText: 'Global Voice Limit' }).first();
-    await expect(panel.getByText('Global Voice Limit')).toBeVisible();
+    const panel = adminPage
+      .getByText('Global Voice Limit', { exact: true })
+      .locator('xpath=ancestor::div[2]');
+    const value = panel.locator('span.w-6');
+    await expect(panel.getByText('Global Voice Limit', { exact: true })).toBeVisible();
 
     await expect
-      .poll(async () => extractFirstInteger(await panel.textContent()))
+      .poll(async () => extractFirstInteger(await value.textContent()))
       .toBe(initialValue);
 
     await panel.getByRole('button', { name: '+' }).click();
 
     await expect
-      .poll(async () => extractFirstInteger(await panel.textContent()), {
+      .poll(async () => extractFirstInteger(await value.textContent()), {
         timeout: 12_000,
         message: 'UI did not reflect the incremented Global Voice Limit value',
       })
@@ -65,7 +68,7 @@ test.describe('admin global settings', () => {
     await panel.getByRole('button', { name: '-' }).click();
 
     await expect
-      .poll(async () => extractFirstInteger(await panel.textContent()), {
+      .poll(async () => extractFirstInteger(await value.textContent()), {
         timeout: 12_000,
         message: 'UI did not restore the original Global Voice Limit value',
       })

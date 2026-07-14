@@ -8,7 +8,7 @@
 import { test, expect, landOnHome } from '../support/fixtures';
 
 test.describe('settings read/write coverage', () => {
-  test('Switch AI Tutor persists to profiles and can be restored', async ({ page, userEvidence, testUser }) => {
+  test('Switch AI Tutor persists to profiles and can be restored', async ({ page, userEvidence, testUser, coverage }) => {
     const { data: initialProfile } = await userEvidence
       .from('profiles')
       .select('selected_tutor_id')
@@ -32,6 +32,8 @@ test.describe('settings read/write coverage', () => {
     await expect(page.getByRole('heading', { name: 'Choose Your Tutor' })).toBeVisible();
     await page.getByRole('button', { name: target.label }).click();
     await expect(page.getByRole('heading', { name: 'Choose Your Tutor' })).toHaveCount(0);
+    coverage.touch('settings.tutor.open', 'outcome-asserted');
+    coverage.touch('settings.tutor.select', 'outcome-asserted');
 
     await expect
       .poll(
@@ -69,7 +71,7 @@ test.describe('settings read/write coverage', () => {
       .toBe(restore.id);
   });
 
-  test('My Submissions reads tickets, requests, corrections, and videos for the current user', async ({ page, userEvidence, testUser }) => {
+  test('My Submissions reads tickets, requests, corrections, and videos for the current user', async ({ page, userEvidence, testUser, coverage }) => {
     const nonce = Date.now().toString();
     const lessonId = `e2e-lesson-${nonce}`;
     const requestTheme = `E2E submissions theme ${nonce}`;
@@ -115,6 +117,7 @@ test.describe('settings read/write coverage', () => {
     await page.getByRole('button', { name: 'Profile' }).first().click();
     await page.getByRole('button', { name: 'My Submissions' }).click();
     await expect(page.getByRole('heading', { name: 'My Submissions' })).toBeVisible();
+    coverage.touch('settings.submissions.open', 'outcome-asserted');
 
     await expect(page.getByText(requestTheme)).toBeVisible();
     await expect(page.getByText(correctionText)).toBeVisible();

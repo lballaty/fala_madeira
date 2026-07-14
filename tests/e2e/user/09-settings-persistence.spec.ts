@@ -12,18 +12,16 @@ test.describe('settings persistence', () => {
     await landOnHome(page);
     await page.getByRole('button', { name: 'Profile' }).first().click();
 
-    const slider = page.locator('input[type="range"]').first();
+    const audioSpeedCard = page.locator('div').filter({ has: page.getByText('Audio Speed', { exact: true }) }).first();
+    const slider = audioSpeedCard.locator('input[type="range"]');
     await expect(slider).toBeVisible();
 
-    const target = '1.3';
-    await slider.evaluate((element, value) => {
-      const input = element as HTMLInputElement;
-      input.value = String(value);
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    }, target);
+    await slider.focus();
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
 
-    await expect(page.getByText('1.3x')).toBeVisible();
+    await expect(audioSpeedCard.getByText('1.3x')).toBeVisible();
 
     await expect
       .poll(

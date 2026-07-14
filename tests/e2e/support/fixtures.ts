@@ -12,13 +12,16 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import {
   SUPABASE_URL,
   SUPABASE_ANON_KEY,
+  SUPABASE_AUTH_STORAGE_KEY,
   REPO_ROOT_DIR,
   ADMIN_SESSION_INFO_PATH,
   ADMIN_STORAGE_STATE_PATH,
   TEST_USER_SESSION_INFO_PATH,
   TEST_USER_STORAGE_STATE_PATH,
+  makeTestUserCreds,
   type SessionInfo,
 } from './env';
+import { createCoverageRecorder, type CoverageRecorder } from './controlCoverage';
 
 const ONBOARDING_KEY_PREFIX = 'onboarding:record:';
 const ADMIN_SESSION_INFO_FALLBACK_PATH = resolve(REPO_ROOT_DIR, 'tests/e2e/.auth/admin-session.json');
@@ -101,6 +104,8 @@ type Fixtures = {
   testUser: TestUserSessionInfo;
   /** The admin session info (userId etc.). */
   admin: AdminSessionInfo;
+  /** Interactive-control touch recorder for coverage verification. */
+  coverage: CoverageRecorder;
 };
 
 async function seedRoleContext(context: BrowserContext, userId: string): Promise<void> {
@@ -108,13 +113,45 @@ async function seedRoleContext(context: BrowserContext, userId: string): Promise
 }
 
 function makeEvidenceClient(info: SessionInfo): SupabaseClient {
-  const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  return createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
-  return client;
+}
+
+function makeStorageState(origin: string, info: SessionInfo) {
+  return {
+    cookies: [],
+    origins: [
+      {
+        origin,
+        localStorage: [
+          {
+            name: SUPABASE_AUTH_STORAGE_KEY,
+            value: JSON.stringify({
+              access_token: info.access_token,
+              token_type: 'bearer',
+              expires_in: 3600,
+              expires_at: Math.floor(Date.now() / 1000) + 3600,
+              refresh_token: info.refresh_token,
+              user: {
+                id: info.userId,
+                email: info.email,
+              },
+            }),
+          },
+        ],
+      },
+    ],
+  };
 }
 
 export const test = base.extend<Fixtures>({
+  coverage: async ({}, use, testInfo) => {
+    const recorder = createCoverageRecorder(testInfo);
+    await use(recorder);
+    recorder.flush();
+  },
+
   admin: async ({}, use) => {
     await use(readAdminSessionInfo());
   },
@@ -187,6 +224,48 @@ export async function landOnHome(page: Page): Promise<void> {
   await page.goto('/');
   // Either the greeting or a Home-only element. The greeting is profile-driven.
   await expect(page.getByRole('heading', { name: /Olá,/i })).toBeVisible({ timeout: 30_000 });
+}
+
+/**
+ * Provision a one-off disposable user and browser context. Use this for destructive flows
+ * (for example account deletion) so the shared suite user remains intact for later specs.
+ */
+export async function createThrowawayUserContext(
+  browser: { newContext: (options?: Parameters<BrowserContext['storageState']>[0] extends never ? never : any) => Promise<BrowserContext> },
+  origin = 'http://127.0.0.1:4173',
+): Promise<{ context: BrowserContext; page: Page; session: SessionInfo }> {
+  const creds = makeTestUserCreds();
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const { data, error } = await supabase.auth.signUp({
+    email: creds.email,
+    password: creds.password,
+    options: {
+      emailRedirectTo: origin,
+      data: {
+        has_accepted_terms: true,
+        has_accepted_ai_usage: true,
+      },
+    },
+  });
+  if (error || !data.session || !data.user) {
+    throw new Error(
+      `createThrowawayUserContext signUp failed for ${creds.email}: ${error?.message ?? 'no session returned'}.`,
+    );
+  }
+
+  const session: SessionInfo = {
+    userId: data.user.id,
+    email: data.user.email ?? creds.email,
+    password: creds.password,
+    access_token: data.session.access_token,
+    refresh_token: data.session.refresh_token,
+  };
+  const context = await browser.newContext({ storageState: makeStorageState(origin, session) });
+  await seedRoleContext(context, session.userId);
+  const page = await context.newPage();
+  return { context, page, session };
 }
 
 /**

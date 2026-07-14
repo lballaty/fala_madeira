@@ -15,7 +15,6 @@ import { test, expect, landOnHome } from './support/fixtures';
 test.describe('offline behavior (S17 §10)', () => {
   test('online-only marked; offline shows "Online only" while offline-capable modes still work', async ({
     page,
-    context,
   }) => {
     await landOnHome(page);
     await page.getByRole('button', { name: 'Practice' }).first().click();
@@ -37,7 +36,7 @@ test.describe('offline behavior (S17 §10)', () => {
     await expect(page.getByRole('heading', { name: 'Practice' })).toBeVisible();
 
     // Go offline for the rest of the test.
-    await context.setOffline(true);
+    await page.context().setOffline(true);
 
     // (2) Open the online-only Simulator → it swaps to the calm "Online only" panel.
     await page.getByText('Situation Simulator', { exact: true }).click();
@@ -57,6 +56,6 @@ test.describe('offline behavior (S17 §10)', () => {
     await expect(firstChoice).toBeVisible();
 
     // Restore connectivity for suite hygiene.
-    await context.setOffline(false);
+    await page.context().setOffline(false);
   });
 });

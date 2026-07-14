@@ -7,7 +7,7 @@
 import { test, expect, landOnHome } from '../support/fixtures';
 
 test.describe('settings static surfaces', () => {
-  test('User Manual, App Tutorial, and legal documents open and navigate', async ({ page }) => {
+  test('User Manual, App Tutorial, and legal documents open and navigate', async ({ page, coverage }) => {
     await landOnHome(page);
     await page.getByRole('button', { name: 'Profile' }).first().click();
 
@@ -32,16 +32,20 @@ test.describe('settings static surfaces', () => {
     await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Terms of Service' }).click();
-    await expect(page.getByRole('heading', { name: 'Terms of Service' })).toBeVisible();
-    await expect(page.getByText(/Version/i)).toBeVisible();
-    await page.getByRole('button', { name: 'Close' }).click();
+    const termsDialog = page.getByRole('dialog', { name: 'Terms of Service' });
+    await expect(termsDialog).toBeVisible();
+    await expect(termsDialog.getByText(/Version \d/)).toBeVisible();
+    await termsDialog.getByRole('button', { name: 'Close' }).click();
+    coverage.touch('settings.legal.terms', 'outcome-asserted');
 
     await page.getByRole('button', { name: 'Privacy Policy' }).click();
     await expect(page.getByRole('heading', { name: 'Privacy Policy' })).toBeVisible();
     await page.getByRole('button', { name: 'Close' }).click();
+    coverage.touch('settings.legal.privacy', 'outcome-asserted');
 
     await page.getByRole('button', { name: 'AI Disclosure' }).click();
     await expect(page.getByRole('heading', { name: 'AI Disclosure' })).toBeVisible();
     await page.getByRole('button', { name: 'Close' }).click();
+    coverage.touch('settings.legal.ai_disclosure', 'outcome-asserted');
   });
 });
