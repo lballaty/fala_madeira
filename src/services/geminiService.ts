@@ -66,6 +66,13 @@ export interface ChatSession {
   sendMessage(input: { message: string }): Promise<{ text: string }>;
 }
 
+// Edge error codes that are EXPECTED conditions, not system faults: a business-rule limit the
+// user hit (VOICE_LIMIT_REACHED — the free-tier daily voice cap) or a planned degradation the
+// client handles gracefully (TTS_UNAVAILABLE → device speech fallback). These log at WARN so the
+// ERROR tier stays a clean signal of real failures; everything else stays ERROR. See
+// OBSERVABILITY-CONTRACT §4 and the EF-36 triage (free-tier 429 is a product cap, not a bug).
+const EXPECTED_EDGE_CODES = new Set(['VOICE_LIMIT_REACHED', 'TTS_UNAVAILABLE']);
+
 // Generate a W3C `traceparent` for one request-level flow (OBSERVABILITY-CONTRACT §8):
 // `00-<32hex trace-id>-<16hex span-id>-01`. Sent as a header on the edge call so the edge
 // function threads the same trace_id into its logs + error envelope, letting a single flow be
@@ -160,14 +167,21 @@ const invokeEdgeFunction = async <T = unknown>(
         // Body was not JSON — keep the default message and log it below.
       }
     }
-    // Single edge-function error choke point: log with the server requestId as the
-    // correlation ID so client and edge-function records join on the same flow.
-    const event = logger.error('edge_fn_failed', `Edge function ${name} failed`, {
-      category: 'AI_DECISION',
-      error,
-      correlationId: serverRequestId,
-      details: { function: name, action: body?.action, code: serverCode, serverRequestId, traceId },
-    });
+    // Single edge-function error choke point: log with the server requestId as the correlation ID
+    // so client and edge-function records join on the same flow. Expected business/degradation
+    // conditions log at WARN (not ERROR) to keep the error tier a clean failure signal.
+    const isExpected = EXPECTED_EDGE_CODES.has(serverCode);
+    const logAtLevel = isExpected ? logger.warn : logger.error;
+    const event = logAtLevel(
+      'edge_fn_failed',
+      `Edge function ${name} ${isExpected ? 'returned an expected condition' : 'failed'} (${serverCode})`,
+      {
+        category: 'AI_DECISION',
+        error,
+        correlationId: serverRequestId,
+        details: { function: name, action: body?.action, code: serverCode, serverRequestId, traceId, expected: isExpected },
+      },
+    );
     throw new EdgeFunctionError(serverCode, serverMessage, serverRequestId ?? event.request_id);
   }
 

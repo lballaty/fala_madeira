@@ -30,7 +30,19 @@ vi.mock('../../platform', () => ({
 
 import { getSupabase } from '../../lib/supabase';
 import { platform } from '../../platform';
+import { logger } from '../../lib/logger';
 import { EdgeFunctionError, geminiService } from '../geminiService';
+
+const edgeError = (status: number, code: string) => ({
+  message: 'Edge Function returned a non-2xx status code',
+  context: {
+    status,
+    json: async () => ({ error: { code, message: `${code} message`, requestId: `req-${code}` } }),
+  },
+});
+
+const routeLogSink = (name: string, geminiResult: unknown) =>
+  name === 'log-sink' ? Promise.resolve({ data: { inserted: 1 }, error: null }) : Promise.resolve(geminiResult);
 
 const invoke = vi.fn();
 
@@ -67,6 +79,34 @@ describe('W3C traceparent header (obs-trace)', () => {
     const [fnName, options] = invoke.mock.calls[0];
     expect(fnName).toBe('gemini');
     expect(options.headers.traceparent).toMatch(/^00-[0-9a-f]{32}-[0-9a-f]{16}-01$/);
+  });
+});
+
+describe('edge error log-level classification', () => {
+  it('logs an EXPECTED business 4xx (VOICE_LIMIT_REACHED) at WARN, not ERROR', async () => {
+    const warnSpy = vi.spyOn(logger, 'warn');
+    const errorSpy = vi.spyOn(logger, 'error');
+    invoke.mockImplementation((name: string) => routeLogSink(name, { data: null, error: edgeError(429, 'VOICE_LIMIT_REACHED') }));
+
+    await expect(geminiService.translateWord('água')).rejects.toBeInstanceOf(EdgeFunctionError);
+
+    expect(warnSpy.mock.calls.some((c) => c[0] === 'edge_fn_failed')).toBe(true);
+    expect(errorSpy.mock.calls.some((c) => c[0] === 'edge_fn_failed')).toBe(false);
+    warnSpy.mockRestore();
+    errorSpy.mockRestore();
+  });
+
+  it('logs an UNEXPECTED error (BAD_REQUEST) at ERROR', async () => {
+    const warnSpy = vi.spyOn(logger, 'warn');
+    const errorSpy = vi.spyOn(logger, 'error');
+    invoke.mockImplementation((name: string) => routeLogSink(name, { data: null, error: edgeError(400, 'BAD_REQUEST') }));
+
+    await expect(geminiService.translateWord('x')).rejects.toBeInstanceOf(EdgeFunctionError);
+
+    expect(errorSpy.mock.calls.some((c) => c[0] === 'edge_fn_failed')).toBe(true);
+    expect(warnSpy.mock.calls.some((c) => c[0] === 'edge_fn_failed')).toBe(false);
+    warnSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 });
 
