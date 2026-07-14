@@ -131,6 +131,13 @@
 - **Deployment-workflow tie-in (owner ask):** the release cut MUST bump `VERSION` + add a `CHANGELOG.md` entry (release notes) — already in the MULTI-AGENT-WORKFLOW §7 release checklist; About surfaces exactly those. Make the CHANGELOG entry a **hard release gate** so About always shows current notes. (Cross-refs the versioning rollout, TODO #122.)
 - **Owner:** Agent E (`feat/*`) + release-workflow. Priority: future release. **Status:** OPEN (backlog).
 
+### EN-5 — Quiz results: persist + admin visibility + regression — `OPEN (backlog; owner-identified gap)`
+- **Gap (confirmed 2026-07-14):** quiz **scores/results are NOT stored** — only pass/fail survives as `profiles.completed_lessons` (score ≥ 3). No score value, per-question data, attempt history, or timestamp; the score doesn't feed the SRS/mastery engine.
+- **What IS covered:** completion persistence is regression-tested against the DB — `user/25-learning-quiz-progression-write.spec.ts` asserts `profiles.completed_lessons` is written after a passing quiz; `user/21-quiz-full-flow` covers the UI/scoring flow.
+- **No admin visibility:** there is NO admin view of quiz results/scores/completions (admin has only moderation queues + Content Studio).
+- **Feature:** (1) store quiz results in a new table (score, lesson/situation id, timestamp, optional per-question) — small DB migration, **coordinate with DB agent**; (2) add an **admin learner-progress / quiz-results view**; (3) e2e asserting the result row is written AND shown in admin; (4) fix the hardcoded `score >= 3` threshold → relative to `questions.length` (a pass ratio); (5) consider feeding results into `applyGrade`/mastery.
+- **Owner:** Agent E (`feat/*`) + DB agent (migration) + admin UI. Priority: future release. **Status:** OPEN (backlog).
+
 ---
 
 ## Cross-references (owned elsewhere, not buried)
