@@ -54,6 +54,12 @@
   2. **SECONDARY (mobile only):** the app shell used `h-screen` = `100vh`, which on Chromium/Android includes the URL-bar area, making the shell taller than the visible viewport and worsening (1).
 - **Fix (`develop`):** (1) `OnboardingFlow.tsx:137` `flex-1 overflow-y-auto` → `flex-1 min-h-0 overflow-y-auto` (commit `822feb6`) — the real cross-platform fix; (2) app shell `h-screen` → `h-dvh` (commit `9c73629`) — mobile viewport correctness. Both verified: `min-h-0` + `.h-dvh`/`100dvh` generated in the built CSS; build green.
 - **Owed:** an `@mobile` regression test asserting the onboarding primary button is within the viewport / clickable on a small viewport; then promote (deploy) to reach the tester.
+
+### TB-5 — Tutor practice session auto-reads every message aloud (reporter: owner) — `OPEN (root cause confirmed; owner decision on default)`
+- **Report:** "When I go to the tutor practice session it reads all out loud regardless if I want to or not."
+- **Root cause (code-read 2026-07-14):** `isSoundEnabled` defaults to **true** (`useSettings.ts:64` — no saved pref → true). The practice session auto-plays the seeded first message (`useTutorSession.ts:362`) + every AI reply (`:232`, `:393`) via `playMessageInChunks` whenever sound is on. Opt-OUT: a fresh user is read to until they hit Mute (persists in `localStorage.is_sound_enabled`).
+- **Fix options (owner decision):** (A) default `isSoundEnabled` false (opt-in); (B) keep mute but STOP auto-reading the transcript — rely on the existing per-message play buttons ("help on demand"); (C) first-run audio choice. Recommend A or B.
+- **Owner:** Agent S (`fix/*`). **Status:** OPEN (needs owner default decision).
 - **Status:** DONE (fixed on develop; @mobile regression test + deploy owed).
 
 ### SW-1 — Admin "all tickets" triage console — `DONE (on develop, unverified in full suite)`
@@ -131,3 +137,34 @@
 - **Versioning rollout** → `aidevops/plans/plan-2026-07-14-versioning-rollout.yaml` (TODO #122).
 - **PF-13 schema drift, observability** → other agent (DB).
 - **EF-34/35 (Lane A specs), EF-36 (WS2 test-user isolation)** → `docs/E2E-LIVE-RUN-TRACKER.md`.
+- **DF1–DF10** (translation slices, gamification celebrate-layer, place-graphics extension) → `REQUIREMENTS-TRACKER.md` §"Deferred/open follow-ups (2026-07-14)".
+
+---
+
+## Compliance / legal notices
+
+### COMP-1 — Data-security, privacy (GDPR) & EU AI Act notices — `OPEN (owner/legal review; owed pre-beta)`
+- **Owner directive (2026-07-14):** ensure notices exist for **data security, privacy, and EU AI Act conformance** even where the build doesn't yet support everything (forward-honest; no over-claiming).
+- **Foundation:** `src/features/legal/{terms,privacy,ai-use}.ts` + `LegalPage`; onboarding captures `has_accepted_terms` + `has_accepted_ai_usage`. A quick grep found NO explicit coverage of local caching, GDPR data-rights, or EU AI Act transparency — needs a proper read + drafting.
+- **Required (careful drafting + likely legal review):** (1) **local-caching disclosure** (owner decided always-cache + inform) → privacy/storage notice + release notes/About (ties EN-2/EN-4); (2) **data security** (TLS, RLS, server-side secrets, retention, contact); (3) **GDPR** (data collected incl. logs w/ correlation IDs, lawful basis, retention, access/erasure — delete-account exists; processors Supabase + Google/Gemini; international transfer); (4) **EU AI Act transparency** — inform users they interact with an AI tutor + that lessons/corrections/chat are AI-generated (Art. 50); confirm risk class (likely limited-risk, confirm w/ counsel); extend `ai-use.ts`.
+- **Owner:** owner/Agent D + legal. **Status:** OPEN (owed before real beta testers).
+
+## QA / test hardening
+
+### QA-1 — Offline-audio download tests — `OPEN (Agent T)`
+- **(a) Download works:** `src/lib/__tests__/audio-download.test.ts` — mock synthesize + storage; `downloadForOffline(scope)` enumerates the scope's speakable lines, stores a clip each, reports `{synthesized, fromCache}`, respects storage-limit/abort.
+- **(b) Survives an app/SW upgrade:** `src/platform/web/__tests__/storage.web.test.ts` — put blobs in the `audio` store at DB_VERSION, reopen at a HIGHER version through the real guarded `onupgradeneeded`, assert blobs persist. Locks the non-destructive migration. (Survival verified SAFE today: IndexedDB is a separate tier from the SW precache; `onupgradeneeded` is create-if-missing; `cleanupOutdatedCaches` sweeps only precache.)
+- **Owner:** Agent T. **Status:** OPEN.
+
+## Infra additions (Lane A, 2026-07-14)
+
+### INFRA-4 UPDATE — staging target VERIFIED + gating decided
+- **Verified (read-only SSH):** `/home/gomadeir/testfalamadeira.searchingfool.com` EXISTS (created 14:56), empty of app content (only cgi-bin + .well-known), same server/account as prod `/home/gomadeir/falamadeira.searchingfool.com`.
+- **Gating decided (owner): SEPARATE APPROVE STEP** — `deploy --target staging` → `deploy --approve` (records approver+time, tied to the staged build hash) → `deploy --target production` (REFUSES without a fresh matching approval). Enforcement MUST live in `deploy-verpex.sh`, not just docs (a checklist is skippable) — so the pre-release step happens no matter which agent runs it.
+- **Design:** `--target staging|production` selects `VERPEX_STAGING_REMOTE_PATH` vs `VERPEX_REMOTE_PATH`; guards — staging requires `*testfalamadeira*`, prod requires `falamadeira` AND NOT `testfalamadeira`; bare `deploy` errors (no default). Prereqs: set `VERPEX_STAGING_REMOTE_PATH` in `.env.deploy`; add `https://testfalamadeira.searchingfool.com/**` to Supabase Auth redirect URLs.
+- **Owed:** implement `deploy-verpex.sh --target/--approve`; plug staging→approve→prod into AGENTS.md + MULTI-AGENT-WORKFLOW §7 (were locked). **Status:** OPEN.
+
+### INFRA-5 — Per-worktree agent profiles + selective secret provisioning — `OPEN (coordinate w/ Lane B)`
+- Model B worktrees need config to "just work". The `.{claude,codex,agy}-w/profiles/falamadeira-dev.json` profiles are PATH-BOUND (startup_repo + scopes hardcode the base `fala_madeira` path), so a worktree at a different path isn't covered; git worktrees also don't carry gitignored files (`.env.local`, `.env.deploy`, `.claude/settings.local.json`, `node_modules`).
+- **Recommendation:** one profile per worktree/role (`-feat-dev`/`-support-dev`/`-content-dev`/`-release-dev`) scoped to its folder + per-role perms; provision secrets least-privilege — `.env.local` to worktrees needing Supabase, **`.env.deploy` ONLY to the release worktree**, `npm install` per worktree; a `scripts/setup-worktree.sh` could automate. Coordinate w/ Lane B + ai-dev-dotfiles.
+- **Status:** OPEN.
