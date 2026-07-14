@@ -16,7 +16,13 @@
 
 ## Run log
 
-### Deploy — 2026-07-14 — HELD (pending other-agent coordination) ⛔
+### Deploy — 2026-07-14 — SHIPPED ✅ (hold resolved)
+- **`npm run deploy` PASSED the full ship gate** (tsc + lint + vitest + build + e2e-coverage contract) and rsynced `dist/` to Verpex. **Prod verified live:** `manifest.webmanifest` 200, homepage 200, serving `index-Be7gTH4K.js` (matches freshly-built dist). REAL_EXIT=0.
+- **Hold resolved:** operator confirmed the other agent is working ONLY on PF-13 (schema-drift; no PF-13 files were dirty), so the remaining working-tree work was committed (fala_madeira `8f89307`, `5ce59db`, `dd18d1d`, `514ec52`) and the tree was clean at deploy — no other-agent WIP shipped.
+- **Now live (everything since the earlier EF-33/a11y deploy):** PF-11b practice-hub contrast (`111bc86`), populated-Home a11y green-900 (`4f687f2`), observability error-routing (usePractice + notifications adapters, `8f89307`), the other agent's committed observability work, UpgradeModal tombstone + probe removal, and the "Daily session" label.
+- **Operator:** hard-refresh once (service worker) before manual testing.
+
+### Deploy — 2026-07-14 — HELD (pending other-agent coordination) ⛔ [RESOLVED — see entry above]
 - **A production deploy was requested but is HELD.** `scripts/ship.sh` builds `dist/` from the **working tree** (no git-clean guard / no checkout), so a deploy now would bundle the **other agent's uncommitted in-flight work** (modified `src/features/practice/usePractice.ts`, `src/features/session/DailySessionView.tsx`, `src/platform/{native,web}/notifications*.ts`; deleted `src/features/tutor/UpgradeModal.tsx`; deleted `src/platform/web/probe.ts`) into the production bundle. Shipping their unreviewed observability/paywall WIP to prod is out of Lane B scope and unsafe.
 - **Ready-to-ship (committed HEAD `83307a5`), NOT yet live:** PF-11b a11y contrast fix (`111bc86`, `--fm-brand` `#0063CE→#0057B7`, verified). Also note `111bc86` + the run-21 tracker commits are **unpushed** as of this note.
 - **UNBLOCK CONDITION (other agent):** either (a) commit / confirm the uncommitted `src/` WIP above is release-ready, then deploy the combined committed state; or (b) explicitly hand off a clean deploy window so Lane B can ship committed HEAD from a throwaway worktree (excludes WIP). Decision recorded 2026-07-14 by operator: **hold + coordinate.**
