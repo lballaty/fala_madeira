@@ -1,0 +1,14 @@
+# File: .versionbump.yaml
+# Description: Declares embedded version literal locations for ~/.ai-dev-dotfiles/tools/version-bump.py.
+#              VERSION (repo root) is the sole source of truth; version-bump.py patches every
+#              literal below to match it. Conforms to ~/.ai-dev-dotfiles/tools/version-bump.schema.json.
+# Author: Libor Ballaty <libor@arionetworks.com>
+# Created: 2026-07-14
+# Reference: ~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md §1 (Versioning — normative)
+
+literals:
+  - file: package.json
+    pattern: '"version":\s*"(?P<version>[^"]+)"'
+
+tag:
+  create: false  # tagging is optional per the release-engineering spec
