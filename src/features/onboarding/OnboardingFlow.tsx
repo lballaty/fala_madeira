@@ -134,7 +134,7 @@ const StepShell = ({ stepIndex, totalSteps, title, subtitle, children, footer }:
         />
       ))}
     </div>
-    <div className="flex-1 overflow-y-auto px-8 pt-8 pb-4">
+    <div className="flex-1 min-h-0 overflow-y-auto px-8 pt-8 pb-4">
       <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
       {subtitle && <p className="text-ios-gray text-sm mt-2 leading-relaxed">{subtitle}</p>}
       <div className="mt-6">{children}</div>
