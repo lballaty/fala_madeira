@@ -353,6 +353,16 @@
 - **Direction:** a shared `_shared/rateLimit.ts` (token-bucket / fixed-window) keyed by IP + user_id, with per-action configurable limits sourced from `global_settings` (so limits are tunable without redeploy); return `429` + a structured `RATE_LIMITED` error via the canonical `errorResponse`/observability path (correlation IDs). Consider Supabase/Postgres-backed counters or an edge KV. Config lives in `global_settings` (e.g. `rate_limit_*`). Ties the observability contract (structured errors) + AUTH-1 (bot/human verification reduces abuse surface).
 - **Owner:** Agent E / ops (security). Before any wide/public beta. Test: e2e/integration that N rapid calls get `429` with the structured code. **Status:** OPEN (HIGH — security).
 
+### EN-13 — Tutor: tap / select-to-translate for Portuguese text — `NEEDS REQUIREMENTS (then owner approval before any coding)`
+- **Report (owner 2026-07-14):** tutor replies are sometimes mixed PT/English (fine) but sometimes **all Portuguese with no translation**. Want to translate by **tapping/clicking a word or section, or highlighting a selection** in the tutor window.
+- **Existing building block:** the `TranslatableText` primitive (tap-to-reveal translation, commit `1d16e6f`) already exists — the tutor window likely renders raw markdown without it. Direction: route tutor message text through a translate-on-tap mechanism (word/section) + support selection-to-translate, using the existing `translate` edge action. → Needs a written spec (granularity: word vs sentence vs highlighted selection; inline-reveal vs popover; caching; markdown handling) + owner approval before coding.
+- **Owner:** Agent E. **Status:** NEEDS REQUIREMENTS.
+
+### EN-14 — Lesson-start background prefetch of all lesson audio (in order, non-blocking, survives leaving) — `NEEDS REQUIREMENTS (then owner approval before any coding)`
+- **Report (owner 2026-07-14):** on starting a lesson, if the audio clips aren't cached yet, download the **whole lesson's audio in the background, in lesson order, non-blocking** (user keeps interacting with the UI/lesson), and the download should **complete even if the user leaves the lesson**.
+- **Ties:** EN-7 (modular/resilient chunked downloads — HIGH), EN-8 (server-hosted audio → what gets fetched), TB-9 (persistence). Direction: on lesson open, enqueue the lesson's clips (ordered) into a background prefetch queue that is non-blocking, resumable, and **persists past navigation away** from the lesson; respects the cache LRU + persistence availability (TB-9); coordinates with EN-8's server cache (fetch static file, else generate). → Needs a written spec (queue lifecycle + ordering + concurrency; "complete even if user leaves" semantics re: service worker / in-memory queue; cancellation; interaction with EN-7/EN-8) + owner approval before coding.
+- **Owner:** Agent E. **Status:** NEEDS REQUIREMENTS.
+
 ## Auth & security backlog (owner-requested 2026-07-14)
 
 ### AUTH-1 — Stronger sign-in: MFA + magic link + human (bot) verification — `OPEN (backlog)`
