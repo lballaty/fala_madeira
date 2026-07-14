@@ -59,9 +59,12 @@ export const useSettings = ({
   requestConfirmation,
   getDiagnostics
 }: SettingsDeps) => {
+  // TB-5: tutor read-aloud defaults OFF (opt-in). Auto-reading every tutor message aloud surprised
+  // users ("it reads all out loud regardless if I want to"); the Mute/Unmute toggle re-enables it,
+  // and the per-message play buttons give audio on demand. A saved preference is still respected.
   const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
     const saved = localStorage.getItem('is_sound_enabled');
-    return saved !== null ? saved === 'true' : true;
+    return saved !== null ? saved === 'true' : false;
   });
   const [playbackSpeed, setPlaybackSpeed] = useState(() => {
     const saved = localStorage.getItem('playback_speed');
