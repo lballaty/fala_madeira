@@ -16,6 +16,15 @@
 
 ## Run log
 
+### Run 20 — 2026-07-14 — a11y Home regression FIXED (verified populated-state); 429 guard + EF-34/35 remain
+- **102 passed · 3 failed of 105 (6.8m).** 
+- **✅ a11y Home regression FIXED + VERIFIED:** all 4 axe smokes green in the FULL-SUITE populated state that reproduced the failure in run 19. Fix (commit 4f687f2): populated-Home green pills/text `text-green-700/800` → `green-900` (~7:1 on the pale-green bgs). The run-19 blue `#2b7cd5` nodes did NOT recur — they were state/content-dependent, not a persistent defect. **PF-11 fully closed again.**
+- **3 remaining, all pre-existing / non-regression:**
+  - **user/44 (EF-34)** — vocab deck-sourcing (open, Lane A/content).
+  - **user/45 (EF-35)** — all 187 situations mission-ready → self-made path unreachable (open, Lane A/content).
+  - **user/47 (@clean error-guard) → NEW item EF-36:** guard caught `429 POST /functions/v1/gemini` (+ the paired console.error) during the Home→Learning(+audio)→Practice→Tutor→Profile journey. Source confirmed = the **gemini edge function rate-limiting under full-suite load** (many TTS plays). Likely test-env (single-user unlikely to hit it), but the app should handle 429 gracefully — catch it in the gemini client path, degrade/backoff, and route through `src/lib/logger.ts` instead of a raw console.error (aligns with the centralized-error standard). Decision needed: app-side 429 handling vs allow transient 429 in the @clean guard vs raise the edge rate limit. Owner: app + test-env. **Not fixed this session** (touches core edge/TTS flow; deserves a focused pass, no DB involved).
+- **Artifacts:** `artifacts/e2e-run20-2026-07-14.tgz`.
+
 ### Run 19 — 2026-07-14 — batches through ae7181c (user/46, user/47 @clean guard); a11y Home REGRESSION + 429 guard hit
 - **101 passed · 4 failed of 105 (6.6m).** Suite grew 87→105 across the latest Lane A batches (user/46 assorted-input, user/47 @clean error-guard project, schema-drift gate).
 - **The 4 failures:**
