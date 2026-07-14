@@ -114,10 +114,14 @@
 ### INFRA-3 — dotfiles template fix push — `DEFERRED (owner/dotfiles)`
 - `commit-and-sync` co-author-trailer fix committed locally in `~/.ai-dev-dotfiles` (`238bb82`), unpushed (6 local commits, only 1 mine).
 
-### INFRA-4 — Staging / pre-release deploy — `OPEN (coordinate with other agent)`
+### INFRA-4 — Staging / pre-release deploy — `NEARLY DONE (one operator .env line remaining, 2026-07-14)`
 - **Staging URL confirmed: `testfalamadeira.searchingfool.com`** (owner, 2026-07-14). Pre-release verify step before prod (`falamadeira.searchingfool.com`).
 - Slotted into the release flow (`MULTI-AGENT-WORKFLOW.md` §3/§7): `develop`→`main` → deploy to `testfalamadeira` (staging) → verify → deploy to prod. Runs from the release worktree (on `main`).
-- **Owed:** get the deploy mechanism from the other agent (how staging is targeted — flag/`VERPEX_REMOTE_PATH`/separate `.env`); wire `scripts/deploy-verpex.sh` to support both targets; finalize the workflow doc §8. Supabase Auth Site/Redirect URLs must include the staging origin.
+- **DONE:** deploy code (staged two-target + approve gate, `57062fb`); workflow docs §3/§7/§8 (`a876082`); deploy mechanism (`deploy-verpex.sh --target staging|production`, reads `VERPEX_STAGING_REMOTE_PATH`, validates the dir contains `testfalamadeira`).
+- **DONE — Supabase Auth redirect URLs (via Management API, 2026-07-14, verified):** `uri_allow_list` now = `https://testfalamadeira.searchingfool.com/**,https://falamadeira.searchingfool.com/**`.
+  - **Discovery (logged):** before this change `uri_allow_list` was **empty** — so **production was ALSO not allow-listed**. Added prod alongside staging (its own origin — clearly correct, non-destructive). Current email/password auth uses no redirect, which is why the empty list never surfaced; magic-link/OAuth (AUTH-1) on any env would have failed.
+  - **⚠️ Owner decision owed — `site_url` is `http://localhost:3000`** (dev default) on the live project. For production this likely should be `https://falamadeira.searchingfool.com` (it's the default redirect target when a request omits an explicit, allow-listed `redirect_to`). Left UNCHANGED pending owner sign-off (changing it affects default redirect behavior for live users). See AUTH-1.
+- **REMAINING (operator, `.env.deploy` — agent cp/edit of `.env*` is hard-denied):** append `VERPEX_STAGING_REMOTE_PATH=/home/gomadeir/testfalamadeira.searchingfool.com` to base `.env.deploy`, then re-copy base→release `.env.deploy`. Once set, `npm run deploy:staging` works from the release worktree. **This is the only thing between here and a working staged deploy.**
 
 ---
 
