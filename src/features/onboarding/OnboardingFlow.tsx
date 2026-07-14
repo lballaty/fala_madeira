@@ -15,7 +15,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ChevronRight, Volume2, Mic, Sparkles, Loader2 } from 'lucide-react';
+import { Check, ChevronRight, Volume2, Mic, Loader2 } from 'lucide-react';
+import { MadeiraIsland } from '../../components/MadeiraIsland';
 import { cn } from '../../lib/utils';
 import { config } from '../../config';
 import { logger } from '../../lib/logger';
@@ -302,9 +303,7 @@ export const OnboardingFlow = ({
             footer={<PrimaryButton label="Let's go" onClick={goNext} />}
           >
             <div className="rounded-3xl bg-card p-6 flex flex-col items-center text-center gap-3 border border-ios-gray/15">
-              <div className="w-16 h-16 rounded-2xl bg-ios-blue/10 flex items-center justify-center">
-                <Sparkles className="w-8 h-8 text-ios-blue" />
-              </div>
+              <MadeiraIsland className="w-44 text-ios-blue" title="Madeira island" />
               <p className="text-sm text-ios-gray leading-relaxed">
                 No pressure, no lock-in. We&apos;ll set a sensible starting point — you can jump ahead or switch paths whenever you like.
               </p>

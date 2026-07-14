@@ -14,6 +14,7 @@ import { useId, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, ChevronRight, Play, Zap, Key, User as UserIcon, X, Flame, Snowflake, RotateCcw } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
+import { MadeiraIsland } from '../../components/MadeiraIsland';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { Lesson, UserProfile } from '../../types';
@@ -143,6 +144,7 @@ export const HomeView = ({
   <div className="p-6 space-y-6 overflow-y-auto h-full pb-32">
     <header className="flex justify-between items-center">
       <div className="flex items-center space-x-4">
+        <MadeiraIsland className="w-10 text-ios-blue/80 shrink-0" archipelago={false} title="" />
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Olá, {user?.email?.split('@')[0]}!</h1>
           <div className="flex items-center space-x-2">
