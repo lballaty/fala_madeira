@@ -275,6 +275,12 @@
 - **Trade-offs to investigate:** storage/CDN cost vs TTS savings (favorable for static content); cache invalidation on content/voice change (hash key handles it); which store (Verpex static vs Supabase Storage vs a CDN); pre-generation pipeline ownership.
 - **Owner:** Agent E (`feat/*`) + ops (storage/pipeline). **Status:** OPEN (backlog; investigate).
 
+### EN-9 — Sign out must be in the nav sidebar (always available), not only on the Profile page — `OPEN (HIGH PRIORITY, owner-requested 2026-07-14)`
+- **Report (owner, staging 2026-07-14):** "Sign out should be available in the navigation sidebar near the bottom at all times, not just in the Profile at the bottom of the page." High priority.
+- **Current state (verified in code):** the only Sign Out control lives in **`src/features/settings/SettingsView.tsx:616`** (a red "Sign Out" button at the bottom of the Profile tab). To sign out, a user must navigate to Profile and scroll to the bottom. The desktop sidebar (`src/components/Sidebar.tsx`, `hidden md:flex md:flex-col`, L52) renders nav items in a `flex-1` `<nav>` and does **not** currently receive or render a logout control.
+- **Fix direction:** add a persistent Sign Out control pinned at the **bottom of the desktop sidebar** (below the `flex-1` nav, above `safe-area-bottom`), wired to the existing `handleLogout` — thread `handleLogout` into `SidebarProps` from `App.tsx` (already available there, `App.tsx:88`). Keep the Profile-page control too (or make the sidebar one the primary). **Mobile note:** the sidebar is desktop-only (`md+`); the mobile bottom tab bar has no room for a sign-out — decide the mobile affordance separately (e.g., a small header action, or keep Profile-page sign-out on mobile). Reuse the same red-text styling + confirmation behavior as the current button; no new logout logic.
+- **Owner:** Agent E (`feat/*`) or S. Small, self-contained UI change + prop threading + a test asserting the sidebar sign-out calls `handleLogout`. **Status:** OPEN (HIGH PRIORITY).
+
 ## Auth & security backlog (owner-requested 2026-07-14)
 
 ### AUTH-1 — Stronger sign-in: MFA + magic link + human (bot) verification — `OPEN (backlog)`
