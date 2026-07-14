@@ -71,13 +71,18 @@ test.describe('listening + vocabulary controls', () => {
     // speaker, the hear-variant front uses an ear icon — same aria-label). If the deck happens to
     // be empty (all caught up), the button is absent; assert what IS reachable and skip.
     const flashcard = page.getByRole('button', { name: 'Flashcard — tap to flip' }).first();
-    if (!(await flashcard.isVisible({ timeout: 20_000 }).catch(() => false))) {
-      // Deck empty this run — the Play-the-word control is unreachable. Assert the honest
-      // empty/summary surface rather than a control that does not exist, and skip the touch.
-      const emptyOrSummary = page
-        .getByRole('heading', { name: 'All caught up' })
-        .or(page.getByRole('heading', { name: 'No vocabulary here yet' }))
-        .or(page.getByRole('heading', { name: 'Session complete' }));
+    const emptyOrSummary = page
+      .getByRole('heading', { name: 'All caught up' })
+      .or(page.getByRole('heading', { name: 'No vocabulary here yet' }))
+      .or(page.getByRole('heading', { name: 'Session complete' }));
+    // The deck loads async, so branch only AFTER the surface settles. `isVisible()` does NOT
+    // auto-wait — checking it immediately raced the still-loading deck and wrongly took the
+    // empty-state branch (the card was about to appear). Wait for whichever state actually
+    // renders (card OR empty/summary), then branch on the settled DOM.
+    await expect(flashcard.or(emptyOrSummary.first())).toBeVisible({ timeout: 20_000 });
+    if (!(await flashcard.isVisible())) {
+      // Deck genuinely empty this run — the Play-the-word control is unreachable. Assert the
+      // honest empty/summary surface rather than a control that does not exist, and skip the touch.
       await expect(emptyOrSummary.first()).toBeVisible();
       test.info().annotations.push({
         type: 'note',
