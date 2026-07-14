@@ -18,6 +18,8 @@ Follow the global operating standard: `/Users/liborballaty/.ai-dev-dotfiles/memo
 | `docs/PRODUCT-DESIGN-TARGET.md` | Full-product target: vision, UX principles, scope, data model |
 | `docs/CONTENT-ARCHITECTURE.md` | **Authoritative** modular content model, path types, engines, feedback loop, offline; governs on any conflict with the target doc |
 | `docs/REQUIREMENTS-TRACKER.md` | Requirement → plan step → status register |
+| `docs/TESTER-FEEDBACK-TRACKER.md` | Tester-reported bugs + support workstream + **all deferrals** — shared across agents (see §7) |
+| `docs/E2E-LIVE-RUN-TRACKER.md` | Live e2e run log + failure triage (EF-/PF-/CG- items) — shared across agents |
 | `docs/ENGINEERING-STANDARDS.md` | Detailed architecture/security/design/coding standard (created by the `engineering-standards` plan step) |
 | `docs/CONTENT-STANDARDS.md` | European-Portuguese/Madeiran content rules + validator |
 | `plans/plan-2026-07-09-full-product.yaml` | **Authoritative executable plan** (55 steps, content-model-first, voice-first, cross-platform). Supersedes `plan-2026-07-08-production-readiness.yaml`. `plans/.plan-state.yaml` = execution state |
@@ -76,4 +78,12 @@ Every capability must serve one of **understand · speak · use · belong**. Als
 
 - **`Edit(**/package.json)` and `Edit(**/requirements.txt)` are DENIED** by global settings — modify dependencies via the `npm` CLI (`npm install -D …`, `npm pkg set …`), never by hand-editing the manifest. Bypass mode does NOT lift deny rules.
 - **Bulk-delete is forbidden** (global standard + guards) — one explicit `rm <path>` per file, never `find -delete`/`xargs rm`/`rm -rf <glob>`.
-- **Git:** work on `main` (greenfield, owner directive); path-form commits; verify the staged set before committing; **no `Co-Authored-By` trailers**.
+- **Git:** feature work on `develop` in the base checkout; releases/deploys ONLY from a `main` worktree (see §4 Branching & worktrees — testers are live, `main` must stay deployable). Path-form commits; verify the staged set before committing; **no `Co-Authored-By` trailers**.
+
+## 7. Shared trackers & coordination (ALL agents — 2026-07-14)
+
+Multiple agents work this repo in parallel; convergence depends on shared state, not private notes.
+
+- **Same trackers, single source of truth:** `docs/TESTER-FEEDBACK-TRACKER.md` (tester bugs + support workstream + all deferrals), `docs/E2E-LIVE-RUN-TRACKER.md` (e2e run log + triage), `docs/REQUIREMENTS-TRACKER.md` (requirement→plan→status). Cross-repo platform/release work: `aidevops/plans/*.yaml` + `aidevops/design/TODO.md`.
+- **Deferral rule (standing):** nothing is closed by declaring it "not our lane." Every deferred, rerouted, or declined item is logged in the relevant tracker above with **status + owner + next action** before moving on, and surfaced in the reply — never silently dropped.
+- **File + task reservation / pickup (before ANY write or picking up work):** use `shared-file-coordination` / `queuectl` on the global queue — `queuectl reserve --agent <you> --working-on "<task>" --files <paths>`. The `--working-on` note is your task claim (pickup); `--files` is your write claim. `verify` before first write, `renew` for long work, `release` on handoff. No edits to shared/canonical files without an active claim; split parallel work by disjoint write scope.
