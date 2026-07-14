@@ -42,6 +42,8 @@ export interface SituationFilter {
   level?: PracticalLevel;
   /** Only situations shipped by this pack. */
   packId?: string;
+  /** Only this one situation (EN-7: the finest download unit — one situation at a time). */
+  situationId?: string;
 }
 
 export interface ContentRefreshResult {
@@ -534,6 +536,9 @@ export const contentRepository = {
     }
     if (filter?.level !== undefined) {
       results = results.filter((s) => s.level === filter.level);
+    }
+    if (filter?.situationId) {
+      results = results.filter((s) => s.id === filter.situationId);
     }
     if (filter?.packId) {
       const pack = packsById.get(filter.packId);
