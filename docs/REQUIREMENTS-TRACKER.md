@@ -52,8 +52,8 @@ Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ nee
 | U1 | Dark mode | NEW dark-mode (was in config-and-dead-code scope) | ⬜ |
 | U2 | Desktop responsive (sidebar + multi-column) | NEW responsive-desktop | ⬜ |
 | U3 | Type scale tokens | (index.css) split-app-components/dark-mode | 🔵 |
-| U4 | AA contrast fix (muted gray fails 4.5:1) | accessibility-pass | 🔵 |
-| U5 | WCAG 2.2 AA (labels, keyboard, targets, pinch-zoom, reflow) | accessibility-pass | 🔵 |
+| U4 | AA contrast fix (muted gray fails 4.5:1) | accessibility-pass | 🔵 — partial: axe smoke contrast fixes shipped 2026-07-14 (PF-11) |
+| U5 | WCAG 2.2 AA (labels, keyboard, targets, pinch-zoom, reflow) | accessibility-pass | 🔵 — partial: axe smoke contrast fixes shipped 2026-07-14 (PF-11) |
 | U6 | Onboarding first-run (60s first win) | NEW onboarding-flow | ⬜ |
 | U7 | Home: progress ring + competence line | NEW home-progress | ⬜ |
 | U8 | Home: Review-due card | srs-engine + home-progress | ⬜ |

@@ -16,6 +16,13 @@
 
 ## Run log
 
+### Deploy — 2026-07-14 ~ CEST — EF-33/LT10 + a11y fixes shipped to production
+- **`npm run deploy` PASSED the full ship gate** (tsc + vitest + build + e2e coverage contract) and rsynced dist to Verpex. Prod smoke `@smoke` = **6/6 green**; `manifest.webmanifest` HTTP 200. Live at https://falamadeira.searchingfool.com.
+- **Ships:** EF-33/LT10 supabase-js post-reload deadlock fix (024683b), and the a11y fixes (9aed0db — PF-11 contrast + PF-12 control labels). Owner: hard-refresh once post-deploy (service worker).
+
+### Run 18 — 2026-07-14 (in progress at time of writing) — regression check after a11y fixes
+- Running the full suite post-9aed0db to confirm the color-token + label changes caused no functional regressions; result appended when complete.
+
 ### Run 17 — 2026-07-13 ~18:45 CEST — new batch ef1c90f (functional tests for 11 previously-silent controls)
 - **83 passed · 4 failed of 87 (5.4m, exit 1).** Suite grew 80 → 87: batch adds admin/09 (reject-correction), user/39 (alt tutor + theme Light/System ×2 tests), user/40 (SRS grade-variants Again/Hard/Easy + Almost/Missed), user/41 (Learning review-mode toggle + Phrase-Library filter). Inventory 142 → 153.
 - **All 7 new batch tests PASS on the runner** (tutor→Maria persists `selected_tutor_id`; theme applies `<html data-theme>` + `fm_theme`; grade variants advance the deck; review-mode label flip + phrase filter narrows; reject-correction polls `lesson_corrections.status == 'rejected'`). Every pre-existing functional test still passes.
@@ -430,8 +437,8 @@
 - **PF-8 (quiz correctness nit):** scoring normalizes punctuation (`normalizeText`) but the inline feedback banner compares with plain lowercase/trim (`Quiz.tsx:173,177`) — the same typed answer can SCORE correct while the banner shows "Incorrect. The answer was: …". Also: accent-sensitive matching is deliberate (EU-PT) but undocumented — specs must type exact diacritics.
 - **PF-9 (quiz robustness, minor):** distractors are sampled only from the same lesson's vocabulary with a biased shuffle — lessons with <4 vocab items yield short option lists, and colliding translations can duplicate the correct answer among options. No XP/streak is awarded on quiz completion (gamification loop untouched by quizzes).
 - **PF-5 (from EF-25, escalated run 6):** Home's session card AND the daily-session surface rendered identical 'Today's Session' headings inside the same nearest `<section>` — duplicate identical headings were an a11y smell and made the surface un-anchorable for tests. Builder patched the session-view heading to **"Daily session"** in `src/features/session/DailySessionView.tsx`; **runner VERIFIED live in run 12 — PF-5 CLOSED.** (EF-25's remaining failure is a spec-side non-exact-name strict violation, not this.)
-- **PF-11 (a11y, WCAG 2.2 AA color-contrast — run 16 axe smoke):** the primary iOS-blue `#007aff` fails 4.5:1 at bold small sizes (white-on-blue CTAs and blue-on-white text = 4.01:1), and several green status pills (`#299556`/`#529573` on pale green) land 2.98–3.58:1. 22 nodes across auth/home/practice-hub/profile-settings. Design-system fix (darken the blue token, or bump weight/size thresholds; darken pill text). Maps to REQUIREMENTS U4/U5. Owner: product/design.
-- **PF-12 (a11y, critical, form controls unnamed — run 16 axe smoke):** on Profile/Settings, 3 `<select>` elements have no accessible name (`select-name`) and 1 `<input>` has no label (`label`). Add `aria-label`/`<label htmlFor>` to the settings selects (provider/voice/level pickers) and the unlabeled input. Owner: app. Low-effort, high-value (blocks screen-reader use of settings).
+- **PF-11 (a11y, WCAG 2.2 AA color-contrast) — ✅ FIXED+DEPLOYED (commit 9aed0db, live 2026-07-14).** Root token `--fm-brand #007AFF` (4.01:1) darkened to `#0063CE` (~5.7:1) for light mode + lighter dark-mode brand `#0A84FF`; scattered Tailwind-default accents on the tested screens fixed (streak `text-orange-500`→`-800`, "Online only" badge→`orange-700`, hero subtitles `text-blue-100/opacity-90`→`text-blue-50`, empty-state green dropped `/80` opacity). axe smoke now 4/4 green. **Remaining tail (tracked, not on a tested screen):** `text-orange-500` on the icon-circle in `LearningView.tsx:220` — verify when a Learning-screen axe smoke is added.
+- **PF-12 (a11y, critical, form controls unnamed) — ✅ FIXED+DEPLOYED (commit 9aed0db, live 2026-07-14).** Added `aria-label` to the Audio Speed range input and the Voice Provider / Storage limit / Download-for-offline selects in `SettingsView.tsx`. Both critical axe findings (`select-name`, `label`) cleared.
 
 ## Gap Analysis v2 — 2026-07-13 ~15:00 (owner-requested; suite at 58 spec files / 71 tests, inventory 141 controls)
 
