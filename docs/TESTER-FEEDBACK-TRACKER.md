@@ -64,7 +64,9 @@
 - **Owner:** Agent S (`fix/*`). **Status:** OPEN (needs owner default decision).
 - **Status:** DONE (fixed on develop; @mobile regression test + deploy owed).
 
-### TB-6 — Onboarding "Say it back" (first-words screen) doesn't listen to what I say (reporter: owner) — `OPEN (root cause confirmed by code-read; needs product decision)`
+### TB-6 — Onboarding "Say it back" (first-words screen) doesn't listen to what I say (reporter: owner) — `DONE (fixed + regression test on develop, commit a5c9d00; owner picked "make it work")`
+- **FIX (2026-07-14, commit `a5c9d00`):** `handleSayItBack` now uses the recognized transcript instead of discarding it. Success echoes what it heard ("Nice — I heard you!" + the transcript) so the learner sees it genuinely listened; `no-speech`/`timeout` offers a **Try again** (not a fake success); `unavailable`/`permission-denied`/`not-implemented` (e.g. Brave/permission) offers an honest **"I said it"** self-confirm. Regression: `src/features/onboarding/__tests__/FirstWinStep.test.tsx` mocks `platform.speech.recognize` and asserts all three outcomes (transcript echoed / retry / honest self-confirm; and NOT the old unconditional "Nice!"). vitest GREEN.
+- **Owed:** promote (deploy) to reach testers. (A live-mic manual check on Brave/iOS still worthwhile to confirm the unavailable-path copy.)
 - **Report (owner 2026-07-14):** "the 'say it back' button on the your first words screen doesn't really listen to what I say."
 - **Root cause (confirmed, code-read — `src/features/onboarding/OnboardingFlow.tsx` `FirstWinStep`/`handleSayItBack` L514):** the say-it-back is **by design a no-op on content** — it calls `platform.speech.recognize({ language:'pt-PT', timeoutMs:6000 })` and **discards the transcript**. On success it does `setSayState('done')`; on **any** error (`no-speech`, `timeout`, `unavailable`, mic-permission) the catch **also** does `setSayState('done')` (comment: "the point is the try, not the score"). Either way it shows *"Nice! You just said your first Madeiran words."* It never compares your speech to "Bom dia!", never echoes what it heard, and never signals failure → so whatever you say (or if nothing is captured) you get the same success message. That is exactly why it "doesn't really listen."
 - **Likely compounding (needs live-mic confirm):** on **Brave** (an earlier tester's browser) the Web Speech API is **disabled by default** (Brave blocks Google's speech endpoint), and iOS Safari/WebView `webkitSpeechRecognition` is intermittent (noted in `speech.web.ts` header). In those cases recognition never starts/returns — but the unconditional "Nice!" masks it. `pt-PT` also depends on the browser's server-side model + network + mic permission.
@@ -208,6 +210,24 @@
 - **Provision each (INFRA-5):** `cp ../fala_madeira/.env.local .` into feat/support/content; **`.env.deploy` into `-release` ONLY**; `npm install` in each. Verify with `npm run check:branch` per folder + `git worktree list` (expect 5).
 - **Then (INFRA-5):** add `scripts/setup-worktree.sh <role>` to automate the above + per-role launcher profiles so an agent boots knowing its role.
 - **Owner:** next session (owner-driven). **Status:** OPEN — instantiation pending.
+
+### EN-6 — Quiz checking: more flexible / AI-driven grading — `OPEN (backlog; owner wants to discuss)`
+- **Report (owner 2026-07-14):** quiz checking is too strict. For a **listening** exercise, a missing exclamation mark (or other punctuation/case) should NOT be marked wrong — we're testing listening comprehension, not punctuation. Don't fixate on the wrong things. Wants more flexible matching, potentially **AI-driven**.
+- **Direction (to discuss):** (1) **Normalize before compare** (cheap, deterministic, offline): lowercase, strip/relax trailing punctuation + diacritics-optional + collapse whitespace, per exercise type (stricter for spelling drills, looser for listening/meaning). (2) **Fuzzy match** (Levenshtein/token overlap) with a per-mode threshold. (3) **AI-driven semantic grade** (gemini) for open/meaning answers — highest quality, but adds cost/latency + needs the offline/degrade story (ties EN-8 audio-cache + EF-36 quota). Likely layer 1+2 first (covers the punctuation complaint immediately, offline), AI for genuinely open answers.
+- **Scope note:** grading logic lives across the quiz/practice graders (`src/components/Quiz.tsx`, practice `speaking`/`vocabulary` accuracy). A shared, per-mode "answer match" policy would centralize this.
+- **Owner:** Agent E (`feat/*`), product to define tolerance per mode. **Status:** OPEN (backlog; discuss).
+
+### EN-7 — Offline/background downloads must be modular + resilient — `OPEN (backlog)`
+- **Report (owner 2026-07-14):** downloads should be more modular, at least in the background — otherwise they "just totally fail all the time" (a single large/all-or-nothing download is fragile).
+- **Direction:** chunk downloads into small independently-retryable units (per pack/lesson/asset), with per-unit progress + resume, exponential-backoff retry, and partial-success (a failed unit doesn't fail the whole batch); run in the background (service worker / Capacitor background) so a dropped connection resumes rather than restarts. Surface per-unit state in the offline UI. Ties EN-8 (audio assets are the bulk of download weight) and QA-1 (offline-audio tests).
+- **Owner:** Agent E (`feat/*`). **Status:** OPEN (backlog).
+
+### EN-8 — Pre-generate + server-host audio (cache tiers) to cut Gemini cost — `OPEN (backlog; investigate)`
+- **Report (owner 2026-07-14):** rather than every user hitting Gemini TTS, pre-generate the audio for content phrases and **store it on our server** (Verpex), so the client only calls Gemini when the audio is missing from (a) device cache, then (b) our server. "Reduce cost — right?"
+- **Assessment (yes, likely a large cost + reliability win):** content phrases are a FINITE, mostly-static set → generating each once and serving a static file is far cheaper than regenerating per user per play, and it removes the per-play Gemini dependency (directly mitigates the 429/503 quota pain behind EF-36 / user/47). Lookup order: **device cache → our server (CDN/static) → Gemini (generate, then persist to server + device)**. 
+- **Design sketch:** a build/admin step renders TTS for every content phrase to audio files keyed by a stable hash (text+voice+lang), uploads to Verpex (or Supabase Storage) under a versioned path; client `playText` checks IndexedDB cache → fetches the hashed URL (200 → cache + play) → on 404 falls back to the gemini edge fn, then writes the result back. Ties EN-7 (these files are what gets downloaded for offline) + the audio-cache already in `src/lib/audioCache.ts`.
+- **Trade-offs to investigate:** storage/CDN cost vs TTS savings (favorable for static content); cache invalidation on content/voice change (hash key handles it); which store (Verpex static vs Supabase Storage vs a CDN); pre-generation pipeline ownership.
+- **Owner:** Agent E (`feat/*`) + ops (storage/pipeline). **Status:** OPEN (backlog; investigate).
 
 ## Auth & security backlog (owner-requested 2026-07-14)
 
