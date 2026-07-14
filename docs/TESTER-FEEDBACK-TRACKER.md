@@ -114,14 +114,16 @@
 ### INFRA-3 — dotfiles template fix push — `DEFERRED (owner/dotfiles)`
 - `commit-and-sync` co-author-trailer fix committed locally in `~/.ai-dev-dotfiles` (`238bb82`), unpushed (6 local commits, only 1 mine).
 
-### INFRA-4 — Staging / pre-release deploy — `NEARLY DONE (one operator .env line remaining, 2026-07-14)`
+### INFRA-4 — Staging / pre-release deploy — `DONE (2026-07-14) — first live run needs the develop→main release cut`
 - **Staging URL confirmed: `testfalamadeira.searchingfool.com`** (owner, 2026-07-14). Pre-release verify step before prod (`falamadeira.searchingfool.com`).
 - Slotted into the release flow (`MULTI-AGENT-WORKFLOW.md` §3/§7): `develop`→`main` → deploy to `testfalamadeira` (staging) → verify → deploy to prod. Runs from the release worktree (on `main`).
 - **DONE:** deploy code (staged two-target + approve gate, `57062fb`); workflow docs §3/§7/§8 (`a876082`); deploy mechanism (`deploy-verpex.sh --target staging|production`, reads `VERPEX_STAGING_REMOTE_PATH`, validates the dir contains `testfalamadeira`).
 - **DONE — Supabase Auth redirect URLs (via Management API, 2026-07-14, verified):** `uri_allow_list` now = `https://testfalamadeira.searchingfool.com/**,https://falamadeira.searchingfool.com/**`.
   - **Discovery (logged):** before this change `uri_allow_list` was **empty** — so **production was ALSO not allow-listed**. Added prod alongside staging (its own origin — clearly correct, non-destructive). Current email/password auth uses no redirect, which is why the empty list never surfaced; magic-link/OAuth (AUTH-1) on any env would have failed.
   - **DONE — `site_url` set to `https://falamadeira.searchingfool.com`** (owner decision 2026-07-14; was `http://localhost:3000`). To preserve local-dev auth after moving `site_url` off localhost, `http://localhost:3000/**` was added to `uri_allow_list`. Final `uri_allow_list` = `https://testfalamadeira.searchingfool.com/**,https://falamadeira.searchingfool.com/**,http://localhost:3000/**`. All verified via read-back.
-- **REMAINING (operator, `.env.deploy` — agent cp/edit of `.env*` is hard-denied):** append `VERPEX_STAGING_REMOTE_PATH=/home/gomadeir/testfalamadeira.searchingfool.com` to base `.env.deploy`, then re-copy base→release `.env.deploy`. Once set, `npm run deploy:staging` works from the release worktree. **This is the only thing between here and a working staged deploy.**
+- **DONE — `VERPEX_STAGING_REMOTE_PATH`** appended to base `.env.deploy` (operator, via `!`) and copied into the release worktree's `.env.deploy` (both verified present).
+- **DONE — pipeline verified end-to-end via dry-run (2026-07-14):** `deploy-verpex.sh --target staging --dry-run` resolves to `…/testfalamadeira.searchingfool.com`; `--target production --dry-run` resolves to `…/falamadeira.searchingfool.com` (target/dir guards correct); dry-run is credential-free + no network. Production-gate ordering confirmed in code — the "not staged+approved" `die` (lines ~200-210) fires **before** the rsync transport (~238), so a real prod deploy refuses before any upload.
+- **⚠️ First LIVE staged deploy requires the first `develop`→`main` release cut.** `main` (release worktree) is stale (`1d16e6f`) and still has the OLD `deploy-verpex.sh` with no `--target` (verified: 0 refs on main vs 12 on develop; `57062fb` not yet an ancestor of `main`). The new script reaches `main` when the Release role merges `develop`→`main` in the release worktree (MULTI-AGENT-WORKFLOW §7) — which is the step *before* it deploys, so the sequence is self-consistent. Until that cut, dry-run/verify from the base worktree (on `develop`) only.
 
 ---
 
