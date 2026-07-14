@@ -53,7 +53,7 @@ steps:
     finished_at: 2026-07-14T00:00:00Z
     troubleshoot_invocations: 0
     notes: "Whole-project gate GREEN: tsc --noEmit clean; eslint 0 errors (1 pre-existing unrelated warning in useFocusTrap.ts); 154/154 unit+component tests pass; vite build succeeds. Deno not installed locally — edge fns type-checked by manual review, deploy on Supabase Deno runtime. logs schema live-verified in obs-schema (single prod env; two-pass N/A)."
-checkpoint: "PLAN COMPLETE — all 10 steps succeeded. FOLLOW-UPS: (1) deploy edge fns: supabase functions deploy log-sink gemini delete-account; (2) owner-approve package.json edit for the test:observability npm script; (3) unrelated: PF-13 profiles schema drift ALTER TABLE still open."
+checkpoint: "PLAN COMPLETE — all 10 steps succeeded. FOLLOW-UPS: (1) DONE 2026-07-14 — deployed log-sink + gemini + delete-account to prod (project gxlrmdfqcqimwwplrdgd); smoke-verified live: log-sink empty-batch inserted:0, real pre-auth event (user_id null) inserted:1 against public.logs (service-role + 00010 columns confirmed), delete-account 401 envelope now echoes requestId (resolves the run-21 09-account-deletion failure — deploy-lag, not a code gap). (2) owner-approve package.json edit for the test:observability npm script — still deferred. (3) unrelated: PF-13 profiles schema drift ALTER TABLE still open. RUN-21 FOLLOW-UPS: VOICE_LIMIT_REACHED/TTS_UNAVAILABLE now WARN not ERROR at the invokeEdgeFunction choke point (commit 681d283). NOTE: one benign diagnostic row event_type='deploy_smoke_test' was inserted into prod public.logs during smoke verification."
 
 # --- Commit traceability (backfilled) ---
 # PROTOCOL DEVIATION: execute-plan.md §"Incremental commits (required)" mandates one commit per
