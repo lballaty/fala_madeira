@@ -284,6 +284,10 @@ export default function App() {
           logger.debug('nav', 'Sidebar nav: admin', { category: 'USER_ACTION' });
           setIsAdminViewOpen(true);
         }}
+        onSignOut={() => {
+          logger.debug('nav', 'Sidebar nav: sign out', { category: 'USER_ACTION' });
+          void handleLogout();
+        }}
       />
       {/* Content column: on desktop it fills the remaining width and centers a readable measure. */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
