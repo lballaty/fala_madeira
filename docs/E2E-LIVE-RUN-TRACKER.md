@@ -16,6 +16,16 @@
 
 ## Run log
 
+### Run 21 — 2026-07-14 — 102/108; practice-hub a11y contrast FIXED+verified (PF-11b); 2 new failures triaged (1 EF-36 family, 1 other-agent)
+- **102 passed · 6 failed of 108 (8.5m), REAL_EXIT=1.** Suite grew 105→108 (new observability specs user/48–49). **Run made against the current working tree, which carries the other agent's uncommitted observability/paywall work** (incl. `UpgradeModal.tsx` deletion, modified `09-account-deletion.spec.ts`) — so some failures reflect their in-flight state, not committed code.
+- **3 failures are the known open items:** user/44 (EF-34), user/45 (EF-35), user/47 (EF-36) — all reproduced exactly as re-triaged above.
+- **3 failures were NEW vs run 20 — triaged:**
+  1. **✅ `11-accessibility.spec.ts:48` (practice hub) — FIXED (PF-11b, commit `111bc86`).** axe serious `color-contrast`: the practice-hub "online" pill (`PracticeHubView.tsx:161`, 9px bold `text-ios-blue` on `bg-ios-blue/10`) rendered **4.33:1** (effective fg `#136ed1` on `#e7effa`). State-dependent (`mode.requiresOnline`), which is why run 20 was green. Fix: darkened light-mode `--fm-brand` `#0063CE→#0057B7` (clears 4.5:1 on the tint with margin; dark mode untouched; only improves white-on-brand elsewhere). **Verified: all 4 axe @a11y smokes green (auth/home/settings/practice), 13.2s.**
+  2. **`05-tutor.spec.ts:31` (@smoke edge requestId join) — EF-36 family (VOICE_LIMIT_REACHED bleed), environmental.** 60s timeout; trace shows `429` + "Daily voice limit". Same shared-test-user voice-cap bleed as EF-36 (user/27 exhausts the cap → later voice specs 429). Not a code regression. → same fix path as EF-36: **WS2 test-user isolation** (premium/unlimited or per-spec `voice_usage_today` reset).
+  3. **`09-account-deletion.spec.ts:12` — "delete-account did not echo a requestId" — OTHER AGENT'S in-flight work, not Lane B.** The assertion is a requestId-echo check tied to the other agent's active observability changes, and `09-account-deletion.spec.ts` is in *their* dirty worktree. Deferred to them; do not fix from Lane B.
+- **Net after PF-11b:** effectively **103/108**; the 5 remaining = EF-34 (Lane A), EF-35 (Lane A/content), EF-36 + 05-tutor (WS2 test-user isolation), 09-account-deletion (other agent). No further Lane B product fix owed this run.
+- **Artifacts:** `artifacts/e2e-run21-2026-07-14.tgz`. Verify log: `/tmp/a11y-verify-run21.log`.
+
 ### Triage — 2026-07-14 — EF-36 + EF-34 root causes CORRECTED from run-19 artifacts (no code written; Lane B analysis)
 Empirical re-triage of the 3 open failures against `artifacts/e2e-run19-2026-07-14.tgz` traces. **Prior root-cause notes for EF-36 and EF-34 were wrong** and are corrected here.
 
