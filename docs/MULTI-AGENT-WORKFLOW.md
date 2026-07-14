@@ -25,6 +25,7 @@ So agents don't share a branch — they each get their own *folder on disk*, on 
    │   📁 fala_madeira/            → branch: develop   → integration line + docs + test runs  │
    │   📁 fala_madeira-feat/       → branch: feat/*    → Agent E  (enhancements)              │
    │   📁 fala_madeira-support/    → branch: fix/*     → Agent S  (support-ticket fixes)      │
+   │   📁 fala_madeira-content/    → branch: content/* → Agent C  (lesson content, feedback-driven) │
    │   📁 fala_madeira-release/    → branch: main      → releases + `npm run deploy` ONLY     │
    │                                                                                          │
    └──────────────────────────────────────────────────────────────────────────────────────┘
@@ -33,6 +34,7 @@ So agents don't share a branch — they each get their own *folder on disk*, on 
 
 - **Agent D (design/docs)** works in the base `fala_madeira/` on `develop` (docs rarely collide).
 - **Agent T (tests)** runs the suite in `fala_madeira/` on `develop` — the integration point everyone merges into.
+- **Agent C (content)** works in `fala_madeira-content/` on `content/*`, improving lesson content (situations/packs, `src/content/**`) from tester/coach feedback. Content is data (CONTENT-ARCHITECTURE §modular), so it flows the same way: `content/*` → merge to `develop` → ships in the next release. Tester content complaints land in `TESTER-FEEDBACK-TRACKER.md`; Agent C picks them up there.
 - Need a hotfix while `develop` has half-done work? Spin up `fala_madeira-hotfix/` on `hotfix/*`, fix, merge, remove it.
 
 ---
