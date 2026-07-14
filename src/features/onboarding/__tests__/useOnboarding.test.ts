@@ -1,9 +1,11 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/features/onboarding/__tests__/useOnboarding.test.ts
-// Description: Regression guard for TB-3 — the onboarding gate must not re-hydrate (and so must not
-//   remount the flow back to step 1) when gotrue hands back a NEW user object with the SAME id on
-//   TOKEN_REFRESHED (browser tab-focus / "switch pages and go back"). The load effect is keyed on
-//   user?.id, not the user object; this test proves same-id churn does not re-read storage, while a
-//   real id change does. Storage + logger boundaries are mocked so the test is hermetic.
+// Description: Regression guard for TB-3 and TB-7.
+//   TB-3: the onboarding gate must not re-hydrate (and so must not remount the flow back to step 1)
+//   when gotrue hands back a NEW user object with the SAME id on TOKEN_REFRESHED (tab-focus). The
+//   load effect is keyed on user?.id, not the user object.
+//   TB-7: a returning user must skip the whole first-run flow even with NO local record, based on
+//   the DB consent flags (has_accepted_terms && has_accepted_ai_usage) — and the local mirror heals.
+//   Storage + logger boundaries are mocked so the test is hermetic.
 // Author: Lane B (with assistant)
 // Created: 2026-07-14
 
@@ -18,7 +20,11 @@ vi.mock('../../../platform', () => ({
   platform: {
     storage: {
       get: (key: string) => storageGet(key),
-      set: (key: string, value: unknown) => storageSet(key, value),
+      // Mirror the real adapter: set returns Promise<void> (production code chains .catch on it).
+      set: (key: string, value: unknown) => {
+        storageSet(key, value);
+        return Promise.resolve();
+      },
     },
   },
 }));
@@ -68,5 +74,44 @@ describe('useOnboarding hydration stability (TB-3)', () => {
 
     rerender({ ...props, user: makeUser('u2') });
     await waitFor(() => expect(storageGet).toHaveBeenCalledTimes(2));
+  });
+});
+
+describe('useOnboarding returning-user gate via DB consent (TB-7)', () => {
+  const makeProfile = (terms: boolean, ai: boolean) =>
+    ({ has_accepted_terms: terms, has_accepted_ai_usage: ai }) as unknown as import('../../../types').UserProfile;
+
+  it('treats a returning user as complete on a device with NO local record when the profile shows consent', async () => {
+    // New device / cleared storage: the local record read comes back empty (first run locally)...
+    storageGet.mockResolvedValue(null);
+    // ...but the DB profile proves onboarding was already finished (consent is the terminal step).
+    const props = {
+      supabase: null,
+      user: makeUser('u1'),
+      profile: makeProfile(true, true),
+      setProfile: vi.fn(),
+    };
+    const { result } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+
+    await waitFor(() => expect(result.current.isLoaded).toBe(true));
+    // Gate is CLOSED (skip the whole flow) even though the local record was empty — no re-onboarding.
+    expect(result.current.isComplete).toBe(true);
+    // The local mirror self-heals so it never flashes again on this device.
+    await waitFor(() => expect(storageSet).toHaveBeenCalledWith('onboarding:record:u1', expect.objectContaining({ complete: true })));
+  });
+
+  it('still gates a genuinely new user (no local record, consent not yet given)', async () => {
+    storageGet.mockResolvedValue(null);
+    const props = {
+      supabase: null,
+      user: makeUser('u2'),
+      profile: makeProfile(false, false),
+      setProfile: vi.fn(),
+    };
+    const { result } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+
+    await waitFor(() => expect(result.current.isLoaded).toBe(true));
+    expect(result.current.isComplete).toBe(false); // first-run flow shows
+    expect(storageSet).not.toHaveBeenCalled(); // nothing to heal
   });
 });
