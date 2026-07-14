@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.1",
+  "repo": "falamadeira",
+  "default_working_dir": ".",
+  "coverage_summary": {
+    "status": "in_progress",
+    "notes": "Dual-role live Supabase regression suite under active expansion; inventory and orphan-control gate scaffolded in-repo."
+  },
+  "mandatory_suite_status": "registered",
+  "suites": [
+    {
+      "name": "FalaMadeira E2E Smoke",
+      "status": "registered",
+      "suite_type": "smoke",
+      "runner_kind": "playwright",
+      "entrypoint": "node scripts/run-e2e-aidevops.mjs --suite smoke",
+      "playwright_project": "chromium",
+      "spec_filter": "tests/e2e/01-app-shell.spec.ts",
+      "notes": "Repo-local smoke slice. After seeding in AIDevOps, patch suite config to add config_file=playwright.config.ts until manifest config_file support lands platform-side."
+    },
+    {
+      "name": "FalaMadeira E2E Regression",
+      "status": "registered",
+      "suite_type": "ui",
+      "runner_kind": "playwright",
+      "entrypoint": "node scripts/run-e2e-aidevops.mjs --suite regression",
+      "playwright_project": "chromium",
+      "spec_filter": "tests/e2e",
+      "notes": "Dual-role admin + disposable-user live regression suite. After seeding in AIDevOps, patch suite config to add config_file=playwright.config.ts until manifest config_file support lands platform-side."
+    }
+  ]
+}
