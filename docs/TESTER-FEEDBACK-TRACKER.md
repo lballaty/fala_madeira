@@ -180,6 +180,20 @@
 - **Recommendation:** one profile per worktree/role (`-feat-dev`/`-support-dev`/`-content-dev`/`-release-dev`) scoped to its folder + per-role perms; provision secrets least-privilege — `.env.local` to worktrees needing Supabase, **`.env.deploy` ONLY to the release worktree**, `npm install` per worktree; a `scripts/setup-worktree.sh` could automate. Coordinate w/ Lane B + ai-dev-dotfiles.
 - **Status:** OPEN.
 
+### INFRA-6 — Instantiate the worktree fleet (NEXT SESSION — ready-to-run) — `OPEN`
+- **Reality verified 2026-07-14:** the fleet is **designed + documented (MULTI-AGENT-WORKFLOW) + enforced (branch guard, staged-deploy gate) but NOT stood up**. `git worktree list` shows ONLY the base `fala_madeira` on `develop`; there are **no `-feat`/`-support`/`-content`/`-release` folders and no `feat/*`/`fix/*`/`content/*` branches**. All work to date runs in the single `develop` checkout. (The earlier "add content worktree" commit added config/docs, not an actual worktree.)
+- **Do (from the base repo, one-time):**
+  ```
+  git worktree add ../fala_madeira-feat    -b feat/scratch      # Agent E
+  git worktree add ../fala_madeira-support -b fix/scratch       # Agent S
+  git worktree add ../fala_madeira-content -b content/scratch   # Agent C
+  git worktree add ../fala_madeira-release main                 # Release (on main)
+  ```
+  (topic branches renamed per task; base `fala_madeira/` stays on `develop` for D/T.)
+- **Provision each (INFRA-5):** `cp ../fala_madeira/.env.local .` into feat/support/content; **`.env.deploy` into `-release` ONLY**; `npm install` in each. Verify with `npm run check:branch` per folder + `git worktree list` (expect 5).
+- **Then (INFRA-5):** add `scripts/setup-worktree.sh <role>` to automate the above + per-role launcher profiles so an agent boots knowing its role.
+- **Owner:** next session (owner-driven). **Status:** OPEN — instantiation pending.
+
 ## Auth & security backlog (owner-requested 2026-07-14)
 
 ### AUTH-1 — Stronger sign-in: MFA + magic link + human (bot) verification — `OPEN (backlog)`
