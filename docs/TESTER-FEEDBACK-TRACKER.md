@@ -1,0 +1,78 @@
+# Tester Feedback & Support Workstream Tracker
+
+**File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/TESTER-FEEDBACK-TRACKER.md
+**Description:** Durable tracker for tester-reported bugs, the support-ticket workstream, and every deferred item in it. Standing rule (owner directive 2026-07-14): nothing is closed by declaring it "not our lane" — every deferral is logged here with owner + next action so it cannot get buried.
+**Author:** Lane B (with assistant)
+**Created:** 2026-07-14
+**Last Updated:** 2026-07-14
+**Last Updated By:** Lane B (with assistant)
+
+---
+
+## Status legend
+`OPEN` active · `IN PROGRESS` being worked · `DEFERRED` parked-but-tracked (never "dropped") · `DONE` complete/verified · `NEEDS DECISION` blocked on a product/owner call
+
+---
+
+## Tester-reported bugs
+
+### TB-1 — Placement level not reflected + not changeable (reporter: dancingtoothbrush) — `NEEDS DECISION`
+- **Report:** "It says I'm Absolute Beginner even though I said I could have a simple conversation, but I can't seem to change it."
+- **Root cause (confirmed, code-read 2026-07-14):**
+  - Onboarding `complete()` persists placement (`placementLevel` 0/1/2 from "Complete beginner / A few words / Basic conversation") **only to `platform.storage`** (`useOnboarding.ts` OnboardingRecord).
+  - Onboarding's `profiles.update` (`useOnboarding.ts:142-148`) writes **only** `has_accepted_terms` + `has_accepted_ai_usage` — it **never writes a level**.
+  - Home shows `getLevelName(profile?.unlocked_level || 1)` (`HomeView.tsx:151`) → with `unlocked_level` unset it defaults to **1 = "Absolute Beginner"**, regardless of placement.
+  - No post-onboarding UI to change level; `unlocked_level` is access-key/paywall gated (`HomeView.tsx:358` "Enter your access key to unlock Month N+1").
+- **Decision needed (owner):** the display conflates two concepts — **paywall `unlocked_level`** vs **proficiency/placement level**. Options:
+  - (A) onboarding placement sets `profile.unlocked_level` — simplest, BUT `unlocked_level` also gates paid content, so a free placement choice could unlock paid months. *(verify gating first)*
+  - (B) add a separate proficiency/practical-level field driven by placement; Home label reads that; keep `unlocked_level` for the paywall. Cleanest, small migration.
+  - (C) keep as-is but add a Settings "change my level" control + write placement→display level.
+- **Owed:** decision → fix → **e2e test** (owner asked explicitly for a test). Branch: `develop`. Likely DB touch (coordinate).
+- **Status:** OPEN, root cause confirmed, awaiting decision.
+
+---
+
+## Support-ticket workstream
+
+### SW-1 — Admin "all tickets" triage console — `DONE (on develop, unverified in full suite)`
+- Built on `develop`, commit `b439439`: admin sees ALL tickets (all statuses), status filter + text search, submitter/date, Reopen for closed. `resolveTicket` widened to accept `open`. tsc + lint clean. e2e `tests/e2e/admin/10-admin-all-tickets.spec.ts` added.
+- **Owed before it reaches testers:** full regression (SW-5) → merge `develop`→`main` → deploy (SW-6).
+
+### SW-2 — Data lands in DB (submit + Send Logs) — `DONE (verified by design + e2e)`
+- Ticket → `tickets` on submit; diagnostics → `logs` (`event='user_report'`) only on separate "Send Logs" click; the two rows are **not linked**. (Linking is SW-3 scope.)
+
+### SW-3 — Submission enrichment — `DEFERRED (designed, DB-coordinate)`
+- Reuse modal + **category** field; **contextual "Report a problem"** entry (pre-fill route + recent errors + correlation_id); structured **environment** capture (browser + device_type — mobile/tablet/desktop — via a `platform.diagnostics.getContext()` adapter). Owner decisions recorded: reuse+category+contextual; global affordance + error-state; single `resolution_note` (not threaded).
+- **DB (one batched migration, coordinate with DB/PF-13 agent):** `category`, `updated_at`, `device_type`, `browser_name`, `environment` (jsonb), `resolution_note`.
+
+### SW-4 — Agent skill to view/update tickets — `DEFERRED (design point open)`
+- A slash-command/skill so an agent can list + update tickets. **Design point:** needs a DB-access path — no service-role key in local env today (only anon + DB password; cloud psql blocked). Options: mint an admin session (as e2e does), or add a service-role secret path. Decide before building.
+
+### SW-5 — Full regression suite before promotion — `DEFERRED (owed now)`
+- Owner asked to run the full suite "once ready." SW-1 is ready; run `npm run test:e2e` on `develop`, triage, before merging to `main`.
+
+### SW-6 — Promote develop→main + deploy — `DEFERRED (after SW-5)`
+- Deploy ONLY from the release worktree/main (see INFRA-1). Testers get it after regression is green.
+
+### SW-7 — Support design doc — `DEFERRED (owed)`
+- `docs/SUPPORT-TICKETS-DESIGN.md` + `REQUIREMENTS-TRACKER.md` entry capturing SW-1..SW-4, per methodology. Deferred while shipping the critical console first.
+
+---
+
+## Infra / process deferrals
+
+### INFRA-1 — Release WORKTREE (not just branch) + agent instructions — `OPEN (owed this session)`
+- Owner directive: use a **release worktree** (separate checkout on `main`, deploys run only there) vs. a shared-branch model, so feature WIP on `develop` can never leak into a deploy. **Owed:** create the worktree + add agent instructions to `AGENTS.md`.
+
+### INFRA-2 — Coverage-inventory the new admin-ticket controls — `DEFERRED (coverage owner)`
+- The all-tickets search / status-filter / reopen controls are not in `tests/e2e/control-inventory.json`. Not blocking the current gate (it only fails on inventoried-but-uncovered controls), but they should be inventoried so the crawl-drift check stays honest.
+
+### INFRA-3 — dotfiles template fix push — `DEFERRED (owner/dotfiles)`
+- `commit-and-sync` co-author-trailer fix committed locally in `~/.ai-dev-dotfiles` (`238bb82`), unpushed (6 local commits, only 1 mine).
+
+---
+
+## Cross-references (owned elsewhere, not buried)
+- **Versioning rollout** → `aidevops/plans/plan-2026-07-14-versioning-rollout.yaml` (TODO #122).
+- **PF-13 schema drift, observability** → other agent (DB).
+- **EF-34/35 (Lane A specs), EF-36 (WS2 test-user isolation)** → `docs/E2E-LIVE-RUN-TRACKER.md`.
