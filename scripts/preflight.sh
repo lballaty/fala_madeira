@@ -136,6 +136,11 @@ run_hard "e2e coverage contract (npm run test:e2e:coverage)" npm run test:e2e:co
 run_audit
 run_hard "standards (scripts/check-standards.sh)" bash "${SCRIPT_DIR}/check-standards.sh"
 
+# CORS header contract — HARD gate. A client request header (e.g. traceparent) missing from the
+# edge Access-Control-Allow-Headers breaks the browser preflight → every edge call fails. This
+# regression (2026-07-14) was invisible to node/curl and mocked e2e, so it gets a build-time gate.
+run_hard "cors header contract (client↔edge allow-headers)" node "${SCRIPT_DIR}/check-cors-headers.mjs"
+
 # Observability §9 forbidden-pattern check — WARN mode during rollout (advisory, never blocks).
 # Invoked directly (not via an npm script) so it needs no package.json change; flip to
 # `node scripts/check-observability.mjs --strict` here to make it a hard gate later.

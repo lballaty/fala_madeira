@@ -7,8 +7,11 @@
 
 export const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
+  // NOTE: `traceparent` MUST stay listed — the client sends a W3C traceparent header on every
+  // functions.invoke (OBSERVABILITY-CONTRACT §8). A custom request header triggers a CORS
+  // preflight, and if it is not allowed here the browser blocks EVERY edge call (FunctionsFetchError).
   "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+    "authorization, x-client-info, apikey, content-type, traceparent",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 

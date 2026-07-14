@@ -8,6 +8,8 @@ coverage/
 !.env.example
 # Deploy credentials: .env.deploy is secret (git-ignored by .env* above); its template is committed.
 !.env.deploy.example
+# Local staging/approval state for the staged deploy (deploy-verpex.sh) — never commit.
+.deploy-state.json
 
 .admin-temp-credentials.txt
 

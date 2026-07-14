@@ -219,7 +219,7 @@ export default function App() {
 
   if (isAuthLoading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-ios-bg">
+      <div className="h-dvh flex items-center justify-center bg-ios-bg">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ios-blue" />
       </div>
     );
@@ -244,7 +244,7 @@ export default function App() {
   if (onboarding.isLoaded && !onboarding.isComplete) {
     return (
       <ErrorBoundary>
-        <div className="flex flex-col h-screen max-w-md mx-auto bg-surface border-x border-line relative overflow-hidden">
+        <div className="flex flex-col h-dvh max-w-md mx-auto bg-surface border-x border-line relative overflow-hidden">
           <Suspense
             fallback={
               <div className="h-full flex items-center justify-center">
@@ -269,7 +269,7 @@ export default function App() {
       {/* Responsive app shell (U2). Mobile (<md): single centered ~384px column with the bottom
           tab bar. Desktop (md+): a persistent left sidebar + full-width content row; the bottom
           bar is hidden and the sidebar drives the identical activeTab state. */}
-      <div className="flex flex-col md:flex-row h-screen max-w-md md:max-w-none mx-auto bg-surface border-x md:border-x-0 border-line relative overflow-hidden">
+      <div className="flex flex-col md:flex-row h-dvh max-w-md md:max-w-none mx-auto bg-surface border-x md:border-x-0 border-line relative overflow-hidden">
       {/* Desktop-only left nav (hidden below md). Same destinations as the bottom bar. */}
       <Sidebar
         navItems={NAV_ITEMS}

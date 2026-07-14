@@ -20,6 +20,9 @@
     "serve:local": "bash scripts/serve-local.sh",
     "test:local-artifact": "bash scripts/serve-local.sh",
     "deploy": "bash scripts/ship.sh",
+    "deploy:staging": "bash scripts/ship.sh --target staging",
+    "deploy:approve": "bash scripts/deploy-verpex.sh --approve",
+    "deploy:production": "bash scripts/ship.sh --target production",
     "test:e2e:regression": "node scripts/run-e2e-regression.mjs",
     "test:e2e:aidevops": "node scripts/run-e2e-aidevops.mjs",
     "test:e2e:coverage": "node scripts/check-interactive-coverage.mjs",
@@ -27,7 +30,9 @@
     "test:e2e:drift": "node scripts/check-inventory-drift.mjs",
     "test:schema-drift": "node scripts/check-schema-drift.mjs",
     "test:observability": "node scripts/check-observability.mjs",
-    "test:e2e:clean": "playwright test --project=clean"
+    "test:cors": "node scripts/check-cors-headers.mjs",
+    "test:e2e:clean": "playwright test --project=clean",
+    "check:branch": "node scripts/check-branch-discipline.mjs"
   },
   "dependencies": {
     "@capacitor/cli": "^8.4.1",

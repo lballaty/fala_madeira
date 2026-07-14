@@ -1,8 +1,14 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { readFileSync } from 'fs';
 import {defineConfig, loadEnv} from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+
+// Single source of truth for the app version: the root VERSION file (CalVer YYYY.MM.DD.N),
+// injected at build time as __APP_VERSION__ so the in-app About surface (EN-4) can show it.
+// Trimmed so a trailing newline never leaks into the UI string.
+const APP_VERSION = readFileSync(path.resolve(__dirname, 'VERSION'), 'utf-8').trim();
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
@@ -109,6 +115,7 @@ export default defineConfig(({mode}) => {
     define: {
       'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL),
       'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY),
+      __APP_VERSION__: JSON.stringify(APP_VERSION),
     },
     build: {
       rollupOptions: {

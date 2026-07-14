@@ -8,10 +8,11 @@
 // Created: 2026-07-09
 
 import { useEffect, useState } from 'react';
-import { BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, Shield, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
+import { BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, Shield, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useTheme, type ThemePreference } from '../../hooks/useTheme';
 import { LegalPage, LegalDocId } from '../legal';
+import { AboutModal } from '../about';
 import { geminiService } from '../../services/geminiService';
 import { TUTORS } from '../../data/tutors';
 import { User } from '@supabase/supabase-js';
@@ -125,6 +126,7 @@ export const SettingsView = ({
   // Legal pages are self-contained (static content, no server state), so their
   // open/closed state lives here rather than in useSettings.
   const [openLegalDoc, setOpenLegalDoc] = useState<LegalDocId | null>(null);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   // Appearance (light/dark) — three-way preference (System/Light/Dark) applied to
   // <html data-theme> and persisted by the useTheme hook (localStorage 'fm_theme').
@@ -529,6 +531,16 @@ export const SettingsView = ({
           <ChevronRight className="w-4 h-4" />
         </button>
         <button
+          onClick={() => setIsAboutOpen(true)}
+          className="w-full p-4 flex items-center justify-between text-ios-blue font-medium active:bg-ios-bg border-b border-ios-bg"
+        >
+          <div className="flex items-center">
+            <Info className="w-5 h-5 mr-3" />
+            About
+          </div>
+          <ChevronRight className="w-4 h-4" />
+        </button>
+        <button
           onClick={() => setOpenLegalDoc('terms')}
           className="w-full p-4 flex items-center justify-between text-ios-blue font-medium active:bg-ios-bg border-b border-ios-bg"
         >
@@ -651,6 +663,12 @@ export const SettingsView = ({
       />
 
       <LegalPage doc={openLegalDoc} onClose={() => setOpenLegalDoc(null)} />
+      <AboutModal
+        open={isAboutOpen}
+        onClose={() => setIsAboutOpen(false)}
+        onOpenLegal={(doc) => { setIsAboutOpen(false); setOpenLegalDoc(doc); }}
+        onOpenSupport={() => { setIsAboutOpen(false); setIsSupportModalOpen(true); }}
+      />
     </div>
   );
 };

@@ -36,8 +36,8 @@ export interface AdminQueuesState {
   resolveCorrection: (row: LessonCorrection, decision: 'approved' | 'rejected') => Promise<void>;
   /** Lesson request: mark reviewed or implemented. */
   resolveRequest: (row: LessonRequest, status: 'reviewed' | 'implemented') => Promise<void>;
-  /** Support ticket: mark in-progress or closed. */
-  resolveTicket: (row: Ticket, status: 'in-progress' | 'closed') => Promise<void>;
+  /** Support ticket: reopen, mark in-progress, or close. */
+  resolveTicket: (row: Ticket, status: 'open' | 'in-progress' | 'closed') => Promise<void>;
   /** Video suggestion: approve or reject. */
   resolveVideo: (row: VideoSuggestion, decision: 'approved' | 'rejected') => Promise<void>;
 }
@@ -169,7 +169,7 @@ export const useAdminQueues = ({
   );
 
   const resolveTicket = useCallback(
-    (row: Ticket, status: 'in-progress' | 'closed') =>
+    (row: Ticket, status: 'open' | 'in-progress' | 'closed') =>
       updateStatus('tickets', row, status, setTickets, `Ticket marked ${status}`),
     [updateStatus],
   );
