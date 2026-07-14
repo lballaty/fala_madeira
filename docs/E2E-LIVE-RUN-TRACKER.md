@@ -20,8 +20,13 @@
 - **`npm run deploy` PASSED the full ship gate** (tsc + vitest + build + e2e coverage contract) and rsynced dist to Verpex. Prod smoke `@smoke` = **6/6 green**; `manifest.webmanifest` HTTP 200. Live at https://falamadeira.searchingfool.com.
 - **Ships:** EF-33/LT10 supabase-js post-reload deadlock fix (024683b), and the a11y fixes (9aed0db — PF-11 contrast + PF-12 control labels). Owner: hard-refresh once post-deploy (service worker).
 
-### Run 18 — 2026-07-14 (in progress at time of writing) — regression check after a11y fixes
-- Running the full suite post-9aed0db to confirm the color-token + label changes caused no functional regressions; result appended when complete.
+### Run 18 — 2026-07-14 — regression check after a11y fixes + newest Lane A batch
+- **102 passed · 2 failed of 104 (6.5m).** Suite grew 87 → 104: another Lane A batch (specs user/38–45) landed on disk during the deploy.
+- **a11y fixes VERIFIED — all 4 axe smokes GREEN in the full suite; ZERO regressions from the color-token + aria-label changes** (every previously-passing functional test still passes; the files I edited — index.css/SettingsView/HomeView/PracticeHubView — did not break anything).
+- **The only 2 failures are BRAND-NEW specs, not regressions and not from my a11y work** (they exercise VocabularyView / Missions / Simulator, which I did not touch):
+  - **EF-34 · user/44 (`44-listening-vocab-controls.spec.ts:65`, "Play the word" audio button):** waits 15s for a vocab completion/empty heading (`All caught up` / `No vocabulary here yet` / `Session complete`) that never appears — deck-state assumption (same shared-SRS-state family as EF-30). This is the CG-18 audio-trigger coverage being added; good. Owner: new-spec/state (Lane A). Status: open.
+  - **EF-35 · user/45 (`45-missions-simulator-controls.spec.ts:47`):** waits for a difficulty-level button matching `/^L\d/` (excluding "mission ready") that never renders — selector/state assumption on the missions/simulator backlog. Owner: new-spec/selector (Lane A). Status: open.
+- **Artifacts:** `artifacts/e2e-run18-2026-07-14.tgz`.
 
 ### Run 17 — 2026-07-13 ~18:45 CEST — new batch ef1c90f (functional tests for 11 previously-silent controls)
 - **83 passed · 4 failed of 87 (5.4m, exit 1).** Suite grew 80 → 87: batch adds admin/09 (reject-correction), user/39 (alt tutor + theme Light/System ×2 tests), user/40 (SRS grade-variants Again/Hard/Easy + Almost/Missed), user/41 (Learning review-mode toggle + Phrase-Library filter). Inventory 142 → 153.
