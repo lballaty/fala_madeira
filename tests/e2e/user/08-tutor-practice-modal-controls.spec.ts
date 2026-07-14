@@ -42,10 +42,12 @@ test.describe('tutor practice modal controls', () => {
     await expect(page.getByRole('button', { name: 'Turn off help mode' })).toHaveAttribute('aria-pressed', 'true');
     coverage.touch('tutor.practice.help_toggle', 'outcome-asserted');
 
-    const soundToggle = page.getByRole('button', { name: 'Mute tutor audio' });
-    await expect(soundToggle).toHaveAttribute('aria-pressed', 'true');
+    // TB-5: tutor read-aloud now defaults OFF (opt-in) — the toggle starts as "Unmute" / not
+    // pressed, so a fresh user is NOT auto-read to. Clicking it enables read-aloud.
+    const soundToggle = page.getByRole('button', { name: 'Unmute tutor audio' });
+    await expect(soundToggle).toHaveAttribute('aria-pressed', 'false');
     await soundToggle.click();
-    await expect(page.getByRole('button', { name: 'Unmute tutor audio' })).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.getByRole('button', { name: 'Mute tutor audio' })).toHaveAttribute('aria-pressed', 'true');
     coverage.touch('tutor.practice.audio_toggle', 'outcome-asserted');
 
     const input = tutorDialog.getByPlaceholder('Type in Portuguese...');

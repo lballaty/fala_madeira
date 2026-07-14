@@ -69,6 +69,17 @@ export const readCacheLimitBytes = (): number => {
   return config.audio.cacheMaxBytes;
 };
 
+/**
+ * TB-9: whether generated audio can be PERSISTED across sessions on this platform. The web blob
+ * store is IndexedDB-backed and silently degrades to an in-memory map when IndexedDB is
+ * unavailable (private-browsing / storage blocked) — audio still plays but is lost on reload, so
+ * it "isn't saved". This is the common, detectable case (IndexedDB absent). Note: it cannot detect
+ * IndexedDB present-but-open()-refused; that rarer case still needs a per-browser repro. Native
+ * (Capacitor) persists, so this is only meaningful on web.
+ */
+export const isBlobStorePersistent = (): boolean =>
+  typeof globalThis !== 'undefined' && !!(globalThis as { indexedDB?: unknown }).indexedDB;
+
 export const audioCache = {
   buildKey,
 
