@@ -1,0 +1,81 @@
+name: observability-centralization
+created: 2026-07-14
+description: >
+  Close the observability gaps documented in docs/08-observability/OBSERVABILITY-CONTRACT.md:
+  first-class logs schema, a service-role log-sink that removes the pre-auth persistence hole,
+  edge-function self-persistence, global uncaught-error handlers, W3C trace context, the unlogged
+  client sites, and the TTS-503 graceful fallback. Consumed by /execute-plan (topological DAG,
+  resumable via plans/.plan-state-observability.yaml). Schema + edge changes require two-pass live
+  verification (prod source-of-truth, then cloud-dev) before being marked verified.
+contract: docs/08-observability/OBSERVABILITY-CONTRACT.md
+
+steps:
+  - id: obs-schema
+    description: "WP-SCHEMA: extend public.logs to first-class the observability fields — add level, category, event_type, session_id, request_id, correlation_id, trace_id columns; make user_id nullable (diagnostic/pre-auth rows); details -> jsonb; keep device_info. Retain SELECT owner-or-admin RLS. Write the migration, apply to the working DB, and two-pass verify column presence."
+    command: "agent-task: write supabase/migrations/00010_observability_logs_schema.sql (additive; nullable user_id; jsonb details) and apply via `node apply-migrations.js supabase/migrations/00010_observability_logs_schema.sql`"
+    validation: "test -f supabase/migrations/00010_observability_logs_schema.sql && node scripts/check-schema-drift.mjs; test $? -le 1"
+    depends_on: []
+    fatal_on_failure: true
+
+  - id: obs-log-sink
+    description: "WP-SINK: new supabase/functions/log-sink edge function. Accepts a batched array of client log events (INCLUDING anonymous/pre-auth, user_id may be null), validates + size/rate-caps the payload, and inserts to public.logs with the service-role client (RLS bypassed). Reuses _shared/http.ts errorResponse envelope + per-request requestId. This removes the auth.uid()=user_id pre-auth limitation."
+    command: "agent-task: create supabase/functions/log-sink/index.ts (service-role insert, anonymous-capable, batch + size cap, structured envelope)"
+    validation: "test -f supabase/functions/log-sink/index.ts && grep -q 'service' supabase/functions/log-sink/index.ts"
+    depends_on: [obs-schema]
+    fatal_on_failure: true
+
+  - id: obs-client-sink
+    description: "WP-CLIENT-SINK: route src/lib/logger.ts persist queue to the log-sink edge function (functions.invoke) instead of the direct RLS-gated table insert. Client still stamps user_id/session/request/correlation when known; pre-auth events now flush too. Preserve ring buffer + dev echo + batching."
+    command: "agent-task: change logger.ts flushPersistQueue to POST batched events to the log-sink; drop the RLS wait-for-auth gate"
+    validation: "grep -q \"log-sink\" src/lib/logger.ts && npm run lint"
+    depends_on: [obs-log-sink]
+    fatal_on_failure: true
+
+  - id: obs-global-handlers
+    description: "WP-GLOBAL: install window.addEventListener('error') + ('unhandledrejection') in src/main.tsx BEFORE app mount, routing to logger.critical with category SYSTEM_HEALTH (filename/lineno/colno + reason in details). Closes the uncaught-error/rejection blind spot."
+    command: "agent-task: add global error + unhandledrejection handlers in src/main.tsx wired to logger.critical"
+    validation: "grep -q \"unhandledrejection\" src/main.tsx && grep -q \"addEventListener('error'\" src/main.tsx && npm run lint"
+    depends_on: []
+    fatal_on_failure: false
+
+  - id: obs-edge-persist
+    description: "WP-EDGE-PERSIST: gemini + delete-account edge functions persist their ERROR/CRITICAL events to public.logs via the existing service-role admin client (not console-only). Read the incoming traceparent header and include trace_id in the persisted row + errorResponse details."
+    command: "agent-task: add a _shared/persistLog.ts helper (service-role insert) and call it at each edge error choke point in gemini/index.ts and delete-account/index.ts"
+    validation: "test -f supabase/functions/_shared/persistLog.ts && grep -rq \"persistLog\" supabase/functions/gemini/index.ts"
+    depends_on: [obs-schema]
+    fatal_on_failure: false
+
+  - id: obs-trace
+    description: "WP-TRACE: generate a W3C traceparent per request-level flow on the client, send it as a header on every functions.invoke; edge reads it and threads trace_id/span_id into logs + errorResponse. Enables client<->edge<->db join beyond correlation_id."
+    command: "agent-task: add traceparent generation in geminiService.invokeEdgeFunction + header; parse in _shared/http.ts and thread to persistLog"
+    validation: "grep -q \"traceparent\" src/services/geminiService.ts && grep -rq \"traceparent\" supabase/functions/_shared && npm run lint"
+    depends_on: [obs-edge-persist, obs-client-sink]
+    fatal_on_failure: false
+
+  - id: obs-client-sites
+    description: "WP-CLIENT-SITES: route the currently-unlogged client error sites through logger — speech onError (useTutorSession.ts:197, ResponseSpeed.tsx:93), listening playback (ListeningView.tsx:137/167), swallowed sync-queue flushes (sync-queue.ts:235/396/410/419 -> logger.warn), storage read (paths/index.ts:123)."
+    command: "agent-task: add logger.warn/error calls at the six unlogged sites per the contract"
+    validation: "npm run lint && [ $(grep -rn 'catch (() => undefined)' src/lib/sync-queue.ts | wc -l) -eq 0 ]"
+    depends_on: []
+    fatal_on_failure: false
+
+  - id: obs-tts-fallback
+    description: "WP-TTS-FALLBACK: on edge 503 TTS_UNAVAILABLE the client must degrade to browser Web Speech (per the decided TTS design) instead of surfacing an error toast. Verify the fallback path exists in useSpeechPlayback/geminiService; wire it if missing. Log a WARN (not ERROR) when falling back."
+    command: "agent-task: ensure playSpeech falls back to platform Web Speech on TTS_UNAVAILABLE; add a WARN log"
+    validation: "grep -rq \"TTS_UNAVAILABLE\" src/ && npm run lint"
+    depends_on: []
+    fatal_on_failure: false
+
+  - id: obs-ci-gate
+    description: "WP-CI-GATE: scripts/check-observability.mjs enforcing the §9 forbidden patterns (bare console.error/warn in error paths, showToast('error') without a paired logger call, hardcoded fallback URLs). Warn-mode first; wire into scripts/preflight.sh."
+    command: "agent-task: create scripts/check-observability.mjs + add npm script test:observability + wire into preflight (warn mode)"
+    validation: "test -f scripts/check-observability.mjs && node scripts/check-observability.mjs; test $? -le 1"
+    depends_on: [obs-client-sites, obs-global-handlers]
+    fatal_on_failure: false
+
+  - id: obs-verify
+    description: "WP-VERIFY: whole-project gate + observability sanity. Runs lint + unit tests + build; confirms the schema-drift gate is green for logs; two-pass live-verify the logs schema (prod then cloud-dev). Marks the plan complete."
+    command: "npm run lint && npm test -- --run && npm run build"
+    validation: "npm run lint && npm test -- --run && npm run build"
+    depends_on: [obs-schema, obs-log-sink, obs-client-sink, obs-global-handlers, obs-edge-persist, obs-trace, obs-client-sites, obs-tts-fallback, obs-ci-gate]
+    fatal_on_failure: true
