@@ -94,7 +94,7 @@ export const DailySessionView = ({
             <ChevronLeft className="w-5 h-5" />
             <span>Exit</span>
           </button>
-          <h2 className="font-bold ml-1">Today's session</h2>
+          <h2 className="font-bold ml-1">Daily session</h2>
         </div>
         {loadingFallback}
       </div>
