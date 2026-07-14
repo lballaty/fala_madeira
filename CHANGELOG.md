@@ -14,6 +14,16 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
+## 2026.07.14.3
+
+- **Fix (TB-7): returning users no longer restart onboarding on every login.** The
+  onboarding gate now also honors the DB consent signal
+  (`profiles.has_accepted_terms && has_accepted_ai_usage`) — the terminal
+  onboarding step — so a returning user skips the entire first-run flow on any
+  device, and Terms are never re-asked once accepted. A heal effect writes the
+  local mirror so it never recurs on that device. First step toward the broader
+  session-continuity requirement (DF11 / docs/USER-WORKFLOWS-AND-STORIES.md).
+
 ## 2026.07.14.2
 
 First release cut through the staged deploy pipeline. Ships accumulated
