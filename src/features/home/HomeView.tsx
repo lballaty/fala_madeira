@@ -179,7 +179,7 @@ export const HomeView = ({
           <Flame className="w-4 h-4 text-orange-500" />
           <span>{freeze.displayStreak}</span>
         </div>
-        <div className="inline-flex items-center space-x-1 bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300 rounded-full px-2 py-0.5 text-[10px] font-bold">
+        <div className="inline-flex items-center space-x-1 bg-green-50 dark:bg-green-950/40 text-green-900 dark:text-green-300 rounded-full px-2 py-0.5 text-[10px] font-bold">
           <Snowflake className="w-3 h-3" />
           <span>{freeze.freezes} {freeze.freezes === 1 ? 'freeze' : 'freezes'}</span>
         </div>
@@ -204,11 +204,11 @@ export const HomeView = ({
     <section className="bg-green-500/10 p-4 rounded-2xl">
       <p className="text-[10px] text-ios-gray uppercase font-bold tracking-wider">You can now…</p>
       {progress.completed >= 1 && competencePhrases.length > 0 ? (
-        <p className="font-semibold mt-1 text-sm text-green-800 dark:text-green-300 leading-snug">
+        <p className="font-semibold mt-1 text-sm text-green-900 dark:text-green-300 leading-snug">
           {competencePhrases.join(' · ')}
         </p>
       ) : (
-        <p className="font-medium mt-1 text-sm text-green-800 dark:text-green-300/80 leading-snug">
+        <p className="font-medium mt-1 text-sm text-green-900 dark:text-green-300/80 leading-snug">
           Finish your first situation and your real-world wins show up here.
         </p>
       )}
