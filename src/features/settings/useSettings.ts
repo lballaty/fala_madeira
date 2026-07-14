@@ -291,8 +291,13 @@ export const useSettings = ({
   }, [isSoundEnabled, user, profile, scheduleProfileWrite]);
 
   useEffect(() => {
+    // TB-8: do NOT persist/reflect the provisional default (config 5) before the server value has
+    // loaded — otherwise the initial render clobbers localStorage with 5, so the client keeps
+    // showing 5 instead of the configured global limit (verified server value: 20). Only persist
+    // once the authoritative value is loaded; then localStorage always matches the server.
+    if (!hasLoadedGlobalVoiceLimit) return;
     localStorage.setItem('global_voice_limit', globalVoiceLimit.toString());
-    if (hasLoadedGlobalVoiceLimit && profile?.role === 'admin' && supabase) {
+    if (profile?.role === 'admin' && supabase) {
       scheduleProfileWrite('global_voice_limit', () =>
         supabase
           .from('global_settings')
