@@ -5,3 +5,7 @@
 // Created: 2026-07-09
 
 /// <reference types="vite/client" />
+
+// Injected by vite `define` from the root VERSION file (CalVer YYYY.MM.DD.N). Used by the
+// in-app About surface (EN-4). Declared as a global so modules can read it without a cast.
+declare const __APP_VERSION__: string;
