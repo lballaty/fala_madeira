@@ -1244,6 +1244,198 @@
       "covered_by": [
         { "spec": "tests/e2e/user/41-learning-review-and-phrase-filters.spec.ts", "depth": "outcome-asserted" }
       ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.quiz.answer_input",
+      "selector": {"css": "input[placeholder=\"Type the answer...\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/42-quiz-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.quiz.play_audio",
+      "selector": {"role": "button", "name": "Play audio"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/42-quiz-controls.spec.ts", "depth": "clicked" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.quiz.close",
+      "selector": {"role": "button", "name": "Close quiz"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/42-quiz-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.request_theme.theme_input",
+      "selector": {"css": "input[placeholder=\"e.g., Wine Tasting, Football...\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.request_theme.desc_input",
+      "selector": {"css": "textarea[placeholder=\"What would you like to learn?\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.suggest_video.url_input",
+      "selector": {"css": "input[placeholder=\"https://youtube.com/watch?v=...\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.suggest_video.note_input",
+      "selector": {"css": "textarea[placeholder=\"Why is this video good for this lesson?\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.correction.input",
+      "selector": {"css": "textarea[placeholder=\"Describe the correction needed...\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.vocab.query_input",
+      "selector": {"css": "input[placeholder=\"Enter a word or phrase...\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.vocab.search",
+      "selector": {"role": "button", "name": "Search"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "learning",
+      "id": "learning.lesson.play_pronunciation",
+      "selector": {"role": "button", "name": "Play pronunciation"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "clicked" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.listening.dictation_input",
+      "selector": {"role": "textbox", "name": "Type what you heard"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/44-listening-vocab-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.listening.playback_speed",
+      "selector": {"role": "group", "name": "Playback speed"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/44-listening-vocab-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.play_word",
+      "selector": {"role": "button", "name": "Play the word"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/44-listening-vocab-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.statement_input",
+      "selector": {"role": "textbox", "name": "My mission statement"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/45-missions-simulator-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.missions.review_input",
+      "selector": {"role": "textbox", "name": "After-action note"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/45-missions-simulator-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.simulator.play_line",
+      "selector": {"role": "button", "name": "Play line"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/45-missions-simulator-controls.spec.ts", "depth": "clicked" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.simulator.end_conversation",
+      "selector": {"role": "button", "name": "End conversation"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/45-missions-simulator-controls.spec.ts", "depth": "clicked" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.support.subject_input",
+      "selector": {"css": "input[placeholder=\"e.g., Audio not playing\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.support.description_input",
+      "selector": {"css": "textarea[placeholder=\"Please describe the issue in detail...\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.tts.provider_key_input",
+      "selector": {"css": "input[placeholder=\"e.g. TTS_ELEVENLABS_KEY_ALICE\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "tutor",
+      "id": "tutor.chat.input",
+      "selector": {"css": "input[placeholder=\"Type in Portuguese...\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "auth",
+      "id": "auth.email_input",
+      "selector": {"css": "input[placeholder=\"Email\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.close",
+      "selector": {"role": "button", "name": "Close admin"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
     }
   ]
 }
