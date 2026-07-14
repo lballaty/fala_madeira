@@ -107,6 +107,14 @@
 - **Implementation hint:** centralize at the shared audio seam — `src/hooks/useSpeechPlayback.ts` / `geminiService.playSpeech` (resolves when playback STARTS, `onEnded` when it stops) — expose a `status: idle|loading|playing` and a shared `AudioButton` that reflects it + guards double-taps. One change covers all call sites.
 - **Owner:** Agent E (`feat/*`). Priority: future release (not blocking). **Status:** OPEN (backlog).
 
+### EN-2 — Local-data transparency + "clear my local data" — `OPEN (backlog, future release)`
+- **Report (owner):** a user has no way to see what's stored locally on their device, or to clear/delete it.
+- **What exists today:** Settings shows **audio-cache** usage ("Used: X of Y MB") + a **"Clear cache"** button (`handleClearAudioCache`) + a save-audio-on-device toggle. That's the ONLY local data surfaced/clearable.
+- **Gap:** the rest of local storage is invisible + unclearable — IndexedDB `KV_STORE` (onboarding record, path selection, mastery/SRS + progress cache, offline sync queue, settings), `localStorage` (prefixed keys), and PWA service-worker caches. No "what's stored" view beyond audio; no "clear all local data / reset device data."
+- **Feature:** a "Local data" settings section listing categories + sizes (use `navigator.storage.estimate()` for the total) and a **"Clear local data"** action. **Must warn** that the offline **sync queue** may hold *unsynced* writes (lost on clear); progress/mastery are server-backed (safe to clear when signed in). Keep the existing audio "Clear cache" as one row.
+- **Implementation:** `platform.storage` needs `enumerate`/`clear` helpers over `KV_STORE` + `BLOB_STORE` + the `localStorage` prefix + SW `caches`. Fits the "calm, honest, real consent" principle (data transparency).
+- **Owner:** Agent E (`feat/*`). Priority: future release. **Status:** OPEN (backlog).
+
 ---
 
 ## Cross-references (owned elsewhere, not buried)
