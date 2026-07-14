@@ -16,6 +16,7 @@ import {
   PlatformError,
   ScheduledNotification,
 } from '../types';
+import { logger } from '../../lib/logger';
 
 // Deterministic string → signed int32 id (FNV-1a, folded to the int32 range the
 // plugin requires on iOS/Android). Collisions are astronomically unlikely for
@@ -63,7 +64,11 @@ export const createNativeNotificationsAdapter = (): NotificationsAdapter => {
         const ln = await plugin();
         const { display } = await ln.requestPermissions();
         return mapPermission(display);
-      } catch {
+      } catch (error) {
+        logger.warn('NATIVE_NOTIFICATION_PERMISSION_FAILED', 'native notification permission request failed', {
+          category: 'SYSTEM_HEALTH',
+          error,
+        });
         return 'unsupported';
       }
     },
@@ -99,7 +104,12 @@ export const createNativeNotificationsAdapter = (): NotificationsAdapter => {
       try {
         const ln = await plugin();
         await ln.cancel({ notifications: [{ id: toNumericId(id) }] });
-      } catch {
+      } catch (error) {
+        logger.warn('NATIVE_NOTIFICATION_CANCEL_FAILED', 'native notification cancel failed; ignoring missing or stale notification', {
+          category: 'SYSTEM_HEALTH',
+          error,
+          details: { id },
+        });
         // Cancelling a notification that was never scheduled is a no-op.
       }
     },

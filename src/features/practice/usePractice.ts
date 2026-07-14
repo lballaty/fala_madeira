@@ -79,9 +79,19 @@ export const usePractice = ({
       const updatedCompleted = [...(profile?.completed_lessons || []), selectedLesson.id];
       setProfile(prev => ({ ...prev!, completed_lessons: updatedCompleted }));
       if (supabase && user) {
-        supabase.from('profiles').update({ completed_lessons: updatedCompleted }).eq('id', user.id).then(({ error }) => {
-          if (error) handleSupabaseError(error, 'updateCompletedLessons', 'profiles');
-        }, (err) => handleSupabaseError(err, 'updateCompletedLessons', 'profiles'));
+        void (async () => {
+          try {
+            const { error } = await supabase
+              .from('profiles')
+              .update({ completed_lessons: updatedCompleted })
+              .eq('id', user.id);
+            if (error) {
+              handleSupabaseError(error, 'updateCompletedLessons', 'profiles');
+            }
+          } catch (error) {
+            handleSupabaseError(error, 'updateCompletedLessons', 'profiles');
+          }
+        })();
       }
     }
   };

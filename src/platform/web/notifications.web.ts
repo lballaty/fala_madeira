@@ -13,6 +13,7 @@ import {
   PlatformError,
   ScheduledNotification,
 } from '../types';
+import { logger } from '../../lib/logger';
 
 const notificationCtor = (): typeof Notification | null => {
   const w = globalThis as { Notification?: unknown };
@@ -53,6 +54,10 @@ export const createWebNotificationsAdapter = (): NotificationsAdapter => {
       try {
         return mapPermission(await Ctor.requestPermission());
       } catch (e) {
+        logger.warn('WEB_NOTIFICATION_PERMISSION_FAILED', 'web notification permission request failed', {
+          category: 'SYSTEM_HEALTH',
+          error: e,
+        });
         throw new PlatformError(
           'notifications',
           'permission-denied',
@@ -64,7 +69,13 @@ export const createWebNotificationsAdapter = (): NotificationsAdapter => {
 
     async schedule(notification: ScheduledNotification): Promise<void> {
       const Ctor = notificationCtor();
-      if (!Ctor) return; // unsupported platform — documented no-op
+      if (!Ctor) {
+        logger.warn('WEB_NOTIFICATION_UNSUPPORTED', 'web notification scheduling requested on an unsupported platform', {
+          category: 'SYSTEM_HEALTH',
+          details: { id: notification.id },
+        });
+        return; // unsupported platform — documented no-op
+      }
 
       // Re-scheduling the same id replaces the pending notification.
       const existing = pending.get(notification.id);
