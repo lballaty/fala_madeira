@@ -52,6 +52,11 @@ Every capability must serve one of **understand · speak · use · belong**. Als
 - **Docs & trackers:** `/update-docs` (Tiers 1/2/4 canonical/derived/architecture docs) and `/update-trackers` (Tier 3 trackers) after code changes; hard boundary between them.
 - **Coordination:** `shared-file-coordination` before editing shared/canonical files (global queue + queuectl).
 - **Versioning:** `/version-bump` in the commit-staging workflow when source changes (never via pre-commit hook).
+- **Branching & worktrees (multi-agent shared checkout — MANDATORY):** the base repo checkout is shared by multiple agents on one device, so a branch switch in it conflicts — `git checkout`/`switch` yanks the working tree out from under every other agent. Therefore we use **worktrees, never branch switches in the base checkout**:
+  - **Dev happens on `develop`** in the base checkout (`…/fala_madeira`); push to `origin/develop`. **Never `git checkout`/`switch` another branch in the base checkout.**
+  - **`main` = release/production.** Any work needing a different branch (release, hotfix, throwaway spike) uses a **dedicated git worktree**: `git worktree add ../fala_madeira-<purpose> <branch>` → work there → `git worktree remove` when done.
+  - **Cutting a release** (in a `main` worktree only): `git worktree add ../fala_madeira-release main` → `git merge --no-ff develop` → `/version-bump` (CalVer) + update `CHANGELOG.md` → commit → tag `vYYYY.MM.DD.N` → `npm run deploy` (`scripts/ship.sh` → Verpex) → push `main` + tags → `git worktree remove ../fala_madeira-release`.
+  - Version bumps, release commits, tags, and deploys happen **only** in the release worktree — never in the shared `develop` checkout.
 - **UI/behavior verification:** `/ui-test` (live UI flows, session/correlation capture) and `/verify` (run the app, observe the change).
 - **Security:** `/security-review` on pending changes touching auth/RLS/secrets/edge functions.
 - **Session:** `/session-refresh` to re-anchor on this file + canonical docs; `/handoff` at end of session.
