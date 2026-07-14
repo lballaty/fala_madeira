@@ -114,6 +114,13 @@ export const config = {
      * download. The run also stops early if the cache byte budget is reached.
      */
     maxDownloadLines: 2000,
+    /**
+     * EN-7 resilience: per-clip retry for transient synthesis failures (429/503/network/
+     * timeout) so a large "Download for offline" run stops failing wholesale. `downloadMaxAttempts`
+     * is total tries per clip (1 = no retry); backoff is exponential from `downloadRetryBaseMs`.
+     */
+    downloadMaxAttempts: 3,
+    downloadRetryBaseMs: 800,
   },
 
   voice: {

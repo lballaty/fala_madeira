@@ -97,3 +97,49 @@ describe('downloadForOffline', () => {
     expect(synthesizeCached).not.toHaveBeenCalled();
   });
 });
+
+// EN-7: resilience (retry/backoff) + the finest download unit (situationId scope).
+describe('downloadForOffline resilience + granularity (EN-7)', () => {
+  it('retries a transient clip failure with backoff and counts it as synthesized', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    vi.mocked(synthesizeCached).mockReset()
+      .mockRejectedValueOnce(new Error('429 transient'))
+      .mockResolvedValue(new ArrayBuffer(8));
+
+    vi.useFakeTimers();
+    const p = downloadForOffline({});
+    await vi.runAllTimersAsync(); // flush the backoff sleep + microtasks
+    const result = await p;
+    vi.useRealTimers();
+
+    expect(synthesizeCached).toHaveBeenCalledTimes(2); // failed once → retried → succeeded
+    expect(result.synthesized).toBe(1);
+    expect(result.failed).toBe(0);
+    expect(result.status).toBe('completed');
+  });
+
+  it('gives up after downloadMaxAttempts, counts the clip failed, and continues the run', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Falha'])]);
+    vi.mocked(synthesizeCached).mockReset().mockRejectedValue(new Error('503 persistent'));
+
+    vi.useFakeTimers();
+    const p = downloadForOffline({});
+    await vi.runAllTimersAsync();
+    const result = await p;
+    vi.useRealTimers();
+
+    expect(synthesizeCached).toHaveBeenCalledTimes(3); // config.offline.downloadMaxAttempts
+    expect(result.failed).toBe(1);
+    expect(result.synthesized).toBe(0);
+    expect(result.status).toBe('completed'); // one bad clip does not fail the whole batch
+  });
+
+  it('passes situationId through to the repository filter (the finest download unit)', async () => {
+    vi.mocked(contentRepository.listSituations).mockReset().mockResolvedValue([situation(['Olá'])]);
+    vi.mocked(synthesizeCached).mockReset().mockResolvedValue(new ArrayBuffer(8));
+    await downloadForOffline({ situationId: 's-cafe' });
+    expect(contentRepository.listSituations).toHaveBeenCalledWith(
+      expect.objectContaining({ situationId: 's-cafe' }),
+    );
+  });
+});
