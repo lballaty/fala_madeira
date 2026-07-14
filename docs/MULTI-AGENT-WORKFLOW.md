@@ -108,19 +108,22 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
    [ ] cd fala_madeira-release/  (on main)
    [ ] git merge --no-ff develop     (reconcile any main-only commits)
    [ ] version bump + CHANGELOG + tag vYYYY.MM.DD.N
-   [ ] deploy to STAGING (testfalamadeira.searchingfool.com)  ;  verify there first   ← pre-release step
-   [ ] deploy to PROD (→ Verpex falamadeira.searchingfool.com)  ;  verify prod
+   [ ] npm run deploy:staging     (→ testfalamadeira.searchingfool.com)  ;  VERIFY on staging   ← pre-release step
+   [ ] npm run deploy:approve     (records approval of the staged commit)
+   [ ] npm run deploy:production  (→ falamadeira.searchingfool.com — REFUSED unless staged+approved)  ;  verify prod
    [ ] git push main + tags
    [ ] back-merge main → develop
 ```
 
 ---
 
-> **Staging / pre-release deploy — `testfalamadeira.searchingfool.com` (in flight — other agent):** the staging step is a pre-release
-> verification target, separate from prod. The committed deploy scripts today ship only to prod
-> (`falamadeira.searchingfool.com`); the staging target/flag is being built. It runs from the
-> **release worktree** (on `main`), same as prod — deploy to staging → verify → then prod. Finalize
-> this section + `scripts/deploy-verpex.sh` when the mechanism lands. Tracked as **INFRA-4**.
+> **Staging / pre-release deploy — `testfalamadeira.searchingfool.com` (LANDED, commit `57062fb`):** `scripts/deploy-verpex.sh`
+> takes `--target staging|production` + a separate `--approve`, run from the **release worktree** (on `main`), same server as prod.
+> The pre-release step is **ENFORCED IN THE SCRIPT** (not just this checklist): `npm run deploy:production` REFUSES unless the
+> current git commit was staged **and** approved — approval is tied to `git rev-parse HEAD` (`.deploy-state.json`, git-ignored),
+> so a new commit invalidates a stale approval and the sequence can't be skipped by any agent. Directory guards prevent either
+> target writing into the other's dir. **Operator prereqs (one-time):** set `VERPEX_STAGING_REMOTE_PATH=/home/gomadeir/testfalamadeira.searchingfool.com`
+> in `.env.deploy`; add `https://testfalamadeira.searchingfool.com/**` to Supabase Auth Site/Redirect URLs. Tracked as **INFRA-4**.
 
 ## 8. Setup choice — **Model B adopted (2026-07-14)**
 
