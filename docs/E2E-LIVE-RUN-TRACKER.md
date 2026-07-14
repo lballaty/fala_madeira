@@ -16,6 +16,11 @@
 
 ## Run log
 
+### Deploy — 2026-07-14 — HELD (pending other-agent coordination) ⛔
+- **A production deploy was requested but is HELD.** `scripts/ship.sh` builds `dist/` from the **working tree** (no git-clean guard / no checkout), so a deploy now would bundle the **other agent's uncommitted in-flight work** (modified `src/features/practice/usePractice.ts`, `src/features/session/DailySessionView.tsx`, `src/platform/{native,web}/notifications*.ts`; deleted `src/features/tutor/UpgradeModal.tsx`; deleted `src/platform/web/probe.ts`) into the production bundle. Shipping their unreviewed observability/paywall WIP to prod is out of Lane B scope and unsafe.
+- **Ready-to-ship (committed HEAD `83307a5`), NOT yet live:** PF-11b a11y contrast fix (`111bc86`, `--fm-brand` `#0063CE→#0057B7`, verified). Also note `111bc86` + the run-21 tracker commits are **unpushed** as of this note.
+- **UNBLOCK CONDITION (other agent):** either (a) commit / confirm the uncommitted `src/` WIP above is release-ready, then deploy the combined committed state; or (b) explicitly hand off a clean deploy window so Lane B can ship committed HEAD from a throwaway worktree (excludes WIP). Decision recorded 2026-07-14 by operator: **hold + coordinate.**
+
 ### Run 21 — 2026-07-14 — 102/108; practice-hub a11y contrast FIXED+verified (PF-11b); 2 new failures triaged (1 EF-36 family, 1 other-agent)
 - **102 passed · 6 failed of 108 (8.5m), REAL_EXIT=1.** Suite grew 105→108 (new observability specs user/48–49). **Run made against the current working tree, which carries the other agent's uncommitted observability/paywall work** (incl. `UpgradeModal.tsx` deletion, modified `09-account-deletion.spec.ts`) — so some failures reflect their in-flight state, not committed code.
 - **3 failures are the known open items:** user/44 (EF-34), user/45 (EF-35), user/47 (EF-36) — all reproduced exactly as re-triaged above.
