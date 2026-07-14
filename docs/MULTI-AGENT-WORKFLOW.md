@@ -51,7 +51,7 @@ So agents don't share a branch — they each get their own *folder on disk*, on 
                         └───────────┬───────────────┘      → cut a release.
                                     │  (in the release folder only)
                                     ▼
-                                  main  ──►  bump version + tag  ──►  🚀 npm run deploy → testers
+                                  main  ──►  bump + tag  ──►  🧪 deploy to TEST URL (staging)  ──►  verify  ──►  🚀 deploy to PROD → testers
                                     │
                                     └──────── back-merge main → develop (carry the version bump) ───►
 ```
@@ -108,12 +108,19 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
    [ ] cd fala_madeira-release/  (on main)
    [ ] git merge --no-ff develop     (reconcile any main-only commits)
    [ ] version bump + CHANGELOG + tag vYYYY.MM.DD.N
-   [ ] npm run deploy   (→ Verpex)   ;  verify prod
+   [ ] deploy to the TEST URL (staging / pre-release)  ;  verify there first   ← other agent owns this step
+   [ ] deploy to PROD (→ Verpex falamadeira.searchingfool.com)  ;  verify prod
    [ ] git push main + tags
    [ ] back-merge main → develop
 ```
 
 ---
+
+> **Staging / pre-release deploy (in flight — other agent):** the "test URL" step is a pre-release
+> verification target, separate from prod. The committed deploy scripts today ship only to prod
+> (`falamadeira.searchingfool.com`); the staging target/flag is being built. It runs from the
+> **release worktree** (on `main`), same as prod — deploy to staging → verify → then prod. Finalize
+> this section + `scripts/deploy-verpex.sh` when the mechanism lands. Tracked as **INFRA-4**.
 
 ## 8. Setup choice — **Model B adopted (2026-07-14)**
 
