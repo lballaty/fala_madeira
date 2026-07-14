@@ -126,10 +126,13 @@
 
 ### EN-4 — In-app "About": release version + release notes — `OPEN (backlog, future release)`
 - **Report (owner):** users need to see the release version + release notes in the app (an "About" link or similar).
+- **Report (owner, 2026-07-14):** the **macOS window menu-bar "About FalaMadeira" is empty** — owner wants version there + a link to release notes **for each version** (history, not just current).
+- **CONSTRAINT / finding (2026-07-14):** on macOS this app is an **installed PWA** — packaging is Capacitor **iOS/Android + web only** (`@capacitor/ios`, no `@capacitor/electron`, no Tauri/Electron macOS target). The native macOS menu-bar "About" is **provided by the browser/PWA shell and CANNOT be populated by our web code.** So the owner ask is delivered as an **in-app About surface**, not the native menu item. (On iOS Capacitor, native app-info is settable separately, but that is iOS, not the macOS menu.) Do **not** promise native-menu content for the PWA.
 - **Sources exist:** `VERSION` (CalVer `2026.07.14.1`) + `CHANGELOG.md` are the version + release-notes sources. Version is **not yet exposed to the client at runtime** (vite has a `define:` block but no version define); no About/version UI exists.
-- **Feature:** inject the version at build (vite `define` `__APP_VERSION__` from `VERSION`), add an "About" entry in Settings showing version/build + release notes (rendered from `CHANGELOG.md` entries).
+- **Feature:** inject the version at build (vite `define` `__APP_VERSION__` from `VERSION`), add an "About" entry in Settings showing version/build + release notes. Render **per-version** history from `CHANGELOG.md` entries (each version's notes), not only the current version, to satisfy the "release notes for each version" ask.
 - **Deployment-workflow tie-in (owner ask):** the release cut MUST bump `VERSION` + add a `CHANGELOG.md` entry (release notes) — already in the MULTI-AGENT-WORKFLOW §7 release checklist; About surfaces exactly those. Make the CHANGELOG entry a **hard release gate** so About always shows current notes. (Cross-refs the versioning rollout, TODO #122.)
-- **Owner:** Agent E (`feat/*`) + release-workflow. Priority: future release. **Status:** OPEN (backlog).
+- **Regression (per §3 methodology):** vitest for the version-define/CHANGELOG parser + an e2e opening Settings → About asserting the current version string + at least one release-notes entry render.
+- **Owner:** Agent E (`feat/*`) + release-workflow. Priority: future release (owner may pull into the imminent release — small: vite define + Settings About + CHANGELOG render). **Status:** OPEN (backlog).
 
 ### EN-5 — Quiz results: persist + admin visibility + regression — `OPEN (backlog; owner-identified gap)`
 - **Gap (confirmed 2026-07-14):** quiz **scores/results are NOT stored** — only pass/fail survives as `profiles.completed_lessons` (score ≥ 3). No score value, per-question data, attempt history, or timestamp; the score doesn't feed the SRS/mastery engine.
