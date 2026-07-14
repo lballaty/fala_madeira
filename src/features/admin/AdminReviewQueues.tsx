@@ -6,6 +6,7 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-10
 
+import { useMemo, useState } from 'react';
 import { Check, RefreshCw, X } from 'lucide-react';
 import { AdminQueuesState } from './useAdminQueues';
 
@@ -90,6 +91,20 @@ export const AdminReviewQueues = ({ queues }: AdminReviewQueuesProps) => {
   const openTickets = tickets.filter((t) => t.status === 'open' || t.status === 'in-progress');
   const pendingVideos = videos.filter((v) => v.status === 'pending');
 
+  // Support-ticket triage: admins see ALL tickets (the data is already loaded), filterable by
+  // status + free-text search. Closed tickets are now visible and reopenable — the old flat
+  // open-only queue hid resolved tickets, so testers' reports vanished once triaged.
+  const [ticketQuery, setTicketQuery] = useState('');
+  const [ticketStatus, setTicketStatus] = useState<'all' | 'open' | 'in-progress' | 'closed'>('open');
+  const filteredTickets = useMemo(() => {
+    const q = ticketQuery.trim().toLowerCase();
+    return tickets.filter((t) => {
+      if (ticketStatus !== 'all' && t.status !== ticketStatus) return false;
+      if (!q) return true;
+      return t.subject.toLowerCase().includes(q) || t.description.toLowerCase().includes(q);
+    });
+  }, [tickets, ticketQuery, ticketStatus]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -149,11 +164,32 @@ export const AdminReviewQueues = ({ queues }: AdminReviewQueuesProps) => {
         )}
       </Section>
 
-      <Section title="Support Tickets" count={openTickets.length}>
-        {openTickets.length === 0 ? (
-          <EmptyRow label="open tickets" />
+      <Section title="Support Tickets" count={filteredTickets.length}>
+        <div className="flex items-center gap-2">
+          <input
+            type="search"
+            value={ticketQuery}
+            onChange={(e) => setTicketQuery(e.target.value)}
+            placeholder="Search subject or description…"
+            aria-label="Search tickets"
+            className="flex-1 min-w-0 text-xs px-2 py-1.5 bg-surface rounded-lg focus:outline-none"
+          />
+          <select
+            value={ticketStatus}
+            onChange={(e) => setTicketStatus(e.target.value as typeof ticketStatus)}
+            aria-label="Filter tickets by status"
+            className="text-xs py-1.5 px-2 bg-surface rounded-lg focus:outline-none"
+          >
+            <option value="all">All</option>
+            <option value="open">Open</option>
+            <option value="in-progress">In progress</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        {filteredTickets.length === 0 ? (
+          <EmptyRow label="tickets match this filter" />
         ) : (
-          openTickets.map((row) => (
+          filteredTickets.map((row) => (
             <div key={row.id} className="p-3 bg-ios-bg rounded-xl flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
@@ -161,13 +197,39 @@ export const AdminReviewQueues = ({ queues }: AdminReviewQueuesProps) => {
                   <Pill status={row.status} />
                 </div>
                 <p className="text-xs mt-1 break-words">{row.description}</p>
+                <p className="text-[10px] text-ios-gray mt-1">
+                  {row.user_id.slice(0, 8)} · {new Date(row.created_at).toLocaleDateString()}
+                </p>
               </div>
-              <ActionButtons
-                onApprove={() => void resolveTicket(row, 'closed')}
-                onReject={() => void resolveTicket(row, 'in-progress')}
-                approveLabel="Close ticket"
-                rejectLabel="Mark in-progress"
-              />
+              <div className="flex gap-1.5 shrink-0">
+                {row.status !== 'closed' && (
+                  <button
+                    onClick={() => void resolveTicket(row, 'closed')}
+                    aria-label="Close ticket"
+                    className="px-2 py-1 text-[10px] font-bold bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-200 dark:hover:bg-green-900 transition-colors"
+                  >
+                    Close
+                  </button>
+                )}
+                {row.status === 'open' && (
+                  <button
+                    onClick={() => void resolveTicket(row, 'in-progress')}
+                    aria-label="Mark in-progress"
+                    className="px-2 py-1 text-[10px] font-bold bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900 transition-colors"
+                  >
+                    In progress
+                  </button>
+                )}
+                {row.status === 'closed' && (
+                  <button
+                    onClick={() => void resolveTicket(row, 'open')}
+                    aria-label="Reopen ticket"
+                    className="px-2 py-1 text-[10px] font-bold bg-yellow-100 dark:bg-yellow-950/40 text-yellow-800 dark:text-yellow-300 rounded-lg hover:bg-yellow-200 dark:hover:bg-yellow-900 transition-colors"
+                  >
+                    Reopen
+                  </button>
+                )}
+              </div>
             </div>
           ))
         )}
