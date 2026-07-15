@@ -1,0 +1,59 @@
+# File: plans/.plan-state-en8-hosted-audio.yaml
+# Description: Resumable execution state for plan-2026-07-15-en8-hosted-audio.yaml
+#   (/execute-plan-autonomously). NB: the generic .plan-state.yaml is occupied by the completed
+#   plan-2026-07-09-full-product.yaml — do not overwrite it; this EN-8 run uses its own state file.
+#   Work happens in the feat worktree fala_madeira-feat on branch feat/en8-server-hosted-audio.
+#   OPERATOR-GATED steps (Verpex spike, shared-prod migration apply, edge/verpex deploys, pregen
+#   run, flag flip, verify-win) CANNOT run autonomously → marked `deferred-operator` and surfaced,
+#   not force-failed; the walk executes code steps and skips server/infra steps it cannot perform.
+# Author: Claude (EN-8 owner)
+# Created: 2026-07-15
+# Last Updated: 2026-07-15
+
+plan: plans/plan-2026-07-15-en8-hosted-audio.yaml
+worktree: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat
+branch: feat/en8-server-hosted-audio
+mode: autonomous
+
+steps:
+  setup-branch:               { status: succeeded, note: "feat/en8 off origin/develop 7dd8af3" }
+  verpex-feasibility-spike:   { status: deferred-operator, note: "operator-run on staging Verpex; gates server phases only" }
+  extract-audio-key:          { status: succeeded, commit: fba5d7f }
+  test-audio-key:             { status: succeeded, commit: fba5d7f }
+  extract-lines:              { status: succeeded, commit: e21b311, note: "moved to content/lines.ts; validated via audio-download.test 8/8; incidentally removed a pre-existing stray NUL byte from the file" }
+  test-lines-moveonly:        { status: succeeded, commit: 83e6361, note: "lines.test.ts locks full enumeration + dedup" }
+  enumerate-roleplay-options: { status: succeeded, commit: 83e6361, note: "option.text enumerated in default voice; 13/13 tests" }
+  commit-phase1:              { status: succeeded, note: "satisfied by incremental commits fba5d7f/e21b311/83e6361" }
+  client-voicetype-mirror:    { status: succeeded, commit: 0cba5b9 }
+  test-voicetype-parity:      { status: succeeded, commit: 0cba5b9, note: "3/3; mirrors router.ts mapping table" }
+  normalize-keys-and-hostable:{ status: pending, note: "NEXT — big step: edit geminiService + 4 caller hooks + audio-download; voiceType keying + hostable flag" }
+  route-listening-shared:     { status: pending }
+  test-key-and-scope:         { status: pending }
+  commit-phase2:              { status: pending }
+  pinned-store-adapter:       { status: pending }
+  pinned-store-migration-test:{ status: pending }
+  wire-pinned-cache:          { status: pending }
+  logout-clears-lru-cache:    { status: pending }
+  commit-phase3:              { status: pending }
+  config-server-audio:        { status: pending }
+  client-server-tier:         { status: pending }
+  test-tier-order:            { status: pending }
+  commit-phase4:              { status: pending }
+  storage-bucket-migration:   { status: deferred-operator, note: "applies to SHARED prod DB" }
+  edge-audiostore-module:     { status: pending }
+  edge-tts-writeback:         { status: pending }
+  edge-audio-sync-endpoint:   { status: pending }
+  deploy-edge:                { status: deferred-operator }
+  commit-phase5:              { status: pending }
+  verpex-pull-cron:           { status: pending }
+  deploy-rsync-exclude:       { status: pending }
+  deploy-verpex-crons-both:   { status: deferred-operator }
+  commit-phase6:              { status: pending }
+  pregen-script:              { status: pending }
+  run-pregen-level0:          { status: deferred-operator }
+  enable-writeback-flag:      { status: deferred-operator }
+  coverage-report-script:     { status: pending }
+  commit-phase7:              { status: pending }
+  full-gate:                  { status: pending }
+  update-docs:                { status: pending }
+  verify-win:                 { status: deferred-operator, note: "gating proof; operator confirms on staging" }

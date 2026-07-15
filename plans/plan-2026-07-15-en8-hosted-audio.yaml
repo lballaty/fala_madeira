@@ -1,0 +1,445 @@
+# File: plans/plan-2026-07-15-en8-hosted-audio.yaml
+# Description: Executable implementation plan for EN-8 — pre-generate + multi-tier hosted audio
+#   to cut TTS cost and eliminate 503s. Consumed by /execute-plan-autonomously or /execute-plan.
+#   Architecture owner-approved across the 2026-07-15 planning session; hardened per Lane A review
+#   (COORD-2). See EN-8 + COORD-1 + COORD-2 in docs/TESTER-FEEDBACK-TRACKER.md.
+#
+#   READ ORDER (client, synthesizeCached): device cache -> device pinned storage -> Verpex
+#     (same-origin GET /audio/<key>) -> Supabase Storage (public URL) -> configured provider
+#     (router chain, NEVER hardcoded gemini).
+#   WRITE-BACK (Option B, owner-chosen; SCOPED per COORD-2 BLOCKING-1): only CURATED, enumerable
+#     content is server-hosted. The client passes hostable:true ONLY for curated text (phrases/
+#     vocab/lesson/dialogue/scripted-roleplay/pre-gen); tutor free-chat + simulator FREE-mode pass
+#     hostable:false and are NEVER uploaded. The edge write-back is additionally gated by an env flag
+#     TTS_BUFFER_WRITEBACK (default off; COORD-2 BLOCKING-2) and only hosts DEFAULT-rate (24kHz) PCM.
+#   POPULATE: the pre-gen script warms the Supabase buffer DIRECTLY (service role); a read-only PHP
+#     cron ON THE VERPEX BOX pulls new clips Supabase->/audio/ (public list+GET, NO Supabase key) and
+#     POSTs the keys it CONFIRMED-copied to an edge delete endpoint -> COPY-CONFIRMED Supabase deletion
+#     (COORD-2 ROBUSTNESS-1). pg_cron only sweeps 7-day-orphaned buffer objects as a backstop.
+#   SHARED BACKEND (COORD-2 BLOCKING-2, owner-accepted): the Supabase project + edge fns are shared
+#     staging+prod; 00012 + the edge deploy land in the shared prod DB. Safe because write-back is
+#     curated-only + flag-gated + non-blocking. Both staging AND prod Verpex crons stand up before the
+#     flag is flipped on.
+#   FEASIBILITY: a Verpex spike (write+serve, PHP outbound HTTPS, cron) gates all server-side work.
+#   OBSERVABILITY (owner-required): tts_source (tier), per-level COVERAGE report, and cron heartbeat/
+#     failures all route to public.logs with correlation IDs so an ADMIN can verify what is where.
+# Author: Claude (with owner libor@labguide.io)
+# Created: 2026-07-15
+# Last Updated: 2026-07-15
+# Last Updated By: Claude
+#
+# ALIGNMENT (checked 2026-07-15 vs origin/develop fad6e18 + trackers + worktrees + global queue):
+#   - COORD-1 RECONCILED (c3ffddb/7f9bf20): linesForSituation already enumerates dialogues +
+#     roleplay.nodes[].npc_text. Lane A also decided option audio = configurable + on-demand tap-to-hear
+#     AND asked to ADD RoleplayOption text to the enumerator for offline -> folded into Phase 1 below.
+#   - COORD-2 (Lane A plan review): 2 BLOCKING + 2 SEQ + 2 ROBUSTNESS + minors — ALL accepted + resolved
+#     in this revision. SEQ-2 already fixed (pushed; origin/develop=fad6e18). tracker-spec marked skip.
+#   - Owner decision 2026-07-15: accept shared-backend trial (flag-gated), not a separate Supabase project.
+#   - TB-12 reuses playSpeech->synthesizeCached->audioCache (synergy). No live uncommitted src WIP at plan time.
+
+# CONVENTION: WT = the EN-8 worktree = /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat
+#   All bash uses `git -C "$WT"` / `npm --prefix "$WT"` (per global CLAUDE.md bash rule). Paths relative to WT.
+#   Commits are path-form + per work package. STAGING host = testfalamadeira.searchingfool.com.
+
+plan:
+  title: >
+    EN-8 phase-1 trial — normalize TTS cache keys to voiceType, add a pinned on-device store, and
+    layer a Verpex+Supabase server audio tier (edge writes Supabase for CURATED text only, flag-gated;
+    a read-only Verpex cron pulls to /audio and copy-confirms Supabase deletion), proven on level-0
+    content so pre-generated audio serves without hitting the TTS provider.
+
+  goal_validation:
+    - "npm --prefix \"$WT\" run lint && lint:eslint && test:run all pass on the EN-8 branch; build succeeds."
+    - "npm --prefix \"$WT\" run test:observability passes (write-back failures + cron heartbeat route through the canonical logger; no swallowed errors / hardcoded fallbacks)."
+    - "Unit: synthesizeCached tier order (device hit -> 0 edge; verpex 200 -> no supabase/provider; supabase 200 -> no provider; miss -> provider then cache)."
+    - "Unit: write-back is SCOPED — hostable:false (tutor free-chat / simulator free-mode) NEVER uploads; only hostable:true + default-rate uploads, and only when TTS_BUFFER_WRITEBACK=on."
+    - "Unit: client voiceTypeForTutor mirror === server mapping; linesForSituation enumerates roleplay.nodes[].npc_text AND RoleplayOption text."
+    - "Verpex spike GO: write+serve /audio; PHP outbound HTTPS to a Supabase public URL; cron runs a PHP script on schedule."
+    - "verify-win (GATING): after both Verpex crons + pre-gen, a sample of L0 keys returns 200 on Verpex AND public.logs shows NO provider tts_* event for those keys."
+
+  steps:
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 0 — branch, (skip stale tracker-spec), Verpex feasibility spike (gates server work)
+    # ----------------------------------------------------------------------------------------------
+    - id: setup-branch
+      description: Cut feat/en8-server-hosted-audio off the NOW-CURRENT origin/develop (fad6e18 — includes reconciled COORD-1 + TB-11b; COORD-2 SEQ-2 resolved) in the feat worktree; install deps.
+      command: >
+        WT=/Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat;
+        git -C "$WT" fetch origin -q &&
+        git -C "$WT" checkout -B feat/en8-server-hosted-audio origin/develop &&
+        npm --prefix "$WT" install
+      validation: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat rev-parse --abbrev-ref HEAD | grep -qx feat/en8-server-hosted-audio"
+      depends_on: []
+      fatal_on_failure: true
+
+    # COORD-2 SEQ-1: tracker-spec is SKIPPED — COORD-1 is already reconciled (c3ffddb/7f9bf20) and its
+    # option-audio decision must not be clobbered. Any EN-8-spec note added later must be ADDITIVE and
+    # must NOT touch COORD-1/COORD-2. (No executable step.)
+
+    - id: verpex-feasibility-spike
+      description: >
+        OPERATOR-ASSISTED go/no-go on STAGING Verpex — (1) create REMOTE_PATH/audio/ and serve a file
+        same-origin; (2) PHP outbound HTTPS GET to a Supabase public URL; (3) cron runs a PHP script on
+        schedule. Deliver a GO/NO-GO note; on NO-GO revisit topology before any server phase.
+      command: >
+        # operator @ testfalamadeira: (a) ssh mkdir REMOTE_PATH/audio + write _spike.bin; curl it -> bytes match;
+        # (b) upload deploy/verpex/spike/_probe.php (fetch a Supabase public URL, echo status); curl -> OUTBOUND_OK;
+        # (c) cPanel cron every min runs deploy/verpex/spike/_cron.php writing a timestamp; confirm it updates; clean up.
+      validation: "# operator confirms all three in the GO/NO-GO note."
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 1 — pure extractions (move-only), THEN the COORD-1/7f9bf20 enumerator extension
+    # ----------------------------------------------------------------------------------------------
+    - id: extract-audio-key
+      description: Create src/lib/audioKey.ts (pure hashText + buildKey + new keyToServerPath) and re-export buildKey from src/lib/audioCache.ts (no behavior change).
+      command: "# Write src/lib/audioKey.ts; Edit src/lib/audioCache.ts to import+re-export buildKey."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run -- src/lib/__tests__/audioKey.test.ts"
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: test-audio-key
+      description: Unit test — buildKey shape unchanged; keyToServerPath stable, collision-safe, URL/path-safe (no traversal).
+      command: "# Write src/lib/__tests__/audioKey.test.ts"
+      validation: "npm --prefix \"$WT\" run test:run -- src/lib/__tests__/audioKey.test.ts"
+      depends_on: [extract-audio-key]
+      fatal_on_failure: true
+
+    - id: extract-lines
+      description: Create src/content/lines.ts with linesForSituation moved VERBATIM (pure) and re-import in src/lib/audio-download.ts (no behavior change yet).
+      command: "# Write src/content/lines.ts (move linesForSituation + AudioLine); Edit src/lib/audio-download.ts to import it."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run -- src/lib/__tests__/audio-download.test.ts"
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: test-lines-moveonly
+      description: Guard test src/content/__tests__/lines.test.ts — linesForSituation output byte-identical to pre-move; fixture MUST include dialogues + roleplay.nodes[] (npc_text/npc_voice_type) + patterns + vocabulary so roleplay/dialogue enumeration is locked (COORD-1).
+      command: "# Write src/content/__tests__/lines.test.ts"
+      validation: "npm --prefix \"$WT\" run test:run -- src/content/__tests__/lines.test.ts"
+      depends_on: [extract-lines]
+      fatal_on_failure: true
+
+    - id: enumerate-roleplay-options
+      description: >
+        BEHAVIOR CHANGE (COORD-1 7f9bf20 / Lane A decision) — extend linesForSituation to ALSO enumerate
+        RoleplayOption text so scripted option prompts are offline-downloadable + pre-hostable (option
+        audio is on-demand tap-to-hear at play time). Each option text keyed with its node's npc_voice_type
+        (or default). Update audio-download.test.ts + lines.test.ts expectations to include the option lines.
+      command: "# Edit src/content/lines.ts to push RoleplayOption text (voiceType = node.npc_voice_type ?? default); update the two tests' expected counts."
+      validation: "npm --prefix \"$WT\" run test:run -- src/content/__tests__/lines.test.ts src/lib/__tests__/audio-download.test.ts"
+      depends_on: [test-lines-moveonly]
+      fatal_on_failure: true
+
+    - id: commit-phase1
+      description: Commit the extractions + roleplay-option enumeration.
+      command: >
+        git -C "$WT" commit src/lib/audioKey.ts src/lib/audioCache.ts src/lib/__tests__/audioKey.test.ts src/content/lines.ts src/lib/audio-download.ts src/content/__tests__/lines.test.ts src/lib/__tests__/audio-download.test.ts -m "refactor(audio): extract pure audioKey + lines modules; enumerate roleplay-option text (EN-8; COORD-1)"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'audioKey + lines'"
+      depends_on: [test-audio-key, enumerate-roleplay-options]
+      fatal_on_failure: false
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 2 — key normalization to resolved voiceType + hostable-flag threading
+    # ----------------------------------------------------------------------------------------------
+    - id: client-voicetype-mirror
+      description: Create src/lib/voiceType.ts — client mirror of server voiceTypeForTutor (router.ts) so client + server resolve the same archetype.
+      command: "# Write src/lib/voiceType.ts (age>40 -> older; female -> teacher; else local; undefined -> teacher)."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run -- src/lib/__tests__/voiceType.test.ts"
+      depends_on: [extract-audio-key]
+      fatal_on_failure: true
+
+    - id: test-voicetype-parity
+      description: Unit test — client mirror === server mapping for every tutor gender/age combination.
+      command: "# Write src/lib/__tests__/voiceType.test.ts"
+      validation: "npm --prefix \"$WT\" run test:run -- src/lib/__tests__/voiceType.test.ts"
+      depends_on: [client-voicetype-mirror]
+      fatal_on_failure: true
+
+    - id: normalize-keys-and-hostable
+      description: >
+        (1) Key ALL TTS by resolved voiceType — synthesizeCached keys by explicit voiceType OR
+        voiceTypeForTutor(tutor); update useSpeechPlayback, useTutorSession, useDrillAudio, useEntryAudio,
+        audio-download.ts so keys agree. (2) COORD-2 BLOCKING-1 — add a `hostable` option to synthesizeCached;
+        CURATED callers (phrase/vocab/lesson/dialogue/scripted-roleplay + the offline downloader) pass
+        hostable:true; tutor FREE-chat (useTutorSession) + simulator FREE-mode pass hostable:false. The
+        flag is forwarded to the edge tts body (consumed in Phase 5); it does NOT change local caching.
+      command: "# Edit src/services/geminiService.ts (voiceType key + hostable option + forward to tts body) + the 4 caller hooks + audio-download.ts."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [client-voicetype-mirror, enumerate-roleplay-options]
+      fatal_on_failure: true
+
+    - id: route-listening-shared
+      description: Route the Listening engine through synthesizeCached/buildKey (shared (voiceType,text) key space; hostable:true — curated); preserve the non-default-sample-rate uncached path.
+      command: "# Edit src/features/practice/listening/listeningAudio.ts to call synthesizeCached({voiceType, hostable:true})."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [normalize-keys-and-hostable]
+      fatal_on_failure: true
+
+    - id: test-key-and-scope
+      description: Unit — (a) a phrase played and the same phrase enumerated by the downloader resolve to the SAME key (closes the EN-7 mismatch); (b) hostable is true for curated paths and false for tutor free-chat / simulator free-mode.
+      command: "# Extend src/services/__tests__/geminiService.test.ts + src/lib/__tests__/audio-download.test.ts."
+      validation: "npm --prefix \"$WT\" run test:run -- src/services/__tests__/geminiService.test.ts src/lib/__tests__/audio-download.test.ts"
+      depends_on: [route-listening-shared, test-voicetype-parity]
+      fatal_on_failure: true
+
+    - id: commit-phase2
+      description: Commit key normalization + hostable scoping.
+      command: >
+        git -C "$WT" commit src/lib/voiceType.ts src/lib/__tests__/voiceType.test.ts src/services/geminiService.ts src/hooks/useSpeechPlayback.ts src/features/tutor/useTutorSession.ts src/features/practice/patterns/useDrillAudio.ts src/features/phrases/useEntryAudio.ts src/lib/audio-download.ts src/features/practice/listening/listeningAudio.ts src/services/__tests__/geminiService.test.ts src/lib/__tests__/audio-download.test.ts -m "fix(audio): normalize keys to voiceType + scope server-hosting via hostable flag (EN-8; COORD-2 BLOCKING-1)"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'hostable flag'"
+      depends_on: [test-key-and-scope]
+      fatal_on_failure: false
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 3 — on-device pinned storage tier
+    # ----------------------------------------------------------------------------------------------
+    - id: pinned-store-adapter
+      description: Add a pinned blob tier — DB_VERSION 2->3 (non-destructive create-if-missing of 'audio_pinned'), getPinnedBlob/setPinnedBlob/pinnedUsage/clearPinned (no LRU eviction). Update platform/types.ts, storage.web.ts, storage.native.ts.
+      command: "# Edit src/platform/types.ts; src/platform/web/storage.web.ts (DB_VERSION=3, pinned store + CRUD); src/platform/native/storage.native.ts."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run -- src/platform/web/__tests__"
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: pinned-store-migration-test
+      description: Extend storage web test — open v2 with blobs, reopen v3, assert 'audio' blobs persist AND 'audio_pinned' exists (locks non-destructive upgrade; QA-1b).
+      command: "# Write/extend src/platform/web/__tests__/storage.web.test.ts"
+      validation: "npm --prefix \"$WT\" run test:run -- src/platform/web/__tests__/storage.web.test.ts"
+      depends_on: [pinned-store-adapter]
+      fatal_on_failure: true
+
+    - id: wire-pinned-cache
+      description: audioCache gains pinned get/set; downloadForOffline writes pinned; synthesizeCached reads pinned AFTER cache, BEFORE the server tiers.
+      command: "# Edit src/lib/audioCache.ts; src/lib/audio-download.ts; src/services/geminiService.ts."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [pinned-store-adapter, normalize-keys-and-hostable]
+      fatal_on_failure: true
+
+    - id: logout-clears-lru-cache
+      description: >
+        SEC-1 WP4 (cross-user device bleed — DEFERRED to EN-8 by Lane B, owner-decided 2026-07-15):
+        on logout, CLEAR the LRU audio cache (can hold user-private tutor free-chat audio) but KEEP the
+        pinned store (curated public content only — no PII; preserves offline downloads for the next user).
+        Wire audioCache.clear() (LRU only) into App.tsx onLogoutCleanup/handleLogout; ensure clear() does
+        NOT touch the pinned store. Coordinate the App.tsx edit with Lane B's SEC-1 WP2 (also edits logout).
+      command: "# Edit src/services (audioCache.clear = LRU-only, pinned untouched) + src/App.tsx onLogoutCleanup to call it; add a unit test: logout clears LRU, pinned survives."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run -- src/lib/__tests__/audioCache.test.ts"
+      depends_on: [wire-pinned-cache]
+      fatal_on_failure: true
+
+    - id: commit-phase3
+      description: Commit the pinned device-storage tier + logout LRU-clear (SEC-1 WP4).
+      command: >
+        git -C "$WT" commit src/platform/types.ts src/platform/web/storage.web.ts src/platform/native/storage.native.ts src/platform/web/__tests__/storage.web.test.ts src/lib/audioCache.ts src/lib/__tests__/audioCache.test.ts src/lib/audio-download.ts src/services/geminiService.ts src/App.tsx -m "feat(audio): pinned on-device store (never LRU-evicted) + clear LRU audio cache on logout (EN-8; fixes EN-7 eviction + SEC-1 WP4 device bleed)"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'pinned on-device'"
+      depends_on: [pinned-store-migration-test, wire-pinned-cache, logout-clears-lru-cache]
+      fatal_on_failure: false
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 4 — client server-tier lookup (Verpex -> Supabase -> configured provider)
+    # ----------------------------------------------------------------------------------------------
+    - id: config-server-audio
+      description: Add config — audio.verpexBase (VITE_AUDIO_VERPEX_BASE, default '/audio'), audio.supabaseAudioBucket (default 'tts-audio'), Supabase public-object-URL helper.
+      command: "# Edit src/config.ts (+ src/vite-env.d.ts if a new VITE_ define is used)."
+      validation: "npm --prefix \"$WT\" run lint"
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: client-server-tier
+      description: In synthesizeCached, after device tiers miss, GET Verpex /audio/<keyToServerPath> then the Supabase public URL; 200 (raw PCM) -> decode + play + write device cache, NO provider call; non-200/error -> next tier, finally the configured provider (router chain). Never break playback. Emit tts_source (tier=cache|pinned|verpex|supabase|provider) for observability.
+      command: "# Edit src/services/geminiService.ts — fetchServerTier(key) between pinned read and edge call; log tts_source."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run -- src/services/__tests__/geminiService.test.ts"
+      depends_on: [config-server-audio, wire-pinned-cache]
+      fatal_on_failure: true
+
+    - id: test-tier-order
+      description: Unit — full tier order with mocked storage + fetch + invokeEdgeFunction (device=0 calls; verpex 200=no supabase/provider; supabase 200=no provider; miss=provider then cache); provider stays the router chain.
+      command: "# Write/extend src/services/__tests__/geminiService.test.ts"
+      validation: "npm --prefix \"$WT\" run test:run -- src/services/__tests__/geminiService.test.ts"
+      depends_on: [client-server-tier]
+      fatal_on_failure: true
+
+    - id: commit-phase4
+      description: Commit the client server-tier lookup.
+      command: >
+        git -C "$WT" commit src/config.ts src/vite-env.d.ts src/services/geminiService.ts src/services/__tests__/geminiService.test.ts -m "feat(audio): client server-tier lookup device->verpex->supabase->provider + tts_source obs (EN-8)"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'server-tier lookup'"
+      depends_on: [test-tier-order]
+      fatal_on_failure: false
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 5 — Supabase buffer + SCOPED, FLAG-GATED edge write-back + copy-confirmed delete endpoint
+    # ----------------------------------------------------------------------------------------------
+    - id: storage-bucket-migration
+      description: >
+        Author + apply migration 00012_audio_buffer_bucket.sql (lands in the SHARED prod DB — COORD-2
+        BLOCKING-2, owner-accepted) — create public 'tts-audio' bucket; RLS: anon SELECT (read+LIST);
+        admin/service INSERT (for pre-gen direct upload) + DELETE (copy-confirmed); enable pg_cron with a
+        BACKSTOP-only job deleting objects older than 7 DAYS (COORD-2 ROBUSTNESS-1 — copy-confirmed
+        deletion is primary; TTL only reaps true orphans). Idempotent.
+      command: "# Write supabase/migrations/00012_audio_buffer_bucket.sql; then node \"$WT/apply-migrations.js\""
+      validation: "psql \"$DATABASE_URL\" -c \"select id from storage.buckets where id='tts-audio'\" | grep -q tts-audio || echo 'verify via dashboard if psql unavailable'"
+      depends_on: [verpex-feasibility-spike]
+      fatal_on_failure: true
+
+    - id: edge-audiostore-module
+      description: >
+        Create supabase/functions/_shared/audioStore.ts — uploadTtsClip(key,pcm) (service-role upsert)
+        and deleteConfirmed(keys[]) (service-role remove). Best-effort; failures persisted to public.logs
+        (WARN) with requestId/correlationId/traceId + reason; never throws to the caller.
+      command: "# Write supabase/functions/_shared/audioStore.ts (persistLog conventions)."
+      validation: "npm --prefix \"$WT\" run test:observability"
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: edge-tts-writeback
+      description: >
+        In the gemini tts action, AFTER routeTts, fire-and-forget uploadTtsClip(key,pcm) ONLY when
+        body.hostable === true AND Deno.env TTS_BUFFER_WRITEBACK === 'on' AND the clip is DEFAULT rate
+        (24kHz) (COORD-2 BLOCKING-1/BLOCKING-2 + minor-c). Does not block/alter the response; key resolved
+        from voiceType via the SAME keyToServerPath the client reads.
+      command: "# Edit supabase/functions/gemini/index.ts (tts case)."
+      validation: "npm --prefix \"$WT\" run test:observability && npm --prefix \"$WT\" run test:cors"
+      depends_on: [edge-audiostore-module, storage-bucket-migration]
+      fatal_on_failure: true
+
+    - id: edge-audio-sync-endpoint
+      description: >
+        Add a log-sink (or gemini) action `audio-sync-confirm` — accepts {keys[], summary} from the Verpex
+        cron authed by a shared token (reuse log-sink per-IP throttle; COORD-2 minor-b), persists the
+        audio_sync_run heartbeat to public.logs, and calls deleteConfirmed(keys) so Supabase deletion is
+        COPY-CONFIRMED (ROBUSTNESS-1). Rejects unknown/oversized payloads. TOKEN HARDENING (Lane A review
+        7dd8af3): the shared token must be strong + rotatable (env secret, not committed), and
+        deleteConfirmed MUST be hard-scoped to the 'tts-audio' bucket ONLY (reject any key resolving
+        outside it) so a leaked token can never delete other buckets/paths.
+      command: "# Edit supabase/functions/log-sink/index.ts (or a small new function) to add the authed audio-sync-confirm action."
+      validation: "npm --prefix \"$WT\" run test:observability && npm --prefix \"$WT\" run test:cors"
+      depends_on: [edge-audiostore-module]
+      fatal_on_failure: true
+
+    - id: deploy-edge
+      description: Deploy the updated edge functions with TTS_BUFFER_WRITEBACK unset/off (operator-run; hits the shared Supabase project).
+      command: "# operator: supabase functions deploy gemini log-sink --project-ref <ref>   (do NOT set TTS_BUFFER_WRITEBACK yet)"
+      validation: "supabase functions list --project-ref <ref> 2>/dev/null | grep -q gemini"
+      depends_on: [edge-tts-writeback, edge-audio-sync-endpoint]
+      fatal_on_failure: true
+
+    - id: commit-phase5
+      description: Commit the buffer migration + scoped write-back + copy-confirm endpoint.
+      command: >
+        git -C "$WT" commit supabase/functions/_shared/audioStore.ts supabase/functions/gemini/index.ts supabase/functions/log-sink/index.ts supabase/migrations/00012_audio_buffer_bucket.sql supabase/migrations/APPLIED.md -m "feat(audio): scoped+flag-gated edge write-back + copy-confirmed Supabase deletion (EN-8; COORD-2)"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'copy-confirmed'"
+      depends_on: [edge-tts-writeback, edge-audio-sync-endpoint]
+      fatal_on_failure: false
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 6 — Verpex read-only pull cron (copy-confirm) + deploy protection (BOTH envs)
+    # ----------------------------------------------------------------------------------------------
+    - id: verpex-pull-cron
+      description: >
+        Author deploy/verpex/audio-sync/pull.php (+ README) — READ-ONLY: list tts-audio (public), download
+        each missing key (public GET) to REMOTE_PATH/audio/ verifying byte length; then POST the CONFIRMED
+        keys + a run summary to the edge audio-sync-confirm action (shared token) so Supabase deletes only
+        copied clips. No Supabase key. Path-traversal-hardened. On zero heartbeats the edge staleness alert fires.
+      command: "# Write deploy/verpex/audio-sync/pull.php + README (cPanel cron every ~15 min; placement at REMOTE_PATH)."
+      validation: "php -l \"$WT/deploy/verpex/audio-sync/pull.php\" 2>/dev/null || echo 'php not local; lint on server'"
+      depends_on: [verpex-feasibility-spike]
+      fatal_on_failure: true
+
+    - id: deploy-rsync-exclude
+      description: Add --exclude 'audio/' (+ the audio-sync dir) to the dist rsync in scripts/deploy-verpex.sh so a web deploy never deletes hosted audio.
+      command: "# Edit scripts/deploy-verpex.sh RSYNC_CMD (alongside .well-known/ + cgi-bin/)."
+      validation: "grep -q \"exclude 'audio/'\" \"$WT/scripts/deploy-verpex.sh\" && bash -n \"$WT/scripts/deploy-verpex.sh\""
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: deploy-verpex-crons-both
+      description: Place pull.php + register the cron on BOTH the staging AND prod Verpex boxes (operator-run) — required before the write-back flag flips (COORD-2 BLOCKING-2). Configure each with its own log-sink token.
+      command: "# operator: scp pull.php to staging + prod REMOTE_PATHs; add cPanel cron */15 * * * * on each; set the shared token."
+      validation: "curl -fsS -o /dev/null -w '%{http_code}' https://testfalamadeira.searchingfool.com/audio-sync-pull.php | grep -qE '200|403' && echo 'confirm BOTH crons scheduled'"
+      depends_on: [verpex-pull-cron, deploy-rsync-exclude, verpex-feasibility-spike]
+      fatal_on_failure: true
+
+    - id: commit-phase6
+      description: Commit the Verpex pull cron + deploy wiring.
+      command: >
+        git -C "$WT" commit deploy/verpex/audio-sync/pull.php scripts/deploy-verpex.sh -m "feat(deploy): copy-confirm Verpex pull cron (Supabase->/audio) + protect /audio on deploy (EN-8)"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'Verpex pull cron'"
+      depends_on: [verpex-pull-cron, deploy-rsync-exclude]
+      fatal_on_failure: false
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 7 — pre-gen (level-0), enable runtime write-back, coverage report
+    # ----------------------------------------------------------------------------------------------
+    - id: pregen-script
+      description: >
+        Create scripts/pregen-audio.mjs — sign in admin (E2E_ADMIN_EMAIL/PASSWORD; bypasses voice cap),
+        enumerate level-0 starter situations via shared linesForSituation (incl. dialogues + roleplay
+        nodes + options), call the edge tts per (voiceType,text) to get PCM, then upload DIRECTLY to the
+        tts-audio bucket via the service role (SUPABASE_SERVICE_ROLE_KEY in .env.local — operator adds it).
+        Direct upload decouples the trial warm from the runtime flag. Idempotent — skip keys already on Verpex (HEAD 200).
+      command: "# Write scripts/pregen-audio.mjs (reuse tests/e2e/support/env.ts creds + keyToServerPath + linesForSituation)."
+      validation: "node --check \"$WT/scripts/pregen-audio.mjs\""
+      depends_on: [extract-audio-key, enumerate-roleplay-options, deploy-edge]
+      fatal_on_failure: false
+
+    - id: run-pregen-level0
+      description: Run pre-gen for level-0 (operator-gated; edge tts -> direct Supabase upload; the Verpex crons then copy to /audio).
+      command: "# operator: node \"$WT/scripts/pregen-audio.mjs\" --level 0"
+      validation: "# operator: after one cron cycle, curl a sample of level-0 keys on Verpex -> 200"
+      depends_on: [pregen-script, deploy-verpex-crons-both]
+      fatal_on_failure: true
+
+    - id: enable-writeback-flag
+      description: Now that BOTH Verpex crons run, enable runtime accumulation of NEW curated audio — set TTS_BUFFER_WRITEBACK=on (operator). Affects the shared backend (curated-only, non-blocking).
+      command: "# operator: supabase secrets set TTS_BUFFER_WRITEBACK=on --project-ref <ref>"
+      validation: "supabase secrets list --project-ref <ref> 2>/dev/null | grep -q TTS_BUFFER_WRITEBACK"
+      depends_on: [run-pregen-level0]
+      fatal_on_failure: false
+
+    - id: coverage-report-script
+      description: >
+        Create scripts/audit-audio.mjs — the admin "what is where" COVERAGE report: EXPECTED (voiceType,text)
+        per level via shared linesForSituation vs on-Verpex (HEAD) vs in-Supabase-buffer (public list) vs
+        missing; plus lag + orphans (retention visibility). Read-only; per-level table + JSON. Usable by admin/agent (ties EN-12).
+      command: "# Write scripts/audit-audio.mjs."
+      validation: "node --check \"$WT/scripts/audit-audio.mjs\""
+      depends_on: [storage-bucket-migration]
+      fatal_on_failure: false
+
+    - id: commit-phase7
+      description: Commit the pre-gen + coverage report scripts.
+      command: >
+        git -C "$WT" commit scripts/pregen-audio.mjs scripts/audit-audio.mjs -m "feat(audio): level-0 pre-gen (direct upload) + admin what-is-where coverage report (EN-8)"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'pre-gen'"
+      depends_on: [pregen-script, coverage-report-script]
+      fatal_on_failure: false
+
+    # ----------------------------------------------------------------------------------------------
+    # PHASE 8 — full gate + docs + GATING proof
+    # ----------------------------------------------------------------------------------------------
+    - id: full-gate
+      description: Full local gate — tsc, eslint, unit tests, build, observability + cors checks.
+      command: >
+        npm --prefix "$WT" run lint && npm --prefix "$WT" run lint:eslint && npm --prefix "$WT" run test:run &&
+        npm --prefix "$WT" run build && npm --prefix "$WT" run test:observability && npm --prefix "$WT" run test:cors
+      validation: "echo $? | grep -qx 0"
+      depends_on: [commit-phase2, commit-phase3, commit-phase4, commit-phase5, commit-phase6, commit-phase7]
+      fatal_on_failure: true
+
+    - id: update-docs
+      description: Sync EN-8 docs (CONTENT-ARCHITECTURE §10 tiers; OBSERVABILITY write-back/cron events; DATABASE_DESIGN bucket + RLS + pg_cron) via /update-docs; log the PCM-compression follow-up + the in-app admin coverage panel (fast-follow, EN-12) in the tracker.
+      command: "# /update-docs ; add follow-up tracker items."
+      validation: "grep -qiE 'tts-audio|hosted audio|audio.*tier' \"$WT/docs/CONTENT-ARCHITECTURE.md\" \"$WT/docs/DATABASE_DESIGN.md\" 2>/dev/null || true"
+      depends_on: [full-gate]
+      fatal_on_failure: false
+
+    - id: verify-win
+      description: >
+        GATING PROOF (COORD-2 ROBUSTNESS-2) — a scripted check: curl a sample of level-0 keys on staging
+        Verpex (expect 200) AND query public.logs for the ABSENCE of a provider tts_* synthesis event for
+        those keys after playback. Fails loudly if the 503-avoidance is not demonstrated.
+      command: "# node scripts/audit-audio.mjs --verify-l0 (curls L0 keys + checks public.logs) — operator confirms on staging UI as backup."
+      validation: "node \"$WT/scripts/audit-audio.mjs\" --verify-l0 2>&1 | grep -qi 'VERIFY_WIN_OK'"
+      depends_on: [run-pregen-level0, full-gate]
+      fatal_on_failure: true
