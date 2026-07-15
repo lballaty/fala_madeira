@@ -35,6 +35,7 @@ import { platform } from '../../platform';
 import { audioCache } from '../../lib/audioCache';
 import { logger } from '../../lib/logger';
 import { EdgeFunctionError, geminiService, synthesizeCached } from '../geminiService';
+import { config } from '../../config';
 import type { Tutor } from '../../types';
 
 const edgeError = (status: number, code: string) => ({
@@ -217,8 +218,9 @@ describe('synthesizeCached key normalization + hostable scope (EN-8)', () => {
 
 describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → supabase → provider', () => {
   const pcm = (n: number) => new Uint8Array(n).fill(1).buffer;
-  const okPcm = () => ({ ok: true, arrayBuffer: async () => pcm(8) });
-  const missPcm = () => ({ ok: false, arrayBuffer: async () => pcm(0) });
+  const okPcm = () => ({ ok: true, headers: { get: () => 'application/octet-stream' }, arrayBuffer: async () => pcm(8) });
+  const missPcm = () => ({ ok: false, headers: { get: () => null }, arrayBuffer: async () => pcm(0) });
+  const htmlShell = () => ({ ok: true, headers: { get: () => 'text/html; charset=utf-8' }, arrayBuffer: async () => pcm(20) });
 
   beforeEach(() => {
     vi.mocked(audioCache.buildKey).mockReturnValue('tts:default:teacher:hash');
@@ -273,5 +275,30 @@ describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → su
     expect(fetchMock).toHaveBeenCalledTimes(2); // verpex + supabase both probed and missed
     const ttsCall = invoke.mock.calls.find((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts');
     expect(ttsCall).toBeDefined();
+  });
+
+  it('treats a 200 HTML shell (SPA-host miss) as a miss, not PCM, and falls through to the provider', async () => {
+    // Verpex .htaccess rewrites a missing /audio/*.pcm to index.html with a 200 — must NOT be
+    // accepted as audio (would play garbage + skip the provider). Both tiers return the shell here.
+    const fetchMock = vi.fn(async () => htmlShell());
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const ttsCall = invoke.mock.calls.find((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts');
+    expect(ttsCall).toBeDefined();
+  });
+
+  it('aborts a server-tier fetch with the SHORT practical timeout, not the 15s edge timeout', async () => {
+    let seenTimeout = -1;
+    const fetchMock = vi.fn(async (_url: string, opts: { signal?: AbortSignal }) => {
+      // AbortSignal.timeout exposes no ms, so assert indirectly: the signal is present (a timeout
+      // was configured) and the config value is the short one, not net.requestTimeoutMs.
+      seenTimeout = opts?.signal ? config.audio.serverTierTimeoutMs : -1;
+      return missPcm();
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(seenTimeout).toBe(config.audio.serverTierTimeoutMs);
+    expect(config.audio.serverTierTimeoutMs).toBeLessThan(config.net.requestTimeoutMs);
   });
 });

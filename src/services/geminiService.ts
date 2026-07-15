@@ -334,13 +334,41 @@ const logTtsSource = (tier: TtsTier, key: string, requestId?: string): void => {
   });
 };
 
-// Best-effort GET of pre-hosted raw PCM. Returns the bytes on a 2xx with a non-empty body, else
+// Warm the bounded LRU cache WITHOUT blocking the retrieval path (owner requirement: storage writes
+// are non-blocking on playback — audio must start immediately, not wait on an IndexedDB write).
+// Failures are logged (WARN), never swallowed; eviction churn is logged at debug.
+const cacheInBackground = (cacheKey: string, buffer: ArrayBuffer, requestId?: string): void => {
+  void audioCache.set(cacheKey, buffer)
+    .then((evicted) => {
+      if (evicted > 0) {
+        logger.debug('tts_cache_evicted', `bounded audio cache evicted ${evicted} least-recently-used clip(s)`, {
+          category: 'SYSTEM_HEALTH',
+          correlationId: requestId,
+          details: { evicted },
+        });
+      }
+    })
+    .catch((err) => {
+      logger.warn('tts_cache_write_failed', 'background audio cache write failed (clip still played)', {
+        category: 'SYSTEM_HEALTH',
+        correlationId: requestId,
+        error: err,
+      });
+    });
+};
+
+// Best-effort GET of pre-hosted raw PCM. Returns the bytes on a 2xx NON-HTML non-empty body, else
 // null. NEVER throws: a 404 (not hosted yet), CORS, timeout, or network drop is an EXPECTED miss
 // that must fall through to the next tier — not an error path (playback still reaches the provider).
+// Uses the SHORT server-tier timeout so a slow/hanging host aborts fast instead of stalling audio.
 const tryFetchPcm = async (url: string): Promise<ArrayBuffer | null> => {
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(config.net.requestTimeoutMs) });
+    const res = await fetch(url, { signal: AbortSignal.timeout(config.audio.serverTierTimeoutMs) });
     if (!res.ok) return null;
+    // SPA hosts (Verpex .htaccess) rewrite a MISS to the index.html shell WITH a 200 — an HTML body
+    // is a miss, not PCM. A real hosted clip is octet-stream/audio, never text/html. Guard both
+    // sides: the server-side fix is excluding /audio from the SPA fallback, this is the client belt.
+    if ((res.headers.get('content-type') ?? '').includes('text/html')) return null;
     const buf = await res.arrayBuffer();
     return buf.byteLength > 0 ? buf : null;
   } catch {
@@ -397,8 +425,8 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   // win). On a hit, warm the device LRU cache so subsequent plays are local, then return.
   const serverHit = await fetchServerTier(cacheKey);
   if (serverHit) {
-    await audioCache.set(cacheKey, serverHit.buffer);
     logTtsSource(serverHit.tier, cacheKey);
+    cacheInBackground(cacheKey, serverHit.buffer); // non-blocking warm; play immediately
     return serverHit.buffer;
   }
 
@@ -425,19 +453,13 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   const arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
   logTtsSource('provider', cacheKey, data?.requestId);
   if (options.pinned) {
-    // Offline download: persist to the pinned store (never LRU-evicted) so it survives cache
-    // pressure — the EN-7 "downloads get evicted" fix. Pinned writes are unbounded here; the
-    // downloader bounds the run against the user's offline budget via pinnedUsage().
+    // Offline download: AWAIT the pinned write — the download's PURPOSE is durable persistence, so
+    // it must land before the run counts the clip done (fire-and-forget here would reintroduce the
+    // EN-7 "download reported complete but clip not saved"). This blocks the download, not playback.
     await audioCache.setPinned(cacheKey, arrayBuffer);
   } else {
-    const evicted = await audioCache.set(cacheKey, arrayBuffer);
-    if (evicted > 0) {
-      logger.debug('tts_cache_evicted', `bounded audio cache evicted ${evicted} least-recently-used clip(s)`, {
-        category: 'SYSTEM_HEALTH',
-        correlationId: data?.requestId,
-        details: { evicted, resolvedProvider: data?.provider, resolvedVoice: data?.voice },
-      });
-    }
+    // Playback: cache write is NON-BLOCKING so audio starts immediately (owner requirement).
+    cacheInBackground(cacheKey, arrayBuffer, data?.requestId);
   }
   return arrayBuffer;
 };

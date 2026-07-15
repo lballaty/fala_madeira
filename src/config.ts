@@ -54,6 +54,13 @@ export const config = {
      */
     verpexBase: (import.meta.env.VITE_AUDIO_VERPEX_BASE as string | undefined) || '/audio',
     supabaseAudioBucket: 'tts-audio',
+    /**
+     * Per-tier timeout (ms) for a server-audio GET (Verpex, then Supabase). Deliberately SHORT and
+     * separate from net.requestTimeoutMs (15s, tuned for slow AI generation): a hosted static PCM
+     * file returns in well under this, so a slow/hanging tier aborts fast and playback falls through
+     * to the next tier / the provider instead of stalling. Worst case on a double hang ≈ 2× this.
+     */
+    serverTierTimeoutMs: 4000,
   },
 
   net: {
