@@ -21,33 +21,13 @@
 import { platform } from '../platform';
 import { config } from '../config';
 import { BlobLimits, BlobStoreUsage } from '../platform/types';
+import { buildKey } from './audioKey';
 
-/** Namespace prefix so audio-cache blobs are distinguishable from other blob payloads. */
-const KEY_PREFIX = 'tts:';
-
-/**
- * Small, fast, non-cryptographic string hash (FNV-1a, 32-bit) rendered as hex.
- * The cache key only needs to be a stable, collision-resistant-enough digest of the
- * text — not a security hash — so this avoids pulling in crypto.subtle (which is async
- * and unavailable in non-secure contexts). Deterministic across sessions.
- */
-const hashText = (text: string): string => {
-  let h = 0x811c9dc5; // FNV offset basis
-  for (let i = 0; i < text.length; i++) {
-    h ^= text.charCodeAt(i);
-    // FNV prime multiply via shifts (keeps the result a 32-bit unsigned int).
-    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
-  }
-  return h.toString(16).padStart(8, '0');
-};
-
-/**
- * Build the cache key for a clip. `provider` = the requested/resolved TTS provider
- * ('default' when the caller lets the server pick), `voice` = the requested voice
- * fingerprint (tutor id or voice_type), `text` = the exact text synthesized. NO speed.
- */
-export const buildKey = (provider: string, voice: string, text: string): string =>
-  `${KEY_PREFIX}${provider || 'default'}:${voice || 'default'}:${hashText(text)}`;
+// buildKey/hashText/keyToServerPath moved to the pure ./audioKey module (EN-8) so the identical
+// key logic is shared by the browser client, the offline downloader, and the Node pre-gen script.
+// Re-exported here to preserve the existing import surface (geminiService, audio-download, …).
+export { buildKey };
+export { keyToServerPath } from './audioKey';
 
 /** The LRU limits the audio cache enforces (entry count + byte budget). */
 const limits = (): BlobLimits => ({
