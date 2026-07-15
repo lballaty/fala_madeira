@@ -14,6 +14,17 @@
 
 ---
 
+## Security
+
+### SEC-1 — Cross-user data bleed on a shared device (reporter: owner, staging 2026-07-15) — `NEEDS APPROVAL (plan written; no coding until owner-approved — AGENTS §3)`
+- **Report (owner):** on the same device, logged in as liborballaty@gmail.com, logged out, logged in as testuser@testuser.com — the profile/settings appeared to be the same. "Check carefully… users must be properly isolated both on device and in Supabase."
+- **Investigation (2026-07-15, two read-only audits + live DB verification):**
+  - **Supabase (server) — ISOLATED, verified LIVE.** All 17 public tables have RLS ON (0 RLS-OFF); every per-user table (`profiles`, `user_track_selection`, `user_situation_progress`, `mastery_items`, `missions_log`, `lessons`, `tickets`, `logs`, `pronunciation_attempts`, `writing_submissions`) is scoped to `auth.uid()` with `WITH CHECK` on writes. `global_settings` SELECT is `USING true` **by design** (readable config, no secrets). **User B cannot read or write user A's DB rows.** Verified against live `pg_policies`/`pg_tables.rowsecurity` (two-pass: migrations + live agree). Minor non-leak symmetry gaps: `video_suggestions` UPDATE is admin-only (no owner-UPDATE); `lesson_corrections` has no owner-DELETE. Low priority, DB-agent territory.
+  - **Client device storage — REAL LEAK (root cause).** Several durable stores use **fixed device-global keys** (not per-user) and **nothing clears them on logout** (`handleLogout` clears React state + the Supabase session only): `paths:selection` (path type + active track + cursor — the "same profile" symptom), `sync:queue` (A's offline writes; RLS rejects cross-user drain server-side but the queue stalls and A's writes sit readable on-device), `missions:log:local`, settings (`is_sound_enabled`/`playback_speed`/`global_voice_limit`/`offline_save_audio`/`offline_cache_limit_bytes`), `active_lessons_month_*`, `fm_theme`, and the TTS audio-blob cache. Correctly scoped already: `onboarding:record:${userId}`, `home:streak-freeze:${userId}`. Also: for a brand-new user B, `fetchProfile`'s `getPrefsForNewProfile()` seeds B's new DB profile with A's device prefs from localStorage.
+- **Fix plan (owner approval pending):** `docs/SEC-1-USER-ISOLATION-FIX-PLAN.md` — namespace user-scoped durable keys by userId (WP1), clear device-global stores + fix new-profile seeding on logout (WP2), namespace + guard the sync queue by user (WP3), a login-A→logout→login-B isolation regression test (WP5); **audio-cache-on-logout DEFERRED to coordinate with the other agent's active EN-8 work** (`audioCache.ts`/`storage.web.ts`, WP4). No schema changes.
+- **Conflict check:** EN-8 (other agent) is actively restructuring `audioCache.ts` + `storage.web.ts` → this plan does NOT touch those. `sync-queue.ts` is the other agent's file but no active WIP (reserve + coordinate). All other targets are conflict-free. No active queue locks by others.
+- **Owner:** Lane B (client fix); DB-agent (the 2 RLS symmetry gaps). **Status:** NEEDS APPROVAL. Nothing shipped; TB-11b release (.4) also held per owner.
+
 ## Tester-reported bugs
 
 ### TB-1 — Placement level not reflected + not changeable (reporter: dancingtoothbrush) — `NEEDS DECISION`
