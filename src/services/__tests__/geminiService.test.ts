@@ -30,8 +30,10 @@ vi.mock('../../platform', () => ({
 
 import { getSupabase } from '../../lib/supabase';
 import { platform } from '../../platform';
+import { audioCache } from '../../lib/audioCache';
 import { logger } from '../../lib/logger';
-import { EdgeFunctionError, geminiService } from '../geminiService';
+import { EdgeFunctionError, geminiService, synthesizeCached } from '../geminiService';
+import type { Tutor } from '../../types';
 
 const edgeError = (status: number, code: string) => ({
   message: 'Edge Function returned a non-2xx status code',
@@ -162,5 +164,46 @@ describe('playSpeech TTS fallback (obs-tts-fallback)', () => {
     expect(err).toBeInstanceOf(EdgeFunctionError);
     expect((err as EdgeFunctionError).code).toBe('GEMINI_ERROR');
     expect(platform.audio.speak).not.toHaveBeenCalled();
+  });
+});
+
+describe('synthesizeCached key normalization + hostable scope (EN-8)', () => {
+  // Resolves immediately (no retry/backoff); carries a tiny valid-base64 PCM payload.
+  const okAudio = { data: { audio: 'AAAA', provider: 'gemini', voice: 'pt-x' }, error: null };
+  const tutorOf = (age: number, gender: 'male' | 'female'): Tutor =>
+    ({ id: 't-id', name: 't', age, gender, description: '', avatar: '', personality: '' });
+
+  beforeEach(() => {
+    vi.mocked(audioCache.buildKey).mockClear().mockReturnValue('provider:voice:hash');
+    vi.mocked(audioCache.get).mockResolvedValue(null);
+    vi.mocked(audioCache.set).mockResolvedValue(0);
+    invoke.mockResolvedValue(okAudio);
+  });
+
+  it('keys by the RESOLVED voice archetype (voiceTypeForTutor), NEVER the tutor id', async () => {
+    // female age<=40 -> 'teacher'. The tutor id 't-id' must NOT appear in the key.
+    await synthesizeCached('Bom dia', { tutor: tutorOf(30, 'female') });
+    expect(audioCache.buildKey).toHaveBeenCalledWith('default', 'teacher', 'Bom dia');
+    expect(vi.mocked(audioCache.buildKey).mock.calls[0]).not.toContain('t-id');
+  });
+
+  it('honours an explicit voiceType override for the key (dialogue per-speaker archetype)', async () => {
+    await synthesizeCached('Olá', { voiceType: 'local' });
+    expect(audioCache.buildKey).toHaveBeenCalledWith('default', 'local', 'Olá');
+  });
+
+  it('defaults to the teacher archetype when neither voiceType nor tutor is given', async () => {
+    await synthesizeCached('Água', {});
+    expect(audioCache.buildKey).toHaveBeenCalledWith('default', 'teacher', 'Água');
+  });
+
+  it('forwards hostable to the tts action body faithfully (true / false / omitted)', async () => {
+    await synthesizeCached('a', { hostable: true });
+    await synthesizeCached('b', { hostable: false });
+    await synthesizeCached('c', {});
+    const hostables = invoke.mock.calls
+      .filter((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts')
+      .map((c) => c[1].body.hostable);
+    expect(hostables).toEqual([true, false, undefined]);
   });
 });

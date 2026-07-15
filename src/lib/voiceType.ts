@@ -17,3 +17,14 @@ export const voiceTypeForTutor = (tutor?: Tutor): VoiceType => {
   if (tutor.age > 40) return 'older';
   return tutor.gender === 'female' ? 'teacher' : 'local';
 };
+
+/**
+ * Resolve the cache-key VOICE SLOT for a synthesis request (EN-8). An explicit voice_type wins
+ * (dialogue lines + pre-gen carry per-speaker archetypes like 'service_worker'); otherwise the
+ * archetype is derived from the tutor via voiceTypeForTutor. Keying ALL tts by this resolved
+ * value — never the raw tutor id — is what makes live playback, offline downloads, the Node
+ * pre-gen script, and the server-hosted files agree on ONE key per (voice, text). The single
+ * source of truth shared by geminiService.synthesizeCached and lib/audio-download.
+ */
+export const resolveVoice = (opts: { voiceType?: string; tutor?: Tutor }): string =>
+  opts.voiceType || voiceTypeForTutor(opts.tutor);

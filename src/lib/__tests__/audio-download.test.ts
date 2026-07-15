@@ -63,6 +63,22 @@ describe('downloadForOffline', () => {
     expect(progress.at(-1)).toBe(4); // progress reaches total
   });
 
+  it('keys the pre-check by the RESOLVED voice (not a literal "default"), matching playback (EN-7/EN-8)', async () => {
+    // A phrase carries no voice_type → resolveVoice → the 'teacher' archetype, the SAME value
+    // geminiService.synthesizeCached resolves for a default play. Before normalization the
+    // downloader keyed the voice slot as the literal 'default', so downloaded phrases were never
+    // reused at play time. Asserting the resolved 'teacher' slot locks the fix.
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    await downloadForOffline({ trackId: 't1' });
+    expect(audioCache.buildKey).toHaveBeenCalledWith('default', 'teacher', 'Bom dia');
+  });
+
+  it('synthesizes curated download clips with hostable:true (EN-8 server-hosting scope)', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    await downloadForOffline({ trackId: 't1' });
+    expect(synthesizeCached).toHaveBeenCalledWith('Bom dia', expect.objectContaining({ hostable: true }));
+  });
+
   it('counts already-cached clips as fromCache and skips the network', async () => {
     vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Olá', 'Adeus'])]);
     vi.mocked(audioCache.get).mockResolvedValue(new ArrayBuffer(8)); // everything already cached

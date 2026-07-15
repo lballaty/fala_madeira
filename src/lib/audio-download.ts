@@ -20,6 +20,7 @@
 import { contentRepository, SituationFilter } from '../content/repository';
 import { PracticalLevel } from '../content/schema';
 import { AudioLine, linesForSituation } from '../content/lines';
+import { resolveVoice } from './voiceType';
 import { synthesizeCached } from '../services/geminiService';
 import { audioCache, readCacheLimitBytes } from './audioCache';
 import { logger } from './logger';
@@ -167,8 +168,10 @@ export const downloadForOffline = async (
       break;
     }
 
-    // Detect an already-cached clip (no network) vs a fresh synthesis for the counters.
-    const key = audioCache.buildKey('default', line.voiceType ?? 'default', line.text);
+    // Detect an already-cached clip (no network) vs a fresh synthesis for the counters. The key
+    // MUST match what synthesizeCached will compute (resolveVoice), or downloaded clips look
+    // uncached at play time and get re-synthesized — the EN-7 mismatch this normalization closes.
+    const key = audioCache.buildKey('default', resolveVoice({ voiceType: line.voiceType }), line.text);
     const already = await audioCache.get(key);
     if (already) {
       fromCache += 1;
@@ -179,7 +182,7 @@ export const downloadForOffline = async (
       const maxAttempts = Math.max(1, config.offline.downloadMaxAttempts);
       for (let attempt = 1; ; attempt += 1) {
         try {
-          await synthesizeCached(line.text, { voiceType: line.voiceType });
+          await synthesizeCached(line.text, { voiceType: line.voiceType, hostable: true });
           synthesized += 1;
           break;
         } catch (error) {

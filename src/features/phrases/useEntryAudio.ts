@@ -38,10 +38,11 @@ export const useEntryAudio = () => {
     setAudioError(null);
     try {
       setPlayingId(entryId);
-      // Default tutor voice + config default speed (see SEAM note in the header).
+      // Default tutor voice + config default speed (see SEAM note in the header). Phrase-library
+      // entries are curated content → hostable:true (EN-8: the server may host them for reuse).
       await geminiService.playSpeech(text, undefined, config.audio.defaultPlaybackSpeed, () => {
         setPlayingId((current) => (current === entryId ? null : current));
-      });
+      }, { hostable: true });
     } catch (err) {
       const event = logger.error('PHRASE_AUDIO_FAILED', 'phrase library TTS playback failed', {
         category: 'AI_DECISION',

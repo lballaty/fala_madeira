@@ -9,6 +9,7 @@
 
 import { Lesson, Tutor, VocabResult } from "../types";
 import { audioCache } from "../lib/audioCache";
+import { resolveVoice } from "../lib/voiceType";
 import { getSupabase } from "../lib/supabase";
 import { logger, userMessage } from "../lib/logger";
 import { platform } from "../platform";
@@ -192,6 +193,19 @@ const invokeEdgeFunction = async <T = unknown>(
 // platform audio adapter (shared AudioContext on web, native shell later).
 const TTS_SAMPLE_RATE = config.audio.ttsSampleRateHz;
 
+/** Playback-time options threaded from the caller through playSpeech into synthesizeCached. */
+export interface PlaySpeechOptions {
+  /**
+   * EN-8: does the caller's text qualify to be SERVER-HOSTED for reuse? true ONLY for curated,
+   * enumerable content (lesson/phrase/vocab/dialogue/scripted-roleplay/pre-gen). Free-form or
+   * user/AI text (tutor free-chat, simulator free-mode) MUST be false/omitted — the edge
+   * write-back never hosts it (COORD-2 BLOCKING-1). Omitted defaults to not-hostable (safe).
+   */
+  hostable?: boolean;
+  /** Explicit voice_type override (dialogue per-speaker lines); else derived from the tutor. */
+  voiceType?: string;
+}
+
 export const geminiService = {
   async generateLesson(topic: string, tutor?: Tutor) {
     const data = await invokeEdgeFunction<{ result?: Partial<Lesson> }>('gemini', { action: 'generate-lesson', topic, tutor });
@@ -246,16 +260,16 @@ export const geminiService = {
     platform.audio.stop();
   },
 
-  async playSpeech(text: string, tutor?: Tutor, speed: number = 1.0, onEnd?: () => void) {
+  async playSpeech(text: string, tutor?: Tutor, speed: number = 1.0, onEnd?: () => void, opts: PlaySpeechOptions = {}) {
     this.stopSpeech();
 
     try {
-      // Cache key = provider:voice:hash(text), NO speed (speed is a playback param applied
-      // by the audio adapter's playbackRate, so one synthesized clip is reused at any speed).
-      // The client keys on the requested voice fingerprint (tutor id) with 'default' provider
-      // — the server resolves the actual provider/voice and returns them in metadata (logged);
-      // reads and writes for the same logical request agree because both use this key.
-      const arrayBuffer = await synthesizeCached(text, { tutorId: tutor?.id, tutor });
+      // Cache key = provider:voiceType:hash(text), NO speed (speed is a playback param applied by
+      // the audio adapter's playbackRate, so one synthesized clip is reused at any speed). EN-8:
+      // the voice slot is the RESOLVED archetype (voiceTypeForTutor), NOT the raw tutor id, so live
+      // playback, offline downloads, and server-hosted clips share one key. `hostable` marks curated
+      // text the server may host (forwarded to the tts action; consumed by the edge write-back).
+      const arrayBuffer = await synthesizeCached(text, { tutor, voiceType: opts.voiceType, hostable: opts.hostable });
 
       // Resolves once playback has started; onEnd fires when the clip finishes
       // (or is stopped) — same contract as the pre-adapter implementation.
@@ -290,14 +304,17 @@ interface TtsResponse {
 }
 
 export interface SynthesizeOptions {
-  /** Voice fingerprint for the cache key (tutor id or voice_type); 'default' when omitted. */
-  tutorId?: string;
-  /** Passed to the edge function so the server picks the right voice from the tutor. */
+  /** Tutor whose RESOLVED voice archetype (voiceTypeForTutor) keys the clip + picks the server voice. */
   tutor?: Tutor;
-  /** voice_type override forwarded to the server (dialogue lines carry per-speaker types). */
+  /** Explicit voice_type override (dialogue lines carry per-speaker archetypes); else derived from the tutor. */
   voiceType?: string;
   /** Provider fingerprint for the cache key; 'default' lets the server pick (default chain). */
   provider?: string;
+  /**
+   * EN-8: curated/enumerable text the server MAY host for reuse. Forwarded to the tts action and
+   * consumed by the edge write-back (which is additionally env-flag gated). Omitted = not-hostable.
+   */
+  hostable?: boolean;
 }
 
 /**
@@ -307,27 +324,31 @@ export interface SynthesizeOptions {
  * choke point in invokeEdgeFunction already logs transport failures with correlation IDs).
  */
 export const synthesizeCached = async (text: string, options: SynthesizeOptions = {}): Promise<ArrayBuffer> => {
-  const voice = options.voiceType || options.tutorId || 'default';
+  // EN-8: key by the RESOLVED voice archetype (explicit voiceType, else voiceTypeForTutor(tutor)),
+  // never the raw tutor id — so every call path that means the same voice hits the same clip.
+  const voice = resolveVoice(options);
   const cacheKey = audioCache.buildKey(options.provider || 'default', voice, text);
 
   const cached = await audioCache.get(cacheKey);
   if (cached) return cached;
 
-  // Server picks the voice from the tutor/voiceType and enforces the daily voice limit;
-  // the response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
+  // Server picks the voice from the tutor/voiceType and enforces the daily voice limit; the
+  // response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
+  // `hostable` tells the edge whether this is curated text it may host for reuse (EN-8 write-back).
   const data = await invokeEdgeFunction<TtsResponse>('gemini', {
     action: 'tts',
     text,
     tutor: options.tutor,
     voiceType: options.voiceType,
     provider: options.provider,
+    hostable: options.hostable,
   });
   const base64Audio = data?.audio;
   if (!base64Audio) {
     const event = logger.error('tts_empty_audio', 'TTS edge function returned no audio payload', {
       category: 'AI_DECISION',
       correlationId: data?.requestId,
-      details: { textLength: text.length, tutorId: options.tutorId, voiceType: options.voiceType },
+      details: { textLength: text.length, voiceType: voice },
     });
     throw new Error(userMessage('TTS_EMPTY_AUDIO', 'The voice service returned no audio. Please try again.', event.request_id));
   }

@@ -42,10 +42,11 @@ export const useDrillAudio = (): DrillAudio => {
       try {
         setIsPlaying(true);
         // No profile in PracticeModeProps → app-default tutor voice (TUTORS[0]),
-        // matching useSpeechPlayback's fallback when no tutor is selected.
+        // matching useSpeechPlayback's fallback when no tutor is selected. Pattern-drill phrases
+        // are curated content → hostable:true (EN-8: the server may host them for reuse).
         await geminiService.playSpeech(text, TUTORS[0], config.audio.defaultPlaybackSpeed, () => {
           setIsPlaying(false);
-        });
+        }, { hostable: true });
         setAudioError(null);
       } catch (error) {
         const event = logger.error('PATTERN_TTS_FAILED', 'pattern drill phrase playback failed', {
