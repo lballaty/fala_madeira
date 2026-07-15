@@ -13,7 +13,10 @@ test.describe('settings static surfaces', () => {
 
     await page.getByRole('button', { name: 'User Manual' }).click();
     await expect(page.getByRole('heading', { name: 'User Manual' })).toBeVisible();
-    await expect(page.getByText('Voice Practice Limits')).toBeVisible();
+    // EN-17a: the manual is now rendered from the App Capability Registry. Assert a registry-driven
+    // capability + the access/limits section (replaces the old hand-written "Voice Practice Limits").
+    await expect(page.getByTestId('manual-cap-situation-simulator')).toBeVisible();
+    await expect(page.getByText('Access & voice limits')).toBeVisible();
     await page.getByRole('button', { name: 'Close' }).click();
     await expect(page.getByRole('heading', { name: 'User Manual' })).toHaveCount(0);
 

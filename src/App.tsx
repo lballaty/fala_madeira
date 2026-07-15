@@ -38,6 +38,7 @@ import { PracticeQuiz } from './features/practice/PracticeQuiz';
 import { usePathSelection } from './paths';
 import { usePathContext } from './features/session/usePathContext';
 import { useOnboarding } from './features/onboarding';
+import { navigateToCapability } from './features/guidance/navigateToCapability';
 
 // Lazy feature views — one chunk per tab (ENGINEERING-STANDARDS §1.1 code-splitting).
 const HomeView = lazy(() => import('./features/home/HomeView'));
@@ -203,6 +204,15 @@ export default function App() {
     setActiveTab('practice');
   };
 
+  // EN-18 reactive guidance: "Take me there" from the help chat. Resolve the capability's target,
+  // close the practice/help modal so the destination control is visible, then switch tab + focus
+  // the control (guide-and-offer — no action is performed for the user).
+  const handleNavigateToCapability = (capabilityId: string) => {
+    logger.debug('guidance', 'navigateToCapability', { category: 'USER_ACTION', details: { capabilityId } });
+    closeAIPractice();
+    void navigateToCapability(capabilityId, { setActiveTab });
+  };
+
   // Cross-slice wiring for the auth slice. Assigned on every render (before effects
   // run) so useAuth's async flows always see fresh closures from the other slices.
   // Intentional render-time ref assignment: this is the documented cross-slice wiring
@@ -359,6 +369,7 @@ export default function App() {
                   openQuiz={openQuiz}
                   selectedLesson={selectedLesson}
                   showToast={showToast}
+                  setActiveTab={setActiveTab}
                 />
               </motion.div>
             )}
@@ -410,6 +421,7 @@ export default function App() {
 
       <nav className="h-20 md:hidden bg-card/80 ios-blur border-t border-line flex items-center justify-around safe-area-bottom z-20">
         <button
+          data-testid="tab-home"
           onClick={() => {
             logger.debug('nav', 'Nav: home', { category: 'USER_ACTION' });
             setActiveTab('home');
@@ -420,6 +432,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Home</span>
         </button>
         <button
+          data-testid="tab-learning"
           onClick={() => {
             logger.debug('nav', 'Nav: learning', { category: 'USER_ACTION' });
             setActiveTab('learning');
@@ -430,6 +443,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Learning</span>
         </button>
         <button
+          data-testid="tab-practice"
           onClick={() => {
             logger.debug('nav', 'Nav: practice', { category: 'USER_ACTION' });
             setActiveTab('practice');
@@ -440,6 +454,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Practice</span>
         </button>
         <button
+          data-testid="tab-chat"
           onClick={() => {
             logger.debug('nav', 'Nav: chat', { category: 'USER_ACTION' });
             setActiveTab('chat');
@@ -450,6 +465,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Tutor</span>
         </button>
         <button
+          data-testid="tab-settings"
           onClick={() => {
             logger.debug('nav', 'Nav: settings', { category: 'USER_ACTION' });
             setActiveTab('settings');
@@ -493,6 +509,7 @@ export default function App() {
         setAiMessage={setAiMessage}
         isRecording={isRecording}
         toggleRecording={toggleRecording}
+        onNavigateToCapability={handleNavigateToCapability}
       />
 
       {/* Admin surface overlay (A12): review queues + Content Studio. Admin-only mount;

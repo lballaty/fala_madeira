@@ -212,7 +212,7 @@ export const SettingsView = ({
           content base — Structured course / Goal track / Adaptive guided / Free. Switchable
           anytime; progress and mastery are shared across paths. (Onboarding sets the initial
           choice later; this is the always-available switch surface it needs.) */}
-      <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4">
+      <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4" data-testid="path-switcher">
         <div className="flex items-center">
           <Compass className="w-5 h-5 mr-3 text-ios-blue" />
           <span className="font-bold">Learning Path</span>

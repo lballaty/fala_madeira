@@ -18,6 +18,8 @@ import { logger } from '../../lib/logger';
 import { PRACTICE_MODES, getPracticeMode } from './registry';
 import { PracticeRoute } from './usePractice';
 import { SituationPicker } from './SituationPicker';
+import { ContextualHint } from '../guidance/ContextualHint';
+import type { TabId } from '../guidance/navigateToCapability';
 
 interface PracticeHubViewProps {
   route: PracticeRoute;
@@ -27,6 +29,8 @@ interface PracticeHubViewProps {
   openQuiz: () => void;
   selectedLesson: Lesson | null;
   showToast: ShowToast;
+  /** EN-18 proactive guidance: lets the hub surface a "pick a lesson first" hint that navigates. */
+  setActiveTab?: (tab: TabId) => void;
 }
 
 const modeSuspenseFallback = (
@@ -42,6 +46,7 @@ export const PracticeHubView = ({
   openQuiz,
   selectedLesson,
   showToast,
+  setActiveTab,
 }: PracticeHubViewProps) => {
   const [isBrowsing, setIsBrowsing] = useState(false);
 
@@ -119,14 +124,26 @@ export const PracticeHubView = ({
 
   // ── Hub: mode tiles per the v3 mockup ──
   return (
-    <div className="p-6 space-y-3 overflow-y-auto h-full pb-32">
+    <div className="p-6 space-y-3 overflow-y-auto h-full pb-32" data-testid="practice-hub">
       <header className="space-y-1 pb-2">
         <h1 className="text-3xl font-bold tracking-tight">Practice</h1>
         <p className="text-ios-gray text-sm">Every mode works on the same situations. Pick your lens.</p>
       </header>
 
+      {/* EN-18 proactive hint: with no lesson chosen the Lesson Quiz has nothing to quiz — surface
+          the Learning roadmap right here so the user can pick one, rather than hitting a dead end. */}
+      {setActiveTab && (
+        <ContextualHint
+          capabilityId="learning-roadmap"
+          when={!selectedLesson}
+          setActiveTab={setActiveTab}
+          message="Pick a lesson in Learning first — then you can quiz it and practise its situations here."
+        />
+      )}
+
       {/* Situation browsing entry — any track, level, situation (§5 free navigation) */}
       <button
+        data-testid="practice-browse"
         onClick={() => setIsBrowsing(true)}
         className="w-full bg-ios-blue p-4 rounded-2xl text-white shadow-lg flex items-center justify-between active:scale-95 transition-transform"
       >

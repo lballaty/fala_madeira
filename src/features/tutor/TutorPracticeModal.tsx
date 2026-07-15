@@ -8,13 +8,14 @@
 
 import { useId, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HelpCircle, Mic, Send as SendIcon, Sparkles, Volume2, X } from 'lucide-react';
+import { HelpCircle, MapPin, Mic, Send as SendIcon, Sparkles, Volume2, X } from 'lucide-react';
 import { SafeMarkdown } from '../../components/SafeMarkdown';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { TUTORS } from '../../data/tutors';
 import { learningPlan } from '../../data/curriculum';
 import { UserProfile } from '../../types';
+import { matchCapabilities } from '../guidance/matchCapabilities';
 
 interface TutorPracticeModalProps {
   isAIPracticeOpen: boolean;
@@ -34,6 +35,9 @@ interface TutorPracticeModalProps {
   setAiMessage: (text: string) => void;
   isRecording: boolean;
   toggleRecording: () => void;
+  /** EN-18 reactive guidance: navigate to a capability's control ("Take me there"). When set and
+   *  in help mode, a chip is offered under each help answer for the capabilities it references. */
+  onNavigateToCapability?: (capabilityId: string) => void;
 }
 
 export const TutorPracticeModal = ({
@@ -53,7 +57,8 @@ export const TutorPracticeModal = ({
   aiMessage,
   setAiMessage,
   isRecording,
-  toggleRecording
+  toggleRecording,
+  onNavigateToCapability,
 }: TutorPracticeModalProps) => {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -163,6 +168,30 @@ export const TutorPracticeModal = ({
                       >
                         <Volume2 className={cn("w-4 h-4", currentlySpeakingIndex === i && "animate-pulse")} />
                       </button>
+                    )}
+                    {/* EN-18 reactive guidance: "Take me there" chips for the capabilities this help
+                        answer references — guide-and-offer (one tap; the user stays in control). */}
+                    {msg.role === 'model' && isHelpMode && onNavigateToCapability && (
+                      (() => {
+                        const matches = matchCapabilities(msg.text);
+                        if (matches.length === 0) return null;
+                        return (
+                          <div className="mt-3 flex flex-wrap gap-2" data-testid="help-take-me-there">
+                            {matches.map((cap) => (
+                              <button
+                                key={cap.id}
+                                type="button"
+                                onClick={() => onNavigateToCapability(cap.id)}
+                                data-testid={`take-me-there-${cap.id}`}
+                                className="inline-flex items-center space-x-1 text-xs font-semibold text-ios-blue bg-ios-blue/10 hover:bg-ios-blue/20 px-3 py-1.5 rounded-full transition-colors min-h-[36px]"
+                              >
+                                <MapPin className="w-3.5 h-3.5" />
+                                <span>Take me to {cap.title}</span>
+                              </button>
+                            ))}
+                          </div>
+                        );
+                      })()
                     )}
                   </div>
                 </div>

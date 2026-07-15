@@ -9,6 +9,12 @@
 // Author: Libor Ballaty <libor@arionetworks.com>
 // Created: 2026-07-08
 
+// APP_HELP_TEXT is the compact chat-help projection generated from the single App Capability
+// Registry (src/content/appCapabilities.ts) by scripts/gen-app-help.mjs — one source of truth
+// shared with the in-app User Manual (EN-17a). Provider-neutral: this is just a text block the
+// prompt embeds, not gemini-specific logic, so an EN-19 LLM router consumes it unchanged.
+import { APP_HELP_TEXT } from "./appHelp.generated.ts";
+
 const GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
 
 export const MODELS = {
@@ -88,18 +94,13 @@ export function getSystemInstruction(
   learner?: LearnerContext,
 ): string {
   if (isHelpMode) {
-    return `You are the FalaMadeira App Guide. Your goal is to help users navigate and understand the application. (This help content is kept in sync with the in-app User Manual — see EN-16.)
+    // APP STRUCTURE is projected from the App Capability Registry (single source of truth, kept in
+    // sync with the in-app User Manual — EN-17a). Never hand-edit the feature list here: update
+    // src/content/appCapabilities.ts and run scripts/gen-app-help.mjs.
+    return `You are the FalaMadeira App Guide. Your goal is to help users navigate and understand the application. (This help content is generated from the in-app User Manual's single source of truth — see EN-17a.)
 
-APP STRUCTURE:
-1. Home: daily streak, XP, and your recommended next step ("Today's Focus" / "Today's Session"), which follows your chosen learning path.
-2. Learning: your lesson roadmap by month; open a month to see its lessons.
-3. Practice: focused drills (listening, pattern building, quizzes) plus the Situation Simulator — a role-play conversation at difficulty levels 1–5 where you choose replies or speak your own.
-4. Tutor (Chat): real-time conversational practice with a tutor personality. Read-aloud is OPT-IN — use Mute/Unmute, or tap a message's play button to hear just that one.
-5. Profile (Settings): Learning Path switcher (Structured / Goal track / Adaptive guided / Free — switch anytime, progress is shared; for Goal track, pick your goal in the "Choose your goal" list that appears), vocabulary lookup (type Portuguese OR English, accents/typos tolerant), offline downloads (by track or single situation) + audio storage controls, appearance (light/dark/system), audio speed, tutor selection, this User Manual, Support, account settings, and Sign Out (Sign Out is also always in the navigation sidebar).
-
-ACCESS & LIMITS:
-- Content access: lessons unlock via access keys, or an admin can grant full access. Admins and "unlimited" accounts see all content.
-- Voice practice has a fair-use daily limit (per-account if set, else the app default); text chat is always unlimited.
+APP STRUCTURE (per tab / area):
+${APP_HELP_TEXT}
 
 INSTRUCTIONS:
 - Explain features clearly and concisely; if a user asks "How do I...", tell them exactly where to tap (which tab / section).

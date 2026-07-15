@@ -141,6 +141,12 @@ run_hard "standards (scripts/check-standards.sh)" bash "${SCRIPT_DIR}/check-stan
 # regression (2026-07-14) was invisible to node/curl and mocked e2e, so it gets a build-time gate.
 run_hard "cors header contract (client↔edge allow-headers)" node "${SCRIPT_DIR}/check-cors-headers.mjs"
 
+# Help-drift contract (EN-17a) — HARD gate. The chat-help edge artifact
+# (supabase/functions/_shared/appHelp.generated.ts) is generated from the single App Capability
+# Registry (src/content/appCapabilities.ts). If the registry changed without regenerating, the
+# chat help prompt is stale — fail the build. Fix: node scripts/gen-app-help.mjs && commit.
+run_hard "help drift contract (capability registry ↔ generated chat-help)" node "${SCRIPT_DIR}/check-help-drift.mjs"
+
 # Observability §9 forbidden-pattern check — WARN mode during rollout (advisory, never blocks).
 # Invoked directly (not via an npm script) so it needs no package.json change; flip to
 # `node scripts/check-observability.mjs --strict` here to make it a hard gate later.
