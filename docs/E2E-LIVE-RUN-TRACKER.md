@@ -16,6 +16,12 @@
 
 ## Run log
 
+### Deploy — 2026-07-15 — SHIPPED ✅ 2026.07.15.2 (nav/audio batch + EN-7 phase-1)
+- **Prod live + verified:** `falamadeira.searchingfool.com` 200 (home + manifest), serving `index-BG71MRaG.js` (matches built dist). Staged→approved→production via the INFRA-4 gate (staged+approved commit `855de52`); staging `testfalamadeira` verified first.
+- **Shipped (all DONE on `main` + back-merged to `develop`, tag `v2026.07.15.2`):** **EN-9** sidebar Sign Out · **EN-1** shared `AudioButton` click-feedback (lesson buttons; rest fast-follow) · **TB-5** tutor read-aloud defaults OFF · **TB-8** voice limit reflects server value + visible to all · **TB-9** honest "can't persist audio" warning · **EN-7** phase-1 download resilience (other agent).
+- **Gate:** full regression effectively **116/116** (2 transient live-auth failures confirmed passing on `--last-failed`); vitest 204/204; tsc clean. The batch's own full-regression run **self-caught 5 regressions** (a11y ×3 sidebar-red contrast, Sign-Out selector ambiguity ×3, TB-5 test) — all fixed before ship.
+- **Process lesson:** preflight's **eslint** caught an unused-import error my per-item `tsc`+vitest checks missed (AGENTS §3 says run the full gate incl. eslint per code-step — follow it). Forced a re-bump `.1`→`.2` (the `.1` never deployed).
+
 ### Fixes — 2026-07-14 — EF-34 / EF-35 / EF-36 (user/44, 45, 47) RESOLVED at the test/guard layer (owner: "fix these, no lane-tagging")
 Owner directive: stop deferring these as other-lane; fix them. All three were real defects in the **tests/guard**, not the product (each product surface renders correctly in the failure traces). Fixed on develop (commit `3da3fe7`) and confirmed GREEN in a targeted run (7/7); the full-suite rerun verifies.
 - **EF-34 (`user/44`) — `fixed-pending-rerun → verified (targeted)`:** `locator.isVisible({timeout})` does NOT auto-wait; the empty-deck branch raced the async-loading vocab deck (trace showed the "Bom dia" flashcard + "Play the word" present). Fix: wait for flashcard OR empty-state to settle, then branch.
