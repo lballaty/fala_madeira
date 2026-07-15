@@ -4,7 +4,12 @@
 //   the path type and left activeTrackId null, so goal-track silently fell back to the first track
 //   and read as the Structured Course. Proves: the chooser appears only for goal-track, picking a
 //   goal persists activeTrackId, and the Home CTA then reflects the chosen track.
-// Author: Lane A (with assistant)
+//   TB-11b extension: after picking a goal, the Home "Today's Focus" CTA reads "Continue your
+//   track" and its detail carries the chosen track's NAME — proving the pick propagates to Home,
+//   not just to storage. (The no-goal "Choose your goal" state is covered by src/paths unit tests:
+//   user_track_selection persists per-user in the DB, so the null state is not reliably
+//   reproducible for the shared e2e user.)
+// Author: Lane A (with assistant); TB-11b by Lane B
 // Created: 2026-07-15
 
 import { test, expect, landOnHome } from '../support/fixtures';
@@ -13,6 +18,11 @@ import { readKv } from '../support/storage';
 async function openProfile(page: Parameters<typeof landOnHome>[0]) {
   await page.getByRole('button', { name: 'Profile' }).first().click();
   await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+}
+
+async function openHome(page: Parameters<typeof landOnHome>[0]) {
+  await page.getByRole('button', { name: 'Home' }).first().click();
+  await expect(page.getByRole('heading', { name: /Olá,/i })).toBeVisible();
 }
 
 test.describe('goal-track picker (TB-11)', () => {
@@ -43,6 +53,9 @@ test.describe('goal-track picker (TB-11)', () => {
     await expect(goalChooser.getByText('Choose your goal')).toBeVisible();
     const firstGoal = goalChooser.getByRole('button').first();
     await expect(firstGoal).toBeVisible();
+    // Capture the goal's name so we can assert Home reflects THIS track (not a default).
+    const goalName = ((await firstGoal.locator('span.font-semibold').first().textContent()) ?? '').trim();
+    expect(goalName.length).toBeGreaterThan(0);
     coverage.touch('settings.path.goal_track.chooser', 'rendered');
 
     await firstGoal.click();
@@ -60,5 +73,17 @@ test.describe('goal-track picker (TB-11)', () => {
 
     // The chosen goal renders as active in the chooser.
     await expect(goalChooser.getByRole('button', { name: /active/i }).first()).toBeVisible();
+
+    // TB-11b: the Home CTA must REFLECT the picked track — "Continue your track" with the chosen
+    // track's name in the detail — proving the pick propagates to Home and the internals, not just
+    // that it persisted to storage.
+    await openHome(page);
+    const focusCard = page
+      .locator('section')
+      .filter({ has: page.getByRole('heading', { name: "Today's Focus" }) })
+      .first();
+    await expect(focusCard.getByRole('button', { name: 'Continue your track' })).toBeVisible();
+    await expect(focusCard.getByText(goalName, { exact: false })).toBeVisible();
+    coverage.touch('home.goal_track.reflects_pick', 'outcome-asserted');
   });
 });

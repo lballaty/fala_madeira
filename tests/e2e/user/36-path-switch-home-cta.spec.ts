@@ -50,6 +50,10 @@ test.describe('path switch changes the Home CTA', () => {
     await openProfile(page);
     await switchPathAndAssertStorage(page, 'Goal track', 'goal-track');
     coverage.touch('settings.path.goal_track', 'outcome-asserted');
+    // TB-11b: goal-track only shows "Continue your track" once a specific goal IS chosen (before
+    // that Home honestly shows "Choose your goal" — see user/37 + paths unit tests). Pick a goal
+    // here so the CTA assertion is deterministic regardless of the shared user's prior DB state.
+    await page.getByTestId('goal-track-chooser').getByRole('button').first().click();
     await openHome(page);
     await expect(page.getByRole('button', { name: 'Continue your track' }).first()).toBeVisible();
 

@@ -105,7 +105,17 @@ export interface SessionSegment {
  * Day 19", "Start today's session"). `kind` lets Home pick the right CTA affordance.
  */
 export interface NextAction {
-  kind: 'session' | 'situation' | 'free';
+  /**
+   * `kind` lets Home pick the right CTA affordance and route the tap:
+   *  - 'session'     → open the Adaptive Guided daily-session player.
+   *  - 'situation'   → open situationId in engineId (a course/track step).
+   *  - 'free'        → send the learner to the Practice hub to self-direct.
+   *  - 'choose-goal' → Goal Track is selected but no specific goal is chosen yet
+   *                    (TB-11b): Home must NOT masquerade as an arbitrary track — it
+   *                    prompts the learner to pick a goal and the tap deep-links to the
+   *                    Settings → Learning Path goal chooser.
+   */
+  kind: 'session' | 'situation' | 'free' | 'choose-goal';
   label: string;
   /** Situation to open (null for 'session' — the session composes its own). */
   situationId: string | null;

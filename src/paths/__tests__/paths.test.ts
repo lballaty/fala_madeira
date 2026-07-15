@@ -112,7 +112,7 @@ describe('goalTrackPath', () => {
     expect(ordered.map((s) => s.id)).toEqual(['b', 'a', 'off']);
   });
 
-  it('next() recommends the first uncompleted track situation', () => {
+  it('next() recommends the first uncompleted track situation and reflects the picked track (TB-11b)', () => {
     const action = goalTrackPath.next(
       ctx({ situations: trackSituations, tracks, completedSituationIds: new Set(['b']) }),
       selection({ activeTrackId: 't1' }),
@@ -120,11 +120,34 @@ describe('goalTrackPath', () => {
     expect(action.kind).toBe('situation');
     expect(action.situationId).toBe('a');
     expect(action.engineId).toBe('listening');
+    // The CTA detail must carry the chosen track's name so Home reflects WHAT was picked.
+    expect(action.detail).toContain('Survival');
   });
 
-  it('next() prompts to pick a track when none loaded', () => {
-    const action = goalTrackPath.next(ctx({ situations: [], tracks: [] }), selection());
-    expect(action.kind).toBe('free');
+  it('next() prompts to CHOOSE A GOAL (not tracks[0] masquerade) when goal-track is active but no goal is chosen — TB-11b', () => {
+    // Tracks ARE loaded; the learner just has not picked one. Must NOT silently fall back to
+    // tracks[0] (which is literally seeded "Structured Course") and label it "Continue your track".
+    const action = goalTrackPath.next(
+      ctx({ situations: trackSituations, tracks }),
+      selection({ type: 'goal-track', activeTrackId: null }),
+    );
+    expect(action.kind).toBe('choose-goal');
+    expect(action.situationId).toBeNull();
+    expect(action.label).toBe('Choose your goal');
+  });
+
+  it('order() passes through all situations (no tracks[0] fallback) when no goal is chosen — TB-11b', () => {
+    const ordered = goalTrackPath.order(
+      ctx({ situations: trackSituations, tracks }),
+      selection({ type: 'goal-track', activeTrackId: null }),
+    );
+    // Every loaded situation is still reachable; we do NOT scope to an arbitrary first track.
+    expect(new Set(ordered.map((s) => s.id))).toEqual(new Set(['b', 'a', 'off']));
+  });
+
+  it('next() prompts to choose a goal when no tracks are loaded either', () => {
+    const action = goalTrackPath.next(ctx({ situations: [], tracks: [] }), selection({ type: 'goal-track' }));
+    expect(action.kind).toBe('choose-goal');
   });
 
   it('sessionPlan() returns null', () => {

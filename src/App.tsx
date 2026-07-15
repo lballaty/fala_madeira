@@ -81,6 +81,9 @@ export default function App() {
   const [isAdminViewOpen, setIsAdminViewOpen] = useState(false);
   // Daily-session player overlay (path-types) — opened from Home "Start today's session".
   const [isDailySessionOpen, setIsDailySessionOpen] = useState(false);
+  // Deep-link signal (TB-11b): when Home's "Choose your goal" CTA is tapped, open Settings and
+  // scroll/highlight the Learning Path goal chooser so the learner lands directly on the picker.
+  const [focusGoalChooser, setFocusGoalChooser] = useState(false);
   const { toast, showToast } = useToast();
   const authDepsRef = useRef<AuthCrossSliceDeps | null>(null);
   const {
@@ -187,6 +190,12 @@ export default function App() {
     if (pathNextAction.kind === 'situation' && pathNextAction.situationId) {
       openMode(pathNextAction.engineId ?? 'listening', pathNextAction.situationId);
       setActiveTab('practice');
+      return;
+    }
+    if (pathNextAction.kind === 'choose-goal') {
+      // Goal Track with no goal chosen (TB-11b): deep-link into the Settings goal chooser.
+      setFocusGoalChooser(true);
+      setActiveTab('settings');
       return;
     }
     // 'free' (or a situation-less step): send the learner to the Practice hub to self-direct.
@@ -383,6 +392,8 @@ export default function App() {
                   handleLogout={handleLogout}
                   showToast={showToast}
                   pathSelection={pathSelection}
+                  focusGoalChooser={focusGoalChooser}
+                  onGoalChooserFocused={() => setFocusGoalChooser(false)}
                 />
               </motion.div>
             )}
