@@ -63,6 +63,72 @@ export async function readKvByPrefix(page: Page, prefix: string): Promise<unknow
   }, prefix);
 }
 
+/**
+ * Write a value into the app's primary KV store (IndexedDB `FalaMadeiraAudioCache/kv`) — the tier
+ * the app actually reads first (localStorage is only its fallback when IndexedDB is unavailable).
+ * Needed by SEC-2 specs to seed pre-fix state (e.g. a legacy device-global `paths:selection`).
+ */
+export async function writeKv(page: Page, key: string, value: unknown): Promise<void> {
+  await page.evaluate(
+    async ({ k, v }) =>
+      new Promise<void>((resolve) => {
+        try {
+          const req = indexedDB.open('FalaMadeiraAudioCache', 2);
+          req.onerror = () => resolve();
+          req.onsuccess = () => {
+            try {
+              const db = req.result;
+              if (!db.objectStoreNames.contains('kv')) {
+                resolve();
+                return;
+              }
+              const tx = db.transaction('kv', 'readwrite');
+              tx.objectStore('kv').put(v, k);
+              tx.oncomplete = () => resolve();
+              tx.onerror = () => resolve();
+            } catch {
+              resolve();
+            }
+          };
+        } catch {
+          resolve();
+        }
+      }),
+    { k: key, v: value },
+  );
+}
+
+/** Delete a key from the app's primary KV store (IndexedDB). Companion to writeKv. */
+export async function deleteKv(page: Page, key: string): Promise<void> {
+  await page.evaluate(
+    async (k) =>
+      new Promise<void>((resolve) => {
+        try {
+          const req = indexedDB.open('FalaMadeiraAudioCache', 2);
+          req.onerror = () => resolve();
+          req.onsuccess = () => {
+            try {
+              const db = req.result;
+              if (!db.objectStoreNames.contains('kv')) {
+                resolve();
+                return;
+              }
+              const tx = db.transaction('kv', 'readwrite');
+              tx.objectStore('kv').delete(k);
+              tx.oncomplete = () => resolve();
+              tx.onerror = () => resolve();
+            } catch {
+              resolve();
+            }
+          };
+        } catch {
+          resolve();
+        }
+      }),
+    key,
+  );
+}
+
 export async function readKv(page: Page, key: string): Promise<unknown | null> {
   return page.evaluate(async (requestedKey) => {
     const localFallbackKey = `fm-kv:${requestedKey}`;
