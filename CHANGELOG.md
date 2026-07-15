@@ -14,6 +14,15 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
+## 2026.07.15.1
+
+- New: **Sign Out is now in the navigation sidebar** (always available), not only at the bottom of the Profile tab. (EN-9)
+- New: **audio buttons show immediate feedback** — a spinner while a clip loads and a disabled state that prevents double-taps (lesson pronunciation first; more controls to follow). (EN-1)
+- Changed: the **AI tutor no longer reads every message aloud by default** — it's now opt-in via the Mute/Unmute control, and per-message play buttons give audio on demand. (TB-5)
+- Fixed: the **daily voice limit now shows the configured value** (was showing the default 5) and is **visible to all users**, not only admins. (TB-8)
+- Improved: **offline audio** now shows an honest notice when the browser can't save audio (private mode / storage blocked), instead of silently losing it. (TB-9)
+- Improved: **more resilient offline downloads** — per-clip retry/backoff and per-situation download units (phase 1). (EN-7)
+
 ## 2026.07.14.3
 
 - **Fix (TB-7): returning users no longer restart onboarding on every login.** The
