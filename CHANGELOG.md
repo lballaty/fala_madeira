@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-15
-**Last Updated By:** claude-opus-4-8 (release 2026.07.15.3 — TB-11)
+**Last Updated By:** claude-opus-4-8 (release 2026.07.15.4 — TB-11 + TB-11b)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -14,9 +14,10 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
-## 2026.07.15.3
+## 2026.07.15.4
 
 - Fixed: the **Goal track is now selectable, not just switched** — choosing "Goal track" in Settings reveals a goal chooser so you can pick which goal to pursue, instead of silently switching to a default. (TB-11)
+- Fixed: **Goal track no longer masquerades as the Structured Course on Home** when you haven't picked a goal yet. Home now shows an honest "Choose your goal" prompt that takes you straight to the goal chooser (scrolled into view and highlighted); once you pick a goal, Home reflects it by name. (TB-11b)
 
 ## 2026.07.15.2
 
