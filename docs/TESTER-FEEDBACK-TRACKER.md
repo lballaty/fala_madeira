@@ -9,6 +9,10 @@
 
 ---
 
+> **⇄ Lane B ↔ Lane A alignment (2026-07-15):** shared-write files to keep in sync — `SettingsView.tsx` (preserve `data-testid` `path-switcher`/`goal-track-chooser` — specs 36/37 depend on them), `src/paths/index.ts` (SEC-1 WP1 `paths:selection` namespacing needs the existing-value migration Lane A flagged), `src/paths/goal-track.ts` + `src/App.tsx` logout (reserve before editing — 3 streams touch it), specs `user/36`+`user/37` (shared). Decisions in TB-11 · TB-12 · COORD-1 · COORD-2 · SEC-1 (Lane A addenda).
+
+---
+
 ## Status legend
 `OPEN` active · `IN PROGRESS` being worked · `DEFERRED` parked-but-tracked (never "dropped") · `DONE` complete/verified · `NEEDS DECISION` blocked on a product/owner call · `NEEDS REQUIREMENTS` captured from feedback but **not buildable** until a written spec is drafted AND owner-approved (AGENTS §3 requirements gate — no coding before then)
 
