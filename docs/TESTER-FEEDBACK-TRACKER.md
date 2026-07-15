@@ -348,6 +348,11 @@
 
 ## QA / test hardening
 
+### QA-3 — EN-10 (inventory-first vocab lookup) shipped with stale/broken e2e — `FIXED by Lane B (release-gate), flagged to Lane A`
+- **Gap (caught by the pre-staging full regression, 2026-07-15):** Lane A's `8a79591` "feat(EN-10): inventory-first vocab lookup" changed the Vocab Lookup modal UI but did NOT update its e2e — `user/03`, `user/04`, `user/43` failed. Two causes (feature works; specs were stale): (1) input placeholder renamed `"Enter a word or phrase..."` → `"Portuguese or English word..."`; (2) inventory-first resolves an in-inventory word synchronously so the transient loading spinner is no longer observable.
+- **Fix (Lane B, commit `a2742ef`):** updated the placeholder selectors (03/04/43) and changed `user/43`'s assertion to the deterministic response (spinner OR the rendered result's "Explanation" section). Verified deterministic (`43:98` ×3 green).
+- **Flag to Lane A:** per AGENTS §3, EN-10 should have shipped its own updated e2e. If you want a stricter assertion (e.g. exercise the AI-fallback loading path with a known-miss word, which needs your inventory knowledge), refine `user/43`. **Owner:** Lane A (feature); coverage restored by Lane B. **Status:** e2e green.
+
 ### QA-2 — Edge voice-limit fix shipped untested (TB-8 edge) — `OPEN (coverage gap; owner: edge/DB agent)`
 - **Gap (found 2026-07-15 reviewing the 2026.07.15.2 release):** commit `4d62982` "fix(edge): voice limit reads global_settings.voice_limit, not hardcoded 5" changed `supabase/functions/gemini/index.ts` (server-side authoritative limit) and shipped with **ZERO tests**. Client pieces ARE covered — `user/55` (Settings reflects the server value) + `user/27` (client-side enforcement blocks recording) — but nothing verifies the **edge** actually reads `global_settings.voice_limit` for enforcement.
 - **Owed (per AGENTS §3 "test every change"):** an integration/e2e (or edge unit) that sets a low `global_settings.voice_limit` and confirms the gemini edge rejects a voice call past it (structured `VOICE_LIMIT_REACHED`), i.e. the server enforces the *configured* value, not a hardcoded default. Ties EF-36 / WS2 test-user isolation (voice-limit e2e is flaky on the shared user).
