@@ -548,7 +548,22 @@ export const useSettings = ({
     void loadMySubmissions();
   }, [loadMySubmissions]);
 
+  // SEC-2: reset device-persisted user preferences to their defaults on logout so the next user
+  // on a shared device never inherits them. The persist effects re-write the defaults to
+  // localStorage; the DB profile stays authoritative and re-applies the next user's prefs on
+  // login (applyProfilePrefs), and a brand-new profile is seeded from these defaults (not the
+  // previous user's values). Runs after user/profile are cleared, so no profile write leaks.
+  const resetForLogout = useCallback(() => {
+    setIsSoundEnabled(initialSoundEnabled(null));
+    setPlaybackSpeed(config.audio.defaultPlaybackSpeed);
+    setGlobalVoiceLimit(config.voice.defaultDailyVoiceLimit);
+    setHasLoadedGlobalVoiceLimit(false);
+    setSaveAudioOnDevice(true);
+    setCacheLimitBytes(config.audio.cacheMaxBytes);
+  }, []);
+
   return {
+    resetForLogout,
     isSoundEnabled, setIsSoundEnabled,
     playbackSpeed, setPlaybackSpeed,
     globalVoiceLimit, setGlobalVoiceLimit,

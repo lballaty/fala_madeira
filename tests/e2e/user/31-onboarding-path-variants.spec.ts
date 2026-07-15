@@ -7,7 +7,7 @@
 
 import { test, expect } from '../support/fixtures';
 import type { Page } from '@playwright/test';
-import { readKv } from '../support/storage';
+import { readKvByPrefix } from '../support/storage';
 
 async function completeSignupToPathChoice(
   page: Page,
@@ -67,7 +67,7 @@ test.describe('onboarding path variants', () => {
     await expect(page.getByRole('heading', { name: new RegExp(`Olá,\\s*${prefix}`, 'i') })).toBeVisible();
     await expect
       .poll(async () => {
-        const value = await readKv(page, 'paths:selection');
+        const value = await readKvByPrefix(page, 'paths:selection:');
         return value && typeof value === 'object' && 'type' in value ? (value as { type?: string }).type ?? null : null;
       })
       .toBe('structured');
@@ -97,7 +97,7 @@ test.describe('onboarding path variants', () => {
     await expect(page.getByRole('heading', { name: new RegExp(`Olá,\\s*${prefix}`, 'i') })).toBeVisible();
     await expect
       .poll(async () => {
-        const value = await readKv(page, 'paths:selection');
+        const value = await readKvByPrefix(page, 'paths:selection:');
         return value && typeof value === 'object' && 'type' in value ? (value as { type?: string }).type ?? null : null;
       })
       .toBe('adaptive-guided');

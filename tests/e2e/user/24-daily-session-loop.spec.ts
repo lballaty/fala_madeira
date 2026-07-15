@@ -6,7 +6,7 @@
 // Created: 2026-07-13
 
 import { test, expect, landOnHome } from '../support/fixtures';
-import { readKv } from '../support/storage';
+import { readKvByPrefix } from '../support/storage';
 
 test.describe('daily session loop', () => {
   test('adaptive-guided path opens the daily session and reaches recap', async ({ page, coverage }) => {
@@ -21,7 +21,7 @@ test.describe('daily session loop', () => {
     coverage.touch('settings.path.adaptive_guided', 'outcome-asserted');
     await expect
       .poll(async () => {
-        const value = await readKv(page, 'paths:selection');
+        const value = await readKvByPrefix(page, 'paths:selection:');
         return value && typeof value === 'object' && 'type' in value ? value.type : null;
       })
       .toBe('adaptive-guided');

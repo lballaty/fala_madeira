@@ -22,25 +22,28 @@ async function switchPathAndAssertStorage(
   page: Parameters<typeof landOnHome>[0],
   label: 'Adaptive guided' | 'Goal track' | 'Structured course',
   expectedType: 'adaptive-guided' | 'goal-track' | 'structured',
+  selectionKey: string,
 ) {
   // Scope to the path-switcher list specifically: the Goal-track chooser (TB-11) adds track
   // buttons in the same card, and a seed track named "Structured Course" would otherwise collide
   // with the case-insensitive substring match for the "Structured course" path button.
   await page.getByTestId('path-switcher').getByRole('button', { name: label }).click();
+  // SEC-1: the path selection mirror is now namespaced per user (paths:selection:${userId}).
   await expect
     .poll(async () => {
-      const value = await readKv(page, 'paths:selection');
+      const value = await readKv(page, selectionKey);
       return value && typeof value === 'object' && 'type' in value ? (value as { type?: string }).type ?? null : null;
     })
     .toBe(expectedType);
 }
 
 test.describe('path switch changes the Home CTA', () => {
-  test('adaptive, goal-track, and structured switches each update Home to the matching next-action CTA', async ({ page, coverage }) => {
+  test('adaptive, goal-track, and structured switches each update Home to the matching next-action CTA', async ({ page, testUser, coverage }) => {
     await landOnHome(page);
+    const selectionKey = `paths:selection:${testUser.userId}`;
 
     await openProfile(page);
-    await switchPathAndAssertStorage(page, 'Adaptive guided', 'adaptive-guided');
+    await switchPathAndAssertStorage(page, 'Adaptive guided', 'adaptive-guided', selectionKey);
     coverage.touch('settings.path.adaptive_guided', 'outcome-asserted');
     await openHome(page);
     const adaptiveCta = page.getByRole('button', { name: "Start today's session" }).first();
@@ -48,7 +51,7 @@ test.describe('path switch changes the Home CTA', () => {
     coverage.touch('home.daily_session.start', 'rendered');
 
     await openProfile(page);
-    await switchPathAndAssertStorage(page, 'Goal track', 'goal-track');
+    await switchPathAndAssertStorage(page, 'Goal track', 'goal-track', selectionKey);
     coverage.touch('settings.path.goal_track', 'outcome-asserted');
     // TB-11b: goal-track only shows "Continue your track" once a specific goal IS chosen (before
     // that Home honestly shows "Choose your goal" — see user/37 + paths unit tests). Pick a goal
@@ -58,7 +61,7 @@ test.describe('path switch changes the Home CTA', () => {
     await expect(page.getByRole('button', { name: 'Continue your track' }).first()).toBeVisible();
 
     await openProfile(page);
-    await switchPathAndAssertStorage(page, 'Structured course', 'structured');
+    await switchPathAndAssertStorage(page, 'Structured course', 'structured', selectionKey);
     await openHome(page);
     await expect(page.getByRole('button', { name: /Continue Day \d+/ }).first()).toBeVisible();
   });

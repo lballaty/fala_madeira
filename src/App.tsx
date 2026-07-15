@@ -14,6 +14,7 @@ import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield } from 'luc
 import { cn } from './lib/utils';
 import { getSupabase } from './lib/supabase';
 import { logger } from './lib/logger';
+import { clearDeviceUserState } from './lib/session-cleanup';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Sidebar, NavItem } from './components/Sidebar';
 import { ConfirmationModal } from './components/ConfirmationModal';
@@ -218,6 +219,11 @@ export default function App() {
       resetLessonsForLogout();
       resetTimeTracking();
       setIsAdminMode(false);
+      // SEC-2: reset device-persisted prefs + clear device-global stores so the next user on a
+      // shared device inherits nothing (settings reset re-applies defaults; the DB profile is
+      // authoritative and re-applies the next user's prefs on login).
+      settings.resetForLogout();
+      void clearDeviceUserState();
     },
   };
 

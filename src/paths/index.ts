@@ -88,15 +88,40 @@ export const usePathSelection = ({ supabase, user }: PathSelectionDeps) => {
   const [selection, setSelection] = useState<PathSelection>(DEFAULT_SELECTION);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // SEC-2: namespace the durable local mirror by user id so a shared device never bleeds one
+  // learner's path selection (type + track + structured cursor) into the next user. The DB
+  // (user_track_selection) stays authoritative for the active track; this is the pre-DB mirror.
+  // Signed-out reads/writes a neutral 'anon' key, never another user's data.
+  const selectionKey = `${config.paths.selectionStorageKey}:${user?.id ?? 'anon'}`;
+
   // Load the durable local mirror, then reconcile the active track from the DB (authoritative
   // for the goal-track selection). State is only set inside promise callbacks (effect-safe).
   useEffect(() => {
     let cancelled = false;
     void platform.storage
-      .get<unknown>(config.paths.selectionStorageKey)
+      .get<unknown>(selectionKey)
       .then(async (raw) => {
         if (cancelled) return;
         let next = coerceSelection(raw);
+        // SEC-2 WP1 migration (flagged by Lane A): pre-fix installs stored the selection under the
+        // legacy device-global key. On first load under per-user namespacing, adopt that value for
+        // the signed-in user ONCE (preserving their path type + structured cursor) and delete the
+        // legacy key so it can never bleed again. Only when this user has no namespaced value yet.
+        if (raw == null && user) {
+          try {
+            const legacy = await platform.storage.get<unknown>(config.paths.selectionStorageKey);
+            if (legacy != null) {
+              next = coerceSelection(legacy);
+              await platform.storage.set(selectionKey, next);
+              await platform.storage.delete(config.paths.selectionStorageKey);
+            }
+          } catch (error) {
+            logger.warn('PATH_SELECTION_MIGRATE_FAILED', 'could not migrate the legacy path-selection mirror — defaults stand', {
+              category: 'DATA_PROCESSING',
+              error,
+            });
+          }
+        }
         // The DB is the source of truth for which goal track is active (§5).
         if (supabase && user) {
           try {
@@ -130,19 +155,19 @@ export const usePathSelection = ({ supabase, user }: PathSelectionDeps) => {
     return () => {
       cancelled = true;
     };
-  }, [supabase, user]);
+  }, [supabase, user, selectionKey]);
 
   /** Persist the whole selection to the durable local mirror (best-effort; logged on failure). */
   const persistLocal = useCallback(async (next: PathSelection): Promise<void> => {
     try {
-      await platform.storage.set(config.paths.selectionStorageKey, next);
+      await platform.storage.set(selectionKey, next);
     } catch (error) {
       logger.warn('PATH_SELECTION_PERSIST_FAILED', 'could not persist the path selection locally — choice stands in memory this session', {
         category: 'DATA_PROCESSING',
         error,
       });
     }
-  }, []);
+  }, [selectionKey]);
 
   /** Switch the active path type (§5 — switchable anytime, shared progress). */
   const setPathType = useCallback(
