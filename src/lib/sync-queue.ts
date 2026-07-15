@@ -253,6 +253,23 @@ export const enqueue = async (
  * on the entry's onConflict key, 'insert' appends a distinct log row. Throws on a
  * transport/DB error so flush can requeue the batch (bounded) and retry later.
  */
+/**
+ * SEC-2: is this queued entry owned by a DIFFERENT user than the one signed in? A shared device
+ * must never replay one learner's queued write under another's session (RLS also rejects it, but
+ * this keeps the queue clean and the data on-device unexposed). Pure + exported for unit tests.
+ * Signed-out (null session user) never treats an entry as foreign — RLS is the backstop there.
+ * Entries with no string `user_id` in the payload (non-user tables) are never foreign.
+ */
+export const isForeignQueueEntry = (
+  entry: Pick<SyncEntry, 'payload'>,
+  sessionUserId: string | null,
+): boolean => {
+  if (!sessionUserId) return false;
+  const payload = entry.payload as { user_id?: unknown } | null | undefined;
+  const entryUserId = payload && typeof payload === 'object' ? payload.user_id : undefined;
+  return typeof entryUserId === 'string' && entryUserId !== sessionUserId;
+};
+
 const replayEntry = async (
   supabase: NonNullable<ReturnType<typeof getSupabase>>,
   entry: SyncEntry,
@@ -306,6 +323,9 @@ export const flush = async (): Promise<void> => {
   // in initSyncQueue re-attempts at 3s/10s/30s, by which point the wedge has resolved or
   // the page is dead anyway). A resolved-but-null session gets one guarded refreshSession()
   // chance before we drain and let RLS failures surface loudly.
+  // SEC-2: capture the signed-in user so the drain never replays a DIFFERENT user's queued
+  // write on a shared device (defense in depth — RLS also rejects it). null when signed out.
+  let sessionUserId: string | null = null;
   try {
     const sessionResult = await withTimeout(supabase.auth.getSession(), AUTH_READY_TIMEOUT_MS);
     if (sessionResult === TIMEOUT) {
@@ -314,6 +334,7 @@ export const flush = async (): Promise<void> => {
       });
       return;
     }
+    sessionUserId = sessionResult.data.session?.user?.id ?? null;
     if (!sessionResult.data.session) {
       const refreshResult = await withTimeout(supabase.auth.refreshSession(), AUTH_READY_TIMEOUT_MS);
       if (refreshResult === TIMEOUT) {
@@ -327,6 +348,8 @@ export const flush = async (): Promise<void> => {
           category: 'DATA_PROCESSING',
           error: refreshResult.error ?? undefined,
         });
+      } else {
+        sessionUserId = refreshResult.data.session.user?.id ?? null;
       }
     }
   } catch {
@@ -338,11 +361,25 @@ export const flush = async (): Promise<void> => {
   isFlushing = true;
   let synced = 0;
   let failed = 0;
+  let skipped = 0;
   try {
     // Snapshot the ids to drain; replay oldest-first. Successes are removed from the
     // live queue immediately so a crash mid-drain never re-runs a committed write.
     const batch = [...q];
     for (const entry of batch) {
+      // SEC-2 guard: never drain a queued write owned by a different user than the one now
+      // signed in. Retain it (do NOT remove) so it drains when its owner returns; skip this
+      // one and keep draining the rest (don't stop the whole batch). Entries with no user_id
+      // in the payload (non-user tables) are unaffected.
+      if (isForeignQueueEntry(entry, sessionUserId)) {
+        logger.warn('SYNC_QUEUE_USER_MISMATCH', 'skipping a queued write for a different user — retained for its owner', {
+          category: 'SECURITY',
+          correlationId,
+          details: { table: entry.table, op: entry.op },
+        });
+        skipped++;
+        continue;
+      }
       try {
         await replayEntry(supabase, entry);
         const idx = q.findIndex((e) => e.id === entry.id);
@@ -364,6 +401,14 @@ export const flush = async (): Promise<void> => {
     await persistQueue(correlationId);
   } finally {
     isFlushing = false;
+  }
+
+  if (skipped > 0) {
+    logger.info('SYNC_QUEUE_SKIPPED_CROSS_USER', `retained ${skipped} queued write(s) belonging to another user (SEC-2 isolation)`, {
+      category: 'SECURITY',
+      correlationId,
+      details: { skipped, remaining: q.length },
+    });
   }
 
   if (synced > 0) {

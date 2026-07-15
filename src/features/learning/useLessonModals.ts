@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { SupabaseClient, User } from '@supabase/supabase-js';
 import { Lesson, UserProfile, VideoSuggestion, VocabResult } from '../../types';
 import { geminiService } from '../../services/geminiService';
+import { lookupVocabInventory } from '../phrases/vocabSearch';
 import { TUTORS } from '../../data/tutors';
 import { ShowToast } from '../../hooks/useToast';
 import { logger, userMessage } from '../../lib/logger';
@@ -159,6 +160,14 @@ export const useLessonModals = ({
     setIsVocabLoading(true);
     setVocabResult(null);
     try {
+      // Inventory-first (EN-10): search the curated {PT word ↔ EN translation} set in
+      // BOTH directions, diacritic-insensitive + fuzzy, offline-capable. Only a MISS
+      // falls through to the AI translate path below.
+      const inventoryHit = await lookupVocabInventory(check.value);
+      if (inventoryHit) {
+        setVocabResult(inventoryHit);
+        return;
+      }
       const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
       const result = await geminiService.translateWord(check.value, tutor);
       setVocabResult(result ?? null);

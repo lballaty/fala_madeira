@@ -137,7 +137,7 @@ test.describe('learning feedback writes', () => {
 
     await page.getByRole('button', { name: 'Vocab', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Vocabulary Lookup' })).toBeVisible();
-    const vocabInput = page.getByPlaceholder('Enter a word or phrase...');
+    const vocabInput = page.getByPlaceholder('Portuguese or English word...');
     await vocabInput.fill(vocabQuery);
     await expect(vocabInput).toHaveValue(vocabQuery);
     await page.getByRole('dialog', { name: 'Vocabulary Lookup' }).getByLabel('Close').click();

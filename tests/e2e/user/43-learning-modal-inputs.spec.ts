@@ -103,7 +103,7 @@ test.describe('learning modal inputs', () => {
     await expect(page.getByRole('heading', { name: 'Vocabulary Lookup' })).toBeVisible();
     const vocabDialog = page.getByRole('dialog', { name: 'Vocabulary Lookup' });
 
-    const queryInput = page.getByPlaceholder('Enter a word or phrase...');
+    const queryInput = page.getByPlaceholder('Portuguese or English word...');
     await queryInput.fill('mercado');
     await expect(queryInput).toHaveValue('mercado');
     coverage.touch('learning.lesson.vocab.query_input', 'value-changed');
@@ -116,10 +116,14 @@ test.describe('learning modal inputs', () => {
     await expect(searchButton).toBeEnabled();
     await searchButton.click();
 
-    // The disabled state is the observable loading response (button is disabled while loading).
-    await expect(searchButton).toBeDisabled();
-    // The spinner element (animate-spin) confirms the loading indicator rendered.
-    await expect(vocabDialog.locator('.animate-spin')).toBeVisible();
+    // EN-10 made lookup inventory-first: an in-inventory word resolves synchronously (the loading
+    // spinner is too brief to observe), while a miss falls back to AI (spinner → result). Assert the
+    // deterministic observable response either way — the loading spinner OR the rendered result
+    // (its "Explanation" section). This proves the search action is wired without depending on the
+    // transient spinner that inventory hits skip.
+    await expect(
+      vocabDialog.locator('.animate-spin').or(vocabDialog.getByText('Explanation', { exact: true })),
+    ).toBeVisible();
     coverage.touch('learning.lesson.vocab.search', 'outcome-asserted');
 
     await vocabDialog.getByLabel('Close').click();

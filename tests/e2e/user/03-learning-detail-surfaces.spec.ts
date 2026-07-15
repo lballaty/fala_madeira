@@ -20,7 +20,7 @@ test.describe('learning detail surfaces', () => {
     await page.getByRole('button', { name: 'Vocab' }).click();
     const vocabDialog = page.getByRole('dialog', { name: 'Vocabulary Lookup' });
     await expect(vocabDialog).toBeVisible();
-    await expect(vocabDialog.getByPlaceholder('Enter a word or phrase...')).toBeVisible();
+    await expect(vocabDialog.getByPlaceholder('Portuguese or English word...')).toBeVisible();
     await expect(vocabDialog.getByText(/AI-powered translation and Madeiran context/i)).toBeVisible();
     await vocabDialog.getByRole('button', { name: 'Close' }).click();
 

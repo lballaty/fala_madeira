@@ -71,7 +71,11 @@ export interface MissionPlanInput {
 // Helpers
 // ---------------------------------------------------------------------------
 
-const LOCAL_KEY = 'missions:log:local';
+/** Device-local (signed-out/offline) missions KV key. Exported so logout cleanup can clear it
+ *  (SEC-2) — these anonymous entries are merged into every listMissionLog and must not persist
+ *  across a user switch on a shared device. */
+export const MISSIONS_LOCAL_KEY = 'missions:log:local';
+const LOCAL_KEY = MISSIONS_LOCAL_KEY;
 
 const newId = (): string =>
   typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'

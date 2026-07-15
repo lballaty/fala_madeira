@@ -26,9 +26,11 @@ async function openHome(page: Parameters<typeof landOnHome>[0]) {
 }
 
 test.describe('goal-track picker (TB-11)', () => {
-  test('choosing Goal track reveals a goal chooser and picking one persists the active track', async ({ page, coverage }) => {
+  test('choosing Goal track reveals a goal chooser and picking one persists the active track', async ({ page, testUser, coverage }) => {
     await landOnHome(page);
     await openProfile(page);
+    // SEC-1: the path selection mirror is namespaced per user (paths:selection:${userId}).
+    const selectionKey = `paths:selection:${testUser.userId}`;
 
     const learningPathCard = page
       .locator('div')
@@ -41,7 +43,7 @@ test.describe('goal-track picker (TB-11)', () => {
     await learningPathCard.getByRole('button', { name: 'Goal track' }).click();
     await expect
       .poll(async () => {
-        const value = await readKv(page, 'paths:selection');
+        const value = await readKv(page, selectionKey);
         return value && typeof value === 'object' && 'type' in value
           ? (value as { type?: string }).type ?? null
           : null;
@@ -63,7 +65,7 @@ test.describe('goal-track picker (TB-11)', () => {
     // Picking a goal persists a concrete activeTrackId (no longer the silent tracks[0] fallback).
     await expect
       .poll(async () => {
-        const value = await readKv(page, 'paths:selection');
+        const value = await readKv(page, selectionKey);
         return value && typeof value === 'object' && 'activeTrackId' in value
           ? (value as { activeTrackId?: string | null }).activeTrackId ?? null
           : null;

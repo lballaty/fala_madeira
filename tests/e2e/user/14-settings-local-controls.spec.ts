@@ -6,7 +6,7 @@
 // Created: 2026-07-13
 
 import { test, expect, landOnHome } from '../support/fixtures';
-import { readKv } from '../support/storage';
+import { readKvByPrefix } from '../support/storage';
 
 test.describe('settings local controls', () => {
   test('theme, path type, and offline-audio controls respond and persist locally', async ({ page, coverage }) => {
@@ -31,7 +31,7 @@ test.describe('settings local controls', () => {
     await expect(page.getByText('active').first()).toBeVisible();
     await expect
       .poll(async () => {
-        const value = await readKv(page, 'paths:selection');
+        const value = await readKvByPrefix(page, 'paths:selection:');
         return value && typeof value === 'object' && 'type' in value ? value.type : null;
       })
       .toBe('goal-track');
