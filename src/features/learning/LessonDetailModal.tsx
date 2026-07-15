@@ -7,7 +7,7 @@
 
 import { useId, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, CheckCircle2, Search, Volume2, X, Youtube } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Search, X, Youtube } from 'lucide-react';
 import { Lesson } from '../../types';
 import { VideoPlayer } from '../../components/VideoPlayer';
 import { AudioButton } from '../../components/AudioButton';
