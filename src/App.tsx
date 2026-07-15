@@ -354,6 +354,7 @@ export default function App() {
                   openQuiz={openQuiz}
                   selectedLesson={selectedLesson}
                   showToast={showToast}
+                  setActiveTab={setActiveTab}
                 />
               </motion.div>
             )}
