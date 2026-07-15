@@ -69,7 +69,7 @@ export const LearningView = ({
   } = lessonModals;
 
   return (
-    <div className="p-6 space-y-6 overflow-y-auto h-full pb-32 no-scrollbar">
+    <div className="p-6 space-y-6 overflow-y-auto h-full pb-32 no-scrollbar" data-testid="learning-plan">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-extrabold tracking-tight">Learning Plan</h1>
         <button

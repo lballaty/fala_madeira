@@ -119,7 +119,7 @@ export const PracticeHubView = ({
 
   // ── Hub: mode tiles per the v3 mockup ──
   return (
-    <div className="p-6 space-y-3 overflow-y-auto h-full pb-32">
+    <div className="p-6 space-y-3 overflow-y-auto h-full pb-32" data-testid="practice-hub">
       <header className="space-y-1 pb-2">
         <h1 className="text-3xl font-bold tracking-tight">Practice</h1>
         <p className="text-ios-gray text-sm">Every mode works on the same situations. Pick your lens.</p>
@@ -127,6 +127,7 @@ export const PracticeHubView = ({
 
       {/* Situation browsing entry — any track, level, situation (§5 free navigation) */}
       <button
+        data-testid="practice-browse"
         onClick={() => setIsBrowsing(true)}
         className="w-full bg-ios-blue p-4 rounded-2xl text-white shadow-lg flex items-center justify-between active:scale-95 transition-transform"
       >

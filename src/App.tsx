@@ -393,6 +393,7 @@ export default function App() {
 
       <nav className="h-20 md:hidden bg-card/80 ios-blur border-t border-line flex items-center justify-around safe-area-bottom z-20">
         <button
+          data-testid="tab-home"
           onClick={() => {
             logger.debug('nav', 'Nav: home', { category: 'USER_ACTION' });
             setActiveTab('home');
@@ -403,6 +404,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Home</span>
         </button>
         <button
+          data-testid="tab-learning"
           onClick={() => {
             logger.debug('nav', 'Nav: learning', { category: 'USER_ACTION' });
             setActiveTab('learning');
@@ -413,6 +415,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Learning</span>
         </button>
         <button
+          data-testid="tab-practice"
           onClick={() => {
             logger.debug('nav', 'Nav: practice', { category: 'USER_ACTION' });
             setActiveTab('practice');
@@ -423,6 +426,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Practice</span>
         </button>
         <button
+          data-testid="tab-chat"
           onClick={() => {
             logger.debug('nav', 'Nav: chat', { category: 'USER_ACTION' });
             setActiveTab('chat');
@@ -433,6 +437,7 @@ export default function App() {
           <span className="text-[10px] font-bold uppercase">Tutor</span>
         </button>
         <button
+          data-testid="tab-settings"
           onClick={() => {
             logger.debug('nav', 'Nav: settings', { category: 'USER_ACTION' });
             setActiveTab('settings');

@@ -1,17 +1,37 @@
-// File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/features/settings/UserManualModal.tsx
-// Description: User manual sheet extracted from App.tsx: learning philosophy, daily
-//   ritual, AI practice guide, and voice-practice fair-use copy (free launch).
-// Author: Libor Ballaty (with assistant)
+// File: src/features/settings/UserManualModal.tsx
+// Description: User manual sheet — now rendered from the single App Capability Registry
+//   (src/content/appCapabilities.ts) grouped by app area (EN-17a, consumer 4a). Replaces the
+//   hand-written JSON-in-JSX so the manual and the chat-help prompt never drift again, and
+//   fixes the literal-** render bug (the registry's `long` is plain prose, no markdown asterisks).
+//   The dialog/focus-trap shell is unchanged.
+// Author: Lane A (with assistant)
 // Created: 2026-07-09
+// Last Updated: 2026-07-15
+// Last Updated By: Lane A (with assistant) — EN-17a registry-driven render
 
 import { useId, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { APP_CAPABILITIES, APP_AREA_LABELS, type AppArea, type AppCapability } from '../../content';
 
 interface UserManualModalProps {
   isUserManualOpen: boolean;
   setIsUserManualOpen: (open: boolean) => void;
+}
+
+/** Section order = the order areas first appear in the registry (stable, single source). */
+function groupByArea(caps: AppCapability[]): { area: AppArea; items: AppCapability[] }[] {
+  const order: AppArea[] = [];
+  const buckets = new Map<AppArea, AppCapability[]>();
+  for (const c of caps) {
+    if (!buckets.has(c.area)) {
+      buckets.set(c.area, []);
+      order.push(c.area);
+    }
+    buckets.get(c.area)!.push(c);
+  }
+  return order.map((area) => ({ area, items: buckets.get(area)! }));
 }
 
 export const UserManualModal = ({ isUserManualOpen, setIsUserManualOpen }: UserManualModalProps) => {
@@ -19,6 +39,7 @@ export const UserManualModal = ({ isUserManualOpen, setIsUserManualOpen }: UserM
   const titleId = useId();
   const handleClose = () => setIsUserManualOpen(false);
   useFocusTrap(dialogRef, isUserManualOpen, handleClose);
+  const sections = groupByArea(APP_CAPABILITIES);
   return (
   <AnimatePresence>
     {isUserManualOpen && (
@@ -44,50 +65,18 @@ export const UserManualModal = ({ isUserManualOpen, setIsUserManualOpen }: UserM
               <X className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar">
-            <div className="space-y-6">
-              <section className="space-y-2">
-                <h3 className="text-ios-blue font-bold text-lg">The Learning Philosophy</h3>
-                <p className="text-sm text-ios-gray leading-relaxed">
-                  FalaMadeira isn't just about grammar; it's about **culture and connection**. Our curriculum is designed to take you from zero to conversational in 6 months, focusing on the specific phonetic nuances and vocabulary of the Madeira archipelago.
-                </p>
+          <div className="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar" data-testid="user-manual-body">
+            {sections.map(({ area, items }) => (
+              <section key={area} className="space-y-4" data-testid={`manual-area-${area}`}>
+                <h3 className="text-ios-blue font-bold text-lg">{APP_AREA_LABELS[area]}</h3>
+                {items.map((cap) => (
+                  <div key={cap.id} className="space-y-1" data-testid={`manual-cap-${cap.id}`}>
+                    <h4 className="font-bold text-sm uppercase tracking-wider text-ios-gray">{cap.title}</h4>
+                    <p className="text-sm text-ios-gray leading-relaxed">{cap.long}</p>
+                  </div>
+                ))}
               </section>
-
-              <section className="space-y-2">
-                <h4 className="font-bold text-sm uppercase tracking-wider text-ios-gray">Your Daily Ritual</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start space-x-3">
-                    <div className="w-5 h-5 bg-ios-blue/10 rounded-full flex items-center justify-center text-ios-blue mt-0.5">
-                      <Check className="w-3 h-3" />
-                    </div>
-                    <p className="text-sm text-ios-gray flex-1">**The Dashboard:** Every day, you'll see a featured lesson. We recommend following the sequence.</p>
-                  </li>
-                  <li className="flex items-start space-x-3">
-                    <div className="w-5 h-5 bg-ios-blue/10 rounded-full flex items-center justify-center text-ios-blue mt-0.5">
-                      <Check className="w-3 h-3" />
-                    </div>
-                    <p className="text-sm text-ios-gray flex-1">**Streak & XP:** Consistency is key. Your streak tracks consecutive days of practice.</p>
-                  </li>
-                </ul>
-              </section>
-
-              <section className="space-y-2">
-                <h4 className="font-bold text-sm uppercase tracking-wider text-ios-gray">AI Practice: Your 24/7 Tutor</h4>
-                <p className="text-sm text-ios-gray leading-relaxed">
-                  This is the heart of FalaMadeira. Speak naturally using the microphone icon. Your tutor knows exactly which lesson you're on and will guide you through the specific patterns of that day.
-                </p>
-              </section>
-
-              <section className="space-y-2">
-                <h4 className="font-bold text-sm uppercase tracking-wider text-ios-gray">Voice Practice Limits</h4>
-                <div className="p-4 bg-gradient-to-br from-ios-blue/5 to-ios-blue/10 rounded-2xl border border-ios-blue/10">
-                  <p className="text-xs font-medium text-ios-blue leading-relaxed">
-                    FalaMadeira is free to use. Voice practice has a fair-use daily limit that
-                    resets every day — text chat with your tutor is always available.
-                  </p>
-                </div>
-              </section>
-            </div>
+            ))}
           </div>
         </motion.div>
       </motion.div>
