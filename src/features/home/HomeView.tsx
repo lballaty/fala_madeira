@@ -21,6 +21,7 @@ import { Lesson, UserProfile } from '../../types';
 import type { NextAction, PathContext, PathSelection, LearningPath } from '../../paths';
 import type { FocusSuggestion } from '../../lib/coach';
 import { FocusCard } from '../coach/FocusCard';
+import { hasFullContentAccess } from '../../lib/access';
 import { useHome } from './useHome';
 
 const getLevelName = (level: number) => {
@@ -121,7 +122,11 @@ export const HomeView = ({
 }: HomeViewProps) => {
   const unlockModalRef = useRef<HTMLDivElement>(null);
   const unlockModalTitleId = useId();
-  useFocusTrap(unlockModalRef, isUnlockModalOpen, () => setIsUnlockModalOpen(false));
+  // EN-15: admins + unlimited-tier users bypass the content paywall entirely, so there is
+  // nothing to unlock. Hide the access-key CTA + modal for them (the key flow is unchanged for
+  // free/premium). Guarded here so the modal never renders even if isUnlockModalOpen goes true.
+  const fullAccess = hasFullContentAccess(profile);
+  useFocusTrap(unlockModalRef, isUnlockModalOpen && !fullAccess, () => setIsUnlockModalOpen(false));
 
   // Derived Home surfaces: progress ring, competence line, review-due count, streak-freeze grace.
   const { progress, competencePhrases, reviewDueCount, freeze } = useHome({
@@ -149,14 +154,18 @@ export const HomeView = ({
           <h1 className="text-3xl font-bold tracking-tight">Olá, {user?.email?.split('@')[0]}!</h1>
           <div className="flex items-center space-x-2">
             <p className="text-ios-gray">{getLevelName(profile?.unlocked_level || 1)}</p>
-            <button
-              onClick={() => setIsUnlockModalOpen(true)}
-              aria-label="Unlock Next Level"
-              className="p-1.5 bg-ios-bg rounded-full text-ios-blue hover:bg-ios-blue/10 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-              title="Unlock Next Level"
-            >
-              <Key className="w-3.5 h-3.5" />
-            </button>
+            {/* EN-15: hide the access-key unlock CTA for full-access (admin/unlimited) users —
+                they already have every level, so there is nothing to unlock. */}
+            {!fullAccess && (
+              <button
+                onClick={() => setIsUnlockModalOpen(true)}
+                aria-label="Unlock Next Level"
+                className="p-1.5 bg-ios-bg rounded-full text-ios-blue hover:bg-ios-blue/10 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                title="Unlock Next Level"
+              >
+                <Key className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -325,9 +334,9 @@ export const HomeView = ({
     </section>
     </div>
 
-    {/* Unlock Level Modal */}
+    {/* Unlock Level Modal — never shown to full-access (admin/unlimited) users (EN-15). */}
     <AnimatePresence>
-      {isUnlockModalOpen && (
+      {isUnlockModalOpen && !fullAccess && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
