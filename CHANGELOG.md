@@ -4,8 +4,8 @@
 **Description:** Release changelog for fala_madeira. Entries grouped by CalVer `YYYY.MM.DD.N`.
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
-**Last Updated:** 2026-07-14
-**Last Updated By:** claude-opus-4-8 (versioning-rollout plan)
+**Last Updated:** 2026-07-15
+**Last Updated By:** claude-opus-4-8 (release 2026.07.15.3 — TB-11)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,10 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.15.3
+
+- Fixed: the **Goal track is now selectable, not just switched** — choosing "Goal track" in Settings reveals a goal chooser so you can pick which goal to pursue, instead of silently switching to a default. (TB-11)
 
 ## 2026.07.15.2
 
