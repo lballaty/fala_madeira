@@ -16,7 +16,8 @@ import type { User } from '@supabase/supabase-js';
 import { CheckCircle2, Ear, Volume2 } from 'lucide-react';
 import type { PracticeModeProps } from '../registry';
 import { contentRepository } from '../../../content/repository';
-import type { Situation } from '../../../content/schema';
+import type { Situation, Track } from '../../../content/schema';
+import { cn } from '../../../lib/utils';
 import { getSupabase } from '../../../lib/supabase';
 import { logger } from '../../../lib/logger';
 import type { Sm2Grade } from '../../../lib/srs';
@@ -142,9 +143,15 @@ interface VocabularySessionScreenProps {
   user: User | null;
   situations: Situation[];
   onExit: () => void;
+  /**
+   * Pre-formatted scope line shown on the header/empty/summary so the deck never reads as
+   * "general" when it isn't — e.g. `This lesson: “Ordering coffee” · 6 words` or
+   * `All lessons · 214 words`. Built by the parent from the chosen scope + its word count (EN-16).
+   */
+  scopeHeading: string;
 }
 
-const VocabularySessionScreen = ({ user, situations, onExit }: VocabularySessionScreenProps) => {
+const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: VocabularySessionScreenProps) => {
   const {
     phase,
     card,
@@ -169,6 +176,9 @@ const VocabularySessionScreen = ({ user, situations, onExit }: VocabularySession
     return (
       <div className="p-6 flex flex-col items-center justify-center text-center h-full space-y-4">
         <CheckCircle2 className="w-12 h-12 text-[#34C759]" />
+        <p className="text-xs font-semibold text-ios-blue" data-testid="vocab-scope">
+          {scopeHeading}
+        </p>
         <div className="space-y-1">
           <h3 className="text-lg font-bold">
             {hasAnyVocabulary ? 'All caught up' : 'No vocabulary here yet'}
@@ -193,6 +203,9 @@ const VocabularySessionScreen = ({ user, situations, onExit }: VocabularySession
     return (
       <div className="p-6 flex flex-col items-center justify-center text-center h-full space-y-5">
         <CheckCircle2 className="w-12 h-12 text-[#34C759]" />
+        <p className="text-xs font-semibold text-ios-blue" data-testid="vocab-scope">
+          {scopeHeading}
+        </p>
         <div className="space-y-1">
           <h3 className="text-lg font-bold">Session complete</h3>
           <p className="text-sm text-ios-gray">Grades feed the 4-dimension model.</p>
@@ -241,6 +254,9 @@ const VocabularySessionScreen = ({ user, situations, onExit }: VocabularySession
 
   return (
     <div className="p-6 space-y-3">
+      <p className="text-xs font-semibold text-ios-blue" data-testid="vocab-scope">
+        {scopeHeading}
+      </p>
       <div className="flex items-center justify-between text-xs text-ios-gray">
         <span>
           {remainingDue} due · {remainingNew} new
@@ -300,14 +316,19 @@ const VocabularySessionScreen = ({ user, situations, onExit }: VocabularySession
 // race-free (useVocabularySession refreshes mastery for a fixed user).
 // ---------------------------------------------------------------------------
 
+/** Vocabulary-review content scope (EN-16): the current lesson, the active goal-track, or all. */
+type VocabScope = 'lesson' | 'track' | 'all';
+
 const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
   const [auth, setAuth] = useState<{ user: User | null } | null>(null);
   const [situations, setSituations] = useState<Situation[] | null>(null);
+  const [tracks, setTracks] = useState<Track[]>([]);
+  const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
+  // Default to the lesson deck when routed in from a situation; otherwise the full deck.
+  const [scope, setScope] = useState<VocabScope>(situationId ? 'lesson' : 'all');
 
-  // Resolve the signed-in user once (modes receive only PracticeModeProps from the hub).
-  // LT9: read the LOCAL persisted session (no network). auth.getUser() here made a network
-  // round-trip that fails offline, silently mounting the session signed-out and dropping
-  // every grade before the offline sync-queue could engage.
+  // Resolve the signed-in user once (LT9: local persisted session, no network round-trip), and
+  // the active goal-track (user_track_selection) so the "This track" scope can be offered.
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve()
@@ -316,7 +337,17 @@ const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
         if (!supabase) return { user: null };
         try {
           const { data } = await supabase.auth.getSession();
-          return { user: data.session?.user ?? null };
+          const user = data.session?.user ?? null;
+          if (user) {
+            const { data: sel } = await supabase
+              .from('user_track_selection')
+              .select('track_id')
+              .eq('user_id', user.id)
+              .eq('is_active', true)
+              .maybeSingle();
+            if (!cancelled && sel?.track_id) setActiveTrackId(sel.track_id);
+          }
+          return { user };
         } catch (err) {
           // Signed-out sessions are expected — practice continues without persistence.
           logger.warn('VOCAB_AUTH_UNAVAILABLE', 'Could not resolve auth user for vocabulary review', {
@@ -334,42 +365,103 @@ const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
     };
   }, []);
 
-  // Load the vocabulary scope: one situation (browser route-in) or all situations.
+  // Load ALL situations + tracks once; scope is applied client-side so the selector can switch
+  // decks (and show per-scope word counts) without re-fetching (EN-16).
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve()
-      .then(async (): Promise<Situation[]> => {
+      .then(async () => {
         try {
-          if (situationId) {
-            const one = await contentRepository.getSituation(situationId);
-            if (one) return [one];
-            // Stale/unknown id: fall back to the full deck instead of a dead screen.
-            logger.warn('VOCAB_SITUATION_MISSING', `situation "${situationId}" not found — falling back to all vocabulary`, {
-              category: 'DATA_PROCESSING',
-              details: { situationId },
-            });
+          const [sits, trks] = await Promise.all([
+            contentRepository.listSituations(),
+            contentRepository.listTracks(),
+          ]);
+          if (!cancelled) {
+            setSituations(sits);
+            setTracks(trks);
           }
-          return await contentRepository.listSituations();
         } catch (err) {
-          logger.error('VOCAB_CONTENT_LOAD_FAILED', 'Failed to load situations for vocabulary review', {
+          logger.error('VOCAB_CONTENT_LOAD_FAILED', 'Failed to load content for vocabulary review', {
             category: 'DATA_PROCESSING',
             error: err,
-            details: { situationId },
           });
-          return [];
+          if (!cancelled) setSituations([]);
         }
-      })
-      .then((list) => {
-        if (!cancelled) setSituations(list);
       });
     return () => {
       cancelled = true;
     };
-  }, [situationId]);
+  }, []);
 
   if (auth === null || situations === null) return loadingSpinner;
 
-  return <VocabularySessionScreen user={auth.user} situations={situations} onExit={onExit} />;
+  const vocabCount = (sits: Situation[]): number => sits.reduce((n, s) => n + s.vocabulary.length, 0);
+  const lessonSituation = situationId ? situations.find((s) => s.id === situationId) ?? null : null;
+  const trackSituations = activeTrackId ? situations.filter((s) => s.tracks.includes(activeTrackId)) : [];
+  const activeTrackName = tracks.find((t) => t.id === activeTrackId)?.name ?? null;
+
+  // Scope options + word counts. Lesson only when routed in; track only when the user has an
+  // active goal-track that actually carries vocabulary; All is always available.
+  const options: { key: VocabScope; label: string; count: number }[] = [];
+  if (lessonSituation) options.push({ key: 'lesson', label: 'This lesson', count: vocabCount([lessonSituation]) });
+  if (activeTrackId && trackSituations.length > 0) {
+    options.push({ key: 'track', label: 'This track', count: vocabCount(trackSituations) });
+  }
+  options.push({ key: 'all', label: 'All lessons', count: vocabCount(situations) });
+
+  // Guard against a scope that isn't available (e.g. 'lesson' with a stale id) → fall back to All.
+  const effectiveScope: VocabScope = options.some((o) => o.key === scope) ? scope : 'all';
+  const scopeSituations =
+    effectiveScope === 'lesson' && lessonSituation
+      ? [lessonSituation]
+      : effectiveScope === 'track'
+        ? trackSituations
+        : situations;
+
+  const activeOption = options.find((o) => o.key === effectiveScope)!;
+  const scopeName =
+    effectiveScope === 'lesson' && lessonSituation
+      ? `This lesson: “${lessonSituation.title}”`
+      : effectiveScope === 'track'
+        ? `Track${activeTrackName ? `: ${activeTrackName}` : ''}`
+        : 'All lessons';
+  const scopeHeading = `${scopeName} · ${activeOption.count} words`;
+
+  return (
+    <div className="flex flex-col h-full">
+      <div className="px-6 pt-4 flex flex-wrap gap-2" data-testid="vocab-scope-selector">
+        {options.map((o) => {
+          const active = o.key === effectiveScope;
+          return (
+            <button
+              key={o.key}
+              type="button"
+              onClick={() => setScope(o.key)}
+              aria-pressed={active}
+              className={cn(
+                'px-3 py-1.5 rounded-full text-xs font-semibold border-2 transition-colors min-h-[36px]',
+                active
+                  ? 'border-ios-blue bg-ios-blue/5 text-ios-blue'
+                  : 'border-transparent bg-ios-bg text-ios-gray',
+              )}
+            >
+              {o.label} ({o.count})
+            </button>
+          );
+        })}
+      </div>
+      {/* Remount the session per scope so the SRS queue rebuilds for the chosen deck. */}
+      <div className="flex-1 min-h-0">
+        <VocabularySessionScreen
+          key={effectiveScope}
+          user={auth.user}
+          situations={scopeSituations}
+          onExit={onExit}
+          scopeHeading={scopeHeading}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default VocabularyView;
