@@ -42,10 +42,14 @@ export const linesForSituation = (situation: Situation): AudioLine[] => {
   // Vocabulary words — default tutor voice.
   for (const item of situation.vocabulary) push(item.word);
 
-  // Roleplay NPC lines carry their own voice archetype (multi-voice).
+  // Roleplay (Situation Simulator, scripted mode): NPC lines carry their speaker archetype
+  // (multi-voice); learner OPTION lines are reference pronunciations in the default tutor voice
+  // (like phrase_patterns/vocabulary). Enumerating both makes scripted-simulator audio fully
+  // downloadable + pre-hostable via the same keys (EN-8 / COORD-1: on-demand tap-to-hear).
   if (situation.roleplay) {
     for (const node of situation.roleplay.nodes) {
       push(node.npc_text, node.npc_voice_type);
+      for (const option of node.options ?? []) push(option.text);
     }
   }
 
