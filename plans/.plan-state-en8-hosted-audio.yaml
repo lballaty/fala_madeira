@@ -26,10 +26,10 @@ steps:
   commit-phase1:              { status: succeeded, note: "satisfied by incremental commits fba5d7f/e21b311/83e6361" }
   client-voicetype-mirror:    { status: succeeded, commit: 0cba5b9 }
   test-voicetype-parity:      { status: succeeded, commit: 0cba5b9, note: "3/3; mirrors router.ts mapping table" }
-  normalize-keys-and-hostable:{ status: pending, note: "NEXT — big step: edit geminiService + 4 caller hooks + audio-download; voiceType keying + hostable flag" }
-  route-listening-shared:     { status: pending }
-  test-key-and-scope:         { status: pending }
-  commit-phase2:              { status: pending }
+  normalize-keys-and-hostable:{ status: succeeded, note: "commit deferred to commit-phase2 (branch incoherent until Listening shares the key space). geminiService keys by resolveVoice(voiceType||voiceTypeForTutor(tutor)); shared resolveVoice added to lib/voiceType.ts; hostable threaded via PlaySpeechOptions. DEVIATION: useSpeechPlayback left NOT-hostable (it is shared with TutorChatView free-chat + user vocab lookups — plan's curated assumption was wrong; code wins). hostable:true on useDrillAudio/useEntryAudio/audio-download; hostable:false explicit on useTutorSession free-chat. tsc 0 + 242 tests green." }
+  route-listening-shared:     { status: succeeded, commit: bce9e45, note: "listeningAudio now keys via audioCache.buildKey('default',voiceType,text) (shared space; drops listening_* scheme) + hostable:true; non-default-rate uncached guard preserved. DEFERRED to Phase 4: route listening cache-MISS through the shared server-tier fetch (needs rate-aware fetch) so hosted dialogue serves from Verpex." }
+  test-key-and-scope:         { status: succeeded, commit: bce9e45, note: "geminiService.test: keys by resolved archetype (not tutor id) + hostable true/false/undefined forwarding; audio-download.test: pre-check key uses resolved 'teacher' (EN-7 fix) + hostable:true. 248 tests total." }
+  commit-phase2:              { status: succeeded, commit: bce9e45, note: "FOLLOW-UPS: (1) opt-in hostable:true for MissionsView/referenceAudio/useVocabularySession/scripted-simulator NPC (curated, out of plan's named 4); (2) per-consumer hostable for useSpeechPlayback curated plays; (3) Phase-4 listening server-tier read." }
   pinned-store-adapter:       { status: pending }
   pinned-store-migration-test:{ status: pending }
   wire-pinned-cache:          { status: pending }
