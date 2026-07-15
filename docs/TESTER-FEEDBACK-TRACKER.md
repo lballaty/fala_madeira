@@ -372,6 +372,12 @@
 
 ## QA / test hardening
 
+### QA-4 — Content coverage: lessons should cover ≥ the 1000 most-used Portuguese words (owner 2026-07-16) — `OPEN (quality follow-up — content audit)`
+- **Ask (owner):** as a matter of course, the authored curriculum vocabulary should cover at least the **top ~1000 most-frequent European Portuguese words**, so learners get the highest-utility vocabulary by default.
+- **Current state:** live content has **1,145 vocabulary words** across 187 situations (6×28 daily lessons + ~19 goal-track). No check that this set overlaps a frequency list — coverage unknown.
+- **Direction (later):** obtain a top-1000 pt-PT frequency list → diff against the authored `vocabulary` set → report coverage % + missing high-frequency words → enrich content to close gaps. Feeds EN-18 (better default vocab pool) + content authoring.
+- **Owner:** content (Agent C) + Lane B (audit script). **Status:** OPEN — quality follow-up, not blocking EN-18.
+
 ### QA-3 — EN-10 (inventory-first vocab lookup) shipped with stale/broken e2e — `FIXED by Lane B (release-gate), flagged to Lane A`
 - **Gap (caught by the pre-staging full regression, 2026-07-15):** Lane A's `8a79591` "feat(EN-10): inventory-first vocab lookup" changed the Vocab Lookup modal UI but did NOT update its e2e — `user/03`, `user/04`, `user/43` failed. Two causes (feature works; specs were stale): (1) input placeholder renamed `"Enter a word or phrase..."` → `"Portuguese or English word..."`; (2) inventory-first resolves an in-inventory word synchronously so the transient loading spinner is no longer observable.
 - **Fix (Lane B, commit `a2742ef`):** updated the placeholder selectors (03/04/43) and changed `user/43`'s assertion to the deterministic response (spinner OR the rendered result's "Explanation" section). Verified deterministic (`43:98` ×3 green).

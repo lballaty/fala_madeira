@@ -59,6 +59,11 @@ sourcing.
   (`daily/social/travel/work`) and/or goal-track — **not** by month/lesson number. There are many.
 - **"Worked on":** a theme enters the pool once the learner has **started** it — opened the
   lesson/theme **and played some of it back** (not necessarily completed).
+- **Which lessons count (owner 2026-07-16):** INCLUDE all lessons — **including grammar lessons**
+  (they DO introduce new vocabulary). EXCLUDE **drills, stress-tests and review situations** (they
+  reinforce, not introduce — the 0-word "Week N Stress Test" / "Grand Stress Test" entries). Live
+  content shape: 6 months × 28 daily lessons; every 7th day is a Stress Test (0 words) → filter
+  those out; ~19 goal-track situations sit outside the month calendar.
 - **Two-dimension evaluation:** COMPREHENSION (typed meaning) + PRODUCTION (spoken). Both → success,
   one → partial, neither → failure.
 - **No mic / declines mic:** comprehension (typed) only → **PASS/FAIL, no PARTIAL**.
