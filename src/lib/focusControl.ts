@@ -28,8 +28,13 @@ export function focusControl(controlId: string): Promise<boolean> {
   if (typeof document === 'undefined') return Promise.resolve(false);
   return new Promise<boolean>((resolve) => {
     let frames = 0;
+    const selector = `[data-testid="${CSS.escape(controlId)}"]`;
     const tick = () => {
-      const el = document.querySelector<HTMLElement>(`[data-testid="${CSS.escape(controlId)}"]`);
+      // A control id can appear in more than one responsive layout (e.g. the mobile bottom bar and
+      // the desktop sidebar both tag their tab button); prefer the currently VISIBLE one so we
+      // scroll/focus the element the user can actually see. offsetParent is null for display:none.
+      const all = Array.from(document.querySelectorAll<HTMLElement>(selector));
+      const el = all.find((n) => n.offsetParent !== null) ?? all[0] ?? null;
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         // Move keyboard focus to it when it can take focus (buttons, inputs, tabindex).
