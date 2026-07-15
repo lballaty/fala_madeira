@@ -9,8 +9,9 @@
 
 import { Lesson, Tutor, VocabResult } from "../types";
 import { audioCache } from "../lib/audioCache";
+import { keyToServerPath } from "../lib/audioKey";
 import { resolveVoice } from "../lib/voiceType";
-import { getSupabase } from "../lib/supabase";
+import { getSupabase, publicObjectUrl } from "../lib/supabase";
 import { logger, userMessage } from "../lib/logger";
 import { platform } from "../platform";
 import { config } from "../config";
@@ -322,10 +323,60 @@ export interface SynthesizeOptions {
   pinned?: boolean;
 }
 
+/** Which tier ultimately served a clip — emitted as `tts_source` for the admin "what is where". */
+type TtsTier = 'cache' | 'pinned' | 'verpex' | 'supabase' | 'provider';
+
+const logTtsSource = (tier: TtsTier, key: string, requestId?: string): void => {
+  logger.debug('tts_source', `tts audio served from ${tier}`, {
+    category: 'DATA_PROCESSING',
+    correlationId: requestId,
+    details: { tier, key },
+  });
+};
+
+// Best-effort GET of pre-hosted raw PCM. Returns the bytes on a 2xx with a non-empty body, else
+// null. NEVER throws: a 404 (not hosted yet), CORS, timeout, or network drop is an EXPECTED miss
+// that must fall through to the next tier — not an error path (playback still reaches the provider).
+const tryFetchPcm = async (url: string): Promise<ArrayBuffer | null> => {
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(config.net.requestTimeoutMs) });
+    if (!res.ok) return null;
+    const buf = await res.arrayBuffer();
+    return buf.byteLength > 0 ? buf : null;
+  } catch {
+    return null;
+  }
+};
+
+interface ServerTierHit { buffer: ArrayBuffer; tier: 'verpex' | 'supabase'; }
+
 /**
- * Fetch (or reuse from the bounded LRU cache) the PCM audio for `text`. Shared by
- * playSpeech and the offline-download pre-generation (src/lib/audio-download.ts) so both
- * key the cache identically. Throws a userMessage-wrapped Error on empty audio (the edge
+ * EN-8 server audio tiers: try the durable Verpex mirror first, then the Supabase public buffer,
+ * for a pre-hosted clip (raw 24kHz PCM — same shape the provider returns). Returns the first hit
+ * or null when both miss/are unreachable. Both tiers are OPTIONAL and best-effort: until the
+ * operator deploys the server side (and sets VITE_AUDIO_VERPEX_BASE / the bucket), every probe
+ * simply misses and playback falls through to the configured provider unchanged.
+ */
+const fetchServerTier = async (cacheKey: string): Promise<ServerTierHit | null> => {
+  const path = keyToServerPath(cacheKey);
+
+  const verpexUrl = `${config.audio.verpexBase.replace(/\/$/, '')}/${path}`;
+  const verpex = await tryFetchPcm(verpexUrl);
+  if (verpex) return { buffer: verpex, tier: 'verpex' };
+
+  const supabaseUrl = publicObjectUrl(config.audio.supabaseAudioBucket, path);
+  if (supabaseUrl) {
+    const supa = await tryFetchPcm(supabaseUrl);
+    if (supa) return { buffer: supa, tier: 'supabase' };
+  }
+  return null;
+};
+
+/**
+ * Fetch (or reuse from a device/server tier) the PCM audio for `text`. Lookup order (EN-8):
+ * device LRU cache → pinned downloads → Verpex mirror → Supabase buffer → configured provider.
+ * Shared by playSpeech and the offline-download pre-generation (src/lib/audio-download.ts) so all
+ * paths key identically. Throws a userMessage-wrapped Error on empty provider audio (the edge
  * choke point in invokeEdgeFunction already logs transport failures with correlation IDs).
  */
 export const synthesizeCached = async (text: string, options: SynthesizeOptions = {}): Promise<ArrayBuffer> => {
@@ -335,12 +386,21 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   const cacheKey = audioCache.buildKey(options.provider || 'default', voice, text);
 
   const cached = await audioCache.get(cacheKey);
-  if (cached) return cached;
+  if (cached) { logTtsSource('cache', cacheKey); return cached; }
 
-  // EN-8 lookup order: bounded LRU cache (above) → PINNED offline store → [server tiers land in
-  // Phase 4] → configured provider (below). Pinned holds user-downloaded clips eviction never removes.
+  // EN-8 lookup order: bounded LRU cache (above) → PINNED offline store → Verpex/Supabase server
+  // tiers → configured provider (below). Pinned holds user-downloaded clips eviction never removes.
   const pinned = await audioCache.getPinned(cacheKey);
-  if (pinned) return pinned;
+  if (pinned) { logTtsSource('pinned', cacheKey); return pinned; }
+
+  // Server tiers: a pre-hosted clip serves WITHOUT paying the provider (the core EN-8 cost/503
+  // win). On a hit, warm the device LRU cache so subsequent plays are local, then return.
+  const serverHit = await fetchServerTier(cacheKey);
+  if (serverHit) {
+    await audioCache.set(cacheKey, serverHit.buffer);
+    logTtsSource(serverHit.tier, cacheKey);
+    return serverHit.buffer;
+  }
 
   // Server picks the voice from the tutor/voiceType and enforces the daily voice limit; the
   // response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
@@ -363,6 +423,7 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
     throw new Error(userMessage('TTS_EMPTY_AUDIO', 'The voice service returned no audio. Please try again.', event.request_id));
   }
   const arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
+  logTtsSource('provider', cacheKey, data?.requestId);
   if (options.pinned) {
     // Offline download: persist to the pinned store (never LRU-evicted) so it survives cache
     // pressure — the EN-7 "downloads get evicted" fix. Pinned writes are unbounded here; the

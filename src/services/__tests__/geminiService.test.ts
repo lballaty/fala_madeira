@@ -10,7 +10,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../../lib/supabase', () => ({ getSupabase: vi.fn() }));
+vi.mock('../../lib/supabase', () => ({ getSupabase: vi.fn(), publicObjectUrl: vi.fn(() => null) }));
 vi.mock('../../lib/audioCache', () => ({
   audioCache: {
     buildKey: vi.fn(() => 'provider:voice:hash'),
@@ -30,7 +30,7 @@ vi.mock('../../platform', () => ({
   },
 }));
 
-import { getSupabase } from '../../lib/supabase';
+import { getSupabase, publicObjectUrl } from '../../lib/supabase';
 import { platform } from '../../platform';
 import { audioCache } from '../../lib/audioCache';
 import { logger } from '../../lib/logger';
@@ -54,6 +54,10 @@ beforeEach(() => {
   vi.useFakeTimers();
   invoke.mockReset();
   vi.mocked(getSupabase).mockReturnValue({ functions: { invoke } } as unknown as ReturnType<typeof getSupabase>);
+  vi.mocked(publicObjectUrl).mockReturnValue(null); // default: skip the Supabase audio tier
+  // Default: the EN-8 server tiers MISS (verpex fetch not ok) so tests reach the provider unless
+  // a test opts into a hosted hit. Individual tier-order tests override this with vi.stubGlobal.
+  vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, arrayBuffer: async () => new ArrayBuffer(0) })));
   vi.mocked(platform.audio.stop).mockClear();
   vi.mocked(platform.audio.playPcm16).mockClear();
   vi.mocked(platform.audio.speak).mockClear();
@@ -61,6 +65,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.useRealTimers();
+  vi.unstubAllGlobals();
 });
 
 describe('EdgeFunctionError', () => {
@@ -207,5 +212,66 @@ describe('synthesizeCached key normalization + hostable scope (EN-8)', () => {
       .filter((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts')
       .map((c) => c[1].body.hostable);
     expect(hostables).toEqual([true, false, undefined]);
+  });
+});
+
+describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → supabase → provider', () => {
+  const pcm = (n: number) => new Uint8Array(n).fill(1).buffer;
+  const okPcm = () => ({ ok: true, arrayBuffer: async () => pcm(8) });
+  const missPcm = () => ({ ok: false, arrayBuffer: async () => pcm(0) });
+
+  beforeEach(() => {
+    vi.mocked(audioCache.buildKey).mockReturnValue('tts:default:teacher:hash');
+    vi.mocked(audioCache.get).mockResolvedValue(null);
+    vi.mocked(audioCache.getPinned).mockResolvedValue(null);
+    vi.mocked(audioCache.set).mockClear().mockResolvedValue(0);
+    invoke.mockResolvedValue({ data: { audio: 'AAAA' }, error: null });
+    vi.mocked(publicObjectUrl).mockReturnValue('https://sb.example/storage/v1/object/public/tts-audio/hash.pcm');
+  });
+
+  it('device cache hit → zero fetches, zero edge calls', async () => {
+    vi.mocked(audioCache.get).mockResolvedValue(pcm(4));
+    const fetchMock = vi.fn(async () => okPcm());
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(invoke).not.toHaveBeenCalled();
+  });
+
+  it('pinned hit (cache miss) → zero fetches, zero edge calls', async () => {
+    vi.mocked(audioCache.getPinned).mockResolvedValue(pcm(4));
+    const fetchMock = vi.fn(async () => okPcm());
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(invoke).not.toHaveBeenCalled();
+  });
+
+  it('Verpex 200 → no Supabase fetch, no provider; warms the device cache', async () => {
+    const fetchMock = vi.fn(async () => okPcm());
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(fetchMock).toHaveBeenCalledTimes(1); // verpex only — supabase not probed
+    expect(invoke).not.toHaveBeenCalled();
+    expect(audioCache.set).toHaveBeenCalledTimes(1); // hit warmed into the LRU cache
+  });
+
+  it('Verpex miss → Supabase 200 → no provider', async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(missPcm()) // verpex
+      .mockResolvedValueOnce(okPcm()); // supabase
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(invoke).not.toHaveBeenCalled();
+  });
+
+  it('all tiers miss → falls through to the configured provider (edge tts)', async () => {
+    const fetchMock = vi.fn(async () => missPcm());
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(fetchMock).toHaveBeenCalledTimes(2); // verpex + supabase both probed and missed
+    const ttsCall = invoke.mock.calls.find((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts');
+    expect(ttsCall).toBeDefined();
   });
 });

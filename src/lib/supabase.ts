@@ -27,6 +27,16 @@ export const getSupabase = (): SupabaseClient | null => {
   return supabaseInstance;
 };
 
-// Export a dummy object that mimics the structure for initial type safety, 
+// Export a dummy object that mimics the structure for initial type safety,
 // but we should use getSupabase() in our components.
 export const supabase = getSupabase();
+
+/**
+ * Build the PUBLIC object URL for a Storage object WITHOUT a client round-trip:
+ * `<SUPABASE_URL>/storage/v1/object/public/<bucket>/<path>`. Returns null when the Supabase URL is
+ * not configured (the caller then skips the Supabase audio tier). Used by the EN-8 server-tier
+ * lookup to fetch a buffered clip from the public tts-audio bucket. Pure string construction so it
+ * is trivially testable and adds no client dependency.
+ */
+export const publicObjectUrl = (bucket: string, path: string): string | null =>
+  supabaseUrl ? `${supabaseUrl.replace(/\/$/, '')}/storage/v1/object/public/${bucket}/${path}` : null;

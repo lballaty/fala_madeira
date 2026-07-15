@@ -43,6 +43,17 @@ export const config = {
      * (which showed a 200 MB option); ordered smallest → largest.
      */
     cacheLimitOptionsBytes: [25 * 1024 * 1024, 50 * 1024 * 1024, 100 * 1024 * 1024, 200 * 1024 * 1024],
+    /**
+     * EN-8 server audio tier. `verpexBase` is the base path the client GETs pre-hosted clips from
+     * (Verpex serves REMOTE_PATH/audio/<keyToServerPath> statically, same-origin by default);
+     * `supabaseAudioBucket` is the public Storage bucket that buffers clips before the Verpex cron
+     * copies them. Read only on the server-tier MISS path in geminiService.synthesizeCached
+     * (device cache → pinned → verpex → supabase → configured provider). Both tiers are optional:
+     * until the operator deploys the server side, fetches simply miss and playback reaches the
+     * provider unchanged. VITE_AUDIO_VERPEX_BASE overrides the base for non-standard hosting.
+     */
+    verpexBase: (import.meta.env.VITE_AUDIO_VERPEX_BASE as string | undefined) || '/audio',
+    supabaseAudioBucket: 'tts-audio',
   },
 
   net: {
