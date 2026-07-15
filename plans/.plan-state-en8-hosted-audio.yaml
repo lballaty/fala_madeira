@@ -35,10 +35,10 @@ steps:
   wire-pinned-cache:          { status: succeeded, commit: 4421425, note: "audioCache.getPinned/setPinned/pinnedUsage; synthesizeCached reads cache->pinned->[server P4]->provider + writes pinned when opts.pinned; downloadForOffline pinned:true + bounds run by pinnedUsage()." }
   logout-clears-lru-cache:    { status: succeeded, commit: 4421425, note: "audioCache.clear()=LRU-only wired into App.tsx onLogoutCleanup (after SEC-2 clearDeviceUserState); pinned preserved. audioCache.test locks delegation." }
   commit-phase3:              { status: succeeded, commit: 4421425, note: "13 files, 252 tests green, pushed. Phase 3 DONE. Next: Phase 4 client-server-tier (config-server-audio first)." }
-  config-server-audio:        { status: pending }
-  client-server-tier:         { status: pending }
-  test-tier-order:            { status: pending }
-  commit-phase4:              { status: pending }
+  config-server-audio:        { status: succeeded, commit: adcf18c, note: "config.audio.verpexBase (VITE_AUDIO_VERPEX_BASE, default /audio) + supabaseAudioBucket ('tts-audio'); pure publicObjectUrl(bucket,path) helper in lib/supabase.ts (no vite-env.d.ts change needed — vite/client index sig)." }
+  client-server-tier:         { status: succeeded, commit: adcf18c, note: "fetchServerTier(key): GET verpex /audio/<keyToServerPath> then Supabase public URL; best-effort (404/CORS/timeout = miss, never throws). Hit warms LRU + skips provider. tts_source(cache|pinned|verpex|supabase|provider) emitted at debug. INERT until operator deploys server side." }
+  test-tier-order:            { status: succeeded, commit: adcf18c, note: "5 cases: cache=0 fetch/edge; pinned=0; verpex200=1 fetch no provider; supabase200=2 fetch no provider; all-miss=provider. 257 tests total." }
+  commit-phase4:              { status: succeeded, commit: adcf18c, note: "pushed. Phase 4 DONE. NEXT = Phase 5 (SERVER: edge write-back + Supabase buffer). storage-bucket-migration + deploy-edge are deferred-operator (owner: no Verpex/server changes without approval, staging-first). edge module code (edge-audiostore-module, edge-tts-writeback, edge-audio-sync-endpoint) can be WRITTEN now but NOT deployed." }
   storage-bucket-migration:   { status: deferred-operator, note: "applies to SHARED prod DB" }
   edge-audiostore-module:     { status: pending }
   edge-tts-writeback:         { status: pending }
