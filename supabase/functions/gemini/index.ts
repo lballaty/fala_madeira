@@ -22,6 +22,8 @@ import {
 } from "../_shared/gemini.ts";
 import { routeTts } from "../_shared/tts/router.ts";
 import { TtsUnavailableError } from "../_shared/tts/types.ts";
+import { buildKey, keyToServerPath } from "../_shared/audioKey.ts";
+import { uploadTtsClip } from "../_shared/audioStore.ts";
 
 interface ChatMessage { role: "user" | "model"; text: string }
 
@@ -204,6 +206,28 @@ Deno.serve(async (req) => {
           byoKeyRef: profile?.tts_byo_key_ref ?? undefined,
           requestId,
         });
+        // EN-8 server write-back (COORD-2 BLOCKING-1/BLOCKING-2 + minor-c): host the clip in the
+        // Supabase buffer ONLY when the caller marked it curated (body.hostable === true), the env
+        // flag is on, and it is DEFAULT-rate (24kHz) PCM — free-form/user/AI text and non-default
+        // rates are never hosted. Keyed by the SAME provider slot ('default') + resolved voiceType
+        // the client reads, so client GET and server write agree. Fire-and-forget: it never blocks
+        // or alters the response, and uploadTtsClip persists its own failures (best-effort).
+        const writebackOn = Deno.env.get("TTS_BUFFER_WRITEBACK") === "on";
+        const defaultRate = !result.sampleRateHz || result.sampleRateHz === 24000;
+        if (body.hostable === true && writebackOn && defaultRate && result.audioBase64) {
+          const objectPath = keyToServerPath(buildKey("default", String(result.voiceType), text));
+          const upload = uploadTtsClip(objectPath, result.audioBase64, {
+            requestId,
+            correlationId: requestId,
+            traceId: trace?.traceId,
+            userId: user.id,
+          });
+          // Prefer the platform background-task API so the upload survives the response returning;
+          // fall back to fire-and-forget where it is unavailable (uploadTtsClip never throws).
+          const rt = (globalThis as { EdgeRuntime?: { waitUntil?: (p: Promise<unknown>) => void } }).EdgeRuntime;
+          if (rt?.waitUntil) rt.waitUntil(upload); else void upload;
+        }
+
         return jsonResponse({
           audio: result.audioBase64,
           provider: result.provider,

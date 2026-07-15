@@ -11,6 +11,64 @@
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import { corsHeaders, errorResponse, jsonResponse, newRequestId } from "../_shared/http.ts";
+import { deleteConfirmed } from "../_shared/audioStore.ts";
+
+// EN-8: cap on keys accepted per copy-confirm run (audioStore also hard-caps; this rejects early).
+const MAX_SYNC_KEYS = 500;
+
+/**
+ * EN-8 copy-confirmed deletion endpoint (COORD-2 ROBUSTNESS-1). The read-only Verpex pull cron POSTs
+ * { action: 'audio-sync-confirm', keys: [<keyToServerPath names copied to /audio>], summary } authed
+ * by a ROTATABLE shared secret (AUDIO_SYNC_TOKEN env; never committed). We delete only the confirmed
+ * keys from the tts-audio buffer (deleteConfirmed hard-scopes to that bucket + safe names) and write
+ * an INFO heartbeat so a staleness alert can fire if the cron stops reporting. Fails LOUD (503) when
+ * the token is unset — the delete surface is never open by default.
+ */
+async function handleAudioSyncConfirm(
+  req: Request,
+  body: { keys?: unknown; summary?: unknown },
+  requestId: string,
+  now: number,
+): Promise<Response> {
+  const expected = Deno.env.get("AUDIO_SYNC_TOKEN");
+  if (!expected) {
+    console.error(JSON.stringify({ level: "ERROR", requestId, event: "audio_sync_token_unset" }));
+    return errorResponse("AUDIO_SYNC_UNCONFIGURED", "Audio sync is not configured.", 503, requestId);
+  }
+  if ((req.headers.get("x-audio-sync-token") ?? "") !== expected) {
+    return errorResponse("UNAUTHENTICATED", "Invalid audio-sync token.", 401, requestId);
+  }
+
+  const keys = Array.isArray(body.keys) ? body.keys.slice(0, MAX_SYNC_KEYS) : [];
+  const result = await deleteConfirmed(keys, { requestId, correlationId: requestId, userId: null });
+
+  // INFO heartbeat via a direct insert (persistLog is WARN+ only): "the cron ran + what it did".
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const admin = createClient(supabaseUrl, serviceKey);
+  const { error } = await admin.from("logs").insert({
+    event: "audio_sync_run",
+    event_type: "audio_sync_run",
+    level: "INFO",
+    category: "DATA_PROCESSING",
+    request_id: requestId,
+    correlation_id: requestId,
+    details: JSON.stringify({
+      message: "Verpex audio pull cron reported a copy-confirm run",
+      reported: keys.length,
+      deleted: result.deleted,
+      rejected: result.rejected,
+      summary: typeof body.summary === "object" && body.summary ? body.summary : undefined,
+    }),
+    device_info: "verpex-cron",
+    timestamp: new Date(now).toISOString(),
+  });
+  if (error) {
+    console.error(JSON.stringify({ level: "ERROR", requestId, event: "audio_sync_heartbeat_failed", message: error.message }));
+  }
+
+  return jsonResponse({ deleted: result.deleted, rejected: result.rejected, requestId });
+}
 
 // --- Caps (abuse control for an anonymous-writable surface) ---
 const MAX_EVENTS_PER_BATCH = 100;
@@ -95,11 +153,17 @@ Deno.serve(async (req) => {
     return errorResponse("PAYLOAD_TOO_LARGE", "Log batch too large.", 413, requestId);
   }
 
-  let body: { events?: unknown };
+  let body: { events?: unknown; action?: unknown };
   try {
     body = JSON.parse(raw);
   } catch {
     return errorResponse("BAD_REQUEST", "Invalid JSON body.", 400, requestId);
+  }
+
+  // EN-8: the Verpex pull cron reuses this throttled, service-role endpoint for copy-confirmed
+  // deletion, authed by a shared token (not the client log-event path below).
+  if (body && typeof body === "object" && body.action === "audio-sync-confirm") {
+    return await handleAudioSyncConfirm(req, body as { keys?: unknown; summary?: unknown }, requestId, now);
   }
 
   const events = body.events;
