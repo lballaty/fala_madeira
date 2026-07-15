@@ -37,6 +37,7 @@ import { PracticeQuiz } from './features/practice/PracticeQuiz';
 import { usePathSelection } from './paths';
 import { usePathContext } from './features/session/usePathContext';
 import { useOnboarding } from './features/onboarding';
+import { navigateToCapability } from './features/guidance/navigateToCapability';
 
 // Lazy feature views — one chunk per tab (ENGINEERING-STANDARDS §1.1 code-splitting).
 const HomeView = lazy(() => import('./features/home/HomeView'));
@@ -191,6 +192,15 @@ export default function App() {
     }
     // 'free' (or a situation-less step): send the learner to the Practice hub to self-direct.
     setActiveTab('practice');
+  };
+
+  // EN-18 reactive guidance: "Take me there" from the help chat. Resolve the capability's target,
+  // close the practice/help modal so the destination control is visible, then switch tab + focus
+  // the control (guide-and-offer — no action is performed for the user).
+  const handleNavigateToCapability = (capabilityId: string) => {
+    logger.debug('guidance', 'navigateToCapability', { category: 'USER_ACTION', details: { capabilityId } });
+    closeAIPractice();
+    void navigateToCapability(capabilityId, { setActiveTab });
   };
 
   // Cross-slice wiring for the auth slice. Assigned on every render (before effects
@@ -481,6 +491,7 @@ export default function App() {
         setAiMessage={setAiMessage}
         isRecording={isRecording}
         toggleRecording={toggleRecording}
+        onNavigateToCapability={handleNavigateToCapability}
       />
 
       {/* Admin surface overlay (A12): review queues + Content Studio. Admin-only mount;
