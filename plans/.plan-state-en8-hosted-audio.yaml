@@ -30,11 +30,11 @@ steps:
   route-listening-shared:     { status: succeeded, commit: bce9e45, note: "listeningAudio now keys via audioCache.buildKey('default',voiceType,text) (shared space; drops listening_* scheme) + hostable:true; non-default-rate uncached guard preserved. DEFERRED to Phase 4: route listening cache-MISS through the shared server-tier fetch (needs rate-aware fetch) so hosted dialogue serves from Verpex." }
   test-key-and-scope:         { status: succeeded, commit: bce9e45, note: "geminiService.test: keys by resolved archetype (not tutor id) + hostable true/false/undefined forwarding; audio-download.test: pre-check key uses resolved 'teacher' (EN-7 fix) + hostable:true. 248 tests total." }
   commit-phase2:              { status: succeeded, commit: bce9e45, note: "FOLLOW-UPS: (1) opt-in hostable:true for MissionsView/referenceAudio/useVocabularySession/scripted-simulator NPC (curated, out of plan's named 4); (2) per-consumer hostable for useSpeechPlayback curated plays; (3) Phase-4 listening server-tier read." }
-  pinned-store-adapter:       { status: pending }
-  pinned-store-migration-test:{ status: pending }
-  wire-pinned-cache:          { status: pending }
-  logout-clears-lru-cache:    { status: pending }
-  commit-phase3:              { status: pending }
+  pinned-store-adapter:       { status: succeeded, commit: 4421425, note: "StorageAdapter gains getPinnedBlob/setPinnedBlob/pinnedUsage/clearPinned; web IDB DB_VERSION 2->3 (additive create-if-missing of 'audio_pinned'); native fm-pinned dir." }
+  pinned-store-migration-test:{ status: succeeded, commit: 4421425, note: "ADDED fake-indexeddb devDep. storage.web.test.ts: real v2->v3 upgrade keeps 'audio' blobs + adds 'audio_pinned'; clearBlobs never touches pinned; pinnedUsage accounting." }
+  wire-pinned-cache:          { status: succeeded, commit: 4421425, note: "audioCache.getPinned/setPinned/pinnedUsage; synthesizeCached reads cache->pinned->[server P4]->provider + writes pinned when opts.pinned; downloadForOffline pinned:true + bounds run by pinnedUsage()." }
+  logout-clears-lru-cache:    { status: succeeded, commit: 4421425, note: "audioCache.clear()=LRU-only wired into App.tsx onLogoutCleanup (after SEC-2 clearDeviceUserState); pinned preserved. audioCache.test locks delegation." }
+  commit-phase3:              { status: succeeded, commit: 4421425, note: "13 files, 252 tests green, pushed. Phase 3 DONE. Next: Phase 4 client-server-tier (config-server-audio first)." }
   config-server-audio:        { status: pending }
   client-server-tier:         { status: pending }
   test-tier-order:            { status: pending }
