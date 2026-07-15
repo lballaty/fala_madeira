@@ -1,6 +1,7 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/features/learning/VocabLookupModal.tsx
-// Description: AI vocabulary lookup modal extracted verbatim from App.tsx. Controlled
-//   component; state and lookup handler live in useLessonModals.
+// Description: Vocabulary lookup modal (extracted from App.tsx). Accepts a Portuguese OR
+//   English word and translates in either direction (EN-10). Controlled component; the
+//   inventory-first + AI-fallback lookup handler lives in useLessonModals.
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
@@ -77,7 +78,8 @@ export const VocabLookupModal = ({
                 <input
                   value={vocabQuery}
                   onChange={(e) => setVocabQuery(e.target.value)}
-                  placeholder="Enter a word or phrase..."
+                  placeholder="Portuguese or English word..."
+                  aria-label="Portuguese or English word"
                   className="w-full bg-ios-bg p-4 rounded-2xl outline-none text-sm pr-12"
                 />
                 <button
@@ -136,7 +138,8 @@ export const VocabLookupModal = ({
                   <Search className="w-8 h-8" />
                 </div>
                 <p className="text-sm text-ios-gray px-8">
-                  Type any Portuguese word or phrase to get an AI-powered translation and Madeiran context.
+                  Type a Portuguese or English word to translate in either direction — matched against the
+                  course vocabulary first, with an AI-powered translation and Madeiran context for anything else.
                 </p>
               </div>
             )}
