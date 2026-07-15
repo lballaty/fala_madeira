@@ -14,7 +14,7 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
-## 2026.07.15.1
+## 2026.07.15.2
 
 - New: **Sign Out is now in the navigation sidebar** (always available), not only at the bottom of the Profile tab. (EN-9)
 - New: **audio buttons show immediate feedback** — a spinner while a clip loads and a disabled state that prevents double-taps (lesson pronunciation first; more controls to follow). (EN-1)
