@@ -20,13 +20,17 @@ import type {
   SessionSegment,
 } from './types';
 
-/** The active track, or the first available track as a fallback (null when none loaded). */
+/**
+ * The explicitly-chosen goal track, or null when the learner has not picked one yet.
+ * We deliberately do NOT fall back to `tracks[0]` (TB-11b): a silent fallback made Goal
+ * Track masquerade as the first seed track (literally named "Structured Course") on Home.
+ * Callers must handle null honestly — order() passes through, next() prompts to pick a goal.
+ */
 const resolveActiveTrack = (context: PathContext, selection: PathSelection): Track | null => {
   if (selection.activeTrackId) {
-    const found = context.tracks.find((t) => t.id === selection.activeTrackId);
-    if (found) return found;
+    return context.tracks.find((t) => t.id === selection.activeTrackId) ?? null;
   }
-  return context.tracks[0] ?? null;
+  return null;
 };
 
 /**
@@ -73,7 +77,15 @@ export const goalTrackPath: LearningPath = {
   next(context: PathContext, selection: PathSelection): NextAction {
     const track = resolveActiveTrack(context, selection);
     if (!track) {
-      return { kind: 'free', label: 'Pick a goal track', situationId: null, engineId: null };
+      // Goal Track selected but no goal chosen yet (TB-11b). Do NOT default to a track —
+      // prompt the learner and let Home deep-link to the Settings goal chooser.
+      return {
+        kind: 'choose-goal',
+        label: 'Choose your goal',
+        situationId: null,
+        engineId: null,
+        detail: 'Goal track · no goal chosen yet — pick a goal in Profile',
+      };
     }
     const ordered = orderedTrackSituations(context, track);
     const nextSituation =

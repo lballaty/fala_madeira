@@ -7,7 +7,7 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AlertTriangle, BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, Shield, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useTheme, type ThemePreference } from '../../hooks/useTheme';
@@ -50,6 +50,10 @@ interface SettingsViewProps {
   showToast: ShowToast;
   /** Path-type selection (docs/CONTENT-ARCHITECTURE.md §5) — the learning-path switcher. */
   pathSelection: ReturnType<typeof usePathSelection>;
+  /** TB-11b deep-link: when true, scroll to + highlight the Learning Path goal chooser (Home CTA). */
+  focusGoalChooser?: boolean;
+  /** Called once the goal chooser has been scrolled into view so the parent can reset the signal. */
+  onGoalChooserFocused?: () => void;
 }
 
 export const SettingsView = ({
@@ -63,8 +67,20 @@ export const SettingsView = ({
   requestConfirmation,
   handleLogout,
   showToast,
-  pathSelection
+  pathSelection,
+  focusGoalChooser = false,
+  onGoalChooserFocused,
 }: SettingsViewProps) => {
+  // TB-11b: the goal chooser is a deep-link target from Home's "Choose your goal" CTA. When the
+  // signal arrives, scroll it into view; the highlight ring is driven off the prop and cleared by
+  // the parent after a short delay (no effect-local setState — keeps the render honest).
+  const goalChooserRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!focusGoalChooser) return;
+    goalChooserRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const timer = setTimeout(() => onGoalChooserFocused?.(), 2200);
+    return () => clearTimeout(timer);
+  }, [focusGoalChooser, onGoalChooserFocused]);
   const {
     playbackSpeed, setPlaybackSpeed,
     globalVoiceLimit, setGlobalVoiceLimit,
@@ -240,10 +256,22 @@ export const SettingsView = ({
             the first track (goal-track.ts resolveActiveTrack), so the path reads as the structured
             course. Surfacing the picker here is the missing Settings-side counterpart. */}
         {pathSelection.selection.type === 'goal-track' && (
-          <div className="space-y-2 border-t border-ios-bg pt-4" data-testid="goal-track-chooser">
+          <div
+            ref={goalChooserRef}
+            data-testid="goal-track-chooser"
+            className={cn(
+              'space-y-2 border-t border-ios-bg pt-4 rounded-2xl transition-all',
+              focusGoalChooser && 'ring-2 ring-ios-blue ring-offset-2 ring-offset-card',
+            )}
+          >
             <p className="text-[11px] font-semibold text-ios-gray uppercase tracking-wide">
               Choose your goal
             </p>
+            {pathSelection.selection.activeTrackId === null && (
+              <p className="text-[11px] text-ios-blue font-medium leading-snug" data-testid="goal-track-unset-hint">
+                Pick a goal to start — until you do, Home won’t have a track to continue.
+              </p>
+            )}
             {tracks.length === 0 ? (
               <p className="text-[11px] text-ios-gray leading-snug">
                 Goal tracks are still loading…
