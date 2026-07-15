@@ -49,6 +49,14 @@ interface SettingsDeps {
   getDiagnostics: () => { activeTab: string; chatHistoryLength: number };
 }
 
+/**
+ * TB-5: resolve the initial tutor read-aloud preference. Defaults OFF (opt-in) when there is no
+ * saved value, so a new user is not auto-read to; a stored preference is respected. (A profile
+ * value, when present, is applied later by the settings load and overrides this seed.)
+ */
+export const initialSoundEnabled = (saved: string | null): boolean =>
+  saved !== null ? saved === 'true' : false;
+
 export const useSettings = ({
   supabase,
   user,
@@ -62,10 +70,9 @@ export const useSettings = ({
   // TB-5: tutor read-aloud defaults OFF (opt-in). Auto-reading every tutor message aloud surprised
   // users ("it reads all out loud regardless if I want to"); the Mute/Unmute toggle re-enables it,
   // and the per-message play buttons give audio on demand. A saved preference is still respected.
-  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
-    const saved = localStorage.getItem('is_sound_enabled');
-    return saved !== null ? saved === 'true' : false;
-  });
+  const [isSoundEnabled, setIsSoundEnabled] = useState(() =>
+    initialSoundEnabled(localStorage.getItem('is_sound_enabled')),
+  );
   const [playbackSpeed, setPlaybackSpeed] = useState(() => {
     const saved = localStorage.getItem('playback_speed');
     return saved ? parseFloat(saved) : config.audio.defaultPlaybackSpeed;

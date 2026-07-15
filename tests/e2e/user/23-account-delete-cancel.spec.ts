@@ -21,7 +21,7 @@ test.describe('account deletion cancel path', () => {
 
     await expect(page.getByRole('heading', { name: 'Delete Account?' })).toHaveCount(0);
     await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Sign Out' })).toBeVisible();
+    await expect(page.getByRole('main').getByRole('button', { name: 'Sign Out' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Log In' })).toHaveCount(0);
   });
 });
