@@ -11,3 +11,16 @@ ROOT="$(git rev-parse --show-toplevel)"
 if [ -f "${ROOT}/scripts/check-branch-discipline.mjs" ]; then
   node "${ROOT}/scripts/check-branch-discipline.mjs" --current || exit 1
 fi
+
+# Version consistency VALIDATE (never mutate — the bump itself happens in ship.sh at the release
+# cut). Fails the commit if VERSION and the package.json version literal have drifted, catching a
+# manual edit to one but not the other. Both files must exist to check.
+if [ -f "${ROOT}/VERSION" ] && [ -f "${ROOT}/package.json" ]; then
+  file_ver="$(tr -d ' \t\n\r' < "${ROOT}/VERSION")"
+  pkg_ver="$(node -e "process.stdout.write(require('${ROOT}/package.json').version || '')" 2>/dev/null || echo '')"
+  if [ -n "${file_ver}" ] && [ -n "${pkg_ver}" ] && [ "${file_ver}" != "${pkg_ver}" ]; then
+    echo "pre-commit: VERSION (${file_ver}) != package.json version (${pkg_ver})." >&2
+    echo "            reconcile with ~/.ai-dev-dotfiles/tools/version-bump.py before committing." >&2
+    exit 1
+  fi
+fi
