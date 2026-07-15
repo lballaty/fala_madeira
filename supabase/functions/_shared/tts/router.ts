@@ -102,11 +102,15 @@ const PROVIDERS: Record<ProviderId, TtsProvider> = {
   polly: pollyProvider,
 };
 
-// Default chain (AGENTS.md §5 decision): Azure pt-PT first, Gemini as server fallback.
-// The final fallback — browser Web Speech — is client-side and triggers on the
-// structured TTS_UNAVAILABLE error, not here. Other registered providers are reachable
-// via an explicit `provider` request field, not the default chain.
-export const DEFAULT_CHAIN: ProviderId[] = ["azure", "gemini"];
+// Default chain (TB-13): locale-pinned European-Portuguese providers FIRST — Azure/Google/Polly
+// each take a pt-PT locale the engine cannot override (hard guarantee of mainland pronunciation) —
+// then Gemini as the always-available server fallback (steered to European Portuguese in gemini.ts,
+// best-effort: its voices have no locale param). Unconfigured providers self-skip, so a deployment
+// with only a Gemini key still works (steered), and the client Web Speech fallback is also pt-PT.
+// The final fallback — browser Web Speech — is client-side and triggers on the structured
+// TTS_UNAVAILABLE error, not here. OpenAI/ElevenLabs are reachable only via an explicit `provider`
+// request field (not the default chain) since their accent is inferred, not locale-pinned.
+export const DEFAULT_CHAIN: ProviderId[] = ["azure", "google", "polly", "gemini"];
 
 export function isProviderId(v: unknown): v is ProviderId {
   return typeof v === "string" && v in PROVIDERS;

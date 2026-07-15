@@ -46,13 +46,20 @@ async function generateTtsHardened(text: string, voiceName: string): Promise<str
   const key = Deno.env.get("GEMINI_API_KEY");
   if (!key) throw new Error("GEMINI_API_KEY not configured in edge-function secrets");
 
+  // TB-13: Gemini's prebuilt voices are multilingual with NO locale parameter, so Portuguese text
+  // defaults to a Brazilian accent. Steer it to European Portuguese with a leading style directive
+  // (Gemini 2.5 TTS follows a "Say in <style>: <content>" prompt and does not speak the directive).
+  // Best-effort — locale-pinned providers (azure/google/polly) are preferred in the chain for a
+  // hard guarantee; this keeps the Gemini fallback European rather than Brazilian.
+  const steered = `Say the following in European Portuguese as spoken in Portugal (Lisbon accent), not Brazilian Portuguese: ${text}`;
+
   let lastReason = "unknown";
   for (let attempt = 1; attempt <= TTS_MAX_ATTEMPTS; attempt++) {
     const res = await fetch(`${GEMINI_BASE}/${TTS_MODEL}:generateContent?key=${key}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        contents: [{ parts: [{ text }] }],
+        contents: [{ parts: [{ text: steered }]}],
         generationConfig: {
           responseModalities: ["AUDIO"],
           speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName } } },
