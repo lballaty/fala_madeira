@@ -49,6 +49,14 @@ interface SettingsDeps {
   getDiagnostics: () => { activeTab: string; chatHistoryLength: number };
 }
 
+/**
+ * TB-5: resolve the initial tutor read-aloud preference. Defaults OFF (opt-in) when there is no
+ * saved value, so a new user is not auto-read to; a stored preference is respected. (A profile
+ * value, when present, is applied later by the settings load and overrides this seed.)
+ */
+export const initialSoundEnabled = (saved: string | null): boolean =>
+  saved !== null ? saved === 'true' : false;
+
 export const useSettings = ({
   supabase,
   user,
@@ -59,10 +67,12 @@ export const useSettings = ({
   requestConfirmation,
   getDiagnostics
 }: SettingsDeps) => {
-  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
-    const saved = localStorage.getItem('is_sound_enabled');
-    return saved !== null ? saved === 'true' : true;
-  });
+  // TB-5: tutor read-aloud defaults OFF (opt-in). Auto-reading every tutor message aloud surprised
+  // users ("it reads all out loud regardless if I want to"); the Mute/Unmute toggle re-enables it,
+  // and the per-message play buttons give audio on demand. A saved preference is still respected.
+  const [isSoundEnabled, setIsSoundEnabled] = useState(() =>
+    initialSoundEnabled(localStorage.getItem('is_sound_enabled')),
+  );
   const [playbackSpeed, setPlaybackSpeed] = useState(() => {
     const saved = localStorage.getItem('playback_speed');
     return saved ? parseFloat(saved) : config.audio.defaultPlaybackSpeed;
@@ -288,8 +298,13 @@ export const useSettings = ({
   }, [isSoundEnabled, user, profile, scheduleProfileWrite]);
 
   useEffect(() => {
+    // TB-8: do NOT persist/reflect the provisional default (config 5) before the server value has
+    // loaded — otherwise the initial render clobbers localStorage with 5, so the client keeps
+    // showing 5 instead of the configured global limit (verified server value: 20). Only persist
+    // once the authoritative value is loaded; then localStorage always matches the server.
+    if (!hasLoadedGlobalVoiceLimit) return;
     localStorage.setItem('global_voice_limit', globalVoiceLimit.toString());
-    if (hasLoadedGlobalVoiceLimit && profile?.role === 'admin' && supabase) {
+    if (profile?.role === 'admin' && supabase) {
       scheduleProfileWrite('global_voice_limit', () =>
         supabase
           .from('global_settings')

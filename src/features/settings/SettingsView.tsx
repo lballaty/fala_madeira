@@ -8,11 +8,12 @@
 // Created: 2026-07-09
 
 import { useEffect, useState } from 'react';
-import { BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, Shield, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
+import { AlertTriangle, BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, Shield, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useTheme, type ThemePreference } from '../../hooks/useTheme';
 import { LegalPage, LegalDocId } from '../legal';
 import { AboutModal } from '../about';
+import { isBlobStorePersistent } from '../../lib/audioCache';
 import { geminiService } from '../../services/geminiService';
 import { TUTORS } from '../../data/tutors';
 import { User } from '@supabase/supabase-js';
@@ -339,6 +340,19 @@ export const SettingsView = ({
           </button>
         </div>
 
+        {/* TB-9: honest warning when this browser can't persist audio (IndexedDB unavailable —
+            private mode / storage blocked). Audio still plays but is lost on reload, so it "isn't
+            saved". Prevents the confusing "I turned it on but nothing is saved" report. */}
+        {!isBlobStorePersistent() && (
+          <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600 dark:text-amber-300" />
+            <p className="text-[11px] text-amber-700 dark:text-amber-200 leading-snug" data-testid="offline-audio-unavailable">
+              This browser can’t save audio for offline use (private mode or storage is blocked).
+              Audio still plays, but it won’t be kept between sessions.
+            </p>
+          </div>
+        )}
+
         {/* Storage limit selector + live usage. */}
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium">Storage limit</span>
@@ -464,6 +478,19 @@ export const SettingsView = ({
             </div>
           </div>
         )}
+        {/* TB-8: surface the daily voice limit read-only to ALL users (it was only visible behind
+            admin mode, so users couldn't see their real allowance). Reflects the loaded server
+            value; admins additionally get the +/- editor above. */}
+        <div className="p-4 flex items-center justify-between border-b border-ios-bg">
+          <div className="flex items-center">
+            <Volume2 className="w-5 h-5 mr-3 text-ios-gray" />
+            <div>
+              <p className="font-medium">Daily voice limit</p>
+              <p className="text-[11px] text-ios-gray">Free spoken-tutor messages per day · applies to all users</p>
+            </div>
+          </div>
+          <span className="font-bold text-sm" data-testid="voice-limit-value">{globalVoiceLimit}</span>
+        </div>
         {deferredPrompt && (
           <button
             onClick={handleInstallClick}

@@ -42,10 +42,16 @@ test.describe('tutor practice modal controls', () => {
     await expect(page.getByRole('button', { name: 'Turn off help mode' })).toHaveAttribute('aria-pressed', 'true');
     coverage.touch('tutor.practice.help_toggle', 'outcome-asserted');
 
-    const soundToggle = page.getByRole('button', { name: 'Mute tutor audio' });
-    await expect(soundToggle).toHaveAttribute('aria-pressed', 'true');
+    // Sound toggle. TB-5 made read-aloud default OFF for NEW users, but this shared user's profile
+    // may carry a saved preference (useSettings loads profiles.is_sound_enabled), so assert the
+    // toggle FLIPS rather than a fixed default. (The default-off itself is unit-tested via
+    // initialSoundEnabled in useSettings' tests.)
+    const soundToggle = page.getByRole('button', { name: /^(Mute|Unmute) tutor audio$/ });
+    await expect(soundToggle).toBeVisible();
+    const wasUnmute = (await soundToggle.getAttribute('aria-label')) === 'Unmute tutor audio';
     await soundToggle.click();
-    await expect(page.getByRole('button', { name: 'Unmute tutor audio' })).toHaveAttribute('aria-pressed', 'false');
+    const flippedLabel = wasUnmute ? 'Mute tutor audio' : 'Unmute tutor audio';
+    await expect(page.getByRole('button', { name: flippedLabel })).toBeVisible();
     coverage.touch('tutor.practice.audio_toggle', 'outcome-asserted');
 
     const input = tutorDialog.getByPlaceholder('Type in Portuguese...');

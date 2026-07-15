@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, CheckCircle2, Search, Volume2, X, Youtube } from 'lucide-react';
 import { Lesson } from '../../types';
 import { VideoPlayer } from '../../components/VideoPlayer';
+import { AudioButton } from '../../components/AudioButton';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 interface LessonDetailModalProps {
@@ -106,9 +107,7 @@ export const LessonDetailModal = ({
                 {selectedLesson.patterns.map((p, i) => (
                   <div key={i} className="flex items-center justify-between p-4 bg-ios-bg rounded-2xl">
                     <span className="font-medium text-sm">{p}</span>
-                    <button onClick={() => playSpeech(p)} aria-label="Play pronunciation" className="text-ios-blue min-w-[44px] min-h-[44px] flex items-center justify-center">
-                      <Volume2 className="w-5 h-5" />
-                    </button>
+                    <AudioButton onPlay={() => playSpeech(p)} label="Play pronunciation" />
                   </div>
                 ))}
               </div>
@@ -123,9 +122,7 @@ export const LessonDetailModal = ({
                       <p className="font-bold text-sm">{v.word}</p>
                       <p className="text-xs text-ios-gray">{v.translation}</p>
                     </div>
-                    <button onClick={() => playSpeech(v.word)} aria-label="Play pronunciation" className="text-ios-blue min-w-[44px] min-h-[44px] flex items-center justify-center">
-                      <Volume2 className="w-5 h-5" />
-                    </button>
+                    <AudioButton onPlay={() => playSpeech(v.word)} label="Play pronunciation" />
                   </div>
                 ))}
               </div>

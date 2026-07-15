@@ -13,7 +13,9 @@ test.describe('settings sign-out flow', () => {
     await page.getByRole('button', { name: 'Profile' }).first().click();
     await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
 
-    await page.getByRole('button', { name: 'Sign Out' }).click();
+    // Scope to the Profile page's Sign Out — the sidebar now also has one (EN-9), so the bare
+    // role+name matches two elements.
+    await page.getByRole('main').getByRole('button', { name: 'Sign Out' }).click();
 
     await expect(page.getByRole('button', { name: 'Log In' })).toBeVisible({ timeout: 15_000 });
     await expect(page.getByRole('button', { name: 'Sign Up' })).toBeVisible();

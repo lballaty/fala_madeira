@@ -161,7 +161,18 @@ Deno.serve(async (req) => {
         if (!unlimited) {
           let usage = profile?.voice_usage_today ?? 0;
           if (profile?.last_voice_usage_date !== today) usage = 0;
-          const limit = profile?.voice_limit ?? 5;
+          // TB-8/EN-11: limit precedence = per-user override (profiles.voice_limit)
+          // -> GLOBAL default (global_settings.voice_limit, the admin-set source of truth)
+          // -> hard floor 5. Previously hardcoded `?? 5`, which ignored the global 20 and
+          // silently capped every user at 5 (forbidden hardcoded-fallback).
+          const { data: globalRow } = await admin
+            .from("global_settings")
+            .select("value")
+            .eq("key", "voice_limit")
+            .maybeSingle();
+          const globalDefault = Number.parseInt(globalRow?.value ?? "", 10);
+          const limit = profile?.voice_limit ??
+            (Number.isFinite(globalDefault) ? globalDefault : 5);
           if (usage >= limit) {
             return errorResponse(
               "VOICE_LIMIT_REACHED",

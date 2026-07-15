@@ -9,7 +9,7 @@
 // Created: 2026-07-10
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon, LogOut } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 /** One navigation destination — shared shape used by both the sidebar and the bottom tab bar. */
@@ -34,6 +34,9 @@ interface SidebarProps {
   isAdminActive?: boolean;
   /** Open the admin overlay. */
   onOpenAdmin?: () => void;
+  /** Sign the user out. Rendered as a persistent control pinned to the bottom of the sidebar
+   *  (EN-9) so sign-out is always available, not only at the bottom of the Profile tab. */
+  onSignOut?: () => void;
 }
 
 /**
@@ -47,6 +50,7 @@ export function Sidebar({
   adminItem,
   isAdminActive,
   onOpenAdmin,
+  onSignOut,
 }: SidebarProps) {
   return (
     <aside className="hidden md:flex md:flex-col w-56 lg:w-64 flex-none border-r border-line bg-elevated safe-area-bottom">
@@ -87,6 +91,17 @@ export function Sidebar({
           >
             <adminItem.icon className="w-5 h-5 flex-none" />
             <span>{adminItem.label}</span>
+          </button>
+        </div>
+      )}
+      {onSignOut && (
+        <div className="px-3 pb-4 pt-2 border-t border-line">
+          <button
+            onClick={onSignOut}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-red-700 dark:text-red-400 transition-colors hover:bg-red-500/10"
+          >
+            <LogOut className="w-5 h-5 flex-none" />
+            <span>Sign Out</span>
           </button>
         </div>
       )}
