@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-15
-**Last Updated By:** claude-opus-4-8 (release 2026.07.15.4 — TB-11 + TB-11b)
+**Last Updated By:** claude-opus-4-8 (release 2026.07.15.5 — SEC-2 + EN-10)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,11 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.15.5
+
+- Security: **users are now properly isolated on a shared device.** Learning-path selection is scoped per user, logout clears device-cached preferences/lessons/offline data, and the offline write queue never replays one user's pending writes under another's session — so logging out and back in as a different account no longer shows the previous user's settings. (Server data was already isolated by row-level security; this closes the client-side gap.) (SEC-2)
+- Improved: **vocabulary lookup checks your course vocabulary first** — bidirectional Portuguese↔English, diacritic-insensitive and fuzzy, with an AI translation + Madeiran context only when a word isn't already in your content. (EN-10)
 
 ## 2026.07.15.4
 
