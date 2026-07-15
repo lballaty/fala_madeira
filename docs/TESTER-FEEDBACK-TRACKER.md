@@ -498,7 +498,13 @@
   - **Session scales to the chosen scope** (remove the fixed 20/session cap for scope-driven sessions — play all due+new in scope). Header shows `<scope> · N words · M ready now` so pool-size vs session-size is explicit.
   - "This track" = the user's active goal-track (`user_track_selection`); if none picked, that option is empty/disabled and falls back to All.
 - **Grade-button note (separate, tracked):** SM-2 math (`srs.ts:90`) is correct + persisted, but for new/early cards the interval is fixed (rep1→1d, rep2→6d) regardless of Hard/Good/Easy, and only "Again" has in-session effect — so the buttons feel interchangeable. Options (future EN): show the scheduled interval per grade ("+1d / +6d / +2wk") and/or Anki-style learning steps + Easy bonus. Owner to decide separately.
-- **Owner:** Lane B (build). **Status:** APPROVED, IN PROGRESS. Coverage: unit (buildSessionCards scope/limit) + e2e (selector + counts).
+- **Owner:** Lane B (build). **Status:** APPROVED, IN PROGRESS. Coverage: unit (buildSessionCards scope/limit) + e2e (selector + counts). **NB:** partly SUPERSEDED by EN-18 (the scope selector folds into EN-18's thematic focus picker).
+
+### EN-18 — Vocabulary practice → objective reinforcement quiz (comprehension + production, progress-aware, thematic) — `SPEC WRITTEN (owner-designed 2026-07-15) — NEEDS APPROVAL before build`
+- **Owner critique:** self-graded flashcards make the learner "judge and jury"; the app has no objective right/wrong signal (no input field, no listening mode). It should observe performance and reinforce: wrong → returns sooner, right → later.
+- **Approved design (owner 2026-07-15), full spec:** `docs/EN-18-VOCAB-REINFORCEMENT-QUIZ-REQUIREMENTS.md`. Loop: source from themes the learner has WORKED ON (started + played some) → PT word + play → **type the meaning** (comprehension, checked by EN-10 `vocabSearch`) → **say it** (production, pt-PT speech recog) → SUCCESS/PARTIAL/FAILURE (no-mic = typed PASS/FAIL, no partial) → SM-2 schedules. Self-grade buttons replaced by objective grading. Focus is **thematic** (situations grouped by category `daily/social/travel/work`), never lesson numbers; the pool grows with progress.
+- **Reuse:** TTS (pt-PT), EN-10 vocabSearch (typed check), first-win pt-PT speech recognition (spoken check), SM-2 (`srs.ts`/`useDueItems`), `user_situation_progress`+`mastery_items` (sourcing), situations/categories (themes).
+- **Owner:** Lane B (build once approved). **Status:** SPEC — NEEDS APPROVAL (no coding until then, AGENTS §3). Supersedes the standalone grade-button A/B tweak.
 
 ### EN-13 — Tutor: tap / select-to-translate for Portuguese text — `NEEDS REQUIREMENTS (then owner approval before any coding)`
 - **Report (owner 2026-07-14):** tutor replies are sometimes mixed PT/English (fine) but sometimes **all Portuguese with no translation**. Want to translate by **tapping/clicking a word or section, or highlighting a selection** in the tutor window.
