@@ -261,6 +261,11 @@
 
 ## QA / test hardening
 
+### QA-2 — Edge voice-limit fix shipped untested (TB-8 edge) — `OPEN (coverage gap; owner: edge/DB agent)`
+- **Gap (found 2026-07-15 reviewing the 2026.07.15.2 release):** commit `4d62982` "fix(edge): voice limit reads global_settings.voice_limit, not hardcoded 5" changed `supabase/functions/gemini/index.ts` (server-side authoritative limit) and shipped with **ZERO tests**. Client pieces ARE covered — `user/55` (Settings reflects the server value) + `user/27` (client-side enforcement blocks recording) — but nothing verifies the **edge** actually reads `global_settings.voice_limit` for enforcement.
+- **Owed (per AGENTS §3 "test every change"):** an integration/e2e (or edge unit) that sets a low `global_settings.voice_limit` and confirms the gemini edge rejects a voice call past it (structured `VOICE_LIMIT_REACHED`), i.e. the server enforces the *configured* value, not a hardcoded default. Ties EF-36 / WS2 test-user isolation (voice-limit e2e is flaky on the shared user).
+- **Owner:** edge/DB agent (whoever owns `supabase/functions/gemini`). **Status:** OPEN (coverage gap, tracked so it isn't buried).
+
 ### QA-1 — Offline-audio download tests — `OPEN (Agent T)`
 - **(a) Download works:** `src/lib/__tests__/audio-download.test.ts` — mock synthesize + storage; `downloadForOffline(scope)` enumerates the scope's speakable lines, stores a clip each, reports `{synthesized, fromCache}`, respects storage-limit/abort.
 - **(b) Survives an app/SW upgrade:** `src/platform/web/__tests__/storage.web.test.ts` — put blobs in the `audio` store at DB_VERSION, reopen at a HIGHER version through the real guarded `onupgradeneeded`, assert blobs persist. Locks the non-destructive migration. (Survival verified SAFE today: IndexedDB is a separate tier from the SW precache; `onupgradeneeded` is create-if-missing; `cleanupOutdatedCaches` sweeps only precache.)
