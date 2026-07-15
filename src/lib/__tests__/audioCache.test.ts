@@ -6,8 +6,22 @@
 // Author: Lane B (with assistant)
 // Created: 2026-07-14
 
-import { describe, it, expect, afterEach } from 'vitest';
-import { isBlobStorePersistent } from '../audioCache';
+import { describe, it, expect, afterEach, vi } from 'vitest';
+
+// Mock the platform storage adapter so audioCache.clear()'s delegation can be asserted in
+// isolation. (The real end-to-end "pinned survives clearBlobs" invariant is locked against a
+// real IndexedDB upgrade in platform/web/__tests__/storage.web.test.ts.)
+vi.mock('../../platform', () => ({
+  platform: {
+    storage: {
+      clearBlobs: vi.fn(async () => undefined),
+      clearPinned: vi.fn(async () => undefined),
+    },
+  },
+}));
+
+import { isBlobStorePersistent, audioCache } from '../audioCache';
+import { platform } from '../../platform';
 
 type GlobalWithIdb = { indexedDB?: unknown };
 
@@ -24,5 +38,15 @@ describe('isBlobStorePersistent (TB-9)', () => {
   it('is false when IndexedDB is unavailable (private mode / storage blocked)', () => {
     g.indexedDB = undefined;
     expect(isBlobStorePersistent()).toBe(false);
+  });
+});
+
+describe('audioCache.clear (SEC-1 WP4 — logout clears LRU only)', () => {
+  afterEach(() => vi.clearAllMocks());
+
+  it('clears the bounded LRU audio cache and NEVER the pinned (downloads) store', async () => {
+    await audioCache.clear();
+    expect(platform.storage.clearBlobs).toHaveBeenCalledTimes(1);
+    expect(platform.storage.clearPinned).not.toHaveBeenCalled();
   });
 });

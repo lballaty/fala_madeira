@@ -16,7 +16,9 @@ vi.mock('../audioCache', () => ({
   audioCache: {
     buildKey: vi.fn((provider: string, voice: string, text: string) => `${provider}:${voice}:${text}`),
     get: vi.fn(async () => null),
+    getPinned: vi.fn(async () => null),
     usage: vi.fn(async () => ({ bytes: 0, count: 0 })),
+    pinnedUsage: vi.fn(async () => ({ bytes: 0, count: 0 })),
   },
   readCacheLimitBytes: vi.fn(() => 5_000_000_000),
 }));

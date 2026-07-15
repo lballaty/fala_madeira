@@ -21,8 +21,12 @@ import { BlobLimits, BlobStoreUsage, PlatformError, StorageAdapter, StorageUsage
 // Legacy names preserved from src/lib/audioCache.ts (pre-adapter) — do not rename,
 // or existing cached audio is orphaned.
 const DB_NAME = 'FalaMadeiraAudioCache';
-const DB_VERSION = 2;
+// v1 (legacy audioCache) held 'audio' only; v2 added 'kv'; v3 (EN-8) adds 'audio_pinned' for
+// never-evicted offline downloads. Every upgrade is additive/create-if-missing (see upgrade()),
+// so bumping the version never drops an existing user's cached audio.
+const DB_VERSION = 3;
 const BLOB_STORE = 'audio';
+const PINNED_STORE = 'audio_pinned';
 const KV_STORE = 'kv';
 const LOCAL_STORAGE_PREFIX = 'fm-kv:';
 
@@ -49,6 +53,7 @@ export const createWebStorageAdapter = (): StorageAdapter => {
   // Last-resort session-scoped fallbacks when IndexedDB is unavailable.
   const memoryKv = new Map<string, unknown>();
   const memoryBlobs = new Map<string, ArrayBuffer>();
+  const memoryPinned = new Map<string, ArrayBuffer>();
 
   const getDB = async (): Promise<IDBPDatabase | null> => {
     if (idbBroken) return null;
@@ -59,12 +64,17 @@ export const createWebStorageAdapter = (): StorageAdapter => {
       }
       dbPromise = openDB(DB_NAME, DB_VERSION, {
         upgrade(db) {
-          // Version 1 (legacy audioCache) created 'audio' only; version 2 adds 'kv'.
+          // Additive, non-destructive: each store is created ONLY if missing, so a v1 ('audio'
+          // only) or v2 ('audio'+'kv') database upgrades to v3 keeping every existing blob.
           if (!db.objectStoreNames.contains(BLOB_STORE)) {
             db.createObjectStore(BLOB_STORE);
           }
           if (!db.objectStoreNames.contains(KV_STORE)) {
             db.createObjectStore(KV_STORE);
+          }
+          // v3 (EN-8): pinned offline downloads — never LRU-evicted, no metadata index needed.
+          if (!db.objectStoreNames.contains(PINNED_STORE)) {
+            db.createObjectStore(PINNED_STORE);
           }
         },
       });
@@ -348,6 +358,58 @@ export const createWebStorageAdapter = (): StorageAdapter => {
       }
       for (const key of [...memoryBlobs.keys()]) {
         if (matchesPrefix(key, prefix)) memoryBlobs.delete(key);
+      }
+    },
+
+    async getPinnedBlob(key: string): Promise<ArrayBuffer | null> {
+      const db = await getDB();
+      if (db) {
+        const value = await db.get(PINNED_STORE, key);
+        return value === undefined ? null : (value as ArrayBuffer);
+      }
+      return memoryPinned.get(key) ?? null;
+    },
+
+    async setPinnedBlob(key: string, data: ArrayBuffer): Promise<void> {
+      const db = await getDB();
+      if (db) {
+        // No eviction, no LRU index: pinned downloads persist until explicitly cleared.
+        await db.put(PINNED_STORE, data, key);
+        return;
+      }
+      memoryPinned.set(key, data);
+    },
+
+    async pinnedUsage(): Promise<BlobStoreUsage> {
+      const db = await getDB();
+      if (db) {
+        const keys = (await db.getAllKeys(PINNED_STORE)).map(String);
+        let bytes = 0;
+        for (const key of keys) {
+          const value = (await db.get(PINNED_STORE, key)) as ArrayBuffer | undefined;
+          if (value) bytes += value.byteLength;
+        }
+        return { count: keys.length, bytes };
+      }
+      let bytes = 0;
+      for (const buf of memoryPinned.values()) bytes += buf.byteLength;
+      return { count: memoryPinned.size, bytes };
+    },
+
+    async clearPinned(prefix?: string): Promise<void> {
+      const db = await getDB();
+      if (db) {
+        if (!prefix) {
+          await db.clear(PINNED_STORE);
+        } else {
+          const keys = (await db.getAllKeys(PINNED_STORE)).map(String).filter((k) => k.startsWith(prefix));
+          const tx = db.transaction(PINNED_STORE, 'readwrite');
+          await Promise.all([...keys.map((k) => tx.store.delete(k)), tx.done]);
+        }
+        return;
+      }
+      for (const key of [...memoryPinned.keys()]) {
+        if (matchesPrefix(key, prefix)) memoryPinned.delete(key);
       }
     },
 

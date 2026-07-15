@@ -155,12 +155,12 @@ export const downloadForOffline = async (
       break;
     }
 
-    // Stop before the cache is thrashed: if we are already at/over the byte budget,
-    // further writes would only evict clips we just generated. Warn and stop.
-    const usage = await audioCache.usage();
+    // Stop before the PINNED store exceeds the user's offline budget: downloads write to the
+    // pinned store now (EN-8), so the budget is measured there, not against the LRU cache.
+    const usage = await audioCache.pinnedUsage();
     if (usage.bytes >= cacheLimitBytes) {
       status = 'cache-full';
-      logger.warn('OFFLINE_DOWNLOAD_CACHE_FULL', `cache byte budget reached (${usage.bytes}/${cacheLimitBytes}) — stopping download early`, {
+      logger.warn('OFFLINE_DOWNLOAD_CACHE_FULL', `offline audio budget reached (${usage.bytes}/${cacheLimitBytes}) — stopping download early`, {
         category: 'DATA_PROCESSING',
         correlationId,
         details: { usedBytes: usage.bytes, limitBytes: cacheLimitBytes, done, total },
@@ -168,11 +168,12 @@ export const downloadForOffline = async (
       break;
     }
 
-    // Detect an already-cached clip (no network) vs a fresh synthesis for the counters. The key
-    // MUST match what synthesizeCached will compute (resolveVoice), or downloaded clips look
+    // Detect an already-downloaded/cached clip (no network) vs a fresh synthesis for the counters.
+    // The key MUST match what synthesizeCached computes (resolveVoice), or downloaded clips look
     // uncached at play time and get re-synthesized — the EN-7 mismatch this normalization closes.
+    // Check the pinned store first (where prior downloads live), then the LRU cache.
     const key = audioCache.buildKey('default', resolveVoice({ voiceType: line.voiceType }), line.text);
-    const already = await audioCache.get(key);
+    const already = (await audioCache.getPinned(key)) ?? (await audioCache.get(key));
     if (already) {
       fromCache += 1;
     } else {
@@ -182,7 +183,7 @@ export const downloadForOffline = async (
       const maxAttempts = Math.max(1, config.offline.downloadMaxAttempts);
       for (let attempt = 1; ; attempt += 1) {
         try {
-          await synthesizeCached(line.text, { voiceType: line.voiceType, hostable: true });
+          await synthesizeCached(line.text, { voiceType: line.voiceType, hostable: true, pinned: true });
           synthesized += 1;
           break;
         } catch (error) {

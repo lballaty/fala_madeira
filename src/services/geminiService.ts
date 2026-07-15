@@ -315,6 +315,11 @@ export interface SynthesizeOptions {
    * consumed by the edge write-back (which is additionally env-flag gated). Omitted = not-hostable.
    */
   hostable?: boolean;
+  /**
+   * EN-8: when true, a freshly-synthesized clip is written to the PINNED device store (offline
+   * downloads, never LRU-evicted) instead of the bounded LRU cache. Set by the offline downloader.
+   */
+  pinned?: boolean;
 }
 
 /**
@@ -331,6 +336,11 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
 
   const cached = await audioCache.get(cacheKey);
   if (cached) return cached;
+
+  // EN-8 lookup order: bounded LRU cache (above) → PINNED offline store → [server tiers land in
+  // Phase 4] → configured provider (below). Pinned holds user-downloaded clips eviction never removes.
+  const pinned = await audioCache.getPinned(cacheKey);
+  if (pinned) return pinned;
 
   // Server picks the voice from the tutor/voiceType and enforces the daily voice limit; the
   // response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
@@ -353,13 +363,20 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
     throw new Error(userMessage('TTS_EMPTY_AUDIO', 'The voice service returned no audio. Please try again.', event.request_id));
   }
   const arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
-  const evicted = await audioCache.set(cacheKey, arrayBuffer);
-  if (evicted > 0) {
-    logger.debug('tts_cache_evicted', `bounded audio cache evicted ${evicted} least-recently-used clip(s)`, {
-      category: 'SYSTEM_HEALTH',
-      correlationId: data?.requestId,
-      details: { evicted, resolvedProvider: data?.provider, resolvedVoice: data?.voice },
-    });
+  if (options.pinned) {
+    // Offline download: persist to the pinned store (never LRU-evicted) so it survives cache
+    // pressure — the EN-7 "downloads get evicted" fix. Pinned writes are unbounded here; the
+    // downloader bounds the run against the user's offline budget via pinnedUsage().
+    await audioCache.setPinned(cacheKey, arrayBuffer);
+  } else {
+    const evicted = await audioCache.set(cacheKey, arrayBuffer);
+    if (evicted > 0) {
+      logger.debug('tts_cache_evicted', `bounded audio cache evicted ${evicted} least-recently-used clip(s)`, {
+        category: 'SYSTEM_HEALTH',
+        correlationId: data?.requestId,
+        details: { evicted, resolvedProvider: data?.provider, resolvedVoice: data?.voice },
+      });
+    }
   }
   return arrayBuffer;
 };

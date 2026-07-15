@@ -13,6 +13,9 @@ import { BlobLimits, BlobStoreUsage, PlatformError, StorageAdapter, StorageUsage
 
 // Subdirectory inside Directory.Data that owns every blob this adapter writes.
 const BLOB_DIR = 'fm-blobs';
+// EN-8: pinned offline downloads live in a SEPARATE directory that eviction never scans, so a
+// clip a user downloaded survives cache pressure (fixes EN-7). Never touched by clearBlobs().
+const PINNED_DIR = 'fm-pinned';
 
 const matchesPrefix = (key: string, prefix?: string): boolean =>
   !prefix || key.startsWith(prefix);
@@ -256,6 +259,69 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
         if (key === null || !matchesPrefix(key, prefix)) continue;
         try {
           await Filesystem.deleteFile({ path: `${BLOB_DIR}/${name}`, directory: Directory.Data });
+        } catch {
+          // Already gone — keep clearing the rest.
+        }
+      }
+    },
+
+    async getPinnedBlob(key: string): Promise<ArrayBuffer | null> {
+      const { Filesystem, Directory } = await fs();
+      try {
+        const result = await Filesystem.readFile({
+          path: `${PINNED_DIR}/${keyToFileName(key)}`,
+          directory: Directory.Data,
+        });
+        return typeof result.data === 'string'
+          ? base64ToArrayBuffer(result.data)
+          : await result.data.arrayBuffer();
+      } catch {
+        return null; // missing file — contract says null for absent blobs
+      }
+    },
+
+    async setPinnedBlob(key: string, data: ArrayBuffer): Promise<void> {
+      try {
+        const { Filesystem, Directory } = await fs();
+        // No eviction: pinned downloads persist until explicitly cleared (clearPinned).
+        await Filesystem.writeFile({
+          path: `${PINNED_DIR}/${keyToFileName(key)}`,
+          data: arrayBufferToBase64(data),
+          directory: Directory.Data,
+          recursive: true, // creates fm-pinned/ on first write
+        });
+      } catch (e) {
+        throw storageFailure('Could not save downloaded audio on this device.', e);
+      }
+    },
+
+    async pinnedUsage(): Promise<BlobStoreUsage> {
+      const { Filesystem, Directory } = await fs();
+      try {
+        const result = await Filesystem.readdir({ path: PINNED_DIR, directory: Directory.Data });
+        return {
+          count: result.files.length,
+          bytes: result.files.reduce((sum, f) => sum + (typeof f.size === 'number' ? f.size : 0), 0),
+        };
+      } catch {
+        return { count: 0, bytes: 0 }; // directory absent — nothing pinned yet
+      }
+    },
+
+    async clearPinned(prefix?: string): Promise<void> {
+      const { Filesystem, Directory } = await fs();
+      let names: string[];
+      try {
+        const result = await Filesystem.readdir({ path: PINNED_DIR, directory: Directory.Data });
+        names = result.files.map((f) => f.name);
+      } catch {
+        return; // directory absent — nothing to clear
+      }
+      for (const name of names) {
+        const key = fileNameToKey(name);
+        if (key === null || !matchesPrefix(key, prefix)) continue;
+        try {
+          await Filesystem.deleteFile({ path: `${PINNED_DIR}/${name}`, directory: Directory.Data });
         } catch {
           // Already gone — keep clearing the rest.
         }

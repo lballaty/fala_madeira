@@ -75,11 +75,34 @@ export const audioCache = {
     return platform.storage.setBlob(key, data, limits());
   },
 
-  /** Exact count/bytes currently cached (drives the Settings usage display). */
+  /**
+   * Read a PINNED clip — user-initiated offline downloads that LRU eviction never removes
+   * (EN-8; fixes EN-7). synthesizeCached checks this AFTER the LRU cache, BEFORE the server tiers.
+   */
+  async getPinned(key: string): Promise<ArrayBuffer | null> {
+    return platform.storage.getPinnedBlob(key);
+  },
+
+  /** Persist a clip to the PINNED store (offline downloads) — not subject to LRU eviction. */
+  async setPinned(key: string, data: ArrayBuffer): Promise<void> {
+    return platform.storage.setPinnedBlob(key, data);
+  },
+
+  /** Exact count/bytes currently cached in the bounded LRU (drives the Settings usage display). */
   async usage(): Promise<BlobStoreUsage> {
     return platform.storage.blobUsage();
   },
 
+  /** Exact count/bytes of the PINNED (downloaded) store — bounds the offline-download run. */
+  async pinnedUsage(): Promise<BlobStoreUsage> {
+    return platform.storage.pinnedUsage();
+  },
+
+  /**
+   * Clear the bounded LRU audio cache ONLY. The pinned store (offline downloads) is deliberately
+   * NOT touched — this is what the logout path calls (SEC-1 WP4): drop any user-private incidental
+   * audio while preserving curated offline downloads for the next user.
+   */
   async clear(): Promise<void> {
     await platform.storage.clearBlobs();
   },

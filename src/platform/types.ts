@@ -207,6 +207,19 @@ export interface StorageAdapter {
   deleteBlob(key: string): Promise<void>;
   blobKeys(prefix?: string): Promise<string[]>;
   clearBlobs(prefix?: string): Promise<void>;
+  // Pinned blob store (EN-8): a SECOND blob namespace that LRU eviction NEVER touches, for
+  // user-initiated offline downloads that must survive cache pressure. This fixes EN-7, where
+  // downloads shared the bounded 'audio' LRU cache and got evicted. A clip lookup checks the
+  // bounded 'audio' cache FIRST, then this pinned store, before any server tier. setPinnedBlob
+  // takes no limits — the store is bounded by download scope (curated content), never auto-evicted.
+  getPinnedBlob(key: string): Promise<ArrayBuffer | null>;
+  setPinnedBlob(key: string, data: ArrayBuffer): Promise<void>;
+  // Exact count/bytes of the pinned store (drives the Settings "downloaded audio" usage display).
+  pinnedUsage(): Promise<BlobStoreUsage>;
+  // Remove pinned blobs (all, or those matching `prefix`) — e.g. an explicit "remove downloads".
+  // Deliberately separate from clearBlobs so clearing the LRU cache (e.g. on logout) never
+  // deletes offline downloads.
+  clearPinned(prefix?: string): Promise<void>;
   // Coarse platform quota estimate (navigator.storage.estimate on web) — the
   // whole origin, not just this app's blobs.
   usage(): Promise<StorageUsage>;

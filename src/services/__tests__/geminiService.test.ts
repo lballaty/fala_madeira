@@ -15,7 +15,9 @@ vi.mock('../../lib/audioCache', () => ({
   audioCache: {
     buildKey: vi.fn(() => 'provider:voice:hash'),
     get: vi.fn(async () => null),
+    getPinned: vi.fn(async () => null),
     set: vi.fn(async () => 0),
+    setPinned: vi.fn(async () => undefined),
   },
 }));
 vi.mock('../../platform', () => ({
