@@ -1,0 +1,227 @@
+# File: plans/plan-2026-07-15-en17-help-registry.yaml
+# Description: Executable plan for EN-17(a) + EN-18 — one reusable "App Capability Registry" feeding
+#   the user manual, the chat help prompt, and in-app navigation/hints. Staged (Phase 1 content-sync,
+#   Phase 2 reactive navigate, Phase 3 proactive hints); each phase independently shippable. Design:
+#   docs/EN-17-EN-18-HELP-GUIDANCE-DESIGN.md. Consumed by /execute-plan.
+# Author: Lane A (with assistant)
+# Created: 2026-07-15
+#
+# ASSUMPTIONS (owner §11 defaults; adjust before running if wrong):
+#   - Registry = typed TS at src/content/appCapabilities.ts.
+#   - Edge chat help gets a GENERATED compact artifact (no cross-runtime import, no runtime fetch).
+#   - Staged 1->3, Phase 1 first. Manual = full re-render from the registry (also fixes literal-**).
+#   - Add scripts/check-help-drift.mjs to preflight.
+#
+# CONVENTION: WT = a dedicated worktree so the gate runs on a clean develop (Lane B has active WIP in
+#   the shared checkout). All bash uses git -C "$WT" / npm --prefix "$WT" (global bash rule, avoids the
+#   cd-guard). Paths relative to WT. Commits are path-form, per phase, NO Co-Authored-By trailer.
+#
+# COORDINATION:
+#   - supabase/functions/_shared/gemini.ts is edge (Lane B EN-8/TB-13 territory) — reserve via queuectl
+#     before editing; the chat-help change reaches users only on the next gemini deploy (Lane B deploys;
+#     this plan does NOT deploy). Provider-neutral: help text is a generated artifact the prompt reads,
+#     not logic embedded in gemini.ts (composes with EN-19).
+#   - src/App.tsx (tab-switch wiring) may be Lane-B-adjacent — reserve before editing.
+#   - Disjoint from Lane B's SEC-2 + audio files.
+#   - HARD CODE HYGIENE: all written source is clean UTF-8; NEVER a raw control byte (NUL) in a string
+#     literal — use escapes. (A prior task shipped a raw NUL and flagged the file binary.)
+
+plan:
+  title: >
+    EN-17(a)+EN-18 — build the App Capability Registry and its thin consumers: manual renderer,
+    generated chat-help projection, navigateToCapability service, and contextual hints — one source,
+    many projections, staged and drift-guarded.
+
+  goal_validation:
+    - "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run lint:eslint && npm --prefix \"$WT\" run test:run all pass."
+    - "npm --prefix \"$WT\" run build succeeds."
+    - "node \"$WT/scripts/check-help-drift.mjs\" exits 0 (generated edge help artifact matches the registry)."
+    - "A unit test proves every APP_CAPABILITIES id is unique and every target.controlId is a real data-testid used in the app."
+    - "The User Manual renders every capability's long text grouped by area (no literal ** shown)."
+    - "The chat help projection is compact (uses short, not long) and names each app area."
+    - "e2e: a help 'Take me there' action navigates to and focuses the target control; a proactive hint appears under its condition and navigates."
+
+  steps:
+    # -------------------------------------------------------------------------- PHASE 0: branch
+    - id: setup-branch
+      description: Create a dedicated worktree off origin/develop and install deps.
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en17";
+        git -C "$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira" fetch origin -q &&
+        git -C "$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira" worktree add "$WT" -b feat/en17-help-registry origin/develop &&
+        npm --prefix "$WT" install
+      validation: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en17";
+        git -C "$WT" rev-parse --abbrev-ref HEAD | grep -qx feat/en17-help-registry
+      depends_on: []
+      fatal_on_failure: true
+
+    # -------------------------------------------------------------------------- PHASE 1: registry + content sync (EN-17a)
+    - id: registry-module
+      description: >
+        Write src/content/appCapabilities.ts — AppArea/NavTarget/AppCapability types + APP_CAPABILITIES,
+        seeded from the CURRENT manual (UserManualModal.tsx) and chat-help (_shared/gemini.ts isHelpMode)
+        content so it is behavior-preserving. Each entry {id, area, title, short(<=1 line), long(prose),
+        keywords[], target?{area,controlId}}. Pure data — no client/edge-only imports. Reuse existing
+        data-testids as target.controlId where a control exists (e.g. goal-track-chooser, path-switcher).
+      command: "# Write src/content/appCapabilities.ts (audit UserManualModal + gemini.ts help branch for the current feature set; add the recently-shipped features: paths/goal chooser, practice modes incl. simulator, vocab lookup, offline downloads, sidebar sign-out, read-aloud opt-in, in-app help)."
+      validation: "npm --prefix \"$WT\" run lint"
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: registry-test
+      description: Unit test src/content/__tests__/appCapabilities.test.ts — ids unique; area ∈ AppArea; short is single-line and non-empty; long non-empty; every target.controlId is a non-empty string. (A follow-up test in Phase 2 cross-checks controlIds against real selectors.)
+      command: "# Write src/content/__tests__/appCapabilities.test.ts"
+      validation: "npm --prefix \"$WT\" run test:run -- src/content/__tests__/appCapabilities.test.ts"
+      depends_on: [registry-module]
+      fatal_on_failure: true
+
+    - id: manual-render
+      description: >
+        Refactor src/features/settings/UserManualModal.tsx to render from APP_CAPABILITIES (map areas ->
+        sections -> each capability's title + long). Removes the hand-written copy and the literal-**
+        render bug (use real markup, not ** in text). Keep the dialog/focus-trap shell unchanged. Reserve
+        the file via queuectl (claude-laneA-en17) before editing.
+      command: "# Edit UserManualModal.tsx to iterate APP_CAPABILITIES grouped by area."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [registry-module]
+      fatal_on_failure: true
+
+    - id: help-projection-gen
+      description: >
+        Write scripts/gen-app-help.mjs — imports APP_CAPABILITIES, emits supabase/functions/_shared/
+        appHelp.generated.ts as a compact, deterministic string/array (per area: title + short + where
+        to find it), with a "DO NOT EDIT — generated from src/content/appCapabilities.ts" header. Keep it
+        small (uses short, not long) so the system prompt stays lean.
+      command: "# Write scripts/gen-app-help.mjs; run it to produce supabase/functions/_shared/appHelp.generated.ts."
+      validation: "node \"$WT/scripts/gen-app-help.mjs\" && test -f \"$WT/supabase/functions/_shared/appHelp.generated.ts\" && node --check \"$WT/scripts/gen-app-help.mjs\""
+      depends_on: [registry-module]
+      fatal_on_failure: true
+
+    - id: help-wire-edge
+      description: >
+        Edit supabase/functions/_shared/gemini.ts — the isHelpMode branch imports the generated
+        appHelp.generated.ts and builds the "APP STRUCTURE" section from it, keeping the surrounding
+        guide persona + instructions. Removes the hardcoded feature list. Provider-neutral (no gemini-
+        specific coupling of the content). Reserve _shared/gemini.ts via queuectl first (coordinate with
+        Lane B). Do NOT deploy. Ensure no raw NUL in any string.
+      command: "# Edit _shared/gemini.ts isHelpMode to consume appHelp.generated.ts."
+      validation: "grep -q 'appHelp.generated' \"$WT/supabase/functions/_shared/gemini.ts\" && [ \"$(LC_ALL=C tr -d -c '\\000' < \"$WT/supabase/functions/_shared/gemini.ts\" | wc -c | tr -d ' ')\" = 0 ]"
+      depends_on: [help-projection-gen]
+      fatal_on_failure: true
+
+    - id: drift-check
+      description: >
+        Write scripts/check-help-drift.mjs (mirrors check-inventory-drift/check-schema-drift): regenerate
+        the edge artifact in a temp path and diff against the committed supabase/functions/_shared/
+        appHelp.generated.ts; exit non-zero on drift with a clear message. Wire it into scripts/preflight.sh.
+      command: "# Write scripts/check-help-drift.mjs; add it to preflight.sh."
+      validation: "node \"$WT/scripts/check-help-drift.mjs\" && grep -q 'check-help-drift' \"$WT/scripts/preflight.sh\""
+      depends_on: [help-projection-gen]
+      fatal_on_failure: true
+
+    - id: commit-phase1
+      description: Commit Phase 1 (content-sync).
+      command: >
+        git -C "$WT" commit src/content/appCapabilities.ts src/content/__tests__/appCapabilities.test.ts src/features/settings/UserManualModal.tsx scripts/gen-app-help.mjs supabase/functions/_shared/appHelp.generated.ts supabase/functions/_shared/gemini.ts scripts/check-help-drift.mjs scripts/preflight.sh -m "feat(EN-17a): app capability registry -> manual + generated chat-help projection + drift check"
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'EN-17a'"
+      depends_on: [registry-test, manual-render, help-wire-edge, drift-check]
+      fatal_on_failure: false
+
+    # -------------------------------------------------------------------------- PHASE 2: reactive navigate (EN-18)
+    - id: focus-control-primitive
+      description: >
+        Generalize TB-11b's focus/scroll/highlight into a reusable primitive — a focusControl(controlId)
+        util/hook that finds [data-testid=controlId], scrolls it into view and briefly highlights it.
+        Audit src/features/settings/SettingsView.tsx (focusGoalChooser/goalChooserRef) + src/App.tsx for
+        the current mechanism and extract it. Reserve SettingsView.tsx + App.tsx first.
+      command: "# Write the focusControl primitive (e.g. src/hooks/useFocusControl.ts or src/lib/focusControl.ts); refactor SettingsView goal-chooser focus onto it."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [setup-branch]
+      fatal_on_failure: true
+
+    - id: navigate-service
+      description: >
+        Write navigateToCapability(id) — resolve target from APP_CAPABILITIES, switch to target.area
+        (reuse App's setActiveTab), then focusControl(target.controlId). Thread the minimal wiring through
+        App.tsx (reserve it). Add the Phase-2 registry test: every target.controlId is a data-testid that
+        actually renders in the app (guards dangling targets).
+      command: "# Write the navigate service + wire App.tsx; extend appCapabilities.test.ts with the controlId-exists check."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [focus-control-primitive, registry-module]
+      fatal_on_failure: true
+
+    - id: help-take-me-there
+      description: >
+        In the in-app help chat UI (locate the isHelpMode chat surface — audit App.tsx/tutor/help
+        components), render a "Take me there" affordance for the capability a help answer references,
+        calling navigateToCapability. Keep it guide-and-offer (one tap; user stays in control) — NO
+        automatic action execution.
+      command: "# Wire a Take-me-there control in the help chat UI -> navigateToCapability."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [navigate-service]
+      fatal_on_failure: true
+
+    - id: commit-phase2
+      description: Commit Phase 2 (reactive navigate).
+      command: "# git -C \"$WT\" commit <focusControl + navigate service + App.tsx + SettingsView.tsx + help-chat files + test> -m \"feat(EN-18): navigateToCapability + generalized focusControl (reactive 'take me there'; refactors TB-11b)\""
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'EN-18'"
+      depends_on: [help-take-me-there, navigate-service]
+      fatal_on_failure: false
+
+    # -------------------------------------------------------------------------- PHASE 3: proactive hints (EN-18)
+    - id: contextual-hint
+      description: >
+        Write a small, condition-gated ContextualHint component driven by a capability id (renders a hint
+        + a navigateToCapability CTA). Apply to 1-2 highest-friction spots and fold the existing TB-11b
+        Home->goal-chooser deep-link into this shared pattern (single mechanism). Do NOT over-apply.
+      command: "# Write ContextualHint; apply to the highest-friction spots; migrate TB-11b's Home deep-link onto it."
+      validation: "npm --prefix \"$WT\" run lint && npm --prefix \"$WT\" run test:run"
+      depends_on: [navigate-service]
+      fatal_on_failure: true
+
+    - id: commit-phase3
+      description: Commit Phase 3 (proactive hints).
+      command: "# git -C \"$WT\" commit <ContextualHint + applied sites> -m \"feat(EN-18): contextual hints (proactive surfacing) over the capability registry\""
+      validation: "git -C \"$WT\" log -1 --pretty=%s | grep -q 'EN-18'"
+      depends_on: [contextual-hint]
+      fatal_on_failure: false
+
+    # -------------------------------------------------------------------------- PHASE 4: e2e + full gate + docs
+    - id: e2e-tests
+      description: >
+        Add e2e (model tests/e2e/user/*): (1) open the manual and assert a recently-added capability's
+        text renders; (2) a help "Take me there" navigates to + focuses the target control; (3) a proactive
+        hint appears under its condition and navigates. Reuse support/fixtures + data-testids.
+      command: "# Write tests/e2e/user/NN-help-guidance.spec.ts"
+      validation: "npx playwright test tests/e2e/user/*help-guidance*.spec.ts --project=chromium"
+      depends_on: [commit-phase1, commit-phase2, commit-phase3]
+      fatal_on_failure: true
+
+    - id: full-gate
+      description: Full local gate.
+      command: >
+        npm --prefix "$WT" run lint &&
+        npm --prefix "$WT" run lint:eslint &&
+        npm --prefix "$WT" run test:run &&
+        npm --prefix "$WT" run build &&
+        node "$WT/scripts/check-help-drift.mjs"
+      validation: "echo $? | grep -qx 0"
+      depends_on: [e2e-tests]
+      fatal_on_failure: true
+
+    - id: update-docs
+      description: Mark EN-17(a) + EN-18 BUILT in docs/TESTER-FEEDBACK-TRACKER.md (reserve first); note the manual is now registry-driven and the ** bug fixed; record that the chat-help change awaits a Lane B gemini deploy; add the DOCUMENTATION-IMPACT rule ("user-facing feature change -> update appCapabilities.ts").
+      command: "# reserve + edit the tracker; add the doc-impact rule."
+      validation: "grep -q 'appCapabilities' \"$WT/docs/TESTER-FEEDBACK-TRACKER.md\""
+      depends_on: [full-gate]
+      fatal_on_failure: false
+
+    - id: merge-note
+      description: >
+        STOP for human merge — do NOT push/merge autonomously. Report the branch, commits, gate results,
+        and the pending Lane B coordination (edge deploy of the regenerated appHelp for the chat half).
+      command: "# Report; leave feat/en17-help-registry for surgical merge to develop (path-form) after review."
+      validation: "# human/owner reviews before merge."
+      depends_on: [update-docs]
+      fatal_on_failure: false
