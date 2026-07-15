@@ -23,11 +23,10 @@ async function switchPathAndAssertStorage(
   label: 'Adaptive guided' | 'Goal track' | 'Structured course',
   expectedType: 'adaptive-guided' | 'goal-track' | 'structured',
 ) {
-  const learningPathCard = page
-    .locator('div')
-    .filter({ has: page.getByText('Learning Path', { exact: true }) })
-    .first();
-  await learningPathCard.getByRole('button', { name: label }).click();
+  // Scope to the path-switcher list specifically: the Goal-track chooser (TB-11) adds track
+  // buttons in the same card, and a seed track named "Structured Course" would otherwise collide
+  // with the case-insensitive substring match for the "Structured course" path button.
+  await page.getByTestId('path-switcher').getByRole('button', { name: label }).click();
   await expect
     .poll(async () => {
       const value = await readKv(page, 'paths:selection');

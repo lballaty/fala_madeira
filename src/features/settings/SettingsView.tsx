@@ -204,7 +204,7 @@ export const SettingsView = ({
         <p className="text-[11px] text-ios-gray leading-snug">
           All paths use the same situations and share your progress. Switch whenever you like.
         </p>
-        <div className="space-y-2">
+        <div className="space-y-2" data-testid="path-switcher">
           {PATHS.map((path) => {
             const desc = path.describe();
             const active = pathSelection.selection.type === path.type;
@@ -233,6 +233,53 @@ export const SettingsView = ({
             );
           })}
         </div>
+
+        {/* Goal-track chooser (TB-11): selecting "Goal track" above only sets the path type — the
+            learner must also pick WHICH life-goal track, exactly like onboarding's track step.
+            Without this, selection.activeTrackId stays null and goal-track silently falls back to
+            the first track (goal-track.ts resolveActiveTrack), so the path reads as the structured
+            course. Surfacing the picker here is the missing Settings-side counterpart. */}
+        {pathSelection.selection.type === 'goal-track' && (
+          <div className="space-y-2 border-t border-ios-bg pt-4" data-testid="goal-track-chooser">
+            <p className="text-[11px] font-semibold text-ios-gray uppercase tracking-wide">
+              Choose your goal
+            </p>
+            {tracks.length === 0 ? (
+              <p className="text-[11px] text-ios-gray leading-snug">
+                Goal tracks are still loading…
+              </p>
+            ) : (
+              tracks.map((track) => {
+                const activeTrack = pathSelection.selection.activeTrackId === track.id;
+                return (
+                  <button
+                    key={track.id}
+                    onClick={() => void pathSelection.setActiveTrack(track.id)}
+                    aria-pressed={activeTrack}
+                    className={cn(
+                      'w-full text-left p-3 rounded-2xl border-2 transition-colors',
+                      activeTrack
+                        ? 'border-ios-blue bg-ios-blue/5'
+                        : 'border-transparent bg-ios-bg hover:bg-ios-bg/70',
+                    )}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-sm">{track.name}</span>
+                      {activeTrack && (
+                        <span className="text-[9px] font-bold uppercase text-ios-blue bg-ios-blue/10 px-2 py-0.5 rounded-full">
+                          active
+                        </span>
+                      )}
+                    </div>
+                    {track.goal && (
+                      <p className="text-[11px] text-ios-gray mt-0.5">{track.goal}</p>
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        )}
       </div>
 
       <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4">
