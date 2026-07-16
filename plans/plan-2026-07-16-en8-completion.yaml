@@ -1,0 +1,242 @@
+# File: plans/plan-2026-07-16-en8-completion.yaml
+# Description: Completion plan for EN-8 server-hosted audio. Picks up after the 2026-07-16 staging
+#   trial (mechanism proven live; 83/527 level-0 warmed; migration 00012 applied; log-sink deployed;
+#   staging Verpex cron up). Drives: (1) close the staging trial to a formal VERIFY_WIN, (2) land the
+#   inert client code onto develop with synced docs, (3) production activation behind an explicit
+#   approval GATE. Executed by /execute-plan-autonomously with incremental commits per code step.
+# Author: Claude (EN-8 owner)
+# Created: 2026-07-16
+# Worktree: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat
+# Branch:   feat/en8-server-hosted-audio
+# Conventions: $WT = the feat worktree above. STAGING audio base =
+#   https://testfalamadeira.searchingfool.com/audio . Verpex creds resolved from
+#   /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/.env.deploy .
+#   Supabase creds from $WT/.env.local. NO Co-Authored-By; path-form commits.
+
+plan:
+  title: >
+    Complete EN-8 server-hosted audio — close the staging trial (full level-0 warm + VERIFY_WIN),
+    land the inert client code on develop with synced docs, and gate production activation behind
+    explicit owner approval.
+
+  goal_validation:
+    - "STAGING: `node $WT/scripts/audit-audio.mjs --verify-l0 --verpex-base https://testfalamadeira.searchingfool.com/audio` prints VERIFY_WIN_OK."
+    - "CODE: feat/en8-server-hosted-audio merged into develop (0 behind) with EN-8 docs synced; full gate green on the merge commit."
+    - "PROD: activation steps remain BLOCKED until the approval GATE is satisfied; when approved, prod Verpex serves a sampled level-0 key 200 and TTS_BUFFER_WRITEBACK=on."
+
+  steps:
+
+    # ---------------------------------------------------------------------------------------------
+    # PHASE 1 — Close the staging trial (autonomous; runtime ops, no repo writes except plan-state)
+    # ---------------------------------------------------------------------------------------------
+    - id: warm-level0-buffer
+      description: >
+        Complete the level-0 warm: run the pre-gen (gentle 1500ms throttle + retry/backoff) in a
+        bounded loop until every level-0 clip is at least in the buffer or already on Verpex
+        (audit missing_everywhere == 0). Idempotent — each pass skips clips already hosted/staged.
+      command: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        for i in 1 2 3 4 5 6; do
+          node scripts/pregen-audio.mjs --level 0 --verpex-base https://testfalamadeira.searchingfool.com/audio ;
+          MISS=$(node scripts/audit-audio.mjs --level 0 --json --verpex-base https://testfalamadeira.searchingfool.com/audio | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const r=JSON.parse(s);process.stdout.write(String(r.report[0].missing_everywhere))})") ;
+          echo "pass $i: missing_everywhere=$MISS" ;
+          [ "$MISS" = "0" ] && break ;
+        done
+      validation: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        node scripts/audit-audio.mjs --level 0 --json --verpex-base https://testfalamadeira.searchingfool.com/audio | grep -q '"missing_everywhere": 0'
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: sync-verpex-staging
+      description: >
+        Trigger the staging Verpex pull cron once (buffer -> /audio + copy-confirmed deletion) so all
+        warmed clips land on Verpex and the buffer is reclaimed. Uses SSH creds from .env.deploy.
+      command: >
+        DEP=/Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/.env.deploy;
+        H=$(grep '^VERPEX_HOST=' "$DEP"|cut -d= -f2-|tr -d '"'); U=$(grep '^VERPEX_USER=' "$DEP"|cut -d= -f2-|tr -d '"');
+        P=$(grep '^VERPEX_PORT=' "$DEP"|cut -d= -f2-|tr -d '"'); K=$(grep '^VERPEX_SSH_KEY=' "$DEP"|cut -d= -f2-|tr -d '"');
+        S=$(grep '^VERPEX_STAGING_REMOTE_PATH=' "$DEP"|cut -d= -f2-|tr -d '"');
+        ssh -p "$P" -i "$K" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=25 "$U@$H" "php '$S/audio-sync/pull.php'"
+      validation: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        node scripts/audit-audio.mjs --level 0 --json --verpex-base https://testfalamadeira.searchingfool.com/audio | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const r=JSON.parse(s);process.exit(r.report[0].on_verpex===527?0:1)})"
+      depends_on: [warm-level0-buffer]
+      fatal_on_failure: true
+
+    - id: verify-win-staging
+      description: >
+        GATING PROOF (COORD-2 ROBUSTNESS-2): every level-0 clip is 200 on staging Verpex AND
+        public.logs has no provider-tier tts_source for those keys. Prints VERIFY_WIN_OK.
+      command: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        node scripts/audit-audio.mjs --verify-l0 --verpex-base https://testfalamadeira.searchingfool.com/audio
+      validation: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        node scripts/audit-audio.mjs --verify-l0 --verpex-base https://testfalamadeira.searchingfool.com/audio 2>&1 | grep -qi 'VERIFY_WIN_OK'
+      depends_on: [sync-verpex-staging]
+      fatal_on_failure: true
+
+    - id: cleanup-pregen-user
+      description: >
+        Delete the throwaway pregen service user (en8-pregen@falamadeira.internal) now the warm is
+        proven — leaves no standing unlimited account on the shared project.
+      command: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        node --input-type=module -e "import {createClient} from '@supabase/supabase-js';import d from 'dotenv';d.config({path:'.env.local',quiet:true});const a=createClient(process.env.VITE_SUPABASE_URL,process.env.SUPABASE_SERVICE_ROLE_KEY,{auth:{persistSession:false}});const l=await a.auth.admin.listUsers({page:1,perPage:1000});const u=l.data.users.find(x=>x.email==='en8-pregen@falamadeira.internal');if(!u){console.log('already gone');process.exit(0);}const r=await a.auth.admin.deleteUser(u.id);console.log(r.error?('ERR '+r.error.message):'deleted '+u.id.slice(0,8));process.exit(r.error?1:0)"
+      validation: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        node --input-type=module -e "import {createClient} from '@supabase/supabase-js';import d from 'dotenv';d.config({path:'.env.local',quiet:true});const a=createClient(process.env.VITE_SUPABASE_URL,process.env.SUPABASE_SERVICE_ROLE_KEY,{auth:{persistSession:false}});const l=await a.auth.admin.listUsers({page:1,perPage:1000});process.exit(l.data.users.find(x=>x.email==='en8-pregen@falamadeira.internal')?1:0)"
+      depends_on: [verify-win-staging]
+      fatal_on_failure: false
+
+    - id: commit-phase1-state
+      description: Record Phase 1 outcome in the EN-8 plan-state file.
+      command: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-support &&
+        git commit plans/.plan-state-en8-hosted-audio.yaml plans/plan-2026-07-16-en8-completion.yaml -m "state(en8): Phase 1 staging trial closed — full level-0 warm + VERIFY_WIN_OK + pregen user cleaned [plan:en8-completion]"
+      validation: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-support log -1 --pretty=%s | grep -q 'Phase 1'"
+      depends_on: [cleanup-pregen-user]
+      fatal_on_failure: false
+
+    # ---------------------------------------------------------------------------------------------
+    # PHASE 2 — Land the inert client code on develop with synced docs (autonomous)
+    # ---------------------------------------------------------------------------------------------
+    - id: rebase-develop
+      description: Fetch and rebase feat/en8 onto origin/develop so it is 0-behind before integration.
+      command: >
+        git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat fetch origin &&
+        git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat rebase origin/develop
+      validation: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat rev-list --count origin/develop..HEAD >/dev/null && [ \"$(git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat rev-list --count HEAD..origin/develop)\" = \"0\" ]"
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: update-docs
+      description: >
+        Sync EN-8 canonical/derived docs via /update-docs — CONTENT-ARCHITECTURE (device/pinned/
+        Verpex/Supabase/provider tiers + key normalization), DATABASE_DESIGN (tts-audio public bucket
+        + tts_audio_public_read RLS + pg_cron backstop), OBSERVABILITY (audio_sync_run heartbeat +
+        write-back WARN events + tts_source tiers). Also add tracker follow-ups: PCM-compression pass;
+        in-app admin audio coverage panel (surface audit-audio.mjs; ties EN-12); multi-env buffer
+        contention note (see prod-design-resolve).
+      command: "# In $WT: run /update-docs then edit the three docs + append the tracker follow-ups."
+      validation: "grep -qiE 'tts-audio|hosted audio|audio.*tier' /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat/docs/CONTENT-ARCHITECTURE.md /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat/docs/DATABASE_DESIGN.md 2>/dev/null"
+      depends_on: [rebase-develop]
+      fatal_on_failure: false
+
+    - id: commit-docs
+      description: Commit the EN-8 doc sync (path-form, only the docs touched).
+      command: "# git -C $WT commit <the docs edited by update-docs> -m 'docs(audio): EN-8 hosted-audio tiers + bucket/RLS + observability [plan:en8-completion step:update-docs]'"
+      validation: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat log -1 --pretty=%s | grep -qi 'docs(audio)'"
+      depends_on: [update-docs]
+      fatal_on_failure: false
+
+    - id: full-gate
+      description: Full local gate on the rebased branch — tsc, eslint, unit tests, build, observability, cors.
+      command: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat &&
+        npm run lint && npm run lint:eslint && npm run test:run && npm run build && npm run test:observability && npm run test:cors
+      validation: "echo $? | grep -qx 0"
+      depends_on: [rebase-develop]
+      fatal_on_failure: true
+
+    - id: push-feat
+      description: Force-push the rebased+documented feat branch with lease.
+      command: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat push --force-with-lease origin feat/en8-server-hosted-audio"
+      validation: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat status -sb | head -1 | grep -qv 'ahead'"
+      depends_on: [full-gate, commit-docs]
+      fatal_on_failure: true
+
+    - id: integrate-develop
+      description: >
+        Merge feat/en8 into develop (fast-forward after rebase) and push. The client tiering is inert
+        until the server side is activated (every tier misses -> unchanged provider fallback), so this
+        is safe to land. Uses the base worktree checked out on develop.
+      command: >
+        git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira fetch origin &&
+        git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira checkout develop &&
+        git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira merge --ff-only origin/feat/en8-server-hosted-audio &&
+        git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira push origin develop
+      validation: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira merge-base --is-ancestor origin/feat/en8-server-hosted-audio origin/develop && echo merged"
+      depends_on: [push-feat]
+      fatal_on_failure: true
+
+    # ---------------------------------------------------------------------------------------------
+    # PHASE 3 — Production activation (GATED: requires explicit owner approval; NOT autonomous)
+    # ---------------------------------------------------------------------------------------------
+    - id: approve-prod-activation
+      description: >
+        HALT. Explicit owner approval required before ANY production server write (memory:
+        feedback-verpex-no-changes-without-approval). The autonomous run STOPS here and surfaces the
+        prod plan. Do not auto-satisfy. Approve by re-running with this step forced to succeeded.
+      command: "# MANUAL GATE — await explicit owner 'approve prod activation'. No autonomous action."
+      validation: "false"
+      depends_on: [integrate-develop, verify-win-staging]
+      fatal_on_failure: true
+
+    - id: prod-design-resolve
+      description: >
+        Resolve the multi-environment buffer-contention design before prod warm: the single public
+        tts-audio buffer + copy-confirmed deletion means the FIRST cron to copy a clip deletes it from
+        the buffer, so the second environment never sees it. Decide + implement one of: (a) warm prod
+        by re-running pregen with --verpex-base <prod> and triggering the PROD pull.php immediately
+        (accept the staging-cron race for a one-off), or (b) environment-tag/segregate buffer objects,
+        or (c) skip-delete until both crons confirm. Capture the decision in the tracker.
+      command: "# Decide (a/b/c) with owner; implement + commit if code change; else document."
+      validation: "true"
+      depends_on: [approve-prod-activation]
+      fatal_on_failure: true
+
+    - id: deploy-gemini-prod
+      description: >
+        Deploy the gemini edge function from develop (post-merge) so runtime write-back exists. From
+        develop the deploy is a coherent, reviewed set (not feat's ad-hoc payload).
+      command: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira &&
+        SUPABASE_ACCESS_TOKEN=$(grep '^SUPABASE_ACCESS_TOKEN=' .env.local|cut -d= -f2-|tr -d '"') supabase functions deploy gemini --project-ref gxlrmdfqcqimwwplrdgd
+      validation: "SUPABASE_ACCESS_TOKEN=$(grep '^SUPABASE_ACCESS_TOKEN=' /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/.env.local|cut -d= -f2-|tr -d '\"') supabase functions list --project-ref gxlrmdfqcqimwwplrdgd | grep -q gemini"
+      depends_on: [approve-prod-activation]
+      fatal_on_failure: true
+
+    - id: prod-verpex-cron
+      description: >
+        Install the PROD Verpex pull cron: scp pull.php + config.php (prod token, AUDIO_DIR=<prod>/audio)
+        to VERPEX_REMOTE_PATH/audio-sync/, chmod 600, php -l, smoke run, register */15 cron.
+      command: "# scp pull.php+config.php to prod REMOTE_PATH/audio-sync/, chmod 600, php -l, smoke, crontab */15 (mirror the staging install)."
+      validation: "curl -s -o /dev/null -w '%{http_code}' https://falamadeira.searchingfool.com/audio-sync/pull.php | grep -qE '403|200'"
+      depends_on: [approve-prod-activation, prod-design-resolve]
+      fatal_on_failure: true
+
+    - id: deploy-web-prod-htaccess
+      description: >
+        Deploy the web build to prod (and staging) so the /audio SPA-fallback 404 rule + rsync audio/
+        excludes ship (public/.htaccess). Uses scripts/deploy-verpex.sh --target production (staged first).
+      command: "# bash scripts/ship.sh --target staging ; then --target production (approval-gated in the script)."
+      validation: "curl -s -o /dev/null -w '%{content_type}' https://falamadeira.searchingfool.com/audio/does_not_exist_zzz.pcm | grep -qv 'text/html'"
+      depends_on: [approve-prod-activation]
+      fatal_on_failure: false
+
+    - id: warm-prod-level0
+      description: Warm prod Verpex for level-0 per the prod-design-resolve decision, then verify.
+      command: "# per prod-design-resolve: pregen --verpex-base <prod> then trigger prod pull.php; audit --verify-l0 --verpex-base <prod>."
+      validation: "true # replaced by audit --verify-l0 against prod once design is set"
+      depends_on: [prod-verpex-cron, deploy-gemini-prod, prod-design-resolve]
+      fatal_on_failure: true
+
+    - id: enable-writeback-flag
+      description: >
+        Flip TTS_BUFFER_WRITEBACK=on (edge secret) ONLY after gemini is deployed and BOTH Verpex crons
+        are up (COORD-2 BLOCKING-2), so runtime write-back can never accumulate unreclaimed buffer cost.
+      command: >
+        cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira &&
+        SUPABASE_ACCESS_TOKEN=$(grep '^SUPABASE_ACCESS_TOKEN=' .env.local|cut -d= -f2-|tr -d '"') supabase secrets set TTS_BUFFER_WRITEBACK=on --project-ref gxlrmdfqcqimwwplrdgd
+      validation: "SUPABASE_ACCESS_TOKEN=$(grep '^SUPABASE_ACCESS_TOKEN=' /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/.env.local|cut -d= -f2-|tr -d '\"') supabase secrets list --project-ref gxlrmdfqcqimwwplrdgd | grep -q TTS_BUFFER_WRITEBACK"
+      depends_on: [deploy-gemini-prod, prod-verpex-cron, warm-prod-level0]
+      fatal_on_failure: true
+
+    - id: verify-prod-win
+      description: Prod gating proof — level-0 keys 200 on prod Verpex + no provider re-synthesis.
+      command: "# node scripts/audit-audio.mjs --verify-l0 --verpex-base https://falamadeira.searchingfool.com/audio"
+      validation: "node /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/scripts/audit-audio.mjs --verify-l0 --verpex-base https://falamadeira.searchingfool.com/audio 2>&1 | grep -qi VERIFY_WIN_OK"
+      depends_on: [enable-writeback-flag]
+      fatal_on_failure: true
