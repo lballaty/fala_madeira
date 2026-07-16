@@ -96,6 +96,8 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
 
 **⑤ and ⑥ are the two nets that keep slipping.** They are not optional. The rule of thumb for ⑥: sync at the **start of each session**, **before you merge into `develop`**, and **right after any release/back-merge lands** (that's when `main`'s version bump + fixes flow back into `develop`, and every worktree's base just changed).
 
+> **Net ② is becoming two tiers (Coordination v2 — see `COORDINATION-V2-TASK-CLAIM-REQUIREMENTS.md`).** A **durable, tracker-bound task claim** (`queuectl claim-task --tracker <ID>`) is the primary unit — it survives long analysis with no writes and survives session/agent switches (any of your agents can `resume`/`handoff` it; one active holder at a time). **File locks are subordinate** and refused without a covering claim (`reserve --files … --task <ID>`). Enforcement is an agent-facing guard (warn → block) that tells the agent to claim+reserve and lets it self-remediate — it never prompts you. This fixes work not being finished end-to-end when you jump between agents.
+
 ---
 
 ## 6. A day in the life
