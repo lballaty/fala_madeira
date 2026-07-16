@@ -100,9 +100,9 @@ This is the fix for P1 (conversation stops emitting the translation drill) and P
 - Edge `_shared/gemini.ts` prompt split is Lane B's EN-8/TB-13 file — reserve + sequence; chat behavior change reaches users only on the next gemini deploy.
 - Provider-neutral (EN-19). No audio-stack / SEC-2 overlap.
 
-## 10. Open decisions for the owner
+## 10. Decisions (owner, 2026-07-16)
 
-1. Intent set — the five in §3, or add/rename any (e.g. a "Pronounce this" mode)?
-2. Should the picker appear **every** time the chat opens, or only when there's no active session (with a "new chat" button to re-summon it)? (Recommend the latter — don't nag returning users mid-conversation.)
-3. Single-word translate → route to the EN-10 vocab lookup modal, or keep it inside the chat as a `translate` turn? (Recommend: inline chat, with EN-10 as the offline/fast path.)
-4. Confirm the prompt split is acceptable given it changes default free-chat behavior (no more auto-translation formatting) — this is the core fix.
+1. **DECIDED — the five intents as-is** (§3). The EN-18 **"Take me there" action bubbles are retained** — they're orthogonal to the picker (picker = opener; bubbles = inside help answers to jump to a screen).
+2. **DECIDED — the picker shows only when intent is NOT contextually clear.** Opening the Tutor tab cold → show it. Entering from a lesson/practice/simulator/the Help entry → the intent is already declared, so go straight in (no picker). A "new chat / change intent" control re-summons it.
+3. **DECIDED — inline chat translation.** In a conversation the user can just ask the chat to translate a word/phrase and it answers in-thread (a `translate` turn). The EN-10 vocab-lookup modal stays as-is for quick single-word lookup, but is NOT the primary path (typing into a modal is less friendly than asking in chat).
+4. **PENDING owner review — the prompt-mode split (§4).** Mockup provided: `docs/EN-21-chat-modes-mockup.html` (before = every message becomes a Português/Pronunciation/English drill; after = conversation is natural, translation only on request, app questions get answered + a "Take me there" bubble). Awaiting owner OK that default free-chat should stop auto-formatting as translation.

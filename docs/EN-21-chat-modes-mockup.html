@@ -1,0 +1,142 @@
+<!doctype html>
+<!--
+  File: docs/EN-21-chat-modes-mockup.html
+  Description: Static before/after mockup for EN-21 decision #4 (the prompt-mode split). Shows why
+    the chat currently drops into a Português/Pronunciation/English translation drill for EVERY
+    message, and what the intent picker + conversation/translate/help modes look like after.
+    Illustrative only — not wired to the app. Open in a browser.
+  Author: Lane A (with assistant)
+  Created: 2026-07-16
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EN-21 — Chat modes: before / after</title>
+<style>
+  :root { --blue:#0a84ff; --bg:#f2f2f7; --card:#fff; --gray:#8e8e93; --line:#e5e5ea; --ink:#1c1c1e; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink); padding:24px; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .sub { color:var(--gray); margin:0 0 24px; }
+  .cols { display:flex; gap:28px; flex-wrap:wrap; align-items:flex-start; }
+  .col { flex:1 1 340px; min-width:320px; }
+  .col h2 { font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--gray); margin:0 0 10px; }
+  .badge { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px; }
+  .b-before { background:#ffe5e5; color:#c00; }
+  .b-after { background:#e3f7e8; color:#137a2b; }
+  .phone { background:var(--card); border:1px solid var(--line); border-radius:22px; overflow:hidden; box-shadow:0 6px 24px rgba(0,0,0,.06); margin-bottom:18px; }
+  .bar { padding:10px 14px; border-bottom:1px solid var(--line); font-weight:700; font-size:13px; display:flex; align-items:center; gap:8px; }
+  .body { padding:14px; display:flex; flex-direction:column; gap:10px; min-height:60px; }
+  .msg { max-width:88%; padding:9px 12px; border-radius:16px; font-size:14px; white-space:pre-wrap; }
+  .me { align-self:flex-end; background:var(--blue); color:#fff; border-bottom-right-radius:5px; }
+  .ai { align-self:flex-start; background:var(--bg); border-bottom-left-radius:5px; }
+  .cap { font-size:12.5px; color:var(--gray); margin:2px 2px 20px; }
+  .cap b { color:var(--ink); }
+  .tx { font-family:ui-monospace,Menlo,monospace; font-size:12.5px; }
+  .tx .lbl { font-weight:700; }
+  .pick { display:flex; flex-direction:column; gap:8px; }
+  .pick .q { font-weight:700; font-size:15px; margin:2px 0 4px; }
+  .opt { border:1px solid var(--line); border-radius:14px; padding:10px 12px; }
+  .opt .t { font-weight:700; font-size:14px; }
+  .opt .h { color:var(--gray); font-size:12.5px; }
+  .chip { align-self:flex-start; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; color:var(--blue); background:rgba(10,132,255,.12); padding:5px 11px; border-radius:999px; margin-top:2px; }
+  .arrow { text-align:center; color:var(--gray); font-size:12px; margin:-8px 0 10px; }
+</style>
+</head>
+<body>
+  <h1>EN-21 — Chat modes: before / after</h1>
+  <p class="sub">Decision #4 = the "prompt-mode split." Today the tutor prompt always applies a translation format, so <b>every</b> message becomes a Português / Pronunciation / English drill. After: an intent picker routes you, and each mode behaves correctly — conversation is natural, translation only when you ask, help is interpreted as an app question.</p>
+
+  <div class="cols">
+    <!-- BEFORE -->
+    <div class="col">
+      <h2><span class="badge b-before">Before — today</span></h2>
+
+      <div class="phone">
+        <div class="bar">💬 Tutor</div>
+        <div class="body">
+          <div class="msg me">Hi! Can we just chat for a bit?</div>
+          <div class="msg ai tx"><span class="lbl">Português:</span>
+> Olá! Claro, como estás?
+
+<span class="lbl">Pronunciation:</span>
+> oh-LAH! KLAH-roo, KOH-moo esh-TASH
+
+<span class="lbl">English:</span>
+> Hello! Of course, how are you?</div>
+        </div>
+      </div>
+      <p class="cap">A casual "can we chat?" comes back as a rigid <b>translation drill</b>. Same for a how-to question — it's never treated as a question about the app. There's no way to say what you actually want.</p>
+
+      <div class="phone">
+        <div class="bar">💬 Tutor</div>
+        <div class="body">
+          <div class="msg me">Where do I change my level?</div>
+          <div class="msg ai tx"><span class="lbl">Português:</span>
+> Onde mudo o meu nível?
+
+<span class="lbl">English:</span>
+> Where do I change my level?</div>
+        </div>
+      </div>
+      <p class="cap">Your <b>app question got translated</b> instead of answered. (This is P1 + P2.)</p>
+    </div>
+
+    <!-- AFTER -->
+    <div class="col">
+      <h2><span class="badge b-after">After — EN-21</span></h2>
+
+      <div class="phone">
+        <div class="bar">💬 Tutor</div>
+        <div class="body">
+          <div class="pick">
+            <div class="q">What would you like to do?</div>
+            <div class="opt"><div class="t">💬 Have a conversation</div><div class="h">Practice by chatting naturally</div></div>
+            <div class="opt"><div class="t">🔤 Translate a word or phrase</div><div class="h">Say it in PT or EN</div></div>
+            <div class="opt"><div class="t">❓ Ask about the app</div><div class="h">How do I…?</div></div>
+            <div class="opt"><div class="t">📘 Practice today's lesson</div></div>
+            <div class="opt"><div class="t">🎭 Role-play a situation</div></div>
+          </div>
+        </div>
+      </div>
+      <p class="cap">A "what do you want to do?" opener — <b>only</b> when the intent isn't already clear (opening from a lesson skips it).</p>
+      <div class="arrow">↓ pick "Have a conversation"</div>
+
+      <div class="phone">
+        <div class="bar">💬 Conversation</div>
+        <div class="body">
+          <div class="msg me">Hi! Can we just chat for a bit?</div>
+          <div class="msg ai">Olá! Claro. 🙂 De que gostavas de falar — do fim de semana?</div>
+          <div class="msg me">Do fim de semana. Fui à praia.</div>
+          <div class="msg ai">Boa! Foste à praia com quem? (small tip: "fui" — nice past tense 👍)</div>
+        </div>
+      </div>
+      <p class="cap"><b>Natural back-and-forth</b>, gentle correction — no translation block forced on every line.</p>
+
+      <div class="phone">
+        <div class="bar">🔤 Translate / ask inline</div>
+        <div class="body">
+          <div class="msg me">How do I say "the bill, please"?</div>
+          <div class="msg ai tx"><span class="lbl">Português:</span>
+> A conta, por favor.
+
+<span class="lbl">Pronunciation:</span>
+> ah KON-tah, poor fah-VOR</div>
+        </div>
+      </div>
+      <p class="cap">The translation format appears <b>only when you ask for it</b> (a translate intent, or just asking in chat). (Decision #3 — inline.)</p>
+
+      <div class="phone">
+        <div class="bar">❓ Ask about the app</div>
+        <div class="body">
+          <div class="msg me">Where do I change my level?</div>
+          <div class="msg ai">Open <b>Profile → Your level</b> and pick your level — it's separate from what content you've unlocked.</div>
+          <div class="chip">📍 Take me to Your level</div>
+        </div>
+      </div>
+      <p class="cap">Now interpreted as an <b>app question</b>, answered from the manual content, with the <b>"Take me there" bubble</b> (the bubbles stay — Decision #1).</p>
+    </div>
+  </div>
+</body>
+</html>
