@@ -49,11 +49,11 @@ steps:
   deploy-rsync-exclude:       { status: succeeded, commit: 6e961b7, note: "scripts/deploy-verpex.sh rsync --delete now excludes audio/ AND audio-sync/ (alongside .well-known/ + cgi-bin/) so a web deploy never wipes hosted audio or the cron. Also public/.htaccess: /audio/ MISS returns 404 not the SPA shell (spike content-type gotcha) so client server-tier fetch falls through. bash -n OK." }
   deploy-verpex-crons-both:   { status: deferred-operator, note: "operator-gated, staging-first: scp pull.php+config.php to staging then prod REMOTE_PATH/audio-sync/, chmod 600 config.php, register */15 cron, set per-env AUDIO_SYNC_TOKEN. Sequenced BEFORE the write-back flag flip (COORD-2 BLOCKING-2)." }
   commit-phase6:              { status: succeeded, commit: 6e961b7, note: "satisfied by 6e961b7 (5 files, 464+ insertions). Pushed. Rebase onto develop done first (0 behind; gate 302 tests green; force-pushed 2b99e52)." }
-  pregen-script:              { status: pending }
-  run-pregen-level0:          { status: deferred-operator }
-  enable-writeback-flag:      { status: deferred-operator }
-  coverage-report-script:     { status: pending }
-  commit-phase7:              { status: pending }
-  full-gate:                  { status: pending }
-  update-docs:                { status: pending }
-  verify-win:                 { status: deferred-operator, note: "gating proof; operator confirms on staging" }
+  pregen-script:              { status: succeeded, commit: e822b44, note: "scripts/pregen-audio.mjs — tsImport shared bundled/lines/audioKey/voiceType; admin sign-in via E2E creds; edge tts per (voiceType,text); service-role upload to tts-audio; idempotent (HEAD verpex/buffer); node --check OK. Running = run-pregen-level0 (operator, needs edge deploy)." }
+  run-pregen-level0:          { status: deferred-operator, note: "operator: node scripts/pregen-audio.mjs --level 0 --verpex-base https://testfalamadeira.searchingfool.com/audio (after edge deploy + migration 00012 + crons)." }
+  enable-writeback-flag:      { status: deferred-operator, note: "flip TTS_BUFFER_WRITEBACK=on ONLY after both Verpex crons are up (COORD-2 BLOCKING-2)." }
+  coverage-report-script:     { status: succeeded, commit: e822b44, note: "scripts/audit-audio.mjs — read-only EXPECTED(per level) vs on-Verpex(HEAD) vs in-buffer(anon list) + missing/lag/orphans; --verify-l0 = COORD-2 ROBUSTNESS-2 gating proof (L0 all 200 on Verpex AND no provider tts_source in public.logs -> VERIFY_WIN_OK). node --check OK." }
+  commit-phase7:              { status: succeeded, commit: e822b44, note: "both scripts committed + pushed." }
+  full-gate:                  { status: succeeded, note: "2026-07-16 feat worktree post-rebase: tsc 0, eslint 0 errors (1 pre-existing src warning), 302 vitest green, vite build OK (PWA 60 precache; dist/.htaccess carries the /audio 404 rule), observability exit 0 (0 hardcoded fallbacks), cors PASS." }
+  update-docs:                { status: deferred, note: "DEFERRED to the operator-approved deploy (docs should flip from 'designed/gated' to 'live' at deploy, not describe not-yet-live behavior). Remaining content to add THEN: (1) CONTENT-ARCHITECTURE §10 — device cache/pinned + Verpex + Supabase buffer + provider tiers & key normalization; (2) DATABASE_DESIGN — tts-audio public bucket + tts_audio_public_read RLS + pg_cron 7-day backstop; (3) OBSERVABILITY — audio_sync_run heartbeat + write-back WARN events + tts_source tiers; (4) TESTER-FEEDBACK-TRACKER follow-ups: PCM-compression pass + in-app admin coverage panel (EN-12 fast-follow). All are shared/canonical files on develop -> queuectl reserve first." }
+  verify-win:                 { status: deferred-operator, note: "gating proof; operator runs `node scripts/audit-audio.mjs --verify-l0 --verpex-base <staging>` after run-pregen-level0 + one cron cycle; expects VERIFY_WIN_OK." }
