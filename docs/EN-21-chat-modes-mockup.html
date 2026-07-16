@@ -46,7 +46,7 @@
 </head>
 <body>
   <h1>EN-21 — Chat modes: before / after</h1>
-  <p class="sub">Decision #4 = the "prompt-mode split." Today the tutor prompt always applies a translation format, so <b>every</b> message becomes a Português / Pronunciation / English drill. After: an intent picker routes you, and each mode behaves correctly — conversation is natural, translation only when you ask, help is interpreted as an app question.</p>
+  <p class="sub">Decision #4 = the "prompt-mode split." Verified against the actual system instruction (<code>_shared/gemini.ts:111-150</code>): today free chat runs one <b>rigorous training-SIMULATION tutor</b> — it's told to self-<b>interrupt</b>, <b>switch scenario</b> every 2–3 turns, simulate "<b>Diz?</b>" misunderstandings and <b>escalate</b> — and to format Portuguese as <b>Português / Pronunciation / English</b> "for translations." So a casual "can we chat?" or an app question gets pulled into that drill rather than a natural reply or an answer. After: an intent picker routes you, and each mode behaves correctly — conversation is natural, translation only when you ask, help is interpreted as an app question.</p>
 
   <div class="cols">
     <!-- BEFORE -->
@@ -67,7 +67,7 @@
 > Hello! Of course, how are you?</div>
         </div>
       </div>
-      <p class="cap">A casual "can we chat?" comes back as a rigid <b>translation drill</b>. Same for a how-to question — it's never treated as a question about the app. There's no way to say what you actually want.</p>
+      <p class="cap">A casual "can we chat?" is pulled into a <b>scripted training drill</b> (SIMULATION MECHANICS: scenario switches, self-interruptions, escalation); Portuguese is presented in the "for translations" Português/Pronunciation/English structure. It's not open conversation — and there's no way to say what you actually want.</p>
 
       <div class="phone">
         <div class="bar">💬 Tutor</div>
