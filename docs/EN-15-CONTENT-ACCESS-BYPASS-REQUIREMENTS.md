@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-15-CONTENT-ACCESS-BYPASS-REQUIREMENTS.md
 **Description:** Requirements + design for Option B of the "how does an admin grant a user all training levels?" question — make content-access gating honor a `role==='admin'` / `subscription_tier==='unlimited'` full-access bypass (mirroring the existing voice-limit bypass), so granting all levels = setting a user's tier to `unlimited` (admins get it automatically). For owner approval before any coding (AGENTS §3).
-**Author:** Lane A (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-15
 **Last Updated:** 2026-07-15
-**Last Updated By:** Lane A (with assistant)
+**Last Updated By:** Libor Ballaty
 
 ---
 

@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/REQUIREMENTS-TRACKER.md
 **Description:** Requirements register for the full FalaMadeira product. Each requirement maps to its source (design target section), the plan step(s) that deliver it, and current status. Full-product scope (not MVP) per the 2026-07-09 directive. Keep in sync with docs/PRODUCT-DESIGN-TARGET.md and plans/plan-2026-07-08-production-readiness.yaml.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-09
 **Last Updated:** 2026-07-09
 **Last Updated By:** design-enhancement session

@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/MULTI-AGENT-WORKFLOW.md
 **Description:** Human-readable, picture-first guide to the worktree + branch + coordination model for multiple agents (and a live-testers release line). Companion to AGENTS.md §4/§7.
-**Author:** Lane B (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-14
-**Last Updated:** 2026-07-14
-**Last Updated By:** Lane B (with assistant)
+**Last Updated:** 2026-07-16
+**Last Updated By:** Libor Ballaty
 
 ---
 
@@ -84,7 +84,17 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
                                (TESTER-FEEDBACK-TRACKER.md, E2E-LIVE-RUN-TRACKER.md).
    ④  Branch guard           → the bouncer. `npm run check:branch` + a pre-commit hook BLOCK a commit
                                if a folder is on the wrong branch (e.g. base folder drifted to main).
+   ⑤  Incremental commits    → commit small, self-contained units as each change validates — NEVER
+                               batch a whole session into one commit. Small path-form commits keep the
+                               shared .git index from sweeping another agent's uncommitted files into
+                               yours, and keep work durable + reviewable. (A validated step is a commit.)
+   ⑥  Sync with the base     → the base moves under you: `develop` (and, after a release, `main`)
+                               advances WHILE you work, so your branch's foundation keeps changing.
+                               Pull it back in regularly — `git -C <worktree> fetch origin && git merge
+                               origin/develop` — so a drifting worktree never becomes a merge nightmare.
 ```
+
+**⑤ and ⑥ are the two nets that keep slipping.** They are not optional. The rule of thumb for ⑥: sync at the **start of each session**, **before you merge into `develop`**, and **right after any release/back-merge lands** (that's when `main`'s version bump + fixes flow back into `develop`, and every worktree's base just changed).
 
 ---
 
@@ -138,8 +148,10 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
 
 An **orchestrator** agent coordinates the others: it reads the trackers, assigns each open item to a role, sequences merges + release cuts, and audits branch discipline. It does not write feature code itself.
 
+> **Roles are conventions, not ownership.** The table below is a *default home* for each kind of work plus the branch-naming convention that goes with it — **not** a fixed identity and **not** an exclusive claim on part of the product. No agent owns a surface. Any agent may pick up any item; what it must do is (a) reserve the task **and** its files first, (b) not step on another agent's in-flight work, (c) ship the tests for what it changed, and (d) commit incrementally + keep its worktree synced to the moving base (§5 ⑤/⑥). When splitting a change across worktrees would be impractical, do the related work in one worktree and merge to `develop`. See AGENTS.md §7.
+
 ### Roles
-| Role | Worktree / branch | Owns | Picks up work from | Merges to |
+| Role | Worktree / branch | Typical focus (default home, not exclusive) | Picks up work from | Merges to |
 |---|---|---|---|---|
 | **Orchestrator** | any (read-mostly) | assignment, sequencing, release timing, audits (`npm run check:branch`) | the trackers | — |
 | **E — enhancements** | `fala_madeira-feat/` · `feat/*` | new features (`src/features/*`) | REQUIREMENTS-TRACKER, owner requests | `develop` |
@@ -158,5 +170,5 @@ An **orchestrator** agent coordinates the others: it reads the trackers, assigns
 6. Orchestrator periodically runs **`npm run check:branch`** to confirm every worktree is on its allowed branch.
 
 ### What every agent reads first
-`AGENTS.md` (repo contract) → §7 (coordination) → **this doc** for its role + the flow → the **trackers** for current work. Reserve before writing; log every deferral (never "not our lane").
+`AGENTS.md` (repo contract) → §7 (coordination) → **this doc** for its role + the flow → the **trackers** for current work. Reserve before writing; commit incrementally + sync your worktree to the moving base (§5 ⑤/⑥); log every deferral (never close an item by calling it someone else's responsibility).
 

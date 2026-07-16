@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/SESSION-HANDOFF-2026-07-13.md
 **Description:** Superset handoff for the T-COV live-execution workstream (Lane B runner sessions of 2026-07-13). Supersedes SESSION-HANDOFF-2026-07-11.md. Read this + §1 files to resume without chat history.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-13
 **Last Updated:** 2026-07-13
-**Last Updated By:** Lane B runner session handoff
+**Last Updated By:** Libor Ballaty
 
 ## 0. Stream status (end of session)
 - **Suite: 66/71 passing (runs 10 & 11 identical — fully deterministic, zero flake).** Trend across 11 runs: 25/38 → 66/71.

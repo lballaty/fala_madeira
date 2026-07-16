@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/STANDARDS-COMPLIANCE-REPORT.md
 **Description:** Item-by-item walk of the `docs/ENGINEERING-STANDARDS.md` §12 compliance checklist (48 items) against the current `src/` + `supabase/` codebase. Each item carries a status (met / partial / not-yet / advisory) and a one-line evidence pointer (file or gate). Produced by the recurring `preflight-and-standards` plan step; re-run alongside `scripts/preflight.sh`. Truthful about documented seams and deferrals — it does not assert coverage the code lacks.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-10
 **Last Updated:** 2026-07-10
 **Last Updated By:** preflight-and-standards step
