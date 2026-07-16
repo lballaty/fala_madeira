@@ -95,7 +95,7 @@ async function installDeterministicAudio(page: Parameters<typeof landOnHome>[0])
     });
   });
 
-  await page.route('**/functions/v1/gemini', async (route) => {
+  await page.route('**/functions/v1/ai-gateway', async (route) => {
     let body: Record<string, unknown> | null = null;
     try {
       body = route.request().postDataJSON() as Record<string, unknown> | null;

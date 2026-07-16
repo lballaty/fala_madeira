@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# File: .githooks/pre-push
+# Description: FalaMadeira coverage-diff gate (AGENTS.md §3 — "test every change", owner reinforced
+#   2026-07-16: NOT optional). Blocks a push whose new commits add/modify functional code under
+#   src/** or supabase/functions/** without an added/updated test in the same pushed range. Reads the
+#   git pre-push protocol on stdin. Escape hatch: a commit message tagged [skip-coverage: <reason>].
+#   Enable once per machine with: git config core.hooksPath .githooks
+# Author: Libor Ballaty (with assistant)
+# Created: 2026-07-16
+set -euo pipefail
+ROOT="$(git rev-parse --show-toplevel)"
+if [ -f "${ROOT}/scripts/check-test-coverage-diff.mjs" ]; then
+  node "${ROOT}/scripts/check-test-coverage-diff.mjs" --pre-push || {
+    echo "" >&2
+    echo "pre-push: coverage-gate blocked this push (see above)." >&2
+    exit 1
+  }
+fi

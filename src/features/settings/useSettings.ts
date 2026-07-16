@@ -18,6 +18,25 @@ import { audioCache } from '../../lib/audioCache';
 import { downloadForOffline, DownloadScope } from '../../lib/audio-download';
 import { validateText } from '../../lib/validation';
 
+/**
+ * TB-8: decide whether an admin edit of the global voice limit should be persisted to
+ * global_settings. Persist ONLY when the caller is an admin AND the current value differs from the
+ * authoritative server value. Returning false for value === serverValue is what prevents load and
+ * profile-identity-churn effect re-runs from re-writing a stale/display value and clobbering the
+ * server setting (the 50 -> 20 reset). Pure + exported for regression testing.
+ */
+export function shouldPersistGlobalVoiceLimit({
+  isAdmin,
+  currentValue,
+  serverValue,
+}: {
+  isAdmin: boolean;
+  currentValue: number;
+  serverValue: number | null;
+}): boolean {
+  return isAdmin && currentValue !== serverValue;
+}
+
 /** Correlation id for tracing a submissions read (mirrors useAdminQueues). */
 const newCorrelationId = (): string =>
   typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
@@ -82,6 +101,10 @@ export const useSettings = ({
     return saved ? parseInt(saved) : config.voice.defaultDailyVoiceLimit;
   });
   const [hasLoadedGlobalVoiceLimit, setHasLoadedGlobalVoiceLimit] = useState(false);
+  // TB-8: the authoritative server value from the last successful fetch/write. The admin write-back
+  // only fires when globalVoiceLimit DIFFERS from this — otherwise load + profile-identity churn
+  // would re-persist a display/stale value and clobber the server setting (e.g. reset 50 -> 20).
+  const serverVoiceLimitRef = useRef<number | null>(null);
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [isTutorSelectionOpen, setIsTutorSelectionOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
@@ -304,7 +327,19 @@ export const useSettings = ({
     // once the authoritative value is loaded; then localStorage always matches the server.
     if (!hasLoadedGlobalVoiceLimit) return;
     localStorage.setItem('global_voice_limit', globalVoiceLimit.toString());
-    if (profile?.role === 'admin' && supabase) {
+    // TB-8: persist to global_settings ONLY when an admin has actually CHANGED the value from the
+    // authoritative server value — never on load or on profile-identity churn (which would re-write
+    // a stale/display value and clobber the server setting). Update the ref so a subsequent effect
+    // run for the same value doesn't re-write.
+    if (
+      supabase &&
+      shouldPersistGlobalVoiceLimit({
+        isAdmin: profile?.role === 'admin',
+        currentValue: globalVoiceLimit,
+        serverValue: serverVoiceLimitRef.current,
+      })
+    ) {
+      serverVoiceLimitRef.current = globalVoiceLimit;
       scheduleProfileWrite('global_voice_limit', () =>
         supabase
           .from('global_settings')
@@ -319,16 +354,29 @@ export const useSettings = ({
   useEffect(() => {
     const fetchGlobalSettings = async () => {
       if (!supabase) return;
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('global_settings')
-        .select('*')
+        .select('value')
         .eq('key', config.globalSettingsKeys.voiceLimit)
-        .single();
+        .maybeSingle();
 
-      if (data) {
-        setGlobalVoiceLimit(parseInt(data.value));
+      // TB-8: do NOT mark loaded on a failed/empty fetch. If we marked loaded without an
+      // authoritative value, the write-back effect could persist the stale localStorage/default
+      // value and clobber the server setting. A miss leaves the client on its provisional value
+      // but never writes it back.
+      if (error) {
+        logger.error('global_settings_fetch_failed', 'global_settings voice_limit fetch failed', {
+          category: 'SYSTEM_HEALTH',
+          error,
+        });
+        return;
       }
-      setHasLoadedGlobalVoiceLimit(true);
+      const parsed = data ? parseInt(data.value, 10) : NaN;
+      if (Number.isFinite(parsed)) {
+        setGlobalVoiceLimit(parsed);
+        serverVoiceLimitRef.current = parsed;
+        setHasLoadedGlobalVoiceLimit(true);
+      }
     };
     fetchGlobalSettings();
     // Intentional run-once fetch on mount; supabase is a per-session singleton.

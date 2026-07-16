@@ -1312,7 +1312,7 @@
     {
       "screen": "learning",
       "id": "learning.lesson.vocab.query_input",
-      "selector": {"css": "input[placeholder=\"Enter a word or phrase...\"]"},
+      "selector": {"css": "input[placeholder=\"Portuguese or English word...\"]"},
       "covered_by": [
         { "spec": "tests/e2e/user/43-learning-modal-inputs.spec.ts", "depth": "value-changed" }
       ]
@@ -1386,7 +1386,7 @@
       "id": "practice.simulator.end_conversation",
       "selector": {"role": "button", "name": "End conversation"},
       "covered_by": [
-        { "spec": "tests/e2e/user/45-missions-simulator-controls.spec.ts", "depth": "clicked" }
+        { "spec": "tests/e2e/user/45-missions-simulator-controls.spec.ts", "depth": "rendered" }
       ]
     },
     {
@@ -1435,6 +1435,214 @@
       "selector": {"role": "button", "name": "Close admin"},
       "covered_by": [
         { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.path.goal_track.chooser",
+      "selector": {"css": "[data-testid=\"goal-track-chooser\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/37-goal-track-picker.spec.ts", "depth": "rendered" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.path.goal_track.select",
+      "selector": {"text": "Choose your goal"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/37-goal-track-picker.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "home",
+      "id": "home.goal_track.reflects_pick",
+      "selector": {"role": "button", "name": "Continue your track"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/37-goal-track-picker.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.welcome.footer_in_viewport",
+      "selector": {"text": "Bem-vindo to FalaMadeira"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/52-onboarding-footer-reachable-short-viewport.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.placement.footer_in_viewport",
+      "selector": {"text": "Where are you starting?"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/52-onboarding-footer-reachable-short-viewport.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "onboarding",
+      "id": "onboarding.placement.footer_advances",
+      "selector": {"text": "How do you want to learn?"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/52-onboarding-footer-reachable-short-viewport.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.about.version",
+      "selector": {"css": "[data-testid=\"about-version\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/53-about-version-release-notes.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.about.release_notes",
+      "selector": {"css": "[data-testid=\"about-release-notes\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/53-about-version-release-notes.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.about.legal_link",
+      "selector": {"role": "button", "name": "Privacy Policy"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/53-about-version-release-notes.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "security",
+      "id": "security.user_isolation.paths_namespaced",
+      "selector": {"css": "[data-testid=\"path-switcher\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/56-user-isolation-storage.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "security",
+      "id": "security.user_isolation.legacy_migration",
+      "selector": {"text": "Olá,"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/56-user-isolation-storage.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "security",
+      "id": "security.user_isolation.logout_clears_device_state",
+      "selector": {"role": "button", "name": "Sign Out"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/56-user-isolation-storage.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocab.scope_selector",
+      "selector": {"css": "[data-testid=\"vocab-scope-selector\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/57-vocab-scope-selector.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "nav",
+      "id": "nav.help.entry",
+      "selector": {"css": "[data-testid=\"nav-help\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/58-help-nav-entry.spec.ts", "depth": "rendered" }
+      ]
+    },
+    {
+      "screen": "nav",
+      "id": "nav.help.open",
+      "selector": {"text": "App Guide"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/58-help-nav-entry.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.access.tab",
+      "selector": {"role": "button", "name": "User Access"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.access.email_input",
+      "selector": {"role": "textbox", "name": "User email"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.access.lookup",
+      "selector": {"role": "button", "name": "Look up user"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.access.tier_select",
+      "selector": {"role": "combobox", "name": "Subscription tier"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.access.update",
+      "selector": {"role": "button", "name": "Update access"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.tts.provider_select",
+      "selector": {"role": "combobox", "name": "Voice Provider"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/46-assorted-input-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.offline.storage_limit",
+      "selector": {"role": "combobox", "name": "Storage limit"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/60-settings-audio-storage-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.offline.download_track_select",
+      "selector": {"role": "combobox", "name": "Download for offline"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/60-settings-audio-storage-controls.spec.ts", "depth": "value-changed" }
+      ]
+    },
+    {
+      "screen": "settings",
+      "id": "settings.about.contact_support",
+      "selector": {"role": "button", "name": "Contact Support"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/61-about-contact-support.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.ticket.filter_status",
+      "selector": {"role": "combobox", "name": "Filter tickets by status"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/11-admin-ticket-filter-reopen.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "admin",
+      "id": "admin.queues.ticket.reopen",
+      "selector": {"role": "button", "name": "Reopen ticket"},
+      "covered_by": [
+        { "spec": "tests/e2e/admin/11-admin-ticket-filter-reopen.spec.ts", "depth": "outcome-asserted" }
       ]
     }
   ]

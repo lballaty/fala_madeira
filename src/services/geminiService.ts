@@ -194,7 +194,7 @@ const TTS_SAMPLE_RATE = config.audio.ttsSampleRateHz;
 
 export const geminiService = {
   async generateLesson(topic: string, tutor?: Tutor) {
-    const data = await invokeEdgeFunction<{ result?: Partial<Lesson> }>('gemini', { action: 'generate-lesson', topic, tutor });
+    const data = await invokeEdgeFunction<{ result?: Partial<Lesson> }>('ai-gateway', { action: 'generate-lesson', topic, tutor });
     return data.result;
   },
 
@@ -205,7 +205,7 @@ export const geminiService = {
     return {
       async sendMessage({ message }: { message: string }) {
         const turns = [...history, { role: 'user' as const, text: message }];
-        const data = await invokeEdgeFunction<{ text?: unknown }>('gemini', {
+        const data = await invokeEdgeFunction<{ text?: unknown }>('ai-gateway', {
           action: 'chat',
           history: turns,
           tutor,
@@ -219,7 +219,7 @@ export const geminiService = {
   },
 
   async translateWord(word: string, tutor?: Tutor) {
-    const data = await invokeEdgeFunction<{ result?: VocabResult }>('gemini', { action: 'translate', word, tutor });
+    const data = await invokeEdgeFunction<{ result?: VocabResult }>('ai-gateway', { action: 'translate', word, tutor });
     return data.result;
   },
 
@@ -229,7 +229,7 @@ export const geminiService = {
   // callers (src/features/coach) enrich the deterministic templated suggestions with these
   // findings and MUST fall back to the offline output on any failure — never block, never empty.
   async analyzeErrors(utterances: string[], tutor?: Tutor): Promise<ErrorAnalystResult> {
-    const data = await invokeEdgeFunction<{ result?: ErrorAnalystResult }>('gemini', {
+    const data = await invokeEdgeFunction<{ result?: ErrorAnalystResult }>('ai-gateway', {
       action: 'error-analyst',
       utterances,
       tutor,
@@ -280,7 +280,7 @@ export const geminiService = {
 };
 
 // TTS response metadata (provider/voice resolved server-side; carried for cache-key
-// guidance and observability — see supabase/functions/gemini/index.ts tts action).
+// guidance and observability — see supabase/functions/ai-gateway/index.ts tts action).
 interface TtsResponse {
   audio?: string;
   provider?: string;
@@ -315,7 +315,7 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
 
   // Server picks the voice from the tutor/voiceType and enforces the daily voice limit;
   // the response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
-  const data = await invokeEdgeFunction<TtsResponse>('gemini', {
+  const data = await invokeEdgeFunction<TtsResponse>('ai-gateway', {
     action: 'tts',
     text,
     tutor: options.tutor,

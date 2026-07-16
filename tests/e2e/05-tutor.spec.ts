@@ -1,11 +1,11 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/05-tutor.spec.ts
 // Description: S3 AI tutor slice. Asserts the chat screen renders (tutor header + welcome), the
 //   input accepts text and the send path fires, and captures the `requestId` echoed by the
-//   /functions/v1/gemini response (success body { requestId } OR error envelope
+//   /functions/v1/ai-gateway response (success body { requestId } OR error envelope
 //   { error: { requestId } }) as the canonical client↔edge join key (docs/TEST-VERTICAL-
 //   SLICES.md S3, evidence path 1). One real edge call is made; we assert a requestId came back
 //   either way — that IS the backend evidence for this slice (G2: edge fns don't write
-//   public.logs; the echoed requestId is the join). If the network yields no /functions/v1/gemini
+//   public.logs; the echoed requestId is the join). If the network yields no /functions/v1/ai-gateway
 //   call within the timeout (e.g. the send is blocked client-side), the requestId assertion fails
 //   honestly rather than being weakened.
 // Author: Libor Ballaty (with assistant)
@@ -33,7 +33,7 @@ test.describe('AI tutor (S3)', () => {
     await page.getByRole('button', { name: 'Tutor' }).first().click();
 
     // The empty-state "Start Today's Lesson" CTA drives startAIPractice(), which opens the AI
-    // Practice modal and makes a real /functions/v1/gemini call (action 'chat') with the lesson
+    // Practice modal and makes a real /functions/v1/ai-gateway call (action 'chat') with the lesson
     // context — the reliable edge-fn entry for this slice. (Free-chat send depends on an async
     // session-init that can lag a restored session; the practice path creates its own session
     // inline, so it always reaches the edge — the honest, deterministic evidence path for S3.)
@@ -44,13 +44,13 @@ test.describe('AI tutor (S3)', () => {
     // success ({ text, requestId }) and inside the error envelope ({ error: { requestId } }) —
     // either proves the client reached the edge and got the correlation key back (S3 evidence
     // path 1, G2). Generous timeout for a cold AI round-trip.
-    const requestIdPromise = captureEdgeRequestId(page, 'gemini', 60_000);
+    const requestIdPromise = captureEdgeRequestId(page, 'ai-gateway', 60_000);
     await startLesson.click();
 
     const requestId = await requestIdPromise;
     expect(
       requestId,
-      'no requestId echoed by /functions/v1/gemini — the AI-practice path did not reach the edge function',
+      'no requestId echoed by /functions/v1/ai-gateway — the AI-practice path did not reach the edge function',
     ).toBeTruthy();
     // Shape sanity: the edge newRequestId() is a non-trivial token.
     expect(requestId!.length).toBeGreaterThan(6);

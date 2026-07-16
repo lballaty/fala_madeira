@@ -44,7 +44,7 @@ const invokeTts = async (text: string, voiceType: VoiceType): Promise<TtsPayload
     );
   }
 
-  const { data, error } = await supabase.functions.invoke('gemini', {
+  const { data, error } = await supabase.functions.invoke('ai-gateway', {
     body: { action: 'tts', text, voiceType },
   });
 

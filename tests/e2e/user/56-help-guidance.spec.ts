@@ -35,7 +35,7 @@ test.describe('help & guidance (EN-17a + EN-18)', () => {
   test('help chat "Take me there" navigates to + focuses the target control', async ({ page }) => {
     // Mock the gemini chat action so the help answer deterministically mentions offline downloads,
     // which the matcher maps to the 'offline-downloads' capability (target: Profile / tab-settings).
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (body && typeof body === 'object' && 'action' in body && body.action === 'chat') {
         await route.fulfill({
@@ -64,7 +64,10 @@ test.describe('help & guidance (EN-17a + EN-18)', () => {
     // Ask a help question; the mocked answer arrives and the "Take me there" chip renders.
     await dialog.getByPlaceholder('Type in Portuguese...').fill('Where are downloads?');
     await dialog.getByRole('button', { name: 'Send message' }).click();
-    await expect(dialog.getByText(/download lessons for offline use/i)).toBeVisible();
+    // .first(): the live AI answer sometimes repeats the registry sentence across two
+    // paragraphs, which is a strict-mode violation on an un-suffixed getByText (flaked 1/2,
+    // 2026-07-16 full run).
+    await expect(dialog.getByText(/download lessons for offline use/i).first()).toBeVisible();
 
     const chip = page.getByTestId('take-me-there-offline-downloads');
     await expect(chip).toBeVisible();

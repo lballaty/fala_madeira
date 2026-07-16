@@ -77,7 +77,7 @@ describe('W3C traceparent header (obs-trace)', () => {
 
     expect(invoke).toHaveBeenCalledTimes(1);
     const [fnName, options] = invoke.mock.calls[0];
-    expect(fnName).toBe('gemini');
+    expect(fnName).toBe('ai-gateway');
     expect(options.headers.traceparent).toMatch(/^00-[0-9a-f]{32}-[0-9a-f]{16}-01$/);
   });
 });

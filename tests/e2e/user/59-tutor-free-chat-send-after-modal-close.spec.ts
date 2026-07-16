@@ -12,7 +12,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 
 test.describe('tutor free chat (TB-15)', () => {
   test('free chat still sends after the practice modal is opened and closed', async ({ page, coverage }) => {
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (body && typeof body === 'object' && 'action' in body && body.action === 'chat') {
         await route.fulfill({
