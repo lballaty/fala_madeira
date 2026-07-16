@@ -1,6 +1,7 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/features/settings/SettingsView.tsx
 // Description: Profile/settings tab extracted verbatim from App.tsx renderSettings: profile
-//   card with time/streak, audio speed slider, admin mode + global voice limit, PWA install,
+//   card with time/streak, audio speed slider, read-only daily voice limit (admins edit the global
+//   value under Admin → Config, EN-25), PWA install,
 //   tutor switch, support, user manual, tutorial, legal pages (Terms/Privacy/AI disclosure),
 //   change password, account deletion, and sign out. Renders its own modals (tutor selection,
 //   support, user manual, tutorial overlay, legal page).
@@ -8,7 +9,7 @@
 // Created: 2026-07-09
 
 import { useEffect, useRef, useState } from 'react';
-import { AlertTriangle, BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, Shield, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
+import { AlertTriangle, BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useTheme, type ThemePreference } from '../../hooks/useTheme';
 import { LegalPage, LegalDocId } from '../legal';
@@ -83,8 +84,7 @@ export const SettingsView = ({
   }, [focusGoalChooser, onGoalChooserFocused]);
   const {
     playbackSpeed, setPlaybackSpeed,
-    globalVoiceLimit, setGlobalVoiceLimit,
-    isAdminMode, setIsAdminMode,
+    globalVoiceLimit,
     isTutorSelectionOpen, setIsTutorSelectionOpen,
     isSupportModalOpen, setIsSupportModalOpen,
     supportSubject, setSupportSubject,
@@ -509,53 +509,9 @@ export const SettingsView = ({
       </div>
 
       <div className="bg-card rounded-2xl ios-shadow overflow-hidden space-y-px">
-        {profile?.role === 'admin' && (
-          <button
-            onClick={() => setIsAdminMode(!isAdminMode)}
-            role="switch"
-            aria-checked={isAdminMode}
-            className="w-full p-4 flex items-center justify-between text-ios-blue font-medium active:bg-ios-bg border-b border-ios-bg"
-          >
-            <div className="flex items-center">
-              <Shield className={cn("w-5 h-5 mr-3", isAdminMode ? "text-ios-blue" : "text-ios-gray")} />
-              Admin Mode
-            </div>
-            <div className={cn(
-              "w-10 h-5 rounded-full transition-colors relative",
-              isAdminMode ? "bg-ios-blue" : "bg-ios-gray/20"
-            )}>
-              <div className={cn(
-                "absolute top-0.5 w-4 h-4 bg-white rounded-full transition-all shadow-sm",
-                isAdminMode ? "right-0.5" : "left-0.5"
-              )} />
-            </div>
-          </button>
-        )}
-
-        {isAdminMode && profile?.role === 'admin' && (
-          <div className="p-4 bg-purple-50 dark:bg-purple-950/40 space-y-4 border-b border-line">
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <p className="font-bold text-xs text-purple-800 dark:text-purple-200">Global Voice Limit</p>
-                <p className="text-[10px] text-purple-600 dark:text-purple-300">Daily free messages for users</p>
-              </div>
-              <div className="flex items-center space-x-3 bg-card p-1 rounded-xl border border-purple-100 dark:border-purple-900">
-                <button
-                  onClick={() => setGlobalVoiceLimit(Math.max(0, globalVoiceLimit - 1))}
-                  className="w-8 h-8 flex items-center justify-center text-purple-600 dark:text-purple-300 font-bold hover:bg-purple-50 dark:hover:bg-purple-900/40 rounded-lg transition-colors"
-                >-</button>
-                <span className="font-bold text-purple-800 dark:text-purple-200 w-6 text-center text-sm">{globalVoiceLimit}</span>
-                <button
-                  onClick={() => setGlobalVoiceLimit(globalVoiceLimit + 1)}
-                  className="w-8 h-8 flex items-center justify-center text-purple-600 dark:text-purple-300 font-bold hover:bg-purple-50 dark:hover:bg-purple-900/40 rounded-lg transition-colors"
-                >+</button>
-              </div>
-            </div>
-          </div>
-        )}
-        {/* TB-8: surface the daily voice limit read-only to ALL users (it was only visible behind
-            admin mode, so users couldn't see their real allowance). Reflects the loaded server
-            value; admins additionally get the +/- editor above. */}
+        {/* TB-8: surface the daily voice limit read-only to ALL users. Reflects the loaded server
+            value. Admins edit the GLOBAL voice limit under Admin → Config (EN-25); the legacy
+            Settings "admin mode" toggle + inline editor were removed. */}
         <div className="p-4 flex items-center justify-between border-b border-ios-bg">
           <div className="flex items-center">
             <Volume2 className="w-5 h-5 mr-3 text-ios-gray" />

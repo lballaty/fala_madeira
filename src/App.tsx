@@ -28,7 +28,6 @@ import { useAuth, AuthCrossSliceDeps } from './features/auth/useAuth';
 import { AuthScreen } from './features/auth/AuthScreen';
 import { SupabaseSetupGuide } from './features/auth/SupabaseSetupGuide';
 import { useSettings } from './features/settings/useSettings';
-import { AdminPanel } from './features/settings/AdminPanel';
 import { useLessons } from './features/learning/useLessons';
 import { useLessonModals } from './features/learning/useLessonModals';
 import { useTutorSession } from './features/tutor/useTutorSession';
@@ -113,8 +112,7 @@ export default function App() {
   const {
     isSoundEnabled, setIsSoundEnabled,
     playbackSpeed,
-    globalVoiceLimit,
-    isAdminMode, setIsAdminMode,
+    globalVoiceLimit, setGlobalVoiceLimit,
     applyProfilePrefs, getPrefsForNewProfile,
   } = settings;
 
@@ -128,8 +126,6 @@ export default function App() {
     isUnlockModalOpen, setIsUnlockModalOpen,
     fetchApprovedVideos,
     fetchCustomLessons,
-    handleApproveSuggestion,
-    handleRejectSuggestion,
     handleUnlockLevel,
     saveGeneratedLesson,
     resetForLogout: resetLessonsForLogout,
@@ -232,7 +228,6 @@ export default function App() {
       resetTutorForLogout();
       resetLessonsForLogout();
       resetTimeTracking();
-      setIsAdminMode(false);
       // SEC-2: reset device-persisted prefs + clear device-global stores so the next user on a
       // shared device inherits nothing (settings reset re-applies defaults; the DB profile is
       // authoritative and re-applies the next user's prefs on login).
@@ -531,6 +526,8 @@ export default function App() {
               profile={profile}
               showToast={showToast}
               handleSupabaseError={handleSupabaseError}
+              globalVoiceLimit={globalVoiceLimit}
+              setGlobalVoiceLimit={setGlobalVoiceLimit}
               onClose={() => setIsAdminViewOpen(false)}
             />
           </Suspense>
@@ -559,16 +556,6 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Admin Panel (persists across tabs while admin mode is on) */}
-      <AdminPanel
-        isAdminMode={isAdminMode}
-        setIsAdminMode={setIsAdminMode}
-        videoSuggestions={videoSuggestions}
-        lessons={lessons}
-        handleApproveSuggestion={handleApproveSuggestion}
-        handleRejectSuggestion={handleRejectSuggestion}
-      />
 
       {/* Practice slice quiz overlay (the practice hub itself is the Practice tab above) */}
       <AnimatePresence>

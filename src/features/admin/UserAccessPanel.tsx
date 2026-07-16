@@ -25,6 +25,7 @@ export const UserAccessPanel = ({ access }: UserAccessPanelProps) => {
   const [email, setEmail] = useState('');
   const [tier, setTier] = useState<SubscriptionTier>('unlimited');
   const [levelInput, setLevelInput] = useState('');
+  const [voiceLimitInput, setVoiceLimitInput] = useState('');
   const { confirmModal, requestConfirmation, closeConfirmation } = useConfirmationModal();
 
   const submitLookup = () => {
@@ -34,15 +35,20 @@ export const UserAccessPanel = ({ access }: UserAccessPanelProps) => {
   const confirmGrant = () => {
     if (!target) return;
     const parsedLevel = levelInput.trim() === '' ? null : Number(levelInput);
+    const parsedVoice = voiceLimitInput.trim() === '' ? null : Number(voiceLimitInput);
     const levelClause =
       parsedLevel != null && Number.isFinite(parsedLevel) ? ` and unlocked level to ${Math.max(1, Math.trunc(parsedLevel))}` : '';
+    const voiceClause =
+      parsedVoice != null && Number.isFinite(parsedVoice)
+        ? ` and daily voice limit to ${Math.max(0, Math.trunc(parsedVoice))}`
+        : '';
     requestConfirmation({
       title: 'Update user access',
-      message: `Set ${target.email}'s subscription tier to "${tier}"${levelClause}? Tier "unlimited" grants access to all content.`,
+      message: `Set ${target.email}'s subscription tier to "${tier}"${levelClause}${voiceClause}? Tier "unlimited" grants access to all content.`,
       confirmText: 'Update access',
       cancelText: 'Cancel',
       onConfirm: () => {
-        void grantAccess(tier, parsedLevel);
+        void grantAccess(tier, parsedLevel, parsedVoice);
       },
     });
   };
@@ -131,6 +137,25 @@ export const UserAccessPanel = ({ access }: UserAccessPanelProps) => {
             />
           </div>
 
+          <div className="space-y-2">
+            <label className="text-[10px] font-bold text-ios-gray uppercase" htmlFor="access-voice-limit">
+              Daily voice limit (optional)
+            </label>
+            <input
+              id="access-voice-limit"
+              data-testid="user-access-voice-limit"
+              type="number"
+              min={0}
+              value={voiceLimitInput}
+              onChange={(e) => setVoiceLimitInput(e.target.value)}
+              placeholder="blank = use global default"
+              className="w-full bg-card p-3 rounded-xl outline-none text-sm border-2 border-transparent focus:border-ios-blue"
+            />
+            <p className="text-[10px] text-ios-gray">
+              Current: <span className="font-semibold">{target.voice_limit ?? '(global default)'}</span>
+            </p>
+          </div>
+
           <div className="flex items-center gap-2 pt-1">
             <button
               onClick={confirmGrant}
@@ -145,6 +170,7 @@ export const UserAccessPanel = ({ access }: UserAccessPanelProps) => {
                 clearTarget();
                 setEmail('');
                 setLevelInput('');
+                setVoiceLimitInput('');
               }}
               className="px-4 py-3 bg-card text-ios-gray rounded-xl font-bold text-xs"
             >
