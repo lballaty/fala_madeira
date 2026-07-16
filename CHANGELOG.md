@@ -14,6 +14,13 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
+## 2026.07.16.1
+
+- New: **an admin can grant a learner full access.** A "User Access" panel in admin mode looks up a user by email and sets their subscription tier (or level); admins and "unlimited" accounts now see all training content automatically, instead of unlocking level-by-level. (EN-15)
+- Improved: **vocabulary review — set the content scope and see how many words** it covers, so the review no longer feels sparse or generic. (EN-16)
+- Improved: **the User Manual and the in-app help assistant now stay in sync from one source**, so both reflect the current app — and the manual is more complete (learning paths, the Situation Simulator, offline downloads, vocabulary lookup, where Sign Out lives, read-aloud opt-in, and more). (EN-17)
+- New: **in-app guidance** — help answers and contextual hints include a "Take me there" that navigates you straight to the right control and highlights it, instead of just describing where to tap. (EN-18)
+
 ## 2026.07.15.5
 
 - Security: **users are now properly isolated on a shared device.** Learning-path selection is scoped per user, logout clears device-cached preferences/lessons/offline data, and the offline write queue never replays one user's pending writes under another's session — so logging out and back in as a different account no longer shows the previous user's settings. (Server data was already isolated by row-level security; this closes the client-side gap.) (SEC-2)
