@@ -35,7 +35,7 @@ test.describe('help & guidance (EN-17a + EN-18)', () => {
   test('help chat "Take me there" navigates to + focuses the target control', async ({ page }) => {
     // Mock the gemini chat action so the help answer deterministically mentions offline downloads,
     // which the matcher maps to the 'offline-downloads' capability (target: Profile / tab-settings).
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (body && typeof body === 'object' && 'action' in body && body.action === 'chat') {
         await route.fulfill({

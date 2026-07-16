@@ -1,6 +1,8 @@
-// File: supabase/functions/gemini/index.ts
+// File: supabase/functions/ai-gateway/index.ts
 // Description: Authenticated server-side AI proxy (chat, generate-lesson, translate,
-//   scenario-generator, error-analyst, tts).
+//   scenario-generator, error-analyst, tts). Renamed from `gemini` (2026-07-16) — the name was a
+//   historical artifact; this is the app's general AI/voice edge, not Gemini-specific (TTS routes
+//   through a provider chain: azure/google/polly/gemini).
 //   Verifies the caller's Supabase JWT and enforces daily voice limits server-side. Provider
 //   API keys never leave the server. Actions are selected via the `action` field in the JSON
 //   body. The tts action routes through the provider adapter layer (_shared/tts/router.ts,

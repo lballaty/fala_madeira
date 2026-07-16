@@ -14,7 +14,7 @@ const VOCAB_ANSWER_MAP = new Map(DAY_ONE_LESSON.vocabulary.map((entry) => [entry
 test.describe('quiz progression write', () => {
   test('passing the Day 1 quiz writes completed_lessons to the profile row', async ({ page, userEvidence, testUser }) => {
     const spokenPrompts: string[] = [];
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (
         body &&

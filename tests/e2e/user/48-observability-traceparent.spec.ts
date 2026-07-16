@@ -15,7 +15,7 @@ test.describe('observability: W3C traceparent propagation', () => {
   test('edge-function invokes carry a well-formed traceparent header', async ({ page, coverage }) => {
     let seenTraceparent: string | null = null;
 
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (body && typeof body === 'object' && body.action === 'chat') {
         seenTraceparent = request.headers()['traceparent'] ?? null;
