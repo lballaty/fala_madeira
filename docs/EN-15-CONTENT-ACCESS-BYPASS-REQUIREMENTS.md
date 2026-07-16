@@ -29,13 +29,17 @@ Make content gating honor a full-access bypass for `role === 'admin'` OR `subscr
 - **R6 — testable.** A user with tier `unlimited` and an `admin` can open any month/level; a `free` user is still gated at `unlocked_level`.
 - **R7 — no schema change.** `subscription_tier` + `role` already exist; RLS already lets an admin UPDATE any profile row (`00001_initial_schema.sql:121`). No migration.
 
-## 4. Companion decision — how a non-admin user's tier gets SET
+## 4. Admin control to set a user's access — DECIDED: BUNDLE it (owner, 2026-07-15)
 
-Option B delivers the *bypass*; it does not add a way to SET a user's tier. Today `subscription_tier` is written by the Stripe webhook (`config.ts:362-363`) or a manual DB edit. Options:
-- **(a)** rely on manual DB edit / webhook for now (Option B alone) — recommended immediate path;
-- **(b)** add a thin **admin control** to set a user's `subscription_tier` (and/or `unlocked_level`) — a small fast-follow. RLS is already permission-ready (admin can UPDATE any profile). 
+Option B (§2) delivers the *bypass* (admin/unlimited users skip the content gate). This feature ALSO ships a **thin admin control** so an admin can grant access in-app instead of editing the DB.
 
-Recommendation: ship B now (bypass); track (b) as a follow-up. Owner to confirm.
+- **AC1 — user lookup.** In `AdminView`, an admin can find a user by **email** (query `profiles`; admin SELECT on any profile is already allowed by RLS `00001:119`).
+- **AC2 — set tier.** The control sets the selected user's `subscription_tier` (`free` / `premium` / `unlimited`) via `supabase.from('profiles').update({ subscription_tier }).eq('id', targetId)` — RLS `00001:121` already permits an admin to UPDATE any profile row, so **no service-role key is needed**; the client admin call is authorized.
+- **AC3 — (optional) set level.** The same control MAY also set `unlocked_level` directly (e.g. a numeric input or "grant all"), for granular grants without changing tier. Owner to confirm whether tier-only is enough or both are wanted.
+- **AC4 — audit + confirm.** Each grant writes a structured `public.logs` event (who granted what to whom, correlation IDs) and shows a confirm + toast. Never a silent privilege change.
+- **AC5 — safety.** The control is inside the `role==='admin'` gate (RLS is the real enforcement); it does not expose tier-setting to non-admins.
+
+Net admin flow: open the control → find user by email → set tier to `unlimited` (or set level) → the §2 bypass grants that user all content. Stripe webhook (`config.ts:362-363`) remains the automated tier source for paying users; this is the manual admin override.
 
 ## 5. `MAX_LEVEL`
 
@@ -45,6 +49,7 @@ Recommendation: ship B now (bypass); track (b) as a follow-up. Owner to confirm.
 
 - **NEW** `src/lib/access.ts` — `hasFullContentAccess` + `effectiveUnlockedLevel` (+ unit tests). Conflict-free.
 - `src/features/home/HomeView.tsx`, `src/features/learning/useLessons.ts`, `src/features/learning/LearningView.tsx` — route gate reads through the helper + hide the unlock CTA for full-access. **Currently conflict-free** vs Lane B (SEC-1 WPs + EN-8 audio stack do not touch these).
+- **Admin control (§4):** `src/features/admin/AdminView.tsx` + a new admin component (e.g. `UserAccessPanel.tsx`) + a hook writing `profiles.subscription_tier`/`unlocked_level` for a looked-up user. The admin surface (`AdminView`, `useAdminQueues`) is **conflict-free** vs Lane B. Reuses the existing admin gating + toast/confirm + logger conventions.
 - **DO NOT TOUCH** `src/features/tutor/useTutorSession.ts` — Lane B's active EN-8 file (key normalization). The voice-limit-check unification (R5) is deferred to a coordinated follow-up.
 - Interacts with **TB-1**: TB-1 moves the Home *label* to `proficiency_level`; EN-15 governs *access*. They are complementary and both leave `unlocked_level` as the paywall — sequence so the Home label change (TB-1) and the gate change (EN-15) don't both rewrite the same HomeView lines without coordination.
 
@@ -62,6 +67,7 @@ Recommendation: ship B now (bypass); track (b) as a follow-up. Owner to confirm.
 
 ## 9. Open questions for the owner
 
-1. Confirm companion path: manual DB/webhook now (B alone), or bundle the thin admin tier-setter (b)?
-2. `MAX_LEVEL` source — derive from content (`learningPlan`/`lessons`) or a config constant?
-3. Should `premium` get any content bypass, or only `unlimited` + `admin`? (Spec assumes only `unlimited`+`admin`, matching the voice-limit rule.)
+1. ~~Companion path~~ **RESOLVED (owner 2026-07-15): bundle the thin admin control (§4).**
+2. Admin control (AC3): tier-only, or also allow setting `unlocked_level` directly ("grant all" / numeric)?
+3. `MAX_LEVEL` source — derive from content (`learningPlan`/`lessons`) or a config constant?
+4. Should `premium` get any content bypass, or only `unlimited` + `admin`? (Spec assumes only `unlimited`+`admin`, matching the voice-limit rule.)

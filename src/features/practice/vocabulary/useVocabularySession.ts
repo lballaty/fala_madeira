@@ -78,9 +78,12 @@ const EMPTY_SUMMARY: VocabSessionSummary = { reviewed: 0, introduced: 0, againCo
 export const buildSessionCards = (
   items: MasteryItem[],
   situations: Situation[],
-  now: Date
+  now: Date,
+  // EN-16: the session scales to the chosen scope — default limit = all vocabulary words in the
+  // in-scope situations, so a session plays every due + new card for the selected lesson/track/all
+  // (replaces the old fixed config.srs.defaultDueLimit cap; the scope selector controls volume now).
+  limit: number = situations.reduce((total, s) => total + s.vocabulary.length, 0)
 ): VocabCard[] => {
-  const limit = config.srs.defaultDueLimit;
 
   // Content index: canonical item_key → (situation, vocabulary entry).
   const contentByKey = new Map<string, { situationId: string; entry: VocabularyItem }>();

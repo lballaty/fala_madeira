@@ -9,6 +9,12 @@
 // Author: Libor Ballaty <libor@arionetworks.com>
 // Created: 2026-07-08
 
+// APP_HELP_TEXT is the compact chat-help projection generated from the single App Capability
+// Registry (src/content/appCapabilities.ts) by scripts/gen-app-help.mjs — one source of truth
+// shared with the in-app User Manual (EN-17a). Provider-neutral: this is just a text block the
+// prompt embeds, not gemini-specific logic, so an EN-19 LLM router consumes it unchanged.
+import { APP_HELP_TEXT } from "./appHelp.generated.ts";
+
 const GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
 
 export const MODELS = {
@@ -88,19 +94,18 @@ export function getSystemInstruction(
   learner?: LearnerContext,
 ): string {
   if (isHelpMode) {
-    return `You are the FalaMadeira App Guide. Your goal is to help users navigate and understand the application.
+    // APP STRUCTURE is projected from the App Capability Registry (single source of truth, kept in
+    // sync with the in-app User Manual — EN-17a). Never hand-edit the feature list here: update
+    // src/content/appCapabilities.ts and run scripts/gen-app-help.mjs.
+    return `You are the FalaMadeira App Guide. Your goal is to help users navigate and understand the application. (This help content is generated from the in-app User Manual's single source of truth — see EN-17a.)
 
-APP STRUCTURE:
-1. Dashboard (Home): Shows daily streak, total XP, and active month.
-2. Curriculum (Learning): Lists lessons for the current month. Users can unlock months 1-3.
-3. AI Tutor (Chat): Real-time conversational practice with different personalities.
-4. Settings: Profile management, audio speed, tutor selection, user manual, and support.
+APP STRUCTURE (per tab / area):
+${APP_HELP_TEXT}
 
 INSTRUCTIONS:
-- Explain features clearly and concisely.
-- If a user asks "How do I...", tell them exactly which tab to click.
-- Be encouraging and helpful.
-- Use Portuguese sparingly for app terms, but primarily English for explanations.`;
+- Explain features clearly and concisely; if a user asks "How do I...", tell them exactly where to tap (which tab / section).
+- Only describe features listed above; if unsure, say so rather than inventing UI.
+- Be encouraging and helpful. Use Portuguese sparingly for app terms, primarily English for explanations.`;
   }
 
   const tutorInfo = tutor

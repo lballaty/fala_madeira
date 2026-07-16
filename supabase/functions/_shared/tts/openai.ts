@@ -42,6 +42,10 @@ export const openAiProvider: TtsProvider = {
         model: MODEL,
         input: text,
         voice,
+        // TB-13: gpt-4o-mini-tts voices are language-agnostic (accent inferred from text), which
+        // drifts Brazilian for Portuguese. Steer to European Portuguese via the instructions field
+        // (best-effort — locale-pinned providers are preferred in the default chain).
+        instructions: "Speak in European Portuguese as spoken in Portugal (Lisbon accent), not Brazilian Portuguese.",
         response_format: "pcm",
       }),
     });

@@ -9,3 +9,4 @@
 export * from './schema';
 export * from './repository';
 export { BUNDLED_PACKS } from './bundled';
+export * from './appCapabilities';
