@@ -411,6 +411,28 @@ export const useTutorSession = ({
     }
   };
 
+  /**
+   * EN-20: open the chat directly in App-Guide (help) mode from a persistent nav entry — no lesson.
+   * Reuses the same practice-modal surface, `isHelpMode`, and the EN-18 "Take me there" chips as the
+   * in-session help toggle; it just skips the lesson-context first message. This is the always-
+   * available Help entry point (the in-modal toggle stays for switching mid-session).
+   */
+  const openHelp = async () => {
+    dispatch({ type: 'START_PRACTICE', isHelpMode: true });
+    try {
+      const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
+      const chat = await geminiService.startChat(tutor, true);
+      dispatch({ type: 'SET_SESSION', session: chat });
+      dispatch({ type: 'SET_HISTORY', history: [{ role: 'model', text: "Olá! I'm your FalaMadeira App Guide. Ask me how to do anything in the app — for example \"how do I change my level?\" or \"where are downloads?\" — and I'll point you to the right place." }] });
+      resetInactivityTimer();
+    } catch (err) {
+      const event = logger.error('help_open_failed', 'Open help chat error', { category: 'AI_DECISION', error: err });
+      showToast(userMessage('HELP_OPEN_FAILED', 'Could not open Help right now. Please try again.', event.request_id), 'error');
+    } finally {
+      dispatch({ type: 'SET_AI_LOADING', isAiLoading: false });
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!chatSession) return;
     // Validate + cap the free-chat input before sending to the edge function (§4).
@@ -462,6 +484,7 @@ export const useTutorSession = ({
     handleAIPractice,
     handleSendMessage,
     toggleHelpMode,
+    openHelp,
     toggleRecording,
     playMessageInChunks,
     resetForLogout,

@@ -28,6 +28,11 @@ interface SidebarProps {
   activeTab: string;
   /** Select a primary tab (drives the same state the bottom bar drives). */
   onSelectTab: (id: string) => void;
+  /** Persistent Help entry (EN-20) — opens the App-Guide chat in help mode directly, so help is
+   *  always one click away rather than buried behind an in-session toggle. */
+  helpItem?: NavItem;
+  /** Open the App-Guide help chat. */
+  onOpenHelp?: () => void;
   /** Optional admin entry (rendered pinned to the bottom); omitted for non-admins. */
   adminItem?: NavItem;
   /** Whether the admin overlay is open (for the admin entry's active state). */
@@ -47,6 +52,8 @@ export function Sidebar({
   navItems,
   activeTab,
   onSelectTab,
+  helpItem,
+  onOpenHelp,
   adminItem,
   isAdminActive,
   onOpenAdmin,
@@ -79,6 +86,18 @@ export function Sidebar({
           );
         })}
       </nav>
+      {helpItem && onOpenHelp && (
+        <div className="px-3 pb-2 pt-2 border-t border-line">
+          <button
+            onClick={onOpenHelp}
+            data-testid="nav-help"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-muted transition-colors hover:bg-brand/5 hover:text-text"
+          >
+            <helpItem.icon className="w-5 h-5 flex-none" />
+            <span>{helpItem.label}</span>
+          </button>
+        </div>
+      )}
       {adminItem && onOpenAdmin && (
         <div className="px-3 pb-4 pt-2 border-t border-line">
           <button

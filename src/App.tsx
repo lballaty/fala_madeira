@@ -10,7 +10,7 @@
 
 import React, { Suspense, lazy, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield } from 'lucide-react';
+import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield, HelpCircle } from 'lucide-react';
 import { cn } from './lib/utils';
 import { getSupabase } from './lib/supabase';
 import { logger } from './lib/logger';
@@ -75,6 +75,9 @@ const NAV_ITEMS: (NavItem & { id: TabId })[] = [
 
 /** Admin entry — rendered only for admins; opens the admin overlay rather than switching tabs. */
 const ADMIN_NAV_ITEM: NavItem = { id: 'admin', label: 'Admin', icon: Shield };
+
+/** Help entry (EN-20) — always available; opens the App-Guide chat in help mode (not a tab). */
+const HELP_NAV_ITEM: NavItem = { id: 'help', label: 'Help', icon: HelpCircle };
 
 export default function App() {
   const supabase = getSupabase();
@@ -154,6 +157,7 @@ export default function App() {
     handleAIPractice,
     handleSendMessage,
     toggleHelpMode,
+    openHelp,
     toggleRecording,
     playMessageInChunks,
     resetForLogout: resetTutorForLogout,
@@ -302,6 +306,11 @@ export default function App() {
         onSelectTab={(id) => {
           logger.debug('nav', 'Sidebar nav', { category: 'USER_ACTION', details: { id } });
           setActiveTab(id as TabId);
+        }}
+        helpItem={HELP_NAV_ITEM}
+        onOpenHelp={() => {
+          logger.debug('nav', 'Sidebar nav: help', { category: 'USER_ACTION' });
+          void openHelp();
         }}
         adminItem={profile?.role === 'admin' ? ADMIN_NAV_ITEM : undefined}
         isAdminActive={isAdminViewOpen}
