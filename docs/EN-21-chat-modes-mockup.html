@@ -46,6 +46,7 @@
 </head>
 <body>
   <h1>EN-21 — Chat modes: before / after</h1>
+  <p class="sub" style="background:#fff6e0;border:1px solid #f0d48a;border-radius:10px;padding:10px 12px;color:#5b4a12;"><b>Which entry this shows:</b> the <b>Tutor tab</b> (the "Tutor" nav item → <code>TutorChatView</code>), opened cold. The other three ways to open a chat already declare intent and are NOT changed here: <b>lesson AI-Practice</b> (Start Today's Lesson), the <b>Help</b> entry (EN-20 sidebar / in-modal toggle), and the <b>Situation Simulator</b> — those skip the picker and go straight into their mode.</p>
   <p class="sub">Decision #4 = the "prompt-mode split." Verified against the actual system instruction (<code>_shared/gemini.ts:111-150</code>): today free chat runs one <b>rigorous training-SIMULATION tutor</b> — it's told to self-<b>interrupt</b>, <b>switch scenario</b> every 2–3 turns, simulate "<b>Diz?</b>" misunderstandings and <b>escalate</b> — and to format Portuguese as <b>Português / Pronunciation / English</b> "for translations." So a casual "can we chat?" or an app question gets pulled into that drill rather than a natural reply or an answer. After: an intent picker routes you, and each mode behaves correctly — conversation is natural, translation only when you ask, help is interpreted as an app question.</p>
 
   <div class="cols">
