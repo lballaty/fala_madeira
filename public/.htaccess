@@ -32,6 +32,13 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
+  # EN-8: /audio/ is the hosted-TTS store, NOT an SPA route. Existing clips were served by the
+  # -f passthrough above; a MISS here must 404 (so the client server-tier fetch treats it as a
+  # miss and falls through to the next tier), NEVER the 200 app shell — otherwise the client would
+  # receive the HTML shell as if it were PCM. (The client also guards on text/html content-type,
+  # but returning a real 404 is the correct server-side behavior.)
+  RewriteRule ^audio/ - [R=404,L]
+
   # Otherwise (client-side route) serve the SPA shell. index.html itself is excluded to avoid a
   # rewrite loop; assets fell through above because they exist on disk.
   RewriteRule ^ index.html [L]

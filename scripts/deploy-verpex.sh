@@ -238,7 +238,10 @@ say "deploying dist/ -> ${REMOTE}  (target: ${TARGET})"
 if command -v rsync >/dev/null 2>&1; then
   say "transport: rsync over ssh"
   # Preserve cPanel/Verpex server-managed dirs: .well-known (AutoSSL/ACME) and cgi-bin.
-  RSYNC_CMD=(rsync -avz --delete --exclude '.well-known/' --exclude 'cgi-bin/' -e "${RSYNC_SSH}" "${DIST_DIR}/" "${REMOTE}")
+  # EN-8: also preserve the hosted-TTS store (audio/) and the reconciliation cron (audio-sync/) —
+  # neither lives in dist/, so without these excludes `--delete` would wipe every hosted clip and
+  # the cron on each web deploy. Verpex /audio is the durable home for pre-generated audio.
+  RSYNC_CMD=(rsync -avz --delete --exclude '.well-known/' --exclude 'cgi-bin/' --exclude 'audio/' --exclude 'audio-sync/' -e "${RSYNC_SSH}" "${DIST_DIR}/" "${REMOTE}")
   if [ "${USE_SSHPASS}" -eq 1 ]; then
     sshpass -p "${VERPEX_PASS}" "${RSYNC_CMD[@]}" || die "rsync upload failed"
   else
