@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/TEST-VERTICAL-SLICES.md
 **Description:** The vertical-slice test contract that the Playwright e2e step (`vertical-slice-e2e`) implements. Each slice maps a UI entry point to its client path, edge function/RPC, DB tables, and the concrete backend evidence (row + correlation_id) the test must assert per ENGINEERING-STANDARDS §9. Slices for not-yet-built features are documented as the forward contract and marked `planned (step-id)`.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-09
 **Last Updated:** 2026-07-09
 **Last Updated By:** execute-plan (vertical-slice-map step)

@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/CONTENT-ARCHITECTURE.md
 **Description:** The modular, non-linear content architecture for FalaMadeira as a voice-first "language operating system for living in Madeira." Defines the separation of content / modes / sequencing, the Situation-as-atom model, tracks & practical levels, content packs (add curriculum as data, not code), the guided-vs-free navigation model, the adaptive weakness model, and offline/resilience. Derived from the owner's full-version vision (2026-07-09). Companion to docs/PRODUCT-DESIGN-TARGET.md.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-09
 **Last Updated:** 2026-07-09
 **Last Updated By:** design-refinement session

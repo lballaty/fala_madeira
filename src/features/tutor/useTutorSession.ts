@@ -411,11 +411,53 @@ export const useTutorSession = ({
     }
   };
 
+  /**
+   * EN-20: open the chat directly in App-Guide (help) mode from a persistent nav entry — no lesson.
+   * Reuses the same practice-modal surface, `isHelpMode`, and the EN-18 "Take me there" chips as the
+   * in-session help toggle; it just skips the lesson-context first message. This is the always-
+   * available Help entry point (the in-modal toggle stays for switching mid-session).
+   */
+  const openHelp = async () => {
+    dispatch({ type: 'START_PRACTICE', isHelpMode: true });
+    try {
+      const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
+      const chat = await geminiService.startChat(tutor, true);
+      dispatch({ type: 'SET_SESSION', session: chat });
+      dispatch({ type: 'SET_HISTORY', history: [{ role: 'model', text: "Olá! I'm your FalaMadeira App Guide. Ask me how to do anything in the app — for example \"how do I change my level?\" or \"where are downloads?\" — and I'll point you to the right place." }] });
+      resetInactivityTimer();
+    } catch (err) {
+      const event = logger.error('help_open_failed', 'Open help chat error', { category: 'AI_DECISION', error: err });
+      showToast(userMessage('HELP_OPEN_FAILED', 'Could not open Help right now. Please try again.', event.request_id), 'error');
+    } finally {
+      dispatch({ type: 'SET_AI_LOADING', isAiLoading: false });
+    }
+  };
+
   const handleSendMessage = async () => {
-    if (!chatSession) return;
     // Validate + cap the free-chat input before sending to the edge function (§4).
     const check = validateText(inputText, 'Message', config.limits.tutorMessageMax);
     if (!check.ok) { showToast(check.reason, 'error'); return; }
+
+    // TB-15: the free-chat session is a single slot shared with the AI-Practice/Help modal,
+    // which nulls it on close (CLOSE_PRACTICE/RESET_FOR_LOGOUT). initChat only re-runs on
+    // user/profile/tutor change, so after any modal open+close (or a failed initial init) the
+    // free-chat session is gone and every send was a silent no-op. Lazily (re)create it here
+    // instead of bailing, and surface an error rather than dropping the message silently.
+    let session = chatSession;
+    if (!session) {
+      try {
+        const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
+        session = await geminiService.startChat(tutor);
+        dispatch({ type: 'SET_SESSION', session });
+      } catch (err) {
+        const event = logger.error('chat_init_failed', 'Free-chat session (re)init on send failed', { category: 'AI_DECISION', error: err });
+        showToast(
+          userMessage('CHAT_SEND_FAILED', errorMessage(err) || 'AI Tutor is temporarily unavailable', event.request_id),
+          'error'
+        );
+        return;
+      }
+    }
 
     const userMsg: ChatMessage = { role: 'user', text: check.value, timestamp: Date.now() };
     setChatMessages(prev => [...prev, userMsg]);
@@ -423,7 +465,7 @@ export const useTutorSession = ({
     setIsTyping(true);
 
     try {
-      const result = await chatSession.sendMessage({ message: check.value });
+      const result = await session.sendMessage({ message: check.value });
       const modelMsg: ChatMessage = { role: 'model', text: result.text, timestamp: Date.now() };
       setChatMessages(prev => [...prev, modelMsg]);
     } catch (error) {
@@ -462,6 +504,7 @@ export const useTutorSession = ({
     handleAIPractice,
     handleSendMessage,
     toggleHelpMode,
+    openHelp,
     toggleRecording,
     playMessageInChunks,
     resetForLogout,

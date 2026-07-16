@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/CONTENT-STANDARDS.md
 **Description:** Authoring rules for all FalaMadeira content: correct European Portuguese as the base, Madeiran spoken realism without dialect gimmickry, register guidance (tu / você / o senhor), the anti-Brazilian marker list enforced by scripts/validate-content.mjs, dialogue realism rules, level guidance L0–L5 with CEFR mapping, and the multi-mode practiceability test for Situations. Companion to docs/CONTENT-ARCHITECTURE.md (§2, §4, §8, §12) and src/content/schema.ts.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-09
 **Last Updated:** 2026-07-09
 **Last Updated By:** content-model-schema plan step

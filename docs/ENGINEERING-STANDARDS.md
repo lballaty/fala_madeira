@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/ENGINEERING-STANDARDS.md
 **Description:** The project's detailed architecture, security, design, and coding standard. Concrete, checkable rules that the standards-compliance review (plan step `preflight-and-standards`) enforces. Inherits the global agentic operating standard; adds FalaMadeira-specific rules. On conflict about *content model* questions, `docs/CONTENT-ARCHITECTURE.md` governs; on conflict about *engineering* questions, this document governs.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-09
 **Last Updated:** 2026-07-09
 **Last Updated By:** execute-plan (engineering-standards step)

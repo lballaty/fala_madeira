@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/USER-WORKFLOWS-AND-STORIES.md
 **Description:** Canonical, navigation-first description of how a user is expected to move through FalaMadeira, the user stories per destination, and the cross-cutting requirement that configuration, choices, progress, and results **persist and are recalled** so a returning or interrupted user *continues* rather than restarts. Grounded in the current code (file:line cited); "as-is" persistence gaps are called out explicitly and tracked as DF11 / TB-7.
-**Author:** Lane A (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-14
-**Last Updated By:** Lane A (with assistant)
+**Last Updated By:** Libor Ballaty
 
 ---
 

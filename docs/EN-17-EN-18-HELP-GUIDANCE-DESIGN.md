@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-17-EN-18-HELP-GUIDANCE-DESIGN.md
 **Description:** Design for a single, reusable "app capability" registry that powers (EN-17a) content sync between the user manual and the chat help prompt, and (EN-18) in-app guidance (reactive "take me there" + proactive surfacing). One source, many thin consumers. Design-phase only — no coding until owner-approved (AGENTS §3).
-**Author:** Lane A (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-15
 **Last Updated:** 2026-07-15
-**Last Updated By:** Lane A (with assistant)
+**Last Updated By:** Libor Ballaty
 
 ---
 

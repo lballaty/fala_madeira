@@ -38,7 +38,10 @@ async function switchPathAndAssertStorage(
 }
 
 test.describe('path switch changes the Home CTA', () => {
-  test('adaptive, goal-track, and structured switches each update Home to the matching next-action CTA', async ({ page, testUser, coverage }) => {
+  test('adaptive, goal-track, and structured switches each update Home to the matching next-action CTA', async ({ page, testUser, coverage, resetUserState }) => {
+    // Shared serial user: clear any persisted goal-track/path selection left by an earlier spec so
+    // the path switches below start from a neutral baseline (avoids leaked-state assertion drift).
+    await resetUserState();
     await landOnHome(page);
     const selectionKey = `paths:selection:${testUser.userId}`;
 
