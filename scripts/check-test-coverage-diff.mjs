@@ -62,11 +62,18 @@ function evaluate({ label, range, commits }) {
   const functional = files.filter(isFunctional);
   const tests = files.filter(isTest);
   const msgs = commitMessages({ range, commits });
-  const skip = msgs.match(/\[skip-coverage:\s*([^\]]+)\]/i);
+  // Line-anchored so a documentation MENTION of the syntax mid-prose (e.g. this very gate's own
+  // commit message describing the escape hatch) does NOT trigger a skip — the directive must be on
+  // its own line, and the reason must be real (not the literal "<reason>" placeholder).
+  const skipMatch = msgs.match(/^\s*\[skip-coverage:\s*([^\]]+)\]\s*$/im);
+  const skipReason = skipMatch ? skipMatch[1].trim() : '';
+  const hasSkip = skipReason && skipReason.toLowerCase() !== '<reason>';
 
+  // Order matters: recognize genuine paired coverage BEFORE honoring any skip, so a real test never
+  // gets reported as a skip, and a skip only ever applies when functional code shipped with NO test.
   if (functional.length === 0) return { ok: true, note: `${label}: no functional code changed — OK` };
-  if (skip) return { ok: true, note: `${label}: coverage skip honored — reason: "${skip[1].trim()}"` };
   if (tests.length > 0) return { ok: true, note: `${label}: ${functional.length} functional file(s) + ${tests.length} test file(s) — OK` };
+  if (hasSkip) return { ok: true, note: `${label}: coverage skip honored — reason: "${skipReason}"` };
 
   return {
     ok: false,
