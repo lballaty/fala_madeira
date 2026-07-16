@@ -8,7 +8,7 @@
 #   not force-failed; the walk executes code steps and skips server/infra steps it cannot perform.
 # Author: Claude (EN-8 owner)
 # Created: 2026-07-15
-# Last Updated: 2026-07-15
+# Last Updated: 2026-07-16
 
 plan: plans/plan-2026-07-15-en8-hosted-audio.yaml
 worktree: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-feat
@@ -44,11 +44,11 @@ steps:
   edge-tts-writeback:         { status: pending }
   edge-audio-sync-endpoint:   { status: pending }
   deploy-edge:                { status: deferred-operator }
-  commit-phase5:              { status: pending }
-  verpex-pull-cron:           { status: pending }
-  deploy-rsync-exclude:       { status: pending }
-  deploy-verpex-crons-both:   { status: deferred-operator }
-  commit-phase6:              { status: pending }
+  commit-phase5:              { status: succeeded, commit: 1579814, note: "Phase 5 edge code (audioStore/audioKey mirror, gemini write-back, log-sink audio-sync-confirm, migration 00012) landed with the branch; commit hash reflects post-rebase rewrite onto develop 2026-07-16." }
+  verpex-pull-cron:           { status: succeeded, commit: 6e961b7, note: "deploy/verpex/audio-sync/pull.php + config.example.php + README.md. Read-only: anon-key list of public tts-audio -> public GET missing to REMOTE_PATH/audio (byte-len + content-type verified) -> POST confirmed names to edge audio-sync-confirm (x-audio-sync-token). Idempotent (re-confirms present, never re-downloads), path-traversal-hardened (^[a-z0-9_]+.pcm$), bounded timeouts (list 15s/download 30s/confirm 15s), <=500 keys/run, CLI-or-token-gated (web miss=403), fails loud (stderr+log-sink ERROR+non-zero exit). php not local -> lints on server per validation contract; bash -n + rule/exclude greps green." }
+  deploy-rsync-exclude:       { status: succeeded, commit: 6e961b7, note: "scripts/deploy-verpex.sh rsync --delete now excludes audio/ AND audio-sync/ (alongside .well-known/ + cgi-bin/) so a web deploy never wipes hosted audio or the cron. Also public/.htaccess: /audio/ MISS returns 404 not the SPA shell (spike content-type gotcha) so client server-tier fetch falls through. bash -n OK." }
+  deploy-verpex-crons-both:   { status: deferred-operator, note: "operator-gated, staging-first: scp pull.php+config.php to staging then prod REMOTE_PATH/audio-sync/, chmod 600 config.php, register */15 cron, set per-env AUDIO_SYNC_TOKEN. Sequenced BEFORE the write-back flag flip (COORD-2 BLOCKING-2)." }
+  commit-phase6:              { status: succeeded, commit: 6e961b7, note: "satisfied by 6e961b7 (5 files, 464+ insertions). Pushed. Rebase onto develop done first (0 behind; gate 302 tests green; force-pushed 2b99e52)." }
   pregen-script:              { status: pending }
   run-pregen-level0:          { status: deferred-operator }
   enable-writeback-flag:      { status: deferred-operator }
