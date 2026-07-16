@@ -100,6 +100,27 @@ const admin = createClient(SUPABASE_URL, SERVICE_KEY, { auth: { persistSession: 
 const { error: signInErr } = await authed.auth.signInWithPassword({ email: ADMIN_EMAIL, password: ADMIN_PASSWORD });
 if (signInErr) { console.error(`FATAL: admin sign-in failed: ${signInErr.message}`); process.exit(2); }
 
+// ---- throttle + retry (avoid provider rate-limiting under rapid sequential load — the exact
+//      503-class failures EN-8 exists to eliminate; mirrors the EN-7 per-clip retry/backoff) ----
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const THROTTLE_MS = 350;        // gap between clips
+const MAX_ATTEMPTS = 4;         // per-clip attempts
+const BACKOFF_MS = [1000, 3000, 8000]; // waits before retries 2..4
+
+/** Invoke the edge tts action with bounded retry/backoff. Returns base64 audio or throws. */
+const synthWithRetry = async (item) => {
+  let lastErr;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const { data, error } = await authed.functions.invoke('gemini', {
+      body: { action: 'tts', text: item.text, voiceType: item.voiceType, provider: 'default' },
+    });
+    if (!error && data?.audio) return data.audio;
+    lastErr = error?.message || 'no audio payload';
+    if (attempt < MAX_ATTEMPTS) await sleep(BACKOFF_MS[attempt - 1]);
+  }
+  throw new Error(lastErr);
+};
+
 // ---- run -------------------------------------------------------------------------------------
 let synthesized = 0, skipped = 0, uploaded = 0;
 const errors = [];
@@ -115,18 +136,20 @@ for (const [i, item] of work.entries()) {
 
   if (DRY_RUN) { console.log(`${tag} — would synthesize + upload`); continue; }
 
-  // Synthesize via the edge tts action (admin session bypasses the voice cap). Same body the
-  // client sends; hostable is irrelevant here (we upload directly, not via the runtime write-back).
-  const { data, error } = await authed.functions.invoke('gemini', {
-    body: { action: 'tts', text: item.text, voiceType: item.voiceType, provider: 'default' },
-  });
-  if (error || !data?.audio) {
-    errors.push({ name: item.name, reason: error?.message || 'no audio payload' });
-    console.error(`${tag} — SYNTH FAILED: ${error?.message || 'no audio'}`);
+  // Synthesize via the edge tts action (high voice_limit bypasses the cap). Throttled + retried
+  // so a burst of calls doesn't trip provider rate-limiting. Same body the client sends; hostable
+  // is irrelevant here (we upload directly, not via the runtime write-back).
+  await sleep(THROTTLE_MS);
+  let audioB64;
+  try {
+    audioB64 = await synthWithRetry(item);
+  } catch (e) {
+    errors.push({ name: item.name, reason: e.message });
+    console.error(`${tag} — SYNTH FAILED (after ${MAX_ATTEMPTS} attempts): ${e.message}`);
     continue;
   }
   synthesized++;
-  const bytes = Buffer.from(data.audio, 'base64');
+  const bytes = Buffer.from(audioB64, 'base64');
 
   const { error: upErr } = await admin.storage.from(BUCKET).upload(item.name, bytes, {
     contentType: 'application/octet-stream',
