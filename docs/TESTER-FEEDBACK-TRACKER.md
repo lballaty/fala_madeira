@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/TESTER-FEEDBACK-TRACKER.md
 **Description:** Durable tracker for tester-reported bugs, the support-ticket workstream, and every deferred item in it. Standing rule (owner directive 2026-07-14): nothing is closed by declaring it "not our lane" — every deferral is logged here with owner + next action so it cannot get buried.
-**Author:** Lane B (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-14
-**Last Updated By:** Lane B (with assistant)
+**Last Updated By:** Libor Ballaty
 
 ---
 
@@ -586,11 +586,13 @@
 - **Scope (not yet designed):** an LLM router mirroring the TTS one (chain + per-user preference + BYO), with the edge fn renamed/kept as a thin entry. Larger change; edge-function territory (coordinate with Lane B). Backlog until prioritized.
 - **Owner:** Agent E / backend. **Status:** OPEN (backlog); separate from the EN-17/EN-18 help theme.
 
-### EN-20 — Persistent, discoverable Help/assistant entry in the navigation — `OPEN (owner-requested 2026-07-16)`
+### EN-20 — Persistent, discoverable Help/assistant entry in the navigation — `BUILT (Lane A, develop 28f7c83, 2026-07-16) — desktop sidebar; mobile parity via EN-21`
 - **Report (owner):** "how do I open the chat? it should really be directly accessible from the side navigation all the time."
 - **Findings (code-read 2026-07-16):** the app HAS a chat tab, but two discoverability problems: (1) the tutor chat nav item is labeled **"Tutor"** (`NAV_ITEMS`, `App.tsx:72`, MessageCircle) — always in the sidebar + bottom nav, but doesn't read as "chat"; (2) the **"App Guide" help chat** (isHelpMode) is **buried** — it's only a *toggle inside a tutor practice session* (`TutorPracticeModal`, reached via `startAIPractice`), with NO direct/always-available entry. So the help assistant the owner wants is effectively hidden.
 - **Proposed scope (needs approval before coding):** (a) a persistent, clearly-labeled **Help** affordance always available (sidebar entry and/or header button) that opens the chat directly in **help mode**; (b) optionally clarify the "Tutor" tab (label/subtitle) so it reads as chat, and expose help mode from `TutorChatView` itself. Extends EN-18 (in-app guidance/discoverability); reuses the existing isHelpMode chat + the EN-17 registry-backed help content. Small client change; no edge/deploy beyond what EN-17 already shipped.
-- **Owner:** Agent E (`feat/*`). **Status:** OPEN — quick UX enhancement; awaiting owner go. **Note:** the "route to help mode" part is subsumed by EN-21 (intent router); EN-20 remains just the persistent nav affordance.
+- **✅ BUILT (Lane A, 2026-07-16, develop `28f7c83`):** `openHelp()` in `useTutorSession` (reuses `START_PRACTICE` + help greeting + the existing help-mode modal & EN-18 chips — no lesson, no in-modal toggle) + a persistent **Help** sidebar entry mirroring the Admin nav-action pattern (`Sidebar.helpItem`/`onOpenHelp`, `App.tsx` `HELP_NAV_ITEM`). e2e `user/58`; tsc/eslint clean, 270 unit pass. Reuse-first (no duplicate chat UI). Not yet in a release cut.
+- **Deferred to EN-21:** mobile parity (the sidebar is desktop-only, matching the Admin precedent) — the EN-21 intent opener surfaces help everywhere; and the "route to help mode" intent lives in EN-21.
+- **Owner:** Agent E (`feat/*`). **Status:** BUILT on develop; folds into the next staging cut. EN-21 design next.
 
 ### EN-21 — Chat entry: intent picker + mode routing (fix default translation-drop + help-not-interpreted) — `OPEN (owner-requested 2026-07-16; investigated)`
 - **Report (owner):** opening the Tutor "no matter what I do goes directly into a Portuguese↔English translated session"; the take-me-there chips only work "after clicking the top question button"; "it is not at all interpreting anything I say as a question about the manual." Wants a "what do you want to do?" opener with options that route to the right workflow.
