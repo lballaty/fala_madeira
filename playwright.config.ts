@@ -29,6 +29,9 @@ export default defineConfig({
   expect: { timeout: 15_000 },
 
   globalSetup: './tests/e2e/global-setup.ts',
+  // Deletes the run's throwaway test user (via the delete-account edge fn) so accounts don't
+  // accumulate in the live project. Best-effort; never fails the suite (see global-teardown.ts).
+  globalTeardown: './tests/e2e/global-teardown.ts',
 
   use: {
     baseURL: BASE_URL,
