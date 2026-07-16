@@ -14,6 +14,11 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
+## 2026.07.16.2
+
+- Fixed: **the Tutor's free chat sends reliably again.** Typing a message and hitting send could silently do nothing after you'd opened and closed guided practice or the in-app help — the shared chat session was being dropped. It now re-establishes the session on send (and shows an error instead of failing silently). (TB-15)
+- New: **a persistent "Help" entry in the sidebar** opens the in-app App-Guide chat from anywhere, so guidance is no longer buried inside the Tutor tab. (EN-20)
+
 ## 2026.07.16.1
 
 - New: **an admin can grant a learner full access.** A "User Access" panel in admin mode looks up a user by email and sets their subscription tier (or level); admins and "unlimited" accounts now see all training content automatically, instead of unlocking level-by-level. (EN-15)
