@@ -1,6 +1,9 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/user/15-practice-vocabulary-session.spec.ts
-// Description: Vocabulary Review regression coverage. Exercises a real flashcard loop from the
-//   Practice hub, including flip, grade buttons, audio chrome, and the completion summary.
+// Description: Vocabulary Review regression coverage. Exercises a real flashcard loop through a
+//   SITUATION-SCOPED deck (Browse situations → Vocabulary), including flip, grade buttons, audio
+//   chrome, and the completion summary. Situation-scoped entry is required since EN-16 (b351bbe):
+//   sessions scale to their scope, so the hub's default "All lessons" deck is the full inventory
+//   (1000+ cards) and never reaches the summary inside a bounded loop.
 // Author: Codex
 // Created: 2026-07-13
 
@@ -10,7 +13,16 @@ test.describe('practice vocabulary session', () => {
   test('Vocabulary Review supports flip, grading, and summary actions', async ({ page, coverage }) => {
     await landOnHome(page);
     await page.getByRole('button', { name: 'Practice' }).first().click();
-    await page.getByText('Vocabulary Review', { exact: true }).click();
+
+    // Enter through a single situation so the EN-16 scope is "This lesson" — a deck small
+    // enough (situation vocabulary only) for the grading loop to finish and reach the summary.
+    await page.getByRole('button', { name: 'Browse situations' }).click();
+    await expect(page.getByRole('heading', { name: 'Situations' })).toBeVisible();
+    const firstSituation = page.locator('button[aria-expanded]').first();
+    await expect(firstSituation).toBeVisible({ timeout: 20_000 });
+    await firstSituation.click();
+    await expect(page.getByText('Practice this with…')).toBeVisible();
+    await page.getByRole('button', { name: 'Vocabulary Review' }).click();
 
     await expect(page.getByRole('heading', { name: 'Vocabulary Review' })).toBeVisible();
 
@@ -26,7 +38,12 @@ test.describe('practice vocabulary session', () => {
         await playWord.click();
       }
 
-      await flashcard.click();
+      // Click near the card's top-left corner, NOT the center: the front face centers the word
+      // beside a 44px nested "Play the word" SpeakerButton that stopPropagation()s. For short
+      // words (e.g. "Ali") the card's center point lands ON that button, so a center click
+      // plays audio instead of flipping — deterministic failure at that card. The corner is
+      // always the flip surface.
+      await flashcard.click({ position: { x: 20, y: 20 } });
 
       const goodButton = page.getByRole('button', { name: 'Good' });
       await expect(goodButton).toBeVisible({ timeout: 10_000 });
