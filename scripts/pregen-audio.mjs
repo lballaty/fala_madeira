@@ -102,10 +102,14 @@ if (signInErr) { console.error(`FATAL: admin sign-in failed: ${signInErr.message
 
 // ---- throttle + retry (avoid provider rate-limiting under rapid sequential load — the exact
 //      503-class failures EN-8 exists to eliminate; mirrors the EN-7 per-clip retry/backoff) ----
+// Provider TTS has a low SUSTAINED rate limit (verified live 2026-07-16: a 350ms burst tripped
+// frequent non-2xx — the very 503-class failure EN-8 eliminates). Warm gently to stay under it;
+// this is a one-off pre-gen, so throughput is secondary to a clean 0-failure pass. Override the
+// gap with --throttle <ms>.
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const THROTTLE_MS = 350;        // gap between clips
-const MAX_ATTEMPTS = 4;         // per-clip attempts
-const BACKOFF_MS = [1000, 3000, 8000]; // waits before retries 2..4
+const THROTTLE_MS = Number(argVal('--throttle', '1500')); // gap between clips
+const MAX_ATTEMPTS = 5;         // per-clip attempts
+const BACKOFF_MS = [2000, 5000, 12000, 25000]; // waits before retries 2..5
 
 /** Invoke the edge tts action with bounded retry/backoff. Returns base64 audio or throws. */
 const synthWithRetry = async (item) => {
