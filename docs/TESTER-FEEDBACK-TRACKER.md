@@ -4,12 +4,20 @@
 **Description:** Durable tracker for tester-reported bugs, the support-ticket workstream, and every deferred item in it. Standing rule (owner directive 2026-07-14): nothing is closed by declaring it "not our lane" — every deferral is logged here with owner + next action so it cannot get buried.
 **Author:** Libor Ballaty
 **Created:** 2026-07-14
-**Last Updated:** 2026-07-14
-**Last Updated By:** Libor Ballaty
+**Last Updated:** 2026-07-16
+**Last Updated By:** EN-8 owner (staging trial + completion plan)
 
 ---
 
 > **⇄ Lane B ↔ Lane A alignment (2026-07-15):** shared-write files to keep in sync — `SettingsView.tsx` (preserve `data-testid` `path-switcher`/`goal-track-chooser` — specs 36/37 depend on them), `src/paths/index.ts` (SEC-2 WP1 `paths:selection` namespacing — existing-value migration Lane A flagged is now HANDLED), `src/paths/goal-track.ts` + `src/App.tsx` logout (reserve before editing — 3 streams touch it), specs `user/36`+`user/37` (shared). Decisions in TB-11 · TB-12 · COORD-1 · COORD-2 · SEC-1 (Lane A addenda).
+
+---
+
+> **★ EN-8 SERVER-HOSTED AUDIO — status 2026-07-16 (owner-approved staging trial COMPLETE + mechanism PROVEN).** Branch `feat/en8-server-hosted-audio` (pushed; behind develop 12 / ahead 14). Active plans in the SUPPORT worktree (`fala_madeira-support/plans/`): `plan-2026-07-15-en8-hosted-audio.yaml` (+ state `.plan-state-en8-hosted-audio.yaml`) = Phases 0–7 done; **NEW `plan-2026-07-16-en8-completion.yaml`** = the go-forward plan (Phase 1 close staging trial, Phase 2 land on develop, Phase 3 GATED prod activation).
+> - **Live on the SHARED Supabase project (owner-approved):** migration `00012` applied+verified (public `tts-audio` bucket + `tts_audio_public_read` RLS + `tts-audio-orphan-backstop` pg_cron); `log-sink` edge fn deployed (`audio-sync-confirm`, `--no-verify-jwt`; 401/200 verified); `AUDIO_SYNC_TOKEN` set (staging). **`gemini` left at v10 (untouched)** — runtime write-back not needed for the trial (flag `TTS_BUFFER_WRITEBACK` OFF; pregen uploads directly).
+> - **Staging Verpex cron LIVE:** `pull.php` at `testfalamadeira.searchingfool.com/audio-sync/` (php-lint clean on server, web-guard 403, `*/15` cron). **Mechanism PROVEN end-to-end:** pregen→buffer→cron copy→Verpex serves **200 application/octet-stream** (real PCM) → client skips provider. Buffer copy-confirm-emptied to 0.
+> - **Open (in the completion plan):** finish the level-0 warm (**83/527** hosted — throttled by a live **provider sustained rate-limit finding**, the exact 503-class failure EN-8 fixes) → formal `VERIFY_WIN`; then land on develop + `update-docs`; then GATED prod activation (needs a fix for the **single-buffer multi-env contention**: first cron to copy deletes from the buffer, so env #2 misses). Throwaway pregen user `en8-pregen@falamadeira.internal` (uid 1fe2dc9f) pending cleanup.
+> - **Follow-ups (NEEDS REQUIREMENTS / backlog):** in-app admin "what-is-where" audio panel (CLI `scripts/audit-audio.mjs` exists; ties EN-12); PCM compression pass (raw ~48KB/s). `public/.htaccess` `/audio` 404 rule ships with the next web deploy (client content-type guard covers it meanwhile).
 
 ---
 
