@@ -434,10 +434,30 @@ export const useTutorSession = ({
   };
 
   const handleSendMessage = async () => {
-    if (!chatSession) return;
     // Validate + cap the free-chat input before sending to the edge function (§4).
     const check = validateText(inputText, 'Message', config.limits.tutorMessageMax);
     if (!check.ok) { showToast(check.reason, 'error'); return; }
+
+    // TB-15: the free-chat session is a single slot shared with the AI-Practice/Help modal,
+    // which nulls it on close (CLOSE_PRACTICE/RESET_FOR_LOGOUT). initChat only re-runs on
+    // user/profile/tutor change, so after any modal open+close (or a failed initial init) the
+    // free-chat session is gone and every send was a silent no-op. Lazily (re)create it here
+    // instead of bailing, and surface an error rather than dropping the message silently.
+    let session = chatSession;
+    if (!session) {
+      try {
+        const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
+        session = await geminiService.startChat(tutor);
+        dispatch({ type: 'SET_SESSION', session });
+      } catch (err) {
+        const event = logger.error('chat_init_failed', 'Free-chat session (re)init on send failed', { category: 'AI_DECISION', error: err });
+        showToast(
+          userMessage('CHAT_SEND_FAILED', errorMessage(err) || 'AI Tutor is temporarily unavailable', event.request_id),
+          'error'
+        );
+        return;
+      }
+    }
 
     const userMsg: ChatMessage = { role: 'user', text: check.value, timestamp: Date.now() };
     setChatMessages(prev => [...prev, userMsg]);
@@ -445,7 +465,7 @@ export const useTutorSession = ({
     setIsTyping(true);
 
     try {
-      const result = await chatSession.sendMessage({ message: check.value });
+      const result = await session.sendMessage({ message: check.value });
       const modelMsg: ChatMessage = { role: 'model', text: result.text, timestamp: Date.now() };
       setChatMessages(prev => [...prev, modelMsg]);
     } catch (error) {
