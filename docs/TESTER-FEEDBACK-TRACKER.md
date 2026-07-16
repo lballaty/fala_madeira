@@ -497,6 +497,7 @@
 - **Current state (code):** enforcement already supports the precedence — `useTutorSession.ts:247` `const limit = profile?.voice_limit ?? globalVoiceLimit`. So **per-user overrides global** already at the enforcement layer. What's missing: (a) `profiles.voice_limit` is NULL for everyone and there is **no UI to set a per-user limit**; (b) the only editable control is the **global** limit, hidden behind admin mode (`SettingsView`); (c) users can't see their own effective limit.
 - **Direction:** (1) admin UI to set a **per-user** `voice_limit` override (e.g. from the admin console / a user's profile), falling back to the global default when null — the enforcement precedence is already correct; (2) surface the **effective** limit (per-user if set, else global) read-only to each user; (3) clarify labels ("your daily voice limit" vs the admin "global default"); (4) keep `subscription_tier==='unlimited'` and `role==='admin'` bypasses as-is. Ties TB-8 (client hardening) + AUTH/monetization (tiers). 
 - **Owner:** Agent E (`feat/*`) + admin console. Test: enforcement precedence (per-user beats global; null falls back), effective-limit display. **Status:** OPEN.
+- **↩ Update (2026-07-16):** confirmed still unbuilt — there is **no UI anywhere to set a per-user `voice_limit`** (the only voice control is the GLOBAL default, buried in `SettingsView` behind the admin-mode toggle, with no nav to it). Owner needed two test users unlimited and could not do it from the UI → **stopgap applied via service-role DB update: `profiles.voice_limit=999999` for `liborballaty@gmail.com` (ead858ac) + `testuser@testuser.com` (89c85dcf)** (reversible → set NULL). The proper per-user `voice_limit` control belongs in the consolidated admin surface — folds into **EN-25**. Priority raised.
 
 ### EN-12 — Admin log viewer: CLI / in-app admin page / separate admin subapp over `public.logs` — `OPEN (owner-requested 2026-07-14)`
 - **Report (owner):** view logs via a CLI interface (not the normal UI) — in admin mode click a link to open a CLI-type, menu-driven (or agent-assisted) interface to examine logs; alternatively a web page in admin mode, or a separate admin subapp accessible via the admin login. "The logs are in the database so it should be possible."
@@ -682,3 +683,20 @@
   - **TB-13 router steering unit/Deno test** — still owed (stand up the harness; assert DEFAULT_CHAIN locale-pinned order + buildChain precedence). Owner: Agent E.
   - Add a **`deno test supabase/functions`** CI job alongside the coverage-gate so edge coverage is enforced, not just diff-presence.
 - **Owner:** Agent E (harness + edge tests) + platform (the coverage-gate + edge CI job may be harvested into the aidevops standard — see [[project-release-standardization-not-oneoff]]). **Status:** IN PROGRESS.
+
+### EN-25 — Consolidate ALL admin functions under ONE nav admin entry point (reporter: owner, 2026-07-16) — `NEEDS REQUIREMENTS confirmation (direction owner-specified; then approval before build)`
+- **Report (owner):** there are **two** confusing admin links — (1) the sidebar nav "Admin" (lower-right), (2) the "admin mode" toggle — "and neither does what I need." Some admin views have **no navigation to them at all**. Owner wants **a single admin link — the one in the navigation sidebar — that reaches ALL admin functions.**
+- **Current state (verified 2026-07-16):**
+  - **Sidebar "Admin"** → `AdminView` (`src/features/admin/AdminView.tsx`), 3 tabs: Review Queues / Content Studio / User Access (`role==='admin'` gate, `App.tsx:315/527`).
+  - **"Admin mode" toggle** → legacy floating `AdminPanel` (`src/features/settings/AdminPanel.tsx`), **video-suggestion moderation only** — **DEPRECATED/pending removal** and **duplicates** the Review Queues tab (which already moderates `video_suggestions`).
+  - **Global voice-limit control** lives inline in `SettingsView` gated by the admin-mode toggle — **not under either admin link, no nav to it** (the "screen I should see is not visible" symptom).
+  - **Per-user voice-limit**: no UI at all (EN-11).
+- **Target (owner-specified direction):** ONE entry point = the sidebar nav Admin link → a single admin surface exposing **every** admin function:
+  1. keep Review Queues / Content Studio / User Access;
+  2. **fold the global voice-limit config** (from SettingsView admin-mode) into an admin **Settings/Config** tab;
+  3. **add per-user `voice_limit`** to User Access (delivers **EN-11**);
+  4. **retire** the legacy `AdminPanel` + the `isAdminMode` toggle (its only unique function, video moderation, already lives in Review Queues — verify, then remove);
+  5. ensure NO admin view is reachable only by a hidden toggle — everything hangs off the one nav link.
+- **Coordination:** ⚠ an `ai-gateway` edge rename is in progress (another agent) — unrelated to this UI work but both may touch admin/settings-adjacent code; sequence. Touches `AdminView.tsx`, `SettingsView.tsx`, `UserAccessPanel.tsx`/`useUserAccess.ts`, `App.tsx` (remove admin-mode wiring), delete `AdminPanel.tsx`. Reserve shared files.
+- **Coverage:** per AGENTS §3 + the new coverage-gate — e2e that the single nav Admin link reaches each function (incl. voice-limit set, per-user + global) and that the legacy toggle is gone; unit for the per-user `voice_limit` write.
+- **Owner:** Agent E (`feat/*`). **Status:** NEEDS REQUIREMENTS confirmation (owner gave the direction; a short spec + owner approval before coding, per the requirements gate). Absorbs EN-11.
