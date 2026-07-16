@@ -14,6 +14,11 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
+## 2026.07.16.3
+
+- Fixed: **the daily voice-limit setting now persists reliably.** An admin-set limit could be silently reset by a stale value on the device; it now only changes on an explicit admin edit and reads the server value authoritatively. (TB-8)
+- Internal: renamed the AI/voice backend function for clarity (no user-facing change) and hardened the automated test suite. Also includes the TB-15 free-chat fix and the sidebar Help entry from 2026.07.16.2.
+
 ## 2026.07.16.2
 
 - Fixed: **the Tutor's free chat sends reliably again.** Typing a message and hitting send could silently do nothing after you'd opened and closed guided practice or the in-app help — the shared chat session was being dropped. It now re-establishes the session on send (and shows an error instead of failing silently). (TB-15)
