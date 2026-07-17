@@ -265,7 +265,9 @@ export async function landOnHome(page: Page): Promise<void> {
  */
 export async function createThrowawayUserContext(
   browser: { newContext: (options?: Parameters<BrowserContext['storageState']>[0] extends never ? never : any) => Promise<BrowserContext> },
-  origin = 'http://127.0.0.1:4173',
+  // Session localStorage is keyed by origin, so this MUST match the origin the page actually loads
+  // (playwright's baseURL / BASE_URL). Hardcoding a port broke runs served on a non-default port.
+  origin = process.env.BASE_URL || 'http://127.0.0.1:4173',
 ): Promise<{ context: BrowserContext; page: Page; session: SessionInfo }> {
   const creds = makeTestUserCreds();
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
