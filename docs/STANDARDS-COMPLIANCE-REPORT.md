@@ -53,7 +53,7 @@ Strong and improving. The refactor the standards doc describes as pending (`src/
 ## Security (6)
 
 18. **No provider key material in `src/`/`dist/`/native/`VITE_*` — met.** `check-standards.sh` src scan PASS; `verify-security.mjs` Group 1 scans `dist/` + `ios/App/App/public` for real key shapes and `.env.local` literals (run via `npm run verify:security`).
-19. **AI/provider calls via JWT-verified edge functions with limits — met.** `supabase/functions/gemini` (JWT-verified, voice-limit); `verify-security.mjs` Group 3 asserts 401 without JWT.
+19. **AI/provider calls via JWT-verified edge functions with limits — met.** `supabase/functions/ai-gateway` (JWT-verified, voice-limit); `verify-security.mjs` Group 3 asserts 401 without JWT.
 20. **Every client-touched table has RLS, documented — met.** `docs/SUPABASE_RLS.md` present; `verify-security.mjs` Group 2 probes `profiles`/`logs` (no anon leak), anon INSERT blocked, public `content_packs`/`global_settings` readable. No service-role key client-side.
 21. **Admin capability server-enforced — met.** RLS/`is_admin()` per migrations; not trusted from client state.
 22. **Logs contain no tokens/keys/PII — partial.** Logger `errorMessage`/masking discipline in place; a full field-by-field PII-redaction audit of every log call site is not automated. `verify-security.mjs` masks all secrets in its own output.
