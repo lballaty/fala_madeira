@@ -4,14 +4,16 @@
 **Description:** Requirements spec for an in-app admin panel to inventory, preview, quality-review, and enqueue-for-regeneration the pre-generated TTS audio produced by EN-8. Folds in the previously-listed "what-is-where" audio panel follow-up. Owner-gated: no coding until this doc is owner-approved (AGENTS §3 requirements gate).
 **Author:** Libor Ballaty
 **Created:** 2026-07-16
-**Last Updated:** 2026-07-16
-**Last Updated By:** claude-audiopanel (requirements draft)
+**Last Updated:** 2026-07-17
+**Last Updated By:** claude-en23 (owner approval + open-item decisions recorded)
 
 ---
 
 ## 1. Status
 
-`NEEDS APPROVAL` — requirements captured from owner feedback (2026-07-16). No coding until owner-approved. Blocked by EN-8 landing on `develop` (see §9).
+`APPROVED — BUILD (partial-block sequencing)` — owner approved 2026-07-17 with all §10 open items decided (see §10). Coding may proceed on the **EN-8-independent slice** per the sequencing decision below; the server-tier presence check + `pregen --from-queue` consumer remain gated until EN-8 lands on `develop` (see §9).
+
+**★ Sequencing decision (owner 2026-07-17): build the EN-8-independent parts now on `develop`.** EN-8 is not yet on `develop` and its branch (`feat/en8-server-hosted-audio`) is being actively edited by another agent (`claude-en8-audiosave`, device-audio persistence redesign). Rather than branch off a moving base or wait, EN-23 builds the parts that do **not** depend on EN-8 directly on `develop`: the DB migration + tables, clip enumeration, verdict/enqueue reducers + persistence, automated signal derivation (incl. silence scoring), the admin **Audio** tab, and device-cache tier presence. The **server (hosted) tier-presence check** and the `pregen-audio.mjs --from-queue` consumer are **stubbed behind the EN-8 audio-config seam** (feature-detected: shown as "server tier unavailable — pending EN-8" until the config + hosted base exist on `develop`) and wired the moment EN-8 lands. No collision with the active EN-8 agent (disjoint files; EN-23 owns the new admin surface + migration).
 
 ## 2. Problem / motivation
 
@@ -37,6 +39,7 @@ The smallest coherent review→verdict→enqueue loop. This is the first shippab
    - text, voice, and the derived `buildKey`;
    - **tier presence**: device cache? server (hosted)? missing? (server presence via a HEAD/GET to the EN-8 server base per `buildKey`);
    - **automated quality signals**: byte size, content-type, duration, and a **suspicious flag** (too-small / zero-duration / wrong content-type) so a 500+-clip set is triageable without hearing every one.
+   - **automated silence/loudness scoring (pulled forward from §8 — owner 2026-07-17):** decode the clip (Web Audio `decodeAudioData` on the PCM/blob) and compute a coarse **RMS/peak level** + **silent-ratio** (fraction of frames below a dB floor). Feeds two additional suspicious sub-flags — **silent** (near-zero RMS across the clip) and **leading/trailing-dead-air / truncated** (silent head or tail beyond a threshold) — so the suspicious triage is stronger than the byte/duration heuristic alone. Persisted as signal fields (see §5). Runs client-side in the panel; no server dependency (works on device-cache clips today, hosted clips once EN-8 lands).
 4. **Preview** — play any clip inline (from device cache or the hosted server URL) to judge quality by ear.
 5. **Verdict** — set **good / bad / re-record** per clip; **persisted** (survives reload; review is resumable across sessions).
 6. **Enqueue** — flag bad/re-record clips into a **regeneration queue** that `pregen-audio.mjs` consumes. Panel does not itself write audio to storage.
@@ -49,6 +52,7 @@ Two small persisted stores are required. Proposed as Postgres tables so verdicts
 
 - **`public.tts_audio_review`** — one row per reviewed clip:
   `build_key (text, pk)`, `voice (text)`, `text (text)`, `situation_id (text)`, `level (smallint)`, `verdict (text: good|bad|re_record|unreviewed)`, `signal_bytes (int)`, `signal_content_type (text)`, `signal_duration_ms (int)`, `signal_suspicious (bool)`, `reviewed_by (uuid)`, `reviewed_at (timestamptz)`, `notes (text)`.
+  Silence/loudness scoring fields (§4 automated signals): `signal_rms_dbfs (real)`, `signal_peak_dbfs (real)`, `signal_silent_ratio (real)`, `signal_silent (bool)`, `signal_dead_air_ms (int)` (leading+trailing), `signal_scored_at (timestamptz)`.
 - **`public.tts_audio_regen_queue`** — clips flagged for (re)generation:
   `build_key (text)`, `voice (text)`, `text (text)`, `situation_id (text)`, `level (smallint)`, `reason (text)`, `enqueued_by (uuid)`, `enqueued_at (timestamptz)`, `status (text: pending|claimed|done|failed)`, `claimed_at`, `completed_at`. `pregen-audio.mjs` reads `status='pending'`, sets `claimed`→`done/failed`.
 
@@ -74,7 +78,7 @@ Two small persisted stores are required. Proposed as Postgres tables so verdicts
 
 - Bulk verdicts / bulk enqueue; keyboard-driven rapid review.
 - Delete/replace a hosted clip directly from the panel (write-to-storage — gated with the EN-8 buffer-contention design).
-- Automated silence/loudness scoring (waveform analysis) beyond byte/duration heuristics.
+- ~~Automated silence/loudness scoring (waveform analysis) beyond byte/duration heuristics.~~ **PULLED FORWARD into MVP (owner 2026-07-17) — see §4/§5.** (A deeper waveform pass — e.g. per-phoneme clipping, spectral checks — remains deferred beyond the coarse RMS/peak/silent-ratio MVP scoring.)
 - Version/diff view when a clip is re-generated (compare old vs new).
 - Provider/voice A–B comparison; per-clip playback-speed QA.
 - Live "generation status" tail (ties EN-12 admin log viewer over `public.logs`).
@@ -86,12 +90,13 @@ Two small persisted stores are required. Proposed as Postgres tables so verdicts
 - **DB coordination** — migration numbering with the DB/EN-8 agent.
 - **Governance** — regeneration is operator-run, staging-first; the panel never writes audio to prod storage directly (D2). `pregen-audio.mjs --from-queue` runs under the same approval gate as the rest of EN-8.
 
-## 10. Open items for owner
+## 10. Open items for owner — RESOLVED (owner 2026-07-17)
 
-1. **Verdict/queue store**: Postgres tables (§5, recommended) vs a JSON artifact MVP? (Affects schema churn vs multi-admin/CLI ergonomics.)
-2. **Default scope**: confirm **Level 0** as the landing scope for the first release.
-3. **Verdict vocabulary**: is **good / bad / re-record** enough, or do you want a finer scale (e.g. a reason taxonomy: silent / truncated / wrong-voice / mispronounced / low-quality)?
-4. **MVP boundary**: confirm §4 is the right first slice, or pull any §8 item forward.
+1. **Verdict/queue store** → **Postgres tables** (§5). `tts_audio_review` + `tts_audio_regen_queue` with admin RLS; CLI consumes via service-role. JSON-artifact alternative rejected.
+2. **Default scope** → **Level 0** confirmed as the landing scope for the first release.
+3. **Verdict vocabulary** → **good / bad / re-record** (three-state), with the free-text `notes` field capturing the "why". Finer reason taxonomy deferred to §8.
+4. **MVP boundary** → **§4 as-is, plus automated silence/loudness scoring pulled forward** from §8 (see §4 signal list + §5 signal fields). All other §8 items remain deferred.
+5. **Sequencing** (added at approval) → **build the EN-8-independent slice now on `develop`**; server-tier presence + `pregen --from-queue` gated behind EN-8 landing (see §1, §9).
 
 ## 11. Test plan (on approval)
 
