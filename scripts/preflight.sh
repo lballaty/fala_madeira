@@ -147,17 +147,12 @@ run_hard "cors header contract (client↔edge allow-headers)" node "${SCRIPT_DIR
 # chat help prompt is stale — fail the build. Fix: node scripts/gen-app-help.mjs && commit.
 run_hard "help drift contract (capability registry ↔ generated chat-help)" node "${SCRIPT_DIR}/check-help-drift.mjs"
 
-# Observability §9 forbidden-pattern check — WARN mode during rollout (advisory, never blocks).
-# Invoked directly (not via an npm script) so it needs no package.json change; flip to
-# `node scripts/check-observability.mjs --strict` here to make it a hard gate later.
-banner "STAGE: observability (§9 forbidden patterns, WARN mode)"
-if node "${SCRIPT_DIR}/check-observability.mjs"; then
-  printf '%s[STAGE WARN]%s observability check advisory (see artifacts/observability-report.json)\n' "$Y" "$N"
-  STAGES+=("observability (§9 forbidden patterns)|WARN")
-else
-  printf '%s[STAGE WARN]%s observability check reported issues (advisory during rollout)\n' "$Y" "$N"
-  STAGES+=("observability (§9 forbidden patterns)|WARN")
-fi
+# Observability §9 forbidden-pattern check — HARD gate (EN-27). --strict fails on any bare console
+# in an error path or hardcoded config fallback (both eliminated in EN-27); TOAST-NO-LOG stays
+# advisory inside --strict (validation-gate toasts are expected false positives). From here on, any
+# NEW console-only error path or hardcoded fallback fails the build — the class cannot silently
+# return.
+run_hard "observability §9 forbidden patterns (--strict)" node "${SCRIPT_DIR}/check-observability.mjs" --strict
 
 if [ "${WITH_SECURITY}" -eq 1 ]; then
   run_hard "security probes (scripts/verify-security.mjs)" npm run verify:security

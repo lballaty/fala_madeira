@@ -158,6 +158,24 @@ fi
 warn "Reminder (§10): commit path-form (\`git commit <path> -m …\`), verify staged set, no Co-Authored-By trailers"
 
 # ---------------------------------------------------------------------------
+# WARN D — silent no-op guards on session/client in user-action paths (EN-27,
+#   the TB-15 class). A bare `if (!supabase|!user|!session|!chatSession) return;`
+#   in a USER-ACTION handler means the user acted and nothing happened — no toast,
+#   no log. This grep cannot tell a handler from a data-fetch effect (where a
+#   silent no-op IS correct), so it is ADVISORY: each hit needs a human/agent
+#   judgment — if it sits in a handle*/onClick/onSubmit path, add logger + a Ref
+#   toast (see useLessonModals.handleSuggestVideo / useTutorSession.handleSendMessage).
+#   Matches only a BARE `return;` (value-returns are not silent no-ops).
+# ---------------------------------------------------------------------------
+noop_guard_hits="$(scan 'if \(![^)]*(supabase|chatSession|\bsession)[^)]*\) return;' || true)"
+if [ -z "${noop_guard_hits}" ]; then
+  pass "No session/client bare-return guards to review (EN-27 no-silent-no-op, TB-15 class)"
+else
+  warn "Session/client bare-return guards (EN-27) — confirm each is a data-fetch effect, NOT a user-action handler that should log+toast:"
+  printf '%s\n' "${noop_guard_hits}" | sed 's/^/         /'
+fi
+
+# ---------------------------------------------------------------------------
 printf '\n%s=== check-standards summary ===%s\n' "$B" "$N"
 printf 'HARD failures: %s   WARN: %s\n' "${HARD_FAILURES}" "${WARN_COUNT}"
 if [ "${HARD_FAILURES}" -gt 0 ]; then
