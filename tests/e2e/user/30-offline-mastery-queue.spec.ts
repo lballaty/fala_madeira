@@ -56,11 +56,14 @@ test.describe('offline mastery queue', () => {
       const gradedItemKey = vocabItemKey(SITUATION_ID, visibleWord);
       const expected = (await input.getAttribute('data-answer')) ?? '';
       expect(expected, 'data-answer hint must be exposed under fm:e2e').toBeTruthy();
+      // A translation may list alternates ("Good evening/night"); the grader accepts any ONE, so
+      // type the first alternate rather than the whole string.
+      const answer = expected.split(/[/,;|]| or /i)[0].trim();
 
       // Grade the card while OFFLINE: type the correct meaning → Check → skip the mic step so the
       // grade is comprehension-only (retrieve, PASS_GRADE=4).
       await page.context().setOffline(true);
-      await input.fill(expected);
+      await input.fill(answer);
       await page.getByTestId('vocab-check').click();
       const sayButton = page.getByTestId('vocab-say');
       if (await sayButton.isVisible({ timeout: 5_000 }).catch(() => false)) {
