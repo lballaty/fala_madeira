@@ -23,6 +23,7 @@ import {
   SpeechStartOptions,
 } from '../types';
 import { SpeechAdapterCore, withRecognize } from '../speech-common';
+import { logger } from '../../lib/logger';
 
 type SpeechPlugin = typeof import('@capgo/capacitor-speech-recognition').SpeechRecognition;
 type ListenerHandle = { remove: () => Promise<void> };
@@ -84,7 +85,13 @@ export const createNativeSpeechAdapter = (): SpeechAdapter => {
       .then((r) => {
         available = r.available;
       })
-      .catch(() => {
+      .catch((e) => {
+        // EN-27 P0.5: a silent probe failure meant native speech went unavailable (falling back to
+        // web/none) with no diagnostic trail — the TB-10 shape. Log it, then keep the fallback.
+        logger.warn('NATIVE_SPEECH_PROBE_FAILED', 'native speech-recognition availability probe failed', {
+          category: 'SYSTEM_HEALTH',
+          error: e,
+        });
         available = false;
       });
   };
@@ -113,7 +120,13 @@ export const createNativeSpeechAdapter = (): SpeechAdapter => {
       } else {
         noMatchCb?.();
       }
-    } catch {
+    } catch (e) {
+      // EN-27 P0.5 (TB-6 shape): the OS captured speech but the plugin could not return the final
+      // transcript. Without this log it surfaces to the user as an indistinguishable "no match".
+      logger.error('NATIVE_SPEECH_FINAL_TRANSCRIPT_FETCH_FAILED', 'captured speech was lost — could not fetch the final transcript from the native plugin', {
+        category: 'SYSTEM_HEALTH',
+        error: e,
+      });
       noMatchCb?.();
     }
   };
@@ -266,6 +279,12 @@ export const createNativeSpeechAdapter = (): SpeechAdapter => {
           await endSession(sr);
         })
         .catch((e) => {
+          // EN-27 P0.5: log before fail() — fail() routes to an optional errorCb, so without this
+          // a stop() failure (session hangs, next attempt aborted) would leave no trace.
+          logger.error('NATIVE_SPEECH_STOP_FAILED', 'could not stop native speech recognition', {
+            category: 'SYSTEM_HEALTH',
+            error: e,
+          });
           fail(
             new PlatformError(
               'speech',

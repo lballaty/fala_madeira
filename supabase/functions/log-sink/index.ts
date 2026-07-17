@@ -157,9 +157,9 @@ Deno.serve(async (req) => {
     // The sink's own failure is server-side; surface a structured envelope. Console is the
     // sink-of-last-resort here (we cannot recurse into the sink to log the sink's failure).
     console.error(JSON.stringify({ level: "ERROR", requestId, event: "log_sink_insert_failed", message: error.message }));
-    return errorResponse("LOG_SINK_INSERT_FAILED", "Could not persist logs.", 502, requestId, {
-      dbMessage: error.message,
-    });
+    // EN-27 P2: do NOT leak the raw DB error (schema/constraint internals) to the client. Ops gets
+    // it from the console line above; the client gets a code + requestId to quote to support.
+    return errorResponse("LOG_SINK_INSERT_FAILED", "Could not persist logs.", 502, requestId);
   }
 
   return jsonResponse({ inserted: rows.length, requestId });

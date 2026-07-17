@@ -25,7 +25,10 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    // src/** is the app suite. supabase/functions/** is scanned too, but ONLY for tests of
+    // runtime-agnostic PURE modules (e.g. _shared/deleteUserData.ts) that have zero Deno/network
+    // imports — those tests never pull a Deno URL import into the vitest graph. (EN-27 WP-A.)
+    include: ['src/**/*.{test,spec}.{ts,tsx}', 'supabase/functions/**/*.{test,spec}.ts'],
     css: false,
   },
 });

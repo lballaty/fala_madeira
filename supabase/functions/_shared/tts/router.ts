@@ -19,6 +19,7 @@ import {
   type TutorLike,
   type VoiceType,
 } from "./types.ts";
+import { persistLog } from "../persistLog.ts";
 import { azureProvider } from "./azure.ts";
 import { geminiProvider, voiceForTutor } from "./gemini.ts";
 import { googleProvider } from "./google.ts";
@@ -139,6 +140,8 @@ export interface RouteTtsRequest {
   // (profiles.tts_byo_key_ref). Raw keys are NEVER passed or stored here — only the ref name.
   byoKeyRef?: unknown;
   requestId: string;
+  // Authenticated caller (for persistLog correlation on provider failures). null/omitted pre-auth.
+  userId?: string | null;
 }
 
 // Decide whether a preferred provider can actually serve a request:
@@ -149,25 +152,30 @@ export interface RouteTtsRequest {
 // yet reconfigure the connector's auth (connectors read their own platform secret); this is
 // the resolution + gating seam so a user preference is only honored when a usable credential
 // exists. Raw key values are never read into logs.
-function preferredProviderIsUsable(
+async function preferredProviderIsUsable(
   providerId: ProviderId,
   byoKeyRef: string | undefined,
   requestId: string,
-): boolean {
+  userId: string | null | undefined,
+): Promise<boolean> {
   if (PROVIDERS[providerId].isAvailable()) return true;
   if (byoKeyRef) {
     if (Deno.env.get(byoKeyRef)) return true;
-    console.warn(JSON.stringify({
+    // Persist to public.logs (EN-27 P0.2 — was console-only, so a user's silently-ignored TTS
+    // preference left no queryable trace). persistLog is the edge logger; it internally falls back
+    // to console as the sink-of-last-resort if its own insert fails, so no separate console line.
+    await persistLog({
       level: "WARN",
-      event_type: "TTS_BYO_KEY_REF_UNRESOLVED",
-      requestId,
-      provider: providerId,
-      // The ref NAME is safe to log; the raw key value is never read into logs.
-      byoKeyRef,
+      category: "AI_DECISION",
+      eventType: "TTS_BYO_KEY_REF_UNRESOLVED",
       message:
         "Preferred TTS provider's platform secret is absent and its bring-your-own key ref " +
         "did not resolve to an edge secret; falling back to the default provider chain.",
-    }));
+      requestId,
+      userId,
+      // The ref NAME is safe to log; the raw key value is never read into logs.
+      details: { provider: providerId, byoKeyRef },
+    });
   }
   return false;
 }
@@ -176,7 +184,7 @@ function preferredProviderIsUsable(
 //  1. explicit `provider` override (single provider, existing contract) — highest priority;
 //  2. otherwise the user's `preferredProvider` (when usable) prepended to the default chain,
 //     de-duplicated, with the default chain (azure -> gemini) always kept as fallback.
-function buildChain(req: RouteTtsRequest): ProviderId[] {
+async function buildChain(req: RouteTtsRequest): Promise<ProviderId[]> {
   if (isProviderId(req.provider)) return [req.provider];
 
   const byoKeyRef = typeof req.byoKeyRef === "string" && req.byoKeyRef
@@ -185,7 +193,7 @@ function buildChain(req: RouteTtsRequest): ProviderId[] {
 
   if (
     isProviderId(req.preferredProvider) &&
-    preferredProviderIsUsable(req.preferredProvider, byoKeyRef, req.requestId)
+    await preferredProviderIsUsable(req.preferredProvider, byoKeyRef, req.requestId, req.userId)
   ) {
     const preferred = req.preferredProvider;
     return [preferred, ...DEFAULT_CHAIN.filter((p) => p !== preferred)];
@@ -215,7 +223,7 @@ export async function routeTts(req: RouteTtsRequest): Promise<TtsResult> {
     ? req.voiceType as VoiceType
     : voiceTypeForTutor(req.tutor);
 
-  const chain: ProviderId[] = buildChain(req);
+  const chain: ProviderId[] = await buildChain(req);
 
   const attempted: ProviderId[] = [];
 
@@ -233,16 +241,19 @@ export async function routeTts(req: RouteTtsRequest): Promise<TtsResult> {
       });
       return { ...audio, provider: providerId, voiceType };
     } catch (e) {
-      // Structured log per the observability standard; continue down the chain.
-      console.error(JSON.stringify({
+      // Persist each provider failure to public.logs (EN-27 P0.2 — this was console-only, which is
+      // why the EF-37 503 storm left zero queryable rows: ops could not ask "which providers failed
+      // for whom in the last hour"). persistLog is the edge logger (console sink-of-last-resort is
+      // inside it). Then continue down the chain.
+      await persistLog({
         level: "ERROR",
-        event_type: "TTS_PROVIDER_FAILED",
+        category: "AI_DECISION",
+        eventType: "TTS_PROVIDER_FAILED",
+        message: `TTS provider '${providerId}' failed: ${String(e)}`,
         requestId: req.requestId,
-        provider: providerId,
-        voice,
-        voiceType,
-        message: String(e),
-      }));
+        userId: req.userId,
+        details: { provider: providerId, voice, voiceType, attempt: attempted.length },
+      });
     }
   }
 

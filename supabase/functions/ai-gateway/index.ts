@@ -147,7 +147,7 @@ Deno.serve(async (req) => {
 
         // --- Server-side voice-limit enforcement ---
         const admin = createClient(supabaseUrl, serviceKey);
-        const { data: profile } = await admin
+        const { data: profile, error: profileErr } = await admin
           .from("profiles")
           .select(
             "subscription_tier, voice_limit, voice_usage_today, last_voice_usage_date, " +
@@ -155,6 +155,29 @@ Deno.serve(async (req) => {
           )
           .eq("id", user.id)
           .single();
+
+        // EN-27 P1.8: this read gates entitlement (tier, limit, provider). A silent failure here
+        // used to drop the user to free-tier/limit-5 defaults with no trace. Fail loudly instead.
+        if (profileErr) {
+          await persistLog({
+            level: "ERROR",
+            category: "DATA_PROCESSING",
+            eventType: "profile_query_failed",
+            message: `could not load profile for voice-limit enforcement: ${profileErr.message}`,
+            requestId,
+            correlationId: requestId,
+            traceId: trace?.traceId,
+            userId: user.id,
+            details: { action },
+          });
+          return errorResponse(
+            "PROFILE_QUERY_FAILED",
+            "Could not load your settings. Please try again.",
+            500,
+            requestId,
+            { traceId: trace?.traceId },
+          );
+        }
 
         const today = new Date().toISOString().slice(0, 10);
         const tier = profile?.subscription_tier ?? "free";
@@ -167,11 +190,25 @@ Deno.serve(async (req) => {
           // -> GLOBAL default (global_settings.voice_limit, the admin-set source of truth)
           // -> hard floor 5. Previously hardcoded `?? 5`, which ignored the global 20 and
           // silently capped every user at 5 (forbidden hardcoded-fallback).
-          const { data: globalRow } = await admin
+          const { data: globalRow, error: globalErr } = await admin
             .from("global_settings")
             .select("value")
             .eq("key", "voice_limit")
             .maybeSingle();
+          // EN-27 P1.8: a query error here silently floors the limit to 5 (degradation is
+          // acceptable — TTS should still work — but log it so the drift is visible).
+          if (globalErr) {
+            await persistLog({
+              level: "WARN",
+              category: "DATA_PROCESSING",
+              eventType: "global_settings_query_failed",
+              message: `could not read global voice_limit; falling back to floor: ${globalErr.message}`,
+              requestId,
+              correlationId: requestId,
+              traceId: trace?.traceId,
+              userId: user.id,
+            });
+          }
           const globalDefault = Number.parseInt(globalRow?.value ?? "", 10);
           const limit = profile?.voice_limit ??
             (Number.isFinite(globalDefault) ? globalDefault : 5);
@@ -184,10 +221,25 @@ Deno.serve(async (req) => {
               { limit, usage },
             );
           }
-          await admin
+          const { error: usageErr } = await admin
             .from("profiles")
             .update({ voice_usage_today: usage + 1, last_voice_usage_date: today })
             .eq("id", user.id);
+          // EN-27 P1.8: don't fail the request on a usage-tracking write error (the user should
+          // still get audio), but log it — a silent failure here lets the daily limit drift.
+          if (usageErr) {
+            await persistLog({
+              level: "WARN",
+              category: "DATA_PROCESSING",
+              eventType: "voice_usage_update_failed",
+              message: `voice_usage_today increment failed; limit enforcement may drift: ${usageErr.message}`,
+              requestId,
+              correlationId: requestId,
+              traceId: trace?.traceId,
+              userId: user.id,
+              details: { usage: usage + 1 },
+            });
+          }
         }
 
         // Route through the provider adapter layer (default chain: azure -> gemini).
@@ -205,6 +257,7 @@ Deno.serve(async (req) => {
           preferredProvider: profile?.tts_provider ?? undefined,
           byoKeyRef: profile?.tts_byo_key_ref ?? undefined,
           requestId,
+          userId: user.id,
         });
         return jsonResponse({
           audio: result.audioBase64,

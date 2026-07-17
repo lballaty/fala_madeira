@@ -11,7 +11,29 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../content/repository', () => ({ contentRepository: { listSituations: vi.fn() } }));
-vi.mock('../../services/geminiService', () => ({ synthesizeCached: vi.fn(async () => new ArrayBuffer(8)) }));
+// EN-27 P1.9: audio-download now imports EdgeFunctionError for the deterministic-vs-transient
+// retry split, so the mock must export a compatible class (an `instanceof` target with a `.code`).
+// The class is declared INSIDE the factory — vi.mock is hoisted above top-level declarations, so a
+// top-level class referenced here would be "used before initialization".
+vi.mock('../../services/geminiService', () => {
+  class FakeEdgeFunctionError extends Error {
+    code: string;
+    constructor(code: string, message = code) {
+      super(message);
+      this.name = 'EdgeFunctionError';
+      this.code = code;
+    }
+  }
+  return {
+    synthesizeCached: vi.fn(async () => new ArrayBuffer(8)),
+    EdgeFunctionError: FakeEdgeFunctionError,
+  };
+});
+// Shrink the retry backoff so the transient-retry test doesn't sleep for seconds.
+vi.mock('../../config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../config')>();
+  return { config: { ...actual.config, offline: { ...actual.config.offline, downloadRetryBaseMs: 1, downloadMaxAttempts: 3 } } };
+});
 vi.mock('../audioCache', () => ({
   audioCache: {
     buildKey: vi.fn((provider: string, voice: string, text: string) => `${provider}:${voice}:${text}`),
@@ -23,7 +45,7 @@ vi.mock('../audioCache', () => ({
 vi.mock('../logger', () => ({ logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() } }));
 
 import { contentRepository } from '../../content/repository';
-import { synthesizeCached } from '../../services/geminiService';
+import { synthesizeCached, EdgeFunctionError } from '../../services/geminiService';
 import { audioCache } from '../audioCache';
 import { downloadForOffline } from '../audio-download';
 import type { Situation } from '../../content/schema';
@@ -95,6 +117,43 @@ describe('downloadForOffline', () => {
     const result = await downloadForOffline({}, { signal: AbortSignal.abort() });
     expect(result.status).toBe('cancelled');
     expect(synthesizeCached).not.toHaveBeenCalled();
+  });
+
+  // EN-27 P1.9: deterministic vs transient retry.
+  it('does NOT retry a deterministic edge failure — the clip is attempted once and counted failed', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    vi.mocked(synthesizeCached).mockRejectedValue(new EdgeFunctionError('VOICE_LIMIT_REACHED', 'daily voice limit reached'));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.failed).toBe(1);
+    // The whole point: a deterministic code is attempted exactly ONCE, not maxAttempts times.
+    expect(synthesizeCached).toHaveBeenCalledTimes(1);
+  });
+
+  it('DOES retry a transient failure up to maxAttempts before counting it failed', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Boa tarde'])]);
+    // A plain (non-EdgeFunctionError) failure is transient/unknown → eligible for retry.
+    vi.mocked(synthesizeCached).mockRejectedValue(new Error('network blip'));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.failed).toBe(1);
+    // downloadMaxAttempts is mocked to 3 → three attempts for the one clip.
+    expect(synthesizeCached).toHaveBeenCalledTimes(3);
+  });
+
+  it('retries a transient failure and SUCCEEDS on a later attempt', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Olá'])]);
+    vi.mocked(synthesizeCached)
+      .mockRejectedValueOnce(new Error('blip 1'))
+      .mockResolvedValueOnce(new ArrayBuffer(8));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.synthesized).toBe(1);
+    expect(result.failed).toBe(0);
+    expect(synthesizeCached).toHaveBeenCalledTimes(2);
   });
 });
 

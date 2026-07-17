@@ -17,6 +17,7 @@
 
 import { openDB, IDBPDatabase } from 'idb';
 import { BlobLimits, BlobStoreUsage, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { logger } from '../../lib/logger';
 
 // Legacy names preserved from src/lib/audioCache.ts (pre-adapter) — do not rename,
 // or existing cached audio is orphaned.
@@ -71,9 +72,15 @@ export const createWebStorageAdapter = (): StorageAdapter => {
     }
     try {
       return await dbPromise;
-    } catch {
+    } catch (e) {
       // IndexedDB refused to open (private mode, quota, corrupted profile) —
-      // degrade to localStorage/memory for the rest of the session.
+      // degrade to localStorage/memory for the rest of the session. EN-27 P1.6: this degrade was
+      // silent, so persisted state (offline audio, user prefs) quietly became volatile and vanished
+      // on reload with no trace. Log the downgrade.
+      logger.warn('WEB_STORAGE_INDEXEDDB_UNAVAILABLE', 'IndexedDB unavailable — degrading to localStorage/memory (state will not persist across reloads)', {
+        category: 'DATA_PROCESSING',
+        error: e,
+      });
       idbBroken = true;
       dbPromise = null;
       return null;
