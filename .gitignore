@@ -30,8 +30,10 @@ supabase/backups/*/
 _probe-vocab-hang.mjs
 _probe-inserts.mjs
 
-# Claude Code local settings
+# Claude Code local settings + agent-local state (DF8)
 .claude/settings.local.json
+.claude/version-history.json
+.claude/worktrees/
 
 # Playwright e2e artifacts (generated; never commit the live session state under .auth/)
 tests/e2e/.auth/
