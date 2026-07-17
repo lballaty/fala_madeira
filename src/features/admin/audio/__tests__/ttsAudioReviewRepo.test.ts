@@ -8,7 +8,7 @@
 
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('../../../lib/logger', () => ({
+vi.mock('../../../../lib/logger', () => ({
   logger: {
     error: vi.fn(() => ({ request_id: 'req-test-1234' })),
     warn: vi.fn(() => ({ request_id: 'req-test-1234' })),
