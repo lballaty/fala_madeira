@@ -106,6 +106,15 @@ type Fixtures = {
   admin: AdminSessionInfo;
   /** Interactive-control touch recorder for coverage verification. */
   coverage: CoverageRecorder;
+  /**
+   * Reset the shared throwaway user's mutable per-user state to a deterministic baseline:
+   * zero the daily voice usage and clear the persisted learning-path/goal-track selection.
+   * The suite runs serially on ONE shared user (playwright.config.ts), so durable DB state
+   * (voice_usage_today, user_track_selection) leaks between specs — exhausting the voice
+   * budget and pinning a goal track. State-sensitive specs call this BEFORE landOnHome so the
+   * app boots from a clean baseline. Uses the test user's own RLS-scoped session (self-writes).
+   */
+  resetUserState: () => Promise<void>;
 };
 
 async function seedRoleContext(context: BrowserContext, userId: string): Promise<void> {
@@ -201,6 +210,30 @@ export const test = base.extend<Fixtures>({
     await use(userEvidence);
   },
 
+  resetUserState: async ({ testUser }, use) => {
+    const reset = async () => {
+      const client = makeEvidenceClient(testUser);
+      const { error: authErr } = await client.auth.setSession({
+        access_token: testUser.access_token,
+        refresh_token: testUser.refresh_token,
+      });
+      if (authErr) throw new Error(`resetUserState setSession failed: ${authErr.message}`);
+      // Zero the daily voice budget so audio-driven specs don't inherit an exhausted counter.
+      const { error: voiceErr } = await client
+        .from('profiles')
+        .update({ voice_usage_today: 0, last_voice_usage_date: null })
+        .eq('id', testUser.userId);
+      if (voiceErr) throw new Error(`resetUserState voice reset failed: ${voiceErr.message}`);
+      // Clear any persisted goal-track/path selection so path-sensitive specs start neutral.
+      const { error: trackErr } = await client
+        .from('user_track_selection')
+        .delete()
+        .eq('user_id', testUser.userId);
+      if (trackErr) throw new Error(`resetUserState track clear failed: ${trackErr.message}`);
+    };
+    await use(reset);
+  },
+
   adminEvidence: async ({ admin }, use) => {
     const client = makeEvidenceClient(admin);
     const { error } = await client.auth.setSession({
@@ -232,7 +265,9 @@ export async function landOnHome(page: Page): Promise<void> {
  */
 export async function createThrowawayUserContext(
   browser: { newContext: (options?: Parameters<BrowserContext['storageState']>[0] extends never ? never : any) => Promise<BrowserContext> },
-  origin = 'http://127.0.0.1:4173',
+  // Session localStorage is keyed by origin, so this MUST match the origin the page actually loads
+  // (playwright's baseURL / BASE_URL). Hardcoding a port broke runs served on a non-default port.
+  origin = process.env.BASE_URL || 'http://127.0.0.1:4173',
 ): Promise<{ context: BrowserContext; page: Page; session: SessionInfo }> {
   const creds = makeTestUserCreds();
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {

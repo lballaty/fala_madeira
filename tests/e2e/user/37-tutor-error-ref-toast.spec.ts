@@ -12,7 +12,7 @@ const FORCED_MESSAGE = 'Tutor service unavailable for test';
 
 test.describe('tutor error Ref surface', () => {
   test('free chat shows a calm error toast with Ref when the tutor edge call fails', async ({ page, coverage }) => {
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (body && typeof body === 'object' && 'action' in body && body.action === 'chat') {
         await route.fulfill({

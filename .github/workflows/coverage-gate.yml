@@ -1,0 +1,48 @@
+# File: .github/workflows/coverage-gate.yml
+# Description: CI enforcement of the FalaMadeira coverage-diff gate (AGENTS.md §3 — tests are NOT
+#   optional). Fails a PR or push whose changed range adds/modifies functional code under src/** or
+#   supabase/functions/** without an added/updated test in the same range. Mirrors the local
+#   .githooks/pre-push hook so the rule holds even when a push bypasses the local hook (--no-verify).
+#   Escape hatch: a commit message in the range tagged [skip-coverage: <reason>].
+# Author: Libor Ballaty (with assistant)
+# Created: 2026-07-16
+name: coverage-gate
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+jobs:
+  coverage-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history for range diffs)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Compute range and run coverage gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+            HEAD="${{ github.sha }}"
+          fi
+          # A brand-new branch / first push reports an all-zero base — fall back to the merge-base
+          # with the default branch so the range is meaningful.
+          if [ -z "${BASE}" ] || [ "${BASE}" = "0000000000000000000000000000000000000000" ]; then
+            git fetch origin develop --depth=1 || true
+            BASE="$(git merge-base origin/develop "${HEAD}" 2>/dev/null || git rev-parse "${HEAD}^" 2>/dev/null || echo "${HEAD}")"
+          fi
+          echo "coverage-gate range: ${BASE}..${HEAD}"
+          node scripts/check-test-coverage-diff.mjs --range "${BASE}..${HEAD}"

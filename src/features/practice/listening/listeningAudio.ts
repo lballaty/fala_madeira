@@ -44,7 +44,7 @@ const invokeTts = async (text: string, voiceType: VoiceType): Promise<TtsPayload
     );
   }
 
-  const { data, error } = await supabase.functions.invoke('gemini', {
+  const { data, error } = await supabase.functions.invoke('ai-gateway', {
     // Dialogue lines are curated content → hostable:true so the edge write-back may host them
     // for reuse (EN-8; gated server-side by the env flag + default-rate check).
     body: { action: 'tts', text, voiceType, hostable: true },

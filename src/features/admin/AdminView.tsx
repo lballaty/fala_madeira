@@ -3,8 +3,11 @@
 //   Gated: renders nothing when the profile is not role='admin' (RLS is the real enforcement;
 //   this is the UI gate). Two tabs: Review Queues (lesson_corrections / lesson_requests / tickets /
 //   video_suggestions moderation via useAdminQueues), Content Studio (author/validate/publish
-//   Situations/Tracks/Packs via useContentStudio), and User Access (EN-15 — grant a user content
-//   access by setting their subscription_tier/unlocked_level via useUserAccess). Lazy-loaded from
+//   Situations/Tracks/Packs via useContentStudio), User Access (EN-15 — grant a user content
+//   access by setting their subscription_tier/unlocked_level/voice_limit via useUserAccess), and
+//   Config (EN-25 — global admin config, currently the global daily voice-limit stepper). EN-25
+//   consolidated ALL admin functions here and deleted the legacy Settings "admin mode" panel.
+//   Lazy-loaded from
 //   App.tsx so its data hooks only mount for admins who open it. All data/writes live in the slice
 //   hooks; this file is the shell + tab chrome.
 // Author: Libor Ballaty (with assistant)
@@ -13,7 +16,7 @@
 import { useId, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { ClipboardList, KeyRound, Lock, PenSquare, X } from 'lucide-react';
+import { ClipboardList, KeyRound, Lock, PenSquare, SlidersHorizontal, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { UserProfile } from '../../types';
@@ -25,22 +28,29 @@ import { useUserAccess } from './useUserAccess';
 import { AdminReviewQueues } from './AdminReviewQueues';
 import { ContentStudio } from './ContentStudio';
 import { UserAccessPanel } from './UserAccessPanel';
+import AdminConfigPanel from './AdminConfigPanel';
+import { AudioPanel } from './audio/AudioPanel';
+import { useAudioReview } from './audio/useAudioReview';
 
 interface AdminViewProps {
   supabase: SupabaseClient | null;
   profile: UserProfile | null;
   showToast: ShowToast;
   handleSupabaseError: (error: unknown, operation: string, path: string) => unknown;
+  globalVoiceLimit: number;
+  setGlobalVoiceLimit: (n: number) => void;
   onClose: () => void;
 }
 
-type AdminTab = 'queues' | 'studio' | 'access';
+type AdminTab = 'queues' | 'studio' | 'access' | 'config' | 'audio';
 
 export default function AdminView({
   supabase,
   profile,
   showToast,
   handleSupabaseError,
+  globalVoiceLimit,
+  setGlobalVoiceLimit,
   onClose,
 }: AdminViewProps) {
   const isAdmin = profile?.role === 'admin';
@@ -60,6 +70,7 @@ export default function AdminView({
     showToast,
     handleSupabaseError,
   });
+  const audio = useAudioReview({ supabase, isAdmin: !!isAdmin, actorId: profile?.id ?? null, showToast });
 
   // Trap focus within the admin overlay while it's mounted (admins only); Escape closes it.
   useFocusTrap(dialogRef, !!isAdmin, onClose);
@@ -122,12 +133,34 @@ export default function AdminView({
         >
           <KeyRound className="w-4 h-4" /> User Access
         </button>
+        <button
+          onClick={() => setTab('audio')}
+          data-testid="admin-tab-audio"
+          className={cn(
+            'flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-bold',
+            tab === 'audio' ? 'text-ios-blue border-b-2 border-ios-blue' : 'text-ios-gray',
+          )}
+        >
+          <Volume2 className="w-4 h-4" /> Audio
+        </button>
+        <button
+          onClick={() => setTab('config')}
+          data-testid="admin-tab-config"
+          className={cn(
+            'flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-bold',
+            tab === 'config' ? 'text-ios-blue border-b-2 border-ios-blue' : 'text-ios-gray',
+          )}
+        >
+          <SlidersHorizontal className="w-4 h-4" /> Config
+        </button>
       </nav>
 
       <main className="flex-1 overflow-y-auto no-scrollbar px-5 py-5">
         {tab === 'queues' && <AdminReviewQueues queues={queues} />}
         {tab === 'studio' && <ContentStudio studio={studio} />}
         {tab === 'access' && <UserAccessPanel access={access} />}
+        {tab === 'audio' && <AudioPanel audio={audio} />}
+        {tab === 'config' && <AdminConfigPanel globalVoiceLimit={globalVoiceLimit} setGlobalVoiceLimit={setGlobalVoiceLimit} />}
       </main>
     </motion.div>
   );

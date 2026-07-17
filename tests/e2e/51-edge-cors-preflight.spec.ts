@@ -20,7 +20,7 @@ const CLIENT_REQUEST_HEADERS = ['authorization', 'apikey', 'x-client-info', 'con
 
 // All edge functions the client invokes (they share _shared/http.ts corsHeaders, but each is
 // deployed independently, so a stale single function is possible).
-const EDGE_FUNCTIONS = ['gemini', 'log-sink', 'delete-account'];
+const EDGE_FUNCTIONS = ['ai-gateway', 'log-sink', 'delete-account'];
 
 test.describe('edge CORS preflight (real, unmocked)', () => {
   for (const fn of EDGE_FUNCTIONS) {

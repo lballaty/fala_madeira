@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/08-observability/OBSERVABILITY-CONTRACT.md
 **Description:** Canonical methodology for error handling, event logging, tracing, and auditing across the FalaMadeira client, edge functions, and database. Instance of the cross-repo observability doctrine (agentic-operating-standard.md § "Centralized error handling and observability"). Codifies the existing implementation, records the design decisions that were never written down, and defines the gaps that the companion plan (`plans/plan-2026-07-14-observability.yaml`) closes.
-**Author:** Observability design (with assistant)
+**Author:** Observability design
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-14
 **Last Updated By:** observability methodology design

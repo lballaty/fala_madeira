@@ -39,7 +39,7 @@ test.describe('observability: TTS fallback to device speech', () => {
       }
     });
 
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (body && typeof body === 'object' && body.action === 'chat') {
         await route.fulfill({

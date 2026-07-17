@@ -21,10 +21,24 @@ import { contentRepository, SituationFilter } from '../content/repository';
 import { PracticalLevel } from '../content/schema';
 import { AudioLine, linesForSituation } from '../content/lines';
 import { resolveVoice } from './voiceType';
-import { synthesizeCached, OfflineStorageFullError } from '../services/geminiService';
+import { synthesizeCached, OfflineStorageFullError, EdgeFunctionError } from '../services/geminiService';
 import { audioCache, readCacheLimitBytes } from './audioCache';
 import { logger } from './logger';
 import { config } from '../config';
+
+// EN-27 P1.9: edge error codes that will NOT succeed on retry within a run — retrying them just
+// multiplies load (e.g. re-hitting a downed TTS provider once per clip across a whole-level
+// download). synthesizeCached's transport layer already retries transient network/5xx; anything
+// that surfaces here as one of these is deterministic-for-this-run and should fail the clip fast.
+// Anything else (network error that escaped, unknown code) still gets the bounded retry+backoff.
+const DETERMINISTIC_DOWNLOAD_CODES = new Set([
+  'VOICE_LIMIT_REACHED',
+  'UNAUTHENTICATED',
+  'EDGE_FN_UNCONFIGURED',
+  'BAD_REQUEST',
+  'PROFILE_QUERY_FAILED',
+  'TTS_UNAVAILABLE',
+]);
 
 // ---------------------------------------------------------------------------
 // Public types
@@ -76,7 +90,11 @@ export interface DownloadHandlers {
 }
 
 // AudioLine + linesForSituation moved to ../content/lines (pure, shared with the Node pre-gen
-// script and imported above). Only the orchestration helpers stay here.
+// script and the audit round-trip). Only the download orchestration stays here. Re-exported below
+// (EN-23): the admin audio panel imports the enumeration from this module — the canonical pure
+// definition lives in ../content/lines, so this keeps a single source of truth for the walk.
+export { linesForSituation };
+export type { AudioLine };
 
 const newCorrelationId = (): string =>
   typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
@@ -190,13 +208,18 @@ export const downloadForOffline = async (
             });
             break;
           }
-          if (attempt >= maxAttempts || signal?.aborted) {
+          // EN-27 P1.9: don't retry deterministic failures (bad input, auth, voice-cap, server TTS
+          // down) — they will fail identically every attempt. Fail the clip immediately instead of
+          // burning maxAttempts backoffs per clip across the whole run.
+          const errorCode = error instanceof EdgeFunctionError ? error.code : undefined;
+          const deterministic = errorCode !== undefined && DETERMINISTIC_DOWNLOAD_CODES.has(errorCode);
+          if (deterministic || attempt >= maxAttempts || signal?.aborted) {
             failed += 1;
-            logger.error('OFFLINE_DOWNLOAD_CLIP_FAILED', `failed to synthesize a clip after ${attempt} attempt(s) — continuing`, {
+            logger.error('OFFLINE_DOWNLOAD_CLIP_FAILED', `failed to synthesize a clip after ${attempt} attempt(s)${deterministic ? ' (deterministic — not retried)' : ''} — continuing`, {
               category: 'AI_DECISION',
               correlationId,
               error,
-              details: { textLength: line.text.length, voiceType: line.voiceType, attempts: attempt },
+              details: { textLength: line.text.length, voiceType: line.voiceType, attempts: attempt, errorCode, deterministic },
             });
             break;
           }
@@ -205,7 +228,7 @@ export const downloadForOffline = async (
             category: 'AI_DECISION',
             correlationId,
             error,
-            details: { attempt, maxAttempts, backoffMs },
+            details: { attempt, maxAttempts, backoffMs, errorCode },
           });
           await sleep(backoffMs);
         }

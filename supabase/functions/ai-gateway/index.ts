@@ -1,6 +1,8 @@
-// File: supabase/functions/gemini/index.ts
+// File: supabase/functions/ai-gateway/index.ts
 // Description: Authenticated server-side AI proxy (chat, generate-lesson, translate,
-//   scenario-generator, error-analyst, tts).
+//   scenario-generator, error-analyst, tts). Renamed from `gemini` (2026-07-16) — the name was a
+//   historical artifact; this is the app's general AI/voice edge, not Gemini-specific (TTS routes
+//   through a provider chain: azure/google/polly/gemini).
 //   Verifies the caller's Supabase JWT and enforces daily voice limits server-side. Provider
 //   API keys never leave the server. Actions are selected via the `action` field in the JSON
 //   body. The tts action routes through the provider adapter layer (_shared/tts/router.ts,
@@ -21,6 +23,7 @@ import {
   type TutorLike,
 } from "../_shared/gemini.ts";
 import { routeTts } from "../_shared/tts/router.ts";
+import { resolveVoiceLimit } from "./voiceLimit.ts";
 import { TtsUnavailableError } from "../_shared/tts/types.ts";
 import { buildKey, keyToServerPath } from "../_shared/audioKey.ts";
 import { uploadTtsClip } from "../_shared/audioStore.ts";
@@ -147,7 +150,7 @@ Deno.serve(async (req) => {
 
         // --- Server-side voice-limit enforcement ---
         const admin = createClient(supabaseUrl, serviceKey);
-        const { data: profile } = await admin
+        const { data: profile, error: profileErr } = await admin
           .from("profiles")
           .select(
             "subscription_tier, voice_limit, voice_usage_today, last_voice_usage_date, " +
@@ -156,38 +159,85 @@ Deno.serve(async (req) => {
           .eq("id", user.id)
           .single();
 
+        // EN-27 P1.8: this read gates entitlement (tier, limit, provider). A silent failure here
+        // used to drop the user to free-tier/limit-5 defaults with no trace. Fail loudly instead.
+        if (profileErr) {
+          await persistLog({
+            level: "ERROR",
+            category: "DATA_PROCESSING",
+            eventType: "profile_query_failed",
+            message: `could not load profile for voice-limit enforcement: ${profileErr.message}`,
+            requestId,
+            correlationId: requestId,
+            traceId: trace?.traceId,
+            userId: user.id,
+            details: { action },
+          });
+          return errorResponse(
+            "PROFILE_QUERY_FAILED",
+            "Could not load your settings. Please try again.",
+            500,
+            requestId,
+            { traceId: trace?.traceId },
+          );
+        }
+
         const today = new Date().toISOString().slice(0, 10);
         const tier = profile?.subscription_tier ?? "free";
         const unlimited = tier === "premium" || tier === "unlimited";
 
         if (!unlimited) {
-          let usage = profile?.voice_usage_today ?? 0;
-          if (profile?.last_voice_usage_date !== today) usage = 0;
-          // TB-8/EN-11: limit precedence = per-user override (profiles.voice_limit)
-          // -> GLOBAL default (global_settings.voice_limit, the admin-set source of truth)
-          // -> hard floor 5. Previously hardcoded `?? 5`, which ignored the global 20 and
-          // silently capped every user at 5 (forbidden hardcoded-fallback).
-          const { data: globalRow } = await admin
+          // TB-8/EN-11 limit precedence (per-user -> global -> floor) + daily reset live in the pure,
+          // unit-tested resolveVoiceLimit. Here we only do the DB reads/writes + persistLog wiring.
+          const { data: globalRow, error: globalErr } = await admin
             .from("global_settings")
             .select("value")
             .eq("key", "voice_limit")
             .maybeSingle();
-          const globalDefault = Number.parseInt(globalRow?.value ?? "", 10);
-          const limit = profile?.voice_limit ??
-            (Number.isFinite(globalDefault) ? globalDefault : 5);
-          if (usage >= limit) {
+          // EN-27 P1.8: a query error here silently floors the limit (degradation is acceptable —
+          // TTS should still work — but log it so the drift is visible).
+          if (globalErr) {
+            await persistLog({
+              level: "WARN",
+              category: "DATA_PROCESSING",
+              eventType: "global_settings_query_failed",
+              message: `could not read global voice_limit; falling back to floor: ${globalErr.message}`,
+              requestId,
+              correlationId: requestId,
+              traceId: trace?.traceId,
+              userId: user.id,
+            });
+          }
+
+          const decision = resolveVoiceLimit(profile, globalRow?.value, today);
+          if (!decision.allowed) {
             return errorResponse(
               "VOICE_LIMIT_REACHED",
-              `Daily voice limit of ${limit} reached. Upgrade for unlimited practice.`,
+              `Daily voice limit of ${decision.limit} reached. Upgrade for unlimited practice.`,
               429,
               requestId,
-              { limit, usage },
+              { limit: decision.limit, usage: decision.usage },
             );
           }
-          await admin
+          const { error: usageErr } = await admin
             .from("profiles")
-            .update({ voice_usage_today: usage + 1, last_voice_usage_date: today })
+            .update({ voice_usage_today: decision.nextUsage, last_voice_usage_date: today })
             .eq("id", user.id);
+          // EN-27 P1.8: don't fail the request on a usage-tracking write error (the user should
+          // still get audio), but log it — a silent failure here lets the daily limit drift.
+          if (usageErr) {
+            await persistLog({
+              level: "WARN",
+              category: "DATA_PROCESSING",
+              eventType: "voice_usage_update_failed",
+              message: `voice_usage_today increment failed; limit enforcement may drift: ${usageErr.message}`,
+              requestId,
+              correlationId: requestId,
+              traceId: trace?.traceId,
+              userId: user.id,
+              details: { usage: decision.nextUsage },
+            });
+          }
         }
 
         // Route through the provider adapter layer (default chain: azure -> gemini).
@@ -205,6 +255,7 @@ Deno.serve(async (req) => {
           preferredProvider: profile?.tts_provider ?? undefined,
           byoKeyRef: profile?.tts_byo_key_ref ?? undefined,
           requestId,
+          userId: user.id,
         });
         // EN-8 server write-back (COORD-2 BLOCKING-1/BLOCKING-2 + minor-c): host the clip in the
         // Supabase buffer ONLY when the caller marked it curated (body.hostable === true), the env

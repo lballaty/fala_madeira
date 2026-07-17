@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/SESSION-HANDOFF-2026-07-11.md
 **Description:** Superset handoff for the full-product build sessions: plan execution (56/56 steps), v1.0.0 launch to https://falamadeira.searchingfool.com, and the post-launch live-testing bug queue. Read this + the files in §1 to resume without chat history.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-11
 **Last Updated:** 2026-07-11
 **Last Updated By:** session handoff

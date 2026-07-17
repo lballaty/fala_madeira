@@ -1,0 +1,290 @@
+# File: plans/plan-2026-07-17-en27-error-hardening.yaml
+# Description: Executable plan for EN-27 — eliminate every verified quiet-failure path (P0–P3) across
+#   src/** and supabase/functions/**, AND harden the test/enforcement layer so each quiet-failure
+#   CLASS is caught automatically going forward. Findings + file:line evidence live in
+#   docs/TESTER-FEEDBACK-TRACKER.md (EN-27). Consumed by /execute-plan-autonomously (topological DAG,
+#   resumable via plans/.plan-state-en27.yaml).
+# Author: Claude (Opus 4.8) with owner approval 2026-07-17
+# Created: 2026-07-17
+#
+# NON-GOALS / GUARDRAILS (owner standing rules):
+#   - NO deploys. This plan WRITES + COMMITS code only. Edge changes reach users on the next
+#     OPERATOR-run deploy; migrations are not involved (EN-27 is code-level, zero schema change).
+#   - Runs in a DEDICATED worktree off origin/develop (fix/en27-error-hardening) so it never yanks
+#     the shared checkout. Edge files are Lane-B-adjacent — reserve via queuectl before editing.
+#   - HARD CODE HYGIENE: all written source is clean UTF-8; NEVER a raw control byte (NUL) in a
+#     string literal — use escapes. (A prior task shipped a raw NUL and flagged a file binary.)
+#   - Per AGENTS §3: every fix ships with a test that would FAIL pre-fix and PASS post-fix.
+#   - Incremental commits: one path-form commit per work package as its validation passes — never
+#     batch. NO Co-Authored-By trailer.
+#   - Shell state does NOT persist between steps: every command re-declares WT and uses
+#     `git -C "$WT"` / `npm --prefix "$WT"` (avoids the cd-guard, runs the gate on the clean tree).
+#
+# WORK-PACKAGE DECOMPOSITION (disjoint write scopes → parallel-assignable):
+#   WP-A  Edge error paths        owns supabase/functions/**              (a1,a2,a3,a-test,a-commit)
+#   WP-B  Platform adapters       owns src/platform/**                    (b1..b5,b-test,b-commit)
+#   WP-C  Client lib + features   owns src/lib/**, src/features/{learning,home}/**, src/content/**
+#   WP-D  Enforcement gates       owns scripts/**                         (depends A+B+C landed)
+#   WP-Z  Full regression + push  read-only over the tree                 (depends D)
+
+plan:
+  title: >
+    EN-27 — eliminate every verified quiet-failure path (P0–P3) across the client, platform adapters,
+    and edge functions, and ratchet the observability/standards gates + unit/e2e tests so each
+    quiet-failure class is caught automatically in future.
+
+  goal_validation:
+    - "node \"$WT/scripts/check-observability.mjs\" --strict exits 0 (zero BARE-CONSOLE in edge/client error paths — the router.ts:160/237 + any regression are gone)."
+    - "npm --prefix \"$WT\" run test:run passes, INCLUDING the new tests: deleteUserData partial-failure, web-audio onerror logging, web-storage IndexedDB-degrade logging, audio-download deterministic-vs-transient retry, logger droppedCount self-observability."
+    - "npm --prefix \"$WT\" run test:e2e:coverage exits 0 and a new e2e proves the Suggest-Video silent guard now surfaces a Ref toast instead of a no-op."
+    - "bash \"$WT/scripts/preflight.sh\" passes with observability promoted to a HARD stage (--strict) and the new silent-no-op-guard standards check present."
+    - "grep proves: delete-account checks each delete's error + persistLog on partial failure; tts/router.ts uses persistLog (not console-only); web/audio.web.ts onerror logs; native storage/speech + web storage log before returning null / degrading; audio-download inspects EdgeFunctionError.code before retry; useLessonModals Suggest-Video guard logs+toasts; log-sink no longer returns raw dbMessage to the client."
+    - "git -C \"$WT\" log shows one path-form commit per work package (A,B,C,D), no Co-Authored-By trailer; branch pushed to origin/fix/en27-error-hardening."
+
+  steps:
+    # ============================================================ PHASE 0 — setup
+    - id: setup-worktree
+      description: "Create the dedicated fix/en27-error-hardening worktree off the latest origin/develop, install deps, and reserve the edge files (Lane-B-adjacent) via the coordination queue."
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        BASE="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira";
+        git -C "$BASE" fetch origin -q &&
+        (git -C "$BASE" worktree add "$WT" -b fix/en27-error-hardening origin/develop 2>/dev/null || git -C "$BASE" worktree add "$WT" fix/en27-error-hardening) &&
+        npm --prefix "$WT" ci &&
+        queuectl reserve --agent en27-exec --working-on "EN-27 error-hardening: edge+platform+client+gates" --files "$WT/supabase/functions/delete-account/index.ts" "$WT/supabase/functions/_shared/tts/router.ts" "$WT/supabase/functions/ai-gateway/index.ts" "$WT/supabase/functions/log-sink/index.ts" || true
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; test -d \"$WT/node_modules\" && git -C \"$WT\" rev-parse --abbrev-ref HEAD | grep -qx fix/en27-error-hardening"
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: baseline-gates
+      description: "Capture the pre-fix baseline so the plan can prove reduction: run the observability checker (WARN) and archive its report; record that --strict currently FAILS (router.ts:160/237). Non-fatal: this is evidence capture, not a gate."
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        node "$WT/scripts/check-observability.mjs" > "$WT/artifacts/en27-baseline-observability.txt" 2>&1 || true;
+        (node "$WT/scripts/check-observability.mjs" --strict > /dev/null 2>&1 && echo "PRE-FIX STRICT: unexpectedly clean" || echo "PRE-FIX STRICT: fails as expected (router console-only)") >> "$WT/artifacts/en27-baseline-observability.txt"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; test -f \"$WT/artifacts/en27-baseline-observability.txt\""
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    # ============================================================ PHASE 1 — WP-A edge error paths
+    - id: a1-delete-account-extract
+      description: "P0.1 (privacy/GDPR): delete-account/index.ts:38-44 runs 7 un-destructured `await admin.from(t).delete()` calls; supabase-js returns PostgREST failures in {error} WITHOUT throwing, so a failed table delete is invisible, never reaches the catch, and the function still returns {deleted:true}. Extract the orchestration into a NEW runtime-agnostic pure module supabase/functions/_shared/deleteUserData.ts exporting `deleteUserData(exec, uid, uidText)` where `exec(table, col, val) => Promise<{error: unknown}>`; it awaits each delete, and on the FIRST {error} returns {ok:false, failedTable, error} WITHOUT continuing — never {ok:true} on a failure. Rewrite delete-account/index.ts to call it (exec = admin.from(t).delete().eq(col,val)); on {ok:false} persistLog(level ERROR, category SECURITY, eventType 'account_delete_step_failed', details {failedTable, stepsCompleted}) and return errorResponse('DELETE_FAILED', ...500...); only after {ok:true} run auth.admin.deleteUser + return {deleted:true}. Zero Deno imports in deleteUserData.ts (pure) so vitest can load it."
+      command: "agent-task: create supabase/functions/_shared/deleteUserData.ts (pure, injected exec, fail-fast on first {error}) and rewrite supabase/functions/delete-account/index.ts to use it with per-step persistLog + errorResponse on partial failure"
+      validation: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        test -f "$WT/supabase/functions/_shared/deleteUserData.ts" &&
+        grep -q "deleteUserData" "$WT/supabase/functions/delete-account/index.ts" &&
+        grep -q "account_delete_step_failed" "$WT/supabase/functions/delete-account/index.ts" &&
+        ! grep -Pzoq "await admin\.from\(\"lessons\"\)\.delete\(\)\.eq[^\n]*\n\s*await admin\.from\(\"lesson_requests\"\)" "$WT/supabase/functions/delete-account/index.ts"
+      depends_on: [setup-worktree]
+      fatal_on_failure: true
+
+    - id: a2-tts-router-persistlog
+      description: "P0.2 (ops-blind, the EF-37 root): supabase/functions/_shared/tts/router.ts:160 (TTS_BYO_KEY_REF_UNRESOLVED, WARN) and :237 (TTS_PROVIDER_FAILED, ERROR) log via console.* only, so the 66/66 503 storm left ZERO rows in public.logs. Thread the request's userId + persistLog into the router (add to RouteTtsRequest or pass a persist callback from ai-gateway), and at BOTH sites call `await persistLog({...})` with provider, voice/voiceType, status/error, attempt, requestId, userId — KEEP the console.* line too (edge stdout is still useful). Ensure a full-chain exhaustion (all providers fail) yields at least one persisted ERROR row so ops can query a rate-limit storm."
+      command: "agent-task: thread persistLog+userId into supabase/functions/_shared/tts/router.ts and replace the two console-only sites (:160 WARN, :237 ERROR) with persistLog calls carrying provider/status/attempt/requestId/userId"
+      validation: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        grep -q "persistLog" "$WT/supabase/functions/_shared/tts/router.ts" &&
+        [ "$(grep -cE 'console\.(warn|error)' "$WT/supabase/functions/_shared/tts/router.ts")" -le 2 ] &&
+        grep -q "TTS_PROVIDER_FAILED" "$WT/supabase/functions/_shared/tts/router.ts"
+      depends_on: [setup-worktree]
+      fatal_on_failure: true
+
+    - id: a3-aigateway-logsink
+      description: "P1.8 + P2: (a) supabase/functions/ai-gateway/index.ts:150 profiles .single() and :187 usage-update, plus the global_settings query, are un-destructured — a DB failure silently drops the user to free-tier / limit-5. Destructure {error} on each; on error persistLog(ERROR, DATA_PROCESSING, 'profile_query_failed'/'voice_usage_update_failed') and, for the profile read that gates entitlement, return errorResponse('PROFILE_QUERY_FAILED',...500). (b) supabase/functions/log-sink/index.ts:~161 returns raw error.message as `dbMessage` in the client envelope — remove dbMessage from the client response (keep the console.error for ops)."
+      command: "agent-task: add {error} checks + persistLog to ai-gateway profile/global_settings/usage queries; strip dbMessage from log-sink's client error envelope"
+      validation: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        grep -q "profile_query_failed" "$WT/supabase/functions/ai-gateway/index.ts" &&
+        ! grep -q "dbMessage" "$WT/supabase/functions/log-sink/index.ts"
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    - id: a-test-deleteuserdata
+      description: "Guard P0.1 forever: add supabase/functions/_shared/__tests__/deleteUserData.test.ts (vitest) that drives deleteUserData with a fake exec — (1) all-succeed → {ok:true}; (2) a mid-sequence {error} → {ok:false, failedTable:<the failing one>} AND proves later tables were NOT attempted AND ok is never true on failure. Extend vitest.config.ts `include` to cover 'supabase/functions/**/*.{test,spec}.ts' (the pure module has no Deno imports, so vitest loads it). This test FAILS against the old inline delete loop (which had no failable unit) and PASSES against deleteUserData."
+      command: "agent-task: write supabase/functions/_shared/__tests__/deleteUserData.test.ts and extend vitest.config.ts include to scan supabase/functions/**"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; npm --prefix \"$WT\" run test:run -- deleteUserData 2>&1 | grep -Eq '([1-9][0-9]* passed|Tests.*passed)'"
+      depends_on: [a1-delete-account-extract]
+      fatal_on_failure: true
+
+    - id: a-commit
+      description: "Commit WP-A (edge error paths) as one path-form commit, no Co-Authored-By."
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        git -C "$WT" add supabase/functions/_shared/deleteUserData.ts supabase/functions/_shared/__tests__/deleteUserData.test.ts vitest.config.ts &&
+        git -C "$WT" commit supabase/functions/delete-account/index.ts supabase/functions/_shared/tts/router.ts supabase/functions/ai-gateway/index.ts supabase/functions/log-sink/index.ts supabase/functions/_shared/deleteUserData.ts supabase/functions/_shared/__tests__/deleteUserData.test.ts vitest.config.ts -m "fix(edge): EN-27 WP-A — no quiet failures in edge error paths"$'\n\n'"delete-account: per-delete {error} checks via extracted pure deleteUserData (was reporting {deleted:true} on partial failure — privacy class) + persistLog on the failing step. tts router: console-only -> persistLog at both sites (the EF-37 503 storm left zero public.logs rows). ai-gateway: check profile/global_settings/usage query errors. log-sink: stop leaking raw dbMessage to clients. + deleteUserData partial-failure unit test."
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; git -C \"$WT\" log -1 --pretty=%s | grep -q 'EN-27 WP-A' && ! git -C \"$WT\" log -1 --pretty=%B | grep -qi 'Co-Authored-By'"
+      depends_on: [a1-delete-account-extract, a2-tts-router-persistlog, a3-aigateway-logsink, a-test-deleteuserdata]
+      fatal_on_failure: true
+
+    # ============================================================ PHASE 2 — WP-B platform adapters
+    - id: b1-web-audio
+      description: "P0.3: src/platform/web/audio.web.ts:176 `utterance.onerror = () => options?.onEnded?.()` — the device-speech fallback of last resort failing = silence reported as success, unlogged. Log logger.error('WEB_SPEECH_SYNTHESIS_ERROR', ..., {category SYSTEM_HEALTH, details:{error: utterance.error?.error}}) BEFORE calling onEnded. Also the resume() catch (~:193) re-throws PlatformError without logging — add logger.error there too."
+      command: "agent-task: add logger.error to src/platform/web/audio.web.ts onerror (before onEnded) and to the resume() catch (before throw)"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -q 'WEB_SPEECH_SYNTHESIS_ERROR' \"$WT/src/platform/web/audio.web.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: true
+
+    - id: b2-native-storage
+      description: "P0.4 (TB-9 symptom shape): src/platform/native/storage.native.ts get() JSON-parse catch (~:160) and getBlob() read catch (:199-213) return null identical to 'absent' — corrupt offline audio/user state looks like 'nothing saved'. Log logger.warn/error with {key} BEFORE returning null in both, and in listBlobFileNames/listBlobStats (~:90-115) log before returning []. Distinguish read-error from empty in the log message (expected vs actual)."
+      command: "agent-task: add logger.warn/error (with key) before every null/[] return in src/platform/native/storage.native.ts read paths"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; [ \"$(grep -c 'logger\\.' \"$WT/src/platform/native/storage.native.ts\")\" -ge 3 ] && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: true
+
+    - id: b3-native-speech
+      description: "P0.5 (TB-6/TB-10 symptom shapes): src/platform/native/speech.native.ts — :87 availability-probe catch (silent), :116 emitFinalFromCache catch routes to noMatchCb() (user's speech WAS captured then lost, surfaces as 'no speech'), :268 stop() catch -> fail() without a logger call. Add logger.warn/error (NATIVE_SPEECH_PROBE_FAILED / NATIVE_SPEECH_FINAL_TRANSCRIPT_FETCH_FAILED / NATIVE_SPEECH_STOP_FAILED) with the error BEFORE the callback/fallback at all three sites. Keep behavior (still fall back), just make it visible."
+      command: "agent-task: add logger calls before the callback/fallback at src/platform/native/speech.native.ts:87, :116, :268"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -q 'NATIVE_SPEECH_FINAL_TRANSCRIPT_FETCH_FAILED' \"$WT/src/platform/native/speech.native.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: true
+
+    - id: b4-web-storage-idb
+      description: "P1.6: src/platform/web/storage.web.ts:72-80 — IndexedDB open failure silently degrades to localStorage/memory (state lost on reload), unlogged. Add logger.warn('WEB_STORAGE_INDEXEDDB_UNAVAILABLE', 'IndexedDB unavailable; degrading to localStorage/memory', {category DATA_PROCESSING, error}) before setting idbBroken = true."
+      command: "agent-task: add logger.warn before the idbBroken degrade in src/platform/web/storage.web.ts"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -q 'WEB_STORAGE_INDEXEDDB_UNAVAILABLE' \"$WT/src/platform/web/storage.web.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    - id: b5-speech-fallback
+      description: "P1.7: src/platform/speech-fallback.ts:107 (startRecording fail) and :137 (stop/transcribe fail) route errors to an OPTIONAL errorCb only — if unbound, the failure vanishes. Add logger.error('CLOUD_SPEECH_START_RECORDING_FAILED' / 'CLOUD_SPEECH_TRANSCRIPTION_FAILED', ..., {error}) before calling errorCb at both sites."
+      command: "agent-task: add logger.error before errorCb at src/platform/speech-fallback.ts:107 and :137"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -q 'CLOUD_SPEECH_TRANSCRIPTION_FAILED' \"$WT/src/platform/speech-fallback.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    - id: b-test-adapters
+      description: "Guard the adapter class: (1) extend src/platform/web/__tests__/audio.web.test.ts to assert that when SpeechSynthesisUtterance fires onerror, logger.error is called with WEB_SPEECH_SYNTHESIS_ERROR (mock logger, fire the utterance.onerror). (2) add src/platform/web/__tests__/storage.web.test.ts asserting that when openDB rejects, logger.warn('WEB_STORAGE_INDEXEDDB_UNAVAILABLE') fires and the adapter degrades (returns null db, does not throw). Both are jsdom-testable. Native adapters (Deno/Capacitor) are not jsdom-loadable — note that as a coverage gap in the test file header, covered instead by the observability --strict gate + the logger-call greps in b2/b3 validation."
+      command: "agent-task: extend audio.web.test.ts (onerror logs) and add storage.web.test.ts (idb-degrade logs) under src/platform/web/__tests__/"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; npm --prefix \"$WT\" run test:run -- platform/web 2>&1 | grep -Eq '([1-9][0-9]* passed|Tests.*passed)'"
+      depends_on: [b1-web-audio, b4-web-storage-idb]
+      fatal_on_failure: false
+
+    - id: b-commit
+      description: "Commit WP-B (platform adapters) as one path-form commit, no Co-Authored-By."
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        git -C "$WT" add src/platform/web/__tests__/storage.web.test.ts 2>/dev/null;
+        git -C "$WT" commit src/platform/web/audio.web.ts src/platform/native/storage.native.ts src/platform/native/speech.native.ts src/platform/web/storage.web.ts src/platform/speech-fallback.ts src/platform/web/__tests__/audio.web.test.ts src/platform/web/__tests__/storage.web.test.ts -m "fix(platform): EN-27 WP-B — adapters log before degrading, never silent"$'\n\n'"web audio onerror = silence-as-success -> logs (SYSTEM_HEALTH). native storage/speech read+probe+transcript-fetch failures logged before null/noMatch fallback (TB-6/9/10 symptom shapes). web IndexedDB degrade logged. speech-fallback errors logged before the optional errorCb. + web-audio onerror + web-storage idb-degrade unit tests."
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; git -C \"$WT\" log -1 --pretty=%s | grep -q 'EN-27 WP-B'"
+      depends_on: [b1-web-audio, b2-native-storage, b3-native-speech, b4-web-storage-idb, b5-speech-fallback, b-test-adapters]
+      fatal_on_failure: true
+
+    # ============================================================ PHASE 3 — WP-C client lib + features
+    - id: c1-audio-download-retry
+      description: "P1.9: src/lib/audio-download.ts:236-256 retries every failure config.offline.downloadMaxAttempts times, including deterministic 4xx (bad input/auth) thrown as EdgeFunctionError with .code. Before the retry decision, inspect the error: if it is an EdgeFunctionError whose code is a deterministic class (e.g. VOICE_LIMIT_REACHED, UNAUTHENTICATED, or any 4xx-mapped code), fail immediately (log OFFLINE_DOWNLOAD_CLIP_FAILED with errorCode) instead of retrying; keep retry+backoff for transient/unknown. Add errorCode to the retry log details."
+      command: "agent-task: add deterministic-vs-transient branching (inspect EdgeFunctionError.code) to the audio-download retry loop"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -Eq 'code|EdgeFunctionError' \"$WT/src/lib/audio-download.ts\" && grep -q 'errorCode' \"$WT/src/lib/audio-download.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    - id: c2-repository-usehome
+      description: "P2: (a) src/content/repository.ts:409 `void refreshInternal(correlationId).catch(() => undefined)` swallows a degraded-cache background refresh failure — replace with .catch(e => logger.warn('CONTENT_REFRESH_BACKGROUND_FAILED', ..., {correlationId, error:e})). (b) src/features/home/useHome.ts:295 (persist) and :303 (load) log but the user never learns their streak-freeze balance is evaporating — on the PERSIST failure add a calm one-time showToast (e.g. 'Offline — streak-freeze will sync when you reconnect'); keep the existing logger.warn."
+      command: "agent-task: log the repository.ts:409 background-refresh swallow; add a user-visible toast to the useHome streak-freeze persist failure"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -q 'CONTENT_REFRESH_BACKGROUND_FAILED' \"$WT/src/content/repository.ts\" && ! grep -q 'catch(() => undefined)' \"$WT/src/content/repository.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    - id: c3-lessonmodals-guard
+      description: "P1.10 (TB-15 class, user-facing): src/features/learning/useLessonModals.ts:87 `handleSuggestVideo` begins `if (!selectedLesson || !supabase || !user) return;` — a user taps Suggest Video and nothing happens, no log, no toast. Split the guard: a missing-session/offline case (supabase/user) logs logger.warn + showToast a calm Ref message; a missing-selectedLesson case is a programmer-guard (should be unreachable — the button only renders in a lesson) so log logger.warn but no toast. Do NOT silently return."
+      command: "agent-task: replace the silent guard in useLessonModals.handleSuggestVideo with logged + toasted branches"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -q 'handleSuggestVideo' \"$WT/src/features/learning/useLessonModals.ts\" && ! grep -Pzoq 'handleSuggestVideo = async \\(\\) => \\{\\s*\\n\\s*if \\(!selectedLesson \\|\\| !supabase \\|\\| !user\\) return;' \"$WT/src/features/learning/useLessonModals.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    - id: c4-logger-selfobs
+      description: "P2: src/lib/logger.ts:114-165 — persist-queue requeue truncation (batch.slice(0, MAX - len)) and ring-buffer overflow (ringBuffer.shift()) drop events with no counter, so the diagnostic-logs export silently omits data. Add a module-level droppedCount (incremented on each drop/truncation), and expose it via a new logger.getDiagnostics() (or extend the existing ring-buffer getter) so SupportModal/log export can report 'N events dropped (buffer/persist overflow)'. Do NOT re-enter the logger from inside the drop path (no logger.* call there — just increment)."
+      command: "agent-task: add droppedCount + getDiagnostics() to src/lib/logger.ts, incrementing on ring-buffer shift and persist-queue truncation"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -Eq 'droppedCount|getDiagnostics' \"$WT/src/lib/logger.ts\" && npm --prefix \"$WT\" run lint"
+      depends_on: [setup-worktree]
+      fatal_on_failure: false
+
+    - id: c-test-client
+      description: "Guard the client classes: (1) src/lib/__tests__/audio-download.test.ts (extend or add) — a deterministic EdgeFunctionError (e.g. code VOICE_LIMIT_REACHED) is attempted ONCE (no retry); a transient error retries up to maxAttempts. (2) src/lib/__tests__/logger.test.ts (extend) — forcing >ringBufferMax events increments droppedCount and getDiagnostics() reports it. Both are pure vitest."
+      command: "agent-task: add/extend vitest for audio-download deterministic-vs-transient retry and logger droppedCount"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; npm --prefix \"$WT\" run test:run -- 'lib/__tests__/audio-download' 'lib/__tests__/logger' 2>&1 | grep -Eq '([1-9][0-9]* passed|Tests.*passed)'"
+      depends_on: [c1-audio-download-retry, c4-logger-selfobs]
+      fatal_on_failure: false
+
+    - id: c-e2e-suggestvideo
+      description: "Guard the user-facing quiet guard: add tests/e2e/user/62-suggest-video-guard.spec.ts that, from a lesson detail, drives the Suggest-Video submit under a condition that triggers the guard's logged/toasted branch and asserts a visible error/Ref toast appears (NOT a silent no-op). Register the touched control(s) in tests/e2e/control-inventory.json so the coverage gate stays green."
+      command: "agent-task: write tests/e2e/user/62-suggest-video-guard.spec.ts and add its control ids to control-inventory.json"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; test -f \"$WT/tests/e2e/user/62-suggest-video-guard.spec.ts\" && node \"$WT/scripts/check-interactive-coverage.mjs\""
+      depends_on: [c3-lessonmodals-guard]
+      fatal_on_failure: false
+
+    - id: c-commit
+      description: "Commit WP-C (client lib + features) as one path-form commit, no Co-Authored-By."
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        git -C "$WT" add tests/e2e/user/62-suggest-video-guard.spec.ts src/lib/__tests__/audio-download.test.ts 2>/dev/null;
+        git -C "$WT" commit src/lib/audio-download.ts src/content/repository.ts src/features/home/useHome.ts src/features/learning/useLessonModals.ts src/lib/logger.ts src/lib/__tests__/audio-download.test.ts src/lib/__tests__/logger.test.ts tests/e2e/user/62-suggest-video-guard.spec.ts tests/e2e/control-inventory.json -m "fix(client): EN-27 WP-C — no silent client failures/fallbacks"$'\n\n'"audio-download: split deterministic (4xx) from transient before retry. repository: log degraded-cache background-refresh swallow. useHome: user-visible toast when streak-freeze can't persist. useLessonModals: Suggest-Video guard logs+toasts instead of silent no-op (TB-15 class). logger: droppedCount + getDiagnostics so export never silently omits. + retry/logger unit tests + suggest-video guard e2e."
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; git -C \"$WT\" log -1 --pretty=%s | grep -q 'EN-27 WP-C'"
+      depends_on: [c1-audio-download-retry, c2-repository-usehome, c3-lessonmodals-guard, c4-logger-selfobs, c-test-client, c-e2e-suggestvideo]
+      fatal_on_failure: true
+
+    # ============================================================ PHASE 4 — WP-D enforcement (after A+B+C land)
+    - id: d1-observability-strict
+      description: "Keystone guardrail: promote the observability checker from WARN to HARD in scripts/preflight.sh by invoking `node scripts/check-observability.mjs --strict` as a run_hard stage (mirroring the existing HARD stages). This only passes because WP-A/WP-B removed the bare-console error paths; from now on ANY new console-only error path fails preflight. Keep the report artifact."
+      command: "agent-task: change the observability stage in scripts/preflight.sh to run check-observability.mjs --strict as a HARD stage"
+      validation: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        grep -q "check-observability.mjs --strict" "$WT/scripts/preflight.sh" &&
+        node "$WT/scripts/check-observability.mjs" --strict
+      depends_on: [a-commit, b-commit, c-commit]
+      fatal_on_failure: true
+
+    - id: d2-standards-silentguard
+      description: "Add a WARN-mode check to scripts/check-standards.sh that flags silent no-op guards in user-action handlers: search src/features for a `handle*` function whose first statement is `if (...) return;` with no logger/showToast on the guarded path (the TB-15 class). Also add the event_type casing check (flag lower_snake_case event_type strings passed to logger.* — everything else is UPPER_SNAKE_CASE; the one known offender is sync_queue_flush_failed). WARN-mode (never fails the gate yet) so it can ratchet; print evidence lines like the other warn() checks."
+      command: "agent-task: add a silent-no-op-guard warn() check and an event_type casing warn() check to scripts/check-standards.sh"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; grep -Eq 'no-op|silent guard|event_type' \"$WT/scripts/check-standards.sh\" && bash \"$WT/scripts/check-standards.sh\"; test $? -le 0"
+      depends_on: [a-commit, b-commit, c-commit]
+      fatal_on_failure: false
+
+    - id: d-commit
+      description: "Commit WP-D (enforcement gates), and fix the one known event_type casing offender (sync-queue) so d2's new check is clean. Path-form, no Co-Authored-By."
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        git -C "$WT" commit scripts/preflight.sh scripts/check-standards.sh src/lib/sync-queue.ts -m "chore(gates): EN-27 WP-D — ratchet observability to HARD + silent-guard/event-type checks"$'\n\n'"preflight: check-observability.mjs --strict is now a HARD stage (any new console-only error path fails the gate). check-standards: WARN checks for silent no-op guards in handle* functions (TB-15 class) and lower_snake_case event_type. Renamed sync_queue_flush_failed -> SYNC_QUEUE_FLUSH_FAILED."
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; git -C \"$WT\" log -1 --pretty=%s | grep -q 'EN-27 WP-D'"
+      depends_on: [d1-observability-strict, d2-standards-silentguard]
+      fatal_on_failure: true
+
+    # ============================================================ PHASE 5 — WP-Z full regression + push
+    - id: z1-full-vitest
+      description: "Full unit/component suite must be green (includes all new EN-27 tests)."
+      command: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; npm --prefix \"$WT\" run test:run"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; npm --prefix \"$WT\" run test:run 2>&1 | grep -Eq 'Tests .*passed' && ! npm --prefix \"$WT\" run test:run 2>&1 | grep -Eq '[1-9][0-9]* failed'"
+      depends_on: [d-commit]
+      fatal_on_failure: true
+
+    - id: z2-coverage-gate
+      description: "Interactive coverage gate green (new suggest-video control ids resolved, no orphans/unknown ids)."
+      command: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; node \"$WT/scripts/check-interactive-coverage.mjs\""
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; node \"$WT/scripts/check-interactive-coverage.mjs\""
+      depends_on: [d-commit]
+      fatal_on_failure: true
+
+    - id: z3-full-e2e
+      description: "Full Playwright regression against the live backend, incl. the new suggest-video guard spec. Non-fatal: live-backend flakes (voice-cap bleed, provider 503) are triaged per E2E-LIVE-RUN-TRACKER, not auto-blocking; /troubleshoot records failures to the tracker."
+      command: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; npm --prefix \"$WT\" run test:e2e"
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; npm --prefix \"$WT\" run test:e2e 2>&1 | tail -5 | grep -Eq 'passed'"
+      depends_on: [d-commit]
+      fatal_on_failure: false
+
+    - id: z4-preflight-full
+      description: "The real ship gate on the finished tree: lint (tsc) + eslint + vitest + build + coverage + npm audit + standards + observability(--strict, now HARD) + CORS + help-drift. This is the AGENTS §3 full gate and proves the whole EN-27 change is coherent."
+      command: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; bash \"$WT/scripts/preflight.sh\""
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; bash \"$WT/scripts/preflight.sh\""
+      depends_on: [z1-full-vitest, z2-coverage-gate]
+      fatal_on_failure: true
+
+    - id: z5-push
+      description: "Push the branch to origin (the repo's pre-push coverage gate runs). Does NOT open into develop/main or deploy — the operator reviews + merges + deploys. Update EN-27 status to FIXED-PENDING-MERGE with the branch name. Release the queue reservation."
+      command: >
+        WT="$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27";
+        git -C "$WT" push -u origin fix/en27-error-hardening &&
+        queuectl release --agent en27-exec 2>/dev/null || true
+      validation: "WT=\"$HOME/LocalProjects/GitHubProjectsDocuments/fala_madeira-en27\"; git -C \"$WT\" rev-parse --abbrev-ref --symbolic-full-name @{u} | grep -q 'origin/fix/en27-error-hardening'"
+      depends_on: [z4-preflight-full]
+      fatal_on_failure: false

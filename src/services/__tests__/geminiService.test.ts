@@ -89,7 +89,7 @@ describe('W3C traceparent header (obs-trace)', () => {
 
     expect(invoke).toHaveBeenCalledTimes(1);
     const [fnName, options] = invoke.mock.calls[0];
-    expect(fnName).toBe('gemini');
+    expect(fnName).toBe('ai-gateway');
     expect(options.headers.traceparent).toMatch(/^00-[0-9a-f]{32}-[0-9a-f]{16}-01$/);
   });
 });
@@ -212,7 +212,7 @@ describe('synthesizeCached key normalization + hostable scope (EN-8)', () => {
     await synthesizeCached('b', { hostable: false });
     await synthesizeCached('c', {});
     const hostables = invoke.mock.calls
-      .filter((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts')
+      .filter((c) => c[0] === 'ai-gateway' && c[1]?.body?.action === 'tts')
       .map((c) => c[1].body.hostable);
     expect(hostables).toEqual([true, false, undefined]);
   });
@@ -277,7 +277,7 @@ describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → su
     vi.stubGlobal('fetch', fetchMock);
     await synthesizeCached('t', {});
     expect(fetchMock).toHaveBeenCalledTimes(2); // verpex + supabase both probed and missed
-    const ttsCall = invoke.mock.calls.find((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts');
+    const ttsCall = invoke.mock.calls.find((c) => c[0] === 'ai-gateway' && c[1]?.body?.action === 'tts');
     expect(ttsCall).toBeDefined();
   });
 
@@ -288,7 +288,7 @@ describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → su
     vi.stubGlobal('fetch', fetchMock);
     await synthesizeCached('t', {});
     expect(fetchMock).toHaveBeenCalledTimes(2);
-    const ttsCall = invoke.mock.calls.find((c) => c[0] === 'gemini' && c[1]?.body?.action === 'tts');
+    const ttsCall = invoke.mock.calls.find((c) => c[0] === 'ai-gateway' && c[1]?.body?.action === 'tts');
     expect(ttsCall).toBeDefined();
   });
 

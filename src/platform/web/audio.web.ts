@@ -8,6 +8,7 @@
 // Created: 2026-07-09
 
 import { AudioAdapter, AudioPlayOptions, PlatformError, SpeechSynthesisOptions } from '../types';
+import { logger } from '../../lib/logger';
 
 // Typed view of globalThis with the legacy WebKit AudioContext alias and the speech-synthesis
 // globals. Guarded property access keeps this module safe in environments without Web Audio or
@@ -172,8 +173,20 @@ export const createWebAudioAdapter = (): AudioAdapter => {
       utterance.rate = options?.rate ?? 1.0;
       utterance.onend = () => options?.onEnded?.();
       // onerror fires after speak() has already resolved (async), so it cannot reject here; the
-      // onEnded contract still fires so callers' spinners clear.
-      utterance.onerror = () => options?.onEnded?.();
+      // onEnded contract still fires so callers' spinners clear. EN-27 P0.3: device speech is the
+      // TTS fallback of last resort — a silent onerror meant "silence reported as success". Log it
+      // (SYSTEM_HEALTH) so the failure is visible even though we still clear the caller's spinner.
+      utterance.onerror = (event) => {
+        logger.error('WEB_SPEECH_SYNTHESIS_ERROR', 'Browser speech synthesis (device-voice fallback) failed', {
+          category: 'SYSTEM_HEALTH',
+          details: {
+            error: (event as SpeechSynthesisErrorEvent)?.error ?? 'unknown',
+            lang: utterance.lang,
+            textLength: text.length,
+          },
+        });
+        options?.onEnded?.();
+      };
       synth.speak(utterance);
     },
 
@@ -193,6 +206,12 @@ export const createWebAudioAdapter = (): AudioAdapter => {
         try {
           await audioElement.play();
         } catch (e) {
+          // EN-27 P0.3: log before re-throwing so a failed resume is visible even if the caller
+          // doesn't itself route the PlatformError through the logger.
+          logger.error('WEB_AUDIO_RESUME_FAILED', 'Audio playback could not resume', {
+            category: 'SYSTEM_HEALTH',
+            error: e,
+          });
           throw new PlatformError(
             'audio',
             'playback-failure',

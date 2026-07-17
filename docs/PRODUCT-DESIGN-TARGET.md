@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/PRODUCT-DESIGN-TARGET.md
 **Description:** Canonical target definition for the *complete* FalaMadeira product (not an MVP). Captures vision, UX principles, learning modes, curriculum scope, the TTS/audio architecture, AI-tutor architecture, design system, screen IA, gamification, onboarding, offline/PWA, and the data model. This is the source of truth the plan and trackers derive from. When code and this doc disagree, reconcile explicitly.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-09
 **Last Updated:** 2026-07-09
 **Last Updated By:** design-enhancement session

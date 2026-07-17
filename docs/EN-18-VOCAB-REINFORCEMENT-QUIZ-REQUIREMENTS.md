@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-18-VOCAB-REINFORCEMENT-QUIZ-REQUIREMENTS.md
 **Description:** Requirements for redesigning vocabulary practice from self-graded flashcards into an objective, quiz-style reinforcement loop (comprehension + production), sourced from what the learner has worked on, focusable by theme. Owner-designed 2026-07-15; awaiting approval before any coding (AGENTS §3).
-**Author:** Lane B (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-15
 **Last Updated:** 2026-07-15
-**Last Updated By:** Lane B (with assistant)
+**Last Updated By:** Libor Ballaty
 
 ---
 

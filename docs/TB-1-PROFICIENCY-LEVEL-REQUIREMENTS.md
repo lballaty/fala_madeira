@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md
 **Description:** Requirements + design spec for TB-1 (Option B): persist the learner's proficiency/practical level from onboarding placement to the DB, show it on Home, and let the learner change it in Settings — as a field wholly separate from the paywall `unlocked_level`. Produced for owner approval before any coding (AGENTS §3 requirements+approval gate). No code in this pass.
-**Author:** Lane A (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-15
 **Last Updated:** 2026-07-15
-**Last Updated By:** Lane A (with assistant)
+**Last Updated By:** Libor Ballaty
 
 ---
 

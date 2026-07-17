@@ -11,11 +11,21 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../content/repository', () => ({ contentRepository: { listSituations: vi.fn() } }));
-// OfflineStorageFullError must be the REAL class (not a stub) so the download loop's `instanceof`
-// check works — the loop catches it to stop early with 'cache-full' (EN-8).
+// OfflineStorageFullError and EdgeFunctionError must be the REAL classes (not stubs) so the
+// download loop's `instanceof` checks work — EN-8 catches OfflineStorageFullError to stop early with
+// 'cache-full'; EN-27 uses EdgeFunctionError for the deterministic-vs-transient retry split.
 vi.mock('../../services/geminiService', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../services/geminiService')>();
-  return { synthesizeCached: vi.fn(async () => new ArrayBuffer(8)), OfflineStorageFullError: actual.OfflineStorageFullError };
+  return {
+    synthesizeCached: vi.fn(async () => new ArrayBuffer(8)),
+    OfflineStorageFullError: actual.OfflineStorageFullError,
+    EdgeFunctionError: actual.EdgeFunctionError,
+  };
+});
+// Shrink the retry backoff so the transient-retry test doesn't sleep for seconds.
+vi.mock('../../config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../config')>();
+  return { config: { ...actual.config, offline: { ...actual.config.offline, downloadRetryBaseMs: 1, downloadMaxAttempts: 3 } } };
 });
 vi.mock('../audioCache', () => ({
   audioCache: {
@@ -27,10 +37,16 @@ vi.mock('../audioCache', () => ({
   },
   readCacheLimitBytes: vi.fn(() => 5_000_000_000),
 }));
-vi.mock('../logger', () => ({ logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() } }));
+// userMessage is exported alongside logger — the geminiService mock uses importOriginal to expose
+// the REAL OfflineStorageFullError/EdgeFunctionError classes, which pulls in real geminiService whose
+// top-level import destructures userMessage from here, so the mock must provide it too (merge glue).
+vi.mock('../logger', () => ({
+  logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() },
+  userMessage: (_code: string, message: string) => message,
+}));
 
 import { contentRepository } from '../../content/repository';
-import { synthesizeCached, OfflineStorageFullError } from '../../services/geminiService';
+import { synthesizeCached, OfflineStorageFullError, EdgeFunctionError } from '../../services/geminiService';
 import { audioCache } from '../audioCache';
 import { downloadForOffline } from '../audio-download';
 import type { Situation } from '../../content/schema';
@@ -132,6 +148,43 @@ describe('downloadForOffline', () => {
     const result = await downloadForOffline({}, { signal: AbortSignal.abort() });
     expect(result.status).toBe('cancelled');
     expect(synthesizeCached).not.toHaveBeenCalled();
+  });
+
+  // EN-27 P1.9: deterministic vs transient retry.
+  it('does NOT retry a deterministic edge failure — the clip is attempted once and counted failed', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    vi.mocked(synthesizeCached).mockRejectedValue(new EdgeFunctionError('VOICE_LIMIT_REACHED', 'daily voice limit reached'));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.failed).toBe(1);
+    // The whole point: a deterministic code is attempted exactly ONCE, not maxAttempts times.
+    expect(synthesizeCached).toHaveBeenCalledTimes(1);
+  });
+
+  it('DOES retry a transient failure up to maxAttempts before counting it failed', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Boa tarde'])]);
+    // A plain (non-EdgeFunctionError) failure is transient/unknown → eligible for retry.
+    vi.mocked(synthesizeCached).mockRejectedValue(new Error('network blip'));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.failed).toBe(1);
+    // downloadMaxAttempts is mocked to 3 → three attempts for the one clip.
+    expect(synthesizeCached).toHaveBeenCalledTimes(3);
+  });
+
+  it('retries a transient failure and SUCCEEDS on a later attempt', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Olá'])]);
+    vi.mocked(synthesizeCached)
+      .mockRejectedValueOnce(new Error('blip 1'))
+      .mockResolvedValueOnce(new ArrayBuffer(8));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.synthesized).toBe(1);
+    expect(result.failed).toBe(0);
+    expect(synthesizeCached).toHaveBeenCalledTimes(2);
   });
 });
 

@@ -86,6 +86,13 @@ for (const f of files) {
 const total =
   violations.bareConsole.length + violations.toastNoLog.length + violations.hardcodedFallback.length;
 
+// EN-27: --strict hard-fails ONLY on the unambiguous forbidden patterns (bare console in an error
+// path, hardcoded config fallbacks). TOAST-NO-LOG stays advisory even in strict mode — validation-
+// gate toasts (input too long, empty field) legitimately need no server log and are the documented
+// expected false positives, so gating on them would make --strict permanently red. They remain
+// reported (and can be hardened case-by-case), just not gate-blocking.
+const strictTotal = violations.bareConsole.length + violations.hardcodedFallback.length;
+
 const outDir = resolve(root, 'artifacts');
 if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 writeFileSync(
@@ -101,12 +108,12 @@ const report = (title, list, note) => {
   if (list.length > 40) console.log(`  … +${list.length - 40} more (see artifacts/observability-report.json)`);
 };
 report('BARE-CONSOLE (error path console.* not paired with logger)', violations.bareConsole);
-report('TOAST-NO-LOG (showToast error without nearby logger)', violations.toastNoLog, 'validation-gate toasts are expected false positives');
+report('TOAST-NO-LOG (showToast error without nearby logger)', violations.toastNoLog, 'advisory even in --strict — validation-gate toasts are expected false positives');
 report('HARDCODED-FALLBACK (?? / || "http…")', violations.hardcodedFallback);
 console.log('\nReport: artifacts/observability-report.json');
 
-if (strict && total > 0) {
-  console.error(`\n--strict: ${total} observability violation(s) — failing.`);
+if (strict && strictTotal > 0) {
+  console.error(`\n--strict: ${strictTotal} gate-blocking observability violation(s) (bare-console + hardcoded-fallback) — failing. (${violations.toastNoLog.length} toast-no-log are advisory.)`);
   process.exit(1);
 }
-// WARN mode: advisory only, always exit 0.
+// WARN mode (and toast-no-log in strict mode): advisory only, exit 0.

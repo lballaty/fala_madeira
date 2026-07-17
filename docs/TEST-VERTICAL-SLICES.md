@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/TEST-VERTICAL-SLICES.md
 **Description:** The vertical-slice test contract that the Playwright e2e step (`vertical-slice-e2e`) implements. Each slice maps a UI entry point to its client path, edge function/RPC, DB tables, and the concrete backend evidence (row + correlation_id) the test must assert per ENGINEERING-STANDARDS §9. Slices for not-yet-built features are documented as the forward contract and marked `planned (step-id)`.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-09
 **Last Updated:** 2026-07-09
 **Last Updated By:** execute-plan (vertical-slice-map step)
@@ -62,7 +62,7 @@ ORDER BY timestamp DESC;
 |---|---|---|
 | S1 | Auth: sign-up / sign-in / reset | implemented |
 | S2 | Structured-course lesson + quiz completion | implemented (legacy lessons shape; content-model rebind planned: `path-types`) |
-| S3 | AI tutor chat / practice (gemini edge fn) | implemented |
+| S3 | AI tutor chat / practice (ai-gateway edge fn) | implemented |
 | S4 | Learner feedback: video suggestion, lesson request, correction | implemented |
 | S5 | Support ticket + diagnostic Send Logs | implemented |
 | S6 | Admin review (video-suggestion moderation) | implemented (partial; full studio: `admin-and-content-studio`) |
@@ -98,19 +98,19 @@ ORDER BY timestamp DESC;
 - **Status:** implemented (legacy `lessons` table shape; rebind to `situations`/`user_situation_progress` lands with `path-types`)
 - **UI entry:** Learning tab → `LearningView` (`src/features/learning/LearningView.tsx`) → open a lesson (`LessonDetailModal`) → "Practice/Quiz" → `PracticeQuiz` (`src/features/practice/PracticeQuiz.tsx`) → complete ≥ 3 correct.
 - **Client path:** `useLessons` (`src/features/learning/useLessons.ts`, fetches static + custom lessons, month unlock via `global_settings` unlock key) → `usePractice.handleQuizComplete` (`src/features/practice/usePractice.ts`).
-- **Edge fn/RPC:** none for the quiz itself; TTS phrase playback goes through `gemini` edge fn action `tts` (see S3).
+- **Edge fn/RPC:** none for the quiz itself; TTS phrase playback goes through `ai-gateway` edge fn action `tts` (see S3).
 - **DB tables:** reads `lessons` (static + own custom), `global_settings` (unlock key), `profiles`; writes `profiles.completed_lessons` (array append on score ≥ 3), `profiles.active_month` (month switch), `profiles.total_time_spent` (via `useTimeTracking`).
 - **Backend evidence:** `profiles.completed_lessons @> ARRAY[:lesson_id]` for the test user after quiz completion (G5: array membership, score ≥ 3 required). No log row on success (G1); to get a correlation_id-bearing record, run Send Logs afterwards and assert the `user_report` row's `recentLogs` includes the session's quiz events.
 - **Failure paths:** score < 3 (no write — assert array unchanged), profile update error surfaces via `handleSupabaseError` → ERROR row in `public.logs` with `correlation_id`, offline completion (currently lost — becomes S17's queue).
 
-### S3 — AI tutor chat / practice (gemini edge fn)
+### S3 — AI tutor chat / practice (ai-gateway edge fn)
 
 - **Status:** implemented
 - **UI entry:** Tutor tab → `TutorChatView` send message; or Home/Learning → "AI Practice" → `TutorPracticeModal` (`startAIPractice`).
-- **Client path:** `useTutorSession` (`src/features/tutor/useTutorSession.ts`) → `src/services/geminiService.ts` `invokeEdgeFunction('gemini', { action: 'chat' | 'generate-lesson' | 'translate' | 'tts', ... })` with the session JWT; stateless server, history sent per turn; TTS audio cached via the audio adapter.
-- **Edge fn/RPC:** `gemini` (`supabase/functions/gemini/index.ts`) — JWT-verified; actions `chat`, `generate-lesson`, `translate`, `tts` (provider router in `_shared/tts/`).
+- **Client path:** `useTutorSession` (`src/features/tutor/useTutorSession.ts`) → `src/services/geminiService.ts` `invokeEdgeFunction('ai-gateway', { action: 'chat' | 'generate-lesson' | 'translate' | 'tts', ... })` with the session JWT; stateless server, history sent per turn; TTS audio cached via the audio adapter.
+- **Edge fn/RPC:** `ai-gateway` (`supabase/functions/ai-gateway/index.ts`) — JWT-verified; actions `chat`, `generate-lesson`, `translate`, `tts` (provider router in `_shared/tts/`).
 - **DB tables:** writes `profiles.voice_usage_today` + `last_voice_usage_date` (STT increments — G6), `lessons` (insert when saving a generated lesson via `saveGeneratedLesson`); reads `profiles` (voice limit), `global_settings` (global voice limit).
-- **Backend evidence:** capture `requestId` from the `/functions/v1/gemini` response body (echoed on success and in the error envelope). Happy path: assert the response envelope carries `requestId` and, for `generate-lesson` + save, that a `lessons` row (`user_id = test user`, matching title) exists. Failure path: force a 4xx (e.g. unknown action via request interception, or signed-out call) and assert a `public.logs` row whose `details` JSON has `"event":"edge_fn_error"`-style `event_type` and `correlation_id` equal to the captured server `requestId` — this is the canonical client↔edge join.
+- **Backend evidence:** capture `requestId` from the `/functions/v1/ai-gateway` response body (echoed on success and in the error envelope). Happy path: assert the response envelope carries `requestId` and, for `generate-lesson` + save, that a `lessons` row (`user_id = test user`, matching title) exists. Failure path: force a 4xx (e.g. unknown action via request interception, or signed-out call) and assert a `public.logs` row whose `details` JSON has `"event":"edge_fn_error"`-style `event_type` and `correlation_id` equal to the captured server `requestId` — this is the canonical client↔edge join.
 - **Failure paths:** AI unavailable/502 (`GEMINI_ERROR` code + Ref in toast, logged), auth expiry mid-chat (401 `UNAUTHENTICATED`), voice limit reached (UpgradeModal path), TTS provider fallback chain, offline send (honest failure, no silent drop).
 
 ### S4 — Learner feedback: video suggestion, lesson request, correction
@@ -172,7 +172,7 @@ The contract below is fixed by `plans/plan-2026-07-09-full-product.yaml` + `docs
 
 - **UI entry:** Practice hub → Listening → pick a Situation → play dialogue (speeds/voices/noise), transcript reveal, dictation check.
 - **Client path:** `src/features/practice/listening/` consuming `situation.payload.dialogues` via `src/content/repository.ts` + TTS/audio adapters.
-- **Edge fn/RPC:** `gemini` action `tts` (or dedicated `speak` fn) for dialogue audio; offline plays from cached audio.
+- **Edge fn/RPC:** `ai-gateway` action `tts` (or dedicated `speak` fn) for dialogue audio; offline plays from cached audio.
 - **DB tables:** reads `situations`; writes `user_situation_progress` (PK `(user_id, situation_id, mode='listening')`, `status`, `score` jsonb).
 - **Backend evidence:** `user_situation_progress` row with `mode='listening'` and a `score` payload matching the completed exercise; TTS network `requestId` captured per audio fetch joins any playback failure to the `public.logs` row via `correlation_id`.
 - **Failure paths:** TTS provider fallback chain (Azure → … → Web Speech), offline playback from cache (no network calls asserted), empty-audio provider defect retry (Gemini `finishReason=OTHER`).
@@ -181,7 +181,7 @@ The contract below is fixed by `plans/plan-2026-07-09-full-product.yaml` + `docs
 
 - **UI entry:** Practice hub → Speaking → repeat/shadow an item → record-and-compare feedback.
 - **Client path:** `src/features/practice/speaking/` using `src/platform/speech.ts` + audio adapter.
-- **Edge fn/RPC:** `gemini` (scoring/error-analyst action, post `prompt-hardening`); STT via platform adapter (G6 — mock in e2e).
+- **Edge fn/RPC:** `ai-gateway` (scoring/error-analyst action, post `prompt-hardening`); STT via platform adapter (G6 — mock in e2e).
 - **DB tables:** writes `pronunciation_attempts` (append-only: `user_id`, `item_key`, `score` jsonb, optional `audio_ref`), `mastery_items` (dimension `say`), `user_situation_progress` (`mode='shadowing'`).
 - **Backend evidence:** new `pronunciation_attempts` row per attempt (count increments; append-only — no UPDATE policy exists, assert updates fail), `mastery_items` row for the item with `dimension='say'` updated. Scoring-call `requestId` from the network joins failures via `correlation_id` in `public.logs`.
 - **Failure paths:** mic permission denied (calm message, logged), STT unavailable on iOS Safari (adapter fallback), AI scoring unavailable → deterministic local feedback fallback.
@@ -198,8 +198,8 @@ The contract below is fixed by `plans/plan-2026-07-09-full-product.yaml` + `docs
 ### S12 — Engine: Situation Simulator — planned (`engine-situation-simulator`)
 
 - **UI entry:** Practice hub → Simulator → pick Situation + difficulty (L1 guided → L5 messy) → branching roleplay.
-- **Client path:** `src/features/practice/simulator/` consuming `situation.payload.roleplay` → `geminiService` → `gemini` edge fn (roleplay/scenario actions per `prompt-hardening`).
-- **Edge fn/RPC:** `gemini` (JWT-verified; level-locked prompts).
+- **Client path:** `src/features/practice/simulator/` consuming `situation.payload.roleplay` → `geminiService` → `ai-gateway` edge fn (roleplay/scenario actions per `prompt-hardening`).
+- **Edge fn/RPC:** `ai-gateway` (JWT-verified; level-locked prompts).
 - **DB tables:** reads `situations`; writes `user_situation_progress` (`mode='roleplay'`), `mastery_items` (dimensions per error analysis).
 - **Backend evidence:** per-turn edge `requestId` captured from responses; completion writes the `user_situation_progress` row (`mode='roleplay'`, `score` with turn stats). Forced AI failure mid-roleplay must yield a `public.logs` row whose `correlation_id` equals the captured `requestId`.
 - **Failure paths:** AI unavailable → honest degradation (offer scripted dialogue, never silent), auth expiry mid-session, level-lock respected (response vocab within learner level — content assertion).
@@ -208,7 +208,7 @@ The contract below is fixed by `plans/plan-2026-07-09-full-product.yaml` + `docs
 
 - **UI entry:** Practice hub → Missions → pick a real-world mission → prep → mark attempted/completed → after-action review.
 - **Client path:** `src/features/practice/missions/` consuming `situation.payload.mission`.
-- **Edge fn/RPC:** none for logging; optional AI after-action review via `gemini`.
+- **Edge fn/RPC:** none for logging; optional AI after-action review via `ai-gateway`.
 - **DB tables:** writes `missions_log` (`user_id`, `situation_id`, `status` planned→attempted→completed, `notes`, `completed_at`).
 - **Backend evidence:** `missions_log` row transitions (`status='completed'`, `completed_at` set, notes text persisted). Offline completion is the flagship S17 case: complete offline, reconnect, assert the row appears with the original (client-side) timestamp semantics.
 - **Failure paths:** offline mission completion (queued), duplicate completion, RLS cross-user read blocked.
@@ -226,7 +226,7 @@ The contract below is fixed by `plans/plan-2026-07-09-full-product.yaml` + `docs
 
 - **UI entry:** Home → "Start today's session" (daily-session composer output: ~30-min mixed sequence).
 - **Client path:** `src/paths/adaptive-guided.ts` + daily-session composer → chains engine slices S9/S11/S14.
-- **Edge fn/RPC:** whatever the composed engines use (TTS, gemini).
+- **Edge fn/RPC:** whatever the composed engines use (TTS, ai-gateway).
 - **DB tables:** reads `mastery_items` (due), `user_situation_progress`, `situations`; writes the composed engines' tables per segment.
 - **Backend evidence:** one session produces multiple rows across tables in the same window: ≥1 `user_situation_progress` update, ≥1 `mastery_items` grade, and (if the composer logs a session summary event on error) a `public.logs` row joinable by `correlation_id`. Assert the composition is recommendation-only: every suggested item is also directly reachable (no hard lock — CONTENT-ARCHITECTURE §5/§12).
 - **Failure paths:** session interrupted mid-way (partial progress persists), offline session (deterministic composition from local data), engine segment failure skips gracefully.
@@ -234,8 +234,8 @@ The contract below is fixed by `plans/plan-2026-07-09-full-product.yaml` + `docs
 ### S16 — Coach Focus card + recap — planned (`coach-feedback-loop`)
 
 - **UI entry:** Home → Focus card ("why" explanation visible); after-session recap screen.
-- **Client path:** `src/lib/coach.ts` (deterministic scoring/prioritization over local + fetched results) → optional AI narrative via `gemini` error-analyst action.
-- **Edge fn/RPC:** `gemini` (narrative only; deterministic fallback offline).
+- **Client path:** `src/lib/coach.ts` (deterministic scoring/prioritization over local + fetched results) → optional AI narrative via `ai-gateway` error-analyst action.
+- **Edge fn/RPC:** `ai-gateway` (narrative only; deterministic fallback offline).
 - **DB tables:** reads `mastery_items`, `user_situation_progress`, `pronunciation_attempts`, `missions_log`; writes none required (derived data is computed, not stored — ENGINEERING-STANDARDS §2); AI-narrative failures write `public.logs`.
 - **Backend evidence:** primarily **input-consistency evidence**: seed known weakness data (low `mastery_items.last_grade` on a `say` item), assert the Focus card surfaces that item with an explanation. AI-narrative path: capture `requestId`; force failure and assert deterministic fallback text renders AND a `public.logs` row with matching `correlation_id` exists.
 - **Failure paths:** offline (deterministic coach only — must still render), AI narrative timeout → fallback, empty history (calm cold-start, no fabricated insight).

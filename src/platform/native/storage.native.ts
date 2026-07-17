@@ -10,12 +10,20 @@
 // Created: 2026-07-09
 
 import { BlobLimits, BlobStoreUsage, PinnedWriteResult, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { logger } from '../../lib/logger';
 
 // Subdirectory inside Directory.Data that owns every blob this adapter writes.
 const BLOB_DIR = 'fm-blobs';
 // EN-8: pinned offline downloads live in a SEPARATE directory that eviction never scans, so a
 // clip a user downloaded survives cache pressure (fixes EN-7). Never touched by clearBlobs().
 const PINNED_DIR = 'fm-pinned';
+
+// EN-27 P0.4: distinguish a benign "not written yet / cache miss" from a real read error. A missing
+// file/dir is the routine path (return null/[] silently); anything else is a read failure that made
+// the store unreadable — corrupt offline audio then looks like "nothing saved" (the TB-9 shape), so
+// it MUST be logged rather than swallowed into an indistinguishable null/[].
+const isNotFound = (e: unknown): boolean =>
+  /does not exist|not found|no such file|enoent/i.test(e instanceof Error ? e.message : String(e));
 
 const matchesPrefix = (key: string, prefix?: string): boolean =>
   !prefix || key.startsWith(prefix);
@@ -95,8 +103,14 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
     try {
       const result = await Filesystem.readdir({ path: BLOB_DIR, directory: Directory.Data });
       return result.files.map((f) => f.name);
-    } catch {
-      return []; // directory does not exist yet — no blobs written
+    } catch (e) {
+      if (!isNotFound(e)) {
+        logger.warn('NATIVE_BLOB_LISTDIR_FAILED', 'could not read the blob directory — treating as empty', {
+          category: 'DATA_PROCESSING',
+          error: e,
+        });
+      }
+      return []; // not-found = directory not created yet; logged case = unreadable store
     }
   };
 
@@ -113,7 +127,13 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
         size: typeof f.size === 'number' ? f.size : 0,
         mtime: typeof f.mtime === 'number' ? f.mtime : 0,
       }));
-    } catch {
+    } catch (e) {
+      if (!isNotFound(e)) {
+        logger.warn('NATIVE_BLOB_STAT_FAILED', 'could not stat the blob directory — LRU/usage will read as empty', {
+          category: 'DATA_PROCESSING',
+          error: e,
+        });
+      }
       return [];
     }
   };
@@ -161,8 +181,15 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
       if (value === null) return null;
       try {
         return JSON.parse(value) as T;
-      } catch {
-        return null; // corrupted entry — treat as missing
+      } catch (e) {
+        // A parse failure is never routine (the value WAS present) — it is a corrupt entry. Log it
+        // (EN-27 P0.4) so corruption is visible instead of masquerading as an absent key.
+        logger.warn('NATIVE_STORAGE_PARSE_FAILED', 'stored value could not be parsed — treating as missing', {
+          category: 'DATA_PROCESSING',
+          error: e,
+          details: { key },
+        });
+        return null;
       }
     },
 
@@ -211,8 +238,18 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
         return typeof result.data === 'string'
           ? base64ToArrayBuffer(result.data)
           : await result.data.arrayBuffer();
-      } catch {
-        return null; // missing file — contract says null for absent blobs
+      } catch (e) {
+        // A missing file is a routine cache miss (contract: null for absent blobs) — stay silent.
+        // Any OTHER read error means a cached clip is present-but-unreadable (corruption/permission)
+        // and would otherwise look identical to "not cached" — the TB-9 shape. Log that case.
+        if (!isNotFound(e)) {
+          logger.warn('NATIVE_BLOB_READ_FAILED', 'cached blob is present but unreadable — treating as a miss', {
+            category: 'DATA_PROCESSING',
+            error: e,
+            details: { key },
+          });
+        }
+        return null;
       }
     },
 

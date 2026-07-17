@@ -9,7 +9,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 
 test.describe('tutor practice modal controls', () => {
   test('Start Today\'s Lesson opens the tutor modal and local controls respond', async ({ page, coverage }) => {
-    await page.route('**/functions/v1/gemini', async (route, request) => {
+    await page.route('**/functions/v1/ai-gateway', async (route, request) => {
       const body = request.postDataJSON();
       if (body && typeof body === 'object' && 'action' in body && body.action === 'chat') {
         await route.fulfill({

@@ -2,10 +2,10 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/E2E-LIVE-RUN-TRACKER.md
 **Description:** Live defect queue from executing the Playwright e2e suite (T-COV mandate, commit 662541b). The test-building agent authors specs but cannot bind ports in its sandbox; the runner session executes the suite (local `vite preview` + LIVE Supabase) and records every discrete failure here. Two buckets: EXECUTION FAILURES (tests that exist but fail) and COVERAGE GAPS (surfaces/flows not yet exercised). Owners — **app** (product code, runner/product session fixes, mirrored to REQUIREMENTS-TRACKER), **harness** (fixtures/setup/technique), **selector** (locator defects), **data** (seed/state assumptions), **environment** (runner env / concurrency noise). Harness/selector/data items belong to the test-building agent.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-13
-**Last Updated:** 2026-07-13 (builder handoff batch: support/video/path journeys + tutor Ref-toast spec + inventory migration checkpoint)
-**Last Updated By:** e2e builder session
+**Last Updated:** 2026-07-16 (replaced "Active lane split" with responsibility-based coordination — no fixed agent identities)
+**Last Updated By:** Libor Ballaty
 
 ## How to use this file
 
@@ -15,6 +15,18 @@
 - Writes to this file are coordinated via the global queue (`queuectl reserve`).
 
 ## Run log
+
+### Run 23 — 2026-07-16 — 125/127 (7.7m); coverage-audit run; both failures root-caused + fixed test-side; coverage gate reconciled 177→203; NEW EF-37 (server TTS 503 across the whole window)
+- **125 passed · 2 failed of 127 (7.7m)**, first full run since EN-15/EN-16/EN-17a/EN-20/TB-15 landed (tree at `55f9b30`). Run executed as part of the 2026-07-16 verify/reconcile audit.
+- **`user/15-practice-vocabulary-session` — deterministic (2/2 incl. fresh-user rerun) — TWO test-side defects, both FIXED (commit `1e95802`), spec now green (8.6s):**
+  1. **Stale vs EN-16 (owner-approved `b351bbe`):** sessions now scale to their scope, so the hub's default "All lessons" deck is the full inventory (1145 cards) and the spec's 25-step loop can never reach "Session complete". Fix: enter via Browse situations → Vocabulary Review (situation-scoped deck). Owner: `data/selector` (spec predates EN-16).
+  2. **Latent short-word click geometry (trace-verified):** the flashcard front centers `word + 44px SpeakerButton`; for a short word ("Ali", deck position 21) the card's CENTER — where Playwright clicks — lands ON the nested button, whose `stopPropagation()` swallows the flip. Fix: corner click. **App-side bug filed as TB-19 (TESTER-FEEDBACK-TRACKER, owner directive 2026-07-16):** nested interactive button inside a `role="button"` flashcard — real mid-card taps on short words play audio instead of flipping; the corner-click is a workaround that MASKS the bug in the suite, so the TB-19 fix must restore a plain center click in user/15 as the regression guard.
+- **`user/56-help-guidance:35` — flaky (1/2) — FIXED (commit `15fe5e8`):** the live AI help answer repeated the registry sentence in two paragraphs → strict-mode violation on un-suffixed `getByText`. Selector hardened with `.first()`. Owner: `selector` (AI-phrasing nondeterminism).
+- **EF-37 (NEW) · Server TTS 503 `TTS_UNAVAILABLE` for the ENTIRE run window — owner: environment/ops (ties EN-8 + TB-13) — `open`:** user/15's trace shows **66/66** `POST /functions/v1/gemini` (pre-rename) returning 503 `{code:'TTS_UNAVAILABLE', attempted:['gemini']}` — the server TTS provider was unavailable/rate-limited throughout (consistent with EN-8's provider sustained-rate-limit finding; the level-0 pregen warm competes for the same quota). The app degraded to device speech as designed (user/50), **but that means live users get device-voice accents while this persists — exactly the TB-13 exposure**. Next action (ops): add a locale-pinned provider key (`AZURE_SPEECH_KEY`) per TB-13, and check provider quota before/after EN-8 warm batches. Distinct from EF-36 (429 voice-cap bleed): this is provider-side 503, hit on the FIRST call.
+- **Coverage gate reconciled (was HARD-FAILING pre-run, exit 1):** touch artifacts referenced **15 control ids** (specs 37/52/53/56/57/58) never added to the inventory — inventory-maintenance debt, the gate did its job. Reconciled `177→203` controls (commit `30a1579`): the 15 ids added; 5 UserAccessPanel controls (exercised by admin/09) + Settings "Voice Provider" select (exercised by user/46) inventoried; stale `learning.lesson.vocab.query_input` placeholder fixed ("Portuguese or English word…" since EN-10); `practice.simulator.end_conversation` claim aligned to the depth user/45 deterministically records (rendered — control is free/AI-variant-only; an online AI-variant spec remains a candidate).
+- **3 NEW gap specs, all green (commit `30a1579`):** `user/60` Settings "Storage limit" + "Download for offline" selects (save-audio-switch gate asserted; download action deliberately excluded — live TTS pregen); `user/61` About → Contact Support → Support & Feedback modal; `admin/11` ticket status filter + "Reopen ticket" (DB-asserted round-trip).
+- **Drift-check false positives — escalated to CS-9 and FIXED (owner directive 2026-07-16):** `settings.tutor.select` "João, 45" false-STALE (ASCII-only word regex) and css-placeholder needles never staleness-checked (how the vocab placeholder went stale silently) — both checker bugs fixed and bite-tested, see CS-9. "Dismiss hint" (ContextualHint) is DEAD UI — no live call site passes `onDismiss` (only the unit test exercises it); app-side cleanup candidate. Remaining depth backlog: 9 rendered-only controls (incl. `admin.studio.save_draft/publish` — held at rendered deliberately: outcome-asserting them would publish to the live project).
+- **Checker state after reconcile:** `check-interactive-coverage.mjs` exit 0, 203 controls, 0 orphans, 0 unknown ids, 0 under-touched claims. vitest 270/270; tsc clean.
 
 ### Deploy — 2026-07-15 — SHIPPED ✅ 2026.07.15.2 (nav/audio batch + EN-7 phase-1)
 - **Prod live + verified:** `falamadeira.searchingfool.com` 200 (home + manifest), serving `index-BG71MRaG.js` (matches built dist). Staged→approved→production via the INFRA-4 gate (staged+approved commit `855de52`); staging `testfalamadeira` verified first.
@@ -601,6 +613,7 @@ The §10 design promise ("offline write queue syncs on reconnect") is implemente
 - **CS-6 · One suite runner at a time (formalize E-1).** Concurrent runs share live DB + `.auth/` files and cross-contaminate (observed: global-setup re-ran mid-triage and swapped the throwaway user under my probes). Suggest: runner reserves a `queuectl` token named "e2e-suite-run" for the duration; both agents honor it. Owner: both agents + operator convention. HIGH confidence.
 - **CS-7 · Reproducibility protocol.** Local `retries: 0` + live backend means occasional network flakes will file false defects. Convention: before filing an EF item, re-run the single failing spec once (`npx playwright test <file> --repeat-each=2` for suspicion of flake); record "deterministic" vs "flaky (1/3)" in the reproducibility field. Owner: runner (adopted as of this review). MEDIUM confidence — revisit when flakes actually appear (run 1 had zero).
 - **CS-8 · Seed/teardown hygiene for queue specs.** admin/03/05 seed pending rows with nonce text but (as read) don't delete them; the live review queues accumulate `Admin queue …` junk across runs, and the owner's real admin view shows test garbage. Suggest afterEach cleanup via evidence clients (delete by nonce), or a dedicated tag prefix + periodic sweep script. Owner: test agent. **Status: fixed-pending-rerun** — builder added finally-block cleanup deletes to `tests/e2e/admin/03-admin-review-queues.spec.ts` and `tests/e2e/admin/05-admin-queue-actions.spec.ts`; runner should confirm the seeded rows no longer remain after execution. HIGH confidence.
+- **CS-9 · Drift-checker blind spots: accented/composed labels false-flagged as STALE; css-placeholder needles never staleness-checked (platform internal bug, owner directive 2026-07-16).** Two defects in `scripts/check-inventory-drift.mjs` found by the 2026-07-16 audit: (1) the significant-word extractor used ASCII-only `[a-z]{3,}`, so an accented word like "João" produced NO checkable words and the check fell through to an exact-literal match that can never succeed for runtime-composed labels (`{t.name}, {t.age}` → "João, 45") → persistent false STALE; (2) css selectors were skipped outright (`if (!needle) continue`), so placeholder needles like `input[placeholder="Enter a word or phrase..."]` were never staleness-checked — **that blind spot is exactly how `learning.lesson.vocab.query_input` went stale silently when EN-10 changed the placeholder.** **Status: FIXED** — Unicode `\p{L}{3,}` word extraction for labels (composed labels verified by parts) + exact-literal staleness matching for css placeholders (word-split is useless there: common words match all over source — proven by a first bite-test that failed to flag an all-common-words placeholder). Verified by bite tests: injected stale placeholder (the EN-10 regression class) FLAGGED; injected composed label "Ana, 62" NOT flagged; real inventory reports 0 STALE. **Coverage gap (explicit, per AGENTS §3):** `scripts/**` has no unit-test harness (EN-24 debt), so the guard is the documented bite-test procedure in this item, not an automated test — convert to a unit test when the scripts harness lands. Owner: test agent / EN-24 stream. HIGH confidence.
 
 ## Coverage-governance program — "true 100%" closure plan
 
@@ -669,49 +682,15 @@ The §10 design promise ("offline write queue syncs on reconnect") is implemente
 - Do not call a domain `closed` because a spec file exists.
 - A domain closes only when the runner has executed it live, the tracker has no open EF/CG items for that surface, and the inventory/gate reflects the real control set.
 
-### Active lane split
+### Coordination within the e2e workstream (responsibilities, not fixed agents)
 
-#### Lane A — Builder lane (Codex test-building agent)
+There are no fixed "lanes" or agent identities here. These are **responsibilities** that whoever works the e2e stream must cover; whoever picks one up reserves the task **and** its files first (AGENTS.md §7). The build-side and run-side responsibilities collide on shared state (`tests/e2e/**`, the live DB, `.auth/`), so they must not run in the same hands at the same moment without a reservation.
 
-- Owns spec authoring, spec refactors, helpers, inventory, selectors, harness fixes, and coverage-gate implementation.
-- Current priorities:
-  - CS-1 inventory-drift detection.
-  - CS-2 control-touch verification.
-  - migrate legacy `covered_by` strings to structured `{ spec, depth }`.
-  - convert the final rendered-only control (`tutor.model.listen`) into an outcome/asserted interaction.
-  - close CG-11 simulator core loop.
-  - close CG-16 offline write queue reconcile path.
-  - close CS-8 seed/teardown hygiene for admin queue specs.
-- Must not mark product surfaces closed without live runner verification.
+- **Building tests** — spec authoring/refactors, helpers, inventory, selectors, harness fixes, coverage-gate implementation. Current priorities: CS-1 inventory-drift detection; CS-2 control-touch verification; migrate legacy `covered_by` strings to structured `{ spec, depth }`; convert the last rendered-only control (`tutor.model.listen`) into an asserted interaction; close CG-11 (simulator core loop), CG-16 (offline write-queue reconcile), CS-8 (seed/teardown hygiene for admin-queue specs). **This is the only work that edits `tests/e2e/**`.** Must not mark a product surface closed without a live run confirming it.
+- **Running tests live** — all live Playwright execution, reruns, DB/product verification needing unsandboxed access, and keeping this tracker's truth current: rerun current/targeted-failed specs; update each item `verified` / `reopened` / narrowed-owner (`selector` / `harness` / `data` / `app` / `environment`); confirm whether an item is a real app bug vs a wrong test expectation; keep run artifacts + repro notes current; confirm newly-added specs against live behaviour after each build batch. **Only a live run can confirm closure here — never infer closure from code alone.** Edits `tests/e2e/**` only when explicitly taking over a build-side fix (reserve it first).
+- **Discovery / mapping (read-only support)** — bounded, disjoint mapping tasks with no shared writes unless assigned a specific slice: map simulator selectors + evidence paths; offline write-queue persistence + readback seam; PWA/service-worker reload testability; admin-queue cleanup + stable card anchors; remaining mobile-only controls. Output = implementation briefs, not tracker-truth changes.
 
-#### Lane B — Runner lane (live execution / unsandboxed validation)
-
-- Owns all live Playwright execution, reruns, DB/product verification requiring unsandboxed access, and tracker truth.
-- Immediate worklist:
-  - rerun the current suite or targeted failed specs for EF-13…EF-24.
-  - update each item with `verified`, `reopened`, or narrowed owner (`selector` / `harness` / `data` / `app` / `environment`).
-  - confirm whether EF-22 is a real app bug or a wrong test expectation.
-  - keep run artifacts and reproducibility notes current.
-  - confirm newly-added specs (user/24…28) against live behavior after each builder batch.
-- Should not edit `tests/e2e/**` unless explicitly taking over a builder-owned fix.
-
-#### Lane C — Subagent discovery lane (parallel read-only support)
-
-- Owns bounded discovery/mapping tasks with no shared writes unless explicitly assigned a disjoint slice.
-- Best uses:
-  - map simulator deterministic selectors + evidence paths.
-  - map offline write queue persistence path and readback seam.
-  - map PWA/service-worker reload testability.
-  - map admin queue cleanup strategy + stable card anchors.
-  - map remaining mobile-only controls not yet inventoried.
-- Output should be implementation briefs, not tracker truth changes.
-
-### Handoff protocol between lanes
-
-- Builder finishes a batch and names the affected specs/helpers/inventory entries.
-- Runner executes live, records EF/CG/CS outcomes, and feeds failures back through this tracker.
-- Subagents support whichever next batch is not on the immediate critical path.
-- No lane should infer closure from code alone; only the runner can confirm closure status here.
+**Handoff between these responsibilities:** whoever built a batch names the affected specs/helpers/inventory entries; whoever runs live records the EF/CG/CS outcomes and feeds failures back here; discovery supports whichever next batch is off the critical path. **One suite runner at a time** — the live DB + shared `.auth/` files make concurrent runs cross-contaminating (see E-1); claim a "suite execution" reservation before a full run.
 
 ## Environment / process notes
 

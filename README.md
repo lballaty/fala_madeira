@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/README.md
 **Description:** Project overview for FalaMadeira — a modular, non-linear, voice-first European-Portuguese learning app focused on living in Madeira. Web PWA + iOS (Capacitor) from one codebase.
-**Author:** Libor Ballaty (with assistant)
+**Author:** Libor Ballaty
 **Created:** 2026-07-11
 **Last Updated:** 2026-07-11
 **Last Updated By:** v1.0.0 release

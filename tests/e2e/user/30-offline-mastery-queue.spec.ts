@@ -1,7 +1,8 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/user/30-offline-mastery-queue.spec.ts
 // Description: Offline write-queue coverage for mastery_items. Grades a known vocabulary card
-//   while offline, proves the mastery row has not reached the DB yet, reloads to keep the queued
-//   write durable, then reconnects and asserts the queued upsert flushes successfully.
+//   while offline (EN-18 objective quiz: type the correct meaning → skip the mic step →
+//   comprehension PASS → 'retrieve' grade), proves the mastery row has not reached the DB yet,
+//   reloads to keep the queued write durable, then reconnects and asserts the queued upsert flushes.
 // Author: Codex
 // Created: 2026-07-13
 
@@ -26,6 +27,15 @@ async function openVocabularyForGreetings(page: Parameters<typeof landOnHome>[0]
 
 test.describe('offline mastery queue', () => {
   test('offline vocabulary grading flushes the queued mastery write after reconnect', async ({ page, userEvidence, testUser, coverage }) => {
+    // Expose the expected meaning on the answer input so the typed grade is deterministic.
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem('fm:e2e', '1');
+      } catch {
+        /* ignore */
+      }
+    });
+
     const { error: resetError } = await userEvidence
       .from('mastery_items')
       .delete()
@@ -36,22 +46,31 @@ test.describe('offline mastery queue', () => {
     try {
       await openVocabularyForGreetings(page);
       coverage.touch('practice.vocabulary.tile', 'outcome-asserted');
-      const flashcardFront = page.getByRole('button', { name: 'Flashcard — tap to flip' }).first();
 
-      await page.context().setOffline(true);
-      await flashcardFront.click();
-      coverage.touch('practice.vocabulary.flashcard', 'outcome-asserted');
-
-      const flashcardBack = page.getByRole('button', { name: 'Card back — grade your recall below' }).first();
-      const backWord = flashcardBack.locator('p.text-2xl').first();
-      await expect(backWord).toBeVisible();
-      const cardWord = await backWord.textContent();
-      const visibleWord = cardWord?.trim() ?? '';
+      // Let the first card render ONLINE (the session refreshes mastery over the network), then
+      // read the word + its expected meaning before going offline.
+      const input = page.getByTestId('vocab-answer-input');
+      await expect(input).toBeVisible({ timeout: 20_000 });
+      const visibleWord = (await page.getByTestId('vocab-word').first().textContent())?.trim() ?? '';
       expect(SITUATION_WORDS).toContain(visibleWord);
       const gradedItemKey = vocabItemKey(SITUATION_ID, visibleWord);
+      const expected = (await input.getAttribute('data-answer')) ?? '';
+      expect(expected, 'data-answer hint must be exposed under fm:e2e').toBeTruthy();
+      // A translation may list alternates ("Good evening/night"); the grader accepts any ONE, so
+      // type the first alternate rather than the whole string.
+      const answer = expected.split(/[/,;|]| or /i)[0].trim();
 
-      await page.getByRole('button', { name: 'Good' }).click();
-      coverage.touch('practice.vocabulary.grade_good', 'outcome-asserted');
+      // Grade the card while OFFLINE: type the correct meaning → Check → skip the mic step so the
+      // grade is comprehension-only (retrieve, PASS_GRADE=4).
+      await page.context().setOffline(true);
+      await input.fill(answer);
+      await page.getByTestId('vocab-check').click();
+      const sayButton = page.getByTestId('vocab-say');
+      if (await sayButton.isVisible({ timeout: 5_000 }).catch(() => false)) {
+        await page.getByTestId('vocab-skip-speaking').click();
+      }
+      await expect(page.getByTestId('vocab-feedback')).toBeVisible({ timeout: 10_000 });
+      coverage.touch('practice.vocabulary.check', 'outcome-asserted');
 
       await expect
         .poll(

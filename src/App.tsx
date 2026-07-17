@@ -10,7 +10,7 @@
 
 import React, { Suspense, lazy, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield } from 'lucide-react';
+import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield, HelpCircle } from 'lucide-react';
 import { cn } from './lib/utils';
 import { getSupabase } from './lib/supabase';
 import { logger } from './lib/logger';
@@ -29,7 +29,6 @@ import { useAuth, AuthCrossSliceDeps } from './features/auth/useAuth';
 import { AuthScreen } from './features/auth/AuthScreen';
 import { SupabaseSetupGuide } from './features/auth/SupabaseSetupGuide';
 import { useSettings } from './features/settings/useSettings';
-import { AdminPanel } from './features/settings/AdminPanel';
 import { useLessons } from './features/learning/useLessons';
 import { useLessonModals } from './features/learning/useLessonModals';
 import { useTutorSession } from './features/tutor/useTutorSession';
@@ -77,6 +76,9 @@ const NAV_ITEMS: (NavItem & { id: TabId })[] = [
 /** Admin entry — rendered only for admins; opens the admin overlay rather than switching tabs. */
 const ADMIN_NAV_ITEM: NavItem = { id: 'admin', label: 'Admin', icon: Shield };
 
+/** Help entry (EN-20) — always available; opens the App-Guide chat in help mode (not a tab). */
+const HELP_NAV_ITEM: NavItem = { id: 'help', label: 'Help', icon: HelpCircle };
+
 export default function App() {
   const supabase = getSupabase();
   const [activeTab, setActiveTab] = useState<'home' | 'learning' | 'practice' | 'chat' | 'settings'>('home');
@@ -111,8 +113,7 @@ export default function App() {
   const {
     isSoundEnabled, setIsSoundEnabled,
     playbackSpeed,
-    globalVoiceLimit,
-    isAdminMode, setIsAdminMode,
+    globalVoiceLimit, setGlobalVoiceLimit,
     applyProfilePrefs, getPrefsForNewProfile,
   } = settings;
 
@@ -126,8 +127,6 @@ export default function App() {
     isUnlockModalOpen, setIsUnlockModalOpen,
     fetchApprovedVideos,
     fetchCustomLessons,
-    handleApproveSuggestion,
-    handleRejectSuggestion,
     handleUnlockLevel,
     saveGeneratedLesson,
     resetForLogout: resetLessonsForLogout,
@@ -155,6 +154,7 @@ export default function App() {
     handleAIPractice,
     handleSendMessage,
     toggleHelpMode,
+    openHelp,
     toggleRecording,
     playMessageInChunks,
     resetForLogout: resetTutorForLogout,
@@ -229,7 +229,6 @@ export default function App() {
       resetTutorForLogout();
       resetLessonsForLogout();
       resetTimeTracking();
-      setIsAdminMode(false);
       // SEC-2: reset device-persisted prefs + clear device-global stores so the next user on a
       // shared device inherits nothing (settings reset re-applies defaults; the DB profile is
       // authoritative and re-applies the next user's prefs on login).
@@ -307,6 +306,11 @@ export default function App() {
         onSelectTab={(id) => {
           logger.debug('nav', 'Sidebar nav', { category: 'USER_ACTION', details: { id } });
           setActiveTab(id as TabId);
+        }}
+        helpItem={HELP_NAV_ITEM}
+        onOpenHelp={() => {
+          logger.debug('nav', 'Sidebar nav: help', { category: 'USER_ACTION' });
+          void openHelp();
         }}
         adminItem={profile?.role === 'admin' ? ADMIN_NAV_ITEM : undefined}
         isAdminActive={isAdminViewOpen}
@@ -527,6 +531,8 @@ export default function App() {
               profile={profile}
               showToast={showToast}
               handleSupabaseError={handleSupabaseError}
+              globalVoiceLimit={globalVoiceLimit}
+              setGlobalVoiceLimit={setGlobalVoiceLimit}
               onClose={() => setIsAdminViewOpen(false)}
             />
           </Suspense>
@@ -555,16 +561,6 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Admin Panel (persists across tabs while admin mode is on) */}
-      <AdminPanel
-        isAdminMode={isAdminMode}
-        setIsAdminMode={setIsAdminMode}
-        videoSuggestions={videoSuggestions}
-        lessons={lessons}
-        handleApproveSuggestion={handleApproveSuggestion}
-        handleRejectSuggestion={handleRejectSuggestion}
-      />
 
       {/* Practice slice quiz overlay (the practice hub itself is the Practice tab above) */}
       <AnimatePresence>
