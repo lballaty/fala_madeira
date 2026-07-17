@@ -40,6 +40,20 @@ export class EdgeFunctionError extends Error {
 }
 
 /**
+ * Thrown by the offline-DOWNLOAD path (synthesizeCached with `pinned:true`) when the freshly
+ * synthesized clip cannot be saved without evicting a protected download — i.e. the durable saved
+ * store is full of downloads (EN-8, owner 2026-07-17). The offline-download loop catches this to
+ * stop early with a 'cache-full' status (deterministic — never retried) so the UI can prompt the
+ * user to raise the storage limit. Playback never throws this: a play silently falls back to cache.
+ */
+export class OfflineStorageFullError extends Error {
+  constructor() {
+    super('Offline storage is full. Raise the storage limit to save more audio.');
+    this.name = 'OfflineStorageFullError';
+  }
+}
+
+/**
  * Client-side mirror of the edge function's ErrorAnalystResult
  * (supabase/functions/_shared/gemini.ts). The server type lives in Deno and cannot be imported
  * into the browser bundle, so this shape is duplicated here — keep the two in sync. Consumed by
@@ -361,13 +375,20 @@ const cacheInBackground = (cacheKey: string, buffer: ArrayBuffer, requestId?: st
 // starts immediately). The saved store is bounded, so a write may evict least-recently-used saved
 // clips (logged at debug). Failures are logged (WARN), never swallowed. EN-8.
 const pinInBackground = (cacheKey: string, buffer: ArrayBuffer, requestId?: string): void => {
-  void audioCache.setPinned(cacheKey, buffer)
-    .then((evicted) => {
-      if (evicted > 0) {
-        logger.debug('tts_saved_evicted', `bounded saved-audio store evicted ${evicted} least-recently-used clip(s)`, {
+  // Auto-saved play (protect:false) — reclaimable, and NEVER evicts a protected download.
+  void audioCache.setPinned(cacheKey, buffer, { protect: false })
+    .then((res) => {
+      if (!res.stored) {
+        // Saved store is full of protected downloads: keep the clip fast for THIS session in the
+        // ephemeral cache instead (no nag — offline durability yields to explicit downloads).
+        cacheInBackground(cacheKey, buffer, requestId);
+        return;
+      }
+      if (res.evicted > 0) {
+        logger.debug('tts_saved_evicted', `saved-audio store reclaimed ${res.evicted} least-recently-used auto-saved clip(s)`, {
           category: 'SYSTEM_HEALTH',
           correlationId: requestId,
-          details: { evicted },
+          details: { evicted: res.evicted },
         });
       }
     })
@@ -497,10 +518,13 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   const arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
   logTtsSource('provider', cacheKey, data?.requestId);
   if (options.pinned) {
-    // Offline download: AWAIT the durable write — the download's PURPOSE is persistence, so it must
-    // land before the run counts the clip done (fire-and-forget here would reintroduce the EN-7
-    // "download reported complete but clip not saved"). This blocks the download, not playback.
-    await audioCache.setPinned(cacheKey, arrayBuffer);
+    // Offline download: AWAIT the durable write (protect:true — never auto-evicted). The download's
+    // PURPOSE is persistence, so it must land before the run counts the clip done (fire-and-forget
+    // here would reintroduce the EN-7 "download reported complete but clip not saved"). If it cannot
+    // fit without evicting another download, throw so the loop stops early + prompts to raise the
+    // storage limit (deterministic, not retried). Blocks the download, not playback.
+    const res = await audioCache.setPinned(cacheKey, arrayBuffer, { protect: true });
+    if (!res.stored) throw new OfflineStorageFullError();
   } else {
     // Playback: persist WITHOUT blocking so audio starts immediately (owner requirement). Curated +
     // "Save audio on device" ON ⇒ durable saved store (fast + offline); otherwise ⇒ ephemeral cache.

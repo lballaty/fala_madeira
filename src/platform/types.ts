@@ -186,6 +186,23 @@ export interface BlobLimits {
   maxBytes?: number;
 }
 
+// Options for a durable-store write (setPinnedBlob). `protect` marks the entry as an EXPLICIT
+// offline download that eviction must never reclaim (owner 2026-07-17: a download is a deliberate
+// "keep offline" commitment). Omitted/false = an opportunistic auto-saved play, which IS reclaimable.
+export interface PinnedWriteOptions {
+  limits?: BlobLimits;
+  protect?: boolean;
+}
+
+// Result of a durable-store write. `stored` is false when the entry could NOT be written within the
+// limit WITHOUT evicting a protected download — the caller decides what to do (a play falls back to
+// the ephemeral cache; a download surfaces an "out of offline space" message). `evicted` counts the
+// reclaimable (unprotected) entries removed to make room.
+export interface PinnedWriteResult {
+  evicted: number;
+  stored: boolean;
+}
+
 // Persistent client-side storage. Two namespaces: a JSON-value key-value store
 // for structured state (progress, queued writes, preferences) and a blob store
 // for binary payloads (cached TTS audio, content-pack media). IndexedDB-backed
@@ -214,15 +231,18 @@ export interface StorageAdapter {
   // 'audio' LRU (getBlob/setBlob) is now only an EPHEMERAL, cleared-on-logout tier for private
   // (non-`hostable`) audio, while this store is the persistent, user-facing "saved audio".
   //
-  // It is BOUNDED like the LRU (owner directive 2026-07-17: "it can still be bounded"): pass
-  // `limits` and a write evicts least-recently-used entries before writing when a limit would be
-  // breached (returns how many were evicted). Reading (getPinnedBlob) marks an entry most-recently
-  // used. Omitting `limits` writes without eviction (e.g. an explicit download bounded by its own
-  // run). It is cleared ONLY by an explicit user action — turning off "Save audio on device" or
-  // an app uninstall — NEVER on logout (contents are public, no PII; SEC-2 safe). A clip lookup
-  // checks the ephemeral 'audio' cache FIRST, then this store, before any server tier.
+  // It is BOUNDED like the LRU (owner directive 2026-07-17: "it can still be bounded") but with a
+  // PROTECTION rule: eviction reclaims only UNPROTECTED (opportunistic auto-saved play) entries,
+  // NEVER a `protect:true` explicit download. With `options.limits` a write reclaims least-recently
+  // -used plays before writing when a limit would be breached; if the incoming entry still cannot
+  // fit without evicting a download, the write is REFUSED (result.stored === false) so the caller
+  // can react (a play falls back to the cache; a download surfaces "out of offline space"). Reading
+  // (getPinnedBlob) marks an entry most-recently used. It is cleared ONLY by an explicit user action
+  // — turning off "Save audio on device" or an app uninstall — NEVER on logout (contents are public,
+  // no PII; SEC-2 safe). A clip lookup checks the ephemeral 'audio' cache FIRST, then this store,
+  // before any server tier.
   getPinnedBlob(key: string): Promise<ArrayBuffer | null>;
-  setPinnedBlob(key: string, data: ArrayBuffer, limits?: BlobLimits): Promise<number>;
+  setPinnedBlob(key: string, data: ArrayBuffer, options?: PinnedWriteOptions): Promise<PinnedWriteResult>;
   // Exact count/bytes of the durable store (drives the Settings "saved audio" usage display).
   pinnedUsage(): Promise<BlobStoreUsage>;
   // Remove durable/saved blobs (all, or those matching `prefix`) — e.g. turning off "Save audio on

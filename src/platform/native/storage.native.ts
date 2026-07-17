@@ -9,7 +9,7 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
-import { BlobLimits, BlobStoreUsage, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { BlobLimits, BlobStoreUsage, PinnedWriteResult, PlatformError, StorageAdapter, StorageUsage } from '../types';
 
 // Subdirectory inside Directory.Data that owns every blob this adapter writes.
 const BLOB_DIR = 'fm-blobs';
@@ -281,7 +281,7 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
       }
     },
 
-    async setPinnedBlob(key: string, data: ArrayBuffer, limits?: BlobLimits): Promise<number> {
+    async setPinnedBlob(key: string, data: ArrayBuffer): Promise<PinnedWriteResult> {
       const fileName = keyToFileName(key);
       try {
         const { Filesystem, Directory } = await fs();
@@ -291,9 +291,12 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
           directory: Directory.Data,
           recursive: true, // creates fm-pinned/ on first write
         });
-        // Bounded, durable LRU (EN-8): evict oldest saved clips when a limit is breached; without
-        // `limits` (e.g. an explicit download bounded by its own run) the store grows unbounded.
-        return limits ? await evictToFit(PINNED_DIR, limits, data.byteLength, fileName) : 0;
+        // ALWAYS store (stored:true), NEVER evict. The web adapter enforces the protected/bounded
+        // LRU via its meta index (protect downloads, reclaim plays); the native filesystem has no
+        // per-file protection flag, so bounding+protection is a WEB-ONLY behavior for now — better an
+        // unbounded native saved store than one that could silently delete a user's download. Native
+        // is not the shipping runtime yet; a sidecar-meta port is tracked with the EN-8 follow-ups.
+        return { evicted: 0, stored: true };
       } catch (e) {
         throw storageFailure('Could not save audio on this device.', e);
       }

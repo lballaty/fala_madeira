@@ -20,7 +20,7 @@
 
 import { platform } from '../platform';
 import { config } from '../config';
-import { BlobLimits, BlobStoreUsage } from '../platform/types';
+import { BlobLimits, BlobStoreUsage, PinnedWriteResult } from '../platform/types';
 import { buildKey } from './audioKey';
 
 // buildKey/hashText/keyToServerPath moved to the pure ./audioKey module (EN-8) so the identical
@@ -101,13 +101,15 @@ export const audioCache = {
   },
 
   /**
-   * Persist a clip to the DURABLE saved store (EN-8). Bounded by the same user storage budget as the
-   * cache (LRU eviction of least-recently-used SAVED clips when over budget — owner 2026-07-17: "it
-   * can still be bounded"). Returns how many entries were evicted. Survives logout; removed only by
-   * clearPinned (turning off "Save audio on device") or uninstall.
+   * Persist a clip to the DURABLE saved store (EN-8). Bounded by the user storage budget, but with
+   * PROTECTION (owner 2026-07-17): `protect:true` = an explicit offline DOWNLOAD that eviction never
+   * reclaims; `protect:false` (default) = an opportunistic auto-saved play, reclaimable oldest-first.
+   * Returns `{evicted, stored}` — `stored:false` means it could not fit without evicting a download,
+   * so the caller reacts (a play falls back to the cache; a download surfaces "out of offline space").
+   * Survives logout; removed only by clearPinned (turning off "Save audio on device") or uninstall.
    */
-  async setPinned(key: string, data: ArrayBuffer): Promise<number> {
-    return platform.storage.setPinnedBlob(key, data, limits());
+  async setPinned(key: string, data: ArrayBuffer, opts: { protect?: boolean } = {}): Promise<PinnedWriteResult> {
+    return platform.storage.setPinnedBlob(key, data, { limits: limits(), protect: opts.protect });
   },
 
   /**

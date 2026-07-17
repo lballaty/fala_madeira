@@ -17,7 +17,7 @@ vi.mock('../../lib/audioCache', () => ({
     get: vi.fn(async () => null),
     getPinned: vi.fn(async () => null),
     set: vi.fn(async () => 0),
-    setPinned: vi.fn(async () => 0),
+    setPinned: vi.fn(async () => ({ evicted: 0, stored: true })),
   },
   // EN-8: "Save audio on device" — defaults ON in tests; individual routing tests override it.
   saveAudioOnDeviceEnabled: vi.fn(() => true),
@@ -36,7 +36,7 @@ import { getSupabase, publicObjectUrl } from '../../lib/supabase';
 import { platform } from '../../platform';
 import { audioCache, saveAudioOnDeviceEnabled } from '../../lib/audioCache';
 import { logger } from '../../lib/logger';
-import { EdgeFunctionError, geminiService, synthesizeCached } from '../geminiService';
+import { EdgeFunctionError, OfflineStorageFullError, geminiService, synthesizeCached } from '../geminiService';
 import { config } from '../../config';
 import type { Tutor } from '../../types';
 
@@ -229,7 +229,7 @@ describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → su
     vi.mocked(audioCache.get).mockResolvedValue(null);
     vi.mocked(audioCache.getPinned).mockResolvedValue(null);
     vi.mocked(audioCache.set).mockClear().mockResolvedValue(0);
-    vi.mocked(audioCache.setPinned).mockClear().mockResolvedValue(0);
+    vi.mocked(audioCache.setPinned).mockClear().mockResolvedValue({ evicted: 0, stored: true });
     vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(true);
     invoke.mockResolvedValue({ data: { audio: 'AAAA' }, error: null });
     vi.mocked(publicObjectUrl).mockReturnValue('https://sb.example/storage/v1/object/public/tts-audio/hash.pcm');
@@ -327,7 +327,7 @@ describe('synthesizeCached device persistence routing (EN-8, owner 2026-07-17)',
     vi.mocked(audioCache.get).mockResolvedValue(null);
     vi.mocked(audioCache.getPinned).mockResolvedValue(null);
     vi.mocked(audioCache.set).mockClear().mockResolvedValue(0);
-    vi.mocked(audioCache.setPinned).mockClear().mockResolvedValue(0);
+    vi.mocked(audioCache.setPinned).mockClear().mockResolvedValue({ evicted: 0, stored: true });
     invoke.mockResolvedValue({ data: { audio: 'AAAA' }, error: null });
   });
 
@@ -357,5 +357,20 @@ describe('synthesizeCached device persistence routing (EN-8, owner 2026-07-17)',
     await synthesizeCached('lesson line', { hostable: true, pinned: true });
     expect(audioCache.setPinned).toHaveBeenCalledTimes(1);
     expect(audioCache.set).not.toHaveBeenCalled();
+  });
+
+  it('curated play that cannot fit (store full of downloads) FALLS BACK to the ephemeral cache', async () => {
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(true);
+    vi.mocked(audioCache.setPinned).mockResolvedValue({ evicted: 0, stored: false }); // refused
+    await synthesizeCached('Bom dia', { hostable: true });
+    await vi.runAllTimersAsync(); // drain the floating pin→fallback microtasks
+    expect(audioCache.setPinned).toHaveBeenCalledTimes(1);
+    expect(audioCache.set).toHaveBeenCalledTimes(1); // fell back to the cache (no nag, still fast)
+  });
+
+  it('offline download that cannot fit THROWS OfflineStorageFullError (never silently dropped)', async () => {
+    vi.mocked(audioCache.setPinned).mockResolvedValue({ evicted: 0, stored: false }); // full of downloads
+    await expect(synthesizeCached('lesson line', { hostable: true, pinned: true }))
+      .rejects.toBeInstanceOf(OfflineStorageFullError);
   });
 });

@@ -18,7 +18,7 @@
 // Created: 2026-07-09
 
 import { openDB, IDBPDatabase } from 'idb';
-import { BlobLimits, BlobStoreUsage, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { BlobLimits, BlobStoreUsage, PinnedWriteOptions, PinnedWriteResult, PlatformError, StorageAdapter, StorageUsage } from '../types';
 
 // Legacy names preserved from src/lib/audioCache.ts (pre-adapter) — do not rename,
 // or existing cached audio is orphaned.
@@ -44,6 +44,13 @@ interface BlobMetaEntry {
   size: number;
   /** Epoch ms of the last get/set — the LRU recency signal. */
   accessedAt: number;
+  /**
+   * Durable-store only (EN-8, owner 2026-07-17): true = an explicit offline DOWNLOAD that eviction
+   * must never reclaim. Only entries with `protected === false` (opportunistic auto-saved plays) are
+   * reclaimable. Undefined (legacy/rebuilt entries, e.g. pre-EN-8 downloads) is treated as PROTECTED
+   * — conservative, so we never auto-delete audio we can't classify. Unused by the 'audio' cache.
+   */
+  protected?: boolean;
 }
 
 type BlobMetaIndex = Record<string, BlobMetaEntry>;
@@ -372,34 +379,72 @@ export const createWebStorageAdapter = (): StorageAdapter => {
       if (db) {
         const value = await db.get(PINNED_STORE, key);
         if (value === undefined) return null;
-        // Touch recency so LRU eviction spares recently-played saved clips.
+        // Touch recency so LRU eviction spares recently-played saved clips. Preserve the protected
+        // flag — a recency touch must never downgrade a download to a reclaimable play.
         const meta = await ensureBlobMeta(db, PINNED_STORE, PINNED_META_KEY);
         const prev = meta[key];
-        meta[key] = { size: (value as ArrayBuffer).byteLength, accessedAt: now() };
-        if (!prev || prev.accessedAt !== meta[key].accessedAt || prev.size !== meta[key].size) {
-          await writeBlobMeta(db, meta, PINNED_META_KEY);
-        }
+        meta[key] = { size: (value as ArrayBuffer).byteLength, accessedAt: now(), protected: prev?.protected };
+        await writeBlobMeta(db, meta, PINNED_META_KEY);
         return value as ArrayBuffer;
       }
       return memoryPinned.get(key) ?? null;
     },
 
-    async setPinnedBlob(key: string, data: ArrayBuffer, limits?: BlobLimits): Promise<number> {
+    async setPinnedBlob(key: string, data: ArrayBuffer, options?: PinnedWriteOptions): Promise<PinnedWriteResult> {
       const db = await getDB();
       if (db) {
-        // Bounded, durable LRU (EN-8): with `limits` a write evicts least-recently-used saved
-        // clips before writing when a cap would be breached; without `limits` (e.g. an explicit
-        // download bounded by its own run) it writes without eviction. Either way the store
-        // survives logout — it is cleared only by clearPinned (turning off "Save audio on device").
+        // Bounded, durable, PROTECTED LRU (EN-8, owner 2026-07-17). Eviction reclaims ONLY
+        // unprotected (auto-saved play) entries — never a protected download. If the incoming entry
+        // cannot fit even after reclaiming every play (protected downloads fill the budget), the
+        // write is REFUSED (stored:false) rather than evicting a download; the caller reacts.
         const meta = await ensureBlobMeta(db, PINNED_STORE, PINNED_META_KEY);
-        const evicted = limits ? await evictToFit(db, PINNED_STORE, meta, key, data.byteLength, limits) : 0;
+        const protect = options?.protect ?? false;
+        const limits = options?.limits;
+        let evicted = 0;
+
+        if (limits && (limits.maxEntries !== undefined || limits.maxBytes !== undefined)) {
+          const { maxEntries, maxBytes } = limits;
+          const others = Object.entries(meta).filter(([k]) => k !== key);
+          // Undefined `protected` (legacy/rebuilt) counts as PROTECTED — only explicit false is reclaimable.
+          const protectedEntries = others.filter(([, m]) => m.protected !== false);
+          const reclaimable = others
+            .filter(([, m]) => m.protected === false)
+            .sort((a, b) => a[1].accessedAt - b[1].accessedAt); // oldest play first
+          const protectedBytes = protectedEntries.reduce((sum, [, m]) => sum + m.size, 0);
+          const protectedCount = protectedEntries.length;
+
+          // Best achievable (all plays reclaimed): does the incoming fit alongside the protected set?
+          const minBytes = protectedBytes + data.byteLength;
+          const minCount = protectedCount + 1;
+          const cannotFit =
+            (maxBytes !== undefined && minBytes > maxBytes) ||
+            (maxEntries !== undefined && minCount > maxEntries);
+          if (cannotFit) return { evicted: 0, stored: false }; // would require evicting a download
+
+          // Reclaim oldest plays until the incoming fits within both caps.
+          let totalBytes = protectedBytes + reclaimable.reduce((sum, [, m]) => sum + m.size, 0) + data.byteLength;
+          let totalCount = protectedCount + reclaimable.length + 1;
+          for (const [rk, entry] of reclaimable) {
+            const overBytes = maxBytes !== undefined && totalBytes > maxBytes;
+            const overCount = maxEntries !== undefined && totalCount > maxEntries;
+            if (!overBytes && !overCount) break;
+            await db.delete(PINNED_STORE, rk);
+            delete meta[rk];
+            totalBytes -= entry.size;
+            totalCount -= 1;
+            evicted += 1;
+          }
+        }
+
         await db.put(PINNED_STORE, data, key);
-        meta[key] = { size: data.byteLength, accessedAt: now() };
+        // Never downgrade an existing download to a reclaimable play on rewrite.
+        const wasProtected = meta[key]?.protected === true;
+        meta[key] = { size: data.byteLength, accessedAt: now(), protected: protect || wasProtected };
         await writeBlobMeta(db, meta, PINNED_META_KEY);
-        return evicted;
+        return { evicted, stored: true };
       }
       memoryPinned.set(key, data);
-      return 0;
+      return { evicted: 0, stored: true };
     },
 
     async pinnedUsage(): Promise<BlobStoreUsage> {

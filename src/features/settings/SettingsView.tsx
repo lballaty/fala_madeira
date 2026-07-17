@@ -436,6 +436,7 @@ export const SettingsView = ({
             onChange={(e) => setCacheLimitBytes(parseInt(e.target.value, 10))}
             disabled={!saveAudioOnDevice}
             aria-label="Storage limit"
+            data-testid="storage-limit"
             className="p-2 rounded-xl bg-ios-bg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ios-blue disabled:opacity-40"
           >
             {config.audio.cacheLimitOptionsBytes.map((bytes) => (

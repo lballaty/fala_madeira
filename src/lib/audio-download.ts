@@ -21,7 +21,7 @@ import { contentRepository, SituationFilter } from '../content/repository';
 import { PracticalLevel } from '../content/schema';
 import { AudioLine, linesForSituation } from '../content/lines';
 import { resolveVoice } from './voiceType';
-import { synthesizeCached } from '../services/geminiService';
+import { synthesizeCached, OfflineStorageFullError } from '../services/geminiService';
 import { audioCache, readCacheLimitBytes } from './audioCache';
 import { logger } from './logger';
 import { config } from '../config';
@@ -141,6 +141,11 @@ export const downloadForOffline = async (
   let failed = 0;
   let done = 0;
   let status: DownloadStatus = 'completed';
+  // Set when a download cannot be saved without evicting another protected download — i.e. the saved
+  // store is full of downloads (EN-8). Stops the run early with a 'cache-full' status so the UI can
+  // prompt the user to raise the storage limit. (Auto-saved plays are reclaimed by the adapter first;
+  // only genuine download-vs-download contention surfaces here.)
+  let storageFull = false;
 
   logger.info('OFFLINE_DOWNLOAD_STARTED', `pre-generating ${total} clip(s) for offline`, {
     category: 'DATA_PROCESSING',
@@ -152,19 +157,6 @@ export const downloadForOffline = async (
   for (const line of plan) {
     if (signal?.aborted) {
       status = 'cancelled';
-      break;
-    }
-
-    // Stop before the PINNED store exceeds the user's offline budget: downloads write to the
-    // pinned store now (EN-8), so the budget is measured there, not against the LRU cache.
-    const usage = await audioCache.pinnedUsage();
-    if (usage.bytes >= cacheLimitBytes) {
-      status = 'cache-full';
-      logger.warn('OFFLINE_DOWNLOAD_CACHE_FULL', `offline audio budget reached (${usage.bytes}/${cacheLimitBytes}) — stopping download early`, {
-        category: 'DATA_PROCESSING',
-        correlationId,
-        details: { usedBytes: usage.bytes, limitBytes: cacheLimitBytes, done, total },
-      });
       break;
     }
 
@@ -187,6 +179,17 @@ export const downloadForOffline = async (
           synthesized += 1;
           break;
         } catch (error) {
+          if (error instanceof OfflineStorageFullError) {
+            // Deterministic: the saved store is full of downloads — do NOT retry, stop the run.
+            status = 'cache-full';
+            storageFull = true;
+            logger.warn('OFFLINE_DOWNLOAD_CACHE_FULL', `offline storage full — downloads fill the ${cacheLimitBytes}-byte budget; stopping early`, {
+              category: 'DATA_PROCESSING',
+              correlationId,
+              details: { limitBytes: cacheLimitBytes, done, total },
+            });
+            break;
+          }
           if (attempt >= maxAttempts || signal?.aborted) {
             failed += 1;
             logger.error('OFFLINE_DOWNLOAD_CLIP_FAILED', `failed to synthesize a clip after ${attempt} attempt(s) — continuing`, {
@@ -208,6 +211,8 @@ export const downloadForOffline = async (
         }
       }
     }
+
+    if (storageFull) break; // saved store full of downloads — stop before counting this clip
 
     done += 1;
     onProgress?.({ done, total });

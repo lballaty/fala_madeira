@@ -16,6 +16,7 @@ import { logger, userMessage } from '../../lib/logger';
 import { config } from '../../config';
 import { audioCache } from '../../lib/audioCache';
 import { downloadForOffline, DownloadScope } from '../../lib/audio-download';
+import { focusControl } from '../../lib/focusControl';
 import { validateText } from '../../lib/validation';
 
 /** Correlation id for tracing a submissions read (mirrors useAdminQueues). */
@@ -204,7 +205,11 @@ export const useSettings = ({
           showToast(`Downloaded ${result.synthesized + result.fromCache} clips for offline`, 'success');
           break;
         case 'cache-full':
-          showToast('Storage limit reached — raise it in Offline settings to download more', 'error');
+          // Inform + take the user to the control (owner 2026-07-17): scroll to + highlight the
+          // storage-limit selector so they can raise it. Downloads are never evicted to make room —
+          // when the store is full of downloads, raising the limit is the only way to fit more.
+          showToast("You're out of offline space — raise the storage limit to download more", 'error');
+          void focusControl('storage-limit');
           break;
         case 'offline':
           showToast('You are offline — connect to download audio', 'error');

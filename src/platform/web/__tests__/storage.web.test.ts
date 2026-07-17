@@ -80,51 +80,77 @@ describe('web storage adapter — pinned store (EN-8)', () => {
   });
 });
 
-describe('web storage adapter — durable saved store is a bounded LRU (EN-8, owner 2026-07-17)', () => {
-  // The saved store now holds curated audio the user PLAYS (not just downloads) and is bounded so
-  // it "can still be bounded" (owner). Small real delays give the entries distinct accessedAt so
-  // LRU ordering is deterministic (the recency signal has ms resolution).
+describe('web storage adapter — durable saved store is a PROTECTED bounded LRU (EN-8, owner 2026-07-17)', () => {
+  // The saved store holds curated audio the user PLAYS (protect:false, reclaimable) AND explicit
+  // DOWNLOADS (protect:true, never evicted). Small real delays give distinct accessedAt so LRU
+  // ordering is deterministic (the recency signal has ms resolution).
   const tick = () => new Promise((r) => setTimeout(r, 3));
 
-  it('setPinnedBlob(limits) evicts least-recently-used SAVED clips over the byte budget', async () => {
+  it('reclaims least-recently-used PLAYS over the byte budget', async () => {
     const adapter = createWebStorageAdapter();
     const limits = { maxEntries: 100, maxBytes: 10 };
-    await adapter.setPinnedBlob('a', new Uint8Array(6).buffer, limits); // 6 bytes
+    await adapter.setPinnedBlob('a', new Uint8Array(6).buffer, { limits, protect: false }); // play, 6
     await tick();
-    await adapter.setPinnedBlob('b', new Uint8Array(6).buffer, limits); // +6 = 12 > 10 → evict 'a'
+    const r = await adapter.setPinnedBlob('b', new Uint8Array(6).buffer, { limits, protect: false }); // +6 > 10 → evict 'a'
+    expect(r).toEqual({ evicted: 1, stored: true });
     expect(await adapter.getPinnedBlob('a')).toBeNull();
     expect(await adapter.getPinnedBlob('b')).not.toBeNull();
     expect((await adapter.pinnedUsage()).count).toBe(1);
   });
 
-  it('getPinnedBlob marks a saved clip most-recently-used so eviction spares it', async () => {
+  it('getPinnedBlob marks a play most-recently-used so eviction spares it', async () => {
     const adapter = createWebStorageAdapter();
     const limits = { maxEntries: 2, maxBytes: 1_000_000 };
-    await adapter.setPinnedBlob('a', new Uint8Array([1]).buffer, limits);
+    await adapter.setPinnedBlob('a', new Uint8Array([1]).buffer, { limits, protect: false });
     await tick();
-    await adapter.setPinnedBlob('b', new Uint8Array([1]).buffer, limits);
+    await adapter.setPinnedBlob('b', new Uint8Array([1]).buffer, { limits, protect: false });
     await tick();
     await adapter.getPinnedBlob('a'); // touch 'a' → now most-recently-used
     await tick();
-    await adapter.setPinnedBlob('c', new Uint8Array([1]).buffer, limits); // over maxEntries → evict 'b'
+    await adapter.setPinnedBlob('c', new Uint8Array([1]).buffer, { limits, protect: false }); // over → evict 'b'
     expect(await adapter.getPinnedBlob('a')).not.toBeNull();
     expect(await adapter.getPinnedBlob('b')).toBeNull();
     expect(await adapter.getPinnedBlob('c')).not.toBeNull();
   });
 
+  it('NEVER evicts a download to fit a play — the play is refused (stored:false) when full of downloads', async () => {
+    const adapter = createWebStorageAdapter();
+    const limits = { maxEntries: 100, maxBytes: 10 };
+    const dl = await adapter.setPinnedBlob('dl', new Uint8Array(10).buffer, { limits, protect: true }); // fills budget
+    expect(dl.stored).toBe(true);
+    const play = await adapter.setPinnedBlob('play', new Uint8Array(6).buffer, { limits, protect: false });
+    expect(play).toEqual({ evicted: 0, stored: false }); // refused, nothing evicted
+    expect(await adapter.getPinnedBlob('dl')).not.toBeNull(); // download survives
+    expect(await adapter.getPinnedBlob('play')).toBeNull();   // play not stored
+  });
+
+  it('a new download reclaims old PLAYS to fit, but never another download', async () => {
+    const adapter = createWebStorageAdapter();
+    const limits = { maxEntries: 100, maxBytes: 12 };
+    await adapter.setPinnedBlob('dl1', new Uint8Array(6).buffer, { limits, protect: true });  // download 6
+    await tick();
+    await adapter.setPinnedBlob('play1', new Uint8Array(6).buffer, { limits, protect: false }); // play 6 (total 12)
+    await tick();
+    const res = await adapter.setPinnedBlob('dl2', new Uint8Array(6).buffer, { limits, protect: true }); // needs room
+    expect(res).toEqual({ evicted: 1, stored: true });
+    expect(await adapter.getPinnedBlob('dl1')).not.toBeNull();  // first download protected
+    expect(await adapter.getPinnedBlob('play1')).toBeNull();    // play reclaimed to make room
+    expect(await adapter.getPinnedBlob('dl2')).not.toBeNull();
+  });
+
   it('clearPinned() empties the saved store and its usage index (the "turn off save" delete)', async () => {
     const adapter = createWebStorageAdapter();
-    await adapter.setPinnedBlob('a', new Uint8Array([1, 2]).buffer, { maxBytes: 1_000_000 });
-    await adapter.setPinnedBlob('b', new Uint8Array([3]).buffer, { maxBytes: 1_000_000 });
+    await adapter.setPinnedBlob('a', new Uint8Array([1, 2]).buffer);
+    await adapter.setPinnedBlob('b', new Uint8Array([3]).buffer, { protect: true });
     await adapter.clearPinned();
     expect(await adapter.getPinnedBlob('a')).toBeNull();
     expect(await adapter.pinnedUsage()).toEqual({ count: 0, bytes: 0 });
   });
 
-  it('clearBlobs() (logout / clear cache) leaves the bounded saved store intact', async () => {
+  it('clearBlobs() (logout / clear cache) leaves the saved store intact', async () => {
     const adapter = createWebStorageAdapter();
     await adapter.setBlob('cache', new Uint8Array([1]).buffer, { maxEntries: 100, maxBytes: 1_000_000 });
-    await adapter.setPinnedBlob('saved', new Uint8Array([2]).buffer, { maxBytes: 1_000_000 });
+    await adapter.setPinnedBlob('saved', new Uint8Array([2]).buffer, { protect: true });
     await adapter.clearBlobs();
     expect(await adapter.getBlob('cache')).toBeNull();
     expect(await adapter.getPinnedBlob('saved')).not.toBeNull();

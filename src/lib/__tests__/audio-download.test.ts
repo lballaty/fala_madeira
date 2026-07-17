@@ -11,7 +11,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../content/repository', () => ({ contentRepository: { listSituations: vi.fn() } }));
-vi.mock('../../services/geminiService', () => ({ synthesizeCached: vi.fn(async () => new ArrayBuffer(8)) }));
+// OfflineStorageFullError must be the REAL class (not a stub) so the download loop's `instanceof`
+// check works — the loop catches it to stop early with 'cache-full' (EN-8).
+vi.mock('../../services/geminiService', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../services/geminiService')>();
+  return { synthesizeCached: vi.fn(async () => new ArrayBuffer(8)), OfflineStorageFullError: actual.OfflineStorageFullError };
+});
 vi.mock('../audioCache', () => ({
   audioCache: {
     buildKey: vi.fn((provider: string, voice: string, text: string) => `${provider}:${voice}:${text}`),
@@ -25,7 +30,7 @@ vi.mock('../audioCache', () => ({
 vi.mock('../logger', () => ({ logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() } }));
 
 import { contentRepository } from '../../content/repository';
-import { synthesizeCached } from '../../services/geminiService';
+import { synthesizeCached, OfflineStorageFullError } from '../../services/geminiService';
 import { audioCache } from '../audioCache';
 import { downloadForOffline } from '../audio-download';
 import type { Situation } from '../../content/schema';
@@ -79,6 +84,20 @@ describe('downloadForOffline', () => {
     vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
     await downloadForOffline({ trackId: 't1' });
     expect(synthesizeCached).toHaveBeenCalledWith('Bom dia', expect.objectContaining({ hostable: true }));
+  });
+
+  it('stops with cache-full (no retry) when the saved store is full of downloads (EN-8)', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia', 'Boa tarde', 'Obrigado'])]);
+    // First clip saves; the second cannot fit (store full of protected downloads) → the loop must
+    // stop with cache-full and NOT retry the deterministic full error (would waste synthesis calls).
+    vi.mocked(synthesizeCached)
+      .mockResolvedValueOnce(new ArrayBuffer(8))
+      .mockRejectedValueOnce(new OfflineStorageFullError())
+      .mockResolvedValue(new ArrayBuffer(8));
+    const result = await downloadForOffline({ trackId: 't1' });
+    expect(result.status).toBe('cache-full');
+    expect(result.synthesized).toBe(1);                 // only the first clip landed
+    expect(synthesizeCached).toHaveBeenCalledTimes(2);  // stopped at the full one — no retry, no 3rd clip
   });
 
   it('counts already-cached clips as fromCache and skips the network', async () => {
