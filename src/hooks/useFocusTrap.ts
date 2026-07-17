@@ -112,6 +112,5 @@ export function useFocusTrap(
       }
     };
     // onClose is intentionally NOT a dep (read via ref) — see header.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, containerRef]);
 }
