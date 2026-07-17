@@ -69,7 +69,10 @@ test.describe('help & guidance (EN-17a + EN-18)', () => {
     // 2026-07-16 full run).
     await expect(dialog.getByText(/download lessons for offline use/i).first()).toBeVisible();
 
-    const chip = page.getByTestId('take-me-there-offline-downloads');
+    // .first(): when the AI answer repeats the capability reference, the help renderer emits the
+    // chip twice (same testid) — a strict-mode violation. Same AI-nondeterminism family as the
+    // text assertion above; the first chip is the one to drive.
+    const chip = page.getByTestId('take-me-there-offline-downloads').first();
     await expect(chip).toBeVisible();
     await chip.click();
 

@@ -79,10 +79,13 @@ export function installErrorGuard(page: Page, opts: ErrorGuardOptions = {}): Err
     const url = res.url();
     // Shared-quota / throttle conditions the app handles gracefully (degrades TTS to device speech,
     // verified by user/50) — not runtime defects: 429 (rate-limit, any endpoint) and 503 from the
-    // gemini TTS function specifically. Everything else 4xx/5xx (incl. non-gemini 5xx and the
+    // AI-gateway TTS function specifically. Everything else 4xx/5xx (incl. other 5xx and the
     // profiles 400s this guard exists to catch) still fails. Durable fix = WS2 isolation (EF-36).
+    // NB: the function was renamed gemini -> ai-gateway (2026-07-16); match both so the exemption
+    // survives the rename (the stale `gemini`-only match turned the EF-37 503 storm into a red
+    // @clean run after the rename).
     if (status === 429) return;
-    if (status === 503 && /\/functions\/v1\/gemini/i.test(url)) return;
+    if (status === 503 && /\/functions\/v1\/(gemini|ai-gateway)/i.test(url)) return;
     if (ignoreUrls.some((re) => re.test(url))) return;
     badResponses.push(`${status} ${res.request().method()} ${url}`);
   });
