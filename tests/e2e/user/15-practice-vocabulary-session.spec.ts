@@ -12,6 +12,10 @@
 
 import { test, expect, landOnHome } from '../support/fixtures';
 
+// A translation may list alternates ("Good evening/night", "So / Then"); the grader accepts any
+// ONE of them, so a learner types a single meaning. Mirror that: type the first alternate.
+const firstAlternate = (translation: string): string => translation.split(/[/,;|]| or /i)[0].trim();
+
 test.describe('practice vocabulary session', () => {
   test('Vocabulary quiz grades typed answers and reaches the summary', async ({ page, coverage }) => {
     // Expose the expected meaning on the answer input so the typed flow is deterministic
@@ -55,7 +59,7 @@ test.describe('practice vocabulary session', () => {
       const expected = await input.getAttribute('data-answer');
       expect(expected, 'data-answer hint must be exposed under fm:e2e').toBeTruthy();
       const typeWrong = step === 0;
-      await input.fill(typeWrong ? 'zzqqxx-not-a-word' : (expected ?? ''));
+      await input.fill(typeWrong ? 'zzqqxx-not-a-word' : firstAlternate(expected ?? ''));
       await page.getByTestId('vocab-check').click();
 
       // The reveal offers a mic step when recognition is available — always skip it so grading is
