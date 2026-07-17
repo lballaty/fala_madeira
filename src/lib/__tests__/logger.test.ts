@@ -106,6 +106,35 @@ describe('logger persistence → log-sink (obs-client-sink)', () => {
   });
 });
 
+describe('logger self-observability — dropped-event counters (EN-27 P2)', () => {
+  it('counts ring-buffer overflow drops and reports them via getDiagnostics()', () => {
+    const { ringBufferMax } = logger.getDiagnostics();
+    const before = logger.getDiagnostics().dropped.ringBuffer;
+
+    // Push well past the ring-buffer cap using DEBUG (ring-buffer only; no persist-queue path).
+    const overflow = ringBufferMax + 50;
+    for (let i = 0; i < overflow; i++) {
+      logger.debug('rb_overflow_probe', `event ${i}`);
+    }
+
+    const after = logger.getDiagnostics();
+    // At least the 50 events beyond capacity were dropped (more if the buffer was already partly
+    // full from earlier tests) — the key property: the drop is COUNTED, not silent.
+    expect(after.dropped.ringBuffer - before).toBeGreaterThanOrEqual(50);
+    expect(after.ringBufferSize).toBeLessThanOrEqual(ringBufferMax);
+  });
+
+  it('getDiagnostics() exposes the queue sizes and both drop tallies', () => {
+    const d = logger.getDiagnostics();
+    expect(d).toMatchObject({
+      sessionId: expect.any(String),
+      ringBufferSize: expect.any(Number),
+      persistQueueSize: expect.any(Number),
+      dropped: { ringBuffer: expect.any(Number), persistQueue: expect.any(Number) },
+    });
+  });
+});
+
 describe('user-visible error surface (userMessage / shortRef)', () => {
   it('shortRef strips dashes and takes the first 8 chars', () => {
     expect(shortRef('abcd1234-e2e-chat-failure')).toBe('abcd1234');

@@ -405,8 +405,16 @@ const load = async (correlationId: string): Promise<void> => {
       details: { source: 'cache', packIds: cached.packs.map((p) => p.id), degraded: cached.degraded },
     });
     if (cached.degraded) {
-      // Some cached packs were corrupt — refetch in the background (§10).
-      void refreshInternal(correlationId).catch(() => undefined);
+      // Some cached packs were corrupt — refetch in the background (§10). EN-27 P2: log a failure
+      // of that background refresh instead of swallowing it (the user is on degraded/corrupt cached
+      // content until the next successful refresh — that should be visible to ops).
+      void refreshInternal(correlationId).catch((error: unknown) => {
+        logger.warn('CONTENT_REFRESH_BACKGROUND_FAILED', 'background refresh of degraded cache failed — staying on cached content', {
+          category: 'DATA_PROCESSING',
+          correlationId,
+          error,
+        });
+      });
     }
     return;
   }

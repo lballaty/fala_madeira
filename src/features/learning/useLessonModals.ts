@@ -84,7 +84,25 @@ export const useLessonModals = ({
   };
 
   const handleSuggestVideo = async () => {
-    if (!selectedLesson || !supabase || !user) return;
+    // EN-27 P1.10 (TB-15 class): the user tapped "Suggest Video" — never silently no-op. Split the
+    // guard so a real not-signed-in / offline condition surfaces a Ref toast + logs, and the
+    // should-be-unreachable no-lesson case still leaves a trace instead of vanishing.
+    if (!supabase || !user) {
+      const event = logger.warn('SUGGEST_VIDEO_NO_SESSION', 'Suggest Video submitted with no active session/client', {
+        category: 'USER_ACTION',
+        details: { hasSupabase: !!supabase, hasUser: !!user },
+      });
+      showToast(userMessage('NO_SESSION', 'You need to be signed in and online to suggest a video.', event.request_id), 'error');
+      return;
+    }
+    if (!selectedLesson) {
+      // Programmer guard: the button only renders inside an open lesson. Reaching here is a bug —
+      // log it (no toast; there is no lesson context to act on).
+      logger.warn('SUGGEST_VIDEO_NO_LESSON', 'Suggest Video invoked with no selected lesson (unexpected)', {
+        category: 'USER_ACTION',
+      });
+      return;
+    }
     // Validate the URL (must be a real http(s) link) and cap the optional note.
     const urlCheck = validateUrl(suggestionUrl, 'Video link');
     if (!urlCheck.ok) { showToast(urlCheck.reason, 'error'); return; }

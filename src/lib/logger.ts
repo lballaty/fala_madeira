@@ -72,6 +72,14 @@ let isFlushing = false;
 
 let currentUserId: string | null = null;
 
+// EN-27 P2 — logger self-observability. The ring buffer and persist queue both DROP events when
+// full (oldest ring entry evicted; ERROR/CRITICAL not queued once persistQueue is at cap; the
+// requeue-on-flush-failure path truncates the batch). Those drops were uncounted, so a diagnostic
+// export could silently omit events with no indication anything was lost. Count them and expose the
+// tallies via getDiagnostics() so "Send Logs" can say "N events dropped (buffer/persist overflow)".
+// NB: incremented WITHOUT re-entering the logger (no logger.* call in a drop path — that would recurse).
+const dropped = { ringBuffer: 0, persistQueue: 0 };
+
 const serializeError = (err: unknown): Record<string, unknown> => {
   if (err instanceof Error) {
     return { name: err.name, message: err.message, stack: import.meta.env.DEV ? err.stack : undefined };
@@ -103,6 +111,16 @@ const devEcho = (event: LogEvent) => {
   else console.log(line, event.details ?? '');
 };
 
+// Requeue a failed batch at the FRONT of the persist queue, bounded by PERSIST_QUEUE_MAX. Events
+// that don't fit are dropped from persistence and counted (EN-27 P2 self-observability).
+const requeueBounded = (batch: LogEvent[]): void => {
+  const capacity = Math.max(0, PERSIST_QUEUE_MAX - persistQueue.length);
+  const kept = batch.slice(0, capacity);
+  const droppedNow = batch.length - kept.length;
+  if (droppedNow > 0) dropped.persistQueue += droppedNow;
+  persistQueue.unshift(...kept);
+};
+
 const scheduleFlush = () => {
   if (flushTimer) return;
   flushTimer = setTimeout(() => {
@@ -130,13 +148,14 @@ export const flushPersistQueue = async (): Promise<void> => {
     // public.logs schema (level/category/event_type/correlation IDs/trace_id + details).
     const { error } = await supabase.functions.invoke('log-sink', { body: { events: batch } });
     if (error) {
-      // Requeue (bounded) so the next timer tick retries — e.g. transient offline.
-      persistQueue.unshift(...batch.slice(0, PERSIST_QUEUE_MAX - persistQueue.length));
+      // Requeue (bounded) so the next timer tick retries — e.g. transient offline. Any batch events
+      // beyond the remaining capacity are dropped from persistence — count them (EN-27 P2).
+      requeueBounded(batch);
       scheduleFlush();
     }
   } catch {
     // Persistence is best-effort by contract; the ring buffer still holds the events.
-    persistQueue.unshift(...batch.slice(0, PERSIST_QUEUE_MAX - persistQueue.length));
+    requeueBounded(batch);
     scheduleFlush();
   } finally {
     isFlushing = false;
@@ -162,10 +181,14 @@ const record = (level: LogLevel, eventType: string, message: string, options: Lo
   };
 
   ringBuffer.push(event);
-  if (ringBuffer.length > RING_BUFFER_MAX) ringBuffer.shift();
+  if (ringBuffer.length > RING_BUFFER_MAX) {
+    ringBuffer.shift();
+    dropped.ringBuffer += 1;
+  }
 
   if (level === 'CRITICAL' || level === 'ERROR') {
     if (persistQueue.length < PERSIST_QUEUE_MAX) persistQueue.push(event);
+    else dropped.persistQueue += 1; // queue at cap — this event will not be persisted
     if (persistQueue.length >= FLUSH_BATCH_TRIGGER) void flushPersistQueue();
     else scheduleFlush();
   }
@@ -191,6 +214,25 @@ export const logger = {
 
   /** Snapshot of the ring buffer for the diagnostic-logs UI (SupportModal "Send Logs"). */
   getRecentLogs: (): LogEvent[] => [...ringBuffer],
+
+  /**
+   * Diagnostics for the "Send Logs" surface (EN-27 P2). `dropped` reports events lost to buffer /
+   * persist-queue overflow so an export can honestly say how many events it is NOT showing, instead
+   * of silently omitting them.
+   */
+  getDiagnostics: (): {
+    sessionId: string;
+    ringBufferSize: number;
+    ringBufferMax: number;
+    persistQueueSize: number;
+    dropped: { ringBuffer: number; persistQueue: number };
+  } => ({
+    sessionId: SESSION_ID,
+    ringBufferSize: ringBuffer.length,
+    ringBufferMax: RING_BUFFER_MAX,
+    persistQueueSize: persistQueue.length,
+    dropped: { ...dropped },
+  }),
 };
 
 /** Short, quotable support reference derived from a correlation/request ID. */
