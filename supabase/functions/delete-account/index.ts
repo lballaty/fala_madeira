@@ -8,6 +8,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import { corsHeaders, errorResponse, jsonResponse, newRequestId, parseTraceparent } from "../_shared/http.ts";
 import { persistLog } from "../_shared/persistLog.ts";
+import { deleteUserData } from "../_shared/deleteUserData.ts";
 
 Deno.serve(async (req) => {
   const requestId = newRequestId();
@@ -35,14 +36,35 @@ Deno.serve(async (req) => {
   const uidText = String(uid);
 
   try {
-    // Owned-row cleanup. user_id is UUID on some tables and TEXT on others.
-    await admin.from("lessons").delete().eq("user_id", uid);
-    await admin.from("lesson_requests").delete().eq("user_id", uid);
-    await admin.from("tickets").delete().eq("user_id", uid);
-    await admin.from("logs").delete().eq("user_id", uid);
-    await admin.from("video_suggestions").delete().eq("user_id", uidText);
-    await admin.from("lesson_corrections").delete().eq("user_id", uidText);
-    await admin.from("profiles").delete().eq("id", uid);
+    // Owned-row cleanup via the pure orchestrator. supabase-js returns failures in `{ error }`
+    // (it does NOT throw), so a per-table failure must be checked explicitly — otherwise a
+    // partially-deleted account would be reported as `{ deleted: true }` (EN-27 P0.1). The
+    // orchestrator stops on the first error; we persist exactly where it stopped and return 500.
+    const result = await deleteUserData(
+      (table, column, value) => admin.from(table).delete().eq(column, value),
+      uid,
+      uidText,
+    );
+    if (!result.ok) {
+      await persistLog({
+        level: "ERROR",
+        category: "SECURITY",
+        eventType: "account_delete_step_failed",
+        message: `owned-row deletion failed at table '${result.failedTable}': ${String(result.error)}`,
+        requestId,
+        correlationId: requestId,
+        traceId: trace?.traceId,
+        userId: uid,
+        details: { failedTable: result.failedTable, stepsCompleted: result.stepsCompleted },
+      });
+      return errorResponse(
+        "DELETE_FAILED",
+        "Could not fully delete the account. Contact support.",
+        500,
+        requestId,
+        { traceId: trace?.traceId },
+      );
+    }
 
     const { error: delErr } = await admin.auth.admin.deleteUser(uid);
     if (delErr) throw delErr;
