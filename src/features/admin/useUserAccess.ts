@@ -23,6 +23,7 @@ export interface AccessTarget {
   email: string;
   subscription_tier: SubscriptionTier | null;
   unlocked_level: number | null;
+  voice_limit: number | null;
   role: 'user' | 'admin' | null;
 }
 
@@ -40,8 +41,8 @@ export interface UserAccessState {
   isSaving: boolean;
   /** Look up a profile by email (exact, case-insensitive). Clears the target on miss. */
   lookupByEmail: (email: string) => Promise<void>;
-  /** Set the target's subscription tier (and optionally unlocked_level) via an RLS-gated UPDATE. */
-  grantAccess: (tier: SubscriptionTier, unlockedLevel?: number | null) => Promise<void>;
+  /** Set the target's subscription tier (and optionally unlocked_level / per-user voice_limit) via an RLS-gated UPDATE. */
+  grantAccess: (tier: SubscriptionTier, unlockedLevel?: number | null, voiceLimit?: number | null) => Promise<void>;
   /** Clear the current target (e.g. after a grant or when starting a new lookup). */
   clearTarget: () => void;
 }
@@ -86,7 +87,7 @@ export const useUserAccess = ({
         // Admin SELECT on any profile is granted by RLS (00001:119). ilike = case-insensitive exact.
         const { data, error } = await supabase
           .from('profiles')
-          .select('id, email, subscription_tier, unlocked_level, role')
+          .select('id, email, subscription_tier, unlocked_level, voice_limit, role')
           .ilike('email', trimmed)
           .maybeSingle();
         if (error) throw error;
@@ -124,7 +125,7 @@ export const useUserAccess = ({
   );
 
   const grantAccess = useCallback(
-    async (tier: SubscriptionTier, unlockedLevel?: number | null): Promise<void> => {
+    async (tier: SubscriptionTier, unlockedLevel?: number | null, voiceLimit?: number | null): Promise<void> => {
       if (!target) {
         showToast('Look up a user first.', 'error');
         return;
@@ -139,10 +140,19 @@ export const useUserAccess = ({
       }
 
       const correlationId = newCorrelationId();
-      const previous = { subscription_tier: target.subscription_tier, unlocked_level: target.unlocked_level };
-      const update: { subscription_tier: SubscriptionTier; unlocked_level?: number } = { subscription_tier: tier };
+      const previous = {
+        subscription_tier: target.subscription_tier,
+        unlocked_level: target.unlocked_level,
+        voice_limit: target.voice_limit,
+      };
+      const update: { subscription_tier: SubscriptionTier; unlocked_level?: number; voice_limit?: number | null } = {
+        subscription_tier: tier,
+      };
       if (typeof unlockedLevel === 'number' && Number.isFinite(unlockedLevel)) {
         update.unlocked_level = Math.max(1, Math.trunc(unlockedLevel));
+      }
+      if (voiceLimit !== undefined) {
+        update.voice_limit = voiceLimit === null ? null : Math.max(0, Math.trunc(voiceLimit));
       }
 
       setIsSaving(true);

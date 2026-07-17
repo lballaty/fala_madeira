@@ -1,10 +1,13 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/admin/02-admin-global-settings.spec.ts
 // Description: Admin settings persistence coverage. Verifies the real admin can change the
-//   global daily voice limit from the live Profile admin controls and that the change persists
-//   to public.global_settings. Restores the original value at the end to keep the environment
-//   stable for later runs.
+//   global daily voice limit and that the change persists to public.global_settings. Restores the
+//   original value at the end to keep the environment stable for later runs.
 // Author: Codex
 // Created: 2026-07-11
+// Updated: 2026-07-16 (EN-25) — the global voice-limit stepper moved OUT of the Settings
+//   "Admin Mode" panel (deleted) INTO the new Admin → Config tab. Rerouted the flow accordingly:
+//   open the single sidebar Admin link → Config tab (data-testid="admin-tab-config") → read the
+//   value span (data-testid="admin-voice-limit-global") and its +/- buttons. DB assertions kept.
 
 import { test, expect, landOnHome } from '../support/fixtures';
 import { config } from '../../../src/config';
@@ -29,20 +32,22 @@ test.describe('admin global settings', () => {
     const targetValue = initialValue + 1;
 
     await landOnHome(adminPage);
-    await adminPage.getByRole('button', { name: 'Profile' }).first().click();
-    await adminPage.getByRole('switch', { name: 'Admin Mode' }).click();
 
-    const panel = adminPage
-      .getByText('Global Voice Limit', { exact: true })
-      .locator('xpath=ancestor::div[2]');
-    const value = panel.locator('span.w-6');
-    await expect(panel.getByText('Global Voice Limit', { exact: true })).toBeVisible();
+    // EN-25: reach the global voice-limit stepper via the single Admin nav → Config tab.
+    await adminPage.getByRole('button', { name: 'Admin' }).first().click();
+    await expect(adminPage.getByRole('heading', { name: 'Admin' })).toBeVisible();
+    await adminPage.getByTestId('admin-tab-config').click();
+
+    const value = adminPage.getByTestId('admin-voice-limit-global');
+    await expect(value).toBeVisible();
+    // The +/- steppers flank the value span within the same stepper control.
+    const stepper = value.locator('xpath=ancestor::div[1]');
 
     await expect
       .poll(async () => extractFirstInteger(await value.textContent()))
       .toBe(initialValue);
 
-    await panel.getByRole('button', { name: '+' }).click();
+    await stepper.getByRole('button', { name: '+' }).click();
 
     await expect
       .poll(async () => extractFirstInteger(await value.textContent()), {
@@ -65,7 +70,7 @@ test.describe('admin global settings', () => {
       )
       .toBe(targetValue);
 
-    await panel.getByRole('button', { name: '-' }).click();
+    await stepper.getByRole('button', { name: '-' }).click();
 
     await expect
       .poll(async () => extractFirstInteger(await value.textContent()), {

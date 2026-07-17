@@ -105,7 +105,6 @@ export const useSettings = ({
   // only fires when globalVoiceLimit DIFFERS from this — otherwise load + profile-identity churn
   // would re-persist a display/stale value and clobber the server setting (e.g. reset 50 -> 20).
   const serverVoiceLimitRef = useRef<number | null>(null);
-  const [isAdminMode, setIsAdminMode] = useState(false);
   const [isTutorSelectionOpen, setIsTutorSelectionOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
   const [supportSubject, setSupportSubject] = useState('');
@@ -615,7 +614,6 @@ export const useSettings = ({
     isSoundEnabled, setIsSoundEnabled,
     playbackSpeed, setPlaybackSpeed,
     globalVoiceLimit, setGlobalVoiceLimit,
-    isAdminMode, setIsAdminMode,
     isTutorSelectionOpen, setIsTutorSelectionOpen,
     isSupportModalOpen, setIsSupportModalOpen,
     supportSubject, setSupportSubject,
