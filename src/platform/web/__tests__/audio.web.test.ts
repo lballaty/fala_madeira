@@ -10,15 +10,28 @@
 // Created: 2026-07-14
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+// EN-27 P0.3: assert the device-speech onerror path LOGS (silence-as-success was the bug).
+vi.mock('../../../lib/logger', () => ({
+  logger: {
+    error: vi.fn(),
+    warn: vi.fn(),
+    info: vi.fn(),
+    debug: vi.fn(),
+    critical: vi.fn(),
+  },
+}));
+
 import { createWebAudioAdapter } from '../audio.web';
 import { PlatformError } from '../../types';
+import { logger } from '../../../lib/logger';
 
 interface FakeUtterance {
   text: string;
   lang: string;
   rate: number;
   onend: (() => void) | null;
-  onerror: (() => void) | null;
+  onerror: ((event?: unknown) => void) | null;
 }
 
 const g = globalThis as unknown as {
@@ -95,5 +108,24 @@ describe('web AudioAdapter.speak() — TTS fallback', () => {
     const adapter = createWebAudioAdapter();
     adapter.stop();
     expect(cancelSpy).toHaveBeenCalled();
+  });
+
+  it('logs WEB_SPEECH_SYNTHESIS_ERROR and still fires onEnded when the utterance errors (EN-27 P0.3)', async () => {
+    const adapter = createWebAudioAdapter();
+    const onEnded = vi.fn();
+    await adapter.speak('falha', { lang: 'pt-PT', onEnded });
+    await Promise.resolve(); // flush the fake engine's auto-onend microtask
+    onEnded.mockClear(); // isolate the onerror path's onEnded from the auto-onend above
+    // Simulate the engine firing onerror instead of onend — the "silence as success" case.
+    expect(lastUtterance?.onerror).toBeTypeOf('function');
+    lastUtterance?.onerror?.({ error: 'synthesis-failed' });
+    // The failure is now visible in the logger...
+    expect(logger.error).toHaveBeenCalledWith(
+      'WEB_SPEECH_SYNTHESIS_ERROR',
+      expect.any(String),
+      expect.objectContaining({ category: 'SYSTEM_HEALTH' }),
+    );
+    // ...and the caller's spinner still clears (onEnded contract preserved).
+    expect(onEnded).toHaveBeenCalledTimes(1);
   });
 });
