@@ -20,8 +20,9 @@ vi.mock('../../platform', () => ({
   },
 }));
 
-import { isBlobStorePersistent, audioCache } from '../audioCache';
+import { isBlobStorePersistent, audioCache, saveAudioOnDeviceEnabled } from '../audioCache';
 import { platform } from '../../platform';
+import { config } from '../../config';
 
 type GlobalWithIdb = { indexedDB?: unknown };
 
@@ -48,5 +49,31 @@ describe('audioCache.clear (SEC-1 WP4 — logout clears LRU only)', () => {
     await audioCache.clear();
     expect(platform.storage.clearBlobs).toHaveBeenCalledTimes(1);
     expect(platform.storage.clearPinned).not.toHaveBeenCalled();
+  });
+});
+
+describe('audioCache.clearPinned (EN-8 — "turn off Save audio on device" deletes saved audio only)', () => {
+  afterEach(() => vi.clearAllMocks());
+
+  it('clears the durable saved store and NEVER the ephemeral cache (never conflated)', async () => {
+    await audioCache.clearPinned();
+    expect(platform.storage.clearPinned).toHaveBeenCalledTimes(1);
+    expect(platform.storage.clearBlobs).not.toHaveBeenCalled();
+  });
+});
+
+describe('saveAudioOnDeviceEnabled (EN-8 — read at write time)', () => {
+  afterEach(() => localStorage.removeItem(config.offline.saveAudioKey));
+
+  it('defaults to true when unset (a curated clip is safe to save)', () => {
+    localStorage.removeItem(config.offline.saveAudioKey);
+    expect(saveAudioOnDeviceEnabled()).toBe(true);
+  });
+
+  it('is false only when the user explicitly turned it off', () => {
+    localStorage.setItem(config.offline.saveAudioKey, 'false');
+    expect(saveAudioOnDeviceEnabled()).toBe(false);
+    localStorage.setItem(config.offline.saveAudioKey, 'true');
+    expect(saveAudioOnDeviceEnabled()).toBe(true);
   });
 });

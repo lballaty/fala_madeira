@@ -35,7 +35,8 @@ const limits = (): BlobLimits => ({
   maxBytes: readCacheLimitBytes(),
 });
 
-/** Read the user's chosen cache byte budget (Settings → Offline), defaulting to config. */
+/** Read the user's chosen storage byte budget (Settings → Offline), defaulting to config. This
+ * bounds BOTH audio tiers — the ephemeral cache and the durable saved store (EN-8). */
 export const readCacheLimitBytes = (): number => {
   try {
     const saved = localStorage.getItem(config.offline.cacheLimitBytesKey);
@@ -47,6 +48,21 @@ export const readCacheLimitBytes = (): number => {
     // localStorage blocked (private mode) — fall back to the config default.
   }
   return config.audio.cacheMaxBytes;
+};
+
+/**
+ * EN-8 (owner 2026-07-17): is "Save audio on device" ON? Governs whether curated clips the user
+ * plays are persisted to the DURABLE saved store (survives logout/restart → offline). Defaults to
+ * true (matching useSettings' default) when unset or when localStorage is blocked — a curated clip
+ * is safe to save (public content, no PII). Read at write time so the current toggle always wins.
+ */
+export const saveAudioOnDeviceEnabled = (): boolean => {
+  try {
+    const saved = localStorage.getItem(config.offline.saveAudioKey);
+    return saved === null ? true : saved === 'true';
+  } catch {
+    return true;
+  }
 };
 
 /**
@@ -76,16 +92,31 @@ export const audioCache = {
   },
 
   /**
-   * Read a PINNED clip — user-initiated offline downloads that LRU eviction never removes
-   * (EN-8; fixes EN-7). synthesizeCached checks this AFTER the LRU cache, BEFORE the server tiers.
+   * Read a clip from the DURABLE saved store — curated audio the user has played (with "Save audio
+   * on device" ON) or downloaded for offline. Survives logout/restart. synthesizeCached checks this
+   * AFTER the ephemeral cache, BEFORE the server tiers.
    */
   async getPinned(key: string): Promise<ArrayBuffer | null> {
     return platform.storage.getPinnedBlob(key);
   },
 
-  /** Persist a clip to the PINNED store (offline downloads) — not subject to LRU eviction. */
-  async setPinned(key: string, data: ArrayBuffer): Promise<void> {
-    return platform.storage.setPinnedBlob(key, data);
+  /**
+   * Persist a clip to the DURABLE saved store (EN-8). Bounded by the same user storage budget as the
+   * cache (LRU eviction of least-recently-used SAVED clips when over budget — owner 2026-07-17: "it
+   * can still be bounded"). Returns how many entries were evicted. Survives logout; removed only by
+   * clearPinned (turning off "Save audio on device") or uninstall.
+   */
+  async setPinned(key: string, data: ArrayBuffer): Promise<number> {
+    return platform.storage.setPinnedBlob(key, data, limits());
+  },
+
+  /**
+   * Delete the durable saved store (all, or a prefix). This is the "explicitly delete saved audio"
+   * path — wired to turning OFF "Save audio on device". Deliberately distinct from clear() (cache):
+   * clearing the cache never deletes saved audio, and deleting saved audio never clears the cache.
+   */
+  async clearPinned(prefix?: string): Promise<void> {
+    await platform.storage.clearPinned(prefix);
   },
 
   /** Exact count/bytes currently cached in the bounded LRU (drives the Settings usage display). */

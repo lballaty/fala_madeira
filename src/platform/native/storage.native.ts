@@ -100,13 +100,14 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
     }
   };
 
-  // File name + size + mtime for every blob (mtime is the LRU recency signal
+  // File name + size + mtime for every blob in `dir` (mtime is the LRU recency signal
   // native provides via readdir FileInfo; the web adapter tracks recency in an
-  // index instead). Missing size/mtime default to 0.
-  const listBlobStats = async (): Promise<{ name: string; size: number; mtime: number }[]> => {
+  // index instead). Missing size/mtime default to 0. Serves both the ephemeral
+  // BLOB_DIR cache and the durable PINNED_DIR store (both bounded LRUs, EN-8).
+  const listBlobStats = async (dir: string): Promise<{ name: string; size: number; mtime: number }[]> => {
     const { Filesystem, Directory } = await fs();
     try {
-      const result = await Filesystem.readdir({ path: BLOB_DIR, directory: Directory.Data });
+      const result = await Filesystem.readdir({ path: dir, directory: Directory.Data });
       return result.files.map((f) => ({
         name: f.name,
         size: typeof f.size === 'number' ? f.size : 0,
@@ -117,24 +118,24 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
     }
   };
 
-  const deleteFileByName = async (name: string): Promise<void> => {
+  const deleteFileByName = async (name: string, dir: string): Promise<void> => {
     const { Filesystem, Directory } = await fs();
     try {
-      await Filesystem.deleteFile({ path: `${BLOB_DIR}/${name}`, directory: Directory.Data });
+      await Filesystem.deleteFile({ path: `${dir}/${name}`, directory: Directory.Data });
     } catch {
       // Already gone — nothing to do.
     }
   };
 
-  // Evict least-recently-used (oldest mtime) blobs until both limits are met.
+  // Evict least-recently-used (oldest mtime) blobs from `dir` until both limits are met.
   // `incomingBytes` is the size of the entry about to be written; `excludeName`
   // is that entry's file (already counted separately by the caller).
-  const evictToFit = async (limits: BlobLimits, incomingBytes: number, excludeName: string): Promise<number> => {
+  const evictToFit = async (dir: string, limits: BlobLimits, incomingBytes: number, excludeName: string): Promise<number> => {
     const maxEntries = limits.maxEntries;
     const maxBytes = limits.maxBytes;
     if (maxEntries === undefined && maxBytes === undefined) return 0;
 
-    const stats = (await listBlobStats()).filter((s) => s.name !== excludeName);
+    const stats = (await listBlobStats(dir)).filter((s) => s.name !== excludeName);
     let totalBytes = stats.reduce((sum, s) => sum + s.size, 0) + incomingBytes;
     let totalCount = stats.length + 1; // + the incoming entry
     // Oldest first.
@@ -145,7 +146,7 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
       const overCount = maxEntries !== undefined && totalCount > maxEntries;
       const overBytes = maxBytes !== undefined && totalBytes > maxBytes;
       if (!overCount && !overBytes) break;
-      await deleteFileByName(s.name);
+      await deleteFileByName(s.name, dir);
       totalBytes -= s.size;
       totalCount -= 1;
       evicted += 1;
@@ -226,7 +227,7 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
           recursive: true, // creates fm-blobs/ on first write
         });
         // Bounded LRU: evict oldest blobs when this write breaches the limits.
-        return limits ? await evictToFit(limits, data.byteLength, fileName) : 0;
+        return limits ? await evictToFit(BLOB_DIR, limits, data.byteLength, fileName) : 0;
       } catch (e) {
         throw storageFailure('Could not save audio/content data on this device.', e);
       }
@@ -280,18 +281,21 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
       }
     },
 
-    async setPinnedBlob(key: string, data: ArrayBuffer): Promise<void> {
+    async setPinnedBlob(key: string, data: ArrayBuffer, limits?: BlobLimits): Promise<number> {
+      const fileName = keyToFileName(key);
       try {
         const { Filesystem, Directory } = await fs();
-        // No eviction: pinned downloads persist until explicitly cleared (clearPinned).
         await Filesystem.writeFile({
-          path: `${PINNED_DIR}/${keyToFileName(key)}`,
+          path: `${PINNED_DIR}/${fileName}`,
           data: arrayBufferToBase64(data),
           directory: Directory.Data,
           recursive: true, // creates fm-pinned/ on first write
         });
+        // Bounded, durable LRU (EN-8): evict oldest saved clips when a limit is breached; without
+        // `limits` (e.g. an explicit download bounded by its own run) the store grows unbounded.
+        return limits ? await evictToFit(PINNED_DIR, limits, data.byteLength, fileName) : 0;
       } catch (e) {
-        throw storageFailure('Could not save downloaded audio on this device.', e);
+        throw storageFailure('Could not save audio on this device.', e);
       }
     },
 
@@ -336,7 +340,7 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
     },
 
     async blobUsage(): Promise<BlobStoreUsage> {
-      const stats = await listBlobStats();
+      const stats = await listBlobStats(BLOB_DIR);
       return {
         count: stats.length,
         bytes: stats.reduce((sum, s) => sum + s.size, 0),

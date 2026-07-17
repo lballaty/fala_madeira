@@ -79,3 +79,55 @@ describe('web storage adapter — pinned store (EN-8)', () => {
     expect(await adapter.pinnedUsage()).toEqual({ count: 2, bytes: 5 });
   });
 });
+
+describe('web storage adapter — durable saved store is a bounded LRU (EN-8, owner 2026-07-17)', () => {
+  // The saved store now holds curated audio the user PLAYS (not just downloads) and is bounded so
+  // it "can still be bounded" (owner). Small real delays give the entries distinct accessedAt so
+  // LRU ordering is deterministic (the recency signal has ms resolution).
+  const tick = () => new Promise((r) => setTimeout(r, 3));
+
+  it('setPinnedBlob(limits) evicts least-recently-used SAVED clips over the byte budget', async () => {
+    const adapter = createWebStorageAdapter();
+    const limits = { maxEntries: 100, maxBytes: 10 };
+    await adapter.setPinnedBlob('a', new Uint8Array(6).buffer, limits); // 6 bytes
+    await tick();
+    await adapter.setPinnedBlob('b', new Uint8Array(6).buffer, limits); // +6 = 12 > 10 → evict 'a'
+    expect(await adapter.getPinnedBlob('a')).toBeNull();
+    expect(await adapter.getPinnedBlob('b')).not.toBeNull();
+    expect((await adapter.pinnedUsage()).count).toBe(1);
+  });
+
+  it('getPinnedBlob marks a saved clip most-recently-used so eviction spares it', async () => {
+    const adapter = createWebStorageAdapter();
+    const limits = { maxEntries: 2, maxBytes: 1_000_000 };
+    await adapter.setPinnedBlob('a', new Uint8Array([1]).buffer, limits);
+    await tick();
+    await adapter.setPinnedBlob('b', new Uint8Array([1]).buffer, limits);
+    await tick();
+    await adapter.getPinnedBlob('a'); // touch 'a' → now most-recently-used
+    await tick();
+    await adapter.setPinnedBlob('c', new Uint8Array([1]).buffer, limits); // over maxEntries → evict 'b'
+    expect(await adapter.getPinnedBlob('a')).not.toBeNull();
+    expect(await adapter.getPinnedBlob('b')).toBeNull();
+    expect(await adapter.getPinnedBlob('c')).not.toBeNull();
+  });
+
+  it('clearPinned() empties the saved store and its usage index (the "turn off save" delete)', async () => {
+    const adapter = createWebStorageAdapter();
+    await adapter.setPinnedBlob('a', new Uint8Array([1, 2]).buffer, { maxBytes: 1_000_000 });
+    await adapter.setPinnedBlob('b', new Uint8Array([3]).buffer, { maxBytes: 1_000_000 });
+    await adapter.clearPinned();
+    expect(await adapter.getPinnedBlob('a')).toBeNull();
+    expect(await adapter.pinnedUsage()).toEqual({ count: 0, bytes: 0 });
+  });
+
+  it('clearBlobs() (logout / clear cache) leaves the bounded saved store intact', async () => {
+    const adapter = createWebStorageAdapter();
+    await adapter.setBlob('cache', new Uint8Array([1]).buffer, { maxEntries: 100, maxBytes: 1_000_000 });
+    await adapter.setPinnedBlob('saved', new Uint8Array([2]).buffer, { maxBytes: 1_000_000 });
+    await adapter.clearBlobs();
+    expect(await adapter.getBlob('cache')).toBeNull();
+    expect(await adapter.getPinnedBlob('saved')).not.toBeNull();
+    expect((await adapter.pinnedUsage()).count).toBe(1);
+  });
+});

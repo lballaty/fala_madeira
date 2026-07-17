@@ -207,18 +207,27 @@ export interface StorageAdapter {
   deleteBlob(key: string): Promise<void>;
   blobKeys(prefix?: string): Promise<string[]>;
   clearBlobs(prefix?: string): Promise<void>;
-  // Pinned blob store (EN-8): a SECOND blob namespace that LRU eviction NEVER touches, for
-  // user-initiated offline downloads that must survive cache pressure. This fixes EN-7, where
-  // downloads shared the bounded 'audio' LRU cache and got evicted. A clip lookup checks the
-  // bounded 'audio' cache FIRST, then this pinned store, before any server tier. setPinnedBlob
-  // takes no limits — the store is bounded by download scope (curated content), never auto-evicted.
+  // DURABLE audio store (EN-8): a SECOND blob namespace that survives logout/restart, holding
+  // CURATED (public, `hostable`) audio — the clips the user plays or downloads for offline use.
+  // Because a locally-stored file serves BOTH intents at once (local ⇒ fast, persistent ⇒
+  // offline), this single store replaces the older "cache vs saved" duplication: the bounded
+  // 'audio' LRU (getBlob/setBlob) is now only an EPHEMERAL, cleared-on-logout tier for private
+  // (non-`hostable`) audio, while this store is the persistent, user-facing "saved audio".
+  //
+  // It is BOUNDED like the LRU (owner directive 2026-07-17: "it can still be bounded"): pass
+  // `limits` and a write evicts least-recently-used entries before writing when a limit would be
+  // breached (returns how many were evicted). Reading (getPinnedBlob) marks an entry most-recently
+  // used. Omitting `limits` writes without eviction (e.g. an explicit download bounded by its own
+  // run). It is cleared ONLY by an explicit user action — turning off "Save audio on device" or
+  // an app uninstall — NEVER on logout (contents are public, no PII; SEC-2 safe). A clip lookup
+  // checks the ephemeral 'audio' cache FIRST, then this store, before any server tier.
   getPinnedBlob(key: string): Promise<ArrayBuffer | null>;
-  setPinnedBlob(key: string, data: ArrayBuffer): Promise<void>;
-  // Exact count/bytes of the pinned store (drives the Settings "downloaded audio" usage display).
+  setPinnedBlob(key: string, data: ArrayBuffer, limits?: BlobLimits): Promise<number>;
+  // Exact count/bytes of the durable store (drives the Settings "saved audio" usage display).
   pinnedUsage(): Promise<BlobStoreUsage>;
-  // Remove pinned blobs (all, or those matching `prefix`) — e.g. an explicit "remove downloads".
-  // Deliberately separate from clearBlobs so clearing the LRU cache (e.g. on logout) never
-  // deletes offline downloads.
+  // Remove durable/saved blobs (all, or those matching `prefix`) — e.g. turning off "Save audio on
+  // device". Deliberately separate from clearBlobs so clearing the ephemeral cache (e.g. on logout)
+  // never deletes the user's saved offline audio, and vice-versa (the two operations are distinct).
   clearPinned(prefix?: string): Promise<void>;
   // Coarse platform quota estimate (navigator.storage.estimate on web) — the
   // whole origin, not just this app's blobs.

@@ -8,7 +8,7 @@
 // Created: 2026-07-09
 
 import { Lesson, Tutor, VocabResult } from "../types";
-import { audioCache } from "../lib/audioCache";
+import { audioCache, saveAudioOnDeviceEnabled } from "../lib/audioCache";
 import { keyToServerPath } from "../lib/audioKey";
 import { resolveVoice } from "../lib/voiceType";
 import { getSupabase, publicObjectUrl } from "../lib/supabase";
@@ -357,6 +357,48 @@ const cacheInBackground = (cacheKey: string, buffer: ArrayBuffer, requestId?: st
     });
 };
 
+// Persist a just-played clip to the DURABLE saved store WITHOUT blocking playback (owner: audio
+// starts immediately). The saved store is bounded, so a write may evict least-recently-used saved
+// clips (logged at debug). Failures are logged (WARN), never swallowed. EN-8.
+const pinInBackground = (cacheKey: string, buffer: ArrayBuffer, requestId?: string): void => {
+  void audioCache.setPinned(cacheKey, buffer)
+    .then((evicted) => {
+      if (evicted > 0) {
+        logger.debug('tts_saved_evicted', `bounded saved-audio store evicted ${evicted} least-recently-used clip(s)`, {
+          category: 'SYSTEM_HEALTH',
+          correlationId: requestId,
+          details: { evicted },
+        });
+      }
+    })
+    .catch((err) => {
+      logger.warn('tts_saved_write_failed', 'background saved-audio write failed (clip still played)', {
+        category: 'SYSTEM_HEALTH',
+        correlationId: requestId,
+        error: err,
+      });
+    });
+};
+
+// EN-8 (owner 2026-07-17): route a just-played clip to the right device tier, non-blocking.
+// A CURATED clip (`hostable`) with "Save audio on device" ON goes to the DURABLE saved store —
+// a local file that serves BOTH intents at once (local ⇒ fast, persistent ⇒ offline). Everything
+// else (private free-chat / user text, or saving turned off) goes to the EPHEMERAL cache, which is
+// cleared on logout (SEC-2 privacy floor: a shared device must not keep the prior user's private
+// audio). This is the single place playback decides "cache vs save" so the two never conflate.
+const persistPlayedClip = (
+  cacheKey: string,
+  buffer: ArrayBuffer,
+  opts: { hostable?: boolean },
+  requestId?: string,
+): void => {
+  if (opts.hostable && saveAudioOnDeviceEnabled()) {
+    pinInBackground(cacheKey, buffer, requestId);
+  } else {
+    cacheInBackground(cacheKey, buffer, requestId);
+  }
+};
+
 // Best-effort GET of pre-hosted raw PCM. Returns the bytes on a 2xx NON-HTML non-empty body, else
 // null. NEVER throws: a 404 (not hosted yet), CORS, timeout, or network drop is an EXPECTED miss
 // that must fall through to the next tier — not an error path (playback still reaches the provider).
@@ -426,7 +468,9 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   const serverHit = await fetchServerTier(cacheKey);
   if (serverHit) {
     logTtsSource(serverHit.tier, cacheKey);
-    cacheInBackground(cacheKey, serverHit.buffer); // non-blocking warm; play immediately
+    // Warm a device tier (non-blocking) so subsequent plays are local. A hosted clip is curated, so
+    // with "Save audio on device" ON it lands in the durable saved store (⇒ available offline too).
+    persistPlayedClip(cacheKey, serverHit.buffer, options);
     return serverHit.buffer;
   }
 
@@ -453,13 +497,14 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   const arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
   logTtsSource('provider', cacheKey, data?.requestId);
   if (options.pinned) {
-    // Offline download: AWAIT the pinned write — the download's PURPOSE is durable persistence, so
-    // it must land before the run counts the clip done (fire-and-forget here would reintroduce the
-    // EN-7 "download reported complete but clip not saved"). This blocks the download, not playback.
+    // Offline download: AWAIT the durable write — the download's PURPOSE is persistence, so it must
+    // land before the run counts the clip done (fire-and-forget here would reintroduce the EN-7
+    // "download reported complete but clip not saved"). This blocks the download, not playback.
     await audioCache.setPinned(cacheKey, arrayBuffer);
   } else {
-    // Playback: cache write is NON-BLOCKING so audio starts immediately (owner requirement).
-    cacheInBackground(cacheKey, arrayBuffer, data?.requestId);
+    // Playback: persist WITHOUT blocking so audio starts immediately (owner requirement). Curated +
+    // "Save audio on device" ON ⇒ durable saved store (fast + offline); otherwise ⇒ ephemeral cache.
+    persistPlayedClip(cacheKey, arrayBuffer, options, data?.requestId);
   }
   return arrayBuffer;
 };

@@ -122,8 +122,11 @@ export const useSettings = ({
 
   const refreshCacheUsage = useCallback(async () => {
     try {
-      const usage = await audioCache.usage();
-      setCacheUsageBytes(usage.bytes);
+      // Total device audio = ephemeral cache + durable saved store (EN-8). Both the "Clear cache"
+      // action (reduces the cache part) and turning off "Save audio on device" (reduces the saved
+      // part) visibly lower this number, so the display stays honest for both operations.
+      const [cache, saved] = await Promise.all([audioCache.usage(), audioCache.pinnedUsage()]);
+      setCacheUsageBytes(cache.bytes + saved.bytes);
     } catch (error) {
       logger.warn('OFFLINE_USAGE_READ_FAILED', 'could not read offline audio-cache usage', {
         category: 'SYSTEM_HEALTH',
@@ -142,12 +145,15 @@ export const useSettings = ({
     void loadUsage();
   }, [refreshCacheUsage]);
 
-  // Persist "Save audio on device"; turning it off clears the cache immediately.
+  // Persist "Save audio on device". Turning it OFF is the explicit "delete my saved audio" action
+  // (owner 2026-07-17): it clears the DURABLE saved store — NOT the ephemeral cache (that is the
+  // separate "Clear cache" action / logout). Future curated plays route to the cache instead of the
+  // saved store because synthesizeCached reads this flag at write time. The two are never conflated.
   useEffect(() => {
     localStorage.setItem(config.offline.saveAudioKey, saveAudioOnDevice.toString());
     if (!saveAudioOnDevice) {
-      void audioCache.clear().then(refreshCacheUsage).catch((error: unknown) => {
-        logger.warn('OFFLINE_CACHE_CLEAR_FAILED', 'could not clear offline audio cache after disabling save-on-device', {
+      void audioCache.clearPinned().then(refreshCacheUsage).catch((error: unknown) => {
+        logger.warn('OFFLINE_SAVED_CLEAR_FAILED', 'could not delete saved audio after turning off save-on-device', {
           category: 'SYSTEM_HEALTH',
           error,
         });

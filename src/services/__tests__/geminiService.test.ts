@@ -17,8 +17,10 @@ vi.mock('../../lib/audioCache', () => ({
     get: vi.fn(async () => null),
     getPinned: vi.fn(async () => null),
     set: vi.fn(async () => 0),
-    setPinned: vi.fn(async () => undefined),
+    setPinned: vi.fn(async () => 0),
   },
+  // EN-8: "Save audio on device" — defaults ON in tests; individual routing tests override it.
+  saveAudioOnDeviceEnabled: vi.fn(() => true),
 }));
 vi.mock('../../platform', () => ({
   platform: {
@@ -32,7 +34,7 @@ vi.mock('../../platform', () => ({
 
 import { getSupabase, publicObjectUrl } from '../../lib/supabase';
 import { platform } from '../../platform';
-import { audioCache } from '../../lib/audioCache';
+import { audioCache, saveAudioOnDeviceEnabled } from '../../lib/audioCache';
 import { logger } from '../../lib/logger';
 import { EdgeFunctionError, geminiService, synthesizeCached } from '../geminiService';
 import { config } from '../../config';
@@ -227,6 +229,8 @@ describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → su
     vi.mocked(audioCache.get).mockResolvedValue(null);
     vi.mocked(audioCache.getPinned).mockResolvedValue(null);
     vi.mocked(audioCache.set).mockClear().mockResolvedValue(0);
+    vi.mocked(audioCache.setPinned).mockClear().mockResolvedValue(0);
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(true);
     invoke.mockResolvedValue({ data: { audio: 'AAAA' }, error: null });
     vi.mocked(publicObjectUrl).mockReturnValue('https://sb.example/storage/v1/object/public/tts-audio/hash.pcm');
   });
@@ -288,6 +292,16 @@ describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → su
     expect(ttsCall).toBeDefined();
   });
 
+  it('server-tier hit + curated + save-on → warms the DURABLE saved store, not the cache', async () => {
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(true);
+    const fetchMock = vi.fn(async () => okPcm()); // verpex 200
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', { hostable: true });
+    expect(audioCache.setPinned).toHaveBeenCalledTimes(1); // durable warm (fast + offline)
+    expect(audioCache.set).not.toHaveBeenCalled();         // not the ephemeral cache
+    expect(invoke).not.toHaveBeenCalled();
+  });
+
   it('aborts a server-tier fetch with the SHORT practical timeout, not the 15s edge timeout', async () => {
     let seenTimeout = -1;
     const fetchMock = vi.fn(async (_url: string, opts: { signal?: AbortSignal }) => {
@@ -300,5 +314,48 @@ describe('synthesizeCached tier order (EN-8): cache → pinned → verpex → su
     await synthesizeCached('t', {});
     expect(seenTimeout).toBe(config.audio.serverTierTimeoutMs);
     expect(config.audio.serverTierTimeoutMs).toBeLessThan(config.net.requestTimeoutMs);
+  });
+});
+
+describe('synthesizeCached device persistence routing (EN-8, owner 2026-07-17)', () => {
+  // All tiers miss (default fetch stub is ok:false) so every case reaches the provider and then
+  // decides where to persist the freshly-synthesized clip: the DURABLE saved store vs the EPHEMERAL
+  // cache vs (explicit download) an awaited durable write. This is the core of the fix — playback
+  // never conflates "cache" (speed, cleared on logout) with "saved" (persistent, offline).
+  beforeEach(() => {
+    vi.mocked(audioCache.buildKey).mockReturnValue('tts:default:teacher:hash');
+    vi.mocked(audioCache.get).mockResolvedValue(null);
+    vi.mocked(audioCache.getPinned).mockResolvedValue(null);
+    vi.mocked(audioCache.set).mockClear().mockResolvedValue(0);
+    vi.mocked(audioCache.setPinned).mockClear().mockResolvedValue(0);
+    invoke.mockResolvedValue({ data: { audio: 'AAAA' }, error: null });
+  });
+
+  it('curated (hostable) + save-on → persists to the DURABLE saved store, not the cache', async () => {
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(true);
+    await synthesizeCached('Bom dia', { hostable: true });
+    expect(audioCache.setPinned).toHaveBeenCalledTimes(1);
+    expect(audioCache.set).not.toHaveBeenCalled();
+  });
+
+  it('curated (hostable) + save-OFF → persists to the ephemeral cache only (no saved write)', async () => {
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(false);
+    await synthesizeCached('Bom dia', { hostable: true });
+    expect(audioCache.set).toHaveBeenCalledTimes(1);
+    expect(audioCache.setPinned).not.toHaveBeenCalled();
+  });
+
+  it('private/non-curated (hostable omitted) + save-on → ephemeral cache only (privacy: never saved)', async () => {
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(true);
+    await synthesizeCached('free chat reply', {});
+    expect(audioCache.set).toHaveBeenCalledTimes(1);
+    expect(audioCache.setPinned).not.toHaveBeenCalled();
+  });
+
+  it('explicit offline download (pinned) → AWAITS the durable write regardless of the toggle', async () => {
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(false);
+    await synthesizeCached('lesson line', { hostable: true, pinned: true });
+    expect(audioCache.setPinned).toHaveBeenCalledTimes(1);
+    expect(audioCache.set).not.toHaveBeenCalled();
   });
 });
