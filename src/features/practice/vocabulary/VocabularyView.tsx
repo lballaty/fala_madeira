@@ -1,55 +1,51 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/features/practice/vocabulary/VocabularyView.tsx
-// Description: Vocabulary Review mode body (docs/ui-mockup/intended-ui-v3.html "VOCABULARY /
-//   SRS" screen): flip flashcards graded Again/Hard/Good/Easy, driven by the SRS adaptive
-//   engine (useVocabularySession → useDueItems/selectDueItems). Card variants: introduce
-//   (PT front + 🔊 → meaning), retrieve (EN front → PT + 🔊), hear (audio-first → PT +
-//   meaning). Rendered inside the Practice hub chrome per the ENGINE INTEGRATION CONTRACT
-//   (../registry.ts): default-exports a ComponentType<PracticeModeProps>, body only,
-//   onExit() returns to the hub. situationId scopes the session to one situation; null =
-//   all vocabulary across situations (engine default). Nothing is ever hard-gated (§5/§12).
+// Description: Vocabulary reinforcement QUIZ body (EN-18). Replaces the self-graded flip cards with
+//   an objective loop: PT word + audio → TYPE the English meaning (Check) → reveal → "Now say it"
+//   (mic, pt-PT) → app-derived SUCCESS/PARTIAL/FAILURE + return timing → next. Sourcing is
+//   progress-aware (src/features/practice/vocabulary/sourcing.ts): entering from a SITUATION scopes
+//   to that lesson's vocabulary; entering from the hub draws on the situations the learner has
+//   WORKED ON, narrowable by a theme/category focus picker (supersedes EN-16's lesson/track/all
+//   selector). Signed-out learners fall back to the full vocabulary pool so the mode never dies.
+//   Rendered inside the Practice hub chrome per the ENGINE INTEGRATION CONTRACT (../registry.ts):
+//   default-exports a ComponentType<PracticeModeProps>, body only, onExit() returns to the hub.
+//   Nothing is ever hard-gated (§5/§12).
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
-import { useEffect, useState } from 'react';
-import type { KeyboardEvent } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import type { FormEvent } from 'react';
 import type { User } from '@supabase/supabase-js';
-import { CheckCircle2, Ear, Volume2 } from 'lucide-react';
+import { Check, CheckCircle2, Mic, Volume2, XCircle } from 'lucide-react';
 import type { PracticeModeProps } from '../registry';
 import { contentRepository } from '../../../content/repository';
-import type { Situation, Track } from '../../../content/schema';
+import type { Situation } from '../../../content/schema';
 import { cn } from '../../../lib/utils';
 import { getSupabase } from '../../../lib/supabase';
 import { logger } from '../../../lib/logger';
-import type { Sm2Grade } from '../../../lib/srs';
+import { useVocabularySession, type VocabCard } from './useVocabularySession';
 import {
-  useVocabularySession,
-  VOCAB_GRADES,
-  type VocabCard,
-} from './useVocabularySession';
+  buildVocabPool,
+  loadStartedSituationIds,
+  type VocabCategoryKey,
+  type VocabPool,
+} from './sourcing';
 
-// Grade buttons per the v3 mockup (colors match its Again/Hard/Good/Easy row).
-const GRADE_BUTTONS: { label: string; grade: Sm2Grade; className: string }[] = [
-  { label: 'Again', grade: VOCAB_GRADES.again, className: 'bg-[#FF3B30]' },
-  { label: 'Hard', grade: VOCAB_GRADES.hard, className: 'bg-[#FF9500]' },
-  { label: 'Good', grade: VOCAB_GRADES.good, className: 'bg-[#34C759]' },
-  { label: 'Easy', grade: VOCAB_GRADES.easy, className: 'bg-[#007AFF]' },
-];
+// Test-only affordance (prod-safe): when an e2e init script sets localStorage['fm:e2e']='1', the
+// answer input carries the expected meaning as data-answer so the deterministic typed-answer flow
+// can drive correct/incorrect submissions. Never enabled in the shipped app (flag is test-set only).
+const E2E_ANSWER_HINT = (() => {
+  try {
+    return typeof localStorage !== 'undefined' && localStorage.getItem('fm:e2e') === '1';
+  } catch {
+    return false;
+  }
+})();
 
 const loadingSpinner = (
   <div className="flex items-center justify-center py-16">
     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ios-blue" />
   </div>
 );
-
-// ---------------------------------------------------------------------------
-// Card faces (front/back per variant — see useVocabularySession VocabCardVariant)
-// ---------------------------------------------------------------------------
-
-interface CardFaceProps {
-  card: VocabCard;
-  isFlipped: boolean;
-  playText: (text: string) => void;
-}
 
 const SpeakerButton = ({ onPlay, label }: { onPlay: () => void; label: string }) => (
   <button
@@ -65,75 +61,80 @@ const SpeakerButton = ({ onPlay, label }: { onPlay: () => void; label: string })
   </button>
 );
 
-const CardMeta = ({ card }: { card: VocabCard }) => (
-  <div className="space-y-1">
+const returnLabel = (days: number): string => {
+  if (days <= 0) return 'soon';
+  if (days === 1) return '~1 day';
+  return `~${days} days`;
+};
+
+// ---------------------------------------------------------------------------
+// Prompt (Step 1): show the PT word + audio, type the meaning, Check.
+// ---------------------------------------------------------------------------
+
+interface PromptProps {
+  card: VocabCard;
+  onPlay: (text: string) => void;
+  onSubmit: (typed: string) => void;
+}
+
+const PromptStep = ({ card, onPlay, onSubmit }: PromptProps) => {
+  const [answer, setAnswer] = useState('');
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    onSubmit(answer);
+  };
+
+  return (
+    <form onSubmit={submit} className="space-y-4">
+      <div className="w-full bg-card rounded-2xl ios-shadow min-h-[120px] flex flex-col items-center justify-center p-6 text-center space-y-2">
+        <div className="flex items-center justify-center space-x-2">
+          <p className="text-2xl font-extrabold" data-testid="vocab-word">
+            {card.entry.word}
+          </p>
+          <SpeakerButton onPlay={() => onPlay(card.entry.word)} label="Play the word" />
+        </div>
+        <p className="text-xs text-ios-gray">What does it mean?</p>
+      </div>
+      <input
+        type="text"
+        autoFocus
+        value={answer}
+        onChange={(e) => setAnswer(e.target.value)}
+        placeholder="Type the meaning in English"
+        aria-label="Type the meaning in English"
+        data-testid="vocab-answer-input"
+        {...(E2E_ANSWER_HINT ? { 'data-answer': card.entry.translation } : {})}
+        className="w-full rounded-2xl border-2 border-ios-bg focus:border-ios-blue outline-none px-4 py-3 text-base"
+      />
+      <button
+        type="submit"
+        data-testid="vocab-check"
+        className="w-full bg-ios-blue text-white rounded-2xl py-3 font-bold text-sm shadow-lg active:scale-95 transition-transform inline-flex items-center justify-center gap-2"
+      >
+        <Check className="w-4 h-4" /> Check
+      </button>
+    </form>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Reveal (between Step 1 and Step 2): show the answer + the production controls.
+// ---------------------------------------------------------------------------
+
+const RevealedCard = ({ card, onPlay }: { card: VocabCard; onPlay: (t: string) => void }) => (
+  <div className="w-full bg-card rounded-2xl ios-shadow p-6 text-center space-y-2" data-testid="vocab-reveal">
+    <div className="flex items-center justify-center space-x-2">
+      <p className="text-2xl font-extrabold">{card.entry.word}</p>
+      <SpeakerButton onPlay={() => onPlay(card.entry.word)} label="Play the word" />
+    </div>
+    <p className="text-lg font-semibold text-ios-gray">{card.entry.translation}</p>
     {card.entry.pronunciation && (
       <p className="text-xs text-ios-gray italic">[{card.entry.pronunciation}]</p>
-    )}
-    {card.entry.register && (
-      <span className="text-[9px] font-bold uppercase text-ios-gray bg-ios-bg px-1.5 py-0.5 rounded-full">
-        {card.entry.register}
-      </span>
     )}
     {card.entry.note && <p className="text-xs text-ios-gray max-w-xs mx-auto">{card.entry.note}</p>}
   </div>
 );
-
-const CardFace = ({ card, isFlipped, playText }: CardFaceProps) => {
-  if (!isFlipped) {
-    if (card.variant === 'hear') {
-      // Audio-first: play the word, guess the meaning (grades the 'hear' dimension).
-      return (
-        <div className="space-y-3">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              playText(card.entry.word);
-            }}
-            className="w-16 h-16 rounded-full bg-ios-blue text-white flex items-center justify-center mx-auto shadow-lg active:scale-95 transition-transform"
-            aria-label="Play the word"
-          >
-            <Ear className="w-8 h-8" />
-          </button>
-          <p className="text-sm font-semibold">Listen — what does it mean?</p>
-          <p className="text-xs text-ios-gray">tap the speaker, then flip to check</p>
-        </div>
-      );
-    }
-    if (card.variant === 'retrieve') {
-      // EN → PT retrieval direction (grades the 'retrieve' dimension).
-      return (
-        <div className="space-y-2">
-          <p className="text-2xl font-extrabold">{card.entry.translation}</p>
-          <p className="text-xs text-ios-gray">say it in Portuguese · tap to flip</p>
-        </div>
-      );
-    }
-    // 'introduce': PT front with audio.
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center justify-center space-x-2">
-          <p className="text-2xl font-extrabold">{card.entry.word}</p>
-          <SpeakerButton onPlay={() => playText(card.entry.word)} label="Play the word" />
-        </div>
-        <p className="text-xs text-ios-gray">new word · tap to flip</p>
-      </div>
-    );
-  }
-
-  // Back face: always the full picture — PT word + audio, meaning, pronunciation, note.
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-center space-x-2">
-        <p className="text-2xl font-extrabold">{card.entry.word}</p>
-        <SpeakerButton onPlay={() => playText(card.entry.word)} label="Play the word" />
-      </div>
-      <p className="text-lg font-semibold text-ios-gray">{card.entry.translation}</p>
-      <CardMeta card={card} />
-    </div>
-  );
-};
 
 // ---------------------------------------------------------------------------
 // Session screen (data already resolved by the default export below)
@@ -143,15 +144,18 @@ interface VocabularySessionScreenProps {
   user: User | null;
   situations: Situation[];
   onExit: () => void;
-  /**
-   * Pre-formatted scope line shown on the header/empty/summary so the deck never reads as
-   * "general" when it isn't — e.g. `This lesson: “Ordering coffee” · 6 words` or
-   * `All lessons · 214 words`. Built by the parent from the chosen scope + its word count (EN-16).
-   */
   scopeHeading: string;
+  /** True when the (hub) pool is progress-derived and empty because nothing is started yet. */
+  emptyIsNoProgress: boolean;
 }
 
-const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: VocabularySessionScreenProps) => {
+const VocabularySessionScreen = ({
+  user,
+  situations,
+  onExit,
+  scopeHeading,
+  emptyIsNoProgress,
+}: VocabularySessionScreenProps) => {
   const {
     phase,
     card,
@@ -159,10 +163,18 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
     total,
     remainingDue,
     remainingNew,
-    isFlipped,
-    flip,
-    gradeCard,
+    step,
+    micAvailable,
+    comprehensionPass,
+    productionResult,
+    productionFailKind,
+    cardResult,
     playText,
+    submitComprehension,
+    sayIt,
+    skipProduction,
+    acceptProductionFail,
+    next,
     audioError,
     summary,
     restart,
@@ -172,7 +184,6 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
   if (phase === 'loading') return loadingSpinner;
 
   if (phase === 'empty') {
-    const hasAnyVocabulary = situations.some((s) => s.vocabulary.length > 0);
     return (
       <div className="p-6 flex flex-col items-center justify-center text-center h-full space-y-4">
         <CheckCircle2 className="w-12 h-12 text-[#34C759]" />
@@ -181,12 +192,12 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
         </p>
         <div className="space-y-1">
           <h3 className="text-lg font-bold">
-            {hasAnyVocabulary ? 'All caught up' : 'No vocabulary here yet'}
+            {emptyIsNoProgress ? 'Nothing to review yet' : 'No vocabulary here'}
           </h3>
           <p className="text-sm text-ios-gray max-w-xs">
-            {hasAnyVocabulary
-              ? 'Nothing due. Items resurface exactly when you are about to forget them — that is the system working, not you slacking.'
-              : 'This situation has no vocabulary entries. Browse another situation or come back to the full deck.'}
+            {emptyIsNoProgress
+              ? 'Start a lesson first — the words you work on build your review deck automatically.'
+              : 'This scope has no vocabulary entries. Pick another theme or start a lesson.'}
           </p>
         </div>
         <button
@@ -208,7 +219,7 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
         </p>
         <div className="space-y-1">
           <h3 className="text-lg font-bold">Session complete</h3>
-          <p className="text-sm text-ios-gray">Grades feed the 4-dimension model.</p>
+          <p className="text-sm text-ios-gray">The app scored each word — grades feed your review schedule.</p>
         </div>
         <div className="w-full max-w-xs bg-card rounded-2xl ios-shadow divide-y divide-ios-bg text-sm">
           <div className="flex justify-between px-4 py-3">
@@ -220,8 +231,18 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
             <span className="font-bold">{summary.introduced}</span>
           </div>
           <div className="flex justify-between px-4 py-3">
-            <span className="text-ios-gray">Again presses</span>
-            <span className="font-bold">{summary.againCount}</span>
+            <span className="text-ios-gray">✓ Got it</span>
+            <span className="font-bold" data-testid="vocab-summary-success">{summary.success}</span>
+          </div>
+          {summary.partial > 0 && (
+            <div className="flex justify-between px-4 py-3">
+              <span className="text-ios-gray">~ Partial</span>
+              <span className="font-bold">{summary.partial}</span>
+            </div>
+          )}
+          <div className="flex justify-between px-4 py-3">
+            <span className="text-ios-gray">✗ Missed</span>
+            <span className="font-bold" data-testid="vocab-summary-failure">{summary.failure}</span>
           </div>
         </div>
         <div className="flex space-x-3">
@@ -245,13 +266,6 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
   // phase === 'active' → card is non-null.
   if (!card) return null;
 
-  const onCardKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      flip();
-    }
-  };
-
   return (
     <div className="p-6 space-y-3">
       <p className="text-xs font-semibold text-ios-blue" data-testid="vocab-scope">
@@ -266,40 +280,95 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
         </span>
       </div>
 
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={flip}
-        onKeyDown={onCardKeyDown}
-        aria-label={isFlipped ? 'Card back — grade your recall below' : 'Flashcard — tap to flip'}
-        className="w-full bg-card rounded-2xl ios-shadow min-h-[180px] flex flex-col items-center justify-center p-6 text-center cursor-pointer select-none"
-      >
-        <CardFace
-          key={`${card.itemKey}:${card.dimension}:${index}`}
+      {step === 'prompt' && (
+        <PromptStep
+          key={`${card.itemKey}:${index}`}
           card={card}
-          isFlipped={isFlipped}
-          playText={playText}
+          onPlay={playText}
+          onSubmit={submitComprehension}
         />
-      </div>
+      )}
+
+      {(step === 'reveal' || step === 'listening') && (
+        <div className="space-y-3">
+          <RevealedCard card={card} onPlay={playText} />
+
+          <p
+            className={cn(
+              'text-sm font-semibold text-center inline-flex items-center justify-center gap-1 w-full',
+              comprehensionPass ? 'text-[#34C759]' : 'text-[#FF3B30]'
+            )}
+          >
+            {comprehensionPass ? <Check className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+            {comprehensionPass ? 'Meaning correct' : 'Meaning missed'}
+          </p>
+
+          {step === 'listening' ? (
+            <p className="text-sm text-center text-ios-blue font-semibold" data-testid="vocab-listening">
+              Listening… say the word out loud.
+            </p>
+          ) : (
+            <div className="space-y-2">
+              {productionResult?.outcome === 'fail' && (
+                <p className="text-xs text-center text-[#FF9500]">{productionResult.message}</p>
+              )}
+              <button
+                type="button"
+                onClick={() => void sayIt()}
+                data-testid="vocab-say"
+                className="w-full bg-ios-blue text-white rounded-2xl py-3 font-bold text-sm shadow-lg active:scale-95 transition-transform inline-flex items-center justify-center gap-2"
+              >
+                <Mic className="w-4 h-4" />
+                {productionResult?.outcome === 'fail' ? 'Try again' : 'Now say it'}
+              </button>
+              <button
+                type="button"
+                onClick={productionFailKind === 'mismatch' ? acceptProductionFail : skipProduction}
+                data-testid="vocab-skip-speaking"
+                className="w-full text-ios-gray rounded-2xl py-2 font-semibold text-xs active:scale-95 transition-transform"
+              >
+                {productionFailKind === 'mismatch' ? 'Move on' : 'Skip speaking'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {step === 'feedback' && cardResult && (
+        <div className="space-y-3">
+          <RevealedCard card={card} onPlay={playText} />
+          <div
+            className="w-full bg-card rounded-2xl ios-shadow p-4 text-center space-y-1"
+            data-testid="vocab-feedback"
+            data-outcome={cardResult.score.outcome}
+          >
+            <p className="text-sm font-semibold">
+              {cardResult.comprehensionPass ? '✓ meaning' : '✗ meaning'}
+              {cardResult.productionPass !== null
+                ? cardResult.productionPass
+                  ? ' · ✓ pronunciation'
+                  : ' · ✗ pronunciation'
+                : ''}
+            </p>
+            <p className="text-xs text-ios-gray">back in {returnLabel(cardResult.returnDays)}</p>
+          </div>
+          <button
+            type="button"
+            onClick={next}
+            data-testid="vocab-next"
+            className="w-full bg-ios-blue text-white rounded-2xl py-3 font-bold text-sm shadow-lg active:scale-95 transition-transform"
+          >
+            {index + 1 >= total ? 'See results' : 'Next word'}
+          </button>
+        </div>
+      )}
 
       {audioError && <p className="text-xs text-[#FF3B30] text-center">{audioError}</p>}
 
-      <div className={`grid grid-cols-4 gap-2 ${isFlipped ? '' : 'invisible'}`}>
-        {GRADE_BUTTONS.map(({ label, grade, className }) => (
-          <button
-            key={label}
-            type="button"
-            disabled={!isFlipped}
-            onClick={() => gradeCard(grade)}
-            className={`${className} text-white rounded-xl py-2.5 text-xs font-bold active:scale-95 transition-transform`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-
       <p className="text-[10px] text-ios-gray text-center">
-        Grades feed the 4-dimension model: hear · say · retrieve · avoid.
+        {micAvailable
+          ? 'Type the meaning, then say the word — the app scores both.'
+          : 'Type the meaning — the app scores it (no mic on this device).'}
       </p>
       {isSignedOut && (
         <p className="text-[10px] text-ios-gray text-center">
@@ -311,24 +380,22 @@ const VocabularySessionScreen = ({ user, situations, onExit, scopeHeading }: Voc
 };
 
 // ---------------------------------------------------------------------------
-// Default export: resolves auth + content, then mounts the session screen.
-// Mounting the session only after the user is known keeps the SRS snapshot
+// Default export: resolves auth + content + started-situation pool, then mounts
+// the session. Mounting only after the user is known keeps the SRS snapshot
 // race-free (useVocabularySession refreshes mastery for a fixed user).
 // ---------------------------------------------------------------------------
 
-/** Vocabulary-review content scope (EN-16): the current lesson, the active goal-track, or all. */
-type VocabScope = 'lesson' | 'track' | 'all';
+const vocabCount = (sits: Situation[]): number => sits.reduce((n, s) => n + s.vocabulary.length, 0);
 
 const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
   const [auth, setAuth] = useState<{ user: User | null } | null>(null);
   const [situations, setSituations] = useState<Situation[] | null>(null);
-  const [tracks, setTracks] = useState<Track[]>([]);
-  const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
-  // Default to the lesson deck when routed in from a situation; otherwise the full deck.
-  const [scope, setScope] = useState<VocabScope>(situationId ? 'lesson' : 'all');
+  const [startedIds, setStartedIds] = useState<ReadonlySet<string> | null>(null);
+  // Focus picker selection (hub only): a category key, or 'all' for the whole started pool.
+  const [focus, setFocus] = useState<VocabCategoryKey | 'all'>('all');
 
-  // Resolve the signed-in user once (LT9: local persisted session, no network round-trip), and
-  // the active goal-track (user_track_selection) so the "This track" scope can be offered.
+  // Resolve the signed-in user once (LT9: local persisted session, no network round-trip), then
+  // load the started-situation set for progress-aware sourcing.
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve()
@@ -338,22 +405,15 @@ const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
         try {
           const { data } = await supabase.auth.getSession();
           const user = data.session?.user ?? null;
-          if (user) {
-            const { data: sel } = await supabase
-              .from('user_track_selection')
-              .select('track_id')
-              .eq('user_id', user.id)
-              .eq('is_active', true)
-              .maybeSingle();
-            if (!cancelled && sel?.track_id) setActiveTrackId(sel.track_id);
-          }
+          const ids = await loadStartedSituationIds(supabase, user);
+          if (!cancelled) setStartedIds(ids);
           return { user };
         } catch (err) {
-          // Signed-out sessions are expected — practice continues without persistence.
           logger.warn('VOCAB_AUTH_UNAVAILABLE', 'Could not resolve auth user for vocabulary review', {
             category: 'DATA_PROCESSING',
             error: err,
           });
+          if (!cancelled) setStartedIds(new Set());
           return { user: null };
         }
       })
@@ -365,21 +425,14 @@ const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
     };
   }, []);
 
-  // Load ALL situations + tracks once; scope is applied client-side so the selector can switch
-  // decks (and show per-scope word counts) without re-fetching (EN-16).
+  // Load ALL situations once; scope is applied client-side.
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve()
       .then(async () => {
         try {
-          const [sits, trks] = await Promise.all([
-            contentRepository.listSituations(),
-            contentRepository.listTracks(),
-          ]);
-          if (!cancelled) {
-            setSituations(sits);
-            setTracks(trks);
-          }
+          const sits = await contentRepository.listSituations();
+          if (!cancelled) setSituations(sits);
         } catch (err) {
           logger.error('VOCAB_CONTENT_LOAD_FAILED', 'Failed to load content for vocabulary review', {
             category: 'DATA_PROCESSING',
@@ -393,71 +446,86 @@ const VocabularyView = ({ situationId, onExit }: PracticeModeProps) => {
     };
   }, []);
 
-  if (auth === null || situations === null) return loadingSpinner;
+  // Progress-aware pool (hub entry). Signed-out learners fall back to the FULL pool (every
+  // vocabulary-introducing situation) so the mode still works without a progress signal.
+  const pool: VocabPool | null = useMemo(() => {
+    if (situations === null || startedIds === null) return null;
+    const effectiveStarted =
+      auth?.user == null ? new Set(situations.map((s) => s.id)) : startedIds;
+    return buildVocabPool(situations, effectiveStarted);
+  }, [situations, startedIds, auth]);
 
-  const vocabCount = (sits: Situation[]): number => sits.reduce((n, s) => n + s.vocabulary.length, 0);
+  if (auth === null || situations === null || pool === null) return loadingSpinner;
+
+  // Situation entry → scope to that one lesson (deterministic, progress-independent). Hub entry →
+  // the progress-aware pool, narrowable by the focus picker.
   const lessonSituation = situationId ? situations.find((s) => s.id === situationId) ?? null : null;
-  const trackSituations = activeTrackId ? situations.filter((s) => s.tracks.includes(activeTrackId)) : [];
-  const activeTrackName = tracks.find((t) => t.id === activeTrackId)?.name ?? null;
 
-  // Scope options + word counts. Lesson only when routed in; track only when the user has an
-  // active goal-track that actually carries vocabulary; All is always available.
-  const options: { key: VocabScope; label: string; count: number }[] = [];
-  if (lessonSituation) options.push({ key: 'lesson', label: 'This lesson', count: vocabCount([lessonSituation]) });
-  if (activeTrackId && trackSituations.length > 0) {
-    options.push({ key: 'track', label: 'This track', count: vocabCount(trackSituations) });
+  if (lessonSituation) {
+    const heading = `This lesson: “${lessonSituation.title}” · ${vocabCount([lessonSituation])} words`;
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 min-h-0">
+          <VocabularySessionScreen
+            user={auth.user}
+            situations={[lessonSituation]}
+            onExit={onExit}
+            scopeHeading={heading}
+            emptyIsNoProgress={false}
+          />
+        </div>
+      </div>
+    );
   }
-  options.push({ key: 'all', label: 'All lessons', count: vocabCount(situations) });
 
-  // Guard against a scope that isn't available (e.g. 'lesson' with a stale id) → fall back to All.
-  const effectiveScope: VocabScope = options.some((o) => o.key === scope) ? scope : 'all';
+  // Hub: focus picker over the started pool.
+  const options: { key: VocabCategoryKey | 'all'; label: string; count: number }[] = [
+    { key: 'all', label: 'All started', count: pool.wordCount },
+    ...pool.groups.map((g) => ({ key: g.category, label: g.label, count: g.wordCount })),
+  ];
+  const effectiveFocus = options.some((o) => o.key === focus) ? focus : 'all';
   const scopeSituations =
-    effectiveScope === 'lesson' && lessonSituation
-      ? [lessonSituation]
-      : effectiveScope === 'track'
-        ? trackSituations
-        : situations;
-
-  const activeOption = options.find((o) => o.key === effectiveScope)!;
-  const scopeName =
-    effectiveScope === 'lesson' && lessonSituation
-      ? `This lesson: “${lessonSituation.title}”`
-      : effectiveScope === 'track'
-        ? `Track${activeTrackName ? `: ${activeTrackName}` : ''}`
-        : 'All lessons';
-  const scopeHeading = `${scopeName} · ${activeOption.count} words`;
+    effectiveFocus === 'all'
+      ? pool.situations
+      : pool.groups.find((g) => g.category === effectiveFocus)?.situations ?? [];
+  const activeOption = options.find((o) => o.key === effectiveFocus)!;
+  const scopeHeading = `${activeOption.label} · ${activeOption.count} words`;
+  const emptyIsNoProgress = auth.user != null && pool.situations.length === 0;
 
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 pt-4 flex flex-wrap gap-2" data-testid="vocab-scope-selector">
-        {options.map((o) => {
-          const active = o.key === effectiveScope;
-          return (
-            <button
-              key={o.key}
-              type="button"
-              onClick={() => setScope(o.key)}
-              aria-pressed={active}
-              className={cn(
-                'px-3 py-1.5 rounded-full text-xs font-semibold border-2 transition-colors min-h-[36px]',
-                active
-                  ? 'border-ios-blue bg-ios-blue/5 text-ios-blue'
-                  : 'border-transparent bg-ios-bg text-ios-gray',
-              )}
-            >
-              {o.label} ({o.count})
-            </button>
-          );
-        })}
-      </div>
-      {/* Remount the session per scope so the SRS queue rebuilds for the chosen deck. */}
+      {options.length > 1 && (
+        <div className="px-6 pt-4 flex flex-wrap gap-2" data-testid="vocab-focus-picker">
+          {options.map((o) => {
+            const active = o.key === effectiveFocus;
+            return (
+              <button
+                key={o.key}
+                type="button"
+                onClick={() => setFocus(o.key)}
+                aria-pressed={active}
+                className={cn(
+                  'px-3 py-1.5 rounded-full text-xs font-semibold border-2 transition-colors min-h-[36px]',
+                  active
+                    ? 'border-ios-blue bg-ios-blue/5 text-ios-blue'
+                    : 'border-transparent bg-ios-bg text-ios-gray'
+                )}
+              >
+                {o.label} ({o.count})
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {/* Remount the session per focus so the SRS queue rebuilds for the chosen deck. */}
       <div className="flex-1 min-h-0">
         <VocabularySessionScreen
-          key={effectiveScope}
+          key={effectiveFocus}
           user={auth.user}
           situations={scopeSituations}
           onExit={onExit}
           scopeHeading={scopeHeading}
+          emptyIsNoProgress={emptyIsNoProgress}
         />
       </div>
     </div>

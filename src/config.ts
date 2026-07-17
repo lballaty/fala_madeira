@@ -177,6 +177,15 @@ export const config = {
     summaryWeakestCount: 3,
   },
 
+  vocabulary: {
+    // Vocabulary reinforcement quiz (EN-18) tunables. Comprehension reuses the EN-10 fuzzy
+    // matcher (no config); production adds a spoken "now say it" step gated on mic availability.
+    /** BCP-47 tag for the spoken-production step (European Portuguese, per CONTENT-STANDARDS). */
+    recognitionLanguage: 'pt-PT',
+    /** One-shot recognize() budget for the "now say it" production step (ms). */
+    recognizeTimeoutMs: 8000,
+  },
+
   coach: {
     // The Coach / Insights engine (docs/CONTENT-ARCHITECTURE.md §6b) tunables. Scoring =
     // weakness severity × goal-relevance × review urgency × recency/avoidance. All behavioral

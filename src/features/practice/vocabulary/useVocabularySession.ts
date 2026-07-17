@@ -1,13 +1,14 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/features/practice/vocabulary/useVocabularySession.ts
-// Description: Session state for the Vocabulary Review engine (docs/CONTENT-ARCHITECTURE.md
-//   §3/§6). Consumes the SRS adaptive engine — useDueItems (persistence + applyGrade) and
-//   selectDueItems (pure prioritization, src/lib/srs.ts) — and NEVER reimplements SM-2.
-//   Session build: due vocab items first (overdue-ness × weakness order via selectDueItems,
-//   restricted to this engine's dimensions retrieve/hear), then new items (vocabulary words
-//   with no 'retrieve' mastery row yet). New items need no seeding: applyGrade starts them
-//   from initialMasteryState (srs.ts) on their first grade. Session length is capped at
-//   config.srs.defaultDueLimit. Grading Again re-enqueues the card at the end of the session
-//   (in-session repeat) — SM-2 scheduling itself is applyGrade's job.
+// Description: Session state for the Vocabulary reinforcement QUIZ (EN-18, docs/
+//   EN-18-VOCAB-REINFORCEMENT-QUIZ-REQUIREMENTS.md). Replaces the old self-graded flip-card loop
+//   with an OBJECTIVE loop: show the PT word → type the EN meaning (comprehension, ./comprehension)
+//   → say it (production, ./production, mic) → the app derives SUCCESS/PARTIAL/FAILURE (./scoring)
+//   and feeds the existing SM-2 scheduler (useDueItems.applyGrade). Comprehension grades the
+//   'retrieve' dimension; production grades 'say'. Consumes the SRS engine (buildSessionCards +
+//   selectDueItems, src/lib/srs.ts) and NEVER reimplements SM-2; the queue is collapsed to one
+//   card PER WORD (the quiz asks each word once, comprehension+production together). Session length
+//   scales to the in-scope situations. A card whose comprehension FAILS is re-enqueued once for an
+//   in-session repeat (the SM-2 reschedule itself already happened in applyGrade).
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
@@ -16,39 +17,31 @@ import type { User } from '@supabase/supabase-js';
 import { config } from '../../../config';
 import { logger, errorMessage, userMessage } from '../../../lib/logger';
 import { getSupabase } from '../../../lib/supabase';
-import { selectDueItems, type MasteryItem, type Sm2Grade } from '../../../lib/srs';
+import {
+  gradeItem,
+  initialMasteryState,
+  selectDueItems,
+  type MasteryItem,
+  type MasteryState,
+} from '../../../lib/srs';
 import { useDueItems } from '../../../hooks/useDueItems';
 import { geminiService } from '../../../services/geminiService';
 import type { Situation, VocabularyItem, ReviewDimension } from '../../../content/schema';
 import { vocabItemKey, VOCABULARY_DIMENSIONS } from './itemKeys';
+import { checkComprehension } from './comprehension';
+import { checkProduction, isProductionAvailable, type ProductionResult } from './production';
+import { scoreCard, type CardScore, type QuizOutcome } from './scoring';
 
 /**
- * Grade-button → SM-2 grade mapping (mockup: Again / Hard / Good / Easy).
- * Again (0) fails the recall (below config.srs.passingGrade → repetitions reset);
- * Hard (3) is the minimum pass; Good (4) normal recall; Easy (5) perfect recall.
- * NOTE: belongs in src/config.ts (AGENTS.md §3) — migrate once the srs config
- * block's write claim is released (same seam as practiceConfig in ../registry.ts).
- */
-export const VOCAB_GRADES = {
-  again: 0,
-  hard: 3,
-  good: 4,
-  easy: 5,
-} as const satisfies Record<string, Sm2Grade>;
-
-/**
- * Card presentation variants:
- *  - 'introduce': new word, front = PT word + 🔊, back = meaning  → grades 'retrieve'
- *  - 'retrieve':  due retrieval, front = EN meaning ("say it in Portuguese"),
- *                 back = PT word + 🔊                              → grades 'retrieve'
- *  - 'hear':      due listening, front = audio only (play & guess the meaning),
- *                 back = PT word + meaning                         → grades 'hear'
+ * Card variant retained for the SESSION QUEUE only (introduce = new word, retrieve/hear = a due
+ * mastery row). The quiz interaction itself is the SAME for every card (type the meaning, then say
+ * it); the variant just labels how the card entered the queue and which content order it took.
  */
 export type VocabCardVariant = 'introduce' | 'retrieve' | 'hear';
 
 export interface VocabCard {
   itemKey: string;
-  /** The mastery dimension this card's grade lands on (applyGrade target). */
+  /** The mastery dimension that put this card in the due queue (queue provenance only). */
   dimension: Extract<ReviewDimension, 'retrieve' | 'hear'>;
   variant: VocabCardVariant;
   /** True when the word has no 'retrieve' mastery row yet (introduced this session). */
@@ -58,33 +51,55 @@ export interface VocabCard {
 }
 
 export interface VocabSessionSummary {
-  /** Grades applied to due (previously seen) cards, incl. in-session Again repeats. */
+  /** Previously-seen cards graded this session (incl. in-session comprehension-fail repeats). */
   reviewed: number;
   /** New words introduced (first grade recorded). */
   introduced: number;
-  /** Number of Again (grade 0) presses. */
-  againCount: number;
+  /** Cards scored SUCCESS (comprehension + production both passed, or comprehension-only pass). */
+  success: number;
+  /** Cards scored PARTIAL (exactly one of comprehension/production passed; mic path only). */
+  partial: number;
+  /** Cards scored FAILURE (nothing passed). */
+  failure: number;
 }
+
+/** Quiz step within a single card. */
+export type VocabQuizStep = 'prompt' | 'reveal' | 'listening' | 'feedback';
 
 export type VocabSessionPhase = 'loading' | 'empty' | 'active' | 'summary';
 
-const EMPTY_SUMMARY: VocabSessionSummary = { reviewed: 0, introduced: 0, againCount: 0 };
+/** The committed result of one card, surfaced for the feedback panel. */
+export interface VocabCardResult {
+  comprehensionPass: boolean;
+  /** null = production not attempted (no mic / declined). */
+  productionPass: boolean | null;
+  score: CardScore;
+  /** Days until this word next surfaces on its 'retrieve' track (for "back in ~N days"). */
+  returnDays: number;
+}
+
+const EMPTY_SUMMARY: VocabSessionSummary = {
+  reviewed: 0,
+  introduced: 0,
+  success: 0,
+  partial: 0,
+  failure: 0,
+};
 
 /**
- * Build one session's card queue: due first (engine-owned dimensions only, prioritized
- * by the SRS engine's selectDueItems), then unseen words, capped at
- * config.srs.defaultDueLimit total. Pure — exported for the unit-tests step.
+ * Build one session's card queue: due first (engine-owned dimensions only, prioritized by the SRS
+ * engine's selectDueItems), then unseen words, capped at `limit` total. Pure — exported for the
+ * unit-tests step (EN-16 regression). NOTE: this may yield two cards for one word (a due 'retrieve'
+ * AND a due 'hear' row); the quiz collapses the queue to one card per word (dedupeByWord below).
  */
 export const buildSessionCards = (
   items: MasteryItem[],
   situations: Situation[],
   now: Date,
   // EN-16: the session scales to the chosen scope — default limit = all vocabulary words in the
-  // in-scope situations, so a session plays every due + new card for the selected lesson/track/all
-  // (replaces the old fixed config.srs.defaultDueLimit cap; the scope selector controls volume now).
+  // in-scope situations, so a session plays every due + new card for the selected scope.
   limit: number = situations.reduce((total, s) => total + s.vocabulary.length, 0)
 ): VocabCard[] => {
-
   // Content index: canonical item_key → (situation, vocabulary entry).
   const contentByKey = new Map<string, { situationId: string; entry: VocabularyItem }>();
   for (const situation of situations) {
@@ -94,8 +109,7 @@ export const buildSessionCards = (
     }
   }
 
-  // Due cards: mastery rows in this engine's namespace + dimensions whose content
-  // still resolves (removed content is silently skipped — never a dead card).
+  // Due cards: mastery rows in this engine's namespace + dimensions whose content still resolves.
   const vocabMastery = items.filter(
     (item) => contentByKey.has(item.itemKey) && VOCABULARY_DIMENSIONS.includes(item.dimension)
   );
@@ -112,8 +126,7 @@ export const buildSessionCards = (
     };
   });
 
-  // New cards: words with no 'retrieve' mastery row yet, in content order. No row is
-  // written up-front — applyGrade introduces them from initialMasteryState on first grade.
+  // New cards: words with no 'retrieve' mastery row yet, in content order.
   const knownRetrieveKeys = new Set(
     items.filter((item) => item.dimension === 'retrieve').map((item) => item.itemKey)
   );
@@ -135,12 +148,31 @@ export const buildSessionCards = (
   return [...dueCards, ...newCards];
 };
 
+/**
+ * Collapse the queue to one card per word: the quiz grades comprehension (retrieve) AND production
+ * (say) in a single card, so a word must not appear twice. First occurrence wins, preserving the
+ * SM-2 order (due-retrieve before due-hear before new).
+ */
+export const dedupeByWord = (cards: VocabCard[]): VocabCard[] => {
+  const seen = new Set<string>();
+  const out: VocabCard[] = [];
+  for (const card of cards) {
+    if (seen.has(card.itemKey)) continue;
+    seen.add(card.itemKey);
+    out.push(card);
+  }
+  return out;
+};
+
 interface VocabularySessionDeps {
   /** Resolved auth user (null = signed out: cards still work, grades are not persisted). */
   user: User | null;
-  /** Situations in scope (one when routed in via the situation browser, else all). */
+  /** Situations in scope (one when routed in via a situation, else the chosen focus). */
   situations: Situation[];
 }
+
+/** How a production attempt failed, so the UI offers the right affordance (retry vs move on). */
+export type ProductionFailKind = 'retryable' | 'mismatch' | null;
 
 export const useVocabularySession = ({ user, situations }: VocabularySessionDeps) => {
   const supabase = useMemo(() => getSupabase(), []);
@@ -150,12 +182,18 @@ export const useVocabularySession = ({ user, situations }: VocabularySessionDeps
   const [masteryReady, setMasteryReady] = useState(false);
   const [cards, setCards] = useState<VocabCard[] | null>(null);
   const [index, setIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [step, setStep] = useState<VocabQuizStep>('prompt');
+  const [comprehensionPass, setComprehensionPass] = useState<boolean | null>(null);
+  const [productionResult, setProductionResult] = useState<ProductionResult | null>(null);
+  const [cardResult, setCardResult] = useState<VocabCardResult | null>(null);
   const [summary, setSummary] = useState<VocabSessionSummary>(EMPTY_SUMMARY);
   const [audioError, setAudioError] = useState<string | null>(null);
 
-  // Session data gate: await an explicit refresh() so the snapshot below is built from
-  // freshly loaded mastery rows (the hook's own mount load races with this effect).
+  // Mic availability is fixed for the session (captured once) so the UI is stable per card.
+  const [micAvailable] = useState(() => isProductionAvailable());
+
+  // Session data gate: await an explicit refresh() so the snapshot is built from freshly loaded
+  // mastery rows (the hook's own mount load races with this effect).
   useEffect(() => {
     let cancelled = false;
     void refresh().then(() => {
@@ -166,15 +204,14 @@ export const useVocabularySession = ({ user, situations }: VocabularySessionDeps
     };
   }, [refresh, sessionKey]);
 
-  // Snapshot the session queue ONCE per sessionKey. items keeps changing as grades
-  // apply (optimistic updates) — the `cards !== null` guard pins the queue so cards
-  // never shuffle mid-session.
+  // Snapshot the session queue ONCE per sessionKey. The `cards !== null` guard pins the queue so
+  // cards never shuffle mid-session as grades apply (optimistic updates keep changing `items`).
   useEffect(() => {
     if (!masteryReady || cards !== null) return;
     let cancelled = false;
     void Promise.resolve().then(() => {
       if (cancelled) return;
-      setCards(buildSessionCards(items, situations, new Date()));
+      setCards(dedupeByWord(buildSessionCards(items, situations, new Date())));
     });
     return () => {
       cancelled = true;
@@ -195,8 +232,6 @@ export const useVocabularySession = ({ user, situations }: VocabularySessionDeps
           ? 'summary'
           : 'active';
 
-  const flip = useCallback(() => setIsFlipped((f) => !f), []);
-
   /** Play European Portuguese TTS for a card's word (server voice, default speed). */
   const playText = useCallback((text: string) => {
     setAudioError(null);
@@ -214,46 +249,126 @@ export const useVocabularySession = ({ user, situations }: VocabularySessionDeps
       });
   }, []);
 
-  /** Grade the current card and advance. Again (0) re-enqueues the card at the end. */
-  const gradeCard = useCallback(
-    (grade: Sm2Grade) => {
-      if (!cards) return;
-      const current = cards[index];
-      if (!current) return;
+  /** Current retrieve-dimension mastery state for a word (or a fresh state when unseen). */
+  const retrieveStateFor = useCallback(
+    (itemKey: string): MasteryState =>
+      items.find((it) => it.itemKey === itemKey && it.dimension === 'retrieve') ??
+      initialMasteryState(),
+    [items]
+  );
 
-      // COACH SIGNAL (§6b): grade emission — this applyGrade call updates the
-      // (item_key, dimension) mastery row the Coach's dimensionSummary reads.
-      // Vocabulary emits on 'retrieve' (flip cards) and 'hear' (audio-first cards).
-      void applyGrade(current.itemKey, current.dimension, grade);
+  /**
+   * Commit the card: score the objective signals, apply per-dimension SM-2 grades (retrieve from
+   * comprehension, say from production when attempted), record the summary + return timing, and
+   * advance to the feedback step. `cp`/`pp` are passed explicitly to avoid stale state right after
+   * a comprehension submit.
+   */
+  const finalize = useCallback(
+    (current: VocabCard, cp: boolean, pp: boolean | null) => {
+      const score: CardScore = scoreCard({ comprehensionPass: cp, productionPass: pp });
+
+      // COACH SIGNAL (§6b): grade emission — applyGrade updates the (item_key, dimension) mastery
+      // row the Coach's dimensionSummary reads. Comprehension → 'retrieve'; production → 'say'.
+      void applyGrade(current.itemKey, 'retrieve', score.retrieveGrade);
+      if (score.sayGrade !== null) void applyGrade(current.itemKey, 'say', score.sayGrade);
+
+      const returnDays = gradeItem(
+        retrieveStateFor(current.itemKey),
+        score.retrieveGrade,
+        new Date()
+      ).intervalDays;
 
       setSummary((s) => ({
         reviewed: s.reviewed + (current.isNew ? 0 : 1),
         introduced: s.introduced + (current.isNew ? 1 : 0),
-        againCount: s.againCount + (grade === VOCAB_GRADES.again ? 1 : 0),
+        success: s.success + (score.outcome === 'success' ? 1 : 0),
+        partial: s.partial + (score.outcome === 'partial' ? 1 : 0),
+        failure: s.failure + (score.outcome === 'failure' ? 1 : 0),
       }));
-
-      if (grade === VOCAB_GRADES.again) {
-        // In-session repeat: see the card again before the session ends (the SM-2
-        // reschedule itself already happened in applyGrade above).
-        setCards((queue) => (queue ? [...queue, { ...current, isNew: false }] : queue));
-      }
-
-      setIsFlipped(false);
-      setIndex((i) => i + 1);
+      setCardResult({ comprehensionPass: cp, productionPass: pp, score, returnDays });
+      setStep('feedback');
     },
-    [cards, index, applyGrade]
+    [applyGrade, retrieveStateFor]
   );
+
+  /** STEP 1 — grade the typed meaning. With a mic, advance to production; else finalize now. */
+  const submitComprehension = useCallback(
+    (typed: string) => {
+      if (!card || step !== 'prompt') return;
+      const pass = checkComprehension(typed, card.entry.translation);
+      setComprehensionPass(pass);
+      if (micAvailable) {
+        setStep('reveal');
+      } else {
+        finalize(card, pass, null);
+      }
+    },
+    [card, step, micAvailable, finalize]
+  );
+
+  /** STEP 2 — run one spoken-production attempt and resolve the outcome. */
+  const sayIt = useCallback(async () => {
+    if (!card || comprehensionPass === null) return;
+    setStep('listening');
+    const result = await checkProduction(card.entry.word);
+    setProductionResult(result);
+    if (result.outcome === 'pass') {
+      finalize(card, comprehensionPass, true);
+    } else if (result.outcome === 'skipped') {
+      finalize(card, comprehensionPass, null);
+    } else {
+      // FAIL: return to the reveal step; the view offers retry (retryable) or move-on (mismatch).
+      setStep('reveal');
+    }
+  }, [card, comprehensionPass, finalize]);
+
+  /** Decline the spoken step entirely → comprehension-only grading (no penalty on 'say'). */
+  const skipProduction = useCallback(() => {
+    if (!card || comprehensionPass === null) return;
+    finalize(card, comprehensionPass, null);
+  }, [card, comprehensionPass, finalize]);
+
+  /** Accept a mismatched spoken attempt as a real production FAIL and move on. */
+  const acceptProductionFail = useCallback(() => {
+    if (!card || comprehensionPass === null) return;
+    finalize(card, comprehensionPass, false);
+  }, [card, comprehensionPass, finalize]);
+
+  /** Advance to the next card (re-enqueuing this one once if comprehension failed). */
+  const next = useCallback(() => {
+    const failedComprehension = cardResult?.comprehensionPass === false;
+    if (failedComprehension && card) {
+      setCards((queue) => (queue ? [...queue, { ...card, isNew: false }] : queue));
+    }
+    setStep('prompt');
+    setComprehensionPass(null);
+    setProductionResult(null);
+    setCardResult(null);
+    setAudioError(null);
+    setIndex((i) => i + 1);
+  }, [cardResult, card]);
 
   /** Start a fresh session (re-fetch mastery, rebuild the queue). */
   const restart = useCallback(() => {
     setMasteryReady(false);
     setCards(null);
     setIndex(0);
-    setIsFlipped(false);
+    setStep('prompt');
+    setComprehensionPass(null);
+    setProductionResult(null);
+    setCardResult(null);
     setSummary(EMPTY_SUMMARY);
     setAudioError(null);
     setSessionKey((k) => k + 1);
   }, []);
+
+  // Classify a production failure so the UI shows the right affordance.
+  const productionFailKind: ProductionFailKind =
+    productionResult?.outcome === 'fail'
+      ? productionResult.reason === 'mismatch'
+        ? 'mismatch'
+        : 'retryable'
+      : null;
 
   // Remaining counts for the header line (mockup "N due"), from the current position.
   const remaining = cards !== null ? cards.slice(index) : [];
@@ -267,10 +382,18 @@ export const useVocabularySession = ({ user, situations }: VocabularySessionDeps
     total: cards?.length ?? 0,
     remainingDue,
     remainingNew,
-    isFlipped,
-    flip,
-    gradeCard,
+    step,
+    micAvailable,
+    comprehensionPass,
+    productionResult,
+    productionFailKind,
+    cardResult,
     playText,
+    submitComprehension,
+    sayIt,
+    skipProduction,
+    acceptProductionFail,
+    next,
     audioError,
     summary,
     restart,
@@ -278,3 +401,5 @@ export const useVocabularySession = ({ user, situations }: VocabularySessionDeps
     isSignedOut: user === null,
   };
 };
+
+export type { QuizOutcome };
