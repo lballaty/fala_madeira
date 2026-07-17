@@ -29,6 +29,8 @@ Status: ✅ resolved · 🔲 open · 🔎 verify · ⏳ planned (expected pendin
 | A6 | Some platform-adapter `catch` blocks don't route through the centralized logger | LOW | ✅ resolved | `src/platform/{web,native}/notifications.*` | Web/native notifications adapters now log permission/cancel/unsupported paths through `src/lib/logger.ts`; keep sweeping remaining adapters opportunistically if more are found. |
 | A7 | Seed situations carry no `dialogues`/`roleplay`/`mission`/`review_items` (engines run on fallbacks) | INFO | ⏳ planned | 0 matches in `src/content/packs/seed-course.ts` | Covered by the `content-enrichment` plan step — expected, not a defect. Engines degrade gracefully today. |
 | A8 | Confirm vitest pass count | — | ✅ resolved | 154 passed / 14 files (pass2) | none |
+| A9 | `jsx-a11y/no-autofocus` error blocks a green `preflight` eslint stage | LOW | 🔲 open | `src/features/practice/vocabulary/VocabularyView.tsx:101` | **Owner: EN-18 agent** (file on the EN-18 avoid-list — not touched by this session). Remove `autoFocus` + focus programmatically post-mount, or add a scoped `eslint-disable-next-line` with a11y justification. Surfaced 2026-07-17 during develop reconciliation. |
+| A10 | Unused `eslint-disable` directive (warning) | INFO | 🔲 open | `src/hooks/useFocusTrap.ts:115` | Drop the now-unused `// eslint-disable ... react-hooks/exhaustive-deps` line (rule reports no problem there). Low-risk; whoever next touches `useFocusTrap.ts` clears it. Surfaced 2026-07-17. |
 
 ## HIGH PRIORITY — Testing coverage (operator directive 2026-07-11)
 
