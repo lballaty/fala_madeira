@@ -16,7 +16,7 @@
 import { useId, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { ClipboardList, KeyRound, Lock, PenSquare, SlidersHorizontal, X } from 'lucide-react';
+import { ClipboardList, KeyRound, Lock, PenSquare, SlidersHorizontal, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { UserProfile } from '../../types';
@@ -29,6 +29,8 @@ import { AdminReviewQueues } from './AdminReviewQueues';
 import { ContentStudio } from './ContentStudio';
 import { UserAccessPanel } from './UserAccessPanel';
 import AdminConfigPanel from './AdminConfigPanel';
+import { AudioPanel } from './audio/AudioPanel';
+import { useAudioReview } from './audio/useAudioReview';
 
 interface AdminViewProps {
   supabase: SupabaseClient | null;
@@ -40,7 +42,7 @@ interface AdminViewProps {
   onClose: () => void;
 }
 
-type AdminTab = 'queues' | 'studio' | 'access' | 'config';
+type AdminTab = 'queues' | 'studio' | 'access' | 'config' | 'audio';
 
 export default function AdminView({
   supabase,
@@ -68,6 +70,7 @@ export default function AdminView({
     showToast,
     handleSupabaseError,
   });
+  const audio = useAudioReview({ supabase, isAdmin: !!isAdmin, actorId: profile?.id ?? null, showToast });
 
   // Trap focus within the admin overlay while it's mounted (admins only); Escape closes it.
   useFocusTrap(dialogRef, !!isAdmin, onClose);
@@ -131,6 +134,16 @@ export default function AdminView({
           <KeyRound className="w-4 h-4" /> User Access
         </button>
         <button
+          onClick={() => setTab('audio')}
+          data-testid="admin-tab-audio"
+          className={cn(
+            'flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-bold',
+            tab === 'audio' ? 'text-ios-blue border-b-2 border-ios-blue' : 'text-ios-gray',
+          )}
+        >
+          <Volume2 className="w-4 h-4" /> Audio
+        </button>
+        <button
           onClick={() => setTab('config')}
           data-testid="admin-tab-config"
           className={cn(
@@ -146,6 +159,7 @@ export default function AdminView({
         {tab === 'queues' && <AdminReviewQueues queues={queues} />}
         {tab === 'studio' && <ContentStudio studio={studio} />}
         {tab === 'access' && <UserAccessPanel access={access} />}
+        {tab === 'audio' && <AudioPanel audio={audio} />}
         {tab === 'config' && <AdminConfigPanel globalVoiceLimit={globalVoiceLimit} setGlobalVoiceLimit={setGlobalVoiceLimit} />}
       </main>
     </motion.div>
