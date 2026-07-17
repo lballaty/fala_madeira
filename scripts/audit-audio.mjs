@@ -48,27 +48,17 @@ if (!SUPABASE_URL || !ANON_KEY) {
 
 // ---- shared pure modules ---------------------------------------------------------------------
 const { BUNDLED_PACKS } = await tsImport('../src/content/bundled.ts', import.meta.url);
-const { linesForSituation } = await tsImport('../src/content/lines.ts', import.meta.url);
-const { buildKey, keyToServerPath } = await tsImport('../src/lib/audioKey.ts', import.meta.url);
-const { resolveVoice } = await tsImport('../src/lib/voiceType.ts', import.meta.url);
+const { expectedNamesByLevel, diffCoverage, findOrphans, providerHits } = await tsImport('../src/lib/audit-utils.ts', import.meta.url);
 
 // ---- expected object names per level ---------------------------------------------------------
+// SHARED single source of truth: expectedNamesByLevel (src/lib/audit-utils.ts) is derived from the
+// SAME walk the generator uses, so the auditor's expected set == pregen's target set by construction
+// (round-trip invariant locked in audit-utils.test.ts). --level narrows to one level here.
 /** @type {Map<number, Set<string>>} */
-const expectedByLevel = new Map();
-const nameToText = new Map(); // for reporting
-for (const pack of BUNDLED_PACKS) {
-  for (const situation of pack.situations) {
-    const lvl = situation.level;
-    if (ONLY_LEVEL !== null && lvl !== ONLY_LEVEL) continue;
-    if (!expectedByLevel.has(lvl)) expectedByLevel.set(lvl, new Set());
-    for (const line of linesForSituation(situation)) {
-      const voice = resolveVoice({ voiceType: line.voiceType });
-      const name = keyToServerPath(buildKey('default', voice, line.text));
-      expectedByLevel.get(lvl).add(name);
-      nameToText.set(name, line.text);
-    }
-  }
-}
+const fullByLevel = expectedNamesByLevel(BUNDLED_PACKS);
+const expectedByLevel = ONLY_LEVEL !== null
+  ? new Map([...fullByLevel].filter(([lvl]) => lvl === ONLY_LEVEL))
+  : fullByLevel;
 const allExpected = new Set([...expectedByLevel.values()].flatMap((s) => [...s]));
 
 // ---- what is in the Supabase buffer (public list via anon key) -------------------------------
@@ -103,17 +93,10 @@ if (VERPEX_BASE) {
 // ---- per-level report ------------------------------------------------------------------------
 const report = [];
 for (const [lvl, expected] of [...expectedByLevel.entries()].sort((a, b) => a[0] - b[0])) {
-  let verpex = 0, buffer = 0, missing = 0, lag = 0;
-  for (const name of expected) {
-    const v = onVerpex.has(name), b = inBuffer.has(name);
-    if (v) verpex++;
-    if (b) buffer++;
-    if (!v && !b) missing++;
-    if (b && !v) lag++;
-  }
-  report.push({ level: lvl, expected: expected.size, on_verpex: VERPEX_BASE ? verpex : null, in_buffer: buffer, missing_everywhere: missing, buffer_lag: lag });
+  const c = diffCoverage({ expected, onVerpex, inBuffer });
+  report.push({ level: lvl, expected: c.expected, on_verpex: VERPEX_BASE ? c.on_verpex : null, in_buffer: c.in_buffer, missing_everywhere: c.missing_everywhere, buffer_lag: c.buffer_lag });
 }
-const orphans = [...new Set([...inBuffer, ...onVerpex])].filter((n) => !allExpected.has(n));
+const orphans = findOrphans({ expected: allExpected, onVerpex, inBuffer });
 
 if (!JSON_ONLY && !VERIFY_L0) {
   console.log('\nEN-8 audio coverage — expected vs on-Verpex vs in-buffer\n');
@@ -151,12 +134,8 @@ if (VERIFY_L0) {
     if (error) {
       problems.push(`could not query public.logs: ${error.message}`);
     } else {
-      const providerHits = (data ?? []).filter((row) => {
-        let d = row.details;
-        if (typeof d === 'string') { try { d = JSON.parse(d); } catch { d = {}; } }
-        return d?.tier === 'provider' && l0.has(keyToServerPath(String(d?.key ?? '')));
-      });
-      if (providerHits.length > 0) problems.push(`${providerHits.length} provider-tier synthesis event(s) found for level-0 keys (503-avoidance NOT demonstrated)`);
+      const hits = providerHits(data, l0);
+      if (hits.length > 0) problems.push(`${hits.length} provider-tier synthesis event(s) found for level-0 keys (503-avoidance NOT demonstrated)`);
     }
   }
 

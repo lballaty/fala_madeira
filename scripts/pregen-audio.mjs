@@ -60,27 +60,15 @@ if (missing.length) {
 
 // ---- shared pure modules (TypeScript via tsx — one key space with the app) -------------------
 const { BUNDLED_PACKS } = await tsImport('../src/content/bundled.ts', import.meta.url);
-const { linesForSituation } = await tsImport('../src/content/lines.ts', import.meta.url);
-const { buildKey, keyToServerPath } = await tsImport('../src/lib/audioKey.ts', import.meta.url);
-const { resolveVoice } = await tsImport('../src/lib/voiceType.ts', import.meta.url);
+const { clipsByLevel } = await tsImport('../src/lib/audit-utils.ts', import.meta.url);
 
 // ---- enumerate the work list (deduped across situations by object name) ----------------------
+// SHARED with the auditor: clipsByLevel (src/lib/audit-utils.ts) is the single source of truth for
+// what level-N hosting covers — same walk (linesForSituation → resolveVoice → buildKey →
+// keyToServerPath), deduped per level by object name — so the generator's targets and the auditor's
+// expected set are the same set by construction (round-trip invariant locked in audit-utils.test.ts).
 /** @type {{text:string, voiceType?:string, key:string, name:string}[]} */
-const work = [];
-const seenNames = new Set();
-for (const pack of BUNDLED_PACKS) {
-  for (const situation of pack.situations) {
-    if (situation.level !== LEVEL) continue;
-    for (const line of linesForSituation(situation)) {
-      const voice = resolveVoice({ voiceType: line.voiceType });
-      const key = buildKey('default', voice, line.text);
-      const name = keyToServerPath(key);
-      if (seenNames.has(name)) continue;
-      seenNames.add(name);
-      work.push({ text: line.text, voiceType: line.voiceType, key, name });
-    }
-  }
-}
+const work = clipsByLevel(BUNDLED_PACKS).get(LEVEL) ?? [];
 
 console.log(`EN-8 pre-gen: level ${LEVEL} — ${work.length} unique (voice,text) clips${DRY_RUN ? ' [DRY RUN]' : ''}`);
 if (work.length === 0) { console.log('nothing to do'); process.exit(0); }
