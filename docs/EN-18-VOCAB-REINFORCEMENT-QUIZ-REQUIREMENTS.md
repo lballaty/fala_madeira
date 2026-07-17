@@ -1,11 +1,11 @@
 # EN-18 — Vocabulary practice as an objective reinforcement quiz
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-18-VOCAB-REINFORCEMENT-QUIZ-REQUIREMENTS.md
-**Description:** Requirements for redesigning vocabulary practice from self-graded flashcards into an objective, quiz-style reinforcement loop (comprehension + production), sourced from what the learner has worked on, focusable by theme. Owner-designed 2026-07-15; awaiting approval before any coding (AGENTS §3).
+**Description:** Requirements for redesigning vocabulary practice from self-graded flashcards into an objective, quiz-style reinforcement loop (comprehension + production), sourced from what the learner has worked on, focusable by theme. Owner-designed 2026-07-15; approved + built + verified 2026-07-17 (see §9).
 **Author:** Libor Ballaty
 **Created:** 2026-07-15
-**Last Updated:** 2026-07-15
-**Last Updated By:** Libor Ballaty
+**Last Updated:** 2026-07-17
+**Last Updated By:** claude-en18-a9 (close-out)
 
 ---
 
@@ -113,5 +113,11 @@ scoring, manual-verify the mic.)
 
 ## 9. Status
 
-**SPEC — NEEDS OWNER APPROVAL before any coding** (AGENTS §3). Supersedes the earlier standalone
-grade-button tweak (EN-16 note); EN-16's scope selector folds into the theme focus picker here.
+**DONE — VERIFIED (2026-07-17).** Owner-approved to build 2026-07-17; all 7 work packages (WP1–WP7)
+shipped on `develop`. Full gate green: tsc clean, 383 unit tests, prod build, coverage checker (202
+controls), full chromium e2e 127/127. **Manual mic verify (Step 2 spoken production) owner-confirmed
+2026-07-17.** The A9 lint blocker (bare `autoFocus` in `VocabularyView` `PromptStep`) was cleared in
+`8db9c52` (version `2026.07.17.2`) — focus is now programmatic post-mount. No code-level items remain;
+the only outstanding step is the operator-gated prod promotion (`develop`→`main` cut + deploy). Full
+history in `docs/TESTER-FEEDBACK-TRACKER.md` (EN-18). Supersedes the earlier standalone grade-button
+tweak (EN-16 note); EN-16's scope selector folded into the theme focus picker here.
