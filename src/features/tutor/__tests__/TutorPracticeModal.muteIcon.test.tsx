@@ -10,15 +10,18 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
-vi.mock('framer-motion', () => ({
-  AnimatePresence: ({ children }: { children?: unknown }) => children,
-  motion: new Proxy({}, { get: () => (props: Record<string, unknown>) => {
-    // Render motion.<tag> as a plain <div> passing through children/refs/aria.
-    const { children, ...rest } = props as { children?: unknown };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (require('react') as typeof import('react')).createElement('div', rest as any, children as any);
-  } }),
-}));
+vi.mock('framer-motion', async () => {
+  const React = await import('react');
+  return {
+    AnimatePresence: ({ children }: { children?: unknown }) => children,
+    motion: new Proxy({}, { get: () => (props: Record<string, unknown>) => {
+      // Render motion.<tag> as a plain <div> passing through children/refs/aria.
+      const { children, ...rest } = props as { children?: unknown };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return React.createElement('div', rest as any, children as any);
+    } }),
+  };
+});
 vi.mock('../../../components/SafeMarkdown', () => ({ SafeMarkdown: () => null }));
 
 import { TutorPracticeModal } from '../TutorPracticeModal';

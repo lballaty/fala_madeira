@@ -11,13 +11,16 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 
-vi.mock('framer-motion', () => ({
-  motion: new Proxy({}, { get: () => (props: Record<string, unknown>) => {
-    const { children, ...rest } = props as { children?: unknown };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (require('react') as typeof import('react')).createElement('div', rest as any, children as any);
-  } }),
-}));
+vi.mock('framer-motion', async () => {
+  const React = await import('react');
+  return {
+    motion: new Proxy({}, { get: () => (props: Record<string, unknown>) => {
+      const { children, ...rest } = props as { children?: unknown };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return React.createElement('div', rest as any, children as any);
+    } }),
+  };
+});
 vi.mock('../../../components/SafeMarkdown', () => ({ SafeMarkdown: ({ content }: { content?: string }) => <span>{content}</span> }));
 
 import { TutorChatView } from '../TutorChatView';
