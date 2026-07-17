@@ -15,7 +15,11 @@ test.describe('practice mode routing', () => {
 
     await page.getByText('Vocabulary Review', { exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Vocabulary Review' })).toBeVisible();
-    await expect(page.getByText(/due|new/i).first()).toBeVisible();
+    // The real mode body always states its scope (data-testid="vocab-scope") — in the active quiz
+    // header AND the progress-aware empty state. A fresh user with no worked-on themes lands on the
+    // empty state (EN-18 progress-aware sourcing), so assert the scope line rather than a "due/new"
+    // counter that only exists once the deck is non-empty.
+    await expect(page.getByTestId('vocab-scope').first()).toBeVisible();
     await backToPractice.click();
     await expect(page.getByRole('heading', { name: 'Practice' })).toBeVisible();
 
