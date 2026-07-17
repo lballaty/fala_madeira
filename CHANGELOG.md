@@ -4,8 +4,8 @@
 **Description:** Release changelog for fala_madeira. Entries grouped by CalVer `YYYY.MM.DD.N`.
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
-**Last Updated:** 2026-07-15
-**Last Updated By:** claude-opus-4-8 (release 2026.07.15.5 — SEC-2 + EN-10)
+**Last Updated:** 2026-07-17
+**Last Updated By:** claude-en18-a9 (2026.07.17.2 — EN-18 vocabulary quiz)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,11 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.17.2
+
+- Improved: **vocabulary practice is now an objective quiz, not self-graded flashcards.** For each word you hear it and **type what it means**, then **say it** (Portuguese speech check); the app decides right/partial/wrong and schedules the word to come back sooner or later accordingly — no more rating yourself. Words are drawn from the situations you've actually worked on and can be narrowed by theme (daily / social / travel / work). Without a microphone it falls back to a typed-only pass/fail. (EN-18)
+- Internal: cleared an accessibility lint finding on the vocabulary answer field (focus is now set programmatically on mount rather than via `autoFocus`), unblocking a fully green preflight. (Audit A9)
 
 ## 2026.07.16.3
 

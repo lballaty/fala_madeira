@@ -12,7 +12,7 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { Check, CheckCircle2, Mic, Volume2, XCircle } from 'lucide-react';
@@ -79,6 +79,13 @@ interface PromptProps {
 
 const PromptStep = ({ card, onPlay, onSubmit }: PromptProps) => {
   const [answer, setAnswer] = useState('');
+  // Focus the answer field on mount so the learner can type straight away, without the
+  // `autoFocus` attribute (jsx-a11y/no-autofocus — A9). Programmatic focus is scoped to
+  // this step's mount and keyed on the card so a new prompt re-focuses.
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [card.entry.word]);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -96,12 +103,9 @@ const PromptStep = ({ card, onPlay, onSubmit }: PromptProps) => {
         </div>
         <p className="text-xs text-ios-gray">What does it mean?</p>
       </div>
-      {/* eslint-disable jsx-a11y/no-autofocus -- pre-existing EN-18 quiz UX auto-focuses the answer
-          input; surfaced (not introduced) by the EN-8↔develop merge. A11y follow-up tracked for EN-18's
-          owner in TESTER-FEEDBACK-TRACKER — do not silently change EN-18's UX here. */}
       <input
+        ref={inputRef}
         type="text"
-        autoFocus
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         placeholder="Type the meaning in English"
@@ -110,7 +114,6 @@ const PromptStep = ({ card, onPlay, onSubmit }: PromptProps) => {
         {...(E2E_ANSWER_HINT ? { 'data-answer': card.entry.translation } : {})}
         className="w-full rounded-2xl border-2 border-ios-bg focus:border-ios-blue outline-none px-4 py-3 text-base"
       />
-      {/* eslint-enable jsx-a11y/no-autofocus */}
       <button
         type="submit"
         data-testid="vocab-check"
