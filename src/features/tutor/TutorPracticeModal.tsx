@@ -8,7 +8,7 @@
 
 import { useId, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HelpCircle, MapPin, Mic, Send as SendIcon, Sparkles, Volume2, X } from 'lucide-react';
+import { HelpCircle, MapPin, Mic, Send as SendIcon, Sparkles, Volume2, VolumeX, X } from 'lucide-react';
 import { SafeMarkdown } from '../../components/SafeMarkdown';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
@@ -121,7 +121,9 @@ export const TutorPracticeModal = ({
                     isSoundEnabled ? "bg-ios-blue/10 text-ios-blue" : "bg-ios-bg text-ios-gray"
                   )}
                 >
-                  {isSoundEnabled ? <Volume2 className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                  {/* TB-23: muted state uses a proper muted-speaker icon, never a bare X — a bare X
+                      next to the close X (below) read like a second close/dismiss. */}
+                  {isSoundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
                 </button>
                 <button
                   onClick={closeAIPractice}
