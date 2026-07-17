@@ -67,4 +67,12 @@ Reference implementations (each file header explains it):
 - `supabase/functions/log-sink/rows.ts` ← `log-sink/index.ts` (batch caps + row mapping)
 - `supabase/functions/ai-gateway/voiceLimit.ts` ← `ai-gateway/index.ts` (voice-limit precedence)
 
-**Residual not covered by this pattern:** the thin `Deno.serve` request→response glue itself. Covering that end-to-end needs the **EN-24** deno harness (`deno test supabase/functions/`); until then it is guarded by the observability `--strict` gate + code review.
+**The thin `Deno.serve` glue — agentic review checklist (in lieu of a deno harness):** the request→response wrapper that reads the request, calls the pure core, and formats the response is **not** automatically tested (the `deno test` harness was declined by owner decision 2026-07-17 — EN-24). Instead it is covered by a **mandatory agentic review activity**: any diff touching `supabase/functions/**` gets a `/code-review` (or `/security-review` for auth/secrets) that confirms the handler —
+
+- [ ] calls the **pure, unit-tested core** for its decision (no decision logic re-implemented inline in the handler);
+- [ ] checks `{ error }` on **every** Supabase call and does not proceed on failure (supabase-js returns errors, it does not throw);
+- [ ] returns the canonical **`errorResponse(code, message, status, requestId, …)`** envelope on every failure — never a bare string, a raw `500`, or a leaked `dbMessage`/internal detail;
+- [ ] `persistLog`s ERROR/CRITICAL failures (paired log + user-visible envelope, correlation IDs threaded);
+- [ ] never introduces a bare `console.error/warn` in an error path (also enforced by the observability `--strict` HARD gate).
+
+This checklist + the vitest core test together are the change's Definition of Done for edge work (routed in `AGENTS.md §4`). EN-24 still tracks the optional full deno harness that would additionally automate the glue, but it is no longer required for EN-27.
