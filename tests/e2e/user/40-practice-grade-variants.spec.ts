@@ -1,84 +1,19 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/user/40-practice-grade-variants.spec.ts
-// Description: Grade-button variant coverage for the two self-graded practice engines. The
-//   existing suite only exercises the "happy" grade on each engine (Vocabulary Review's "Good"
-//   in 15-practice-vocabulary-session; Pattern Builder's "Got it" in 19-offline-pattern-builder-
-//   drill). This spec functionally drives the remaining variants — vocab Again/Hard/Easy and
-//   pattern Almost/Missed — proving each records the grade and advances the drill (next card /
-//   next phrase, or the completion summary). Assertions are UI-state only (no DB reads): SRS and
-//   Coach writes are shared-state and non-deterministic across runs, whereas the flip-state
-//   reset (a fresh unflipped card) and the progress counter / "complete" heading are deterministic
-//   consequences of a recorded grade advancing the queue.
+// Description: Grade-button variant coverage for the Pattern Builder self-graded engine. Drives the
+//   non-"happy" grades — Almost / Missed — proving each records the grade and advances the drill
+//   (next phrase or the completion summary). Assertions are UI-state only (no DB reads): SRS/Coach
+//   writes are shared, non-deterministic state, whereas the phrase counter / "complete" heading are
+//   deterministic consequences of a recorded grade advancing the queue.
+//   NOTE (EN-18): the former Vocabulary Review grade-variant test (Again/Hard/Easy self-grade
+//   buttons) was removed — the vocab engine is now an OBJECTIVE quiz (type the meaning + say it),
+//   with no self-grade row. That flow is covered by 15-practice-vocabulary-session.spec.ts.
 // Author: Coverage backlog (with assistant)
 // Created: 2026-07-13
 
 import { test, expect, landOnHome } from '../support/fixtures';
 
 test.describe('practice grade-button variants', () => {
-  // ── Test A: Vocabulary Review — Again / Hard / Easy ────────────────────────
-  //
-  // Only "Good" is covered elsewhere. Here we open the flashcard loop and, on
-  // successive cards, press Again → Hard → Easy. The grade row is only shown when
-  // the card is flipped (VocabularyView: the row is `invisible` until isFlipped),
-  // so each press must be preceded by a flip. After each grade the session either
-  // advances to a fresh (unflipped) card — where "Flashcard — tap to flip" is
-  // visible again — or reaches "Session complete". Either outcome proves the grade
-  // was accepted and the queue advanced.
-  test('Vocabulary Review records Again, Hard, and Easy and advances', async ({ page, coverage }) => {
-    await landOnHome(page);
-    await page.getByRole('button', { name: 'Practice' }).first().click();
-    await page.getByText('Vocabulary Review', { exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Vocabulary Review' })).toBeVisible();
-
-    const summaryHeading = page.getByRole('heading', { name: 'Session complete' });
-    const flashcard = page.getByRole('button', { name: 'Flashcard — tap to flip' }).first();
-
-    // Grades to exercise, in order. A grade maps to a coverage id we assert once it
-    // is actually applied and the drill is observed to advance.
-    const gradePlan: { label: 'Again' | 'Hard' | 'Easy'; coverageId: string }[] = [
-      { label: 'Again', coverageId: 'practice.vocabulary.grade_again' },
-      { label: 'Hard', coverageId: 'practice.vocabulary.grade_hard' },
-      { label: 'Easy', coverageId: 'practice.vocabulary.grade_easy' },
-    ];
-
-    const applied: string[] = [];
-
-    for (const { label, coverageId } of gradePlan) {
-      // If the deck emptied before we reached this grade, stop — we assert what we
-      // reached below and note the shortfall via the coverage record.
-      if (await summaryHeading.isVisible().catch(() => false)) break;
-
-      await expect(flashcard).toBeVisible({ timeout: 20_000 });
-
-      // Flip to reveal the grade row (idempotent: if already flipped the buttons
-      // are simply already visible; a second tap would flip back, so only flip
-      // when the front — the "tap to flip" affordance — is still showing).
-      const gradeButton = page.getByRole('button', { name: label, exact: true });
-      if (!(await gradeButton.isEnabled().catch(() => false))) {
-        await flashcard.click();
-      }
-      await expect(gradeButton).toBeVisible({ timeout: 10_000 });
-      await expect(gradeButton).toBeEnabled();
-
-      await gradeButton.click();
-
-      // Deterministic post-grade assertion: the grade advanced the queue. Either a
-      // fresh unflipped card is offered again, or the run finished. (We do not assert
-      // the counter value: "Again" re-queues the item, so total can shift — but the
-      // flip-state reset / summary transition is invariant.)
-      await expect(
-        flashcard.or(summaryHeading),
-      ).toBeVisible({ timeout: 20_000 });
-
-      applied.push(coverageId);
-      coverage.touch(coverageId, 'outcome-asserted');
-    }
-
-    // We must have exercised at least one non-"Good" grade for the test to have
-    // meaning; in practice the seed deck is large enough for all three.
-    expect(applied.length).toBeGreaterThan(0);
-  });
-
-  // ── Test B: Pattern Builder — Almost / Missed ──────────────────────────────
+  // ── Pattern Builder — Almost / Missed ──────────────────────────────────────
   //
   // Only "Got it" is covered elsewhere. Pattern Builder routes each pattern to
   // either the slotted or the degraded phrase drill; both render the shared

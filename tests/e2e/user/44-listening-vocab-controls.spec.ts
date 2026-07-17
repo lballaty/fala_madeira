@@ -64,25 +64,28 @@ test.describe('listening + vocabulary controls', () => {
 
   test('Vocabulary "Play the word" audio button is interactive and error-free', async ({ page, coverage }) => {
     await openPractice(page);
-    await page.getByText('Vocabulary Review', { exact: true }).click();
+
+    // Enter via a single situation so the quiz prompt card renders deterministically (the hub deck
+    // is progress-scoped and may be empty for a fresh user). The prompt card (EN-18) shows the PT
+    // word beside a "Play the word" speaker button before any answer is typed.
+    await page.getByRole('button', { name: 'Browse situations' }).click();
+    await expect(page.getByRole('heading', { name: 'Situations' })).toBeVisible();
+    const firstSituation = page.locator('button[aria-expanded]').first();
+    await expect(firstSituation).toBeVisible({ timeout: 20_000 });
+    await firstSituation.click();
+    await expect(page.getByText('Practice this with…')).toBeVisible();
+    await page.getByRole('button', { name: 'Vocabulary Review' }).click();
     await expect(page.getByRole('heading', { name: 'Vocabulary Review' })).toBeVisible();
 
-    // The active flashcard exposes a "Play the word" audio button (introduce/back faces use the
-    // speaker, the hear-variant front uses an ear icon — same aria-label). If the deck happens to
-    // be empty (all caught up), the button is absent; assert what IS reachable and skip.
-    const flashcard = page.getByRole('button', { name: 'Flashcard — tap to flip' }).first();
+    const input = page.getByTestId('vocab-answer-input');
     const emptyOrSummary = page
-      .getByRole('heading', { name: 'All caught up' })
-      .or(page.getByRole('heading', { name: 'No vocabulary here yet' }))
+      .getByRole('heading', { name: 'No vocabulary here' })
+      .or(page.getByRole('heading', { name: 'Nothing to review yet' }))
       .or(page.getByRole('heading', { name: 'Session complete' }));
-    // The deck loads async, so branch only AFTER the surface settles. `isVisible()` does NOT
-    // auto-wait — checking it immediately raced the still-loading deck and wrongly took the
-    // empty-state branch (the card was about to appear). Wait for whichever state actually
-    // renders (card OR empty/summary), then branch on the settled DOM.
-    await expect(flashcard.or(emptyOrSummary.first())).toBeVisible({ timeout: 20_000 });
-    if (!(await flashcard.isVisible())) {
-      // Deck genuinely empty this run — the Play-the-word control is unreachable. Assert the
-      // honest empty/summary surface rather than a control that does not exist, and skip the touch.
+    // Branch only AFTER the surface settles (the deck loads async): wait for the prompt card OR an
+    // empty/summary state, then decide on the settled DOM.
+    await expect(input.or(emptyOrSummary.first())).toBeVisible({ timeout: 20_000 });
+    if (!(await input.isVisible())) {
       await expect(emptyOrSummary.first()).toBeVisible();
       test.info().annotations.push({
         type: 'note',
@@ -96,19 +99,15 @@ test.describe('listening + vocabulary controls', () => {
     await expect(playWord).toBeEnabled();
 
     // Audio playback is fire-and-forget (playText → TTS, no DOM "playing" indicator), so the
-    // deterministic outcome we can assert is: the click resolves without a thrown error, the
-    // button stays present/enabled, and no audio-error banner appears. A stopPropagation guard on
-    // the speaker means the click must NOT flip the card — verify grade buttons stay hidden.
+    // deterministic outcome we can assert is: the click resolves without a thrown error, the button
+    // stays present/enabled, no audio-error banner appears, and — per the speaker's stopPropagation
+    // guard — the prompt does NOT submit (the answer input is still visible, no feedback shown).
     await playWord.click();
 
     await expect(playWord).toBeEnabled();
     await expect(page.getByText(/Audio unavailable|Playback failed|Could not play/i)).toHaveCount(0);
-    // stopPropagation contract: playing the word does not flip the card. Grade buttons live in an
-    // `invisible` (visibility:hidden) + disabled grid until the card is flipped; a visibility:hidden
-    // node is excluded from the accessibility tree, so a role/name query for the still-hidden grade
-    // resolves to nothing — assert the card stayed on its front face by confirming "Good" is absent
-    // from the a11y tree (it becomes queryable only once the card flips and the grid un-hides).
-    await expect(page.getByRole('button', { name: 'Good' })).toHaveCount(0);
+    await expect(input).toBeVisible();
+    await expect(page.getByTestId('vocab-feedback')).toHaveCount(0);
     coverage.touch('practice.vocabulary.play_word', 'outcome-asserted');
   });
 });
