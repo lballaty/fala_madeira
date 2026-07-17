@@ -72,8 +72,9 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
     <div className="space-y-4">
       {/* Scope selector */}
       <div className="flex flex-wrap items-center gap-2">
-        <label className="text-xs font-bold text-ios-gray">Level</label>
+        <label htmlFor="audio-scope-level" className="text-xs font-bold text-ios-gray">Level</label>
         <select
+          id="audio-scope-level"
           data-testid="audio-scope-select"
           value={scope.level ?? ''}
           onChange={(e) =>
@@ -88,8 +89,9 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
           ))}
         </select>
 
-        <label className="text-xs font-bold text-ios-gray ml-2">Track</label>
+        <label htmlFor="audio-scope-track" className="text-xs font-bold text-ios-gray ml-2">Track</label>
         <select
+          id="audio-scope-track"
           data-testid="audio-scope-track"
           value={scope.trackId ?? ''}
           onChange={(e) => setScope(e.target.value === '' ? { level: 0 as PracticalLevel } : { trackId: e.target.value })}

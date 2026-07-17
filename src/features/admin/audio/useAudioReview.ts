@@ -93,15 +93,14 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
   const reload = useCallback(() => setReloadTick((t) => t + 1), []);
 
   useEffect(() => {
-    if (!isAdmin) {
-      setItems([]);
-      return;
-    }
+    // No-op for non-admins (items stays at its empty initial value; this hook only ever renders
+    // under AdminView, which gates on role==='admin'). Avoids a synchronous setState in the effect.
+    if (!isAdmin) return;
     let cancelled = false;
     const correlationId = newCorrelationId();
-    setLoading(true);
 
     (async () => {
+      setLoading(true);
       try {
         const clips = await enumerateClips(scope);
         const reviewsResult = await getReviews(supabase, clips.map((c) => c.buildKey), correlationId);
