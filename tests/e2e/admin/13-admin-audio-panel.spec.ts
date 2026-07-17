@@ -39,33 +39,53 @@ test.describe('admin audio panel (EN-23)', () => {
     const firstRow = adminPage.getByTestId('audio-clip-row').first();
     await expect(firstRow).toBeVisible({ timeout: 15_000 });
 
-    await firstRow.getByTestId('audio-verdict-bad').click();
-    await expect(firstRow).toHaveAttribute('data-verdict', 'bad');
+    // Deterministic + isolated: target a specific clip by its build_key, and pre-clean any residue
+    // for it (from a prior run / another admin) so the enqueue control is enabled and the assertion
+    // is unambiguous. Without this the "first row" could already be Queued (button disabled).
+    const targetKey = (await firstRow.getAttribute('data-build-key'))!;
+    expect(targetKey).toBeTruthy();
+    const cleanup = async () => {
+      await adminEvidence.from('tts_audio_regen_queue').delete().eq('build_key', targetKey);
+      await adminEvidence.from('tts_audio_review').delete().eq('build_key', targetKey);
+    };
+    await cleanup(); // pre-clean
 
-    let enqueuedBuildKey: string | null = null;
     try {
-      await firstRow.getByTestId('audio-enqueue').click();
+      // Reflect the cleaned DB state in the UI, then re-acquire the row by its exact key.
+      await adminPage.getByTestId('audio-reload').click();
+      const row = adminPage.locator(`[data-testid="audio-clip-row"][data-build-key="${targetKey}"]`);
+      await expect(row).toBeVisible({ timeout: 15_000 });
+
+      await row.getByTestId('audio-verdict-bad').click();
+      await expect(row).toHaveAttribute('data-verdict', 'bad');
+
+      await expect(row.getByTestId('audio-enqueue')).toBeEnabled();
+      await row.getByTestId('audio-enqueue').click();
+
       await expect
         .poll(
           async () => {
             const { data } = await adminEvidence
               .from('tts_audio_regen_queue')
-              .select('build_key, status')
+              .select('status')
+              .eq('build_key', targetKey)
               .eq('status', 'pending')
-              .order('enqueued_at', { ascending: false })
-              .limit(1)
               .maybeSingle();
-            enqueuedBuildKey = data?.build_key ?? null;
             return data?.status ?? null;
           },
-          { timeout: 12_000, message: 'no pending regen-queue row appeared after enqueue' },
+          { timeout: 12_000, message: 'no pending regen-queue row appeared for the target clip after enqueue' },
         )
         .toBe('pending');
+
+      // The verdict persisted too (round-trip through tts_audio_review).
+      const { data: review } = await adminEvidence
+        .from('tts_audio_review')
+        .select('verdict')
+        .eq('build_key', targetKey)
+        .maybeSingle();
+      expect(review?.verdict).toBe('bad');
     } finally {
-      if (enqueuedBuildKey) {
-        await adminEvidence.from('tts_audio_regen_queue').delete().eq('build_key', enqueuedBuildKey);
-        await adminEvidence.from('tts_audio_review').delete().eq('build_key', enqueuedBuildKey);
-      }
+      await cleanup();
     }
   });
 });

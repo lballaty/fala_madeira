@@ -137,6 +137,7 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
           <li
             key={item.buildKey}
             data-testid="audio-clip-row"
+            data-build-key={item.buildKey}
             data-verdict={item.verdict}
             data-suspicious={item.signals.suspicious ? 'true' : 'false'}
             className={cn('rounded-xl border p-3 bg-card', item.signals.suspicious ? 'border-amber-400' : 'border-line')}
