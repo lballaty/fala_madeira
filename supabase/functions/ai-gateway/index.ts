@@ -23,6 +23,7 @@ import {
   type TutorLike,
 } from "../_shared/gemini.ts";
 import { routeTts } from "../_shared/tts/router.ts";
+import { resolveVoiceLimit } from "./voiceLimit.ts";
 import { TtsUnavailableError } from "../_shared/tts/types.ts";
 
 interface ChatMessage { role: "user" | "model"; text: string }
@@ -184,19 +185,15 @@ Deno.serve(async (req) => {
         const unlimited = tier === "premium" || tier === "unlimited";
 
         if (!unlimited) {
-          let usage = profile?.voice_usage_today ?? 0;
-          if (profile?.last_voice_usage_date !== today) usage = 0;
-          // TB-8/EN-11: limit precedence = per-user override (profiles.voice_limit)
-          // -> GLOBAL default (global_settings.voice_limit, the admin-set source of truth)
-          // -> hard floor 5. Previously hardcoded `?? 5`, which ignored the global 20 and
-          // silently capped every user at 5 (forbidden hardcoded-fallback).
+          // TB-8/EN-11 limit precedence (per-user -> global -> floor) + daily reset live in the pure,
+          // unit-tested resolveVoiceLimit. Here we only do the DB reads/writes + persistLog wiring.
           const { data: globalRow, error: globalErr } = await admin
             .from("global_settings")
             .select("value")
             .eq("key", "voice_limit")
             .maybeSingle();
-          // EN-27 P1.8: a query error here silently floors the limit to 5 (degradation is
-          // acceptable — TTS should still work — but log it so the drift is visible).
+          // EN-27 P1.8: a query error here silently floors the limit (degradation is acceptable —
+          // TTS should still work — but log it so the drift is visible).
           if (globalErr) {
             await persistLog({
               level: "WARN",
@@ -209,21 +206,20 @@ Deno.serve(async (req) => {
               userId: user.id,
             });
           }
-          const globalDefault = Number.parseInt(globalRow?.value ?? "", 10);
-          const limit = profile?.voice_limit ??
-            (Number.isFinite(globalDefault) ? globalDefault : 5);
-          if (usage >= limit) {
+
+          const decision = resolveVoiceLimit(profile, globalRow?.value, today);
+          if (!decision.allowed) {
             return errorResponse(
               "VOICE_LIMIT_REACHED",
-              `Daily voice limit of ${limit} reached. Upgrade for unlimited practice.`,
+              `Daily voice limit of ${decision.limit} reached. Upgrade for unlimited practice.`,
               429,
               requestId,
-              { limit, usage },
+              { limit: decision.limit, usage: decision.usage },
             );
           }
           const { error: usageErr } = await admin
             .from("profiles")
-            .update({ voice_usage_today: usage + 1, last_voice_usage_date: today })
+            .update({ voice_usage_today: decision.nextUsage, last_voice_usage_date: today })
             .eq("id", user.id);
           // EN-27 P1.8: don't fail the request on a usage-tracking write error (the user should
           // still get audio), but log it — a silent failure here lets the daily limit drift.
@@ -237,7 +233,7 @@ Deno.serve(async (req) => {
               correlationId: requestId,
               traceId: trace?.traceId,
               userId: user.id,
-              details: { usage: usage + 1 },
+              details: { usage: decision.nextUsage },
             });
           }
         }
