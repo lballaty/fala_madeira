@@ -14,6 +14,11 @@ file is the sole source of truth; embedded literals are declared in
 
 ---
 
+## 2026.07.17.1
+
+- Improved: **all admin functions are now reached from a single "Admin" entry in the navigation** — one surface with Review Queues, Content Studio, User Access, and a new **Config** tab. The separate, confusing "Admin Mode" toggle has been removed. (EN-25)
+- New: **admins can set a per-user daily voice limit** from the User Access panel (blank = fall back to the global default), and the global voice-limit control now lives in the admin **Config** tab. (EN-25 / EN-11)
+
 ## 2026.07.16.3
 
 - Fixed: **the daily voice-limit setting now persists reliably.** An admin-set limit could be silently reset by a stale value on the device; it now only changes on an explicit admin edit and reads the server value authoritatively. (TB-8)
