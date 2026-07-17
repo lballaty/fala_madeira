@@ -181,6 +181,20 @@ if [ "${DRY_RUN}" -eq 1 ]; then
   exit 0
 fi
 
+# --- 3a. BRANCH GUARD: a REAL deploy may only run from the `main` release branch ----------------
+# The version bump + release-notes cut happen on `main` (ship.sh STAGE 0, gated on BRANCH=main).
+# Deploying from `develop` (or any topic branch) uploads an UNBUMPED, off-process artifact to the
+# live host — the exact failure this guard prevents. Enforced HERE at the upload chokepoint so no
+# entry point (ship.sh OR a direct deploy-verpex.sh call) can bypass it. Dry-run already exited
+# above, so it remains allowed from any branch. Override intentionally with ALLOW_NONMAIN_DEPLOY=1
+# only for a documented exception (e.g. a hotfix worktree), never as a routine convenience.
+CURRENT_BRANCH="$(git -C "${REPO_ROOT}" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '')"
+if [ "${CURRENT_BRANCH}" != "main" ] && [ "${ALLOW_NONMAIN_DEPLOY:-0}" -ne 1 ]; then
+  die "REAL deploy refused: must run from the 'main' release branch — this worktree is on '${CURRENT_BRANCH}'.
+       Cut the release first (in the -release worktree): git merge develop, then 'npm run deploy:staging'.
+       To validate from any branch without uploading, add --dry-run."
+fi
+
 # --- 3b. REAL DEPLOY: creds required, scoped target enforced -----------------------------------
 if [ ! -f "${ENV_FILE}" ]; then
   die "real deploy requires ${ENV_FILE} (git-ignored). Copy it from ${ENV_EXAMPLE} and fill it in.
