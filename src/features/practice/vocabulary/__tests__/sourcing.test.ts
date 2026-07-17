@@ -6,13 +6,28 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-17
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+
+vi.mock('../../../../lib/logger', () => ({ logger: { warn: vi.fn(), error: vi.fn(), info: vi.fn() } }));
+
 import {
   buildVocabPool,
   introducesVocabulary,
   isStartedStatus,
+  loadStartedSituationIds,
 } from '../sourcing';
 import type { CourseCategory, Situation } from '../../../../content/schema';
+import type { SupabaseClient, User } from '@supabase/supabase-js';
+
+/** Minimal supabase stub: from().select().eq() resolves to {data, error}. */
+const fakeSupabase = (
+  data: Array<{ situation_id: string; status: string | null }> | null,
+  error: unknown = null
+): SupabaseClient =>
+  ({
+    from: () => ({ select: () => ({ eq: () => Promise.resolve({ data, error }) }) }),
+  }) as unknown as SupabaseClient;
+const USER = { id: 'u1' } as User;
 
 const situation = (
   id: string,
@@ -105,5 +120,28 @@ describe('buildVocabPool (EN-18 progress-aware pool)', () => {
     expect(pool.situations).toHaveLength(0);
     expect(pool.groups).toHaveLength(0);
     expect(pool.wordCount).toBe(0);
+  });
+});
+
+describe('loadStartedSituationIds (progress query)', () => {
+  it('returns an empty set when signed out (no supabase or no user)', async () => {
+    expect((await loadStartedSituationIds(null, USER)).size).toBe(0);
+    expect((await loadStartedSituationIds(fakeSupabase([]), null)).size).toBe(0);
+  });
+
+  it('keeps only started (in_progress/completed) situation ids', async () => {
+    const rows = [
+      { situation_id: 's1', status: 'in_progress' },
+      { situation_id: 's2', status: 'completed' },
+      { situation_id: 's3', status: 'skipped' },
+      { situation_id: 's4', status: null },
+    ];
+    const ids = await loadStartedSituationIds(fakeSupabase(rows), USER);
+    expect([...ids].sort()).toEqual(['s1', 's2']);
+  });
+
+  it('degrades to an empty set (no throw) on a query error', async () => {
+    const ids = await loadStartedSituationIds(fakeSupabase(null, new Error('rls denied')), USER);
+    expect(ids.size).toBe(0);
   });
 });
