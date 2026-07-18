@@ -52,7 +52,10 @@ export const config = {
      * until the operator deploys the server side, fetches simply miss and playback reaches the
      * provider unchanged. VITE_AUDIO_VERPEX_BASE overrides the base for non-standard hosting.
      */
-    verpexBase: (import.meta.env.VITE_AUDIO_VERPEX_BASE as string | undefined) || '/audio',
+    // Optional-chain `env` so this module stays import-safe outside Vite (e.g. Playwright's Node
+    // collection context, where `import.meta.env` is undefined) — an unguarded read throws at load
+    // and takes down every spec that transitively imports config. In Vite `env` is always defined.
+    verpexBase: (import.meta.env?.VITE_AUDIO_VERPEX_BASE as string | undefined) || '/audio',
     supabaseAudioBucket: 'tts-audio',
     /**
      * Per-tier timeout (ms) for a server-audio GET (Verpex, then Supabase). Deliberately SHORT and

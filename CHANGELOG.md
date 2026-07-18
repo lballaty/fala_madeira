@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-18
-**Last Updated By:** claude-en26 (2026.07.18.1 — EN-26 admin user search)
+**Last Updated By:** claude-en26 (2026.07.18.2 — e2e-collection import-safety fix)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,10 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.18.2
+
+- Internal: made `src/config.ts` import-safe when `import.meta.env` is absent (Playwright's Node collection context) — an unguarded `VITE_AUDIO_VERPEX_BASE` read (from the EN-8 server-audio tier) crashed the entire e2e suite at load (0 tests collected). No app-facing change. (EN-8 follow-up)
 
 ## 2026.07.18.1
 
@@ -22,6 +26,11 @@ file is the sole source of truth; embedded literals are declared in
 
 - Improved: **vocabulary practice is now an objective quiz, not self-graded flashcards.** For each word you hear it and **type what it means**, then **say it** (Portuguese speech check); the app decides right/partial/wrong and schedules the word to come back sooner or later accordingly — no more rating yourself. Words are drawn from the situations you've actually worked on and can be narrowed by theme (daily / social / travel / work). Without a microphone it falls back to a typed-only pass/fail. (EN-18)
 - Internal: cleared an accessibility lint finding on the vocabulary answer field (focus is now set programmatically on mount rather than via `autoFocus`), unblocking a fully green preflight. (Audit A9)
+
+## 2026.07.17.1
+
+- Improved: **all admin functions are now reached from a single "Admin" entry in the navigation** — one surface with Review Queues, Content Studio, User Access, and a new **Config** tab. The separate, confusing "Admin Mode" toggle has been removed. (EN-25)
+- New: **admins can set a per-user daily voice limit** from the User Access panel (blank = fall back to the global default), and the global voice-limit control now lives in the admin **Config** tab. (EN-25 / EN-11)
 
 ## 2026.07.16.3
 
