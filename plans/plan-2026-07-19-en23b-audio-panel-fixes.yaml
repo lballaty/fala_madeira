@@ -1,0 +1,96 @@
+# File: plans/plan-2026-07-19-en23b-audio-panel-fixes.yaml
+# Description: Executable implementation plan for EN-23b (admin Audio panel fixes W1-W4),
+#   per docs/EN-23b-AUDIO-PANEL-FIXES-REQUIREMENTS.md. Consumed by /execute-plan(-autonomously).
+#   BUILD IS GATED ON OWNER APPROVAL of the requirements (AGENTS §3) — do not execute until approved.
+# Author: claude-orchestrator (with owner)
+# Created: 2026-07-19
+
+plan:
+  title: >
+    Fix the four EN-8-independent admin Audio panel bugs (W1 server-tier config wiring,
+    W2 working play, W3 pagination, W4 file-size) with unit + e2e coverage, then re-gate.
+  approval_gate: >
+    Owner must approve docs/EN-23b-AUDIO-PANEL-FIXES-REQUIREMENTS.md before execution begins.
+  branch: feat/en23b-audio-panel-fixes   # topic branch off develop (base worktree or a -feat worktree)
+  goal_validation:
+    - "audioServerTier resolves URLs from config.audio.verpexBase/supabaseAudioBucket via keyToServerPath (no more phantom config.audio.serverBase); server column never hardwired to 'pending EN-8'."
+    - "Play works for any listed clip (synthesizeCached fallback on device-cache miss); file size shows for every clip; a scope renders a bounded first page without N sequential network probes."
+    - "New/extended vitest specs pass; tests/e2e/admin/13-admin-audio-panel.spec.ts stays green with the added assertions."
+    - "Full gate green: CI=1 e2e regression + ship dry-run (preflight all stages) before any cut."
+
+  steps:
+    - id: branch-setup
+      description: Create/checkout the EN-23b topic branch off the current develop.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira checkout -b feat/en23b-audio-panel-fixes
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira rev-parse --abbrev-ref HEAD | grep -qx feat/en23b-audio-panel-fixes
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: w1-server-tier-config
+      description: >
+        Fix src/features/admin/audio/audioServerTier.ts to read config.audio.verpexBase +
+        config.audio.supabaseAudioBucket (NOT the nonexistent config.audio.serverBase), build the
+        object name with keyToServerPath(buildKey) (src/lib/audioKey.ts), and probe Verpex then the
+        Supabase bucket mirroring src/services/geminiService.ts fetchServerTier (~451-464). Route probe
+        errors through src/lib/logger with correlation ids. Add src/features/admin/audio/__tests__/audioServerTier.test.ts.
+      command: "IMPLEMENT per docs/EN-23b-AUDIO-PANEL-FIXES-REQUIREMENTS.md §2 W1; edit audioServerTier.ts; add __tests__/audioServerTier.test.ts asserting URL == verpexBase + keyToServerPath(key) and that an unset tier reports unconfigured (not hardwired false)."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && npx vitest run src/features/admin/audio/__tests__/audioServerTier.test.ts && npx tsc --noEmit
+      depends_on: [branch-setup]
+      fatal_on_failure: true
+
+    - id: w2-play-fallback
+      description: >
+        Fix getPlaybackUrl (useAudioReview.ts ~227-231) to fall through to
+        geminiService.synthesizeCached(clip.text, {voiceType}) on a device-cache miss; relax the
+        play button disabled gate (AudioPanel.tsx ~164) with a loading state; log fetch failures via
+        src/lib/logger with a user-visible message + correlation id. Add/extend a useAudioReview unit test.
+      command: "IMPLEMENT per §2 W2; edit useAudioReview.ts + AudioPanel.tsx; add src/features/admin/audio/__tests__/useAudioReview.play.test.ts mocking synthesizeCached to assert cache-miss falls through and errors log (no silent dead button)."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && npx vitest run src/features/admin/audio/__tests__/useAudioReview.play.test.ts && npx tsc --noEmit
+      depends_on: [branch-setup]
+      fatal_on_failure: true
+
+    - id: w3-pagination
+      description: >
+        Bound the per-clip enumerate/probe loop (useAudioReview.ts ~118-158) to a page batch
+        (25-50) with load-more/windowing; stop issuing N sequential awaits + N network probes on load.
+        Add a unit test asserting the batch is bounded.
+      command: "IMPLEMENT per §2 W3; edit useAudioReview.ts (paginate the loop) + AudioPanel.tsx (load-more/windowed render); add src/features/admin/audio/__tests__/useAudioReview.pagination.test.ts."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && npx vitest run src/features/admin/audio/__tests__/useAudioReview.pagination.test.ts && npx tsc --noEmit
+      depends_on: [branch-setup]
+      fatal_on_failure: false
+
+    - id: w4-file-size
+      description: >
+        Show file size for every listed clip (AudioPanel.tsx ~153) derived from the fetched blob's
+        byteLength (W2 path) or a server Content-Length (W1 path), regardless of prior device scoring.
+        Extend the useAudioReview unit test for size derivation.
+      command: "IMPLEMENT per §2 W4; edit useAudioReview.ts (populate bytes from fetched blob / HEAD) + AudioPanel.tsx (render size when known); extend the useAudioReview tests for size derivation."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && npx vitest run src/features/admin/audio/__tests__/ && npx tsc --noEmit
+      depends_on: [w1-server-tier-config, w2-play-fallback]
+      fatal_on_failure: false
+
+    - id: e2e-extend
+      description: >
+        Extend tests/e2e/admin/13-admin-audio-panel.spec.ts to assert: the Audio tab renders a
+        bounded first page (W3), play produces audio via the (mocked/provider) path (W2), a size is
+        shown (W4), and the existing verdict/notes/enqueue round-trip still passes (no regression).
+      command: "IMPLEMENT per §5; extend tests/e2e/admin/13-admin-audio-panel.spec.ts with the W1-W4 assertions, reusing existing admin fixtures."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && CI=1 npx playwright test tests/e2e/admin/13-admin-audio-panel.spec.ts --reporter=list
+      depends_on: [w1-server-tier-config, w2-play-fallback]
+      fatal_on_failure: true
+
+    - id: full-gate
+      description: >
+        Full release gate on the topic branch: fresh-server e2e regression + credential-free ship
+        dry-run (preflight: eslint/tsc/vitest/build/coverage/audit/standards/cors/help-drift/db-drift/observability).
+      command: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && CI=1 npm run test:e2e:regression && npm run deploy -- --dry-run
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && grep -E '"failed": 0' artifacts/e2e/summary.json && echo "gate green"
+      depends_on: [w3-pagination, w4-file-size, e2e-extend]
+      fatal_on_failure: true
+
+    - id: merge-to-develop
+      description: Merge the topic branch into develop (no-ff) once the gate is green; push.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira checkout develop && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira merge --no-ff feat/en23b-audio-panel-fixes -m "Merge feat/en23b-audio-panel-fixes into develop — admin Audio panel W1-W4" && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira push origin develop
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira log --oneline -1 | grep -qi en23b
+      depends_on: [full-gate]
+      fatal_on_failure: true
