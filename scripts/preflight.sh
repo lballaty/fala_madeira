@@ -147,6 +147,11 @@ run_hard "cors header contract (client↔edge allow-headers)" node "${SCRIPT_DIR
 # chat help prompt is stale — fail the build. Fix: node scripts/gen-app-help.mjs && commit.
 run_hard "help drift contract (capability registry ↔ generated chat-help)" node "${SCRIPT_DIR}/check-help-drift.mjs"
 
+# IndexedDB DB_VERSION drift — HARD gate. Test helpers that open FalaMadeiraAudioCache at a version
+# different from the app's DB_VERSION deadlock the app's upgrade (content/audio hang) or silently
+# no-op the seed — the root cause of the EN-8 v2->v3 e2e breakage. Keeps test-side opens in lockstep.
+run_hard "IndexedDB version drift (app DB_VERSION ↔ e2e helpers)" node "${SCRIPT_DIR}/check-db-version-drift.mjs"
+
 # Observability §9 forbidden-pattern check — HARD gate (EN-27). --strict fails on any bare console
 # in an error path or hardcoded config fallback (both eliminated in EN-27); TOAST-NO-LOG stays
 # advisory inside --strict (validation-gate toasts are expected false positives). From here on, any
