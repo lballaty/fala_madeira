@@ -77,7 +77,7 @@ export async function writeKv(page: Page, key: string, value: unknown): Promise<
     async ({ k, v }) =>
       new Promise<void>((resolve) => {
         try {
-          const req = indexedDB.open('FalaMadeiraAudioCache', 2);
+          const req = indexedDB.open('FalaMadeiraAudioCache', 3);
           req.onerror = () => resolve();
           req.onsuccess = () => {
             try {
@@ -108,7 +108,7 @@ export async function deleteKv(page: Page, key: string): Promise<void> {
     async (k) =>
       new Promise<void>((resolve) => {
         try {
-          const req = indexedDB.open('FalaMadeiraAudioCache', 2);
+          const req = indexedDB.open('FalaMadeiraAudioCache', 3);
           req.onerror = () => resolve();
           req.onsuccess = () => {
             try {
