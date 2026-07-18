@@ -16,7 +16,13 @@ vi.mock('../../platform', () => ({
 import { platform } from '../../platform';
 import { config } from '../../config';
 import { MISSIONS_LOCAL_KEY } from '../../features/practice/missions/missionsStore';
-import { clearDeviceUserState } from '../session-cleanup';
+import {
+  clearDeviceUserState,
+  readDeviceOwner,
+  writeDeviceOwner,
+  clearDeviceOwner,
+  isUserSwitch,
+} from '../session-cleanup';
 
 describe('clearDeviceUserState (SEC-2 logout cleanup)', () => {
   beforeEach(() => {
@@ -47,5 +53,41 @@ describe('clearDeviceUserState (SEC-2 logout cleanup)', () => {
     await clearDeviceUserState();
     const deleted = (platform.storage.delete as ReturnType<typeof vi.fn>).mock.calls.map((c) => String(c[0]));
     expect(deleted.some((k) => k.startsWith('tts:'))).toBe(false);
+  });
+});
+
+describe('device-owner marker + isUserSwitch (SEC-3 — switch-without-logout isolation)', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('read/write/clear round-trips the on-device owner', () => {
+    expect(readDeviceOwner()).toBeNull(); // fresh device
+    writeDeviceOwner('user-A');
+    expect(readDeviceOwner()).toBe('user-A');
+    writeDeviceOwner('user-B'); // a later sign-in overwrites the owner
+    expect(readDeviceOwner()).toBe('user-B');
+    clearDeviceOwner();
+    expect(readDeviceOwner()).toBeNull();
+  });
+
+  it('isUserSwitch is TRUE only when the device holds a DIFFERENT non-null user', () => {
+    // Switch that skipped logout: device owned by A, B signs in → clear A first.
+    expect(isUserSwitch('user-A', 'user-B')).toBe(true);
+    // Same user (reload / token refresh) → no cleanup, no data loss.
+    expect(isUserSwitch('user-A', 'user-A')).toBe(false);
+    // Fresh device / post-explicit-logout (owner null) → nothing to clear.
+    expect(isUserSwitch(null, 'user-B')).toBe(false);
+  });
+
+  it('models the leak fix: A owns the device, B signs in (no logout) → switch detected, then B owns it', () => {
+    writeDeviceOwner('user-A'); // A used the app (its data is on the device)
+    const signingIn = 'user-B';
+    const mustClear = isUserSwitch(readDeviceOwner(), signingIn);
+    expect(mustClear).toBe(true); // → the auth slice runs onLogoutCleanup for A before loading B
+    writeDeviceOwner(signingIn);
+    expect(readDeviceOwner()).toBe('user-B');
+    // A subsequent reload as B is NOT a switch (no redundant cleanup / no data loss).
+    expect(isUserSwitch(readDeviceOwner(), 'user-B')).toBe(false);
   });
 });
