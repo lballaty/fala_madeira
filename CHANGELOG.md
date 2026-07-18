@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-18
-**Last Updated By:** claude-orchestrator (2026.07.18.3 — SEC-3 / EN-23 / EN-8 device persistence / TB-16/17/21/22/23 release notes prepared for the next cut)
+**Last Updated By:** claude-orchestrator (2026.07.18.4 — new-user Home crash fix + EN-26/SEC-3/EN-23/EN-8/TB batch)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,10 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.18.4
+
+- Fixed: **new accounts no longer hit an error page right after signing up.** For a brand-new user, the Home screen could crash before the first lessons finished loading; it now shows a calm "Start your first lesson" prompt until your course content is ready. (This crash was present in the previous release too.)
 
 ## 2026.07.18.3
 
