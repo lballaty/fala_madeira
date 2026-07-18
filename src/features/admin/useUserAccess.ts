@@ -1,11 +1,13 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/src/features/admin/useUserAccess.ts
-// Description: Admin "grant content access" data hook (EN-15 §4). Looks up a user by email and
-//   sets their subscription_tier (and optionally unlocked_level) so the EN-15 content-access
-//   bypass grants that user all levels ("grant all" = tier 'unlimited'). Admin SELECT + UPDATE
-//   of ANY profile is already permitted by RLS (00001_initial_schema.sql:119/121), so this is a
-//   client-side admin write — no service-role key. Every lookup + grant routes through
-//   src/lib/logger with correlation IDs (structured audit: who set what for whom) and
-//   handleSupabaseError; no bare console, no swallowed errors, no hardcoded fallbacks.
+// Description: Admin "grant content access" data hook (EN-15 §4). Searches users by PARTIAL email
+//   (EN-26 — case-insensitive substring; an empty query browses all users, bounded), returns a
+//   short list to pick from, then sets the chosen user's subscription_tier (and optionally
+//   unlocked_level / per-user voice_limit) so the EN-15 content-access bypass grants that user all
+//   levels ("grant all" = tier 'unlimited'). Admin SELECT + UPDATE of ANY profile is already
+//   permitted by RLS (00001_initial_schema.sql:119/121), so this is a client-side admin write — no
+//   service-role key. Every search + grant routes through src/lib/logger with correlation IDs
+//   (structured audit: who searched/set what for whom) and handleSupabaseError; no bare console,
+//   no swallowed errors, no hardcoded fallbacks.
 // Author: Lane A (with assistant)
 // Created: 2026-07-15
 
@@ -35,15 +37,28 @@ interface UserAccessDeps {
   handleSupabaseError: (error: unknown, operation: string, path: string) => unknown;
 }
 
+/** The most matches a single search returns — bounds an empty/broad "browse all" query (EN-26). */
+export const USER_SEARCH_LIMIT = 50;
+
 export interface UserAccessState {
   target: AccessTarget | null;
+  /** The current search matches to pick from (EN-26). Empty until a search runs; collapsed on select. */
+  results: AccessTarget[];
+  /** True when the last search hit the result cap (more users exist than are shown). */
+  resultsTruncated: boolean;
   isLooking: boolean;
   isSaving: boolean;
-  /** Look up a profile by email (exact, case-insensitive). Clears the target on miss. */
-  lookupByEmail: (email: string) => Promise<void>;
+  /**
+   * Search profiles by PARTIAL email (case-insensitive substring). An empty query browses all users
+   * (bounded to USER_SEARCH_LIMIT, ordered by email). Populates `results`; a single unambiguous match
+   * is auto-selected as `target`, zero matches clears both. (EN-26)
+   */
+  searchUsers: (query: string) => Promise<void>;
+  /** Choose one search result as the grant target (collapses the results list). */
+  selectTarget: (user: AccessTarget) => void;
   /** Set the target's subscription tier (and optionally unlocked_level / per-user voice_limit) via an RLS-gated UPDATE. */
   grantAccess: (tier: SubscriptionTier, unlockedLevel?: number | null, voiceLimit?: number | null) => Promise<void>;
-  /** Clear the current target (e.g. after a grant or when starting a new lookup). */
+  /** Clear the current target + results (e.g. after a grant or when starting a new search). */
   clearTarget: () => void;
 }
 
@@ -60,68 +75,90 @@ export const useUserAccess = ({
   handleSupabaseError,
 }: UserAccessDeps): UserAccessState => {
   const [target, setTarget] = useState<AccessTarget | null>(null);
+  const [results, setResults] = useState<AccessTarget[]>([]);
+  const [resultsTruncated, setResultsTruncated] = useState(false);
   const [isLooking, setIsLooking] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  const clearTarget = useCallback(() => setTarget(null), []);
+  const clearTarget = useCallback(() => {
+    setTarget(null);
+    setResults([]);
+    setResultsTruncated(false);
+  }, []);
 
-  const lookupByEmail = useCallback(
-    async (email: string): Promise<void> => {
-      const trimmed = email.trim();
-      if (!trimmed) {
-        showToast('Enter an email to look up.', 'error');
-        return;
-      }
+  const searchUsers = useCallback(
+    async (query: string): Promise<void> => {
+      const trimmed = query.trim();
       if (!supabase || !isAdmin) {
-        const event = logger.error('ADMIN_ACCESS_NO_CLIENT', 'cannot look up user: no client / not admin', {
+        const event = logger.error('ADMIN_ACCESS_NO_CLIENT', 'cannot search users: no client / not admin', {
           category: 'SECURITY',
           details: { hasClient: !!supabase, isAdmin },
         });
-        showToast(userMessage('ADMIN_ACCESS_UNAVAILABLE', 'Not connected — cannot look up user.', event.request_id), 'error');
+        showToast(userMessage('ADMIN_ACCESS_UNAVAILABLE', 'Not connected — cannot search users.', event.request_id), 'error');
         return;
       }
 
       const correlationId = newCorrelationId();
       setIsLooking(true);
       try {
-        // Admin SELECT on any profile is granted by RLS (00001:119). ilike = case-insensitive exact.
+        // Admin SELECT on any profile is granted by RLS (00001:119). PARTIAL, case-insensitive email
+        // match: `%q%` is a substring match; an empty query yields `%%` → every user, bounded + ordered
+        // (the "browse all users" affordance). One extra row over the cap tells us the list was cut.
         const { data, error } = await supabase
           .from('profiles')
           .select('id, email, subscription_tier, unlocked_level, voice_limit, role')
-          .ilike('email', trimmed)
-          .maybeSingle();
+          .ilike('email', `%${trimmed}%`)
+          .order('email', { ascending: true })
+          .limit(USER_SEARCH_LIMIT + 1);
         if (error) throw error;
 
-        if (!data) {
+        const rows = (data ?? []) as AccessTarget[];
+        const truncated = rows.length > USER_SEARCH_LIMIT;
+        const shown = truncated ? rows.slice(0, USER_SEARCH_LIMIT) : rows;
+        // Auto-select a single unambiguous match so the grant form appears directly (and collapse the
+        // list, mirroring selectTarget); otherwise show the picklist with no target. A miss clears both.
+        if (shown.length === 1) {
+          setResults([]);
+          setResultsTruncated(false);
+          setTarget(shown[0]);
+        } else {
+          setResults(shown);
+          setResultsTruncated(truncated);
           setTarget(null);
-          logger.info('ADMIN_ACCESS_LOOKUP_MISS', 'no profile matched the looked-up email', {
-            category: 'USER_ACTION',
-            correlationId,
-            details: { actorId, email: trimmed },
-          });
-          showToast('No user found with that email.', 'error');
-          return;
         }
 
-        setTarget(data as AccessTarget);
-        logger.info('ADMIN_ACCESS_LOOKUP_HIT', 'admin looked up a user profile by email', {
+        logger.info(shown.length ? 'ADMIN_ACCESS_SEARCH_HIT' : 'ADMIN_ACCESS_SEARCH_MISS', 'admin searched users by email', {
           category: 'USER_ACTION',
           correlationId,
-          details: { actorId, targetId: (data as AccessTarget).id, email: trimmed },
+          details: { actorId, query: trimmed, count: shown.length, truncated },
         });
+        if (!shown.length) showToast('No users match that search.', 'error');
       } catch (error) {
-        logger.error('ADMIN_ACCESS_LOOKUP_FAILED', 'failed to look up user by email', {
+        logger.error('ADMIN_ACCESS_SEARCH_FAILED', 'failed to search users by email', {
           category: 'DATA_PROCESSING',
           correlationId,
           error,
-          details: { actorId, email: trimmed },
+          details: { actorId, query: trimmed },
         });
-        handleSupabaseError(error, 'lookupByEmail', 'profiles');
+        handleSupabaseError(error, 'searchUsers', 'profiles');
       } finally {
         setIsLooking(false);
       }
     },
     [supabase, isAdmin, actorId, showToast, handleSupabaseError],
+  );
+
+  const selectTarget = useCallback(
+    (user: AccessTarget): void => {
+      setTarget(user);
+      setResults([]);
+      setResultsTruncated(false);
+      logger.info('ADMIN_ACCESS_SELECT', 'admin selected a user to grant access', {
+        category: 'USER_ACTION',
+        details: { actorId, targetId: user.id, email: user.email },
+      });
+    },
+    [actorId],
   );
 
   const grantAccess = useCallback(
@@ -191,5 +228,5 @@ export const useUserAccess = ({
     [target, supabase, isAdmin, actorId, showToast, handleSupabaseError],
   );
 
-  return { target, isLooking, isSaving, lookupByEmail, grantAccess, clearTarget };
+  return { target, results, resultsTruncated, isLooking, isSaving, searchUsers, selectTarget, grantAccess, clearTarget };
 };

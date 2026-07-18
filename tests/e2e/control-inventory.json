@@ -1560,7 +1560,7 @@
     {
       "screen": "admin",
       "id": "admin.access.email_input",
-      "selector": {"role": "textbox", "name": "User email"},
+      "selector": {"role": "textbox", "name": "Find a user"},
       "covered_by": [
         { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "value-changed" }
       ]
@@ -1568,7 +1568,7 @@
     {
       "screen": "admin",
       "id": "admin.access.lookup",
-      "selector": {"role": "button", "name": "Look up user"},
+      "selector": {"role": "button", "name": "Search users"},
       "covered_by": [
         { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "outcome-asserted" }
       ]

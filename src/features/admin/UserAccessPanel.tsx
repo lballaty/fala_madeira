@@ -21,15 +21,16 @@ interface UserAccessPanelProps {
 }
 
 export const UserAccessPanel = ({ access }: UserAccessPanelProps) => {
-  const { target, isLooking, isSaving, lookupByEmail, grantAccess, clearTarget } = access;
-  const [email, setEmail] = useState('');
+  const { target, results, resultsTruncated, isLooking, isSaving, searchUsers, selectTarget, grantAccess, clearTarget } =
+    access;
+  const [query, setQuery] = useState('');
   const [tier, setTier] = useState<SubscriptionTier>('unlimited');
   const [levelInput, setLevelInput] = useState('');
   const [voiceLimitInput, setVoiceLimitInput] = useState('');
   const { confirmModal, requestConfirmation, closeConfirmation } = useConfirmationModal();
 
-  const submitLookup = () => {
-    void lookupByEmail(email);
+  const submitSearch = () => {
+    void searchUsers(query);
   };
 
   const confirmGrant = () => {
@@ -63,34 +64,60 @@ export const UserAccessPanel = ({ access }: UserAccessPanelProps) => {
         </p>
       </div>
 
-      {/* Lookup */}
+      {/* Search (EN-26: partial email; blank = browse all users) */}
       <div className="space-y-2">
         <label className="text-[10px] font-bold text-ios-gray uppercase" htmlFor="access-email">
-          User email
+          Find a user
         </label>
         <div className="flex items-center gap-2">
           <input
             id="access-email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') submitLookup();
+              if (e.key === 'Enter') submitSearch();
             }}
-            placeholder="user@example.com"
+            placeholder="Search by email (partial), or leave blank to browse all"
             className="flex-1 bg-ios-bg p-3 rounded-xl outline-none text-sm border-2 border-transparent focus:border-ios-blue transition-all"
           />
           <button
-            onClick={submitLookup}
+            onClick={submitSearch}
             disabled={isLooking}
             className="flex items-center gap-1 px-4 py-3 bg-ios-blue text-white rounded-xl font-bold text-xs disabled:opacity-50"
-            aria-label="Look up user"
+            aria-label="Search users"
           >
             <Search className="w-4 h-4" />
-            {isLooking ? 'Looking…' : 'Look up'}
+            {isLooking ? 'Searching…' : 'Search'}
           </button>
         </div>
       </div>
+
+      {/* Results picklist — shown when a search returns more than one match (a single match
+          auto-selects into the grant form below). */}
+      {!target && results.length > 0 && (
+        <div className="space-y-1" data-testid="user-access-results">
+          <p className="text-[10px] font-bold text-ios-gray uppercase">
+            {results.length} match{results.length === 1 ? '' : 'es'}
+            {resultsTruncated ? ` (showing first ${results.length})` : ''}
+          </p>
+          <ul className="divide-y divide-ios-bg rounded-xl bg-ios-bg overflow-hidden">
+            {results.map((u) => (
+              <li key={u.id}>
+                <button
+                  onClick={() => selectTarget(u)}
+                  className="w-full text-left px-3 py-2.5 hover:bg-card active:bg-card transition-colors"
+                >
+                  <span className="text-sm font-semibold break-all">{u.email}</span>
+                  <span className="block text-[10px] text-ios-gray">
+                    tier {u.subscription_tier ?? 'free'} · level {u.unlocked_level ?? 1} · role {u.role ?? 'user'}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Target + grant form */}
       {target && (
@@ -168,7 +195,7 @@ export const UserAccessPanel = ({ access }: UserAccessPanelProps) => {
             <button
               onClick={() => {
                 clearTarget();
-                setEmail('');
+                setQuery('');
                 setLevelInput('');
                 setVoiceLimitInput('');
               }}
