@@ -233,6 +233,9 @@ Append-only history: SELECT (owner or admin), INSERT (owner), DELETE (owner). No
 ### `writing_submissions` (migration 00006)
 SELECT (owner or admin), INSERT (owner), DELETE (owner); **UPDATE**: owner OR admin (admin attaches `feedback`).
 
+### Storage: `tts-audio` public bucket (EN-8, migration 00012)
+A **public** Storage bucket `tts-audio` buffers pre-generated / write-back TTS clips (raw 24kHz PCM) before the read-only Verpex pull cron copies them to the durable `/audio` mirror and copy-confirms deletion. RLS: **`tts_audio_public_read`** grants anon SELECT on objects in this bucket (the clips are curated public content — no PII); writes are service-role only (pre-gen upload + the `ai-gateway` edge write-back). A pg_cron job **`tts-audio-orphan-backstop`** (daily) sweeps buffer objects the cron never confirmed, so a failed copy can't accumulate cost. Applied + verified live 2026-07-16. See CONTENT-ARCHITECTURE §10.1 for the client tier order.
+
 ## 3. Recommended Triggers & Functions
 
 ### Auto-create Profile on Signup
