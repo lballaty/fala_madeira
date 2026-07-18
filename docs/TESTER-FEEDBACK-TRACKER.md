@@ -389,6 +389,14 @@
 - **Regression (per §3 methodology):** vitest for the version-define/CHANGELOG parser + an e2e opening Settings → About asserting the current version string + at least one release-notes entry render.
 - **Owner:** Agent E (`feat/*`) + release-workflow. Priority: future release (owner may pull into the imminent release — small: vite define + Settings About + CHANGELOG render). **Status:** OPEN (backlog).
 
+### EN-4b — One-click "About" from the nav bar — `OPEN (backlog; owner ask 2026-07-18)`
+- **Report (owner, 2026-07-18):** put an **About link on the navigation bar** so it's reachable in **one click** (today it's Settings → Profile → About = 2+ clicks).
+- **Feasibility:** straightforward — clean precedent already exists. The desktop `Sidebar` (`src/components/Sidebar.tsx`) renders pinned non-tab entries via the same pattern used for **EN-20 Help** (`helpItem`+`onOpenHelp`) and EN-9 Sign Out. Add an `aboutItem`+`onOpenAbout` prop the same way; wire it in `App.tsx` by lifting the `AboutModal` open state (currently owned by `SettingsView`) to a shared handler.
+- **Scope/decisions to confirm:** (1) desktop sidebar only, or **also the mobile bottom tab bar**? The bottom bar holds exactly 5 primary tabs — no room without displacing one, so mobile likely needs an overflow/"More" or lives under Profile there. (2) icon choice (e.g. `Info`). (3) label ("About").
+- **Coverage required (per §3 gate):** extend `user/53` (or a new spec) to assert one-click open from the nav entry; add the `nav-about` control id to the interactive-coverage inventory (`check-interactive-coverage.mjs`) + a `data-testid="nav-about"`; add a CHANGELOG line at its cut.
+- **Sequencing:** **deferred out of the `2026.07.18.3` cut** — must NOT be added to the state currently being regression-gated (would invalidate the run). Implement as its own small change after `.18.3` stages.
+- **Owner:** Agent E (`feat/*`). Priority: next release (small). **Next action:** confirm mobile-nav decision above, then build + cover. **Status:** OPEN (backlog).
+
 ### EN-5 — Quiz results: persist + admin visibility + regression — `OPEN (backlog; owner-identified gap)`
 - **Gap (confirmed 2026-07-14):** quiz **scores/results are NOT stored** — only pass/fail survives as `profiles.completed_lessons` (score ≥ 3). No score value, per-question data, attempt history, or timestamp; the score doesn't feed the SRS/mastery engine.
 - **What IS covered:** completion persistence is regression-tested against the DB — `user/25-learning-quiz-progression-write.spec.ts` asserts `profiles.completed_lessons` is written after a passing quiz; `user/21-quiz-full-flow` covers the UI/scoring flow.
