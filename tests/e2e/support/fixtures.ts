@@ -133,6 +133,30 @@ function makeEvidenceClient(info: SessionInfo): SupabaseClient {
   });
 }
 
+/**
+ * Authenticate an evidence client for `info`. Fast path: restore the cached session tokens. The
+ * suite runs serially on ONE shared user for the whole run, so those tokens can EXPIRE (access token
+ * TTL) or be ROTATED (the app's own browser session for the same user refreshes) mid-run — then
+ * setSession fails with "Auth session missing!" and the spec dies at setup (this was the dominant
+ * harness-only failure in long full runs). Robust fallback: re-mint a fresh session from the stored
+ * credentials (a new session never invalidates the app's — Supabase sessions are independent). Never
+ * throws unless BOTH paths fail. Keeps evidence assertions deterministic regardless of run length.
+ */
+async function authenticateEvidence(client: SupabaseClient, info: SessionInfo, label: string): Promise<void> {
+  const { error } = await client.auth.setSession({
+    access_token: info.access_token,
+    refresh_token: info.refresh_token,
+  });
+  if (!error) return;
+  const { error: signInError } = await client.auth.signInWithPassword({
+    email: info.email,
+    password: info.password,
+  });
+  if (signInError) {
+    throw new Error(`${label} setSession failed (${error.message}) and credential re-signin failed (${signInError.message})`);
+  }
+}
+
 function makeStorageState(origin: string, info: SessionInfo) {
   return {
     cookies: [],
@@ -202,13 +226,7 @@ export const test = base.extend<Fixtures>({
 
   userEvidence: async ({ testUser }, use) => {
     const client = makeEvidenceClient(testUser);
-    const { error } = await client.auth.setSession({
-      access_token: testUser.access_token,
-      refresh_token: testUser.refresh_token,
-    });
-    if (error) {
-      throw new Error(`evidence client setSession failed: ${error.message}`);
-    }
+    await authenticateEvidence(client, testUser, 'evidence client');
     await use(client);
   },
 
@@ -219,11 +237,7 @@ export const test = base.extend<Fixtures>({
   resetUserState: async ({ testUser }, use) => {
     const reset = async () => {
       const client = makeEvidenceClient(testUser);
-      const { error: authErr } = await client.auth.setSession({
-        access_token: testUser.access_token,
-        refresh_token: testUser.refresh_token,
-      });
-      if (authErr) throw new Error(`resetUserState setSession failed: ${authErr.message}`);
+      await authenticateEvidence(client, testUser, 'resetUserState');
       // Zero the daily voice budget so audio-driven specs don't inherit an exhausted counter.
       const { error: voiceErr } = await client
         .from('profiles')
@@ -242,13 +256,7 @@ export const test = base.extend<Fixtures>({
 
   adminEvidence: async ({ admin }, use) => {
     const client = makeEvidenceClient(admin);
-    const { error } = await client.auth.setSession({
-      access_token: admin.access_token,
-      refresh_token: admin.refresh_token,
-    });
-    if (error) {
-      throw new Error(`admin evidence client setSession failed: ${error.message}`);
-    }
+    await authenticateEvidence(client, admin, 'admin evidence client');
     await use(client);
   },
 });
