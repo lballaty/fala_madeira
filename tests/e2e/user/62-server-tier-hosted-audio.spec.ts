@@ -149,14 +149,20 @@ async function routeAiGateway(
   });
 }
 
-// STATUS (2026-07-17, owner-approved defer): authored scaffold, NOT yet green. In the preview build
-// the tutor reply + Listen render and click correctly, but no /audio fetch or playback registers via
-// the route/mock — the playSpeech → synthesizeCached → fetchServerTier path needs live network/console
-// tracing to pin down (a non-obvious preview-build wiring issue, not a config/timeout problem —
-// serverTierTimeoutMs=4000 is fine). The tier-order + HTML-shell-guard BEHAVIOUR is already covered by
-// passing unit tests in src/services/__tests__/geminiService.test.ts ("synthesizeCached tier order
-// (EN-8)"), so this real-HTTP e2e is additive integration proof, not the sole coverage. Marked
-// test.fixme so it does not gate the suite; owed item tracked in docs/TESTER-FEEDBACK-TRACKER.md (EN-8).
+// STATUS (updated 2026-07-18, owner-approved defer): authored scaffold, NOT yet green.
+// DIAGNOSED (request-level tracing): clicking the tutor free-chat reply's "Listen" produces ONLY the
+// initial chat POST to /functions/v1/ai-gateway — NO /audio fetch, NO tts POST, and NO playback
+// (window.__audioPlays stays 0). So the tutor free-chat Listen is NOT exercising
+// playSpeech → synthesizeCached → fetchServerTier in the preview build the way this test assumes
+// (candidates: an auto-play/device-speech path + the 300ms useSpeechPlayback debounce swallowing the
+// click, or the reply's Listen not routing through the server-tier lookup). Prod build suppresses the
+// client debug logs (tts_source), so the next pass needs EITHER a Vite DEV-build run (to read those
+// logs) OR a simpler single-shot playSpeech surface (e.g. LessonDetailModal / VocabLookupModal
+// "Play pronunciation", which call playSpeech(phrase) directly without chat auto-play/streaming).
+// The tier-order + HTML-shell-guard BEHAVIOUR is already covered by passing unit tests in
+// src/services/__tests__/geminiService.test.ts ("synthesizeCached tier order (EN-8)"), so this
+// real-HTTP e2e is additive integration proof, not the sole coverage. Marked test.fixme so it does
+// not gate the suite; owed item tracked in docs/TESTER-FEEDBACK-TRACKER.md (EN-8).
 test.describe('EN-8 server-audio tier (real HTTP): hosted clip serves without the provider', () => {
   test.fixme('a hosted /audio clip (200 PCM) is served and the provider tts is NEVER called', async ({ page }) => {
     await installDeterministicAudio(page);
