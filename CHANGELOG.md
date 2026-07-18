@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-18
-**Last Updated By:** claude-en26 (2026.07.18.1 — EN-26 admin user search)
+**Last Updated By:** claude-en26 (2026.07.18.2 — e2e-collection import-safety fix)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,10 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.18.2
+
+- Internal: made `src/config.ts` import-safe when `import.meta.env` is absent (Playwright's Node collection context) — an unguarded `VITE_AUDIO_VERPEX_BASE` read (from the EN-8 server-audio tier) crashed the entire e2e suite at load (0 tests collected). No app-facing change. (EN-8 follow-up)
 
 ## 2026.07.18.1
 
