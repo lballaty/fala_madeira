@@ -1,9 +1,10 @@
 // File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/tests/e2e/admin/09-admin-user-access-grant.spec.ts
-// Description: EN-15 admin User Access control coverage. As the real admin, opens the Admin
-//   surface, switches to the User Access tab, looks up the throwaway test user by email, sets
-//   their subscription_tier to 'unlimited' through the confirm dialog, and asserts the profiles
-//   row updated in the database (adminEvidence). Restores the original tier at the end so the
-//   shared suite user is left untouched for later specs.
+// Description: EN-15 admin User Access control coverage + EN-26 partial-email search. As the real
+//   admin, opens the Admin surface, switches to the User Access tab, finds the throwaway test user
+//   by a PARTIAL email (local-part only — proves EN-26 substring search; a single match auto-selects
+//   into the grant form), sets their subscription_tier to 'unlimited' through the confirm dialog, and
+//   asserts the profiles row updated in the database (adminEvidence). Restores the original tier at
+//   the end so the shared suite user is left untouched for later specs.
 // Author: Lane A (with assistant)
 // Created: 2026-07-15
 
@@ -32,11 +33,13 @@ test.describe('admin user access grant (EN-15)', () => {
       await adminPage.getByRole('button', { name: /User Access/i }).click();
       await expect(adminPage.getByRole('heading', { name: /Grant content access/i })).toBeVisible();
 
-      // Look up the throwaway test user by email.
-      await adminPage.getByLabel('User email').fill(testUser.email);
-      await adminPage.getByRole('button', { name: 'Look up user' }).click();
+      // EN-26: find the user by a PARTIAL email (local-part only — no @domain) to prove substring
+      // search. It uniquely matches the throwaway user, so the single match auto-selects into the form.
+      const partial = testUser.email.split('@')[0];
+      await adminPage.getByLabel('Find a user').fill(partial);
+      await adminPage.getByRole('button', { name: 'Search users' }).click();
 
-      // The resolved target card shows the user's email.
+      // The resolved target card shows the user's full email (auto-selected single match).
       await expect(adminPage.getByText(testUser.email, { exact: false })).toBeVisible();
 
       // Set tier to unlimited and submit → confirm dialog.

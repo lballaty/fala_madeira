@@ -40,8 +40,8 @@ test.describe('admin single entry + per-user voice limit (EN-25/EN-11)', () => {
       // User Access tab → look up the throwaway test user.
       await adminPage.getByRole('button', { name: /User Access/i }).click();
       await expect(adminPage.getByRole('heading', { name: /Grant content access/i })).toBeVisible();
-      await adminPage.getByLabel('User email').fill(testUser.email);
-      await adminPage.getByRole('button', { name: 'Look up user' }).click();
+      await adminPage.getByLabel('Find a user').fill(testUser.email);
+      await adminPage.getByRole('button', { name: 'Search users' }).click();
       await expect(adminPage.getByText(testUser.email, { exact: false })).toBeVisible();
 
       // Keep the tier unchanged (select the current one) and set a per-user voice limit.
