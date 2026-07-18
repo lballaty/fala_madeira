@@ -44,7 +44,7 @@ Every log event and every user-facing error carries the same ID set so a user's 
 
 **Edge functions:**
 - All handlers return the `errorResponse(...)` envelope. ✅
-- Every `ERROR`/`CRITICAL`/degradation-`WARN` also persists to `public.logs` via the service-role client (`_shared/persistLog.ts`). ✅ implemented (plan `obs-edge-persist`; `gemini` + `delete-account`).
+- Every `ERROR`/`CRITICAL`/degradation-`WARN` also persists to `public.logs` via the service-role client (`_shared/persistLog.ts`). ✅ implemented (plan `obs-edge-persist`; `ai-gateway` + `delete-account`).
 
 ## 6. Persistence model
 
@@ -86,7 +86,7 @@ Client generates a `traceparent` per request-level flow, sends it as a header on
 
 **Enforcement:** `scripts/check-observability.mjs` (`obs-ci-gate`) statically checks the §9 forbidden patterns; wired into `scripts/preflight.sh` in WARN mode during rollout (flip to `--strict` to make it a hard gate).
 
-**Deploy dependency:** the edge changes (`log-sink`, `gemini`, `delete-account`) require `supabase functions deploy` to take effect in prod; the client changes ship with the normal web build.
+**Deploy dependency:** the edge changes (`log-sink`, `ai-gateway`, `delete-account`) require `supabase functions deploy` to take effect in prod; the client changes ship with the normal web build.
 
 ## 11. Implementation
 

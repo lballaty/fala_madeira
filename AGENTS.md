@@ -72,7 +72,7 @@ Every capability must serve one of **understand · speak · use · belong**. Als
 - **Supabase project:** `gxlrmdfqcqimwwplrdgd` ("PortugueseMadeira", org `gvvowvskmczwwlniyfzb`, West EU/London), owned by the **liborballaty** account (NOT the Arion CLI login). CLI auth via `SUPABASE_ACCESS_TOKEN` in `.env.local`.
 - **DB connection:** direct `postgresql://postgres:<pw>@db.gxlrmdfqcqimwwplrdgd.supabase.co:5432/postgres` (IPv6). The region pooler host is wrong for this project. Runner: `node apply-migrations.js <sql>` (ESM, direct host, argv path). Migrations 00001–00004 applied; log in `supabase/migrations/APPLIED.md`.
 - **dotenv gotcha:** dotenv v17 prints a stdout tip — never capture env values via `$(node -e "require('dotenv')...")`; parse `.env.local` directly or use `{quiet:true}`, else the DB password gets corrupted and SASL auth fails.
-- **Edge functions:** `gemini` (chat/generate/translate/tts, JWT-verified, voice-limit enforced) + `delete-account`, deployed. Gemini TTS validated+retried for the intermittent `finishReason=OTHER` empty-audio defect.
+- **Edge functions:** `ai-gateway` (chat/generate/translate/tts, JWT-verified, voice-limit enforced; renamed from `gemini`) + `delete-account`, deployed. Gemini TTS validated+retried for the intermittent `finishReason=OTHER` empty-audio defect.
 - **Admin account:** `liborballaty@gmail.com` (role=admin; temp creds in git-ignored `.admin-temp-credentials.txt`).
 - **Deploy target:** Verpex, document root = the `falamadeira.searchingfool.com` directory ONLY. Deploy from THIS device (`npm run deploy` → `scripts/ship.sh`), never GitHub. GitHub = source hosting only.
 - **TTS default (decided):** Azure pt-PT + browser Web Speech fallback, via provider adapters.

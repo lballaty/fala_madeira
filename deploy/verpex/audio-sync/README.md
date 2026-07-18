@@ -23,7 +23,7 @@ The EN-8 lookup order is `device cache → device pinned → Verpex /audio → S
 Deploy this cron on **both** staging and prod **before** the `TTS_BUFFER_WRITEBACK` flag is flipped, so nothing accumulates unreclaimed in the buffer. Order:
 
 1. Apply migration `00012_audio_buffer_bucket.sql` (Supabase Dashboard SQL editor).
-2. Deploy edge functions `gemini` + `log-sink`; set `AUDIO_SYNC_TOKEN` (a distinct value per environment).
+2. Deploy edge functions `ai-gateway` + `log-sink`; set `AUDIO_SYNC_TOKEN` (a distinct value per environment).
 3. Install this cron on staging **and** prod (below).
 4. Only then flip `TTS_BUFFER_WRITEBACK=on`.
 

@@ -83,7 +83,7 @@ This section applies the global centralized-error-handling standard concretely.
 
 - **Secrets are server-side only.** Gemini, Azure Speech, and any provider keys live exclusively in Supabase edge-function secrets. They never appear in the web bundle, the Capacitor native bundle, `import.meta.env.VITE_*`, or committed files. `grep` of `dist/` for key material must come up empty.
 - **The only client-side trust surface is the Supabase anon key + RLS.** Every table the client touches has RLS enabled with policies documented in `docs/SUPABASE_RLS.md`; the anon key grants nothing RLS doesn't allow. No service-role key in client code, ever.
-- **All AI/provider calls go through JWT-verified edge functions** (`gemini`, future providers). Edge functions validate the JWT, enforce per-user limits (e.g. voice-limit), and validate/sanitize inputs before calling providers.
+- **All AI/provider calls go through JWT-verified edge functions** (`ai-gateway`, future providers). Edge functions validate the JWT, enforce per-user limits (e.g. voice-limit), and validate/sanitize inputs before calling providers.
 - **Admin capability is server-checked** (`is_admin()` / role checks in RLS and edge functions), never trusted from client state.
 - **BYO-key (user-supplied provider keys):** stored server-side against the user (encrypted at rest), sent only from edge functions to providers; never round-tripped into the client bundle or logs.
 - **No PII or key material in logs.** The logger redacts tokens, keys, and message content beyond what the event needs.

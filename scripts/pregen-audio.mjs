@@ -103,7 +103,7 @@ const BACKOFF_MS = [2000, 5000, 12000, 25000]; // waits before retries 2..5
 const synthWithRetry = async (item) => {
   let lastErr;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const { data, error } = await authed.functions.invoke('gemini', {
+    const { data, error } = await authed.functions.invoke('ai-gateway', {
       body: { action: 'tts', text: item.text, voiceType: item.voiceType, provider: 'default' },
     });
     if (!error && data?.audio) return data.audio;

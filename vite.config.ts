@@ -77,7 +77,7 @@ export default defineConfig(({mode}) => {
             },
             // NEVER CACHED (no matching route => default network handling):
             //   - /auth/**            (Supabase auth: tokens, sessions)
-            //   - /functions/v1/**    (edge functions: gemini/tts POSTs, AI calls)
+            //   - /functions/v1/**    (edge functions: ai-gateway/tts POSTs, AI calls)
             //   - all non-GET Supabase requests (mutations)
             // These intentionally have no runtimeCaching entry so they always hit the network.
           ],
