@@ -62,7 +62,7 @@ export default defineConfig({
     },
     {
       // Error-guard lane: @clean specs assert the app emits no console/page/network errors
-      // during core journeys. Kept in its own lane so a real runtime error (e.g. the gemini
+      // during core journeys. Kept in its own lane so a real runtime error (e.g. the ai-gateway
       // 503) fails here without conflating with functional pass/fail — same pattern as @mobile.
       name: 'clean',
       use: { ...devices['Desktop Chrome'] },

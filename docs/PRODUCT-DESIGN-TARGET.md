@@ -88,7 +88,7 @@ Learning modes become a **first-class information-architecture concept**: a dedi
 
 ## 7. AI tutor architecture
 
-- All Gemini access via **authenticated Supabase Edge Functions** (`gemini`, `delete-account`); API key server-side only (never in bundle).
+- All Gemini access via **authenticated Supabase Edge Functions** (`ai-gateway`, `delete-account`); API key server-side only (never in bundle).
 - Actions: chat (history-based), generate-lesson, translate, tts. JWT-verified; **server-side voice-limit enforcement**.
 - **Prompt hardening (target):** level-locking to the learner's unlocked level + known vocabulary; explicit correction strategy (recast + brief note); pt-PT/Madeiran enforcement with prohibited Brazilian forms; content-safety boundaries.
 - Structured error envelopes with correlation IDs (centralized error-handling standard).

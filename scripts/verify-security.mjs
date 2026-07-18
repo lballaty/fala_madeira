@@ -603,9 +603,9 @@ async function main() {
 
   // --- GROUP 3: edge-fn auth ---
   console.log('--- Group 3: edge-fn auth (FATAL) ---');
-  const geminiOk = await probeEdgeFn('gemini', { action: 'chat', payload: {} });
+  const aiGatewayOk = await probeEdgeFn('ai-gateway', { action: 'chat', payload: {} });
   const deleteOk = await probeEdgeFn('delete-account', {});
-  if (!geminiOk || !deleteOk) fatalOk = false;
+  if (!aiGatewayOk || !deleteOk) fatalOk = false;
   console.log('');
 
   // --- Advisory (WARN, non-fatal) ---
