@@ -44,9 +44,18 @@ test.describe('admin audio panel (EN-23)', () => {
     // is unambiguous. Without this the "first row" could already be Queued (button disabled).
     const targetKey = (await firstRow.getAttribute('data-build-key'))!;
     expect(targetKey).toBeTruthy();
+    // The regen queue is append/update-only: admins have SELECT/INSERT/UPDATE but NOT DELETE
+    // (migration 00014 — a durable log guarded by a unique LIVE-status index; done/failed rows are
+    // retained so re-enqueue is allowed). A DELETE here is SILENTLY RLS-blocked and would leak a
+    // permanent pending row that disables the enqueue control on every later run — this was EF-38.
+    // Retire any LIVE (pending/claimed) entry via UPDATE instead, so `queued` clears and enqueue is
+    // enabled. The verdict row is left as-is (setVerdict upserts; a stale verdict is harmless).
     const cleanup = async () => {
-      await adminEvidence.from('tts_audio_regen_queue').delete().eq('build_key', targetKey);
-      await adminEvidence.from('tts_audio_review').delete().eq('build_key', targetKey);
+      await adminEvidence
+        .from('tts_audio_regen_queue')
+        .update({ status: 'done', completed_at: new Date().toISOString() })
+        .eq('build_key', targetKey)
+        .in('status', ['pending', 'claimed']);
     };
     await cleanup(); // pre-clean
 
