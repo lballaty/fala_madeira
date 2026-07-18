@@ -2,6 +2,10 @@
 // Description: Playwright helpers for reading the app's web storage adapter surfaces. The app
 //   persists structured KV state in IndexedDB `FalaMadeiraAudioCache/kv` first and falls back to
 //   `localStorage` with the `fm-kv:` prefix, so specs should not assume localStorage directly.
+//   The IndexedDB opens below MUST use the same version as the app's DB_VERSION in
+//   src/platform/web/storage.web.ts (currently 3). Opening an existing higher-version DB at a lower
+//   version throws VersionError, so these reads/writes silently return null / no-op — which drifted
+//   to v2 after the app went v2->v3 (EN-8) and made KV assertions (e.g. paths:selection) fail.
 // Author: Codex
 // Created: 2026-07-13
 
@@ -27,7 +31,7 @@ export async function readKvByPrefix(page: Page, prefix: string): Promise<unknow
     }
     return await new Promise<unknown | null>((resolve) => {
       try {
-        const request = indexedDB.open('FalaMadeiraAudioCache', 2);
+        const request = indexedDB.open('FalaMadeiraAudioCache', 3);
         request.onerror = () => resolve(null);
         request.onupgradeneeded = () => resolve(null);
         request.onsuccess = () => {
@@ -73,7 +77,7 @@ export async function writeKv(page: Page, key: string, value: unknown): Promise<
     async ({ k, v }) =>
       new Promise<void>((resolve) => {
         try {
-          const req = indexedDB.open('FalaMadeiraAudioCache', 2);
+          const req = indexedDB.open('FalaMadeiraAudioCache', 3);
           req.onerror = () => resolve();
           req.onsuccess = () => {
             try {
@@ -104,7 +108,7 @@ export async function deleteKv(page: Page, key: string): Promise<void> {
     async (k) =>
       new Promise<void>((resolve) => {
         try {
-          const req = indexedDB.open('FalaMadeiraAudioCache', 2);
+          const req = indexedDB.open('FalaMadeiraAudioCache', 3);
           req.onerror = () => resolve();
           req.onsuccess = () => {
             try {
@@ -143,7 +147,7 @@ export async function readKv(page: Page, key: string): Promise<unknown | null> {
 
     return await new Promise<unknown | null>((resolve) => {
       try {
-        const request = indexedDB.open('FalaMadeiraAudioCache', 2);
+        const request = indexedDB.open('FalaMadeiraAudioCache', 3);
         request.onerror = () => resolve(null);
         request.onupgradeneeded = () => resolve(null);
         request.onsuccess = () => {
