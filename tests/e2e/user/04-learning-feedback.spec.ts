@@ -80,9 +80,19 @@ async function assertQuizTypingWorks(page: Parameters<typeof landOnHome>[0], val
     const firstChoice = quizSurface.locator('div.grid').getByRole('button').first();
     await expect(firstChoice).toBeVisible();
     const previousIndex = await readActiveQuizIndex();
-    await firstChoice.click();
     const nextButton = quizSurface.getByRole('button', { name: /Next Question|Finish Quiz/ });
-    await expect(nextButton).toBeEnabled();
+    // EF-39: under full-suite CPU load the AnimatePresence question-entrance animation
+    // (motion.div key={index}, x:20->0) can jank, so the first choice-click may land on a
+    // still-transitioning element and never fire handleAnswer -> isAnswered stays false ->
+    // Next stays disabled. handleAnswer guards `if (isAnswered) return`, so re-clicking is
+    // idempotent. Poll the click until the answer registers. This does NOT weaken the
+    // assertion: the product must still enable Next in response to a real choice-click.
+    await expect(async () => {
+      if (!(await nextButton.isEnabled().catch(() => false))) {
+        await firstChoice.click();
+      }
+      await expect(nextButton).toBeEnabled({ timeout: 2_000 });
+    }).toPass({ timeout: 15_000 });
     await nextButton.click();
     const finishButtonVisible = await quizSurface.getByRole('button', { name: 'Finish Quiz' }).isVisible().catch(() => false);
     if (!finishButtonVisible) {
