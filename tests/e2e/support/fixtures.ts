@@ -63,9 +63,14 @@ function makeInitScript(userId: string): string {
 
     // (b) Seed the onboarding-complete record into IndexedDB (FalaMadeiraAudioCache/kv).
     const DB_NAME = 'FalaMadeiraAudioCache';
-    const DB_VERSION = 2;
+    // MUST stay equal to the app's DB_VERSION in src/platform/web/storage.web.ts. Opening an
+    // existing higher-version DB at a LOWER version throws VersionError, which silently fails this
+    // seed (swallowed below) and strands the app on onboarding — this drifted to v2 when the app
+    // bumped v2->v3 (EN-8 audio_pinned store) and broke ~31 landOnHome-dependent content specs.
+    const DB_VERSION = 3;
     const KV_STORE = 'kv';
     const BLOB_STORE = 'audio';
+    const PINNED_STORE = 'audio_pinned';
     const key = ${JSON.stringify(ONBOARDING_KEY_PREFIX)} + ${JSON.stringify(userId)};
     const record = { complete: true, placementLevel: 1, completedAt: new Date().toISOString() };
     try {
@@ -74,6 +79,7 @@ function makeInitScript(userId: string): string {
         const db = req.result;
         if (!db.objectStoreNames.contains(BLOB_STORE)) db.createObjectStore(BLOB_STORE);
         if (!db.objectStoreNames.contains(KV_STORE)) db.createObjectStore(KV_STORE);
+        if (!db.objectStoreNames.contains(PINNED_STORE)) db.createObjectStore(PINNED_STORE);
       };
       req.onsuccess = () => {
         const db = req.result;
