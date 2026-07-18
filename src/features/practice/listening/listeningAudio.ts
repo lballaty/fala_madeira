@@ -45,7 +45,9 @@ const invokeTts = async (text: string, voiceType: VoiceType): Promise<TtsPayload
   }
 
   const { data, error } = await supabase.functions.invoke('ai-gateway', {
-    body: { action: 'tts', text, voiceType },
+    // Dialogue lines are curated content → hostable:true so the edge write-back may host them
+    // for reuse (EN-8; gated server-side by the env flag + default-rate check).
+    body: { action: 'tts', text, voiceType, hostable: true },
   });
 
   if (error) {
@@ -97,7 +99,11 @@ export const playListeningText = async (
 ): Promise<void> => {
   platform.audio.stop();
 
-  const cacheKey = `listening_${voiceType}_${text}`;
+  // EN-8: share the ONE (provider,voiceType,text) key space with geminiService.synthesizeCached
+  // (and the offline downloader / pre-gen) instead of the old bespoke `listening_*` scheme — so a
+  // dialogue clip cached, downloaded, or pre-hosted once is reused everywhere. resolveVoice for an
+  // explicit archetype is the archetype itself, so this matches synthesizeCached's key exactly.
+  const cacheKey = audioCache.buildKey('default', voiceType, text);
   let buffer = await audioCache.get(cacheKey);
   let sampleRate: number = config.audio.ttsSampleRateHz;
 

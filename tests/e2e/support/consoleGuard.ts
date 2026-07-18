@@ -27,6 +27,13 @@ const DEFAULT_IGNORE_URLS: RegExp[] = [
   /\byoutube-nocookie\.com\//i,
   /\bytimg\.com\//i,
   /fonts\.g(oogle)?(static|apis)?\.com/i,
+  // EN-8 server-audio buffer probe: synthesizeCached best-effort GETs a pre-hosted clip from the
+  // public tts-audio bucket BEFORE paying the provider (geminiService.fetchServerTier). Until the
+  // operator deploys server audio the object is absent and Supabase Storage returns 400; tryFetchPcm
+  // handles it (returns null → the provider plays unchanged), so this is an EXPECTED best-effort miss,
+  // not an app defect. Scoped to the bucket path — a real app-origin 400 (e.g. profiles) is a
+  // different URL and still fails this guard.
+  /\/storage\/v1\/object\/public\/tts-audio\//i,
 ];
 
 // Console noise that is not an app error (browser tracking-prevention notices, PWA install hints).
@@ -43,7 +50,10 @@ const DEFAULT_IGNORE_CONSOLE: RegExp[] = [
   // URL, so we suppress those two statuses here; the response handler below is the authoritative
   // judge and still fails on any OTHER 4xx/5xx (the profiles 400s this guard exists to catch). The
   // durable fix for clean gemini calls under test is WS2 test-user isolation (EF-36).
-  /status of (429|503)/i,
+  // 400 is added for the EN-8 server-audio buffer probe (tts-audio bucket miss, see DEFAULT_IGNORE_URLS):
+  // the browser emits the same URL-less "Failed to load resource … status of 400 ()" pair, and the
+  // URL-aware response handler below stays authoritative — a real app-origin 400 (profiles) still fails.
+  /status of (400|429|503)/i,
 ];
 
 export interface ErrorGuard {
@@ -79,10 +89,13 @@ export function installErrorGuard(page: Page, opts: ErrorGuardOptions = {}): Err
     const url = res.url();
     // Shared-quota / throttle conditions the app handles gracefully (degrades TTS to device speech,
     // verified by user/50) — not runtime defects: 429 (rate-limit, any endpoint) and 503 from the
-    // gemini TTS function specifically. Everything else 4xx/5xx (incl. non-gemini 5xx and the
+    // AI-gateway TTS function specifically. Everything else 4xx/5xx (incl. other 5xx and the
     // profiles 400s this guard exists to catch) still fails. Durable fix = WS2 isolation (EF-36).
+    // NB: the function was renamed gemini -> ai-gateway (2026-07-16); match both so the exemption
+    // survives the rename (the stale `gemini`-only match turned the EF-37 503 storm into a red
+    // @clean run after the rename).
     if (status === 429) return;
-    if (status === 503 && /\/functions\/v1\/gemini/i.test(url)) return;
+    if (status === 503 && /\/functions\/v1\/(gemini|ai-gateway)/i.test(url)) return;
     if (ignoreUrls.some((re) => re.test(url))) return;
     badResponses.push(`${status} ${res.request().method()} ${url}`);
   });

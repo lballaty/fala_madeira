@@ -9,10 +9,21 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
-import { BlobLimits, BlobStoreUsage, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { BlobLimits, BlobStoreUsage, PinnedWriteResult, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { logger } from '../../lib/logger';
 
 // Subdirectory inside Directory.Data that owns every blob this adapter writes.
 const BLOB_DIR = 'fm-blobs';
+// EN-8: pinned offline downloads live in a SEPARATE directory that eviction never scans, so a
+// clip a user downloaded survives cache pressure (fixes EN-7). Never touched by clearBlobs().
+const PINNED_DIR = 'fm-pinned';
+
+// EN-27 P0.4: distinguish a benign "not written yet / cache miss" from a real read error. A missing
+// file/dir is the routine path (return null/[] silently); anything else is a read failure that made
+// the store unreadable — corrupt offline audio then looks like "nothing saved" (the TB-9 shape), so
+// it MUST be logged rather than swallowed into an indistinguishable null/[].
+const isNotFound = (e: unknown): boolean =>
+  /does not exist|not found|no such file|enoent/i.test(e instanceof Error ? e.message : String(e));
 
 const matchesPrefix = (key: string, prefix?: string): boolean =>
   !prefix || key.startsWith(prefix);
@@ -92,46 +103,59 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
     try {
       const result = await Filesystem.readdir({ path: BLOB_DIR, directory: Directory.Data });
       return result.files.map((f) => f.name);
-    } catch {
-      return []; // directory does not exist yet — no blobs written
+    } catch (e) {
+      if (!isNotFound(e)) {
+        logger.warn('NATIVE_BLOB_LISTDIR_FAILED', 'could not read the blob directory — treating as empty', {
+          category: 'DATA_PROCESSING',
+          error: e,
+        });
+      }
+      return []; // not-found = directory not created yet; logged case = unreadable store
     }
   };
 
-  // File name + size + mtime for every blob (mtime is the LRU recency signal
+  // File name + size + mtime for every blob in `dir` (mtime is the LRU recency signal
   // native provides via readdir FileInfo; the web adapter tracks recency in an
-  // index instead). Missing size/mtime default to 0.
-  const listBlobStats = async (): Promise<{ name: string; size: number; mtime: number }[]> => {
+  // index instead). Missing size/mtime default to 0. Serves both the ephemeral
+  // BLOB_DIR cache and the durable PINNED_DIR store (both bounded LRUs, EN-8).
+  const listBlobStats = async (dir: string): Promise<{ name: string; size: number; mtime: number }[]> => {
     const { Filesystem, Directory } = await fs();
     try {
-      const result = await Filesystem.readdir({ path: BLOB_DIR, directory: Directory.Data });
+      const result = await Filesystem.readdir({ path: dir, directory: Directory.Data });
       return result.files.map((f) => ({
         name: f.name,
         size: typeof f.size === 'number' ? f.size : 0,
         mtime: typeof f.mtime === 'number' ? f.mtime : 0,
       }));
-    } catch {
+    } catch (e) {
+      if (!isNotFound(e)) {
+        logger.warn('NATIVE_BLOB_STAT_FAILED', 'could not stat the blob directory — LRU/usage will read as empty', {
+          category: 'DATA_PROCESSING',
+          error: e,
+        });
+      }
       return [];
     }
   };
 
-  const deleteFileByName = async (name: string): Promise<void> => {
+  const deleteFileByName = async (name: string, dir: string): Promise<void> => {
     const { Filesystem, Directory } = await fs();
     try {
-      await Filesystem.deleteFile({ path: `${BLOB_DIR}/${name}`, directory: Directory.Data });
+      await Filesystem.deleteFile({ path: `${dir}/${name}`, directory: Directory.Data });
     } catch {
       // Already gone — nothing to do.
     }
   };
 
-  // Evict least-recently-used (oldest mtime) blobs until both limits are met.
+  // Evict least-recently-used (oldest mtime) blobs from `dir` until both limits are met.
   // `incomingBytes` is the size of the entry about to be written; `excludeName`
   // is that entry's file (already counted separately by the caller).
-  const evictToFit = async (limits: BlobLimits, incomingBytes: number, excludeName: string): Promise<number> => {
+  const evictToFit = async (dir: string, limits: BlobLimits, incomingBytes: number, excludeName: string): Promise<number> => {
     const maxEntries = limits.maxEntries;
     const maxBytes = limits.maxBytes;
     if (maxEntries === undefined && maxBytes === undefined) return 0;
 
-    const stats = (await listBlobStats()).filter((s) => s.name !== excludeName);
+    const stats = (await listBlobStats(dir)).filter((s) => s.name !== excludeName);
     let totalBytes = stats.reduce((sum, s) => sum + s.size, 0) + incomingBytes;
     let totalCount = stats.length + 1; // + the incoming entry
     // Oldest first.
@@ -142,7 +166,7 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
       const overCount = maxEntries !== undefined && totalCount > maxEntries;
       const overBytes = maxBytes !== undefined && totalBytes > maxBytes;
       if (!overCount && !overBytes) break;
-      await deleteFileByName(s.name);
+      await deleteFileByName(s.name, dir);
       totalBytes -= s.size;
       totalCount -= 1;
       evicted += 1;
@@ -157,8 +181,15 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
       if (value === null) return null;
       try {
         return JSON.parse(value) as T;
-      } catch {
-        return null; // corrupted entry — treat as missing
+      } catch (e) {
+        // A parse failure is never routine (the value WAS present) — it is a corrupt entry. Log it
+        // (EN-27 P0.4) so corruption is visible instead of masquerading as an absent key.
+        logger.warn('NATIVE_STORAGE_PARSE_FAILED', 'stored value could not be parsed — treating as missing', {
+          category: 'DATA_PROCESSING',
+          error: e,
+          details: { key },
+        });
+        return null;
       }
     },
 
@@ -207,8 +238,18 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
         return typeof result.data === 'string'
           ? base64ToArrayBuffer(result.data)
           : await result.data.arrayBuffer();
-      } catch {
-        return null; // missing file — contract says null for absent blobs
+      } catch (e) {
+        // A missing file is a routine cache miss (contract: null for absent blobs) — stay silent.
+        // Any OTHER read error means a cached clip is present-but-unreadable (corruption/permission)
+        // and would otherwise look identical to "not cached" — the TB-9 shape. Log that case.
+        if (!isNotFound(e)) {
+          logger.warn('NATIVE_BLOB_READ_FAILED', 'cached blob is present but unreadable — treating as a miss', {
+            category: 'DATA_PROCESSING',
+            error: e,
+            details: { key },
+          });
+        }
+        return null;
       }
     },
 
@@ -223,7 +264,7 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
           recursive: true, // creates fm-blobs/ on first write
         });
         // Bounded LRU: evict oldest blobs when this write breaches the limits.
-        return limits ? await evictToFit(limits, data.byteLength, fileName) : 0;
+        return limits ? await evictToFit(BLOB_DIR, limits, data.byteLength, fileName) : 0;
       } catch (e) {
         throw storageFailure('Could not save audio/content data on this device.', e);
       }
@@ -262,6 +303,75 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
       }
     },
 
+    async getPinnedBlob(key: string): Promise<ArrayBuffer | null> {
+      const { Filesystem, Directory } = await fs();
+      try {
+        const result = await Filesystem.readFile({
+          path: `${PINNED_DIR}/${keyToFileName(key)}`,
+          directory: Directory.Data,
+        });
+        return typeof result.data === 'string'
+          ? base64ToArrayBuffer(result.data)
+          : await result.data.arrayBuffer();
+      } catch {
+        return null; // missing file — contract says null for absent blobs
+      }
+    },
+
+    async setPinnedBlob(key: string, data: ArrayBuffer): Promise<PinnedWriteResult> {
+      const fileName = keyToFileName(key);
+      try {
+        const { Filesystem, Directory } = await fs();
+        await Filesystem.writeFile({
+          path: `${PINNED_DIR}/${fileName}`,
+          data: arrayBufferToBase64(data),
+          directory: Directory.Data,
+          recursive: true, // creates fm-pinned/ on first write
+        });
+        // ALWAYS store (stored:true), NEVER evict. The web adapter enforces the protected/bounded
+        // LRU via its meta index (protect downloads, reclaim plays); the native filesystem has no
+        // per-file protection flag, so bounding+protection is a WEB-ONLY behavior for now — better an
+        // unbounded native saved store than one that could silently delete a user's download. Native
+        // is not the shipping runtime yet; a sidecar-meta port is tracked with the EN-8 follow-ups.
+        return { evicted: 0, stored: true };
+      } catch (e) {
+        throw storageFailure('Could not save audio on this device.', e);
+      }
+    },
+
+    async pinnedUsage(): Promise<BlobStoreUsage> {
+      const { Filesystem, Directory } = await fs();
+      try {
+        const result = await Filesystem.readdir({ path: PINNED_DIR, directory: Directory.Data });
+        return {
+          count: result.files.length,
+          bytes: result.files.reduce((sum, f) => sum + (typeof f.size === 'number' ? f.size : 0), 0),
+        };
+      } catch {
+        return { count: 0, bytes: 0 }; // directory absent — nothing pinned yet
+      }
+    },
+
+    async clearPinned(prefix?: string): Promise<void> {
+      const { Filesystem, Directory } = await fs();
+      let names: string[];
+      try {
+        const result = await Filesystem.readdir({ path: PINNED_DIR, directory: Directory.Data });
+        names = result.files.map((f) => f.name);
+      } catch {
+        return; // directory absent — nothing to clear
+      }
+      for (const name of names) {
+        const key = fileNameToKey(name);
+        if (key === null || !matchesPrefix(key, prefix)) continue;
+        try {
+          await Filesystem.deleteFile({ path: `${PINNED_DIR}/${name}`, directory: Directory.Data });
+        } catch {
+          // Already gone — keep clearing the rest.
+        }
+      }
+    },
+
     async usage(): Promise<StorageUsage> {
       // WKWebView exposes navigator.storage.estimate for webview-managed
       // storage only; filesystem blobs are not covered, so report unknown
@@ -270,7 +380,7 @@ export const createNativeStorageAdapter = (): StorageAdapter => {
     },
 
     async blobUsage(): Promise<BlobStoreUsage> {
-      const stats = await listBlobStats();
+      const stats = await listBlobStats(BLOB_DIR);
       return {
         count: stats.length,
         bytes: stats.reduce((sum, s) => sum + s.size, 0),

@@ -12,7 +12,7 @@
 // Author: Lane B (with assistant)
 // Created: 2026-07-15
 
-import { test, expect, landOnHome } from '../support/fixtures';
+import { test, expect, landOnHome, createThrowawayUserContext } from '../support/fixtures';
 import { readKv, writeKv, deleteKv } from '../support/storage';
 
 test.describe('user isolation: device storage (SEC-2)', () => {
@@ -64,27 +64,35 @@ test.describe('user isolation: device storage (SEC-2)', () => {
     coverage.touch('security.user_isolation.legacy_migration', 'outcome-asserted');
   });
 
-  test('WP2: logout clears device-global client state (lesson cache + anonymous missions)', async ({ page, coverage }) => {
-    await landOnHome(page);
+  test('WP2: logout clears device-global client state (lesson cache + anonymous missions)', async ({ browser, coverage }) => {
+    // This spec SIGNS OUT, which globally revokes the user's refresh token (supabase signOut default
+    // scope) — doing that to the SHARED suite user poisoned every later spec's evidence session
+    // ("Auth session missing!"). Run on a one-off disposable user, like 09-account-deletion / user/15.
+    const { context, page } = await createThrowawayUserContext(browser);
+    try {
+      await landOnHome(page);
 
-    // Seed device-global stores that must NOT survive to the next user: the write-only lesson
-    // cache (plain localStorage) and the anonymous missions list (IndexedDB KV, the app's tier).
-    await page.evaluate(() => localStorage.setItem('active_lessons_month_1', '[{"id":"x"}]'));
-    await writeKv(page, 'missions:log:local', [
-      { id: 'm1', situation_id: 's1', status: 'planned', notes: '{}', completed_at: null, created_at: '2026-07-15T00:00:00Z' },
-    ]);
+      // Seed device-global stores that must NOT survive to the next user: the write-only lesson
+      // cache (plain localStorage) and the anonymous missions list (IndexedDB KV, the app's tier).
+      await page.evaluate(() => localStorage.setItem('active_lessons_month_1', '[{"id":"x"}]'));
+      await writeKv(page, 'missions:log:local', [
+        { id: 'm1', situation_id: 's1', status: 'planned', notes: '{}', completed_at: null, created_at: '2026-07-15T00:00:00Z' },
+      ]);
 
-    // Sign out via the desktop sidebar (EN-9).
-    await page.getByRole('complementary').getByRole('button', { name: 'Sign Out' }).click();
-    await expect(page.getByRole('button', { name: 'Log In' })).toBeVisible({ timeout: 15_000 });
+      // Sign out via the desktop sidebar (EN-9).
+      await page.getByRole('complementary').getByRole('button', { name: 'Sign Out' }).click();
+      await expect(page.getByRole('button', { name: 'Log In' })).toBeVisible({ timeout: 15_000 });
 
-    // onLogoutCleanup → clearDeviceUserState() removed both (fire-and-forget → poll).
-    await expect
-      .poll(async () => ({
-        lessons: await page.evaluate(() => localStorage.getItem('active_lessons_month_1')),
-        missions: await readKv(page, 'missions:log:local'),
-      }))
-      .toEqual({ lessons: null, missions: null });
-    coverage.touch('security.user_isolation.logout_clears_device_state', 'outcome-asserted');
+      // onLogoutCleanup → clearDeviceUserState() removed both (fire-and-forget → poll).
+      await expect
+        .poll(async () => ({
+          lessons: await page.evaluate(() => localStorage.getItem('active_lessons_month_1')),
+          missions: await readKv(page, 'missions:log:local'),
+        }))
+        .toEqual({ lessons: null, missions: null });
+      coverage.touch('security.user_isolation.logout_clears_device_state', 'outcome-asserted');
+    } finally {
+      await context.close();
+    }
   });
 });

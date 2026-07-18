@@ -30,6 +30,12 @@ export const useSpeechPlayback = ({ profile, playbackSpeed, showToast }: SpeechP
     try {
       setIsAudioPlaying(true);
       const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
+      // NOTE (EN-8): this hook is shared across CURATED text (lessons, quiz, onboarding) AND
+      // free-chat replies (TutorChatView plays msg.text through the same playSpeech) + user vocab
+      // lookups. Because the caller isn't distinguishable here, hostable is deliberately left unset
+      // (= not-hostable) so free-chat/user text can never be server-hosted (COORD-2 BLOCKING-1).
+      // Curated content played via this hook is still hosted through the pre-gen + offline paths.
+      // FOLLOW-UP: thread a per-consumer hostable flag so curated lesson/quiz plays opt in safely.
       await geminiService.playSpeech(text, tutor, playbackSpeed, () => {
         setIsAudioPlaying(false);
       });

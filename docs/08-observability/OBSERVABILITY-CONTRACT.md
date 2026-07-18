@@ -44,7 +44,7 @@ Every log event and every user-facing error carries the same ID set so a user's 
 
 **Edge functions:**
 - All handlers return the `errorResponse(...)` envelope. ✅
-- Every `ERROR`/`CRITICAL`/degradation-`WARN` also persists to `public.logs` via the service-role client (`_shared/persistLog.ts`). ✅ implemented (plan `obs-edge-persist`; `gemini` + `delete-account`).
+- Every `ERROR`/`CRITICAL`/degradation-`WARN` also persists to `public.logs` via the service-role client (`_shared/persistLog.ts`). ✅ implemented (plan `obs-edge-persist`; `ai-gateway` + `delete-account`).
 
 ## 6. Persistence model
 
@@ -86,7 +86,15 @@ Client generates a `traceparent` per request-level flow, sends it as a header on
 
 **Enforcement:** `scripts/check-observability.mjs` (`obs-ci-gate`) statically checks the §9 forbidden patterns; wired into `scripts/preflight.sh` in WARN mode during rollout (flip to `--strict` to make it a hard gate).
 
-**Deploy dependency:** the edge changes (`log-sink`, `gemini`, `delete-account`) require `supabase functions deploy` to take effect in prod; the client changes ship with the normal web build.
+**Deploy dependency:** the edge changes (`log-sink`, `ai-gateway`, `delete-account`) require `supabase functions deploy` to take effect in prod; the client changes ship with the normal web build.
+
+### 10.1 EN-8 hosted-audio observability
+
+*Status: implemented on `develop`, inert until server activation.*
+
+- **`tts_source`** — emitted per clip served, recording WHICH tier fulfilled it (`cache` | `pinned` | `verpex` | `supabase` | `provider`). This is the cost / 503-avoidance signal: a non-`provider` source means the paid provider was skipped. The `--verify-l0` gating proof asserts NO `provider`-tier `tts_source` exists for level-0 keys.
+- **`audio_sync_run`** — an INFO heartbeat inserted by the `log-sink` `audio-sync-confirm` endpoint each time the read-only Verpex pull cron reports a copy-confirm run (`reported` / `deleted` / `rejected` counts). A staleness alert can fire if the cron stops reporting.
+- **Write-back WARN events** — the `ai-gateway` edge write-back path (`TTS_BUFFER_WRITEBACK`-gated) logs WARN (never a silent failure) when a hostable clip cannot be buffered; the copy-confirmed deletion (`_shared/audioStore.ts`) never deletes a buffer object that was not confirmed copied.
 
 ## 11. Implementation
 

@@ -7,7 +7,7 @@
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Mic, Play, Send, Settings, Sparkles, Volume2 } from 'lucide-react';
+import { BookOpen, Mic, Play, Send, SquarePen, Sparkles, Volume2 } from 'lucide-react';
 import { SafeMarkdown } from '../../components/SafeMarkdown';
 import { cn } from '../../lib/utils';
 import { TUTORS } from '../../data/tutors';
@@ -75,9 +75,19 @@ export const TutorChatView = ({
             <p className="text-xs text-green-500 font-medium">Online • Madeiran Accent</p>
           </div>
         </div>
-        <button className="p-2 text-ios-blue">
-          <Settings className="w-5 h-5" />
-        </button>
+        {/* TB-22: replaces a DEAD Settings button (no onClick) with a working "New chat" control.
+            Shown only once a conversation exists; clearing chatMessages returns to the welcome
+            state (Start Lesson / Just Want to Chat) without a full page reload. */}
+        {chatMessages.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setChatMessages([])}
+            aria-label="New chat"
+            className="p-2 text-ios-blue rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center active:opacity-60"
+          >
+            <SquarePen className="w-5 h-5" />
+          </button>
+        )}
       </header>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 pb-24">

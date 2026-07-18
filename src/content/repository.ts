@@ -394,6 +394,20 @@ const fetchFromNetwork = async (correlationId: string): Promise<ContentPack[] | 
 // Load + refresh orchestration
 // ---------------------------------------------------------------------------
 
+// EN-27 P2: run a background refresh of degraded cache, logging (not swallowing) a failure so ops
+// can see the user is stuck on degraded/corrupt cached content until the next successful refresh.
+// Exported + refresh-fn injected so the logging behaviour is unit-testable without the full
+// cache/network fixture (the swallowed `.catch(() => undefined)` had no coverage).
+export const runBackgroundRefresh = (refresh: () => Promise<unknown>, correlationId: string): void => {
+  void refresh().catch((error: unknown) => {
+    logger.warn('CONTENT_REFRESH_BACKGROUND_FAILED', 'background refresh of degraded cache failed — staying on cached content', {
+      category: 'DATA_PROCESSING',
+      correlationId,
+      error,
+    });
+  });
+};
+
 const load = async (correlationId: string): Promise<void> => {
   // Rung 2: cache (fast, offline-capable).
   const cached = await loadFromCache(correlationId);
@@ -406,7 +420,7 @@ const load = async (correlationId: string): Promise<void> => {
     });
     if (cached.degraded) {
       // Some cached packs were corrupt — refetch in the background (§10).
-      void refreshInternal(correlationId).catch(() => undefined);
+      runBackgroundRefresh(() => refreshInternal(correlationId), correlationId);
     }
     return;
   }

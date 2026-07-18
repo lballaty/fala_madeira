@@ -30,6 +30,7 @@ import {
   SpeechStartOptions,
 } from './types';
 import { SpeechAdapterCore, withRecognize } from './speech-common';
+import { logger } from '../lib/logger';
 
 export interface CloudSttTranscribeOptions {
   // BCP-47 tag, e.g. 'pt-PT'.
@@ -106,6 +107,12 @@ export const createCloudSpeechAdapter = (
         .then(() => { startCb?.(); })
         .catch((e) => {
           listening = false;
+          // EN-27 P1.7: log before the OPTIONAL errorCb — if no callback is bound the failure would
+          // otherwise vanish (user can't start cloud transcription, no trace).
+          logger.error('CLOUD_SPEECH_START_RECORDING_FAILED', 'could not start microphone recording for cloud transcription', {
+            category: 'SYSTEM_HEALTH',
+            error: e,
+          });
           errorCb?.(
             e instanceof PlatformError
               ? e
@@ -135,6 +142,12 @@ export const createCloudSpeechAdapter = (
           endCb?.();
         })
         .catch((e) => {
+          // EN-27 P1.7: log before the OPTIONAL errorCb — the user's captured speech failed to
+          // transcribe; without this it's lost with no trace when no callback is bound.
+          logger.error('CLOUD_SPEECH_TRANSCRIPTION_FAILED', 'cloud speech transcription failed — captured audio was not transcribed', {
+            category: 'SYSTEM_HEALTH',
+            error: e,
+          });
           errorCb?.(toPlatformError(e, 'Cloud speech transcription failed.'));
           endCb?.();
         });

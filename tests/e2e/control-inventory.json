@@ -850,8 +850,8 @@
     },
     {
       "screen": "practice",
-      "id": "practice.vocabulary.flashcard",
-      "selector": { "role": "button", "name": "Flashcard — tap to flip" },
+      "id": "practice.vocabulary.answer_input",
+      "selector": {"css": "[data-testid=\"vocab-answer-input\"]"},
       "covered_by": [
         { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "outcome-asserted" },
         { "spec": "tests/e2e/user/30-offline-mastery-queue.spec.ts", "depth": "outcome-asserted" }
@@ -859,11 +859,27 @@
     },
     {
       "screen": "practice",
-      "id": "practice.vocabulary.grade_good",
-      "selector": { "role": "button", "name": "Good" },
+      "id": "practice.vocabulary.check",
+      "selector": {"css": "[data-testid=\"vocab-check\"]"},
       "covered_by": [
         { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "outcome-asserted" },
         { "spec": "tests/e2e/user/30-offline-mastery-queue.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.skipSpeaking",
+      "selector": {"css": "[data-testid=\"vocab-skip-speaking\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "practice",
+      "id": "practice.vocabulary.next",
+      "selector": {"css": "[data-testid=\"vocab-next\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/15-practice-vocabulary-session.spec.ts", "depth": "outcome-asserted" }
       ]
     },
     {
@@ -1191,30 +1207,6 @@
     },
     {
       "screen": "practice",
-      "id": "practice.vocabulary.grade_again",
-      "selector": {"role": "button", "name": "Again"},
-      "covered_by": [
-        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
-      ]
-    },
-    {
-      "screen": "practice",
-      "id": "practice.vocabulary.grade_hard",
-      "selector": {"role": "button", "name": "Hard"},
-      "covered_by": [
-        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
-      ]
-    },
-    {
-      "screen": "practice",
-      "id": "practice.vocabulary.grade_easy",
-      "selector": {"role": "button", "name": "Easy"},
-      "covered_by": [
-        { "spec": "tests/e2e/user/40-practice-grade-variants.spec.ts", "depth": "outcome-asserted" }
-      ]
-    },
-    {
-      "screen": "practice",
       "id": "practice.pattern_builder.grade_almost",
       "selector": {"role": "button", "name": "Almost"},
       "covered_by": [
@@ -1535,8 +1527,8 @@
     },
     {
       "screen": "practice",
-      "id": "practice.vocab.scope_selector",
-      "selector": {"css": "[data-testid=\"vocab-scope-selector\"]"},
+      "id": "practice.vocab.focus_picker",
+      "selector": {"css": "[data-testid=\"vocab-focus-picker\"]"},
       "covered_by": [
         { "spec": "tests/e2e/user/57-vocab-scope-selector.spec.ts", "depth": "outcome-asserted" }
       ]
@@ -1568,7 +1560,7 @@
     {
       "screen": "admin",
       "id": "admin.access.email_input",
-      "selector": {"role": "textbox", "name": "User email"},
+      "selector": {"role": "textbox", "name": "Find a user"},
       "covered_by": [
         { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "value-changed" }
       ]
@@ -1576,7 +1568,7 @@
     {
       "screen": "admin",
       "id": "admin.access.lookup",
-      "selector": {"role": "button", "name": "Look up user"},
+      "selector": {"role": "button", "name": "Search users"},
       "covered_by": [
         { "spec": "tests/e2e/admin/09-admin-user-access-grant.spec.ts", "depth": "outcome-asserted" }
       ]

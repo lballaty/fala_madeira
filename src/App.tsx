@@ -15,6 +15,7 @@ import { cn } from './lib/utils';
 import { getSupabase } from './lib/supabase';
 import { logger } from './lib/logger';
 import { clearDeviceUserState } from './lib/session-cleanup';
+import { audioCache } from './lib/audioCache';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Sidebar, NavItem } from './components/Sidebar';
 import { ConfirmationModal } from './components/ConfirmationModal';
@@ -233,6 +234,10 @@ export default function App() {
       // authoritative and re-applies the next user's prefs on login).
       settings.resetForLogout();
       void clearDeviceUserState();
+      // SEC-1 WP4 (device bleed): clear the LRU audio cache — it can hold user-private tutor
+      // free-chat audio — but KEEP the pinned store (curated public downloads, no PII), so the
+      // next user on a shared device inherits no private audio yet keeps offline content usable.
+      void audioCache.clear();
     },
   };
 

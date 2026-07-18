@@ -16,6 +16,7 @@ import { logger, userMessage } from '../../lib/logger';
 import { config } from '../../config';
 import { audioCache } from '../../lib/audioCache';
 import { downloadForOffline, DownloadScope } from '../../lib/audio-download';
+import { focusControl } from '../../lib/focusControl';
 import { validateText } from '../../lib/validation';
 
 /**
@@ -144,8 +145,11 @@ export const useSettings = ({
 
   const refreshCacheUsage = useCallback(async () => {
     try {
-      const usage = await audioCache.usage();
-      setCacheUsageBytes(usage.bytes);
+      // Total device audio = ephemeral cache + durable saved store (EN-8). Both the "Clear cache"
+      // action (reduces the cache part) and turning off "Save audio on device" (reduces the saved
+      // part) visibly lower this number, so the display stays honest for both operations.
+      const [cache, saved] = await Promise.all([audioCache.usage(), audioCache.pinnedUsage()]);
+      setCacheUsageBytes(cache.bytes + saved.bytes);
     } catch (error) {
       logger.warn('OFFLINE_USAGE_READ_FAILED', 'could not read offline audio-cache usage', {
         category: 'SYSTEM_HEALTH',
@@ -164,12 +168,15 @@ export const useSettings = ({
     void loadUsage();
   }, [refreshCacheUsage]);
 
-  // Persist "Save audio on device"; turning it off clears the cache immediately.
+  // Persist "Save audio on device". Turning it OFF is the explicit "delete my saved audio" action
+  // (owner 2026-07-17): it clears the DURABLE saved store — NOT the ephemeral cache (that is the
+  // separate "Clear cache" action / logout). Future curated plays route to the cache instead of the
+  // saved store because synthesizeCached reads this flag at write time. The two are never conflated.
   useEffect(() => {
     localStorage.setItem(config.offline.saveAudioKey, saveAudioOnDevice.toString());
     if (!saveAudioOnDevice) {
-      void audioCache.clear().then(refreshCacheUsage).catch((error: unknown) => {
-        logger.warn('OFFLINE_CACHE_CLEAR_FAILED', 'could not clear offline audio cache after disabling save-on-device', {
+      void audioCache.clearPinned().then(refreshCacheUsage).catch((error: unknown) => {
+        logger.warn('OFFLINE_SAVED_CLEAR_FAILED', 'could not delete saved audio after turning off save-on-device', {
           category: 'SYSTEM_HEALTH',
           error,
         });
@@ -220,7 +227,11 @@ export const useSettings = ({
           showToast(`Downloaded ${result.synthesized + result.fromCache} clips for offline`, 'success');
           break;
         case 'cache-full':
-          showToast('Storage limit reached — raise it in Offline settings to download more', 'error');
+          // Inform + take the user to the control (owner 2026-07-17): scroll to + highlight the
+          // storage-limit selector so they can raise it. Downloads are never evicted to make room —
+          // when the store is full of downloads, raising the limit is the only way to fit more.
+          showToast("You're out of offline space — raise the storage limit to download more", 'error');
+          void focusControl('storage-limit');
           break;
         case 'offline':
           showToast('You are offline — connect to download audio', 'error');
@@ -388,8 +399,14 @@ export const useSettings = ({
     if (data.is_sound_enabled !== undefined) setIsSoundEnabled(data.is_sound_enabled);
   };
 
-  // Read by the auth slice when creating a brand-new profile row.
-  const getPrefsForNewProfile = () => ({ playbackSpeed, isSoundEnabled });
+  // Read by the auth slice when creating a brand-new profile row. SEC-3: a brand-new profile must
+  // inherit device DEFAULTS, never the CURRENT device prefs — otherwise user B's first profile (a
+  // fresh signup on a shared device) mirrors user A's playback speed / sound setting. Defence-in-depth
+  // alongside the auth-slice device-owner cleanup (which resets prefs before a switched-in user loads).
+  const getPrefsForNewProfile = () => ({
+    playbackSpeed: config.audio.defaultPlaybackSpeed,
+    isSoundEnabled: initialSoundEnabled(null),
+  });
 
   const handleSelectTutor = async (tutorId: string) => {
     if (supabase && user) {

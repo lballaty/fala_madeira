@@ -6,35 +6,52 @@
 //   the adapter layer. Falls back to localStorage (small KV) and an in-memory map when
 //   IndexedDB is unavailable (e.g. some private-browsing modes).
 //
-//   Bounded LRU (CONTENT-ARCHITECTURE §10): the blob store is a bounded cache. A blob
-//   metadata index (per-key {size, accessedAt}) is kept in the KV store under
-//   BLOB_META_KEY. getBlob/setBlob touch a key's accessedAt (most-recently-used), and
-//   setBlob(limits) evicts least-recently-used entries before writing when the store
-//   would breach maxEntries/maxBytes. blobUsage() reports exact count/bytes from the
-//   index (rebuilt lazily from the store if the index is missing/stale).
+//   Two audio tiers (EN-8, owner 2026-07-17): both are bounded LRUs (CONTENT-ARCHITECTURE §10)
+//   with their own {size, accessedAt} index in the KV store. 'audio' is the EPHEMERAL cache
+//   (cleared on logout, holds private non-hostable clips); 'audio_pinned' is the DURABLE saved
+//   store (survives logout/restart, holds curated public clips the user plays or downloads for
+//   offline) — cleared only when the user turns off "Save audio on device". Same LRU machinery
+//   serves both: getBlob/getPinnedBlob touch accessedAt; setBlob/setPinnedBlob(limits) evict
+//   least-recently-used entries before writing when a cap would be breached; blob/pinnedUsage()
+//   report exact count/bytes from the index (rebuilt lazily if missing/stale).
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
 import { openDB, IDBPDatabase } from 'idb';
-import { BlobLimits, BlobStoreUsage, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { BlobLimits, BlobStoreUsage, PinnedWriteOptions, PinnedWriteResult, PlatformError, StorageAdapter, StorageUsage } from '../types';
+import { logger } from '../../lib/logger';
 
 // Legacy names preserved from src/lib/audioCache.ts (pre-adapter) — do not rename,
 // or existing cached audio is orphaned.
 const DB_NAME = 'FalaMadeiraAudioCache';
-const DB_VERSION = 2;
+// v1 (legacy audioCache) held 'audio' only; v2 added 'kv'; v3 (EN-8) adds 'audio_pinned' for
+// never-evicted offline downloads. Every upgrade is additive/create-if-missing (see upgrade()),
+// so bumping the version never drops an existing user's cached audio.
+const DB_VERSION = 3;
 const BLOB_STORE = 'audio';
+const PINNED_STORE = 'audio_pinned';
 const KV_STORE = 'kv';
 const LOCAL_STORAGE_PREFIX = 'fm-kv:';
 
-// KV key holding the LRU index for the blob store: { [blobKey]: { size, accessedAt } }.
-// Lives in the KV store (small JSON) alongside blob payloads in the blob store.
+// KV keys holding the LRU index for each blob store: { [blobKey]: { size, accessedAt } }.
+// Live in the KV store (small JSON) alongside the blob payloads. Both the ephemeral 'audio'
+// cache and the durable 'audio_pinned' store are bounded LRUs (EN-8, owner 2026-07-17) and each
+// keeps its own index so eviction on one never disturbs the other.
 const BLOB_META_KEY = 'blob-lru-index';
+const PINNED_META_KEY = 'pinned-lru-index';
 
 interface BlobMetaEntry {
   /** Byte length of the stored blob. */
   size: number;
   /** Epoch ms of the last get/set — the LRU recency signal. */
   accessedAt: number;
+  /**
+   * Durable-store only (EN-8, owner 2026-07-17): true = an explicit offline DOWNLOAD that eviction
+   * must never reclaim. Only entries with `protected === false` (opportunistic auto-saved plays) are
+   * reclaimable. Undefined (legacy/rebuilt entries, e.g. pre-EN-8 downloads) is treated as PROTECTED
+   * — conservative, so we never auto-delete audio we can't classify. Unused by the 'audio' cache.
+   */
+  protected?: boolean;
 }
 
 type BlobMetaIndex = Record<string, BlobMetaEntry>;
@@ -49,6 +66,7 @@ export const createWebStorageAdapter = (): StorageAdapter => {
   // Last-resort session-scoped fallbacks when IndexedDB is unavailable.
   const memoryKv = new Map<string, unknown>();
   const memoryBlobs = new Map<string, ArrayBuffer>();
+  const memoryPinned = new Map<string, ArrayBuffer>();
 
   const getDB = async (): Promise<IDBPDatabase | null> => {
     if (idbBroken) return null;
@@ -59,21 +77,32 @@ export const createWebStorageAdapter = (): StorageAdapter => {
       }
       dbPromise = openDB(DB_NAME, DB_VERSION, {
         upgrade(db) {
-          // Version 1 (legacy audioCache) created 'audio' only; version 2 adds 'kv'.
+          // Additive, non-destructive: each store is created ONLY if missing, so a v1 ('audio'
+          // only) or v2 ('audio'+'kv') database upgrades to v3 keeping every existing blob.
           if (!db.objectStoreNames.contains(BLOB_STORE)) {
             db.createObjectStore(BLOB_STORE);
           }
           if (!db.objectStoreNames.contains(KV_STORE)) {
             db.createObjectStore(KV_STORE);
           }
+          // v3 (EN-8): pinned offline downloads — never LRU-evicted, no metadata index needed.
+          if (!db.objectStoreNames.contains(PINNED_STORE)) {
+            db.createObjectStore(PINNED_STORE);
+          }
         },
       });
     }
     try {
       return await dbPromise;
-    } catch {
+    } catch (e) {
       // IndexedDB refused to open (private mode, quota, corrupted profile) —
-      // degrade to localStorage/memory for the rest of the session.
+      // degrade to localStorage/memory for the rest of the session. EN-27 P1.6: this degrade was
+      // silent, so persisted state (offline audio, user prefs) quietly became volatile and vanished
+      // on reload with no trace. Log the downgrade.
+      logger.warn('WEB_STORAGE_INDEXEDDB_UNAVAILABLE', 'IndexedDB unavailable — degrading to localStorage/memory (state will not persist across reloads)', {
+        category: 'DATA_PROCESSING',
+        error: e,
+      });
       idbBroken = true;
       dbPromise = null;
       return null;
@@ -94,47 +123,48 @@ export const createWebStorageAdapter = (): StorageAdapter => {
 
   const now = (): number => Date.now();
 
-  const readBlobMeta = async (db: IDBPDatabase): Promise<BlobMetaIndex> => {
-    const raw = await db.get(KV_STORE, BLOB_META_KEY);
+  const readBlobMeta = async (db: IDBPDatabase, metaKey: string): Promise<BlobMetaIndex> => {
+    const raw = await db.get(KV_STORE, metaKey);
     return raw && typeof raw === 'object' ? (raw as BlobMetaIndex) : {};
   };
 
-  const writeBlobMeta = async (db: IDBPDatabase, meta: BlobMetaIndex): Promise<void> => {
-    await db.put(KV_STORE, meta, BLOB_META_KEY);
+  const writeBlobMeta = async (db: IDBPDatabase, meta: BlobMetaIndex, metaKey: string): Promise<void> => {
+    await db.put(KV_STORE, meta, metaKey);
   };
 
-  // Recompute the index from the actual blob store — used when the index is
+  // Recompute a store's index from its actual contents — used when the index is
   // missing (first run after upgrade, legacy cached audio) or when a caller
   // needs authoritative usage. Reads every blob's byteLength once.
-  const rebuildBlobMeta = async (db: IDBPDatabase): Promise<BlobMetaIndex> => {
+  const rebuildBlobMeta = async (db: IDBPDatabase, storeName: string, metaKey: string): Promise<BlobMetaIndex> => {
     const meta: BlobMetaIndex = {};
-    const keys = (await db.getAllKeys(BLOB_STORE)).map(String);
+    const keys = (await db.getAllKeys(storeName)).map(String);
     const stamp = now();
     for (const key of keys) {
-      const value = (await db.get(BLOB_STORE, key)) as ArrayBuffer | undefined;
+      const value = (await db.get(storeName, key)) as ArrayBuffer | undefined;
       if (value) meta[key] = { size: value.byteLength, accessedAt: stamp };
     }
-    await writeBlobMeta(db, meta);
+    await writeBlobMeta(db, meta, metaKey);
     return meta;
   };
 
-  // Ensure the index reflects the store: rebuild when it is empty but blobs
+  // Ensure a store's index reflects it: rebuild when the index is empty but blobs
   // exist (legacy/orphaned entries), otherwise trust it.
-  const ensureBlobMeta = async (db: IDBPDatabase): Promise<BlobMetaIndex> => {
-    const meta = await readBlobMeta(db);
+  const ensureBlobMeta = async (db: IDBPDatabase, storeName: string, metaKey: string): Promise<BlobMetaIndex> => {
+    const meta = await readBlobMeta(db, metaKey);
     if (Object.keys(meta).length === 0) {
-      const blobKeyCount = (await db.getAllKeys(BLOB_STORE)).length;
-      if (blobKeyCount > 0) return rebuildBlobMeta(db);
+      const blobKeyCount = (await db.getAllKeys(storeName)).length;
+      if (blobKeyCount > 0) return rebuildBlobMeta(db, storeName, metaKey);
     }
     return meta;
   };
 
-  // Evict least-recently-used entries until adding `incomingBytes` under
-  // `incomingKey` keeps the store within both limits. Mutates `meta` and the
-  // blob store; returns the number of entries evicted. A single entry larger
-  // than maxBytes is still stored (everything else is evicted first).
+  // Evict least-recently-used entries from `storeName` until adding `incomingBytes`
+  // under `incomingKey` keeps the store within both limits. Mutates `meta` and the
+  // store; returns the number of entries evicted. A single entry larger than
+  // maxBytes is still stored (everything else is evicted first).
   const evictToFit = async (
     db: IDBPDatabase,
+    storeName: string,
     meta: BlobMetaIndex,
     incomingKey: string,
     incomingBytes: number,
@@ -156,7 +186,7 @@ export const createWebStorageAdapter = (): StorageAdapter => {
       const overCount = maxEntries !== undefined && totalCount > maxEntries;
       const overBytes = maxBytes !== undefined && totalBytes > maxBytes;
       if (!overCount && !overBytes) break;
-      await db.delete(BLOB_STORE, key);
+      await db.delete(storeName, key);
       delete meta[key];
       totalBytes -= entry.size;
       totalCount -= 1;
@@ -274,12 +304,12 @@ export const createWebStorageAdapter = (): StorageAdapter => {
         const value = await db.get(BLOB_STORE, key);
         if (value === undefined) return null;
         // Touch recency (most-recently-used) so LRU eviction spares hot clips.
-        const meta = await ensureBlobMeta(db);
+        const meta = await ensureBlobMeta(db, BLOB_STORE, BLOB_META_KEY);
         const prev = meta[key];
         meta[key] = { size: (value as ArrayBuffer).byteLength, accessedAt: now() };
         // Only pay the index write when something actually changed.
         if (!prev || prev.accessedAt !== meta[key].accessedAt || prev.size !== meta[key].size) {
-          await writeBlobMeta(db, meta);
+          await writeBlobMeta(db, meta, BLOB_META_KEY);
         }
         return value as ArrayBuffer;
       }
@@ -289,12 +319,12 @@ export const createWebStorageAdapter = (): StorageAdapter => {
     async setBlob(key: string, data: ArrayBuffer, limits?: BlobLimits): Promise<number> {
       const db = await getDB();
       if (db) {
-        const meta = await ensureBlobMeta(db);
+        const meta = await ensureBlobMeta(db, BLOB_STORE, BLOB_META_KEY);
         // Evict BEFORE writing so the store never transiently overshoots the cap.
-        const evicted = limits ? await evictToFit(db, meta, key, data.byteLength, limits) : 0;
+        const evicted = limits ? await evictToFit(db, BLOB_STORE, meta, key, data.byteLength, limits) : 0;
         await db.put(BLOB_STORE, data, key);
         meta[key] = { size: data.byteLength, accessedAt: now() };
-        await writeBlobMeta(db, meta);
+        await writeBlobMeta(db, meta, BLOB_META_KEY);
         return evicted;
       }
       memoryBlobs.set(key, data);
@@ -305,10 +335,10 @@ export const createWebStorageAdapter = (): StorageAdapter => {
       const db = await getDB();
       if (db) {
         await db.delete(BLOB_STORE, key);
-        const meta = await readBlobMeta(db);
+        const meta = await readBlobMeta(db, BLOB_META_KEY);
         if (key in meta) {
           delete meta[key];
-          await writeBlobMeta(db, meta);
+          await writeBlobMeta(db, meta, BLOB_META_KEY);
         }
         return;
       }
@@ -329,12 +359,12 @@ export const createWebStorageAdapter = (): StorageAdapter => {
       if (db) {
         if (!prefix) {
           await db.clear(BLOB_STORE);
-          await writeBlobMeta(db, {}); // index tracks the (now empty) store
+          await writeBlobMeta(db, {}, BLOB_META_KEY); // index tracks the (now empty) store
         } else {
           const keys = (await db.getAllKeys(BLOB_STORE)).map(String).filter((k) => k.startsWith(prefix));
           const tx = db.transaction(BLOB_STORE, 'readwrite');
           await Promise.all([...keys.map((k) => tx.store.delete(k)), tx.done]);
-          const meta = await readBlobMeta(db);
+          const meta = await readBlobMeta(db, BLOB_META_KEY);
           let changed = false;
           for (const k of keys) {
             if (k in meta) {
@@ -342,12 +372,121 @@ export const createWebStorageAdapter = (): StorageAdapter => {
               changed = true;
             }
           }
-          if (changed) await writeBlobMeta(db, meta);
+          if (changed) await writeBlobMeta(db, meta, BLOB_META_KEY);
         }
         return;
       }
       for (const key of [...memoryBlobs.keys()]) {
         if (matchesPrefix(key, prefix)) memoryBlobs.delete(key);
+      }
+    },
+
+    async getPinnedBlob(key: string): Promise<ArrayBuffer | null> {
+      const db = await getDB();
+      if (db) {
+        const value = await db.get(PINNED_STORE, key);
+        if (value === undefined) return null;
+        // Touch recency so LRU eviction spares recently-played saved clips. Preserve the protected
+        // flag — a recency touch must never downgrade a download to a reclaimable play.
+        const meta = await ensureBlobMeta(db, PINNED_STORE, PINNED_META_KEY);
+        const prev = meta[key];
+        meta[key] = { size: (value as ArrayBuffer).byteLength, accessedAt: now(), protected: prev?.protected };
+        await writeBlobMeta(db, meta, PINNED_META_KEY);
+        return value as ArrayBuffer;
+      }
+      return memoryPinned.get(key) ?? null;
+    },
+
+    async setPinnedBlob(key: string, data: ArrayBuffer, options?: PinnedWriteOptions): Promise<PinnedWriteResult> {
+      const db = await getDB();
+      if (db) {
+        // Bounded, durable, PROTECTED LRU (EN-8, owner 2026-07-17). Eviction reclaims ONLY
+        // unprotected (auto-saved play) entries — never a protected download. If the incoming entry
+        // cannot fit even after reclaiming every play (protected downloads fill the budget), the
+        // write is REFUSED (stored:false) rather than evicting a download; the caller reacts.
+        const meta = await ensureBlobMeta(db, PINNED_STORE, PINNED_META_KEY);
+        const protect = options?.protect ?? false;
+        const limits = options?.limits;
+        let evicted = 0;
+
+        if (limits && (limits.maxEntries !== undefined || limits.maxBytes !== undefined)) {
+          const { maxEntries, maxBytes } = limits;
+          const others = Object.entries(meta).filter(([k]) => k !== key);
+          // Undefined `protected` (legacy/rebuilt) counts as PROTECTED — only explicit false is reclaimable.
+          const protectedEntries = others.filter(([, m]) => m.protected !== false);
+          const reclaimable = others
+            .filter(([, m]) => m.protected === false)
+            .sort((a, b) => a[1].accessedAt - b[1].accessedAt); // oldest play first
+          const protectedBytes = protectedEntries.reduce((sum, [, m]) => sum + m.size, 0);
+          const protectedCount = protectedEntries.length;
+
+          // Best achievable (all plays reclaimed): does the incoming fit alongside the protected set?
+          const minBytes = protectedBytes + data.byteLength;
+          const minCount = protectedCount + 1;
+          const cannotFit =
+            (maxBytes !== undefined && minBytes > maxBytes) ||
+            (maxEntries !== undefined && minCount > maxEntries);
+          if (cannotFit) return { evicted: 0, stored: false }; // would require evicting a download
+
+          // Reclaim oldest plays until the incoming fits within both caps.
+          let totalBytes = protectedBytes + reclaimable.reduce((sum, [, m]) => sum + m.size, 0) + data.byteLength;
+          let totalCount = protectedCount + reclaimable.length + 1;
+          for (const [rk, entry] of reclaimable) {
+            const overBytes = maxBytes !== undefined && totalBytes > maxBytes;
+            const overCount = maxEntries !== undefined && totalCount > maxEntries;
+            if (!overBytes && !overCount) break;
+            await db.delete(PINNED_STORE, rk);
+            delete meta[rk];
+            totalBytes -= entry.size;
+            totalCount -= 1;
+            evicted += 1;
+          }
+        }
+
+        await db.put(PINNED_STORE, data, key);
+        // Never downgrade an existing download to a reclaimable play on rewrite.
+        const wasProtected = meta[key]?.protected === true;
+        meta[key] = { size: data.byteLength, accessedAt: now(), protected: protect || wasProtected };
+        await writeBlobMeta(db, meta, PINNED_META_KEY);
+        return { evicted, stored: true };
+      }
+      memoryPinned.set(key, data);
+      return { evicted: 0, stored: true };
+    },
+
+    async pinnedUsage(): Promise<BlobStoreUsage> {
+      const db = await getDB();
+      if (db) {
+        const meta = await ensureBlobMeta(db, PINNED_STORE, PINNED_META_KEY);
+        const entries = Object.values(meta);
+        return { count: entries.length, bytes: entries.reduce((sum, m) => sum + m.size, 0) };
+      }
+      let bytes = 0;
+      for (const buf of memoryPinned.values()) bytes += buf.byteLength;
+      return { count: memoryPinned.size, bytes };
+    },
+
+    async clearPinned(prefix?: string): Promise<void> {
+      const db = await getDB();
+      if (db) {
+        if (!prefix) {
+          await db.clear(PINNED_STORE);
+          await writeBlobMeta(db, {}, PINNED_META_KEY);
+        } else {
+          const keys = (await db.getAllKeys(PINNED_STORE)).map(String).filter((k) => k.startsWith(prefix));
+          const tx = db.transaction(PINNED_STORE, 'readwrite');
+          await Promise.all([...keys.map((k) => tx.store.delete(k)), tx.done]);
+          const meta = await readBlobMeta(db, PINNED_META_KEY);
+          let changed = false;
+          for (const k of keys) {
+            if (k in meta) { delete meta[k]; changed = true; }
+          }
+          if (changed) await writeBlobMeta(db, meta, PINNED_META_KEY);
+        }
+        return;
+      }
+      for (const key of [...memoryPinned.keys()]) {
+        if (matchesPrefix(key, prefix)) memoryPinned.delete(key);
       }
     },
 
@@ -370,7 +509,7 @@ export const createWebStorageAdapter = (): StorageAdapter => {
     async blobUsage(): Promise<BlobStoreUsage> {
       const db = await getDB();
       if (db) {
-        const meta = await ensureBlobMeta(db);
+        const meta = await ensureBlobMeta(db, BLOB_STORE, BLOB_META_KEY);
         const entries = Object.values(meta);
         return {
           count: entries.length,

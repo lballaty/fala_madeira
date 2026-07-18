@@ -181,6 +181,20 @@ if [ "${DRY_RUN}" -eq 1 ]; then
   exit 0
 fi
 
+# --- 3a. BRANCH GUARD: a REAL deploy may only run from the `main` release branch ----------------
+# The version bump + release-notes cut happen on `main` (ship.sh STAGE 0, gated on BRANCH=main).
+# Deploying from `develop` (or any topic branch) uploads an UNBUMPED, off-process artifact to the
+# live host — the exact failure this guard prevents. Enforced HERE at the upload chokepoint so no
+# entry point (ship.sh OR a direct deploy-verpex.sh call) can bypass it. Dry-run already exited
+# above, so it remains allowed from any branch. Override intentionally with ALLOW_NONMAIN_DEPLOY=1
+# only for a documented exception (e.g. a hotfix worktree), never as a routine convenience.
+CURRENT_BRANCH="$(git -C "${REPO_ROOT}" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '')"
+if [ "${CURRENT_BRANCH}" != "main" ] && [ "${ALLOW_NONMAIN_DEPLOY:-0}" -ne 1 ]; then
+  die "REAL deploy refused: must run from the 'main' release branch — this worktree is on '${CURRENT_BRANCH}'.
+       Cut the release first (in the -release worktree): git merge develop, then 'npm run deploy:staging'.
+       To validate from any branch without uploading, add --dry-run."
+fi
+
 # --- 3b. REAL DEPLOY: creds required, scoped target enforced -----------------------------------
 if [ ! -f "${ENV_FILE}" ]; then
   die "real deploy requires ${ENV_FILE} (git-ignored). Copy it from ${ENV_EXAMPLE} and fill it in.
@@ -238,7 +252,10 @@ say "deploying dist/ -> ${REMOTE}  (target: ${TARGET})"
 if command -v rsync >/dev/null 2>&1; then
   say "transport: rsync over ssh"
   # Preserve cPanel/Verpex server-managed dirs: .well-known (AutoSSL/ACME) and cgi-bin.
-  RSYNC_CMD=(rsync -avz --delete --exclude '.well-known/' --exclude 'cgi-bin/' -e "${RSYNC_SSH}" "${DIST_DIR}/" "${REMOTE}")
+  # EN-8: also preserve the hosted-TTS store (audio/) and the reconciliation cron (audio-sync/) —
+  # neither lives in dist/, so without these excludes `--delete` would wipe every hosted clip and
+  # the cron on each web deploy. Verpex /audio is the durable home for pre-generated audio.
+  RSYNC_CMD=(rsync -avz --delete --exclude '.well-known/' --exclude 'cgi-bin/' --exclude 'audio/' --exclude 'audio-sync/' -e "${RSYNC_SSH}" "${DIST_DIR}/" "${REMOTE}")
   if [ "${USE_SSHPASS}" -eq 1 ]; then
     sshpass -p "${VERPEX_PASS}" "${RSYNC_CMD[@]}" || die "rsync upload failed"
   else

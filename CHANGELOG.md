@@ -4,8 +4,8 @@
 **Description:** Release changelog for fala_madeira. Entries grouped by CalVer `YYYY.MM.DD.N`.
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
-**Last Updated:** 2026-07-15
-**Last Updated By:** claude-opus-4-8 (release 2026.07.15.5 — SEC-2 + EN-10)
+**Last Updated:** 2026-07-18
+**Last Updated By:** claude-orchestrator (2026.07.18.3 — SEC-3 / EN-23 / EN-8 device persistence / TB-16/17/21/22/23 release notes prepared for the next cut)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,30 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.18.3
+
+- Security: **a shared device now fully resets between users even if the previous person never signed out** — logging in as a different account clears the prior user's on-device data, and brand-new profiles start from clean defaults. (SEC-3)
+- New: **admins can manage generated audio** — a panel to review the audio inventory, see quality signals (silence scoring), mark a clip bad, and queue it for regeneration. (EN-23)
+- Improved: **audio you play is now kept on your device** — curated clips are saved to a durable, size-bounded store on play, so they load instantly and work offline, and survive logout/restart; turning off "Save audio on device" clears that saved store. (EN-8)
+- Fixed: **the video player now shows an explicit "video unavailable" message** instead of a blank area when a clip can't load. (TB-16)
+- Fixed: **study time now counts active practice, not wall-clock** — time only accrues while you're actually working, and a partial minute is saved on logout. (TB-17)
+- Improved: **time-spent now reads in hours past 60 minutes** and is clearly labelled "Total time." (TB-21)
+- Fixed: **the Tutor's free chat has a "New chat" control** to start over, and a dead Settings button in the tutor header was removed. (TB-22)
+- Fixed: **the mute toggle shows a proper mute icon** (crossed-out speaker) instead of a bare X. (TB-23)
+
+## 2026.07.18.2
+
+- Internal: made `src/config.ts` import-safe when `import.meta.env` is absent (Playwright's Node collection context) — an unguarded `VITE_AUDIO_VERPEX_BASE` read (from the EN-8 server-audio tier) crashed the entire e2e suite at load (0 tests collected). No app-facing change. (EN-8 follow-up)
+
+## 2026.07.18.1
+
+- Improved: **admin User Access now finds people by a partial email** — type any part of an address (no need to remember the whole thing) and pick from the matches, or leave the box blank to **browse all users**. A single match jumps straight to the grant form. (EN-26)
+
+## 2026.07.17.2
+
+- Improved: **vocabulary practice is now an objective quiz, not self-graded flashcards.** For each word you hear it and **type what it means**, then **say it** (Portuguese speech check); the app decides right/partial/wrong and schedules the word to come back sooner or later accordingly — no more rating yourself. Words are drawn from the situations you've actually worked on and can be narrowed by theme (daily / social / travel / work). Without a microphone it falls back to a typed-only pass/fail. (EN-18)
+- Internal: cleared an accessibility lint finding on the vocabulary answer field (focus is now set programmatically on mount rather than via `autoFocus`), unblocking a fully green preflight. (Audit A9)
 
 ## 2026.07.17.1
 

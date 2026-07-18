@@ -11,6 +11,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AlertTriangle, BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { formatDuration } from '../../lib/duration';
 import { useTheme, type ThemePreference } from '../../hooks/useTheme';
 import { LegalPage, LegalDocId } from '../legal';
 import { AboutModal } from '../about';
@@ -167,9 +168,11 @@ export const SettingsView = ({
           <p className="text-ios-gray">Member since 2026</p>
           <div className="mt-4 flex items-center justify-center space-x-4">
             <div className="bg-ios-bg px-4 py-2 rounded-2xl">
-              <p className="text-[10px] uppercase tracking-wider font-bold text-ios-gray">Time Spent</p>
+              {/* TB-21: label is explicit ("Total time" = cumulative, incl. this session) and the
+                  value scales past minutes (min → h → d) instead of an ever-growing "Nm". */}
+              <p className="text-[10px] uppercase tracking-wider font-bold text-ios-gray">Total time</p>
               <p className="text-lg font-bold text-ios-blue">
-                {Math.floor(((profile?.total_time_spent || 0) + totalTimeInSeconds) / 60)}m
+                {formatDuration((profile?.total_time_spent || 0) + totalTimeInSeconds)}
               </p>
             </div>
             <div className="bg-ios-bg px-4 py-2 rounded-2xl">
@@ -436,6 +439,7 @@ export const SettingsView = ({
             onChange={(e) => setCacheLimitBytes(parseInt(e.target.value, 10))}
             disabled={!saveAudioOnDevice}
             aria-label="Storage limit"
+            data-testid="storage-limit"
             className="p-2 rounded-xl bg-ios-bg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ios-blue disabled:opacity-40"
           >
             {config.audio.cacheLimitOptionsBytes.map((bytes) => (

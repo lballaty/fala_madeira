@@ -8,8 +8,10 @@
 // Created: 2026-07-09
 
 import { Lesson, Tutor, VocabResult } from "../types";
-import { audioCache } from "../lib/audioCache";
-import { getSupabase } from "../lib/supabase";
+import { audioCache, saveAudioOnDeviceEnabled } from "../lib/audioCache";
+import { keyToServerPath } from "../lib/audioKey";
+import { resolveVoice } from "../lib/voiceType";
+import { getSupabase, publicObjectUrl } from "../lib/supabase";
 import { logger, userMessage } from "../lib/logger";
 import { platform } from "../platform";
 import { config } from "../config";
@@ -34,6 +36,20 @@ export class EdgeFunctionError extends Error {
     this.name = 'EdgeFunctionError';
     this.code = code;
     this.ref = ref;
+  }
+}
+
+/**
+ * Thrown by the offline-DOWNLOAD path (synthesizeCached with `pinned:true`) when the freshly
+ * synthesized clip cannot be saved without evicting a protected download — i.e. the durable saved
+ * store is full of downloads (EN-8, owner 2026-07-17). The offline-download loop catches this to
+ * stop early with a 'cache-full' status (deterministic — never retried) so the UI can prompt the
+ * user to raise the storage limit. Playback never throws this: a play silently falls back to cache.
+ */
+export class OfflineStorageFullError extends Error {
+  constructor() {
+    super('Offline storage is full. Raise the storage limit to save more audio.');
+    this.name = 'OfflineStorageFullError';
   }
 }
 
@@ -192,6 +208,19 @@ const invokeEdgeFunction = async <T = unknown>(
 // platform audio adapter (shared AudioContext on web, native shell later).
 const TTS_SAMPLE_RATE = config.audio.ttsSampleRateHz;
 
+/** Playback-time options threaded from the caller through playSpeech into synthesizeCached. */
+export interface PlaySpeechOptions {
+  /**
+   * EN-8: does the caller's text qualify to be SERVER-HOSTED for reuse? true ONLY for curated,
+   * enumerable content (lesson/phrase/vocab/dialogue/scripted-roleplay/pre-gen). Free-form or
+   * user/AI text (tutor free-chat, simulator free-mode) MUST be false/omitted — the edge
+   * write-back never hosts it (COORD-2 BLOCKING-1). Omitted defaults to not-hostable (safe).
+   */
+  hostable?: boolean;
+  /** Explicit voice_type override (dialogue per-speaker lines); else derived from the tutor. */
+  voiceType?: string;
+}
+
 export const geminiService = {
   async generateLesson(topic: string, tutor?: Tutor) {
     const data = await invokeEdgeFunction<{ result?: Partial<Lesson> }>('ai-gateway', { action: 'generate-lesson', topic, tutor });
@@ -246,16 +275,16 @@ export const geminiService = {
     platform.audio.stop();
   },
 
-  async playSpeech(text: string, tutor?: Tutor, speed: number = 1.0, onEnd?: () => void) {
+  async playSpeech(text: string, tutor?: Tutor, speed: number = 1.0, onEnd?: () => void, opts: PlaySpeechOptions = {}) {
     this.stopSpeech();
 
     try {
-      // Cache key = provider:voice:hash(text), NO speed (speed is a playback param applied
-      // by the audio adapter's playbackRate, so one synthesized clip is reused at any speed).
-      // The client keys on the requested voice fingerprint (tutor id) with 'default' provider
-      // — the server resolves the actual provider/voice and returns them in metadata (logged);
-      // reads and writes for the same logical request agree because both use this key.
-      const arrayBuffer = await synthesizeCached(text, { tutorId: tutor?.id, tutor });
+      // Cache key = provider:voiceType:hash(text), NO speed (speed is a playback param applied by
+      // the audio adapter's playbackRate, so one synthesized clip is reused at any speed). EN-8:
+      // the voice slot is the RESOLVED archetype (voiceTypeForTutor), NOT the raw tutor id, so live
+      // playback, offline downloads, and server-hosted clips share one key. `hostable` marks curated
+      // text the server may host (forwarded to the tts action; consumed by the edge write-back).
+      const arrayBuffer = await synthesizeCached(text, { tutor, voiceType: opts.voiceType, hostable: opts.hostable });
 
       // Resolves once playback has started; onEnd fires when the clip finishes
       // (or is stopped) — same contract as the pre-adapter implementation.
@@ -290,55 +319,216 @@ interface TtsResponse {
 }
 
 export interface SynthesizeOptions {
-  /** Voice fingerprint for the cache key (tutor id or voice_type); 'default' when omitted. */
-  tutorId?: string;
-  /** Passed to the edge function so the server picks the right voice from the tutor. */
+  /** Tutor whose RESOLVED voice archetype (voiceTypeForTutor) keys the clip + picks the server voice. */
   tutor?: Tutor;
-  /** voice_type override forwarded to the server (dialogue lines carry per-speaker types). */
+  /** Explicit voice_type override (dialogue lines carry per-speaker archetypes); else derived from the tutor. */
   voiceType?: string;
   /** Provider fingerprint for the cache key; 'default' lets the server pick (default chain). */
   provider?: string;
+  /**
+   * EN-8: curated/enumerable text the server MAY host for reuse. Forwarded to the tts action and
+   * consumed by the edge write-back (which is additionally env-flag gated). Omitted = not-hostable.
+   */
+  hostable?: boolean;
+  /**
+   * EN-8: when true, a freshly-synthesized clip is written to the PINNED device store (offline
+   * downloads, never LRU-evicted) instead of the bounded LRU cache. Set by the offline downloader.
+   */
+  pinned?: boolean;
 }
 
+/** Which tier ultimately served a clip — emitted as `tts_source` for the admin "what is where". */
+type TtsTier = 'cache' | 'pinned' | 'verpex' | 'supabase' | 'provider';
+
+const logTtsSource = (tier: TtsTier, key: string, requestId?: string): void => {
+  logger.debug('tts_source', `tts audio served from ${tier}`, {
+    category: 'DATA_PROCESSING',
+    correlationId: requestId,
+    details: { tier, key },
+  });
+};
+
+// Warm the bounded LRU cache WITHOUT blocking the retrieval path (owner requirement: storage writes
+// are non-blocking on playback — audio must start immediately, not wait on an IndexedDB write).
+// Failures are logged (WARN), never swallowed; eviction churn is logged at debug.
+const cacheInBackground = (cacheKey: string, buffer: ArrayBuffer, requestId?: string): void => {
+  void audioCache.set(cacheKey, buffer)
+    .then((evicted) => {
+      if (evicted > 0) {
+        logger.debug('tts_cache_evicted', `bounded audio cache evicted ${evicted} least-recently-used clip(s)`, {
+          category: 'SYSTEM_HEALTH',
+          correlationId: requestId,
+          details: { evicted },
+        });
+      }
+    })
+    .catch((err) => {
+      logger.warn('tts_cache_write_failed', 'background audio cache write failed (clip still played)', {
+        category: 'SYSTEM_HEALTH',
+        correlationId: requestId,
+        error: err,
+      });
+    });
+};
+
+// Persist a just-played clip to the DURABLE saved store WITHOUT blocking playback (owner: audio
+// starts immediately). The saved store is bounded, so a write may evict least-recently-used saved
+// clips (logged at debug). Failures are logged (WARN), never swallowed. EN-8.
+const pinInBackground = (cacheKey: string, buffer: ArrayBuffer, requestId?: string): void => {
+  // Auto-saved play (protect:false) — reclaimable, and NEVER evicts a protected download.
+  void audioCache.setPinned(cacheKey, buffer, { protect: false })
+    .then((res) => {
+      if (!res.stored) {
+        // Saved store is full of protected downloads: keep the clip fast for THIS session in the
+        // ephemeral cache instead (no nag — offline durability yields to explicit downloads).
+        cacheInBackground(cacheKey, buffer, requestId);
+        return;
+      }
+      if (res.evicted > 0) {
+        logger.debug('tts_saved_evicted', `saved-audio store reclaimed ${res.evicted} least-recently-used auto-saved clip(s)`, {
+          category: 'SYSTEM_HEALTH',
+          correlationId: requestId,
+          details: { evicted: res.evicted },
+        });
+      }
+    })
+    .catch((err) => {
+      logger.warn('tts_saved_write_failed', 'background saved-audio write failed (clip still played)', {
+        category: 'SYSTEM_HEALTH',
+        correlationId: requestId,
+        error: err,
+      });
+    });
+};
+
+// EN-8 (owner 2026-07-17): route a just-played clip to the right device tier, non-blocking.
+// A CURATED clip (`hostable`) with "Save audio on device" ON goes to the DURABLE saved store —
+// a local file that serves BOTH intents at once (local ⇒ fast, persistent ⇒ offline). Everything
+// else (private free-chat / user text, or saving turned off) goes to the EPHEMERAL cache, which is
+// cleared on logout (SEC-2 privacy floor: a shared device must not keep the prior user's private
+// audio). This is the single place playback decides "cache vs save" so the two never conflate.
+const persistPlayedClip = (
+  cacheKey: string,
+  buffer: ArrayBuffer,
+  opts: { hostable?: boolean },
+  requestId?: string,
+): void => {
+  if (opts.hostable && saveAudioOnDeviceEnabled()) {
+    pinInBackground(cacheKey, buffer, requestId);
+  } else {
+    cacheInBackground(cacheKey, buffer, requestId);
+  }
+};
+
+// Best-effort GET of pre-hosted raw PCM. Returns the bytes on a 2xx NON-HTML non-empty body, else
+// null. NEVER throws: a 404 (not hosted yet), CORS, timeout, or network drop is an EXPECTED miss
+// that must fall through to the next tier — not an error path (playback still reaches the provider).
+// Uses the SHORT server-tier timeout so a slow/hanging host aborts fast instead of stalling audio.
+const tryFetchPcm = async (url: string): Promise<ArrayBuffer | null> => {
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(config.audio.serverTierTimeoutMs) });
+    if (!res.ok) return null;
+    // SPA hosts (Verpex .htaccess) rewrite a MISS to the index.html shell WITH a 200 — an HTML body
+    // is a miss, not PCM. A real hosted clip is octet-stream/audio, never text/html. Guard both
+    // sides: the server-side fix is excluding /audio from the SPA fallback, this is the client belt.
+    if ((res.headers.get('content-type') ?? '').includes('text/html')) return null;
+    const buf = await res.arrayBuffer();
+    return buf.byteLength > 0 ? buf : null;
+  } catch {
+    return null;
+  }
+};
+
+interface ServerTierHit { buffer: ArrayBuffer; tier: 'verpex' | 'supabase'; }
+
 /**
- * Fetch (or reuse from the bounded LRU cache) the PCM audio for `text`. Shared by
- * playSpeech and the offline-download pre-generation (src/lib/audio-download.ts) so both
- * key the cache identically. Throws a userMessage-wrapped Error on empty audio (the edge
+ * EN-8 server audio tiers: try the durable Verpex mirror first, then the Supabase public buffer,
+ * for a pre-hosted clip (raw 24kHz PCM — same shape the provider returns). Returns the first hit
+ * or null when both miss/are unreachable. Both tiers are OPTIONAL and best-effort: until the
+ * operator deploys the server side (and sets VITE_AUDIO_VERPEX_BASE / the bucket), every probe
+ * simply misses and playback falls through to the configured provider unchanged.
+ */
+const fetchServerTier = async (cacheKey: string): Promise<ServerTierHit | null> => {
+  const path = keyToServerPath(cacheKey);
+
+  const verpexUrl = `${config.audio.verpexBase.replace(/\/$/, '')}/${path}`;
+  const verpex = await tryFetchPcm(verpexUrl);
+  if (verpex) return { buffer: verpex, tier: 'verpex' };
+
+  const supabaseUrl = publicObjectUrl(config.audio.supabaseAudioBucket, path);
+  if (supabaseUrl) {
+    const supa = await tryFetchPcm(supabaseUrl);
+    if (supa) return { buffer: supa, tier: 'supabase' };
+  }
+  return null;
+};
+
+/**
+ * Fetch (or reuse from a device/server tier) the PCM audio for `text`. Lookup order (EN-8):
+ * device LRU cache → pinned downloads → Verpex mirror → Supabase buffer → configured provider.
+ * Shared by playSpeech and the offline-download pre-generation (src/lib/audio-download.ts) so all
+ * paths key identically. Throws a userMessage-wrapped Error on empty provider audio (the edge
  * choke point in invokeEdgeFunction already logs transport failures with correlation IDs).
  */
 export const synthesizeCached = async (text: string, options: SynthesizeOptions = {}): Promise<ArrayBuffer> => {
-  const voice = options.voiceType || options.tutorId || 'default';
+  // EN-8: key by the RESOLVED voice archetype (explicit voiceType, else voiceTypeForTutor(tutor)),
+  // never the raw tutor id — so every call path that means the same voice hits the same clip.
+  const voice = resolveVoice(options);
   const cacheKey = audioCache.buildKey(options.provider || 'default', voice, text);
 
   const cached = await audioCache.get(cacheKey);
-  if (cached) return cached;
+  if (cached) { logTtsSource('cache', cacheKey); return cached; }
 
-  // Server picks the voice from the tutor/voiceType and enforces the daily voice limit;
-  // the response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
+  // EN-8 lookup order: bounded LRU cache (above) → PINNED offline store → Verpex/Supabase server
+  // tiers → configured provider (below). Pinned holds user-downloaded clips eviction never removes.
+  const pinned = await audioCache.getPinned(cacheKey);
+  if (pinned) { logTtsSource('pinned', cacheKey); return pinned; }
+
+  // Server tiers: a pre-hosted clip serves WITHOUT paying the provider (the core EN-8 cost/503
+  // win). On a hit, warm the device LRU cache so subsequent plays are local, then return.
+  const serverHit = await fetchServerTier(cacheKey);
+  if (serverHit) {
+    logTtsSource(serverHit.tier, cacheKey);
+    // Warm a device tier (non-blocking) so subsequent plays are local. A hosted clip is curated, so
+    // with "Save audio on device" ON it lands in the durable saved store (⇒ available offline too).
+    persistPlayedClip(cacheKey, serverHit.buffer, options);
+    return serverHit.buffer;
+  }
+
+  // Server picks the voice from the tutor/voiceType and enforces the daily voice limit; the
+  // response carries base64 PCM (24kHz mono s16le) plus resolved provider/voice metadata.
+  // `hostable` tells the edge whether this is curated text it may host for reuse (EN-8 write-back).
   const data = await invokeEdgeFunction<TtsResponse>('ai-gateway', {
     action: 'tts',
     text,
     tutor: options.tutor,
     voiceType: options.voiceType,
     provider: options.provider,
+    hostable: options.hostable,
   });
   const base64Audio = data?.audio;
   if (!base64Audio) {
     const event = logger.error('tts_empty_audio', 'TTS edge function returned no audio payload', {
       category: 'AI_DECISION',
       correlationId: data?.requestId,
-      details: { textLength: text.length, tutorId: options.tutorId, voiceType: options.voiceType },
+      details: { textLength: text.length, voiceType: voice },
     });
     throw new Error(userMessage('TTS_EMPTY_AUDIO', 'The voice service returned no audio. Please try again.', event.request_id));
   }
   const arrayBuffer = Uint8Array.from(atob(base64Audio), c => c.charCodeAt(0)).buffer;
-  const evicted = await audioCache.set(cacheKey, arrayBuffer);
-  if (evicted > 0) {
-    logger.debug('tts_cache_evicted', `bounded audio cache evicted ${evicted} least-recently-used clip(s)`, {
-      category: 'SYSTEM_HEALTH',
-      correlationId: data?.requestId,
-      details: { evicted, resolvedProvider: data?.provider, resolvedVoice: data?.voice },
-    });
+  logTtsSource('provider', cacheKey, data?.requestId);
+  if (options.pinned) {
+    // Offline download: AWAIT the durable write (protect:true — never auto-evicted). The download's
+    // PURPOSE is persistence, so it must land before the run counts the clip done (fire-and-forget
+    // here would reintroduce the EN-7 "download reported complete but clip not saved"). If it cannot
+    // fit without evicting another download, throw so the loop stops early + prompts to raise the
+    // storage limit (deterministic, not retried). Blocks the download, not playback.
+    const res = await audioCache.setPinned(cacheKey, arrayBuffer, { protect: true });
+    if (!res.stored) throw new OfflineStorageFullError();
+  } else {
+    // Playback: persist WITHOUT blocking so audio starts immediately (owner requirement). Curated +
+    // "Save audio on device" ON ⇒ durable saved store (fast + offline); otherwise ⇒ ephemeral cache.
+    persistPlayedClip(cacheKey, arrayBuffer, options, data?.requestId);
   }
   return arrayBuffer;
 };

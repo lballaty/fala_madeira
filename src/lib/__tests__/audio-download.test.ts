@@ -11,19 +11,42 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('../../content/repository', () => ({ contentRepository: { listSituations: vi.fn() } }));
-vi.mock('../../services/geminiService', () => ({ synthesizeCached: vi.fn(async () => new ArrayBuffer(8)) }));
+// OfflineStorageFullError and EdgeFunctionError must be the REAL classes (not stubs) so the
+// download loop's `instanceof` checks work — EN-8 catches OfflineStorageFullError to stop early with
+// 'cache-full'; EN-27 uses EdgeFunctionError for the deterministic-vs-transient retry split.
+vi.mock('../../services/geminiService', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../services/geminiService')>();
+  return {
+    synthesizeCached: vi.fn(async () => new ArrayBuffer(8)),
+    OfflineStorageFullError: actual.OfflineStorageFullError,
+    EdgeFunctionError: actual.EdgeFunctionError,
+  };
+});
+// Shrink the retry backoff so the transient-retry test doesn't sleep for seconds.
+vi.mock('../../config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../config')>();
+  return { config: { ...actual.config, offline: { ...actual.config.offline, downloadRetryBaseMs: 1, downloadMaxAttempts: 3 } } };
+});
 vi.mock('../audioCache', () => ({
   audioCache: {
     buildKey: vi.fn((provider: string, voice: string, text: string) => `${provider}:${voice}:${text}`),
     get: vi.fn(async () => null),
+    getPinned: vi.fn(async () => null),
     usage: vi.fn(async () => ({ bytes: 0, count: 0 })),
+    pinnedUsage: vi.fn(async () => ({ bytes: 0, count: 0 })),
   },
   readCacheLimitBytes: vi.fn(() => 5_000_000_000),
 }));
-vi.mock('../logger', () => ({ logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() } }));
+// userMessage is exported alongside logger — the geminiService mock uses importOriginal to expose
+// the REAL OfflineStorageFullError/EdgeFunctionError classes, which pulls in real geminiService whose
+// top-level import destructures userMessage from here, so the mock must provide it too (merge glue).
+vi.mock('../logger', () => ({
+  logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() },
+  userMessage: (_code: string, message: string) => message,
+}));
 
 import { contentRepository } from '../../content/repository';
-import { synthesizeCached } from '../../services/geminiService';
+import { synthesizeCached, OfflineStorageFullError, EdgeFunctionError } from '../../services/geminiService';
 import { audioCache } from '../audioCache';
 import { downloadForOffline } from '../audio-download';
 import type { Situation } from '../../content/schema';
@@ -63,6 +86,36 @@ describe('downloadForOffline', () => {
     expect(progress.at(-1)).toBe(4); // progress reaches total
   });
 
+  it('keys the pre-check by the RESOLVED voice (not a literal "default"), matching playback (EN-7/EN-8)', async () => {
+    // A phrase carries no voice_type → resolveVoice → the 'teacher' archetype, the SAME value
+    // geminiService.synthesizeCached resolves for a default play. Before normalization the
+    // downloader keyed the voice slot as the literal 'default', so downloaded phrases were never
+    // reused at play time. Asserting the resolved 'teacher' slot locks the fix.
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    await downloadForOffline({ trackId: 't1' });
+    expect(audioCache.buildKey).toHaveBeenCalledWith('default', 'teacher', 'Bom dia');
+  });
+
+  it('synthesizes curated download clips with hostable:true (EN-8 server-hosting scope)', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    await downloadForOffline({ trackId: 't1' });
+    expect(synthesizeCached).toHaveBeenCalledWith('Bom dia', expect.objectContaining({ hostable: true }));
+  });
+
+  it('stops with cache-full (no retry) when the saved store is full of downloads (EN-8)', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia', 'Boa tarde', 'Obrigado'])]);
+    // First clip saves; the second cannot fit (store full of protected downloads) → the loop must
+    // stop with cache-full and NOT retry the deterministic full error (would waste synthesis calls).
+    vi.mocked(synthesizeCached)
+      .mockResolvedValueOnce(new ArrayBuffer(8))
+      .mockRejectedValueOnce(new OfflineStorageFullError())
+      .mockResolvedValue(new ArrayBuffer(8));
+    const result = await downloadForOffline({ trackId: 't1' });
+    expect(result.status).toBe('cache-full');
+    expect(result.synthesized).toBe(1);                 // only the first clip landed
+    expect(synthesizeCached).toHaveBeenCalledTimes(2);  // stopped at the full one — no retry, no 3rd clip
+  });
+
   it('counts already-cached clips as fromCache and skips the network', async () => {
     vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Olá', 'Adeus'])]);
     vi.mocked(audioCache.get).mockResolvedValue(new ArrayBuffer(8)); // everything already cached
@@ -95,6 +148,43 @@ describe('downloadForOffline', () => {
     const result = await downloadForOffline({}, { signal: AbortSignal.abort() });
     expect(result.status).toBe('cancelled');
     expect(synthesizeCached).not.toHaveBeenCalled();
+  });
+
+  // EN-27 P1.9: deterministic vs transient retry.
+  it('does NOT retry a deterministic edge failure — the clip is attempted once and counted failed', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Bom dia'])]);
+    vi.mocked(synthesizeCached).mockRejectedValue(new EdgeFunctionError('VOICE_LIMIT_REACHED', 'daily voice limit reached'));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.failed).toBe(1);
+    // The whole point: a deterministic code is attempted exactly ONCE, not maxAttempts times.
+    expect(synthesizeCached).toHaveBeenCalledTimes(1);
+  });
+
+  it('DOES retry a transient failure up to maxAttempts before counting it failed', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Boa tarde'])]);
+    // A plain (non-EdgeFunctionError) failure is transient/unknown → eligible for retry.
+    vi.mocked(synthesizeCached).mockRejectedValue(new Error('network blip'));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.failed).toBe(1);
+    // downloadMaxAttempts is mocked to 3 → three attempts for the one clip.
+    expect(synthesizeCached).toHaveBeenCalledTimes(3);
+  });
+
+  it('retries a transient failure and SUCCEEDS on a later attempt', async () => {
+    vi.mocked(contentRepository.listSituations).mockResolvedValue([situation(['Olá'])]);
+    vi.mocked(synthesizeCached)
+      .mockRejectedValueOnce(new Error('blip 1'))
+      .mockResolvedValueOnce(new ArrayBuffer(8));
+
+    const result = await downloadForOffline({ trackId: 't1' });
+
+    expect(result.synthesized).toBe(1);
+    expect(result.failed).toBe(0);
+    expect(synthesizeCached).toHaveBeenCalledTimes(2);
   });
 });
 

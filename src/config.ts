@@ -43,6 +43,27 @@ export const config = {
      * (which showed a 200 MB option); ordered smallest → largest.
      */
     cacheLimitOptionsBytes: [25 * 1024 * 1024, 50 * 1024 * 1024, 100 * 1024 * 1024, 200 * 1024 * 1024],
+    /**
+     * EN-8 server audio tier. `verpexBase` is the base path the client GETs pre-hosted clips from
+     * (Verpex serves REMOTE_PATH/audio/<keyToServerPath> statically, same-origin by default);
+     * `supabaseAudioBucket` is the public Storage bucket that buffers clips before the Verpex cron
+     * copies them. Read only on the server-tier MISS path in geminiService.synthesizeCached
+     * (device cache → pinned → verpex → supabase → configured provider). Both tiers are optional:
+     * until the operator deploys the server side, fetches simply miss and playback reaches the
+     * provider unchanged. VITE_AUDIO_VERPEX_BASE overrides the base for non-standard hosting.
+     */
+    // Optional-chain `env` so this module stays import-safe outside Vite (e.g. Playwright's Node
+    // collection context, where `import.meta.env` is undefined) — an unguarded read throws at load
+    // and takes down every spec that transitively imports config. In Vite `env` is always defined.
+    verpexBase: (import.meta.env?.VITE_AUDIO_VERPEX_BASE as string | undefined) || '/audio',
+    supabaseAudioBucket: 'tts-audio',
+    /**
+     * Per-tier timeout (ms) for a server-audio GET (Verpex, then Supabase). Deliberately SHORT and
+     * separate from net.requestTimeoutMs (15s, tuned for slow AI generation): a hosted static PCM
+     * file returns in well under this, so a slow/hanging tier aborts fast and playback falls through
+     * to the next tier / the provider instead of stalling. Worst case on a double hang ≈ 2× this.
+     */
+    serverTierTimeoutMs: 4000,
   },
 
   net: {
@@ -175,6 +196,15 @@ export const config = {
     defaultDueLimit: 20,
     /** How many weakest items dimensionSummary reports per dimension (Coach §6b input). */
     summaryWeakestCount: 3,
+  },
+
+  vocabulary: {
+    // Vocabulary reinforcement quiz (EN-18) tunables. Comprehension reuses the EN-10 fuzzy
+    // matcher (no config); production adds a spoken "now say it" step gated on mic availability.
+    /** BCP-47 tag for the spoken-production step (European Portuguese, per CONTENT-STANDARDS). */
+    recognitionLanguage: 'pt-PT',
+    /** One-shot recognize() budget for the "now say it" production step (ms). */
+    recognizeTimeoutMs: 8000,
   },
 
   coach: {

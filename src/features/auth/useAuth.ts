@@ -13,6 +13,7 @@ import { SupabaseClient, User } from '@supabase/supabase-js';
 import { UserProfile } from '../../types';
 import { ShowToast } from '../../hooks/useToast';
 import { errorMessage, logger, userMessage } from '../../lib/logger';
+import { readDeviceOwner, writeDeviceOwner, clearDeviceOwner, isUserSwitch } from '../../lib/session-cleanup';
 
 export type AuthMode = 'login' | 'signup' | 'reset' | 'verifyOtp' | 'updatePassword' | 'none';
 
@@ -169,6 +170,21 @@ export const useAuth = ({ supabase, showToast, depsRef }: AuthDeps) => {
         setTimeout(() => {
           void (async () => {
             try {
+              // SEC-3: if the data currently on this device belongs to a DIFFERENT user than the one
+              // now signing in — a switch that skipped an explicit logout (reaching a login screen
+              // without signing out, or a session-expiry then a different login) — clear the outgoing
+              // user's on-device state BEFORE loading the new user, so the new user never inherits the
+              // previous user's cached prefs/lessons/missions/audio. (Explicit logout already cleans up
+              // + clears the owner marker; this covers every OTHER switch path.) Same-user reloads and
+              // first-ever sign-ins are no-ops.
+              if (isUserSwitch(readDeviceOwner(), currentUser.id)) {
+                logger.info('device_owner_switch_cleanup', 'Different user signed in without logout — clearing prior user device state', {
+                  category: 'SECURITY',
+                  details: { newUserId: currentUser.id },
+                });
+                depsRef.current!.onLogoutCleanup();
+              }
+              writeDeviceOwner(currentUser.id);
               const fetchedProfile = await fetchProfile(currentUser.id);
               await depsRef.current!.fetchCustomLessons(currentUser.id, fetchedProfile?.role);
             } catch (err) {
@@ -209,6 +225,7 @@ export const useAuth = ({ supabase, showToast, depsRef }: AuthDeps) => {
       setProfile(null);
       setAuthMode('none');
       depsRef.current!.onLogoutCleanup();
+      clearDeviceOwner(); // SEC-3: data cleared → forget the on-device owner (next sign-in starts clean).
 
       // Attempt server-side sign out
       const { error } = await supabase.auth.signOut();

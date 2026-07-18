@@ -295,10 +295,12 @@ export const useTutorSession = ({
 
       try {
         await new Promise<void>((resolve, reject) => {
+          // Tutor replies are AI-generated free-form conversation → hostable:false: the edge
+          // write-back must NEVER host user/AI chat text on the shared server (COORD-2 BLOCKING-1).
           geminiService.playSpeech(chunk, tutor, playbackSpeed, () => {
             // Add a small pause between sentences to let it sink in
             setTimeout(resolve, 600);
-          }).catch(reject);
+          }, { hostable: false }).catch(reject);
         });
       } catch (err) {
         // Surface voice-limit and service errors instead of hanging the chunk loop

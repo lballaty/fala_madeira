@@ -64,6 +64,7 @@ Every capability must serve one of **understand · speak · use · belong**. Als
   - Version bumps, release commits, tags, and deploys happen **only** in the release worktree — never in the shared `develop` checkout.
 - **UI/behavior verification:** `/ui-test` (live UI flows, session/correlation capture) and `/verify` (run the app, observe the change).
 - **Security:** `/security-review` on pending changes touching auth/RLS/secrets/edge functions.
+- **Edge-glue agentic review (MANDATORY for any `supabase/functions/**` diff — owner decision 2026-07-17):** edge functions run on Deno (`https://esm.sh` imports + `Deno.*`), so their **decision logic** is covered by extracting it into a pure sibling module unit-tested in vitest (EN-27 pattern — `docs/TEST_MANUAL.md §8`), but the thin `Deno.serve` request→response **glue has no automated test by decision** (the `deno` harness was declined; EN-24). Instead, that glue is covered by an **agentic review activity**: any diff touching an edge function gets a `/code-review` (or `/security-review` when auth/secrets are involved) that applies the **edge-glue checklist in `docs/TEST_MANUAL.md §8`** — the handler calls the pure tested core, checks `{error}` on every Supabase call, returns the canonical `errorResponse` envelope (never a raw string/500, never a leaked `dbMessage`), and `persistLog`s on error. This review is part of the change's Definition of Done, alongside the vitest core test.
 - **Session:** `/session-refresh` to re-anchor on this file + canonical docs; `/handoff` at end of session.
 
 ## 5. Operating facts (verified 2026-07-09)
@@ -71,7 +72,7 @@ Every capability must serve one of **understand · speak · use · belong**. Als
 - **Supabase project:** `gxlrmdfqcqimwwplrdgd` ("PortugueseMadeira", org `gvvowvskmczwwlniyfzb`, West EU/London), owned by the **liborballaty** account (NOT the Arion CLI login). CLI auth via `SUPABASE_ACCESS_TOKEN` in `.env.local`.
 - **DB connection:** direct `postgresql://postgres:<pw>@db.gxlrmdfqcqimwwplrdgd.supabase.co:5432/postgres` (IPv6). The region pooler host is wrong for this project. Runner: `node apply-migrations.js <sql>` (ESM, direct host, argv path). Migrations 00001–00004 applied; log in `supabase/migrations/APPLIED.md`.
 - **dotenv gotcha:** dotenv v17 prints a stdout tip — never capture env values via `$(node -e "require('dotenv')...")`; parse `.env.local` directly or use `{quiet:true}`, else the DB password gets corrupted and SASL auth fails.
-- **Edge functions:** `gemini` (chat/generate/translate/tts, JWT-verified, voice-limit enforced) + `delete-account`, deployed. Gemini TTS validated+retried for the intermittent `finishReason=OTHER` empty-audio defect.
+- **Edge functions:** `ai-gateway` (chat/generate/translate/tts, JWT-verified, voice-limit enforced; renamed from `gemini`) + `delete-account`, deployed. Gemini TTS validated+retried for the intermittent `finishReason=OTHER` empty-audio defect.
 - **Admin account:** `liborballaty@gmail.com` (role=admin; temp creds in git-ignored `.admin-temp-credentials.txt`).
 - **Deploy target:** Verpex, document root = the `falamadeira.searchingfool.com` directory ONLY. Deploy from THIS device (`npm run deploy` → `scripts/ship.sh`), never GitHub. GitHub = source hosting only.
 - **TTS default (decided):** Azure pt-PT + browser Web Speech fallback, via provider adapters.

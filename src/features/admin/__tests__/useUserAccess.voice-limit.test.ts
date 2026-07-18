@@ -29,8 +29,9 @@ const TARGET = {
 
 /**
  * Builds a mocked SupabaseClient whose `.from('profiles')` supports:
- *  - select().ilike().maybeSingle() → resolves the TARGET (drives lookupByEmail)
- *  - update(payload).eq(col, val)  → captures payload, resolves { error: null }
+ *  - select().ilike().order().limit() → resolves a single-row list (drives searchUsers, which
+ *    auto-selects the lone match as target)
+ *  - update(payload).eq(col, val)     → captures payload, resolves { error: null }
  */
 const makeSupabase = () => {
   const updateSpy = vi.fn();
@@ -38,7 +39,9 @@ const makeSupabase = () => {
     from: vi.fn(() => ({
       select: vi.fn(() => ({
         ilike: vi.fn(() => ({
-          maybeSingle: vi.fn(async () => ({ data: TARGET, error: null })),
+          order: vi.fn(() => ({
+            limit: vi.fn(async () => ({ data: [TARGET], error: null })),
+          })),
         })),
       })),
       update: vi.fn((payload: Record<string, unknown>) => {
@@ -66,7 +69,7 @@ describe('useUserAccess.grantAccess — per-user voice_limit (EN-25)', () => {
     const { result } = renderHook(() => useUserAccess(deps(client)));
 
     await act(async () => {
-      await result.current.lookupByEmail(TARGET.email);
+      await result.current.searchUsers(TARGET.email);
     });
     await waitFor(() => expect(result.current.target).not.toBeNull());
 
@@ -83,7 +86,7 @@ describe('useUserAccess.grantAccess — per-user voice_limit (EN-25)', () => {
     const { result } = renderHook(() => useUserAccess(deps(client)));
 
     await act(async () => {
-      await result.current.lookupByEmail(TARGET.email);
+      await result.current.searchUsers(TARGET.email);
     });
     await waitFor(() => expect(result.current.target).not.toBeNull());
 
