@@ -399,8 +399,14 @@ export const useSettings = ({
     if (data.is_sound_enabled !== undefined) setIsSoundEnabled(data.is_sound_enabled);
   };
 
-  // Read by the auth slice when creating a brand-new profile row.
-  const getPrefsForNewProfile = () => ({ playbackSpeed, isSoundEnabled });
+  // Read by the auth slice when creating a brand-new profile row. SEC-3: a brand-new profile must
+  // inherit device DEFAULTS, never the CURRENT device prefs — otherwise user B's first profile (a
+  // fresh signup on a shared device) mirrors user A's playback speed / sound setting. Defence-in-depth
+  // alongside the auth-slice device-owner cleanup (which resets prefs before a switched-in user loads).
+  const getPrefsForNewProfile = () => ({
+    playbackSpeed: config.audio.defaultPlaybackSpeed,
+    isSoundEnabled: initialSoundEnabled(null),
+  });
 
   const handleSelectTutor = async (tutorId: string) => {
     if (supabase && user) {

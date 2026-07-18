@@ -57,3 +57,45 @@ export const clearDeviceUserState = async (): Promise<void> => {
     }
   }
 };
+
+// SEC-3: marker recording WHICH user's data currently populates this device. localStorage (sync, so
+// it is safe to read inside the gotrue onAuthStateChange callback — no await). The auth slice uses it
+// to detect a user SWITCH that skipped an explicit logout (reaching a login screen without signing
+// out, or a session-expiry then a different login) and clear the outgoing user's on-device state
+// BEFORE loading the new user — so the second user never inherits the first user's cached data.
+const DEVICE_OWNER_KEY = 'fm:device-owner-uid';
+
+/** The userId whose on-device data currently populates this device, or null if unknown/cleared. */
+export const readDeviceOwner = (): string | null => {
+  try {
+    return typeof localStorage !== 'undefined' ? localStorage.getItem(DEVICE_OWNER_KEY) : null;
+  } catch {
+    return null;
+  }
+};
+
+/** Record `userId` as the current on-device data owner (called after a sign-in settles this device). */
+export const writeDeviceOwner = (userId: string): void => {
+  try {
+    if (typeof localStorage !== 'undefined') localStorage.setItem(DEVICE_OWNER_KEY, userId);
+  } catch {
+    /* best-effort — a missing marker only causes a redundant (harmless) cleanup on the next sign-in */
+  }
+};
+
+/** Forget the on-device owner (called on an EXPLICIT logout, which already cleared the data). */
+export const clearDeviceOwner = (): void => {
+  try {
+    if (typeof localStorage !== 'undefined') localStorage.removeItem(DEVICE_OWNER_KEY);
+  } catch {
+    /* best-effort */
+  }
+};
+
+/**
+ * SEC-3 decision (pure): should signing in as `newUserId` first clear this device's state? True only
+ * when the device holds a DIFFERENT (non-null) user's data — a switch that skipped an explicit logout.
+ * A null owner (fresh device / post-explicit-logout) or the same user (reload, token refresh) => false.
+ */
+export const isUserSwitch = (deviceOwner: string | null, newUserId: string): boolean =>
+  deviceOwner !== null && deviceOwner !== newUserId;

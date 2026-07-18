@@ -170,6 +170,22 @@ New/changed tables (data-driven content):
 - **Resilience:** all AI/network calls go through the centralized logger with retry/backoff + graceful degradation (never a silent failure); pack integrity checked via checksum; app-shell precached (PWA).
 - **Content versioning:** packs are versioned so a device can detect and pull updates without breaking in-progress state.
 
+### 10.1 Server-hosted audio tiers (EN-8)
+
+*Status: implemented on `develop`, INERT until server activation — until the server side is switched on, every server tier simply misses and playback falls through to the provider exactly as before.*
+
+TTS audio is resolved through a fixed tier order in `geminiService.synthesizeCached` (shared by live playback, offline download pre-generation, and the pre-gen script, so all paths key identically):
+
+1. **Device LRU cache** (`audio` IndexedDB store) — ephemeral, holds private/free-chat clips; **cleared on logout** (SEC-1 WP4 / SEC-2 device-bleed).
+2. **Device durable saved store** (`audio_pinned`) — survives logout/restart; holds curated public clips the user PLAYS (auto-saved, reclaimable) or explicitly DOWNLOADS (`protect:true`, never evicted); a bounded LRU under the user's storage budget. Cache ≠ saved (never conflated).
+3. **Verpex mirror** — the durable server home (`<VITE_AUDIO_VERPEX_BASE>/<name>.pcm`, default `/audio`).
+4. **Supabase public buffer** — the `tts-audio` bucket that stages a clip before the Verpex cron copies it.
+5. **Provider** (`ai-gateway` edge TTS) — the always-available fallback; a server-tier hit skips it (the core cost / 503-avoidance win).
+
+- **Key normalization:** `buildKey('default', resolveVoice(...), text) → keyToServerPath → <name>.pcm`. The voice slot is the RESOLVED archetype, not the raw tutor id, so playback / offline / hosted clips share ONE key.
+- **Content-type guard:** an SPA host that rewrites a missing `/audio/*.pcm` to `index.html` (200 `text/html`) is treated as a MISS (client belt; the server `.htaccess` `/audio` 404 rule is the server-side fix).
+- **Write-back (gated):** on a provider synthesis of a `hostable` (curated) clip, the `ai-gateway` edge may host it into the Supabase buffer; a read-only Verpex pull cron copies buffer → `/audio` and copy-confirms deletion. Gated by `TTS_BUFFER_WRITEBACK` (OFF until both Verpex crons are up).
+
 ## 11. Build sequence (working backwards)
 
 1. **Content model** — situations/tracks/levels/packs schema + validator (foundation).
