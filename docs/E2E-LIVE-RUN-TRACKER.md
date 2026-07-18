@@ -16,6 +16,13 @@
 
 ## Run log
 
+### Deploy — 2026-07-18 — STAGED ✅ 2026.07.18.3 (SEC-3 + EN-23 + EN-8 device persistence + TB batch) — awaiting production approval
+- **Gate (develop `30808cb`, fresh CI=1):** full e2e **132 passed · 0 failed · 3 skipped** of 135 (6.8m); the 3 skips = owner-approved EN-8 server-tier `test.fixme` in `user/62`. **EF-39 did not trip** (single-worker run avoids the load window; deferred as a documented non-blocker, zero product impact — pure sync client state `Quiz.tsx:191`). vitest 503/503.
+- **Ship gate (both develop dry-run and the real staging cut on `main`):** all preflight stages PASS — eslint, tsc, vitest 503, build, e2e-coverage (202 controls), npm-audit (no high/crit prod), standards (0 hard / 2 advisory), cors, help-drift, db-version-drift, observability `--strict`.
+- **Cut:** merged `develop`→`main` (`--no-ff`, `1df6805`); `ship.sh` STAGE 0 bumped `VERSION` `2026.07.18.2→2026.07.18.3` (+ package.json), committed `4de8dac`. CHANGELOG `2026.07.18.3` block carries the 8 previously-undocumented user-facing tickets (SEC-3, EN-23, EN-8, TB-16/17/21/22/23).
+- **Staged:** rsync/SSH upload of `dist/` → `testfalamadeira.searchingfool.com`; staged commit `4de8dac` recorded in `.deploy-state.json`. **Verified live:** homepage + manifest 200; served `SettingsView` bundle carries `2026.07.18.3` (About will show the version + new notes).
+- **NOT yet:** `deploy:approve` + `deploy:production` (operator-gated), `git push main` + tag, back-merge to develop. **Next:** owner manual-verifies staging → `npm run deploy:approve` → `npm run deploy:production`.
+
 ### Run 25 — 2026-07-18 — release-gate regression 41→2→GREEN modulo 1 flake; 3 IndexedDB/session HARNESS root causes fixed; reuseExistingServer footgun
 - **Context:** cutting `2026.07.18.2` from `develop` (`6bd894d`). First full regression **91/135 · 41 failed** (19m — bloated by ~28 onboarding-stranded 15–20s timeouts). Driven to **130/135 · 2 failed** on a clean server, then the last 2 resolved/classified. **All causes were TEST-HARNESS; zero product regressions.** `main` kept clean throughout (owner directive) — every fix on `develop`.
 - **RC1 · IndexedDB onboarding-seed drift — `verified` — `fix 44a95ac`:** `fixtures.ts:makeInitScript` opened `FalaMadeiraAudioCache` at **v2** but the app is **v3** (EN-8 `audio_pinned`). Opening an existing v3 DB at v2 throws `VersionError`; the seed write was swallowed → `useOnboarding` saw no record → App rendered `OnboardingFlow` → **~28 `landOnHome`-dependent content specs died on the welcome screen** (order-dependent: passed alone, failed once the DB existed at v3). Bumped seed to v3 + create pinned store + pinned a comment to the app `DB_VERSION`.

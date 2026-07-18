@@ -284,6 +284,9 @@ export const HomeView = ({
               <button
                 onClick={() => {
                   const nextLesson = lessons.find(l => l.day === (profile?.unlocked_level || 1)) || lessons[0];
+                  // No lesson yet (empty content / still loading) — route to Learning rather than
+                  // calling startAIPractice(undefined), which would crash the practice launch.
+                  if (!nextLesson) { setActiveTab('learning'); return; }
                   startAIPractice(nextLesson);
                 }}
                 className="px-6 py-3 bg-white text-ios-blue rounded-2xl font-bold text-sm shadow-lg flex items-center space-x-2"
@@ -315,22 +318,45 @@ export const HomeView = ({
         <h2 className="text-xl font-semibold">Continue Learning</h2>
         <button onClick={() => setActiveTab('learning')} className="text-ios-blue text-sm font-medium">See All</button>
       </div>
-      <button
-        type="button"
-        onClick={() => { setSelectedLesson(lessons[0]); setActiveTab('learning'); }}
-        className="w-full text-left bg-card p-5 rounded-2xl ios-shadow flex items-center justify-between cursor-pointer active:scale-95 transition-transform"
-      >
-        <div className="flex items-center">
-          <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600 mr-4">
-            <BookOpen className="w-6 h-6" />
+      {/* Guard against an empty lesson set — a brand-new user (or the brief window before content
+          finishes loading) has `lessons === []`, so `lessons[0]` is undefined. Rendering
+          `lessons[0].title` here crashed Home for every first-time registrant (unguarded index
+          access). Show a calm first-run prompt into Learning instead of dereferencing an empty list. */}
+      {lessons.length > 0 ? (
+        <button
+          type="button"
+          onClick={() => { setSelectedLesson(lessons[0]); setActiveTab('learning'); }}
+          className="w-full text-left bg-card p-5 rounded-2xl ios-shadow flex items-center justify-between cursor-pointer active:scale-95 transition-transform"
+        >
+          <div className="flex items-center">
+            <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600 mr-4">
+              <BookOpen className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold">{lessons[0].title}</h3>
+              <p className="text-sm text-ios-gray">Month {lessons[0].level} • {lessons[0].category}</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-semibold">{lessons[0].title}</h3>
-            <p className="text-sm text-ios-gray">Month {lessons[0].level} • {lessons[0].category}</p>
+          <ChevronRight className="text-ios-gray" />
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setActiveTab('learning')}
+          className="w-full text-left bg-card p-5 rounded-2xl ios-shadow flex items-center justify-between cursor-pointer active:scale-95 transition-transform"
+        >
+          <div className="flex items-center">
+            <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600 mr-4">
+              <BookOpen className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="font-semibold">Start your first lesson</h3>
+              <p className="text-sm text-ios-gray">Head to Learning to begin your course.</p>
+            </div>
           </div>
-        </div>
-        <ChevronRight className="text-ios-gray" />
-      </button>
+          <ChevronRight className="text-ios-gray" />
+        </button>
+      )}
     </section>
     </div>
 
