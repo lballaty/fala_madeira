@@ -1,0 +1,159 @@
+<!--
+  File: /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-8-AUDIO-HOSTING-FLOW.html
+  Description: EN-8 / EN-34 audio hosting + sync + idempotency flow diagram (proposed target design),
+    with a plain-language "what's happening / what's decided" card for every node. Self-contained:
+    renders the Mermaid flowchart via CDN. Design reference for the buffer-contention + versioning +
+    idempotency decisions discussed 2026-07-19. NOT the built state everywhere — see the legend.
+  Author: Libor Ballaty (with assistant)
+  Created: 2026-07-19
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EN-8 Audio Hosting Flow</title>
+  <style>
+    :root { --fg:#1c2430; --muted:#5b6774; --line:#dce3ea; --bg:#f6f8fa; --card:#fff; --accent:#0057b7;
+            --built:#2e9e5b; --builtbg:#e6f4ec; --prop:#e08c00; --propbg:#fdf1de; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+           color:var(--fg); background:var(--bg); line-height:1.5; }
+    .wrap { max-width:1100px; margin:0 auto; padding:32px 24px 64px; }
+    h1 { font-size:1.6rem; margin:0 0 4px; }
+    .sub { color:var(--muted); margin:0 0 24px; font-size:.95rem; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin:0 0 22px; }
+    .diagram { overflow-x:auto; text-align:center; }
+    h2 { font-size:1.15rem; margin:26px 0 12px; }
+    .legend span { display:inline-block; margin-right:16px; font-size:.88rem; color:var(--muted); }
+    .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+    .built { background:var(--built); } .proposed { background:var(--prop); }
+    code { background:#eef2f6; padding:1px 5px; border-radius:5px; font-size:.9em; }
+
+    .nodes { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
+    .node { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px;
+            border-left-width:5px; }
+    .node.b { border-left-color:var(--built); }
+    .node.p { border-left-color:var(--prop); }
+    .node .hd { display:flex; align-items:center; gap:9px; margin:0 0 8px; }
+    .badge { flex:none; width:26px; height:26px; border-radius:50%; color:#fff; font-weight:700; font-size:.85rem;
+             display:flex; align-items:center; justify-content:center; }
+    .node.b .badge { background:var(--built); } .node.p .badge { background:var(--prop); }
+    .node .ttl { font-weight:700; font-size:.98rem; }
+    .node .tag { margin-left:auto; font-size:.68rem; text-transform:uppercase; letter-spacing:.04em;
+                 padding:2px 8px; border-radius:20px; font-weight:700; }
+    .node.b .tag { background:var(--builtbg); color:#155f34; } .node.p .tag { background:var(--propbg); color:#7a4b00; }
+    .node p { margin:6px 0 0; font-size:.9rem; }
+    .node .lbl { color:var(--muted); font-weight:700; font-size:.74rem; text-transform:uppercase; letter-spacing:.04em; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>EN-8 / EN-34 — Audio hosting, sync &amp; idempotency</h1>
+    <p class="sub">Proposed target flow (folds in the 2026-07-19 decisions). Each numbered node has a plain-language card below.</p>
+
+    <div class="card diagram">
+      <pre class="mermaid">
+flowchart TD
+    A["1 · Clip needed<br/>(batch OR runtime)"] --> B["2 · Versioned filename"]
+    B --> C{"3 · Already hosted?<br/>HEAD Verpex"}
+    C -- "yes" --> SKIP["4 · Skip"]
+    C -- "no / new version" --> D["5 · Synthesize PCM"]
+    D --> E["6 · Upload to bucket<br/>(transient)"]
+    E --> F{"7 · Notify Verpex?"}
+    F -- "ping" --> G
+    F -- "or 15-min poll" --> G["8 · Prod pulls<br/>(sole puller)"]
+    G --> H["9 · Copy to prod /audio"]
+    H --> I["10 · Confirm copied keys"]
+    I --> J["11 · Delete from bucket"]
+    H --> K["12 · symlink staging /audio → prod /audio"]
+    J -. "stuck &gt; 7d" .-> L["13 · Orphan backstop"]
+
+    subgraph CL["14 · Client playback — first hit wins"]
+      direction LR
+      C1["device cache"] --> C2["pinned"] --> C3["Verpex"] --> C4["bucket"] --> C5["provider"]
+    end
+    H --> C3
+    K --> C3
+
+    classDef built fill:#e6f4ec,stroke:#2e9e5b,color:#12351f;
+    classDef proposed fill:#fdf1de,stroke:#e08c00,color:#5a3800;
+    class A,B,C,D,E,G,H,I,J,L,C1,C2,C3,C4,C5,SKIP built;
+    class F,K proposed;
+      </pre>
+    </div>
+
+    <p class="legend">
+      <span><span class="dot built"></span>built today</span>
+      <span><span class="dot proposed"></span>proposed / not yet built</span>
+    </p>
+
+    <h2>What each node means</h2>
+    <div class="nodes">
+
+      <div class="node b"><div class="hd"><span class="badge">1</span><span class="ttl">Clip needed</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> Something wants a Portuguese clip hosted — the batch job warming common phrases, or (later) a live user playing one for the first time.</p>
+        <p><span class="lbl">Decided:</span> Batch first; runtime write-back stays OFF for now. Only curated/known phrases are ever hosted — never free-chat or improvised lines.</p></div>
+
+      <div class="node p"><div class="hd"><span class="badge">2</span><span class="ttl">Versioned filename</span><span class="tag">proposed</span></div>
+        <p><span class="lbl">Happening:</span> Work out the file's name from the phrase, voice, provider — plus a version stamp.</p>
+        <p><span class="lbl">Decided:</span> Add a version/fingerprint so a re-recorded clip gets a NEW name. (Today the name is phrase-only — this is the change that makes “new version” actually ship.)</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">3</span><span class="ttl">Already hosted?</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> Before doing any work, ask the durable home (Verpex) “do you already have this file?” — checking the real store, not the throwaway bucket.</p>
+        <p><span class="lbl">Decided:</span> Idempotency is anchored on Verpex, with a content-type guard so a fake “page found” 200 can’t fool it.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">4</span><span class="ttl">Skip</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> It’s already hosted — do nothing.</p>
+        <p><span class="lbl">Decided:</span> No re-generate, no re-upload, no re-pull. This is the step that stops the endless loop you asked about.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">5</span><span class="ttl">Synthesize PCM</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> Not hosted yet → call the AI voice service to make the audio, backing off politely if it’s rate-limited.</p>
+        <p><span class="lbl">Decided:</span> On 429/503 the batch stops cleanly and resumes next run rather than hammering — the exact failure EN-8 exists to reduce.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">6</span><span class="ttl">Upload to bucket</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> Drop the finished clip into the Supabase bucket.</p>
+        <p><span class="lbl">Decided:</span> The bucket is only a temporary hand-off — NOT the system of record. It gets emptied after pickup.</p></div>
+
+      <div class="node p"><div class="hd"><span class="badge">7</span><span class="ttl">Notify Verpex?</span><span class="tag">proposed</span></div>
+        <p><span class="lbl">Happening:</span> Decide whether to tell Verpex “come get it now” or let it check on its schedule.</p>
+        <p><span class="lbl">Decided:</span> Polling every 15 min is the guaranteed path; an optional “pull now” ping just trims latency — nice-to-have, not required.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">8</span><span class="ttl">Prod pulls (sole puller)</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> Production’s scheduled job pulls new clips out of the bucket.</p>
+        <p><span class="lbl">Decided:</span> ONLY production pulls. Staging never pulls — this is what removes the “two environments fighting over one bucket” problem.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">9</span><span class="ttl">Copy to prod /audio</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> The clip lands in production’s real <code>/audio</code> folder — its permanent home.</p>
+        <p><span class="lbl">Decided:</span> Verpex <code>/audio</code> is the durable home; the website deploy already leaves it untouched.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">10</span><span class="ttl">Confirm copied keys</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> After a successful copy, prod tells Supabase exactly which clips it got.</p>
+        <p><span class="lbl">Decided:</span> “Confirm, then clean up” — deletion is driven by confirmed copies, not a blind timer.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">11</span><span class="ttl">Delete from bucket</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> Supabase deletes just those confirmed clips, keeping the bucket small.</p>
+        <p><span class="lbl">Decided:</span> Safe now because there is only ONE puller — nothing else still needs them.</p></div>
+
+      <div class="node p"><div class="hd"><span class="badge">12</span><span class="ttl">symlink: staging /audio → prod /audio</span><span class="tag">proposed</span></div>
+        <p><span class="lbl">Happening:</span> Staging’s <code>/audio</code> is a symlink pointing at prod’s real <code>/audio</code> folder (same server). Whatever prod pulls, staging serves the same files instantly — no copy step.</p>
+        <p><span class="lbl">Decided:</span> Symlink over an rsync sync — it’s the more reliable steady state (no ongoing sync process to silently fail, zero drift, always consistent, same-origin). Trade-off accepted: staging can’t hold audio that prod doesn’t.</p>
+        <p><span class="lbl">Before go-live (2 one-time checks):</span> ① <b>Test symlink-following</b> — <code>ln -s &lt;prod&gt;/audio &lt;staging&gt;/audio-test</code> then <code>curl -I …/audio-test/&lt;known&gt;.pcm</code>; a <code>200</code> = the host serves through it. ② <b>Protect it from the deploy</b> — change the web-deploy exclude <code>--exclude 'audio/'</code> → <code>--exclude 'audio'</code> (no slash) so a staging deploy’s <code>--delete</code> can’t remove the link; verify a deploy leaves it intact. Staging’s own pull cron stays OFF (prod is sole puller).</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">13</span><span class="ttl">Orphan backstop</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> Once a day, delete anything left in the bucket older than 7 days.</p>
+        <p><span class="lbl">Decided:</span> Pure safety net for clips never confirmed (e.g. a puller was down) so the bucket can’t grow forever.</p></div>
+
+      <div class="node b"><div class="hd"><span class="badge">14</span><span class="ttl">Client playback lookup</span><span class="tag">built</span></div>
+        <p><span class="lbl">Happening:</span> When the app must speak, it checks sources in order — <b>device cache → pinned → Verpex → bucket → live provider</b> — first hit wins, misses fall through.</p>
+        <p><span class="lbl">Decided:</span> Cheapest/fastest first, paid provider last. The provider always works, so nothing breaks even if hosting is incomplete.</p></div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { htmlLabels: true, curve: 'basis' } });
+  </script>
+</body>
+</html>

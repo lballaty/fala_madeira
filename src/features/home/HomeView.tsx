@@ -24,19 +24,12 @@ import { FocusCard } from '../coach/FocusCard';
 import { hasFullContentAccess } from '../../lib/access';
 import { useHome } from './useHome';
 
-const getLevelName = (level: number) => {
-  const levels: Record<number, string> = {
-    1: "Absolute Beginner",
-    2: "Beginner",
-    3: "Elementary",
-    4: "Pre-Intermediate",
-    5: "Intermediate",
-    6: "Upper-Intermediate",
-    7: "Advanced",
-    8: "Proficient"
-  };
-  return levels[level] || "Student";
-};
+// TB-1 (Option B): the Home greeting level label now derives from the learner's proficiency_level
+// via useHome's proficiencyName (the proficiencyLabel mapping) — NOT the paywall unlocked_level.
+// The former paywall-flavoured getLevelName (1..8) map lived here ONLY to label the greeting and is
+// removed with that read; the unlock modal below never used it (it renders its own inline "L1:
+// Absolute Beginner …" guide + a raw (unlocked_level||1)+1), so the paywall/unlock flow is
+// byte-for-byte unchanged. Separation invariant proficiency_level ⟂ unlocked_level (REQUIREMENTS §2/§5.3).
 
 /** Deterministic SVG progress ring for the active-path completion figure (mirrors the v3 mockup). */
 const ProgressRing = ({ percent }: { percent: number }) => {
@@ -129,7 +122,7 @@ export const HomeView = ({
   useFocusTrap(unlockModalRef, isUnlockModalOpen && !fullAccess, () => setIsUnlockModalOpen(false));
 
   // Derived Home surfaces: progress ring, competence line, review-due count, streak-freeze grace.
-  const { progress, competencePhrases, reviewDueCount, freeze } = useHome({
+  const { progress, competencePhrases, reviewDueCount, freeze, proficiencyName } = useHome({
     supabase,
     user,
     profile,
@@ -153,7 +146,7 @@ export const HomeView = ({
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Olá, {user?.email?.split('@')[0]}!</h1>
           <div className="flex items-center space-x-2">
-            <p className="text-ios-gray">{getLevelName(profile?.unlocked_level || 1)}</p>
+            <p className="text-ios-gray">{proficiencyName}</p>
             {/* EN-15: hide the access-key unlock CTA for full-access (admin/unlimited) users —
                 they already have every level, so there is nothing to unlock. */}
             {!fullAccess && (

@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-18
-**Last Updated By:** claude-orchestrator (2026.07.18.4 — new-user Home crash fix + EN-26/SEC-3/EN-23/EN-8/TB batch)
+**Last Updated By:** claude-orchestrator (2026.07.19.1 — TB-1 proficiency level + EN-23b admin audio panel fixes)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,11 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.19.1
+
+- Fixed: **your level now reflects what you chose at sign-up — and you can change it.** Home used to show a fixed "Absolute Beginner" no matter what you picked during placement, with no way to change it. It now shows your actual proficiency level, and a new **Settings → "Your level"** control lets you update it any time. (This is separate from paid content access, which is unchanged.) (TB-1)
+- Improved (admin): **the Audio management panel is more usable** — clip preview playback now works for any clip, the server-hosted-audio status is read correctly (no longer stuck on "pending"), the list loads in pages instead of all at once, and each clip shows its file size. (EN-23b)
 
 ## 2026.07.18.4
 

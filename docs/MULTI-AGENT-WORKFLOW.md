@@ -102,13 +102,15 @@ The release is just a **photo of `develop` at one moment**. Agents keep working;
 
 ## 6. A day in the life
 
-1. **E** opens `fala_madeira-feat/`, `git switch -c feat/loops`, builds the enhancement, commits there.
-2. **S** opens `fala_madeira-support/`, `git switch -c fix/tickets`, fixes a ticket, commits there.
+1. **E** provisions a worktree for the item — `bash scripts/setup-worktree.sh --issue EN-30 feat` (creates `fala_madeira-en30` **from `develop`** on `feat/en30`, installs deps, generates the profile, drops in the admin TEST creds) — then builds the enhancement and commits there. *Don't hand-roll `git worktree add`; the provisioner is the start-work step.*
+2. **S** does the same for a bug — `setup-worktree.sh --issue TB-42 fix` (→ `fala_madeira-tb42` on `fix/tb42`) — fixes it, commits there.
 3. **D** updates design docs in `fala_madeira/` on `develop`; reserves the docs via `queuectl` first (shared files).
 4. E and S each **merge their branch into `develop`** when done.
 5. **T** runs `npm run test:e2e` on `develop`. Green ✓.
 6. Someone cuts a release **in `fala_madeira-release/`**: `git merge --no-ff develop` → bump + tag → `npm run deploy` → push. Testers get it. Nobody else paused.
 7. **Back-merge** `main`→`develop` so the version bump is everywhere.
+
+> **Autonomy boundary:** with `execute-plan-autonomously`, an agent does steps **1–5** on its own (provision → build → merge to `develop` → **full regression to green**). Steps **6–7 (release cut, staging/production deploy, back-merge) are operator-gated** — an agent never stages or deploys.
 
 ---
 

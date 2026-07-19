@@ -27,6 +27,28 @@ import type { UserProfile } from '../../types';
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+/**
+ * TB-1 (Option B): map the learner's proficiency_level to the Home greeting label. This is the
+ * PLACEMENT domain (PracticalLevel 0/1/2 today — mirrors the onboarding placement option labels in
+ * OnboardingFlow.tsx), DISTINCT from the paywall getLevelName 1..8 map in HomeView (which stays for
+ * the unlock modal). Reads tolerate null / out-of-range by falling back to the neutral "Student"
+ * (R2/R6): never crash, never fabricate "Absolute Beginner". This label derives ONLY from
+ * proficiency_level — never from unlocked_level (separation invariant, REQUIREMENTS §2).
+ */
+export const proficiencyLabel = (level: number | null | undefined): string => {
+  switch (level) {
+    case 0:
+      return 'Complete beginner';
+    case 1:
+      return 'A few words';
+    case 2:
+      return 'Basic conversation';
+    default:
+      // null / undefined (not yet placed) OR any out-of-range value → honest neutral fallback.
+      return 'Student';
+  }
+};
+
 /** The progress ring's scoped completion figure for the active path. */
 export interface HomeProgress {
   /** Completion percentage 0–100 (rounded) over the in-scope situation set. */
@@ -243,6 +265,13 @@ export const useHome = ({ supabase, user, profile, pathContext, pathSelection, a
 
   const competencePhrases = useMemo(() => buildCompetencePhrases(pathContext), [pathContext]);
 
+  // TB-1: the Home greeting level label, derived from the learner's proficiency_level (NOT the
+  // paywall unlocked_level). Null/out-of-range fall back to the neutral "Student" (R2/R6).
+  const proficiencyName = useMemo(
+    () => proficiencyLabel(profile?.proficiency_level),
+    [profile?.proficiency_level],
+  );
+
   // Streak-freeze grace: load the durable balance, reconcile once against last_active, persist.
   const [freeze, setFreeze] = useState<StreakFreezeState>(DEFAULT_FREEZE_STATE);
 
@@ -318,5 +347,5 @@ export const useHome = ({ supabase, user, profile, pathContext, pathSelection, a
     // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed to identity/last_active/streak only
   }, [user, profile?.id, profile?.last_active, profile?.streak]);
 
-  return { progress, competencePhrases, reviewDueCount, freeze };
+  return { progress, competencePhrases, reviewDueCount, freeze, proficiencyName };
 };
