@@ -80,7 +80,7 @@
 
 ## Tester-reported bugs
 
-### TB-1 — Placement level not reflected + not changeable (reporter: dancingtoothbrush) — `DECIDED (Option B) + REQUIREMENTS DRAFTED (docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md, 2026-07-15) → awaiting owner approval + DB coordination before build`
+### TB-1 — Placement level not reflected + not changeable (reporter: dancingtoothbrush) — `APPROVED (Option B, owner 2026-07-19) — build the conflation fix; platform-behaves-per-proficiency split out as TB-1a`
 - **Report:** "It says I'm Absolute Beginner even though I said I could have a simple conversation, but I can't seem to change it."
 - **Root cause (confirmed, code-read 2026-07-14):**
   - Onboarding `complete()` persists placement (`placementLevel` 0/1/2 from "Complete beginner / A few words / Basic conversation") **only to `platform.storage`** (`useOnboarding.ts` OnboardingRecord).
@@ -100,8 +100,15 @@
   5. **`unlocked_level`** stays exactly as-is (access-key/paywall only).
 - **Coordination flags:** DB migration (DB agent). Touches `SettingsView.tsx` (Lane A's goal chooser + Lane B's TB-11b already there) and possibly `App.tsx` (Lane B live for SEC-1) — reserve + sequence before editing. `useOnboarding.ts`/`HomeView.tsx`/`useHome.ts` are currently conflict-free.
 - **Owed:** requirements doc → owner approval → build → **e2e test** (owner asked explicitly). Branch: `develop`.
-- **Status:** DECIDED (Option B); **NEEDS REQUIREMENTS + owner approval before coding** (AGENTS §3) + DB coordination.
+- **Status:** **APPROVED to build (Option B, owner 2026-07-19)** — "fix the whole thing." Requirements = `docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md` §1–§10. Still needs DB migration-number coordination (EN-8 holds `00012`). Build on `develop` per the requirements sequence.
 - **↩ Staging re-confirmation (owner, 2026.07.18.4 verify 2026-07-19):** independently re-observed on staging — "it doesn't appear to make any difference what proficiency level I choose as to where the system wants to start my learning — so what is the point of the proficiency choices." Confirms the same defect from a second reporter/session: placement is collected but never drives the learning start. This is the exact symptom Option B fixes (proficiency drives the level label + a Settings control; placement→`proficiency_level`). **No new item — reinforces TB-1's priority.** The requirements doc (`docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md`) + owner approval are still the gate before build. Note: whether placement should also alter the **content start point** (not just the displayed level) is an open product question to resolve in the requirements — the owner's "where the system wants to start my learning" framing implies they expect placement to affect the actual starting curriculum, which is broader than the current Option-B display-field shape.
+
+### TB-1a — Platform must ACT per proficiency (placement drives the learning start + progression) — `OPEN (NEEDS REQUIREMENTS/DESIGN — new, owner 2026-07-19)`
+- **Report (owner, 2026-07-19):** "we want to fix the whole thing plus expand to TB-1a — actually have the platform act correctly according to the proficiency setting." Split from TB-1: TB-1 fixes the display/persistence conflation (Option B); **TB-1a makes the curriculum actually start + progress per the proficiency setting**, not just show a label.
+- **Substrate:** depends on TB-1 (the `proficiency_level` field + Settings control). Build TB-1 first.
+- **★ Paywall principle (owner 2026-07-19):** the **paywall stays a separate CHECK** — it gates opening paid content **at the point of open**, but it must **NOT drive/re-route/restart the flow**. The FLOW is driven by proficiency; the paywall is an orthogonal checkpoint layered on top. `proficiency_level ⟂ unlocked_level` still holds (placement never unlocks paid content; the paywall never moves the proficiency-driven start).
+- **Design seed:** `docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md` §11 (open questions: per-path start-point mapping for structured/adaptive/goal/free; retroactivity when proficiency changes in Settings; precedence of a returning learner's *resume* point (DF11) over the placement-derived *initial* start; ties EN-15 content access).
+- **Owner:** design → owner approval → build + coverage (e2e: higher placement starts further into ACCESSIBLE curriculum AND never unlocks paid content). **Next action:** write TB-1a requirements/design (per-path mapping + the paywall-as-check rule). **Status:** OPEN (NEEDS REQUIREMENTS/DESIGN; sequence after TB-1).
 
 ### TB-2 — First-words screen speaker/audio button does nothing (reporter: owner) — `DONE (fixed + verified; edge deployed)`
 - **Report:** "In the first words screen the speaker button doesn't seem to work when I click it."

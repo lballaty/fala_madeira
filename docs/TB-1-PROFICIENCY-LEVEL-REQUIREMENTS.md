@@ -170,3 +170,29 @@ Full gate before any promotion: eslint/tsc/vitest + e2e (per the test-every-chan
 1. Exact display strings for the three proficiency labels and the null fallback (§5 proposes placement-option wording + "Student").
 2. Backfill: rely on Settings + null fallback only, or add a one-time "confirm your level" prompt for null-proficiency returning users? (Recommendation: Settings + fallback.)
 3. Should proficiency ever influence default content difficulty later? (Out of scope now; flag if the column shape should anticipate it — current `smallint` already does.)
+
+---
+
+## 11. TB-1a (split out 2026-07-19): the platform must ACT per proficiency
+
+**★ Owner decision (2026-07-19):** **TB-1 = fix the whole conflation now (Option B, §1–§10) — APPROVED to build.** Separately, a NEW item **TB-1a** captures making the platform *actually behave* according to the proficiency setting — starting the curriculum at the right point and (future) adapting difficulty — tracked as its own entry in `docs/TESTER-FEEDBACK-TRACKER.md`. This grew from a second observation on the `.18.4` staging verify ("*it makes no difference what proficiency level I choose as to where the system wants to start my learning — so what's the point*"). Option B (§1–§10) is TB-1a's required **substrate** (the `proficiency_level` field + Settings control); the design below is the seed for TB-1a's own requirements pass.
+
+### R8 — Placement drives the learning start point
+On first entry after onboarding, the learner's starting position in their active path is derived from `proficiency_level` (not always month 1 / day 1). Changing proficiency in Settings updates the recommended start going forward.
+
+### The paywall is a separate CHECK — it must NOT drive the flow (owner 2026-07-19)
+The §2 separation invariant holds: `proficiency_level ⟂ unlocked_level`. **The learning FLOW is driven by proficiency** (placement sets the start point + progression). **The paywall is an independent access *check*** applied only at the moment the learner tries to open paid content — it gates that single open, but it must **not re-route, restart, clamp, or otherwise disrupt the flow.**
+- Proficiency decides *where the learner flows* (start point, next lesson). The paywall never moves that.
+- When the flow reaches content beyond `unlocked_level`, the paywall check surfaces the unlock prompt **at that point** — a gate on the one open, not a redirection of the whole flow.
+- Orthogonal by construction: placement never mutates `unlocked_level`; `unlocked_level` never mutates the proficiency-driven start. One drives the flow, the other is a checkpoint layered on top.
+
+### Open design questions (BLOCK build until answered)
+1. **Per-path mapping.** How does `proficiency_level` 0/1/2 map to a start point in each path type — structured-course (which month/day?), adaptive-guided (initial difficulty / starting situation set?), goal-track / free (start of track / N/A)? Needs the curriculum structure to define the concrete mapping.
+2. **Paywall interaction** — confirm the clamp-to-`unlocked_level` rule above (recommended) vs. an alternative.
+3. **Retroactivity.** When a learner changes proficiency later in Settings, does it re-base the start point? (Recommendation: set a new *recommended* start without destroying existing progress — never move a learner backward or wipe completions.)
+4. **Interaction with DF11** (session continuity / resume last position) and **EN-15** (content access) — a returning learner's *resume point* must take precedence over the placement-derived *initial* start.
+
+### Impact on the rest of the spec
+- **No new DB column** — same `proficiency_level`; the start-point is derived logic (in the path/next-action layer, e.g. `src/paths/*` + `useHome`/`usePathContext`), not stored state.
+- **Testing (extends §8):** e2e must assert that a higher placement starts the learner further into the (accessible) curriculum, AND that it never unlocks paid content (paywall/`unlocked_level` unchanged) — the invariant assertion widens to cover the start point, not just the label.
+- **Status:** **TB-1 (Option B, §1–§10) — APPROVED to build** (fix the whole conflation). **TB-1a (this §11) — NEEDS REQUIREMENTS/DESIGN**: the per-path start-point mapping + paywall-clamp rule (Q1/Q2) must be specified and owner-approved before build. **Sequence:** TB-1 first (its `proficiency_level` field is TB-1a's substrate), then TB-1a.
