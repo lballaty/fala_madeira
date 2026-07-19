@@ -47,8 +47,14 @@ export const isServerTierAvailable = (): boolean =>
 /** HEAD-probe a single hosted URL. 'present' on 2xx, 'missing' on 404, 'unknown' otherwise/on error. */
 const probeUrl = async (url: string, buildKey: string, correlationId: string): Promise<TierPresence> => {
   try {
-    const res = await fetch(url, { method: 'HEAD' });
-    if (res.ok) return 'present';
+    const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(config.audio.serverTierTimeoutMs) });
+    if (res.ok) {
+      // SPA hosts (Verpex .htaccess, `vite preview`) rewrite a MISS to the index.html shell WITH a
+      // 200 — an HTML content-type is a MISS, not a hosted PCM clip. Mirrors geminiService.tryFetchPcm
+      // so the admin panel never reads a false 'present' from the SPA fallback.
+      if ((res.headers.get('content-type') ?? '').includes('text/html')) return 'missing';
+      return 'present';
+    }
     if (res.status === 404) return 'missing';
     logger.warn('EN23_SERVER_PRESENCE_UNEXPECTED', `unexpected status probing hosted clip: ${res.status}`, {
       category: 'DATA_PROCESSING',

@@ -10,8 +10,11 @@
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-// Mutable config the module reads; each test sets the EN-8 tier keys as needed.
-const audioConfig: { verpexBase?: string; supabaseAudioBucket?: string } = {};
+// Mutable config the module reads; each test sets the EN-8 tier keys as needed. serverTierTimeoutMs
+// is always present (the probe passes it to AbortSignal.timeout).
+const audioConfig: { verpexBase?: string; supabaseAudioBucket?: string; serverTierTimeoutMs: number } = {
+  serverTierTimeoutMs: 4000,
+};
 vi.mock('../../../../config', () => ({ config: { get audio() { return audioConfig; } } }));
 vi.mock('../../../../lib/logger', () => ({ logger: { warn: vi.fn(), error: vi.fn(), info: vi.fn() } }));
 // Deterministic public-bucket URL builder (mirrors src/lib/supabase.publicObjectUrl shape).
@@ -63,6 +66,13 @@ describe('resolve* / isServerTierAvailable', () => {
   });
 });
 
+// A HEAD Response stub: `ct` is the content-type header the probe reads.
+const resp = (ok: boolean, status: number, ct = 'application/octet-stream') => ({
+  ok,
+  status,
+  headers: { get: (h: string) => (h.toLowerCase() === 'content-type' ? ct : null) },
+});
+
 describe('checkServerPresence', () => {
   it('returns "unknown" without fetching when neither tier is configured', async () => {
     const fetchSpy = vi.fn();
@@ -73,12 +83,18 @@ describe('checkServerPresence', () => {
 
   it('probes Verpex at verpexBase + keyToServerPath(key) (NOT the raw build key) and returns present on 2xx', async () => {
     audioConfig.verpexBase = 'https://cdn.example.com/audio';
-    const fetchSpy = vi.fn(async () => ({ ok: true, status: 200 }));
+    const fetchSpy = vi.fn(async () => resp(true, 200));
     vi.stubGlobal('fetch', fetchSpy);
     expect(await checkServerPresence(KEY, 'corr-1')).toBe('present');
-    expect(fetchSpy).toHaveBeenCalledWith(`https://cdn.example.com/audio/${PATH}`, { method: 'HEAD' });
+    expect(fetchSpy).toHaveBeenCalledWith(`https://cdn.example.com/audio/${PATH}`, expect.objectContaining({ method: 'HEAD' }));
     // Guard against the old raw-key bug: the URL must be keyToServerPath-based, not the encoded key.
     expect(fetchSpy).not.toHaveBeenCalledWith(expect.stringContaining(encodeURIComponent(KEY)), expect.anything());
+  });
+
+  it('treats a 200 text/html (SPA fallback) as MISSING, not a false present', async () => {
+    audioConfig.verpexBase = '/audio';
+    vi.stubGlobal('fetch', vi.fn(async () => resp(true, 200, 'text/html; charset=utf-8')));
+    expect(await checkServerPresence(KEY, 'corr-1')).toBe('missing');
   });
 
   it('falls through Verpex 404 to the Supabase bucket, returning present when the bucket has it', async () => {
@@ -86,22 +102,22 @@ describe('checkServerPresence', () => {
     audioConfig.supabaseAudioBucket = 'tts-audio';
     const fetchSpy = vi
       .fn()
-      .mockResolvedValueOnce({ ok: false, status: 404 }) // verpex miss
-      .mockResolvedValueOnce({ ok: true, status: 200 }); // supabase hit
+      .mockResolvedValueOnce(resp(false, 404)) // verpex miss
+      .mockResolvedValueOnce(resp(true, 200)); // supabase hit
     vi.stubGlobal('fetch', fetchSpy);
     expect(await checkServerPresence(KEY, 'corr-1')).toBe('present');
-    expect(fetchSpy).toHaveBeenNthCalledWith(1, `/audio/${PATH}`, { method: 'HEAD' });
+    expect(fetchSpy).toHaveBeenNthCalledWith(1, `/audio/${PATH}`, expect.objectContaining({ method: 'HEAD' }));
     expect(fetchSpy).toHaveBeenNthCalledWith(
       2,
       `https://sb.example.co/storage/v1/object/public/tts-audio/${PATH}`,
-      { method: 'HEAD' },
+      expect.objectContaining({ method: 'HEAD' }),
     );
   });
 
   it('returns "missing" only when every configured tier positively 404s', async () => {
     audioConfig.verpexBase = '/audio';
     audioConfig.supabaseAudioBucket = 'tts-audio';
-    vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, status: 404 })));
+    vi.stubGlobal('fetch', vi.fn(async () => resp(false, 404)));
     expect(await checkServerPresence(KEY, 'corr-1')).toBe('missing');
   });
 
