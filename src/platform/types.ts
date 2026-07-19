@@ -139,9 +139,14 @@ export interface AudioAdapter {
   playPcm16(data: ArrayBuffer, sampleRate: number, options?: AudioPlayOptions): Promise<void>;
   // Text-to-speech via the platform's built-in speech-synthesis engine. This is the graceful
   // fallback when SERVER TTS is unavailable (edge TTS_UNAVAILABLE) — degraded quality but still
-  // audible, per the TTS design. Resolves once speech has started; options.onEnded fires when it
-  // finishes (or is stopped). Rejects PlatformError('audio','unavailable') when the platform has
-  // no speech synthesis. stop() also cancels in-progress synthesis.
+  // audible, per the TTS design. EN-31: this is the LAST-RESORT tier, so its outcome must be
+  // honest — the promise resolves when speech ends and REJECTS PlatformError('audio','speech-failed')
+  // when the engine errors (no voice, autoplay-gesture block, engine failure) with code
+  // 'playback-failure', so the caller can notify the user instead of reporting silence as success.
+  // Rejects PlatformError('audio',
+  // 'unavailable') when the platform has no speech synthesis. A timeout backstop resolves so a
+  // dropped utterance never hangs the await. `options.onEnded` fires on EVERY settle path (end,
+  // error, timeout) so the caller's spinner-clear contract holds. stop() also cancels in-progress synthesis.
   speak(text: string, options?: SpeechSynthesisOptions): Promise<void>;
   pause(): void;
   // Resume a paused playback (also resumes a suspended audio context).

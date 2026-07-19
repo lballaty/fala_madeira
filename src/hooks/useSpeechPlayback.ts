@@ -18,6 +18,16 @@ interface SpeechPlaybackDeps {
   showToast: ShowToast;
 }
 
+// EN-31 GAP 3: once-per-OUTAGE dedupe of the "audio couldn't play" toast. Module-scoped (not per
+// hook mount) so it dedupes across every audio surface — a session-long outage would otherwise
+// pop one toast per play. A SUCCESSFUL play re-arms it, so recovery-then-new-outage notifies again
+// (a strict once-per-whole-session would hide later failures, defeating EN-31's purpose). Note:
+// EVERY failure is still logged (below) — only the user-facing toast is deduped, never the log.
+let audioFailureNotified = false;
+
+/** Test-only: reset the module-scoped toast-dedupe latch between cases. */
+export const __resetAudioFailureNotified = (): void => { audioFailureNotified = false; };
+
 export const useSpeechPlayback = ({ profile, playbackSpeed, showToast }: SpeechPlaybackDeps) => {
   const lastPlayTimeRef = useRef(0);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -39,9 +49,16 @@ export const useSpeechPlayback = ({ profile, playbackSpeed, showToast }: SpeechP
       await geminiService.playSpeech(text, tutor, playbackSpeed, () => {
         setIsAudioPlaying(false);
       });
+      // Recovered: re-arm the failure notification so the next outage is surfaced again.
+      audioFailureNotified = false;
     } catch (err) {
+      // Always log every failure (observability); dedupe only the user-facing toast so a
+      // session-long outage doesn't spam one toast per play (EN-31 GAP 3).
       const event = logger.error('speech_playback_failed', 'Play speech error', { category: 'AI_DECISION', error: err });
-      showToast(userMessage('TTS_FAILED', errorMessage(err) || 'Audio playback failed', event.request_id), 'error');
+      if (!audioFailureNotified) {
+        showToast(userMessage('TTS_FAILED', errorMessage(err) || 'Audio playback failed', event.request_id), 'error');
+        audioFailureNotified = true;
+      }
       setIsAudioPlaying(false);
     }
   };
