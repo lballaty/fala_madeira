@@ -6,6 +6,7 @@
 **Created:** 2026-07-15
 **Last Updated:** 2026-07-15
 **Last Updated By:** Libor Ballaty
+**Status:** **SHIPPED 2026.07.16.1** (commit `10accaf`) — content-access gating honors `unlimited`/`admin` full-access bypass; admin grant control live.
 
 ---
 
