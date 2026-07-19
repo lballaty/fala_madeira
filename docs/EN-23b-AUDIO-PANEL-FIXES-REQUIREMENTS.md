@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty (with assistant)
 **Created:** 2026-07-19
 **Last Updated:** 2026-07-19
-**Last Updated By:** claude-orchestrator (initial draft for owner approval)
+**Last Updated By:** claude-en23b (owner APPROVED build W1–W4; claims verified against live code)
 
 ## 1. Context & problem
 
@@ -50,4 +50,4 @@ Ships in the next cut (CalVer `2026.07.19.x`) via the standard staging→approve
 
 ## 8. Approval
 
-**Status:** DRAFT — awaiting owner approval before build (requirements/approval gate, AGENTS §3).
+**Status:** APPROVED — owner approved build W1–W4 on 2026-07-19 (requirements/approval gate, AGENTS §3). All four claims (W1 phantom `config.audio.serverBase` + raw-key probe, W2 null-on-cache-miss play, W3 N-sequential enumerate/probe loop, W4 size-only-when-scored) were verified against live code (`audioServerTier.ts:18-38`, `config.ts:58-59`, `useAudioReview.ts:118-158,227-231`) before approval. Build proceeds on `feat/en23b-audio-panel-fixes` in an isolated worktree; incremental commits per work-package; full gate (CI=1 e2e regression + ship dry-run) before any cut.
