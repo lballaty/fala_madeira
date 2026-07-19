@@ -35,4 +35,4 @@ EN-34 hosts curated audio so fewer plays reach the failing provider; EN-31 guara
 
 ---
 
-**Status:** DRAFT — awaiting owner approval (AGENTS §3). Paired with EN-34; own approval + work-package decomposition follow.
+**Status:** **APPROVED + BUILT & MERGED to develop `9e2c694` 2026-07-19.** Owner decisions (§4) locked: (1) trigger = **total-failure only** (no GAP-2 degradation indicator); (2) surface = **error toast** (existing, not modal); (3) copy = message + correlation ref; (4) **no** Retry/Settings action; (5) dedupe = **once-per-outage** (module-scoped, re-armed on a successful play). Built on `feat/en31-audio-fail-notification` (`7ac5e85`): GAP 1 — `platform.audio.speak()` (web) rejects on `onerror` (+ resolve-on-timeout backstop, `onEnded` preserved every path) so the silent device-speech failure reaches the existing toast; GAP 3 — once-per-outage toast dedupe (every failure still logged). GAP 2 left silent (owner). Gate: vitest 590/590, tsc 0; e2e regression showed no EN-31 regression. Tests: `useSpeechPlayback.test.ts` (new) + `audio.web.test.ts`.

@@ -2,7 +2,7 @@
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-34-INCREMENTAL-AUDIO-HOSTING-REQUIREMENTS.md
 **Description:** Requirements for hosting curated TTS audio in small batches over time (never stalling on provider limits, never silently forgotten), plus an inventory audit of what is already hosted. Approach **C** (both paths), delivered **A-first**.
-**Status:** **APPROVED 2026-07-19** (see §173) — execute-ready, not yet built. Live activation steps remain operator-gated + staging-first.
+**Status:** **AUTONOMOUS HALF BUILT & MERGED INERT to develop `d4eb62f` 2026-07-19** — all 13 code/test/docs steps complete behind inert flags (vitest 577/577, tsc 0, e2e 135/0/3, ship dry-run PASS). Live activation remains operator-gated + staging-first. Per-step commits + operator sequence: `docs/TESTER-FEEDBACK-TRACKER.md` (EN-34).
 **Author:** claude-opus-runner (with owner)
 **Created:** 2026-07-19
 **Last Updated:** 2026-07-19
@@ -171,4 +171,4 @@ The EN-23 admin Audio tab already lets an admin **rate** a clip (`good`/`bad`/`r
 
 ---
 
-**Status:** **APPROVED to build 2026-07-19** (owner). Decisions locked (schedule host = pg_cron→edge; versioning = build now; contention = symlink); alignment refinements A/B/C folded (§11); **EN-32 absorbed, EN-31 paired** (§7). Executable plan: `plans/plan-2026-07-19-en34-incremental-audio-hosting.yaml` — autonomous code/test/docs on `develop` behind inert flags, HALTs at every live/operator step. Live activation (migrations apply, edge deploy, Verpex symlink/cron, `TTS_BUFFER_WRITEBACK` flip, bucket writes) remains operator-gated + staging-first (the `tts-audio` bucket is shared prod+staging).
+**Status:** **AUTONOMOUS HALF BUILT & MERGED INERT to develop `d4eb62f` 2026-07-19.** APPROVED to build 2026-07-19 (owner); decisions locked (schedule host = pg_cron→edge; versioning = build now; contention = symlink); refinements A/B/C folded (§11); **EN-32 absorbed, EN-31 paired** (§7). All 13 steps of `plans/plan-2026-07-19-en34-incremental-audio-hosting.yaml` built + gated green (vitest 577/577, tsc 0, e2e 135/0/3, ship dry-run PASS), merged behind inert flags. Live activation (migrations apply, edge deploy, Verpex symlink/cron, `TTS_BUFFER_WRITEBACK` flip, bucket writes) remains operator-gated + staging-first (the `tts-audio` bucket is shared prod+staging). Per-step commits + operator activation sequence: the tracker (EN-34).
