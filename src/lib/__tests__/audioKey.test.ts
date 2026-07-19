@@ -55,4 +55,39 @@ describe('audioKey.keyToServerPath', () => {
     expect(keyToServerPath(k1).startsWith('tts_')).toBe(false);
     expect(keyToServerPath(k1)).not.toBe(keyToServerPath(k2));
   });
+
+  // EN-34 versioning: generation folds into the object name so a regenerated clip lands at a
+  // different URL and busts every cache layer. Generation 1 (default) MUST equal the legacy name.
+  describe('generation versioning (EN-34)', () => {
+    const key = buildKey('default', 'teacher', 'Bom dia!');
+
+    it('generation 1 (and the default) is byte-identical to the legacy unversioned name', () => {
+      const legacy = keyToServerPath(key);
+      expect(keyToServerPath(key, 1)).toBe(legacy);
+      expect(legacy).toMatch(/^[a-z0-9_]+\.pcm$/i);
+      expect(legacy).not.toContain('.v');
+    });
+
+    it('generation ≥ 2 inserts a purely-numeric .v<gen> suffix before .pcm', () => {
+      expect(keyToServerPath(key, 2)).toBe(keyToServerPath(key).replace(/\.pcm$/, '.v2.pcm'));
+      expect(keyToServerPath(key, 7)).toMatch(/\.v7\.pcm$/);
+      // each generation is a distinct object name (the whole point of cache-busting)
+      expect(keyToServerPath(key, 2)).not.toBe(keyToServerPath(key, 3));
+      expect(keyToServerPath(key, 2)).not.toBe(keyToServerPath(key, 1));
+    });
+
+    it('floors non-integer / coerces junk generation and stays traversal-safe', () => {
+      // A fractional or non-numeric generation can never inject a slash, colon, or dots.
+      expect(keyToServerPath(key, 2.9 as unknown as number)).toBe(keyToServerPath(key, 2));
+      expect(keyToServerPath(key, 0)).toBe(keyToServerPath(key)); // < 2 → legacy
+      expect(keyToServerPath(key, NaN as unknown as number)).toBe(keyToServerPath(key));
+      for (const g of [2, 5, 99]) {
+        const p = keyToServerPath(key, g);
+        expect(p).not.toContain('/');
+        expect(p).not.toContain(':');
+        expect(p).not.toContain('..');
+        expect(p).toMatch(/^[a-z0-9_]+\.v[0-9]+\.pcm$/i);
+      }
+    });
+  });
 });
