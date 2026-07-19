@@ -185,6 +185,9 @@ export const SettingsView = ({
   // manual close doesn't immediately re-open it.
   useEffect(() => {
     if (!openAboutSignal) return;
+    // One-shot external signal (sidebar About deep-link); cleared immediately via
+    // onAboutSignalHandled, so this does not trigger cascading renders.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsAboutOpen(true);
     onAboutSignalHandled?.();
   }, [openAboutSignal, onAboutSignalHandled]);
