@@ -1,38 +1,86 @@
 # EN-31 — "Audio couldn't play" user notification (Requirements)
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-31-AUDIO-FAIL-NOTIFICATION-REQUIREMENTS.md
-**Description:** Product-wide, honest notification when TTS audio fails to reach the user — hardening the existing toast and closing the SILENT device-speech failure gap. Paired with EN-34 (hosting reduces failures; EN-31 surfaces the rest). DRAFT — no build until owner-approved (AGENTS §3).
+**Description:** Product-wide, honest notification when TTS audio fails to reach the user. The silent-failure core (GAP 1) and toast anti-spam (GAP 3) are BUILT + merged; this spec now scopes the remaining owner-decision UX (GAP 2 degradation indicator, popup/Retry/copy) for approval. Paired with EN-34 (hosting reduces failures; EN-31 surfaces the rest).
 **Author:** claude-en23b (with owner)
 **Created:** 2026-07-19
 **Last Updated:** 2026-07-19
-**Last Updated By:** claude-en23b
+**Last Updated By:** claude-en31-spec
 
 ---
+
+## 0. Status (reconciled 2026-07-19)
+
+**PARTIALLY BUILT — remaining scope NEEDS APPROVAL (AGENTS §3).**
+
+| Item | State |
+|---|---|
+| GAP 1 — silent device-speech failure now surfaces | ✅ **BUILT + merged to `develop`** (commit `7ac5e85`), with unit tests |
+| GAP 3 — once-per-outage toast dedupe | ✅ **BUILT + merged to `develop`** (commit `7ac5e85`), with unit tests |
+| GAP 2 — server→device degradation indicator | ⛔ **NOT built** — genuine product decision, needs approval |
+| UX — popup/modal vs toast, Retry action, Settings link, final copy | ⛔ **NOT built** — needs approval |
+
+Rationale for the built part landing ahead of this spec's approval: GAP 1 closes an **acknowledged OBSERVABILITY-doctrine gap** (a failure was logged but never surfaced to the user — "silence reported as success"), so it qualifies as a doctrine/bug fix rather than a new feature. GAP 3 is the small anti-spam guard bundled with it. The **product-shaping** choices (GAP 2 + the popup/Retry/copy UX) remain gated on owner approval below.
 
 ## 1. Purpose
-When audio can't be played for any reason, the user must be told (owner: "a popup of some kind so they are not just unaware of what is wrong") — product-wide, not onboarding-scoped. This is **harden-the-existing**, not build-from-scratch.
 
-## 2. Current state (verified in code)
-- All audio surfaces route through `useSpeechPlayback.playSpeech` (`src/hooks/useSpeechPlayback.ts`), whose `catch` (≈line 42-44) already fires `showToast(userMessage('TTS_FAILED', …, event.request_id), 'error')` — an error toast carrying the correlation ref (satisfies OBSERVABILITY §10 dual-surface). So the happy-path failure notification exists.
+When audio can't be played for any reason, the user must be told (owner: "a popup of some kind so they are not just unaware of what is wrong") — **product-wide**, not onboarding-scoped. This is **harden-the-existing**, not build-from-scratch.
 
-## 3. Gaps to close
-- **GAP 1 (the real "unaware" case) — silent device-speech failure = NO toast.** The toast only fires when `geminiService.playSpeech` throws. The last-resort device fallback `platform.audio.speak` (`src/platform/web/audio.web.ts:159-190`) **resolves immediately on `synth.speak()`**; Web-Speech `onerror` fires asynchronously *after* resolution → logged (SYSTEM_HEALTH) but cannot reject → user gets **silence + no toast** (no pt-PT voice, autoplay-gesture block, engine error). **Fix:** make `speak()` return a promise that resolves on `onend` and **rejects on `onerror`** (with a timeout backstop), preserving the `onEnded` spinner-clear contract, so the failure reaches the existing toast.
-- **GAP 2 (product decision) — degradation is intentionally silent.** When server TTS 503s but device speech works, the user hears the device voice with no indication quality dropped (ties EF-37/TB-13). **Decide:** a subtle "using device voice" indicator (distinct from the error toast) vs. keep silent.
-- **GAP 3 (UX) — dedupe the toast.** A session-long outage risks a toast per play. Set a once-per-session/surface dedupe (the 300ms ref debounce governs play frequency, not toast spam).
+## 2. Current state (verified in code, on `develop`)
 
-## 4. Decisions for owner
-1. **Trigger set** — total-failure only, or also the GAP-2 degradation indicator?
-2. **Surface** — toast (existing) vs. modal ("popup" per owner) for total failure.
-3. **Copy** — honest, non-alarming; include the correlation ref for support.
-4. **Actions** — Retry button + link to Settings › Voice Provider?
-5. **Dedupe policy** — once per session, or per surface, per outage.
+All audio surfaces (lessons, quiz, tutor free-chat, vocab, onboarding first-win) route through `useSpeechPlayback.playSpeech` (`src/hooks/useSpeechPlayback.ts`).
 
-## 5. Testing (AGENTS §3)
-Unit tests per failure mode: device `speak()` rejects → toast; unsupported/no-voice → toast; graceful degradation → no *error* toast (optional indicator only); dedupe suppresses repeats. No product regression to the happy path.
+- **Total-failure toast (pre-existing).** `playSpeech`'s `catch` fires `showToast(userMessage('TTS_FAILED', errorMessage(err), event.request_id), 'error')` — an error toast **carrying the correlation ref** (satisfies OBSERVABILITY §10 dual-surface: the same failure is `logger.error`'d and shown to the user with a quotable ref).
+- **GAP 1 CLOSED (`7ac5e85`).** The last-resort device fallback `platform.audio.speak` (`src/platform/web/audio.web.ts`) previously resolved as soon as `synth.speak()` was queued, so an async `onerror` (no `pt-PT` voice, autoplay-gesture block, engine error) could only be *logged*, never surfaced → the user got silence with no toast. `speak()` now returns a promise that **resolves on `onend`, rejects on `onerror`**, with a **timeout backstop that resolves** (a timeout is ambiguous, not a definite failure) so the await can't hang. `onEnded` still fires on every path, preserving the caller's spinner-clear contract. A device failure now propagates to the existing toast.
+- **GAP 3 CLOSED (`7ac5e85`).** A module-scoped `audioFailureNotified` latch dedupes the *toast* to **once per outage**; a successful play **re-arms** it (so recovery-then-new-outage notifies again — a strict once-per-session would hide later failures). Every failure is still **logged** individually; only the user-facing toast is deduped.
+- **Coverage:** `src/hooks/__tests__/useSpeechPlayback.test.ts` and `src/platform/web/__tests__/audio.web.test.ts` assert: device `speak()` rejects on `onerror` → toast; timeout resolves (no false toast); dedupe suppresses repeat toasts; a success re-arms the latch.
 
-## 6. Relationship to EN-34
-EN-34 hosts curated audio so fewer plays reach the failing provider; EN-31 guarantees the *remaining* failures are visible. Ship sequenced with EN-34 for a complete reliability story.
+## 3. Remaining requirements (the open scope)
+
+### GAP 2 — server→device degradation is intentionally silent (product decision)
+When server/premium TTS 503s but device speech succeeds, the user hears the lower-quality device voice with **no indication quality dropped** (ties EF-37 / TB-13). This is *not* a failure, so the error toast is the wrong surface. Decide whether to surface a **subtle, non-alarming "using device voice" indicator** or keep it silent.
+
+### UX enhancements to the total-failure notification
+The failure notification today is an error toast. Owner asked for "a popup." Decide the surface, whether it carries a **Retry** action and a **link to Settings › Voice Provider**, and the exact copy.
+
+## 4. Proposed resolution (PROPOSED — owner confirm each)
+
+> These are recommendations grounded in the current code and the calm/honest/non-manipulative product guardrails (CONTENT-ARCHITECTURE §12). The owner approves or amends; nothing here is built until then.
+
+1. **Surface for total failure — keep the toast, don't add a blocking modal.** *Recommendation:* interpret "popup" as the existing non-blocking error toast, **not** a modal. A modal that interrupts on a failed audio play is hostile on a voice-first app where plays are frequent; the toast already carries the ref and is deduped once-per-outage. If the owner wants stronger emphasis, scope any modal to **first failure of a session only**. **PROPOSED: enhanced toast (below), no modal.**
+2. **Copy (honest, non-alarming, ref included).** *Proposed strings:*
+   - Total failure: **"Couldn't play the audio — check your connection or try again. (Ref: {requestId})"**
+   - Unsupported device (no speech synthesis): **"This device can't play spoken audio. (Ref: {requestId})"**
+   These replace the raw `errorMessage(err)` passthrough with a stable, user-facing message while keeping the `{requestId}` for support.
+3. **Retry action.** *Recommendation:* add a **Retry** button to the failure toast that re-invokes the last `playSpeech(text)`. Cheap, directly addresses transient provider/network blips, and avoids the user re-hunting the speaker control. **PROPOSED: yes.**
+4. **Settings link.** *Recommendation:* when the failure is provider/voice-related (not a plain network drop), add a secondary **"Voice settings"** link to Settings › Voice Provider. **PROPOSED: yes, conditional on failure class.**
+5. **GAP 2 degradation indicator.** *Recommendation:* show a **subtle, once-per-session, non-error indicator** (e.g. a small "device voice" pill/icon near the audio control), distinct from the error toast — never a toast, since degradation is expected graceful behavior, not an error. **PROPOSED: subtle indicator, once per session.** (Owner may choose "keep silent" — lowest effort, but leaves the EF-37/TB-13 "why does it sound different?" question unanswered.)
+6. **Dedupe policy.** Already built as once-per-outage with re-arm on success (GAP 3). *Recommendation:* keep as-is; only add per-surface granularity if testing shows cross-surface confusion. **RESOLVED.**
+
+## 5. Acceptance criteria
+
+- **AC-1 (built, regression-guard):** a device `speak()` `onerror` produces exactly one error toast carrying a `{requestId}`; a backstop timeout produces **no** toast.
+- **AC-2 (built, regression-guard):** during a sustained outage, repeated plays produce exactly one toast until a successful play re-arms the latch.
+- **AC-3 (new, if WP-C approved):** the total-failure toast shows the approved stable copy (not a raw error string) and, when present, a working **Retry** that re-triggers the last play; a provider/voice-class failure also shows the **Voice settings** link.
+- **AC-4 (new, if WP-D approved):** when server TTS degrades to device voice, the degradation indicator appears at most **once per session** and **no error toast** fires.
+- **AC-5 (no regression):** the happy path (audio plays) shows neither toast nor indicator; the spinner-clear contract (`onEnded`/`isAudioPlaying=false`) holds on every path.
+
+## 6. Work packages (decomposition)
+
+| WP | Scope | Files (indicative) | Depends on | State |
+|---|---|---|---|---|
+| **WP-A** | GAP 1 — `speak()` resolve-on-`onend`/reject-on-`onerror` + timeout backstop | `src/platform/web/audio.web.ts`, `src/platform/types.ts` | — | ✅ done (`7ac5e85`) |
+| **WP-B** | GAP 3 — module-scoped once-per-outage toast dedupe + re-arm | `src/hooks/useSpeechPlayback.ts` | — | ✅ done (`7ac5e85`) |
+| **WP-C** | Enhanced failure toast: stable copy + Retry + conditional Settings link | `useSpeechPlayback.ts`, toast component, `src/lib/logger.ts` (userMessage) | owner approval (§4.1–4.4) | ⛔ needs approval |
+| **WP-D** | GAP 2 degradation indicator (once/session, non-error) | audio control component, `useSpeechPlayback.ts` (surface a `degraded` signal) | owner approval (§4.5); ties EF-37/TB-13 | ⛔ needs approval |
+| **WP-E** | Tests for WP-C/WP-D (vitest: copy, Retry re-invoke, indicator once/session, no-error-on-degrade) | `__tests__/useSpeechPlayback.test.ts`, component tests | WP-C, WP-D | ⛔ needs approval |
+
+WP-C and WP-D are independent of each other; both require owner approval and each ships with WP-E coverage per AGENTS §3 (test with every change).
+
+## 7. Relationship to EN-34
+
+EN-34 hosts curated audio so fewer plays reach the failing/throttled provider; EN-31 guarantees the **remaining** failures are visible and the **degradation** is honest. Ship WP-C/WP-D sequenced with EN-34 for a complete audio-reliability story.
 
 ---
 
-**Status:** DRAFT — awaiting owner approval (AGENTS §3). Paired with EN-34; own approval + work-package decomposition follow.
+**Status:** PARTIALLY BUILT (WP-A/WP-B merged `7ac5e85`) — WP-C/WP-D/WP-E **NEEDS APPROVAL** (AGENTS §3). Paired with EN-34.
