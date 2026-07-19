@@ -16,11 +16,14 @@ import { BUNDLED_PACKS } from '../../content/bundled';
 import { buildKey, keyToServerPath } from '../audioKey';
 import {
   clipsByLevel,
+  clipsForOnboarding,
+  clipsForCorpus,
   expectedNamesByLevel,
   diffCoverage,
   findOrphans,
   providerHits,
 } from '../audit-utils';
+import { config } from '../../config';
 
 // Minimal Situation carrying only the fields linesForSituation + the audit walk read.
 const situation = (
@@ -80,6 +83,43 @@ describe('audit-utils — clipsByLevel / expectedNamesByLevel (single source of 
     expect(clip.text).toBe('água');
     expect(clip.key).toBe(buildKey('default', 'teacher', 'água')); // default vocab → teacher voice
     expect(clip.name).toBe(keyToServerPath(clip.key));
+  });
+});
+
+describe('audit-utils — clipsForOnboarding / clipsForCorpus (EN-34 corpus selection)', () => {
+  it('onboarding corpus is non-empty, deduped, and keyed identically to every other tier', () => {
+    const clips = clipsForOnboarding();
+    expect(clips.length).toBeGreaterThan(0);
+    const names = new Set(clips.map((c) => c.name));
+    expect(names.size).toBe(clips.length); // deduped by object name
+    // seeded with the actual first-win greeting the onboarding flow speaks, at the default voice
+    const firstWin = clips.find((c) => c.text === config.onboarding.firstWinPhrase);
+    expect(firstWin).toBeDefined();
+    expect(firstWin!.key).toBe(buildKey('default', 'teacher', config.onboarding.firstWinPhrase));
+    expect(firstWin!.name).toBe(keyToServerPath(firstWin!.key));
+  });
+
+  it("clipsForCorpus('onboarding') === clipsForOnboarding()", () => {
+    expect(clipsForCorpus(BUNDLED_PACKS, 'onboarding')).toEqual(clipsForOnboarding());
+  });
+
+  it("clipsForCorpus('level:<n>') selects that level; empty falls back to fallbackLevel", () => {
+    const packs = [pack([situation(0, { phrases: ['olá'] }), situation(1, { phrases: ['bom dia'] })])];
+    expect(clipsForCorpus(packs, 'level:1').map((c) => c.text)).toEqual(['bom dia']);
+    expect(clipsForCorpus(packs, '', 0).map((c) => c.text)).toEqual(['olá']); // fallback to level 0
+  });
+
+  it("clipsForCorpus('all') flattens every level, deduped globally by object name", () => {
+    // 'olá' at level 0 and level 1 share the same default-voice object name → one clip in 'all'.
+    const packs = [pack([situation(0, { phrases: ['olá', 'adeus'] }), situation(1, { phrases: ['olá'] })])];
+    const all = clipsForCorpus(packs, 'all');
+    const names = all.map((c) => c.name);
+    expect(new Set(names).size).toBe(names.length); // no duplicate object names across levels
+    expect(all.map((c) => c.text).sort()).toEqual(['adeus', 'olá']);
+  });
+
+  it('throws on an unknown corpus spec (a typo must never silently host the wrong set)', () => {
+    expect(() => clipsForCorpus(BUNDLED_PACKS, 'levl:0')).toThrow(/unknown --corpus/);
   });
 });
 

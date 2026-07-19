@@ -15,6 +15,7 @@
 
 import type { ContentPack, PracticalLevel, VoiceType } from '../content/schema';
 import { linesForSituation } from '../content/lines';
+import { ONBOARDING_CORPUS } from '../content/onboardingCorpus';
 import { buildKey, keyToServerPath } from './audioKey';
 import { resolveVoice } from './voiceType';
 
@@ -72,6 +73,56 @@ export const clipsByLevel = (packs: ContentPack[]): Map<PracticalLevel, AudioCli
     }
   }
   return byLevel;
+};
+
+/**
+ * The onboarding audio corpus as AudioClips (EN-34 / EN-32 absorbed). Maps the single-source
+ * ONBOARDING_CORPUS (text, voiceType) pairs through the SAME resolveVoice → buildKey →
+ * keyToServerPath pipeline as clipsByLevel, so the onboarding clips key/host identically to every
+ * other tier and the panel/warm-fn enumerate one set. Deduped by object name. Pure.
+ */
+export const clipsForOnboarding = (): AudioClip[] => {
+  const seen = new Set<string>();
+  const out: AudioClip[] = [];
+  for (const src of ONBOARDING_CORPUS) {
+    const voice = resolveVoice({ voiceType: src.voiceType });
+    const key = buildKey('default', voice, src.text);
+    const name = keyToServerPath(key);
+    if (seen.has(name)) continue;
+    seen.add(name);
+    out.push({ text: src.text, voiceType: src.voiceType, key, name });
+  }
+  return out;
+};
+
+/**
+ * Resolve a --corpus spec to its work list (EN-34 A2 priority ordering entry points):
+ *   'onboarding'  → the onboarding greeting set (highest priority)
+ *   'level:<n>'   → one practical level
+ *   'all'         → every level, ascending, deduped GLOBALLY by object name
+ *   ''/undefined  → fall back to `fallbackLevel` (back-compat with the pre-corpus --level flag)
+ * Pure: callers own I/O. Unknown specs throw so a typo never silently hosts the wrong set.
+ */
+export const clipsForCorpus = (packs: ContentPack[], corpus: string, fallbackLevel = 0): AudioClip[] => {
+  const spec = (corpus || '').trim();
+  if (spec === 'onboarding') return clipsForOnboarding();
+  const byLevel = clipsByLevel(packs);
+  if (spec === 'all') {
+    const seen = new Set<string>();
+    const out: AudioClip[] = [];
+    for (const lvl of [...byLevel.keys()].sort((a, b) => a - b)) {
+      for (const clip of byLevel.get(lvl)!) {
+        if (seen.has(clip.name)) continue;
+        seen.add(clip.name);
+        out.push(clip);
+      }
+    }
+    return out;
+  }
+  const levelMatch = spec.match(/^level:(\d+)$/);
+  const level = (levelMatch ? Number(levelMatch[1]) : fallbackLevel) as PracticalLevel;
+  if (spec && !levelMatch) throw new Error(`unknown --corpus '${spec}' (expected onboarding|level:<n>|all)`);
+  return byLevel.get(level) ?? [];
 };
 
 /**
