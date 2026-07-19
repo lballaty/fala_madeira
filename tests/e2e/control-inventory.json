@@ -1566,6 +1566,14 @@
       ]
     },
     {
+      "screen": "nav",
+      "id": "nav.about",
+      "selector": {"css": "[data-testid=\"nav-about\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/66-sidebar-about.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
       "screen": "admin",
       "id": "admin.access.tab",
       "selector": {"role": "button", "name": "User Access"},

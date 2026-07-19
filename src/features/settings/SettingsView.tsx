@@ -70,6 +70,11 @@ interface SettingsViewProps {
   focusProficiencyCard?: boolean;
   /** Called once the proficiency card has been scrolled into view so the parent can reset the signal. */
   onProficiencyCardFocused?: () => void;
+  /** NAV-1c: when true, open the About modal (raised by the desktop sidebar's About entry, which
+   *  lands on Settings and asks this view to open its About modal). */
+  openAboutSignal?: boolean;
+  /** Called once the About modal has been opened so the parent can reset the signal. */
+  onAboutSignalHandled?: () => void;
 }
 
 export const SettingsView = ({
@@ -88,6 +93,8 @@ export const SettingsView = ({
   onGoalChooserFocused,
   focusProficiencyCard = false,
   onProficiencyCardFocused,
+  openAboutSignal = false,
+  onAboutSignalHandled,
 }: SettingsViewProps) => {
   // TB-11b: the goal chooser is a deep-link target from Home's "Choose your goal" CTA. When the
   // signal arrives, scroll it into view; the highlight ring is driven off the prop and cleared by
@@ -173,6 +180,14 @@ export const SettingsView = ({
   // open/closed state lives here rather than in useSettings.
   const [openLegalDoc, setOpenLegalDoc] = useState<LegalDocId | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  // NAV-1c: the desktop sidebar's About entry lands here and raises openAboutSignal; open the About
+  // modal (its legal/support links stay wired to this view's state) and clear the signal so a later
+  // manual close doesn't immediately re-open it.
+  useEffect(() => {
+    if (!openAboutSignal) return;
+    setIsAboutOpen(true);
+    onAboutSignalHandled?.();
+  }, [openAboutSignal, onAboutSignalHandled]);
 
   // Appearance (light/dark) — three-way preference (System/Light/Dark) applied to
   // <html data-theme> and persisted by the useTheme hook (localStorage 'fm_theme').

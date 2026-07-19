@@ -10,7 +10,7 @@
 
 import React, { Suspense, lazy, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield, HelpCircle } from 'lucide-react';
+import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield, HelpCircle, Info } from 'lucide-react';
 import { cn } from './lib/utils';
 import { getSupabase } from './lib/supabase';
 import { logger } from './lib/logger';
@@ -79,6 +79,10 @@ const ADMIN_NAV_ITEM: NavItem = { id: 'admin', label: 'Admin', icon: Shield };
 /** Help entry (EN-20) — always available; opens the App-Guide chat in help mode (not a tab). */
 const HELP_NAV_ITEM: NavItem = { id: 'help', label: 'Help', icon: HelpCircle };
 
+/** About entry (EN-4b / NAV-1c) — desktop-sidebar only; opens the in-app About modal. Mobile keeps
+ *  About under Settings, so this is intentionally not added to the mobile bottom tab bar. */
+const ABOUT_NAV_ITEM: NavItem = { id: 'about', label: 'About', icon: Info };
+
 export default function App() {
   const supabase = getSupabase();
   const [activeTab, setActiveTab] = useState<'home' | 'learning' | 'practice' | 'chat' | 'settings'>('home');
@@ -93,6 +97,10 @@ export default function App() {
   // scroll/highlight the "Your level" proficiency card so the learner lands directly on the control
   // that changes their level (the reporter had no obvious path from a wrong Home level to the fix).
   const [focusProficiencyCard, setFocusProficiencyCard] = useState(false);
+  // NAV-1c: About-modal open state lifted here so the desktop sidebar's About entry can open it. The
+  // modal itself is still rendered + wired (legal/support links) by SettingsView; opening it switches
+  // to the Settings tab and raises this signal, which SettingsView consumes to open its About modal.
+  const [openAboutSignal, setOpenAboutSignal] = useState(false);
   const { toast, showToast } = useToast();
   const authDepsRef = useRef<AuthCrossSliceDeps | null>(null);
   const {
@@ -325,6 +333,14 @@ export default function App() {
           logger.debug('nav', 'Sidebar nav: help', { category: 'USER_ACTION' });
           void openHelp();
         }}
+        aboutItem={ABOUT_NAV_ITEM}
+        onOpenAbout={() => {
+          logger.debug('nav', 'Sidebar nav: about', { category: 'USER_ACTION' });
+          // Land on Settings (where the About modal + its legal/support wiring lives) and raise the
+          // open signal; SettingsView opens its About modal and clears the signal.
+          setActiveTab('settings');
+          setOpenAboutSignal(true);
+        }}
         adminItem={profile?.role === 'admin' ? ADMIN_NAV_ITEM : undefined}
         isAdminActive={isAdminViewOpen}
         onOpenAdmin={() => {
@@ -436,6 +452,8 @@ export default function App() {
                   onGoalChooserFocused={() => setFocusGoalChooser(false)}
                   focusProficiencyCard={focusProficiencyCard}
                   onProficiencyCardFocused={() => setFocusProficiencyCard(false)}
+                  openAboutSignal={openAboutSignal}
+                  onAboutSignalHandled={() => setOpenAboutSignal(false)}
                 />
               </motion.div>
             )}
