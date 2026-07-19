@@ -71,11 +71,13 @@ The failure notification today is an error toast. Owner asked for "a popup." Dec
 |---|---|---|---|---|
 | **WP-A** | GAP 1 — `speak()` resolve-on-`onend`/reject-on-`onerror` + timeout backstop | `src/platform/web/audio.web.ts`, `src/platform/types.ts` | — | ✅ done (`7ac5e85`) |
 | **WP-B** | GAP 3 — module-scoped once-per-outage toast dedupe + re-arm | `src/hooks/useSpeechPlayback.ts` | — | ✅ done (`7ac5e85`) |
-| **WP-C** | Enhanced failure toast: stable copy + Retry + conditional Settings link | `useSpeechPlayback.ts`, toast component, `src/lib/logger.ts` (userMessage) | owner approval (§4.1–4.4) | ⛔ needs approval |
-| **WP-D** | GAP 2 degradation indicator (once/session, non-error) | audio control component, `useSpeechPlayback.ts` (surface a `degraded` signal) | owner approval (§4.5); ties EF-37/TB-13 | ⛔ needs approval |
-| **WP-E** | Tests for WP-C/WP-D (vitest: copy, Retry re-invoke, indicator once/session, no-error-on-degrade) | `__tests__/useSpeechPlayback.test.ts`, component tests | WP-C, WP-D | ⛔ needs approval |
+| **WP-C** | Enhanced failure toast: stable copy + Retry (Settings deep-link split to WP-F) | `useSpeechPlayback.ts`, `components/Toast.tsx`, `hooks/useToast.ts`, `config.ts` | approved 2026-07-19 | ✅ done (`9ccebfe`, `feat/en31`) |
+| **WP-D** | GAP 2 degradation notice — once-per-session calm `info` toast (interim; pill upgrade → WP-G) | `geminiService.ts` (`onDegraded`), `useSpeechPlayback.ts`, toast infra | approved 2026-07-19 | ✅ done (`9ccebfe`, `feat/en31`) |
+| **WP-E** | Tests: stable/unsupported copy, Retry re-invoke, degrade once/session, degrade≠error latch, toast action dismiss + timer-clear | `__tests__/useSpeechPlayback.test.ts`, new `__tests__/useToast.test.ts` | WP-C, WP-D | ✅ done (`9ccebfe`, +12 tests) |
+| **WP-F** | Voice-settings deep-link action on the failure toast | `useSpeechPlayback.ts` deps + **`App.tsx`** nav wiring | **DEFERRED** — App.tsx locked by active TB-1a | ⛔ blocked |
+| **WP-G** | Upgrade WP-D surface: interim `info` toast → subtle pill near the audio control | audio-control component + **`App.tsx`** render wiring | **DEFERRED** — App.tsx locked by active TB-1a | ⛔ blocked |
 
-WP-C and WP-D are independent of each other; both require owner approval and each ships with WP-E coverage per AGENTS §3 (test with every change).
+WP-C/D/E shipped together on `feat/en31` (`9ccebfe`), App.tsx untouched. WP-F/WP-G were split out and deferred because both require editing `App.tsx`, which is under an active TB-1a lock — building into it now would collide with that agent's in-flight work. Both become unblocked once TB-1a lands.
 
 ## 7. Relationship to EN-34
 
@@ -83,4 +85,4 @@ EN-34 hosts curated audio so fewer plays reach the failing/throttled provider; E
 
 ---
 
-**Status:** PARTIALLY BUILT (WP-A/WP-B merged `7ac5e85`) — WP-C/WP-D/WP-E **NEEDS APPROVAL** (AGENTS §3). Paired with EN-34.
+**Status:** WP-A/WP-B on `develop` (`7ac5e85`); WP-C/WP-D/WP-E **BUILT + owner-approved** on `feat/en31` (`9ccebfe`, unmerged — orchestrator to land). WP-F (Settings deep-link) + WP-G (pill upgrade) **DEFERRED** — both need `App.tsx`, currently locked by active TB-1a. Paired with EN-34.
