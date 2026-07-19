@@ -16,6 +16,12 @@
 
 ## Run log
 
+### Deploy — 2026-07-19 — STAGED ✅ 2026.07.19.1 (TB-1 proficiency + EN-23b audio panel) — awaiting production approval
+- **Contents:** TB-1 Option B (placement→`profiles.proficiency_level`; migration 00015 already applied live to the shared DB `gxlrmdfqcqimwwplrdgd`; Home label reads proficiency, Settings "Your level" control; separation invariant `proficiency_level ⟂ unlocked_level` tested) + EN-23b admin Audio panel W1–W4.
+- **Gate (develop, CI=1):** 134 passed · **1 failed = EF-39** (user/04 quiz Next-button flake — documented non-blocker, zero product impact; TB-1/EN-23b don't touch Quiz.tsx) · 3 skipped. TB-1 e2e `user/64-proficiency-level` PASSED. Cut preflight (11 stages) all-PASS (vitest 530/530, coverage-contract incl. new `settings.proficiency.select`).
+- **Cut:** merged develop→main; `ship.sh` bumped `2026.07.18.4→2026.07.19.1`. **Staged** to `testfalamadeira.searchingfool.com`; staged commit `1eb7ba2`. Verified live: home 200, served bundle carries `2026.07.19.1` + proficiency code.
+- **NOT yet:** `deploy:approve` + `deploy:production`, push main + tag `v2026.07.19.1`, back-merge to develop. **Next:** owner verifies staging → approve → production. **EF-39** recommended for quarantine before it flakes another gate.
+
 ### Run 27 — 2026-07-19 — EN-23b admin Audio panel W1–W4 built + full regression GREEN (134/0/3 of 137)
 - **Context:** EN-23b (admin Audio panel fixes) built in worktree `fala_madeira-en23b` on `feat/en23b-audio-panel-fixes`, merged to develop (`3b299a8`) + post-merge concurrency fix (`18c7be1`). Owner-approved requirements (`docs/EN-23b-AUDIO-PANEL-FIXES-REQUIREMENTS.md §8`, 2026-07-19); all four claims verified against live code before build.
 - **What shipped:** W1 server-tier config wiring (`audioServerTier.ts` → real `verpexBase`/`supabaseAudioBucket` + `keyToServerPath` + Verpex→Supabase probe + SPA-fallback `text/html` guard + timeout); W2 `getPlaybackUrl` synthesize-on-cache-miss (play works for any clip, loading state, logged/toasted failure); W3 paginated load (`config.audio.reviewPageSize=25` + "Load more"; per-page enrichment **concurrent** via Promise.all); W4 previewed-clip byteLength → size shown per row.
