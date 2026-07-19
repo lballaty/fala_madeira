@@ -76,7 +76,8 @@ const probeUrl = async (url: string, buildKey: string, correlationId: string): P
 /**
  * Probe whether a clip is hosted on the EN-8 server tier. Mirrors geminiService.fetchServerTier's
  * lookup order (Verpex mirror first, then the Supabase public buffer) but with HEAD requests — the
- * object name is keyToServerPath(buildKey), the SAME name the writers use. Returns:
+ * object name is keyToServerPath(buildKey, generation), the SAME name the writers use (c2: the
+ * generation, resolved from the tts_audio_hosted manifest, selects the versioned object). Returns:
  *   - 'present' as soon as either tier has the object (2xx),
  *   - 'missing'  when every configured tier returns 404 (genuinely not hosted yet),
  *   - 'unknown'  when the tier is unconfigured or every probe errored (never a FALSE 'missing' that
@@ -85,12 +86,17 @@ const probeUrl = async (url: string, buildKey: string, correlationId: string): P
 export const checkServerPresence = async (
   buildKey: string,
   correlationId: string,
+  generation = 1,
 ): Promise<TierPresence> => {
   const verpexBase = resolveVerpexBase();
   const bucket = resolveSupabaseBucket();
   if (!verpexBase && !bucket) return 'unknown';
 
-  const path = keyToServerPath(buildKey);
+  // c2 Refinement A: probe the CURRENT-generation object name, not the fixed legacy name. A clip an
+  // admin re-recorded (generation ≥ 2) is hosted at `<base>.v<gen>.pcm`; probing the legacy `.pcm`
+  // would falsely report a freshly regenerated clip as "missing". generation defaults to 1, so
+  // un-regenerated clips keep probing the legacy unversioned name unchanged.
+  const path = keyToServerPath(buildKey, generation);
   let sawMissing = false;
 
   if (verpexBase) {

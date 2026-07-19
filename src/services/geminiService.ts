@@ -336,6 +336,14 @@ export interface SynthesizeOptions {
    * downloads, never LRU-evicted) instead of the bounded LRU cache. Set by the offline downloader.
    */
   pinned?: boolean;
+  /**
+   * EN-34 c2 (Refinement A): EXPLICIT generation override. Playback normally resolves the current
+   * generation via the flag-gated audioManifest.resolveGeneration. The admin audio panel reads the
+   * true generation DIRECTLY from the manifest (independent of the playback flag) and passes it here
+   * so a preview always plays the CURRENT (re-recorded) object — and scoreClip re-scores it on the
+   * next preview (Refinement C) — even when the playback flag is off. Omitted = flag-gated resolve.
+   */
+  generation?: number;
 }
 
 /** Which tier ultimately served a clip — emitted as `tts_source` for the admin "what is where". */
@@ -486,7 +494,9 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   // pinned store miss the stale bytes and re-fetch. The SERVER object name is versioned separately
   // inside fetchServerTier(cacheKey, generation). logTtsSource keeps the canonical (unsalted)
   // cacheKey so the admin "what is where" observability joins across generations.
-  const generation = await resolveGeneration(cacheKey);
+  // c2 (Refinement A): an EXPLICIT generation (admin panel, manifest-direct) wins over the flag-gated
+  // resolve so an admin preview plays the current object even with the playback flag off.
+  const generation = options.generation != null ? Math.floor(Number(options.generation) || 1) : await resolveGeneration(cacheKey);
   const deviceKey = deviceCacheKey(cacheKey, generation);
 
   const cached = await audioCache.get(deviceKey);

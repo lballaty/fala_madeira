@@ -12,6 +12,7 @@ import { AudioSignals, AudioVerdict, RegenQueueRow, ReviewRow } from './types';
 
 const REVIEW_TABLE = 'tts_audio_review';
 const QUEUE_TABLE = 'tts_audio_regen_queue';
+const HOSTED_TABLE = 'tts_audio_hosted';
 
 export const newCorrelationId = (): string =>
   typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
@@ -176,6 +177,66 @@ export const enqueueRegen = async (
     return { ok: true, data: null };
   } catch (error) {
     return fail('EN23_ENQUEUE_FAILED', 'enqueue for regeneration', error, correlationId);
+  }
+};
+
+/** The hosted-manifest fact the panel needs per clip: its CURRENT generation + the object name. */
+export interface HostedGeneration {
+  generation: number;
+  objectName: string | null;
+}
+
+/**
+ * c2 (W5, Refinement A): fetch the CURRENT hosted generation (+ object name) for the given build keys
+ * from public.tts_audio_hosted (migration 00016). The panel reads the manifest DIRECTLY here — NOT
+ * through the flag-gated playback resolver (src/lib/audioManifest.resolveGeneration) — so the admin
+ * always sees the true generation regardless of the client playback flag.
+ *
+ * BEST-EFFORT by design: on ANY failure (query error, or the table not yet applied — apply is
+ * operator-gated) this returns an EMPTY map, so every clip DEFAULTS to generation 1 and the panel
+ * degrades to pre-EN-34 behaviour. It NEVER throws — a manifest read must not break the review list.
+ * Missing keys are simply absent from the map (caller treats absent → generation 1).
+ */
+export const fetchHostedGenerations = async (
+  supabase: SupabaseClient | null,
+  buildKeys: string[],
+  correlationId = newCorrelationId(),
+): Promise<Map<string, HostedGeneration>> => {
+  const byKey = new Map<string, HostedGeneration>();
+  if (!supabase || buildKeys.length === 0) return byKey;
+  try {
+    const chunkSize = 200;
+    for (let i = 0; i < buildKeys.length; i += chunkSize) {
+      const chunk = buildKeys.slice(i, i + chunkSize);
+      const { data, error } = await supabase
+        .from(HOSTED_TABLE)
+        .select('build_key, generation, object_name')
+        .in('build_key', chunk);
+      if (error) {
+        // Best-effort: log + degrade to gen 1, never surface an error to the panel.
+        logger.warn('EN34_HOSTED_GEN_LOAD_FAILED', 'hosted-generation manifest read failed; defaulting clips to generation 1', {
+          category: 'DATA_PROCESSING',
+          correlationId,
+          error,
+        });
+        return new Map();
+      }
+      for (const row of (data ?? []) as Array<{ build_key?: unknown; generation?: unknown; object_name?: unknown }>) {
+        const key = String(row.build_key ?? '');
+        const gen = Math.floor(Number(row.generation));
+        if (key && Number.isFinite(gen) && gen >= 1) {
+          byKey.set(key, { generation: gen, objectName: (row.object_name as string | null) ?? null });
+        }
+      }
+    }
+    return byKey;
+  } catch (error) {
+    logger.warn('EN34_HOSTED_GEN_LOAD_FAILED', 'hosted-generation manifest read threw; defaulting clips to generation 1', {
+      category: 'DATA_PROCESSING',
+      correlationId,
+      error,
+    });
+    return new Map();
   }
 };
 

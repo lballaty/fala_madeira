@@ -55,6 +55,38 @@ test.describe('admin audio panel (EN-23 / EN-23b)', () => {
     }
   });
 
+  test('shows the current hosted generation for a re-recorded clip (W5, Refinement A)', async ({ adminPage }) => {
+    // c2: the panel reads the true generation DIRECTLY from public.tts_audio_hosted (NOT the flag-
+    // gated playback resolver). Stub the manifest REST read to report EVERY visible clip at
+    // generation 2, so the "gen 2" indicator is deterministic and independent of whether migration
+    // 00016 is applied (best-effort: an un-stubbed / missing table degrades to gen 1 = no indicator).
+    await adminPage.route('**/rest/v1/tts_audio_hosted*', (route) => {
+      const url = new URL(route.request().url());
+      // supabase-js encodes .in('build_key', keys) as ?build_key=in.("k1","k2",...). Echo each key
+      // back at generation 2 so the resolved rows carry a versioned object name.
+      const filter = url.searchParams.get('build_key') ?? '';
+      const inner = filter.replace(/^in\.\(/, '').replace(/\)$/, '');
+      const keys = inner
+        .split(',')
+        .map((k) => k.trim().replace(/^"|"$/g, ''))
+        .filter(Boolean);
+      const rows = keys.map((build_key) => ({ build_key, generation: 2, object_name: `${build_key}.v2.pcm` }));
+      return route.fulfill({ status: 200, headers: { 'content-type': 'application/json' }, body: JSON.stringify(rows) });
+    });
+    // Probe the versioned object name (gen 2) — miss it so the load stays deterministic + fast.
+    await stubServerTierMisses(adminPage);
+
+    await landOnHome(adminPage);
+    await adminPage.getByRole('button', { name: 'Admin' }).first().click();
+    await adminPage.getByTestId('admin-tab-audio').click();
+    const firstRow = adminPage.getByTestId('audio-clip-row').first();
+    await expect(firstRow).toBeVisible({ timeout: 30_000 });
+
+    // W5: the row surfaces the current generation once a clip has been re-recorded (≥ 2).
+    await expect(firstRow.getByTestId('audio-generation')).toBeVisible({ timeout: 30_000 });
+    await expect(firstRow.getByTestId('audio-generation')).toContainText(/gen 2/i);
+  });
+
   test('plays any clip via synthesis and shows its size (W2 + W4)', async ({ adminPage }) => {
     await stubServerTierMisses(adminPage);
     // Deterministic W2: intercept the TTS edge call so play never depends on the live provider/quota
