@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-19
-**Last Updated By:** claude-opus-runner (staging 2026.07.18.4 verify — new TB-30 double-consent; re-confirmed TB-1 proficiency-no-op + EN-4b about-nav-link)
+**Last Updated By:** claude-opus-runner (staging 2026.07.18.4 verify — TB-30 double-consent; EN-31 product-wide audio-fail notification [harden existing]; EN-32 onboarding pre-host [approved]; EN-33 first-month pre-host [follow-up]; re-confirmed TB-1 + EN-4b)
 
 ---
 
@@ -378,6 +378,28 @@
 ---
 
 ## Enhancements (future releases — backlog)
+
+### EN-31 — Product-wide "audio couldn't play" user notification (harden existing + surface silent device-speech failures) (reporter: owner, staging 2026-07-19) — `NEEDS REQUIREMENTS (then owner approval — AGENTS §3)`
+- **Report (owner):** "if the audio can't be played to the user for whatever reason — the user should be notified through a popup of some kind so that they are not just unaware of what is wrong." **Product-wide**, not onboarding-scoped.
+- **Finding — a product-wide notification ALREADY EXISTS (partial):** all audio surfaces (lessons, quiz, tutor free-chat, vocab, onboarding first-win) route through `useSpeechPlayback.playSpeech` (`src/hooks/useSpeechPlayback.ts`), whose `catch` (line 42-44) fires `showToast(userMessage('TTS_FAILED', …, event.request_id), 'error')` — an error toast **carrying the correlation ref** (satisfies OBSERVABILITY §10 dual-surface). So this is a **harden-the-existing**, not build-from-scratch.
+- **GAP 1 (the real "unaware" case) — silent device-speech failure produces NO toast:** the toast only fires when `geminiService.playSpeech` **throws**. Its last-resort device fallback `platform.audio.speak` (`src/platform/web/audio.web.ts:159-190`) **resolves immediately on `synth.speak()`**; the Web-Speech `onerror` fires *asynchronously after* resolution, so it is **logged (SYSTEM_HEALTH) but cannot reject** — the code comment states *"a silent onerror meant 'silence reported as success'."* Result: when device speech fails at runtime (no `pt-PT` voice, autoplay-gesture block, engine error) the user gets **silence + no toast**. **Fix direction:** make `speak()` return a promise that resolves on `onend` / **rejects on `onerror`** (with a timeout backstop), preserving the `onEnded` spinner-clear contract, so the failure reaches `useSpeechPlayback`'s toast. This closes the acknowledged doctrine gap (log surface present, user surface missing).
+- **GAP 2 (product decision) — graceful degradation is intentionally silent:** when server TTS 503s but device speech works, the user hears the device voice with no indication quality dropped (ties EF-37 / TB-13). Decide whether to surface a **subtle "using device voice" indicator** (distinct from the error toast) or keep it silent.
+- **GAP 3 (UX) — debounce/dedupe the toast:** a session-long provider/device outage currently risks a toast per play. Requirements must set a once-per-session/surface dedupe (the 300ms ref debounce governs play frequency, not toast spam).
+- **Requirements doc must decide:** trigger set (total-failure only, or also degradation), surface (toast vs modal — owner said "popup"), copy (honest, non-alarming), whether a Retry action + a link to Settings › Voice Provider, dedupe policy, and the correlation-ref presentation. Coverage per §3: unit tests for each failure mode (speak rejects → toast; unsupported → toast; degradation → no error toast).
+- **Owner:** Agent E (`feat/*`). **Status:** NEEDS REQUIREMENTS.
+
+### EN-32 — Pre-host the onboarding audio corpus (all 6 clips) so onboarding never falls through to the throttled provider (owner ask 2026-07-19) — `APPROVED (owner: "we want all 6 clips uploaded") — operator-gated live op; in progress`
+- **Why:** on staging, every onboarding speaker tap walks all audio tiers and misses — Verpex `/audio/*.pcm` 404 → Supabase `tts-audio` 400 → `ai-gateway` tts **503** (provider throttled) → device-speech fallback. Pre-hosting the ~6 onboarding clips (tier-1/2) makes the premium voice play and **never calls the provider**, eliminating the 404/400/503 console chain for onboarding. Feasible where the full warm isn't **because the set is tiny** (6 clips vs the 527-clip level-0 warm that stalls under the same rate-limit).
+- **Confirmed corpus so far:** `config.onboarding.firstWinPhrase = 'Bom dia!'` (the tap-to-hear first-win, `src/config.ts:365`). The console showed **5 more auto-loaded `default_teacher` clips** whose exact texts must be captured empirically (they aren't `OnboardingFlow.tsx`'s single `playSpeech` call → other steps/preload). **Step 1 = capture the exact 6 `(text, voiceType)` pairs.**
+- **Gaps to clear before upload:** (a) `scripts/pregen-audio.mjs` walks **level-0 situations only** — needs a small **`--corpus onboarding`** mode fed the captured texts (keying stays `buildKey('default', resolveVoice, text)` so pre-gen/live/offline/server tiers agree); (b) admin creds — pregen signs in as the E2E admin to bypass the voice cap, but `E2E_ADMIN_EMAIL/PASSWORD` are **not env-vars in this worktree** (`.env.local`); they exist for e2e via `.admin-temp-credentials.txt` — reconcile before running; (c) `SUPABASE_SERVICE_ROLE_KEY` **present**.
+- **★ Operator gate / blast radius:** the `tts-audio` bucket is on the **SHARED prod+staging Supabase project** — hosting these clips makes them live for **prod too** (staging-first is NOT separable here). Tier-1 `/audio` copy depends on the Verpex pull-cron (staging cron live; confirm prod). Per the no-server-changes-without-approval rule, owner has approved the upload; execution still confirms env + that it touches prod.
+- **Plan:** P1 capture corpus + add `--corpus onboarding` (+ test) [non-gated build] → P2 synth+upload the 6 clips (idempotent, tolerant of throttling) [operator-gated] → P3 re-verify onboarding on staging (tier-1/2 hit, no 503 chain).
+- **Owner:** Agent E / operator (P2 run). **Status:** APPROVED — in progress (P1).
+
+### EN-33 — Pre-host the FIRST-MONTH content audio, soonest (reporter: owner, 2026-07-19) — `OPEN (backlog, prioritized "soonest") — explicitly a separate follow-up`
+- **Report (owner):** "the first month of clips should be uploaded soonest but we can leave that to a separate follow up." Scoped-out of EN-32 by owner; tracked so it isn't lost.
+- **Scope:** pre-host the audio for **month-1 (level-0/early) content** so new users get premium-voice audio without hitting the throttled provider — the same pipeline as EN-32/EN-8 pregen, larger corpus. This IS closer to what `pregen-audio.mjs --level 0` already targets (the stalled 83/527 warm), so the **provider rate-limit (EF-37 / TB-13) is the gating dependency** — a locale-pinned dedicated provider key (TB-13) likely required to complete the batch at scale.
+- **Owner:** operator + Agent E. **Depends on:** EF-37/TB-13 provider capacity; EN-8 hosting pipeline (bucket + Verpex cron + contention fix). **Status:** OPEN — prioritized "soonest", separate follow-up.
 
 ### EN-1 — Audio buttons need immediate click feedback (loading/playing state) — `OPEN (backlog, future release)`
 - **Report (owner):** clicking any audio icon gives no feedback, so if playback takes a moment a user clicks repeatedly instead of waiting. Add an immediate visual state (spinner / pulsing / disabled-while-loading) on tap.
