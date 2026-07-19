@@ -93,6 +93,7 @@ test.describe('admin audio panel (EN-23 / EN-23b)', () => {
     const probe = await adminEvidence.from('tts_audio_regen_queue').select('build_key').limit(1);
     test.skip(probe.error != null, 'tts_audio_regen_queue missing — pending migration 00014 apply (operator-gated)');
 
+    await stubServerTierMisses(adminPage); // this test does not exercise the server tier — keep load fast/deterministic
     await landOnHome(adminPage);
     await adminPage.getByRole('button', { name: 'Admin' }).first().click();
     await adminPage.getByTestId('admin-tab-audio').click();

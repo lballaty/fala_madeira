@@ -136,39 +136,41 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
 
   // Enrich a slice of already-enumerated clips into panel rows: read the device cache (+ score a
   // cached clip that lacks persisted signals) and probe the server tier. This is the EXPENSIVE,
-  // per-clip work — W3 keeps it bounded to one page at a time (never the whole scope at once).
+  // per-clip work — W3 keeps it bounded to one page at a time (never the whole scope at once), and
+  // the page's clips are enriched CONCURRENTLY (Promise.all preserves order) so a page costs ~one
+  // server round-trip, not page-size × round-trips (a full page of sequential cross-origin probes
+  // otherwise stalled the first render for seconds).
   const enrichClips = useCallback(
-    async (slice: EnumeratedClip[]): Promise<AudioReviewItem[]> => {
-      const rows: AudioReviewItem[] = [];
-      for (const clip of slice) {
-        const review = reviewsRef.current[clip.buildKey];
-        let deviceTier: TierPresence = 'missing';
-        let signals = signalsFromReview(review);
+    (slice: EnumeratedClip[]): Promise<AudioReviewItem[]> =>
+      Promise.all(
+        slice.map(async (clip): Promise<AudioReviewItem> => {
+          const review = reviewsRef.current[clip.buildKey];
+          let deviceTier: TierPresence = 'missing';
+          let signals = signalsFromReview(review);
 
-        const cached = await audioCache.get(clip.buildKey);
-        if (cached) {
-          deviceTier = 'present';
-          if (!review || review.signal_scored_at == null) {
-            signals = await scoreClip(new Blob([cached]), { scoredAt: new Date().toISOString() });
+          const cached = await audioCache.get(clip.buildKey);
+          if (cached) {
+            deviceTier = 'present';
+            if (!review || review.signal_scored_at == null) {
+              signals = await scoreClip(new Blob([cached]), { scoredAt: new Date().toISOString() });
+            }
           }
-        }
 
-        const serverTier = serverTierAvailable
-          ? await checkServerPresence(clip.buildKey, correlationRef.current)
-          : 'unknown';
+          const serverTier = serverTierAvailable
+            ? await checkServerPresence(clip.buildKey, correlationRef.current)
+            : 'unknown';
 
-        rows.push({
-          ...clip,
-          verdict: review?.verdict ?? 'unreviewed',
-          notes: review?.notes ?? null,
-          deviceTier,
-          serverTier,
-          signals,
-          queued: queuedRef.current.has(clip.buildKey),
-        });
-      }
-      return rows;
-    },
+          return {
+            ...clip,
+            verdict: review?.verdict ?? 'unreviewed',
+            notes: review?.notes ?? null,
+            deviceTier,
+            serverTier,
+            signals,
+            queued: queuedRef.current.has(clip.buildKey),
+          };
+        }),
+      ),
     [serverTierAvailable],
   );
 
