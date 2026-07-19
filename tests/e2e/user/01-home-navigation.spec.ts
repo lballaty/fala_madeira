@@ -19,7 +19,7 @@ test.describe('home navigation surfaces', () => {
     await expect(page.getByRole('heading', { name: 'Unlock Level' })).toHaveCount(0);
 
     await page.getByRole('button', { name: 'Settings' }).click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
     coverage.touch('home.settings.open', 'outcome-asserted');
 
     await page.getByRole('button', { name: 'Home' }).first().click();

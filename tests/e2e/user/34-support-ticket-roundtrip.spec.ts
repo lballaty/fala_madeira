@@ -22,7 +22,7 @@ test.describe('support ticket roundtrip', () => {
 
     try {
       await landOnHome(page);
-      await page.getByRole('button', { name: 'Profile' }).first().click();
+      await page.getByRole('button', { name: 'Settings' }).first().click();
 
       await page.getByRole('button', { name: 'Support & Feedback' }).click();
       coverage.touch('settings.support.open', 'outcome-asserted');
@@ -70,7 +70,7 @@ test.describe('support ticket roundtrip', () => {
         .toBe('closed');
 
       await landOnHome(page);
-      await page.getByRole('button', { name: 'Profile' }).first().click();
+      await page.getByRole('button', { name: 'Settings' }).first().click();
       await page.getByRole('button', { name: 'My Submissions' }).click();
       coverage.touch('settings.submissions.open', 'outcome-asserted');
       await expect(page.getByRole('heading', { name: 'My Submissions' })).toBeVisible();

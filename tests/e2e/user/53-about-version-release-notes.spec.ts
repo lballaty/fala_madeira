@@ -26,7 +26,7 @@ test.describe('in-app About: version + release notes (EN-4)', () => {
     coverage,
   }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     await page.getByRole('button', { name: 'About', exact: true }).click();
 

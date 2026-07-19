@@ -70,7 +70,7 @@ const NAV_ITEMS: (NavItem & { id: TabId })[] = [
   { id: 'learning', label: 'Learning', icon: BookOpen },
   { id: 'practice', label: 'Practice', icon: Headphones },
   { id: 'chat', label: 'Tutor', icon: MessageCircle },
-  { id: 'settings', label: 'Profile', icon: Settings },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 /** Admin entry — rendered only for admins; opens the admin overlay rather than switching tabs. */
@@ -482,7 +482,7 @@ export default function App() {
           className={cn("flex flex-col items-center space-y-1", activeTab === 'settings' ? "text-ios-blue" : "text-ios-gray")}
         >
           <Settings className="w-6 h-6" />
-          <span className="text-[10px] font-bold uppercase">Profile</span>
+          <span className="text-[10px] font-bold uppercase">Settings</span>
         </button>
         {profile?.role === 'admin' && (
           <button

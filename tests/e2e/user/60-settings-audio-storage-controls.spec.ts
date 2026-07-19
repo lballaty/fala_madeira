@@ -16,8 +16,8 @@ test.describe('settings offline-audio storage controls', () => {
     coverage,
   }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
 
     const saveSwitch = page.getByRole('switch', { name: 'Save audio on device' });
     await saveSwitch.scrollIntoViewIfNeeded();

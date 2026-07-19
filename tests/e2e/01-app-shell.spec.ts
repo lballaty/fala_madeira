@@ -19,7 +19,7 @@ test.describe('@smoke app-shell', () => {
     await landOnHome(page);
 
     // The five primary destinations render (desktop sidebar). Assert the tab labels exist.
-    for (const label of ['Home', 'Learning', 'Practice', 'Tutor', 'Profile']) {
+    for (const label of ['Home', 'Learning', 'Practice', 'Tutor', 'Settings']) {
       await expect(page.getByRole('button', { name: label }).first()).toBeVisible();
     }
 

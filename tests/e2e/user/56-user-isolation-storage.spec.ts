@@ -20,8 +20,8 @@ test.describe('user isolation: device storage (SEC-2)', () => {
     await landOnHome(page);
 
     // Make a distinctive, persisted choice as this user: switch to Goal track and pick a goal.
-    await page.getByRole('button', { name: 'Profile' }).first().click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
     await page.getByTestId('path-switcher').getByRole('button', { name: 'Goal track' }).click();
     await page.getByTestId('goal-track-chooser').getByRole('button').first().click();
 

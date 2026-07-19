@@ -14,7 +14,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('help & guidance (EN-17a + EN-18)', () => {
   test('User Manual renders a recent capability from the registry', async ({ page }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     await page.getByRole('button', { name: 'User Manual' }).click();
     await expect(page.getByRole('heading', { name: 'User Manual' })).toBeVisible();
@@ -42,7 +42,7 @@ test.describe('help & guidance (EN-17a + EN-18)', () => {
           status: 200,
           contentType: 'application/json',
           body: JSON.stringify({
-            text: 'You can download lessons for offline use in Profile — by whole track or one situation at a time.',
+            text: 'You can download lessons for offline use in Settings — by whole track or one situation at a time.',
             requestId: 'e2e-help-guidance',
           }),
         });
@@ -78,7 +78,7 @@ test.describe('help & guidance (EN-17a + EN-18)', () => {
 
     // The modal closes and we land on the Profile (settings) tab — the offline downloads target.
     await expect(page.getByRole('heading', { name: /AI .* Tutor/i })).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Profile', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Settings', exact: true })).toBeVisible();
     // The learning-path switcher (a Profile-tab control) is present, confirming the tab switched.
     await expect(page.getByTestId('path-switcher')).toBeVisible();
   });

@@ -12,7 +12,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('assorted input controls', () => {
   test('support subject + description accept typed values', async ({ page, coverage }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     await page.getByRole('button', { name: 'Support & Feedback' }).click();
     const dialog = page.getByRole('dialog', { name: 'Support & Feedback' });
@@ -32,7 +32,7 @@ test.describe('assorted input controls', () => {
 
   test('TTS provider-key reference input accepts a typed value', async ({ page, coverage }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     // The provider-key input only renders once a specific voice provider is chosen.
     // handleSetTtsProvider optimistically updates local profile.tts_provider before the

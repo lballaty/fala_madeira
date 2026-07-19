@@ -45,8 +45,8 @@ test.describe('@a11y accessibility smoke (WCAG 2.2 AA)', () => {
 
   test('profile/settings screen has no critical/serious violations', async ({ page }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
     await assertNoSeriousViolations(page, 'Profile screen');
   });
 

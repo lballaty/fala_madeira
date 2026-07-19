@@ -17,7 +17,7 @@ test.describe('admin surfaces', () => {
     await expect(adminPage.getByRole('button', { name: 'Admin' }).first()).toBeVisible();
 
     // EN-25: the legacy Settings "Admin Mode" toggle was deleted — it must not exist.
-    await adminPage.getByRole('button', { name: 'Profile' }).first().click();
+    await adminPage.getByRole('button', { name: 'Settings' }).first().click();
     await expect(adminPage.getByRole('switch', { name: 'Admin Mode' })).toHaveCount(0);
 
     // The single sidebar Admin link opens the consolidated overlay.
@@ -39,7 +39,7 @@ test.describe('admin surfaces', () => {
 
     await expect(page.getByRole('button', { name: 'Admin' })).toHaveCount(0);
 
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
     await expect(page.getByRole('switch', { name: 'Admin Mode' })).toHaveCount(0);
   });
 });

@@ -9,7 +9,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('settings static surfaces', () => {
   test('User Manual, App Tutorial, and legal documents open and navigate', async ({ page, coverage }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     await page.getByRole('button', { name: 'User Manual' }).click();
     await expect(page.getByRole('heading', { name: 'User Manual' })).toBeVisible();

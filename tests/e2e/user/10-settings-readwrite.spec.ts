@@ -26,7 +26,7 @@ test.describe('settings read/write coverage', () => {
         : { id: 't1', label: /Maria, 28/ };
 
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     await page.getByRole('button', { name: 'Switch AI Tutor' }).click();
     await expect(page.getByRole('heading', { name: 'Choose Your Tutor' })).toBeVisible();
@@ -114,7 +114,7 @@ test.describe('settings read/write coverage', () => {
     expect(videoInsert.error?.message ?? null).toBeNull();
 
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
     await page.getByRole('button', { name: 'My Submissions' }).click();
     await expect(page.getByRole('heading', { name: 'My Submissions' })).toBeVisible();
     coverage.touch('settings.submissions.open', 'outcome-asserted');

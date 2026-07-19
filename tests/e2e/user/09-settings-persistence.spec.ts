@@ -10,7 +10,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('settings persistence', () => {
   test('playback speed change persists to the profile row', async ({ page, userEvidence, testUser }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     const audioSpeedCard = page.locator('div').filter({ has: page.getByText('Audio Speed', { exact: true }) }).first();
     const slider = audioSpeedCard.locator('input[type="range"]');

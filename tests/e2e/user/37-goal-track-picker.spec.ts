@@ -16,8 +16,8 @@ import { test, expect, landOnHome } from '../support/fixtures';
 import { readKv } from '../support/storage';
 
 async function openProfile(page: Parameters<typeof landOnHome>[0]) {
-  await page.getByRole('button', { name: 'Profile' }).first().click();
-  await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+  await page.getByRole('button', { name: 'Settings' }).first().click();
+  await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
 }
 
 async function openHome(page: Parameters<typeof landOnHome>[0]) {

@@ -168,7 +168,7 @@ export const SettingsView = ({
 
   return (
     <div className="p-6 space-y-8 overflow-y-auto h-full pb-32">
-      <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
 
       <div className="bg-card p-6 rounded-3xl ios-shadow flex flex-col items-center space-y-4">
         <div className="w-24 h-24 bg-ios-blue/10 rounded-full flex items-center justify-center text-ios-blue">

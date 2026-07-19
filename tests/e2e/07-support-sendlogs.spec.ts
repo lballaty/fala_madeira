@@ -32,7 +32,7 @@ test.describe('support ticket + Send Logs (S5)', () => {
     // USER_ACTION logs) that Send Logs will snapshot with their correlation_id.
     await page.getByRole('button', { name: 'Learning' }).first().click();
     await expect(page.getByRole('heading', { name: 'Learning Plan' })).toBeVisible();
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     // Open Support & Feedback.
     await page.getByRole('button', { name: 'Support & Feedback' }).click();
