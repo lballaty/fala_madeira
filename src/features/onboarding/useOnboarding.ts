@@ -172,16 +172,24 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
     };
   }, [userId, record, consentComplete]);
 
-  /** Persist consent to the profiles row (DB source of truth) and mirror onto the profile state. */
+  /**
+   * Persist consent AND the placement proficiency to the profiles row (DB source of truth) and
+   * mirror both onto the profile state. TB-1 (Option B): placement is written to
+   * profiles.proficiency_level in this SAME single profiles.update — a field wholly separate from
+   * the paywall unlocked_level (separation invariant, REQUIREMENTS §2): this write NEVER touches
+   * unlocked_level. Best-effort: a write failure is logged with correlation IDs and never re-gates
+   * the learner (local completion still stands).
+   */
   const persistConsent = useCallback(
     async (result: OnboardingResult): Promise<void> => {
       if (!user) return;
-      // Optimistic local mirror so the rest of the app sees consent immediately.
+      // Optimistic local mirror so the rest of the app sees consent + proficiency immediately.
       if (profile) {
         setProfile({
           ...profile,
           has_accepted_terms: result.acceptedTerms,
           has_accepted_ai_usage: result.acceptedAiUsage,
+          proficiency_level: result.placementLevel,
         });
       }
       if (!supabase) return;
@@ -191,15 +199,20 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
           .update({
             has_accepted_terms: result.acceptedTerms,
             has_accepted_ai_usage: result.acceptedAiUsage,
+            proficiency_level: result.placementLevel,
           })
           .eq('id', user.id);
         if (error) throw error;
-        logger.info('ONBOARDING_CONSENT_PERSISTED', 'onboarding consent recorded on the profile', {
+        logger.info('ONBOARDING_CONSENT_PERSISTED', 'onboarding consent + placement proficiency recorded on the profile', {
           category: 'SECURITY',
-          details: { acceptedTerms: result.acceptedTerms, acceptedAiUsage: result.acceptedAiUsage },
+          details: {
+            acceptedTerms: result.acceptedTerms,
+            acceptedAiUsage: result.acceptedAiUsage,
+            proficiencyLevel: result.placementLevel,
+          },
         });
       } catch (error) {
-        logger.error('ONBOARDING_CONSENT_PERSIST_FAILED', 'could not persist onboarding consent to the profile', {
+        logger.error('ONBOARDING_CONSENT_PERSIST_FAILED', 'could not persist onboarding consent + proficiency to the profile', {
           category: 'DATA_PROCESSING',
           error,
         });

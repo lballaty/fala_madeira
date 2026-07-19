@@ -31,11 +31,24 @@ vi.mock('../../../platform', () => ({
 vi.mock('../../../lib/logger', () => ({ logger: { warn: vi.fn(), info: vi.fn() } }));
 
 import { useOnboarding } from '../useOnboarding';
+import type { OnboardingResult } from '../useOnboarding';
 
 const makeUser = (id: string): User => ({ id }) as User;
 const flush = async () => {
   await Promise.resolve();
   await Promise.resolve();
+};
+
+/**
+ * Minimal supabase stub: from('profiles').update(payload).eq('id', id) resolves to { error: null }.
+ * Captures the payload passed to .update() so a test can assert exactly which columns were written.
+ */
+const makeSupabaseStub = () => {
+  const update = vi.fn((payload: Record<string, unknown>) => ({
+    eq: vi.fn((_col: string, _val: string) => Promise.resolve({ error: null, payload })),
+  }));
+  const from = vi.fn((_table: string) => ({ update }));
+  return { client: { from } as unknown as import('@supabase/supabase-js').SupabaseClient, from, update };
 };
 
 afterEach(() => {
@@ -113,5 +126,83 @@ describe('useOnboarding returning-user gate via DB consent (TB-7)', () => {
     await waitFor(() => expect(result.current.isLoaded).toBe(true));
     expect(result.current.isComplete).toBe(false); // first-run flow shows
     expect(storageSet).not.toHaveBeenCalled(); // nothing to heal
+  });
+});
+
+describe('useOnboarding placement -> proficiency_level (TB-1 Option B, R1)', () => {
+  const makeProfile = () =>
+    ({
+      id: 'u1',
+      has_accepted_terms: false,
+      has_accepted_ai_usage: false,
+      unlocked_level: 1,
+    }) as unknown as import('../../../types').UserProfile;
+
+  const result: OnboardingResult = {
+    placementLevel: 2, // "Basic conversation"
+    acceptedTerms: true,
+    acceptedAiUsage: true,
+  };
+
+  it('writes proficiency_level = the placement level to the SAME profiles.update as consent', async () => {
+    storageGet.mockResolvedValue(null);
+    const supa = makeSupabaseStub();
+    const setProfile = vi.fn();
+    const props = {
+      supabase: supa.client,
+      user: makeUser('u1'),
+      profile: makeProfile(),
+      setProfile,
+    };
+    const { result: hook } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+    await waitFor(() => expect(hook.current.isLoaded).toBe(true));
+
+    await hook.current.complete(result);
+
+    // Exactly one profiles.update carrying BOTH consent flags AND proficiency_level = placement.
+    expect(supa.from).toHaveBeenCalledWith('profiles');
+    expect(supa.update).toHaveBeenCalledTimes(1);
+    const payload = supa.update.mock.calls[0][0];
+    expect(payload).toMatchObject({
+      has_accepted_terms: true,
+      has_accepted_ai_usage: true,
+      proficiency_level: 2,
+    });
+  });
+
+  it('mirrors proficiency_level onto the optimistic setProfile', async () => {
+    storageGet.mockResolvedValue(null);
+    const supa = makeSupabaseStub();
+    const setProfile = vi.fn();
+    const props = {
+      supabase: supa.client,
+      user: makeUser('u1'),
+      profile: makeProfile(),
+      setProfile,
+    };
+    const { result: hook } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+    await waitFor(() => expect(hook.current.isLoaded).toBe(true));
+
+    await hook.current.complete(result);
+
+    expect(setProfile).toHaveBeenCalledWith(expect.objectContaining({ proficiency_level: 2 }));
+  });
+
+  it('INVARIANT (R5): the onboarding proficiency write contains NO unlocked_level key', async () => {
+    storageGet.mockResolvedValue(null);
+    const supa = makeSupabaseStub();
+    const props = {
+      supabase: supa.client,
+      user: makeUser('u1'),
+      profile: makeProfile(),
+      setProfile: vi.fn(),
+    };
+    const { result: hook } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+    await waitFor(() => expect(hook.current.isLoaded).toBe(true));
+
+    await hook.current.complete(result);
+
+    const payload = supa.update.mock.calls[0][0];
+    expect(payload).not.toHaveProperty('unlocked_level');
   });
 });
