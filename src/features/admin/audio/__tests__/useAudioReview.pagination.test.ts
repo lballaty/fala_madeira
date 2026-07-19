@@ -41,6 +41,7 @@ vi.mock('../ttsAudioReviewRepo', () => ({
   isRepoError: (r: { ok: boolean }) => r.ok === false,
   getReviews: vi.fn(async () => ({ ok: true, data: {} })),
   listRegenQueue: vi.fn(async () => ({ ok: true, data: [] })),
+  fetchHostedGenerations: vi.fn(async () => new Map()),
   upsertVerdict: vi.fn(async () => ({ ok: true, data: {} })),
   enqueueRegen: vi.fn(async () => ({ ok: true, data: null })),
 }));

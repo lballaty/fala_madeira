@@ -94,4 +94,10 @@ export interface AudioReviewItem extends EnumeratedClip {
   serverTier: TierPresence;
   signals: AudioSignals;
   queued: boolean;
+  /**
+   * c2 (W5): the clip's CURRENT hosted generation, read from the tts_audio_hosted manifest (NOT the
+   * flag-gated playback resolver). undefined/1 = the legacy unversioned object; ≥ 2 = a re-recorded
+   * clip (hosted at `<base>.v<gen>.pcm`). Absent → treat as 1.
+   */
+  generation?: number;
 }

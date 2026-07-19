@@ -167,6 +167,13 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
                 <p className="text-[11px] text-ios-gray">
                   voice: {item.voice} · {tierBadge(item.deviceTier, 'device')} ·{' '}
                   {serverTierAvailable ? tierBadge(item.serverTier, 'server') : 'server: pending EN-8'}
+                  {/* c2 (W5): show the CURRENT hosted generation once a clip has been re-recorded
+                      (≥ 2) — gen 1 is the un-regenerated default and stays unlabelled to avoid noise. */}
+                  {(item.generation ?? 1) >= 2 && (
+                    <span data-testid="audio-generation" className="ml-1 font-bold text-ios-blue">
+                      · gen {item.generation}
+                    </span>
+                  )}
                 </p>
                 <p className="text-[11px] text-ios-gray">
                   {item.signals.bytes != null && (

@@ -38,13 +38,16 @@ vi.mock('../../../../lib/logger', () => ({
   userMessage: (_c: string, m: string) => m,
 }));
 vi.mock('../audioSignals', () => ({ scoreClip: vi.fn(async () => ({ suspicious: false })) }));
+const checkServerPresence = vi.fn(async () => 'unknown');
 vi.mock('../audioServerTier', () => ({
-  isServerTierAvailable: vi.fn(() => false),
-  checkServerPresence: vi.fn(async () => 'unknown'),
+  isServerTierAvailable: vi.fn(() => true), // c2: server tier available so checkServerPresence runs (with generation)
+  checkServerPresence: (...args: unknown[]) => checkServerPresence(...(args as [])),
 }));
 
 const upsertVerdict = vi.fn(async () => ({ ok: true, data: {} }));
 const enqueueRegen = vi.fn(async () => ({ ok: true, data: null }));
+// c2: the manifest read — Olá is regenerated (gen 3), Bom dia is absent (⇒ default gen 1).
+const fetchHostedGenerations = vi.fn(async () => new Map([['default:default:Olá', { generation: 3, objectName: 'x.v3.pcm' }]]));
 vi.mock('../ttsAudioReviewRepo', () => ({
   newCorrelationId: () => 'corr-test',
   isRepoError: (r: { ok: boolean }) => r.ok === false,
@@ -53,6 +56,7 @@ vi.mock('../ttsAudioReviewRepo', () => ({
     data: { 'default:default:Olá': { build_key: 'default:default:Olá', verdict: 'good', notes: 'clear', signal_silent: false, signal_scored_at: null } },
   })),
   listRegenQueue: vi.fn(async () => ({ ok: true, data: [{ build_key: 'default:shopkeeper_male:Bom dia' }] })),
+  fetchHostedGenerations: (...args: unknown[]) => fetchHostedGenerations(...(args as [])),
   upsertVerdict: (...args: unknown[]) => upsertVerdict(...(args as [])),
   enqueueRegen: (...args: unknown[]) => enqueueRegen(...(args as [])),
 }));
@@ -90,6 +94,26 @@ describe('useAudioReview — load + merge', () => {
 
     expect(bomDia.queued).toBe(true);
     expect(ola.queued).toBe(false);
+  });
+
+  // c2 (W5): the hook fetches the page's hosted generations (ONE call per page) and exposes each
+  // clip's generation, passing it into checkServerPresence (Refinement A).
+  it('exposes the manifest generation per clip and threads it into the presence probe', async () => {
+    const d = makeDeps();
+    const { result } = renderHook(() => useAudioReview(d));
+    await waitFor(() => expect(result.current.items.length).toBe(2));
+
+    // ONE manifest read for the page (not per clip).
+    expect(fetchHostedGenerations).toHaveBeenCalledTimes(1);
+
+    const ola = result.current.items.find((i) => i.text === 'Olá')!; // regenerated → gen 3
+    const bomDia = result.current.items.find((i) => i.text === 'Bom dia')!; // absent → default gen 1
+    expect(ola.generation).toBe(3);
+    expect(bomDia.generation).toBe(1);
+
+    // Refinement A: the presence probe received each clip's resolved generation.
+    expect(checkServerPresence).toHaveBeenCalledWith('default:default:Olá', 'corr-test', 3);
+    expect(checkServerPresence).toHaveBeenCalledWith('default:shopkeeper_male:Bom dia', 'corr-test', 1);
   });
 
   it('is a no-op when not admin', async () => {
@@ -145,6 +169,29 @@ describe('useAudioReview — enqueue action', () => {
 
     expect(enqueueRegen).toHaveBeenCalledTimes(1);
     expect(result.current.items.find((i) => i.text === 'Olá')!.queued).toBe(true);
+  });
+
+  // c1 (W6): the enqueue threads the reviewer's VERDICT context into `reason` (verdict + note), so the
+  // audio-warm edge fn + audit see WHY the clip was flagged, not just the free-text note.
+  it('threads the verdict into reason (verdict: note), and bare verdict when no note', async () => {
+    const d = makeDeps();
+    const { result } = renderHook(() => useAudioReview(d));
+    await waitFor(() => expect(result.current.items.length).toBe(2));
+    const ola = result.current.items.find((i) => i.text === 'Olá')!; // verdict 'good'
+
+    await act(async () => {
+      await result.current.enqueue(ola, 'muffled');
+    });
+    expect(enqueueRegen).toHaveBeenLastCalledWith(
+      d.supabase,
+      expect.objectContaining({ build_key: 'default:default:Olá', voice: 'default', text: 'Olá', reason: 'good: muffled' }),
+    );
+
+    // No note → bare verdict (still a non-empty reason for the warm fn + audit).
+    await act(async () => {
+      await result.current.enqueue(ola, null);
+    });
+    expect(enqueueRegen).toHaveBeenLastCalledWith(d.supabase, expect.objectContaining({ reason: 'good' }));
   });
 
   it('rolls back queued state when enqueue fails', async () => {

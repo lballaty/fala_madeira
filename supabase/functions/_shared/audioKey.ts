@@ -28,6 +28,13 @@ export const buildKey = (provider: string, voice: string, text: string): string 
  * Map a cache key to a filesystem/URL-safe object name for the server audio tier. Strips the
  * `tts:` prefix, collapses every non-[a-z0-9_] run to `_`, appends `.pcm`. Contains no `/`, `:`,
  * or `..` so it can never traverse outside the audio bucket/directory.
+ *
+ * EN-34 versioning (MUST stay in lockstep with src/lib/audioKey.ts): generation 1 (default) →
+ * legacy `<base>.pcm`; generation ≥ 2 → `<base>.v<generation>.pcm`. `generation` is floored to an
+ * integer so the `.v<n>` suffix is purely numeric and traversal-safety holds for every generation.
  */
-export const keyToServerPath = (key: string): string =>
-  `${key.replace(new RegExp(`^${KEY_PREFIX}`), "").replace(/[^a-z0-9_]+/gi, "_")}.pcm`;
+export const keyToServerPath = (key: string, generation = 1): string => {
+  const base = key.replace(new RegExp(`^${KEY_PREFIX}`), "").replace(/[^a-z0-9_]+/gi, "_");
+  const gen = Math.floor(Number(generation) || 1);
+  return gen >= 2 ? `${base}.v${gen}.pcm` : `${base}.pcm`;
+};

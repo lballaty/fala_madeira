@@ -126,4 +126,26 @@ describe('checkServerPresence', () => {
     vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('network'); }));
     expect(await checkServerPresence(KEY, 'corr-1')).toBe('unknown');
   });
+
+  // c2 Refinement A: a re-recorded clip (generation ≥ 2) is hosted at `<base>.v<gen>.pcm` — the probe
+  // must HEAD the VERSIONED name, or a freshly regenerated clip would falsely read "missing".
+  it('probes the versioned .v<gen>.pcm object name for generation ≥ 2', async () => {
+    audioConfig.verpexBase = 'https://cdn.example.com/audio';
+    const versionedPath = keyToServerPath(KEY, 3); // e.g. default_default_abc12345.v3.pcm
+    expect(versionedPath).toContain('.v3.pcm');
+    const fetchSpy = vi.fn(async () => resp(true, 200));
+    vi.stubGlobal('fetch', fetchSpy);
+    expect(await checkServerPresence(KEY, 'corr-1', 3)).toBe('present');
+    expect(fetchSpy).toHaveBeenCalledWith(`https://cdn.example.com/audio/${versionedPath}`, expect.objectContaining({ method: 'HEAD' }));
+    // Guard: it must NOT probe the legacy unversioned name for a regenerated clip.
+    expect(fetchSpy).not.toHaveBeenCalledWith(`https://cdn.example.com/audio/${PATH}`, expect.anything());
+  });
+
+  it('keeps probing the legacy unversioned name for generation 1 (default, un-regenerated)', async () => {
+    audioConfig.verpexBase = '/audio';
+    const fetchSpy = vi.fn(async () => resp(true, 200));
+    vi.stubGlobal('fetch', fetchSpy);
+    expect(await checkServerPresence(KEY, 'corr-1', 1)).toBe('present');
+    expect(fetchSpy).toHaveBeenCalledWith(`/audio/${PATH}`, expect.objectContaining({ method: 'HEAD' }));
+  });
 });

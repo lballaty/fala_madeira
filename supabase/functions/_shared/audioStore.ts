@@ -16,10 +16,11 @@ import { persistLog } from "./persistLog.ts";
 // MUST match migration 00012_audio_buffer_bucket.sql and the client config.audio.supabaseAudioBucket.
 export const AUDIO_BUCKET = "tts-audio";
 
-// The ONLY object-name shape keyToServerPath() produces: [a-z0-9_]+ then '.pcm'. No '/', no '..',
-// no ':' — so a name matching this can never traverse outside the bucket. Every write/delete is
-// gated on this pattern as defense-in-depth (never trust a name from the network).
-const OBJECT_RE = /^[a-z0-9_]+\.pcm$/i;
+// The ONLY object-name shapes keyToServerPath() produces: [a-z0-9_]+ then an optional EN-34
+// version suffix `.v<digits>` then '.pcm'. No '/', no '..', no ':' — so a name matching this can
+// never traverse outside the bucket. Every write/delete is gated on this pattern as
+// defense-in-depth (never trust a name from the network).
+const OBJECT_RE = /^[a-z0-9_]+(\.v[0-9]+)?\.pcm$/i;
 
 // Hard cap on a single copy-confirmed delete batch (bounds a hostile/oversized payload).
 const MAX_DELETE_BATCH = 500;

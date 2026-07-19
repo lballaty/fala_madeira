@@ -33,6 +33,7 @@ vi.mock('../ttsAudioReviewRepo', () => ({
   isRepoError: (r: { ok: boolean }) => r.ok === false,
   getReviews: vi.fn(async () => ({ ok: true, data: {} })),
   listRegenQueue: vi.fn(async () => ({ ok: true, data: [] })),
+  fetchHostedGenerations: vi.fn(async () => new Map()),
   upsertVerdict: vi.fn(async () => ({ ok: true, data: {} })),
   enqueueRegen: vi.fn(async () => ({ ok: true, data: null })),
 }));
@@ -67,7 +68,9 @@ describe('useAudioReview.getPlaybackUrl (EN-23b W2)', () => {
     synthesizeCached.mockResolvedValueOnce(new ArrayBuffer(8));
     const { result } = makeHook();
     const url = await result.current.getPlaybackUrl(CLIP);
-    expect(synthesizeCached).toHaveBeenCalledWith('Bom dia', { voiceType: undefined });
+    // c2 (Refinement A): getPlaybackUrl now threads the row's resolved generation (1 here — the clip
+    // is not in the enriched items map, so it defaults to legacy generation 1).
+    expect(synthesizeCached).toHaveBeenCalledWith('Bom dia', { voiceType: undefined, generation: 1 });
     expect(url).toBe('blob:preview');
   });
 

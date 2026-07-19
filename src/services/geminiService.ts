@@ -9,7 +9,8 @@
 
 import { Lesson, Tutor, VocabResult } from "../types";
 import { audioCache, saveAudioOnDeviceEnabled } from "../lib/audioCache";
-import { keyToServerPath } from "../lib/audioKey";
+import { keyToServerPath, deviceCacheKey } from "../lib/audioKey";
+import { resolveGeneration } from "../lib/audioManifest";
 import { resolveVoice } from "../lib/voiceType";
 import { getSupabase, publicObjectUrl } from "../lib/supabase";
 import { logger, userMessage } from "../lib/logger";
@@ -335,6 +336,14 @@ export interface SynthesizeOptions {
    * downloads, never LRU-evicted) instead of the bounded LRU cache. Set by the offline downloader.
    */
   pinned?: boolean;
+  /**
+   * EN-34 c2 (Refinement A): EXPLICIT generation override. Playback normally resolves the current
+   * generation via the flag-gated audioManifest.resolveGeneration. The admin audio panel reads the
+   * true generation DIRECTLY from the manifest (independent of the playback flag) and passes it here
+   * so a preview always plays the CURRENT (re-recorded) object — and scoreClip re-scores it on the
+   * next preview (Refinement C) — even when the playback flag is off. Omitted = flag-gated resolve.
+   */
+  generation?: number;
 }
 
 /** Which tier ultimately served a clip — emitted as `tts_source` for the admin "what is where". */
@@ -448,8 +457,12 @@ interface ServerTierHit { buffer: ArrayBuffer; tier: 'verpex' | 'supabase'; }
  * operator deploys the server side (and sets VITE_AUDIO_VERPEX_BASE / the bucket), every probe
  * simply misses and playback falls through to the configured provider unchanged.
  */
-const fetchServerTier = async (cacheKey: string): Promise<ServerTierHit | null> => {
-  const path = keyToServerPath(cacheKey);
+const fetchServerTier = async (cacheKey: string, generation = 1): Promise<ServerTierHit | null> => {
+  // EN-34: the object name carries the current generation, so a regenerated clip is a DIFFERENT
+  // URL — the Verpex fetch and the Supabase Storage GET both miss the stale bytes (and the PWA
+  // service worker, which caches Supabase Storage by URL, has no entry for the new versioned name),
+  // fetching the fresh render. Generation 1 keeps the legacy unversioned name.
+  const path = keyToServerPath(cacheKey, generation);
 
   const verpexUrl = `${config.audio.verpexBase.replace(/\/$/, '')}/${path}`;
   const verpex = await tryFetchPcm(verpexUrl);
@@ -475,23 +488,33 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
   // never the raw tutor id — so every call path that means the same voice hits the same clip.
   const voice = resolveVoice(options);
   const cacheKey = audioCache.buildKey(options.provider || 'default', voice, text);
+  // EN-34: resolve this clip's CURRENT hosted generation (1 = legacy/unversioned, the default when
+  // the feature is off or the clip was never regenerated), then salt the DEVICE cache key with it.
+  // A regenerated clip (generation ≥ 2) gets a distinct device key → the local LRU cache and the
+  // pinned store miss the stale bytes and re-fetch. The SERVER object name is versioned separately
+  // inside fetchServerTier(cacheKey, generation). logTtsSource keeps the canonical (unsalted)
+  // cacheKey so the admin "what is where" observability joins across generations.
+  // c2 (Refinement A): an EXPLICIT generation (admin panel, manifest-direct) wins over the flag-gated
+  // resolve so an admin preview plays the current object even with the playback flag off.
+  const generation = options.generation != null ? Math.floor(Number(options.generation) || 1) : await resolveGeneration(cacheKey);
+  const deviceKey = deviceCacheKey(cacheKey, generation);
 
-  const cached = await audioCache.get(cacheKey);
+  const cached = await audioCache.get(deviceKey);
   if (cached) { logTtsSource('cache', cacheKey); return cached; }
 
   // EN-8 lookup order: bounded LRU cache (above) → PINNED offline store → Verpex/Supabase server
   // tiers → configured provider (below). Pinned holds user-downloaded clips eviction never removes.
-  const pinned = await audioCache.getPinned(cacheKey);
+  const pinned = await audioCache.getPinned(deviceKey);
   if (pinned) { logTtsSource('pinned', cacheKey); return pinned; }
 
   // Server tiers: a pre-hosted clip serves WITHOUT paying the provider (the core EN-8 cost/503
   // win). On a hit, warm the device LRU cache so subsequent plays are local, then return.
-  const serverHit = await fetchServerTier(cacheKey);
+  const serverHit = await fetchServerTier(cacheKey, generation);
   if (serverHit) {
     logTtsSource(serverHit.tier, cacheKey);
     // Warm a device tier (non-blocking) so subsequent plays are local. A hosted clip is curated, so
     // with "Save audio on device" ON it lands in the durable saved store (⇒ available offline too).
-    persistPlayedClip(cacheKey, serverHit.buffer, options);
+    persistPlayedClip(deviceKey, serverHit.buffer, options);
     return serverHit.buffer;
   }
 
@@ -523,12 +546,12 @@ export const synthesizeCached = async (text: string, options: SynthesizeOptions 
     // here would reintroduce the EN-7 "download reported complete but clip not saved"). If it cannot
     // fit without evicting another download, throw so the loop stops early + prompts to raise the
     // storage limit (deterministic, not retried). Blocks the download, not playback.
-    const res = await audioCache.setPinned(cacheKey, arrayBuffer, { protect: true });
+    const res = await audioCache.setPinned(deviceKey, arrayBuffer, { protect: true });
     if (!res.stored) throw new OfflineStorageFullError();
   } else {
     // Playback: persist WITHOUT blocking so audio starts immediately (owner requirement). Curated +
     // "Save audio on device" ON ⇒ durable saved store (fast + offline); otherwise ⇒ ephemeral cache.
-    persistPlayedClip(cacheKey, arrayBuffer, options, data?.requestId);
+    persistPlayedClip(deviceKey, arrayBuffer, options, data?.requestId);
   }
   return arrayBuffer;
 };

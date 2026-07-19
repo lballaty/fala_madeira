@@ -27,7 +27,7 @@ import {
 } from './types';
 import { scoreClip } from './audioSignals';
 import { checkServerPresence, isServerTierAvailable } from './audioServerTier';
-import { enqueueRegen, getReviews, isRepoError, listRegenQueue, newCorrelationId, upsertVerdict } from './ttsAudioReviewRepo';
+import { enqueueRegen, fetchHostedGenerations, getReviews, isRepoError, listRegenQueue, newCorrelationId, upsertVerdict } from './ttsAudioReviewRepo';
 
 export interface AudioReviewScope {
   level?: PracticalLevel;
@@ -141,8 +141,17 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
   // server round-trip, not page-size × round-trips (a full page of sequential cross-origin probes
   // otherwise stalled the first render for seconds).
   const enrichClips = useCallback(
-    (slice: EnumeratedClip[]): Promise<AudioReviewItem[]> =>
-      Promise.all(
+    async (slice: EnumeratedClip[]): Promise<AudioReviewItem[]> => {
+      // c2 (W5, Refinement A): resolve the CURRENT hosted generation for this PAGE's clips in ONE
+      // manifest read (not per clip), read DIRECTLY from tts_audio_hosted (never the flag-gated
+      // playback resolver) so the panel shows the true generation regardless of the playback flag.
+      // Best-effort: an error / not-yet-applied table returns an empty map → every clip is gen 1.
+      const gens = await fetchHostedGenerations(
+        supabase,
+        slice.map((c) => c.buildKey),
+        correlationRef.current,
+      );
+      return Promise.all(
         slice.map(async (clip): Promise<AudioReviewItem> => {
           const review = reviewsRef.current[clip.buildKey];
           let deviceTier: TierPresence = 'missing';
@@ -156,8 +165,9 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
             }
           }
 
+          const generation = gens.get(clip.buildKey)?.generation ?? 1;
           const serverTier = serverTierAvailable
-            ? await checkServerPresence(clip.buildKey, correlationRef.current)
+            ? await checkServerPresence(clip.buildKey, correlationRef.current, generation)
             : 'unknown';
 
           return {
@@ -168,10 +178,12 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
             serverTier,
             signals,
             queued: queuedRef.current.has(clip.buildKey),
+            generation,
           };
         }),
-      ),
-    [serverTierAvailable],
+      );
+    },
+    [serverTierAvailable, supabase],
   );
 
   useEffect(() => {
@@ -271,13 +283,21 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
   const enqueue = useCallback(
     async (clip: EnumeratedClip, reason: string | null) => {
       applyLocal(clip.buildKey, { queued: true }); // optimistic
+      // c1 (W6): thread the reviewer's VERDICT context into `reason` so the audio-warm edge fn (which
+      // bumps the generation + re-hosts) and the audit trail can see WHY this clip was flagged, not
+      // just the free-text note. The verdict prefix is always present; the note is appended when the
+      // reviewer typed one (e.g. "re_record: muffled", or bare "re_record" with no note).
+      const current = items.find((it) => it.buildKey === clip.buildKey);
+      const verdict = current?.verdict ?? 'unreviewed';
+      const note = (reason ?? '').trim();
+      const enrichedReason = note ? `${verdict}: ${note}` : verdict;
       const result = await enqueueRegen(supabase, {
         build_key: clip.buildKey,
         voice: clip.voice,
         text: clip.text,
         situation_id: clip.situationId,
         level: clip.level,
-        reason,
+        reason: enrichedReason,
         enqueued_by: actorId,
       });
       if (isRepoError(result)) {
@@ -287,7 +307,7 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
         showToast('Enqueued for regeneration.', 'success');
       }
     },
-    [supabase, actorId, applyLocal, showToast],
+    [items, supabase, actorId, applyLocal, showToast],
   );
 
   const getPlaybackUrl = useCallback(
@@ -297,8 +317,13 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
       // listed clip, not just ones already cached on this device. Failures route through the
       // centralized logger + a toast carrying the correlation id — never a silent dead button.
       try {
+        // c2 (Refinement A): resolve THIS row's current generation (from the manifest, already
+        // enriched onto the item) and pass it to synthesizeCached so a device-cache miss fetches the
+        // CURRENT (re-recorded) object — and scoreClip re-scores it (Refinement C) — regardless of
+        // the flag-gated playback resolver. Absent → 1 (legacy), unchanged behaviour.
+        const generation = items.find((it) => it.buildKey === clip.buildKey)?.generation ?? 1;
         const cached = await audioCache.get(clip.buildKey);
-        const buffer: Uint8Array | ArrayBuffer = cached ?? (await synthesizeCached(clip.text, { voiceType: clip.voiceType }));
+        const buffer: Uint8Array | ArrayBuffer = cached ?? (await synthesizeCached(clip.text, { voiceType: clip.voiceType, generation }));
         // W4: we now hold the actual bytes — record the size so the row shows it even for a clip that
         // was never scored on this device (the buffer's byteLength is the true clip size).
         setItems((prev) =>
@@ -320,7 +345,7 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
         return null;
       }
     },
-    [showToast],
+    [items, showToast],
   );
 
   return {
