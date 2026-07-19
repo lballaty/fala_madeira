@@ -217,6 +217,14 @@
     },
     {
       "screen": "settings",
+      "id": "settings.proficiency.select",
+      "selector": {"css": "[data-testid=\"proficiency-chooser\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/64-proficiency-level.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "settings",
       "id": "settings.submissions.open",
       "selector": { "role": "button", "name": "My Submissions" },
       "covered_by": [
