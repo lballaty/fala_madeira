@@ -65,7 +65,8 @@ if (!DRY_RUN && missing.length) {
 
 // ---- shared pure modules (TypeScript via tsx — one key space with the app) -------------------
 const { BUNDLED_PACKS } = await tsImport('../src/content/bundled.ts', import.meta.url);
-const { clipsForCorpus } = await tsImport('../src/lib/audit-utils.ts', import.meta.url);
+const { clipsForCorpus, mergeTiers } = await tsImport('../src/lib/audit-utils.ts', import.meta.url);
+const { keyToServerPath } = await tsImport('../src/lib/audioKey.ts', import.meta.url);
 
 // ---- enumerate the work list (deduped across situations by object name) ----------------------
 // SHARED with the auditor: clipsForCorpus (src/lib/audit-utils.ts) is the single source of truth for
@@ -104,6 +105,30 @@ if (!DRY_RUN) {
   if (signInErr) { console.error(`FATAL: admin sign-in failed: ${signInErr.message}`); process.exit(2); }
 }
 
+// ---- EN-34 hosted manifest (real run only) ---------------------------------------------------
+// Read the current generation + tiers for the work keys so a re-hosted clip lands at its CURRENT
+// generation's object name (keyToServerPath(key, generation)) and we RECORD what we host into
+// public.tts_audio_hosted — the source of truth the client generation resolver + auditor read.
+// Best-effort: if the table is absent (migration not yet applied) treat every clip as generation 1
+// (legacy unversioned name) and skip the manifest write, so pregen still works pre-activation.
+const genByKey = new Map(); // build_key -> { generation, tiers }
+let manifestAvailable = false;
+if (!DRY_RUN) {
+  try {
+    const { data, error } = await admin
+      .from('tts_audio_hosted')
+      .select('build_key, generation, tiers')
+      .in('build_key', work.map((w) => w.key));
+    if (error) throw new Error(error.message);
+    for (const row of data ?? []) {
+      genByKey.set(row.build_key, { generation: Number(row.generation) || 1, tiers: row.tiers ?? [] });
+    }
+    manifestAvailable = true;
+  } catch (e) {
+    console.warn(`WARN: hosted manifest unavailable (${e.message}) — hosting at generation 1, skipping manifest writes.`);
+  }
+}
+
 // ---- throttle + retry (avoid provider rate-limiting under rapid sequential load — the exact
 //      503-class failures EN-8 exists to eliminate; mirrors the EN-7 per-clip retry/backoff) ----
 // Provider TTS has a low SUSTAINED rate limit (verified live 2026-07-16: a 350ms burst tripped
@@ -134,14 +159,19 @@ let synthesized = 0, skipped = 0, uploaded = 0;
 const errors = [];
 
 for (const [i, item] of work.entries()) {
-  const tag = `[${i + 1}/${work.length}] ${item.name}`;
+  // EN-34: host under the clip's CURRENT generation name. New clips (no manifest row) => gen 1 =>
+  // legacy unversioned name (item.name); a previously-regenerated clip => its .v<gen> name.
+  const generation = genByKey.get(item.key)?.generation ?? 1;
+  const name = keyToServerPath(item.key, generation);
+  const tag = `[${i + 1}/${work.length}] ${name}${generation >= 2 ? ` (gen ${generation})` : ''}`;
 
   // Dry-run: enumerate only — no network, no creds (checked before any probe/sign-in).
   if (DRY_RUN) { console.log(`${tag} — would synthesize + upload`); continue; }
 
-  // Idempotent: already on Verpex (durable home) or staged in the buffer → skip.
-  const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${item.name}`;
-  const onVerpex = VERPEX_BASE ? await headOk(`${VERPEX_BASE}/${item.name}`) : false;
+  // Idempotent: already on Verpex (durable home) or staged in the buffer → skip (checks the
+  // CURRENT generation's name, so a regeneration is not falsely skipped by the old clip).
+  const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${name}`;
+  const onVerpex = VERPEX_BASE ? await headOk(`${VERPEX_BASE}/${name}`) : false;
   const onBuffer = await headOk(publicUrl);
   if (onVerpex || onBuffer) { skipped++; console.log(`${tag} — skip (${onVerpex ? 'verpex' : 'buffer'})`); continue; }
 
@@ -153,24 +183,39 @@ for (const [i, item] of work.entries()) {
   try {
     audioB64 = await synthWithRetry(item);
   } catch (e) {
-    errors.push({ name: item.name, reason: e.message });
+    errors.push({ name, reason: e.message });
     console.error(`${tag} — SYNTH FAILED (after ${MAX_ATTEMPTS} attempts): ${e.message}`);
     continue;
   }
   synthesized++;
   const bytes = Buffer.from(audioB64, 'base64');
 
-  const { error: upErr } = await admin.storage.from(BUCKET).upload(item.name, bytes, {
+  const { error: upErr } = await admin.storage.from(BUCKET).upload(name, bytes, {
     contentType: 'application/octet-stream',
     upsert: true,
   });
   if (upErr) {
-    errors.push({ name: item.name, reason: `upload: ${upErr.message}` });
+    errors.push({ name, reason: `upload: ${upErr.message}` });
     console.error(`${tag} — UPLOAD FAILED: ${upErr.message}`);
     continue;
   }
   uploaded++;
   console.log(`${tag} — ok (${bytes.length} bytes)`);
+
+  // EN-34: record what we hosted (build_key → generation/object_name/tiers) so the client
+  // generation resolver + the coverage auditor see it. Best-effort — a hosted clip is not undone
+  // by a manifest write miss (logged, counted separately from a hosting failure).
+  if (manifestAvailable) {
+    const prev = genByKey.get(item.key);
+    const { error: mErr } = await admin.from('tts_audio_hosted').upsert({
+      build_key: item.key,
+      generation,
+      object_name: name,
+      hosted_at: new Date().toISOString(),
+      tiers: mergeTiers(prev?.tiers, 'bucket'),
+    }, { onConflict: 'build_key' });
+    if (mErr) console.warn(`${tag} — manifest upsert failed (clip is hosted): ${mErr.message}`);
+  }
 }
 
 console.log(JSON.stringify({

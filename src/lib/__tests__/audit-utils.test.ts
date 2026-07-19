@@ -18,6 +18,7 @@ import {
   clipsByLevel,
   clipsForOnboarding,
   clipsForCorpus,
+  mergeTiers,
   expectedNamesByLevel,
   diffCoverage,
   findOrphans,
@@ -120,6 +121,16 @@ describe('audit-utils — clipsForOnboarding / clipsForCorpus (EN-34 corpus sele
 
   it('throws on an unknown corpus spec (a typo must never silently host the wrong set)', () => {
     expect(() => clipsForCorpus(BUNDLED_PACKS, 'levl:0')).toThrow(/unknown --corpus/);
+  });
+});
+
+describe('audit-utils — mergeTiers (EN-34 hosted-manifest tiers)', () => {
+  it('adds a store label, dedupes, and stable-sorts; tolerates null/empty', () => {
+    expect(mergeTiers(null, 'bucket')).toEqual(['bucket']);
+    expect(mergeTiers([], 'bucket')).toEqual(['bucket']);
+    expect(mergeTiers(['bucket'], 'bucket')).toEqual(['bucket']); // idempotent
+    expect(mergeTiers(['verpex'], 'bucket')).toEqual(['bucket', 'verpex']); // sorted
+    expect(mergeTiers(['verpex', 'bucket'], 'verpex')).toEqual(['bucket', 'verpex']);
   });
 });
 

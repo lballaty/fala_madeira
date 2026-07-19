@@ -139,6 +139,14 @@ export const expectedNamesByLevel = (packs: ContentPack[]): Map<PracticalLevel, 
 };
 
 /**
+ * EN-34 hosted-manifest tier merge: add a store label ('bucket'|'verpex') to a clip's existing
+ * tiers[] set, deduped + stable-sorted. Pure — the writer (pregen / warm fn) upserts the result
+ * into tts_audio_hosted.tiers so the manifest records every store currently holding a generation.
+ */
+export const mergeTiers = (existing: readonly string[] | null | undefined, add: string): string[] =>
+  [...new Set([...(existing ?? []), add])].filter(Boolean).sort();
+
+/**
  * Coverage counts for one level's `expected` name set against the sets actually on Verpex / in the
  * buffer: on_verpex (hosted), in_buffer (staged), missing_everywhere (neither), buffer_lag (staged
  * but not yet copied to Verpex). Pure set arithmetic.
