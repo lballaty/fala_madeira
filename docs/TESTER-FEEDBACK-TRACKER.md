@@ -478,7 +478,11 @@
   - **NAV-1b** = **TB-1 UX polish**: make the level text on Home tappable → deep-link to the Settings "Your level" control (reuse the EN-18 "take me there" pattern).
   - **NAV-1c** = **EN-4b** (already tracked): build the desktop-sidebar About entry (mobile stays under Profile).
 - **Open (owner):** confirm label wording ("Settings" vs "Profile / Settings"); confirm the TB-1 "Your level" card actually renders on staging (pending owner check — distinguishes findability-gap from a render-bug).
-- **Owner:** Agent E (`feat/*`). **Next action:** requirements note for the batch → approval → build + coverage (incl. updating Profile-named specs). **Status:** OPEN (small batch; requirements/approval gate).
+- **BUILT + gate-failed 2026-07-19 (branch `feat/nav1-discoverability`, commits `88ad8dd`/`860fc01`/`d13051e`; NOT merged — local merge reset).** vitest 534/534 + tsc + coverage-contract clean, but the full gate (CI=1 e2e + preflight) found **3 fixes still owed:**
+  1. **"Settings" accessible-name COLLISION (the main one):** relabeling the nav tab to "Settings" made **3 buttons share name "Settings"** (nav tab + Home top-right icon whose `aria-label` is already "Settings" + sidebar) → `getByRole('button',{name:'Settings'})` strict-mode violations in `user/01-home-navigation` + `user/11-settings-static-surfaces`. **Fix:** give the controls UNIQUE accessible names (e.g. Home icon `aria-label`→"Open settings"; keep nav tab "Settings") rather than just scoping specs — the collision is a real a11y smell.
+  2. **eslint FAIL** — a lint error introduced in the NAV-1 changes (worker ran tsc, not full eslint). Fix + re-run `npm run lint:eslint`.
+  3. Then re-gate on develop (CI=1 e2e + dry-run) and merge.
+- **Owner:** Agent E (`feat/*`). **Next action:** fix the 2 collision items + eslint on `feat/nav1-discoverability`, re-gate, merge. (Rides the release AFTER 2026.07.19.1.) **Status:** OPEN — built, needs a fix+re-gate pass (diagnosis above).
 
 ### EN-5 — Quiz results: persist + admin visibility + regression — `OPEN (backlog; owner-identified gap)`
 - **Gap (confirmed 2026-07-14):** quiz **scores/results are NOT stored** — only pass/fail survives as `profiles.completed_lessons` (score ≥ 3). No score value, per-question data, attempt history, or timestamp; the score doesn't feed the SRS/mastery engine.
