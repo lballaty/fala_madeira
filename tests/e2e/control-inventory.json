@@ -1134,6 +1134,14 @@
       ]
     },
     {
+      "screen": "home",
+      "id": "home.path.start_cta",
+      "selector": { "css": "[data-testid=\"home-path-cta\"]" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/67-proficiency-behavior.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
       "screen": "session",
       "id": "session.segment.skip",
       "selector": { "role": "button", "name": "Skip" },
