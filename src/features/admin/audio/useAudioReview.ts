@@ -296,7 +296,14 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
       // centralized logger + a toast carrying the correlation id — never a silent dead button.
       try {
         const cached = await audioCache.get(clip.buildKey);
-        const buffer: BlobPart = cached ?? (await synthesizeCached(clip.text, { voiceType: clip.voiceType }));
+        const buffer: Uint8Array | ArrayBuffer = cached ?? (await synthesizeCached(clip.text, { voiceType: clip.voiceType }));
+        // W4: we now hold the actual bytes — record the size so the row shows it even for a clip that
+        // was never scored on this device (the buffer's byteLength is the true clip size).
+        setItems((prev) =>
+          prev.map((it) =>
+            it.buildKey === clip.buildKey ? { ...it, signals: { ...it.signals, bytes: buffer.byteLength } } : it,
+          ),
+        );
         return URL.createObjectURL(new Blob([buffer]));
       } catch (error) {
         const event = logger.error('EN23B_PLAYBACK_FETCH_FAILED', 'failed to load audio for admin preview', {

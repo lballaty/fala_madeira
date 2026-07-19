@@ -20,11 +20,12 @@ vi.mock('../../../../content/repository', () => ({
 vi.mock('../../../../lib/audio-download', () => ({
   linesForSituation: vi.fn(() => ['a', 'b', 'c', 'd', 'e'].map((t) => ({ text: t, voiceType: undefined }))),
 }));
-const cacheGet = vi.fn(async (_k: string): Promise<Uint8Array | null> => null);
+const cacheGet = vi.fn(async (): Promise<Uint8Array | null> => null);
 vi.mock('../../../../lib/audioCache', () => ({
-  audioCache: { buildKey: (p: string, v: string, t: string) => `${p}:${v}:${t}`, get: (k: string) => cacheGet(k) },
+  audioCache: { buildKey: (p: string, v: string, t: string) => `${p}:${v}:${t}`, get: () => cacheGet() },
 }));
-vi.mock('../../../../services/geminiService', () => ({ synthesizeCached: vi.fn() }));
+const synthesizeCached = vi.fn();
+vi.mock('../../../../services/geminiService', () => ({ synthesizeCached: (...a: unknown[]) => synthesizeCached(...(a as [])) }));
 vi.mock('../../../../lib/logger', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn(() => ({ request_id: 'r' })) },
   userMessage: (_c: string, m: string) => m,
@@ -87,5 +88,19 @@ describe('useAudioReview — W3 pagination', () => {
     await act(async () => { await result.current.loadMore(); });
     expect(result.current.items.length).toBe(5);
     expect(cacheGet).toHaveBeenCalledTimes(5);
+  });
+});
+
+describe('useAudioReview — W4 file size', () => {
+  it('records the previewed clip size on its row even when it was never scored', async () => {
+    (URL as unknown as { createObjectURL: (b: Blob) => string }).createObjectURL = vi.fn(() => 'blob:x');
+    synthesizeCached.mockResolvedValueOnce(new ArrayBuffer(2048)); // 2 KB clip, device-cache miss
+    const { result } = makeHook();
+    await waitFor(() => expect(result.current.items.length).toBe(2));
+    const clip = result.current.items[0];
+    expect(clip.signals.bytes).toBeUndefined(); // unscored, uncached → no size yet
+
+    await act(async () => { await result.current.getPlaybackUrl(clip); });
+    expect(result.current.items.find((i) => i.buildKey === clip.buildKey)!.signals.bytes).toBe(2048);
   });
 });

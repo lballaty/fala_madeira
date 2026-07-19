@@ -24,6 +24,13 @@ const VERDICTS: { value: Exclude<AudioVerdict, 'unreviewed'>; label: string }[] 
   { value: 're_record', label: 'Re-record' },
 ];
 
+/** Human-readable clip size (W4) — bytes → B / KB / MB. */
+const formatBytes = (n: number): string => {
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+};
+
 const tierBadge = (tier: AudioReviewItem['deviceTier'], label: string, pendingLabel?: string): string => {
   if (tier === 'present') return `${label}: yes`;
   if (tier === 'missing') return `${label}: no`;
@@ -162,7 +169,9 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
                   {serverTierAvailable ? tierBadge(item.serverTier, 'server') : 'server: pending EN-8'}
                 </p>
                 <p className="text-[11px] text-ios-gray">
-                  {item.signals.bytes != null && <>bytes: {item.signals.bytes} · </>}
+                  {item.signals.bytes != null && (
+                    <span data-testid="audio-size">size: {formatBytes(item.signals.bytes)} · </span>
+                  )}
                   {item.signals.durationMs != null && <>dur: {item.signals.durationMs}ms · </>}
                   {item.signals.rmsDbfs != null && <>rms: {item.signals.rmsDbfs}dBFS · </>}
                   {item.signals.silent && <span className="text-amber-600">silent · </span>}
