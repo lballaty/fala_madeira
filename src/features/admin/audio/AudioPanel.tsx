@@ -7,7 +7,7 @@
 //   tier shows "pending EN-8" until that config lands. Author: claude-en23. Created: 2026-07-17.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertTriangle, Play, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Loader2, Play, RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { contentRepository } from '../../../content/repository';
 import { PRACTICAL_LEVELS, PracticalLevel, Track } from '../../../content/schema';
@@ -24,6 +24,13 @@ const VERDICTS: { value: Exclude<AudioVerdict, 'unreviewed'>; label: string }[] 
   { value: 're_record', label: 'Re-record' },
 ];
 
+/** Human-readable clip size (W4) — bytes → B / KB / MB. */
+const formatBytes = (n: number): string => {
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+};
+
 const tierBadge = (tier: AudioReviewItem['deviceTier'], label: string, pendingLabel?: string): string => {
   if (tier === 'present') return `${label}: yes`;
   if (tier === 'missing') return `${label}: no`;
@@ -31,10 +38,11 @@ const tierBadge = (tier: AudioReviewItem['deviceTier'], label: string, pendingLa
 };
 
 export const AudioPanel = ({ audio }: AudioPanelProps) => {
-  const { scope, setScope, items, loading, serverTierAvailable, reload, setVerdict, enqueue, getPlaybackUrl } = audio;
+  const { scope, setScope, items, loading, loadingMore, totalCount, hasMore, loadMore, serverTierAvailable, reload, setVerdict, enqueue, getPlaybackUrl } = audio;
   const [tracks, setTracks] = useState<Track[]>([]);
   const [notesDraft, setNotesDraft] = useState<Record<string, string>>({});
   const [playingKey, setPlayingKey] = useState<string | null>(null);
+  const [loadingKey, setLoadingKey] = useState<string | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
   const objectUrlRef = useRef<string | null>(null);
 
@@ -56,7 +64,15 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
   const suspiciousCount = useMemo(() => items.filter((it) => it.signals.suspicious).length, [items]);
 
   const play = async (item: AudioReviewItem) => {
-    const url = await getPlaybackUrl(item);
+    // W2: getPlaybackUrl now synthesizes on a device-cache miss, so this can take a moment and can
+    // fail (the hook surfaces a logged toast) — show a per-row loading state while it resolves.
+    setLoadingKey(item.buildKey);
+    let url: string | null = null;
+    try {
+      url = await getPlaybackUrl(item);
+    } finally {
+      setLoadingKey((k) => (k === item.buildKey ? null : k));
+    }
     if (!url) return;
     if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
     objectUrlRef.current = url;
@@ -117,7 +133,10 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
 
       {/* Summary */}
       <div className="flex items-center gap-3 text-xs text-ios-gray" data-testid="audio-summary">
-        <span>{items.length} clip(s)</span>
+        <span data-testid="audio-count">
+          {items.length}
+          {totalCount > items.length ? ` of ${totalCount}` : ''} clip(s)
+        </span>
         {suspiciousCount > 0 && (
           <span className="flex items-center gap-1 text-amber-600">
             <AlertTriangle className="w-3.5 h-3.5" /> {suspiciousCount} suspicious
@@ -150,7 +169,9 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
                   {serverTierAvailable ? tierBadge(item.serverTier, 'server') : 'server: pending EN-8'}
                 </p>
                 <p className="text-[11px] text-ios-gray">
-                  {item.signals.bytes != null && <>bytes: {item.signals.bytes} · </>}
+                  {item.signals.bytes != null && (
+                    <span data-testid="audio-size">size: {formatBytes(item.signals.bytes)} · </span>
+                  )}
                   {item.signals.durationMs != null && <>dur: {item.signals.durationMs}ms · </>}
                   {item.signals.rmsDbfs != null && <>rms: {item.signals.rmsDbfs}dBFS · </>}
                   {item.signals.silent && <span className="text-amber-600">silent · </span>}
@@ -161,12 +182,18 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
               </div>
               <button
                 onClick={() => void play(item)}
-                disabled={item.deviceTier !== 'present'}
+                disabled={loadingKey === item.buildKey}
                 data-testid="audio-play"
+                data-loading={loadingKey === item.buildKey ? 'true' : 'false'}
                 className="shrink-0 flex items-center justify-center min-w-[44px] min-h-[44px] text-ios-blue disabled:text-ios-gray/40"
-                aria-label={`Play ${item.text}`}
+                aria-label={loadingKey === item.buildKey ? `Loading ${item.text}` : `Play ${item.text}`}
+                aria-busy={loadingKey === item.buildKey}
               >
-                <Play className="w-4 h-4" />
+                {loadingKey === item.buildKey ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Play className="w-4 h-4" />
+                )}
               </button>
             </div>
 
@@ -206,6 +233,18 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
           </li>
         ))}
       </ul>
+
+      {/* W3: reveal the next bounded page on demand instead of enriching the whole scope up front. */}
+      {hasMore && (
+        <button
+          onClick={() => void loadMore()}
+          disabled={loadingMore}
+          data-testid="audio-load-more"
+          className="w-full rounded-xl border border-line bg-card py-2 text-sm font-bold text-ios-blue disabled:opacity-40"
+        >
+          {loadingMore ? 'Loading…' : `Load more (${items.length} of ${totalCount})`}
+        </button>
+      )}
 
       {/* eslint-disable-next-line jsx-a11y/media-has-caption -- TTS preview, no captions available */}
       <audio ref={audioElRef} onEnded={() => setPlayingKey(null)} data-testid="audio-player" hidden />
