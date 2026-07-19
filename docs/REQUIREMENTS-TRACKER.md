@@ -4,8 +4,8 @@
 **Description:** Requirements register for the full FalaMadeira product. Each requirement maps to its source (design target section), the plan step(s) that deliver it, and current status. Full-product scope (not MVP) per the 2026-07-09 directive. Keep in sync with docs/PRODUCT-DESIGN-TARGET.md and plans/plan-2026-07-08-production-readiness.yaml.
 **Author:** Libor Ballaty
 **Created:** 2026-07-09
-**Last Updated:** 2026-07-19
-**Last Updated By:** claude-reconcile (header refresh; body already current through 2026-07-14)
+**Last Updated:** 2026-07-20
+**Last Updated By:** claude-agent-c (added EN-28 admin user-mgmt + EN-29 content-studio rows)
 
 Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ needs plan step · ❓ decision needed
 
@@ -205,3 +205,12 @@ Captured so nothing deferred verbally ("other agent's lane") gets buried. Every 
 | DF9 | **EF-34 (user/44 vocab spec race) + EF-35 (user/45 mission-seed)** — new specs fail on load-timing / seed assumptions. | Owner: Lane A (spec race/timeout) + content (EF-35 seed). Full detail in E2E-LIVE-RUN-TRACKER EF-34/EF-35. | ⬜ |
 | DF10 | **Place graphics: optional extension** — Madeira island SVG shipped (onboarding + Home glyph, commit 6e36359). Optional future: Portugal+Madeira locator map / flag accent. | Nice-to-have; only if desired. | ⬜ |
 | DF11 | **Session continuity & state persistence (owner requirement, 2026-07-14) — foundational.** App must NOT treat a returning user as first-run: configuration, choices, progress, and results must persist server-side and be recalled so the user *continues*, never restarts — and expect interruptions mid-flow. **Root cause (verified):** onboarding-complete + placement live ONLY in client `platform.storage` (`onboarding:record:<userId>`), never the DB; the App gate reads only that client record and never consults DB signals (`profiles.has_accepted_terms`, `user_track_selection`), so a new device / cleared storage / private mode re-runs the ENTIRE first-run flow incl. re-asking consent already in the DB. Plus broad interruption loss: Daily Session, all Practice engines, Quiz, Tutor free-chat, AI-Practice hold progress in **memory only** (lost on tab-switch/reload). Full inventory + user stories → **docs/USER-WORKFLOWS-AND-STORIES.md**. | (1) Persist onboarding-complete + placement to a `profiles` column; gate on the DB signal (client mirror as fallback); short-circuit already-answered steps from existing DB state (consent, track). (2) Restore last-active tab/route on login. (3) Persist mid-flow progress for interruptible flows so they resume. (4) Confirm empirically whether same-device re-login also restarts (IndexedDB→memory fallback on staging?). Cross-ref TESTER-FEEDBACK **TB-7**. **PROGRESS 2026-07-14:** step (1)'s worst symptom fixed — the onboarding gate now honors the DB consent signal so returning users skip first-run + re-consent on any device (TB-7, commit `092605b`, staged in `2026.07.14.3`). STILL OPEN: `profiles` column for onboarding-complete/placement (placement survival, ties TB-1), (2) last-route restore, (3) interruptible-flow resume. | 🟡 |
+
+## Admin & authoring (EN-28 / EN-29 — new 2026-07-20, DRAFT for approval)
+
+| ID | Requirement | Doc | Status |
+|---|---|---|---|
+| EN-28 | Admin user management — browse/search, view, manage attributes, and **delete or disable** users from the admin surface (no admin-deletes-another path today) | `docs/EN-28-USER-MANAGEMENT-REQUIREMENTS.md` | ⬜ DRAFT — awaiting owner approval (AGENTS §3); live delete operator-gated |
+| EN-29 | Content Studio "add a theme" — user-friendly guided authoring UX replacing raw-JSON editing (desktop-first) | `docs/EN-29-CONTENT-STUDIO-UX-DESIGN.md` | ⬜ DRAFT (design) — awaiting owner approval (AGENTS §3) |
+
+> ⚠ **ID collision:** `EN-28` also tags a **separate** "new-release notification" item in `docs/TESTER-FEEDBACK-TRACKER.md` (~line 957). Same code, two different features — the orchestrator should re-number one. This entry + `docs/EN-28-USER-MANAGEMENT-REQUIREMENTS.md` use EN-28 for **admin user management** per the 2026-07-20 assignment.
