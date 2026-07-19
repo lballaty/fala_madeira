@@ -16,8 +16,12 @@ file is the sole source of truth; embedded literals are declared in
 
 ## 2026.07.19.1
 
-- Fixed: **your level now reflects what you chose at sign-up — and you can change it.** Home used to show a fixed "Absolute Beginner" no matter what you picked during placement, with no way to change it. It now shows your actual proficiency level, and a new **Settings → "Your level"** control lets you update it any time. (This is separate from paid content access, which is unchanged.) (TB-1)
-- Improved (admin): **the Audio management panel is more usable** — clip preview playback now works for any clip, the server-hosted-audio status is read correctly (no longer stuck on "pending"), the list loads in pages instead of all at once, and each clip shows its file size. (EN-23b)
+- Fixed: **your level now reflects what you chose at sign-up.** Home used to show a fixed "Absolute Beginner" no matter what you picked during placement — it now shows your actual proficiency level. (TB-1)
+- New: **you can change your level any time** from the new **Settings → "Your level"** control — no access key needed, and it persists. (This is separate from paid-content access, which is unchanged.) (TB-1)
+- Fixed (admin): **audio clip preview playback now works** for any clip in the Audio management panel — it fetches the clip on demand instead of only replaying already-cached audio. (EN-23b)
+- Fixed (admin): **the server-hosted-audio status now reads correctly** — a wiring bug made every clip show as "pending" regardless of its real state; the panel now reports the actual tier. (EN-23b)
+- Improved (admin): **the Audio panel loads in pages** ("Load more") instead of fetching every clip at once, so it stays responsive at scale. (EN-23b)
+- Improved (admin): **each audio clip now shows its file size.** (EN-23b)
 
 ## 2026.07.18.4
 
