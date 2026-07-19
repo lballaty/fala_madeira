@@ -28,7 +28,7 @@ vi.mock('../../../platform', () => ({
     },
   },
 }));
-vi.mock('../../../lib/logger', () => ({ logger: { warn: vi.fn(), info: vi.fn() } }));
+vi.mock('../../../lib/logger', () => ({ logger: { warn: vi.fn(), info: vi.fn(), error: vi.fn() } }));
 
 import { useOnboarding } from '../useOnboarding';
 import type { OnboardingResult } from '../useOnboarding';
@@ -45,9 +45,9 @@ const flush = async () => {
  */
 const makeSupabaseStub = () => {
   const update = vi.fn((payload: Record<string, unknown>) => ({
-    eq: vi.fn((_col: string, _val: string) => Promise.resolve({ error: null, payload })),
+    eq: vi.fn(() => Promise.resolve({ error: null, payload })),
   }));
-  const from = vi.fn((_table: string) => ({ update }));
+  const from = vi.fn(() => ({ update }));
   return { client: { from } as unknown as import('@supabase/supabase-js').SupabaseClient, from, update };
 };
 
@@ -204,5 +204,72 @@ describe('useOnboarding placement -> proficiency_level (TB-1 Option B, R1)', () 
 
     const payload = supa.update.mock.calls[0][0];
     expect(payload).not.toHaveProperty('unlocked_level');
+  });
+});
+
+describe('useOnboarding proficiency backfill-heal (TB-1 Option B, §6)', () => {
+  const makeProfile = (proficiency: number | null) =>
+    ({
+      id: 'u1',
+      has_accepted_terms: true,
+      has_accepted_ai_usage: true,
+      unlocked_level: 1,
+      proficiency_level: proficiency,
+    }) as unknown as import('../../../types').UserProfile;
+
+  it('heals ONCE: DB proficiency null + a complete local placement mirror → one proficiency write', async () => {
+    // Already-onboarded local record carrying a real placement (level 2)...
+    storageGet.mockResolvedValue({ complete: true, placementLevel: 2, completedAt: '2026-07-14T00:00:00.000Z' });
+    const supa = makeSupabaseStub();
+    const props = {
+      supabase: supa.client,
+      user: makeUser('u1'),
+      // ...but the DB row still has proficiency_level null (pre-existing user).
+      profile: makeProfile(null),
+      setProfile: vi.fn(),
+    };
+    const { result: hook } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+    await waitFor(() => expect(hook.current.isLoaded).toBe(true));
+
+    // The heal writes the mirrored placement to proficiency_level exactly once.
+    await waitFor(() => expect(supa.update).toHaveBeenCalledTimes(1));
+    expect(supa.from).toHaveBeenCalledWith('profiles');
+    expect(supa.update.mock.calls[0][0]).toMatchObject({ proficiency_level: 2 });
+    // INVARIANT: the heal write carries no unlocked_level key.
+    expect(supa.update.mock.calls[0][0]).not.toHaveProperty('unlocked_level');
+  });
+
+  it('no mirror (record not complete): DB proficiency stays null, no heal write', async () => {
+    // Fresh/incomplete local record — placementLevel default is NOT a real placement mirror.
+    storageGet.mockResolvedValue({ complete: false, placementLevel: 0, completedAt: null });
+    const supa = makeSupabaseStub();
+    const props = {
+      supabase: supa.client,
+      user: makeUser('u1'),
+      profile: makeProfile(null),
+      setProfile: vi.fn(),
+    };
+    const { result: hook } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+    await waitFor(() => expect(hook.current.isLoaded).toBe(true));
+    await flush();
+
+    // No placement mirror to heal from → proficiency stays null, nothing written.
+    expect(supa.update).not.toHaveBeenCalled();
+  });
+
+  it('does NOT heal when DB proficiency is already set (non-null)', async () => {
+    storageGet.mockResolvedValue({ complete: true, placementLevel: 2, completedAt: '2026-07-14T00:00:00.000Z' });
+    const supa = makeSupabaseStub();
+    const props = {
+      supabase: supa.client,
+      user: makeUser('u1'),
+      profile: makeProfile(1), // DB already has a proficiency — no heal needed.
+      setProfile: vi.fn(),
+    };
+    const { result: hook } = renderHook((p: typeof props) => useOnboarding(p), { initialProps: props });
+    await waitFor(() => expect(hook.current.isLoaded).toBe(true));
+    await flush();
+
+    expect(supa.update).not.toHaveBeenCalled();
   });
 });

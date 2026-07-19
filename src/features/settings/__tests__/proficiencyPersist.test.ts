@@ -32,9 +32,9 @@ import { setProficiencyLevel } from '../../onboarding/proficiency';
 /** Minimal supabase stub capturing the .update() payload; .eq resolves to { error: null }. */
 const makeSupabaseStub = () => {
   const update = vi.fn((payload: Record<string, unknown>) => ({
-    eq: vi.fn((_col: string, _val: string) => Promise.resolve({ error: null, payload })),
+    eq: vi.fn(() => Promise.resolve({ error: null, payload })),
   }));
-  const from = vi.fn((_table: string) => ({ update }));
+  const from = vi.fn(() => ({ update }));
   return { client: { from } as unknown as SupabaseClient, from, update };
 };
 

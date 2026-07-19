@@ -29,6 +29,7 @@ import { logger } from '../../lib/logger';
 import { platform } from '../../platform';
 import { DEFAULT_RECORD, coerceRecord, storageKeyFor } from './onboardingRecord';
 import type { OnboardingRecord } from './onboardingRecord';
+import { setProficiencyLevel } from './proficiency';
 
 export type { OnboardingRecord } from './onboardingRecord';
 
@@ -142,6 +143,43 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
       cancelled = true;
     };
   }, [userId, record, consentComplete]);
+
+  // TB-1 (Option B) backfill-heal (REQUIREMENTS §6): for an already-onboarded user whose DB
+  // proficiency_level is still null (pre-existing row, never written by the old flow) but whose
+  // local placement mirror exists, write the mirrored placement to the DB ONCE — mirroring the
+  // consent-heal shape above. The mirror-exists signal is `completedAt !== null`: only a genuine
+  // local completion via complete() records a REAL placement alongside a completedAt timestamp. We
+  // deliberately do NOT key on record.complete — the TB-7 consent-heal synthesizes complete=true
+  // from the DB consent flags WITHOUT a real placement, leaving completedAt null and placementLevel
+  // at its default 0; healing from that would fabricate "complete beginner" for a user who never
+  // placed on this device (§6 forbids inferring a value with no mirror). Runs once per null→heal;
+  // the DB write flips proficiency_level non-null so it never re-fires. NEVER derives from
+  // unlocked_level (separation invariant, §2). Best-effort + logged inside setProficiencyLevel.
+  const proficiencyIsNull = profile?.proficiency_level === null || profile?.proficiency_level === undefined;
+  const hasPlacementMirror = record.completedAt !== null;
+  useEffect(() => {
+    if (!userId || !profile || !hasPlacementMirror || !proficiencyIsNull) return;
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+      void setProficiencyLevel({
+        supabase,
+        userId,
+        level: record.placementLevel,
+        // Adapt useOnboarding's whole-profile setter to the shared writer's SetStateAction shape.
+        setProfile: (update) => {
+          const next = typeof update === 'function' ? update(profile) : update;
+          if (next) setProfile(next);
+        },
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+    // Keyed on identity + the null signal + the mirror signal + the mirrored level; not the whole
+    // profile object (which churns on xp/streak/etc.). Re-runs only when a real heal condition appears.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed to heal signal, not full profile
+  }, [userId, hasPlacementMirror, record.placementLevel, proficiencyIsNull, supabase]);
 
   /**
    * Persist consent AND the placement proficiency to the profiles row (DB source of truth) and
