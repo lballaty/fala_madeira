@@ -21,6 +21,20 @@ import type {
   SessionSegment,
 } from './types';
 
+/** The structured curriculum spans 6 months (seed pack: 6 × 28 days — §2). */
+const MIN_STRUCTURED_MONTH = 1;
+const MAX_STRUCTURED_MONTH = 6;
+
+/**
+ * TB-1a §4.1 (D-map): map effective proficiency `p` to the initial structured start MONTH
+ * (day 1 of that month). Derived from the empirical month↔level table (§2): p=0→M1 (L0/L1),
+ * p=1→M2, p=2→M3 … p=5→M6, expressed as `clamp(p + 1, 1, 6)`. Pure/deterministic — this is
+ * only a RECOMMENDED start, never a hard gate. The accessible-content bound (§5.3.2, R11) is
+ * applied in the WIRING layer via context.structuredStartCeilingMonth (paths stay paywall-blind).
+ */
+export const initialStructuredMonth = (p: number): number =>
+  Math.min(MAX_STRUCTURED_MONTH, Math.max(MIN_STRUCTURED_MONTH, Math.floor(p) + 1));
+
 /** Sort key for a situation's course slot; slot-less situations sort after all slotted ones. */
 const courseKey = (s: Situation): number => {
   if (!s.course) return Number.MAX_SAFE_INTEGER;
@@ -60,9 +74,31 @@ export const structuredCoursePath: LearningPath = {
   next(context: PathContext, selection: PathSelection): NextAction {
     const ordered = orderedCourseSituations(context);
 
+    // TB-1a §4.1/§5.2 — RESUME-VS-INITIAL precedence (D3/R12). A resume signal exists when the
+    // learner has advanced past the untouched default cursor (1,1) OR completed ≥1 situation; in
+    // that case the persisted cursor wins and placement is NOT consulted. Only for a brand-new,
+    // not-yet-advanced learner do we SEED the start month from placement (§4.1). The day stays 1
+    // (start of the seeded month) — the at/after-cursor scan below then finds the first uncompleted
+    // day, unchanged. Bounded DOWN to the highest accessible month by the wiring layer's
+    // context.structuredStartCeilingMonth (§5.3.2, R11) — paths never read unlocked_level.
+    const isUntouchedCursor =
+      selection.structuredMonth === MIN_STRUCTURED_MONTH && selection.structuredDay === 1;
+    const isResume = !isUntouchedCursor || context.completedSituationIds.size > 0;
+
+    let effectiveMonth = selection.structuredMonth;
+    let effectiveDay = selection.structuredDay;
+    if (!isResume) {
+      const ceiling = context.structuredStartCeilingMonth ?? MAX_STRUCTURED_MONTH;
+      const seededMonth = Math.min(initialStructuredMonth(context.placementLevel), ceiling);
+      // max(cursorMonth, seed) keeps the derivation monotonic — never moves a placed learner
+      // backward from a (here, default) cursor.
+      effectiveMonth = Math.max(selection.structuredMonth, seededMonth);
+      effectiveDay = effectiveMonth === selection.structuredMonth ? selection.structuredDay : 1;
+    }
+
     // The next day is the first course situation the learner has not completed at/after
-    // the persisted cursor; falling back to the very first uncompleted day, then day 1.
-    const cursorKey = selection.structuredMonth * 1_000_000 + selection.structuredDay;
+    // the effective cursor; falling back to the very first uncompleted day, then day 1.
+    const cursorKey = effectiveMonth * 1_000_000 + effectiveDay;
     const atOrAfterCursor = ordered.filter((s) => courseKey(s) >= cursorKey);
     const pool = atOrAfterCursor.length > 0 ? atOrAfterCursor : ordered;
     const nextSituation =
