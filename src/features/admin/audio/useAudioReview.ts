@@ -13,6 +13,7 @@ import { contentRepository, SituationFilter } from '../../../content/repository'
 import { PracticalLevel } from '../../../content/schema';
 import { linesForSituation } from '../../../lib/audio-download';
 import { audioCache } from '../../../lib/audioCache';
+import { synthesizeCached } from '../../../services/geminiService';
 import { logger, userMessage } from '../../../lib/logger';
 import { ShowToast } from '../../../hooks/useToast';
 import {
@@ -48,7 +49,11 @@ export interface UseAudioReview {
   reload: () => void;
   setVerdict: (clip: EnumeratedClip, verdict: AudioVerdict, notes?: string | null) => Promise<void>;
   enqueue: (clip: EnumeratedClip, reason: string | null) => Promise<void>;
-  /** Resolve a playable object URL for a clip from the device cache (null if not cached). */
+  /**
+   * Resolve a playable object URL for a clip. Uses the device cache when present, otherwise
+   * synthesizes through the normal lookup chain (cache → pinned → EN-8 server tiers → provider).
+   * Returns null and surfaces a logged toast on failure (never a silent dead button).
+   */
   getPlaybackUrl: (clip: EnumeratedClip) => Promise<string | null>;
 }
 
@@ -224,11 +229,31 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
     [supabase, actorId, applyLocal, showToast],
   );
 
-  const getPlaybackUrl = useCallback(async (clip: EnumeratedClip): Promise<string | null> => {
-    const cached = await audioCache.get(clip.buildKey);
-    if (!cached) return null;
-    return URL.createObjectURL(new Blob([cached]));
-  }, []);
+  const getPlaybackUrl = useCallback(
+    async (clip: EnumeratedClip): Promise<string | null> => {
+      // Prefer a device-cached copy (instant, offline). W2: on a MISS, synthesize through the normal
+      // lookup chain (cache → pinned → EN-8 server tiers → provider) so an admin can preview ANY
+      // listed clip, not just ones already cached on this device. Failures route through the
+      // centralized logger + a toast carrying the correlation id — never a silent dead button.
+      try {
+        const cached = await audioCache.get(clip.buildKey);
+        const buffer: BlobPart = cached ?? (await synthesizeCached(clip.text, { voiceType: clip.voiceType }));
+        return URL.createObjectURL(new Blob([buffer]));
+      } catch (error) {
+        const event = logger.error('EN23B_PLAYBACK_FETCH_FAILED', 'failed to load audio for admin preview', {
+          category: 'DATA_PROCESSING',
+          error,
+          details: { buildKey: clip.buildKey },
+        });
+        showToast(
+          userMessage('EN23B_PLAYBACK_FETCH_FAILED', 'Could not load audio for this clip.', event.request_id),
+          'error',
+        );
+        return null;
+      }
+    },
+    [showToast],
+  );
 
   return { scope, setScope, items, loading, serverTierAvailable, reload, setVerdict, enqueue, getPlaybackUrl };
 };

@@ -7,7 +7,7 @@
 //   tier shows "pending EN-8" until that config lands. Author: claude-en23. Created: 2026-07-17.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertTriangle, Play, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Loader2, Play, RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { contentRepository } from '../../../content/repository';
 import { PRACTICAL_LEVELS, PracticalLevel, Track } from '../../../content/schema';
@@ -35,6 +35,7 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
   const [tracks, setTracks] = useState<Track[]>([]);
   const [notesDraft, setNotesDraft] = useState<Record<string, string>>({});
   const [playingKey, setPlayingKey] = useState<string | null>(null);
+  const [loadingKey, setLoadingKey] = useState<string | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
   const objectUrlRef = useRef<string | null>(null);
 
@@ -56,7 +57,15 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
   const suspiciousCount = useMemo(() => items.filter((it) => it.signals.suspicious).length, [items]);
 
   const play = async (item: AudioReviewItem) => {
-    const url = await getPlaybackUrl(item);
+    // W2: getPlaybackUrl now synthesizes on a device-cache miss, so this can take a moment and can
+    // fail (the hook surfaces a logged toast) — show a per-row loading state while it resolves.
+    setLoadingKey(item.buildKey);
+    let url: string | null = null;
+    try {
+      url = await getPlaybackUrl(item);
+    } finally {
+      setLoadingKey((k) => (k === item.buildKey ? null : k));
+    }
     if (!url) return;
     if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
     objectUrlRef.current = url;
@@ -161,12 +170,18 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
               </div>
               <button
                 onClick={() => void play(item)}
-                disabled={item.deviceTier !== 'present'}
+                disabled={loadingKey === item.buildKey}
                 data-testid="audio-play"
+                data-loading={loadingKey === item.buildKey ? 'true' : 'false'}
                 className="shrink-0 flex items-center justify-center min-w-[44px] min-h-[44px] text-ios-blue disabled:text-ios-gray/40"
-                aria-label={`Play ${item.text}`}
+                aria-label={loadingKey === item.buildKey ? `Loading ${item.text}` : `Play ${item.text}`}
+                aria-busy={loadingKey === item.buildKey}
               >
-                <Play className="w-4 h-4" />
+                {loadingKey === item.buildKey ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Play className="w-4 h-4" />
+                )}
               </button>
             </div>
 
