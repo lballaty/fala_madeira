@@ -25,41 +25,13 @@ import { useCallback, useEffect, useState } from 'react';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
 import type { PracticalLevel } from '../../content/schema';
 import type { UserProfile } from '../../types';
-import { config } from '../../config';
 import { logger } from '../../lib/logger';
 import { platform } from '../../platform';
+import { DEFAULT_RECORD, coerceRecord, storageKeyFor } from './onboardingRecord';
+import type { OnboardingRecord } from './onboardingRecord';
+import { setProficiencyLevel } from './proficiency';
 
-/** Persisted per-user onboarding record (platform.storage). Consent lives on the profile row. */
-export interface OnboardingRecord {
-  /** True once the learner has finished the first-run flow (App.tsx gates on this). */
-  complete: boolean;
-  /** Placement level chosen at onboarding — a sensible starting point, never a lock (§5). */
-  placementLevel: PracticalLevel;
-  /** ISO timestamp the flow completed (diagnostics only). */
-  completedAt: string | null;
-}
-
-const DEFAULT_RECORD: OnboardingRecord = {
-  complete: false,
-  placementLevel: 0,
-  completedAt: null,
-};
-
-const isPracticalLevel = (value: unknown): value is PracticalLevel =>
-  typeof value === 'number' && Number.isInteger(value) && value >= 0 && value <= 5;
-
-/** Structural guard for a record read back from platform.storage (tolerates corruption). */
-const coerceRecord = (value: unknown): OnboardingRecord => {
-  if (typeof value !== 'object' || value === null) return { ...DEFAULT_RECORD };
-  const v = value as Record<string, unknown>;
-  return {
-    complete: v.complete === true,
-    placementLevel: isPracticalLevel(v.placementLevel) ? v.placementLevel : DEFAULT_RECORD.placementLevel,
-    completedAt: typeof v.completedAt === 'string' ? v.completedAt : null,
-  };
-};
-
-const storageKeyFor = (userId: string): string => `${config.onboarding.recordStorageKeyPrefix}${userId}`;
+export type { OnboardingRecord } from './onboardingRecord';
 
 interface OnboardingDeps {
   supabase: SupabaseClient | null;
@@ -172,16 +144,61 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
     };
   }, [userId, record, consentComplete]);
 
-  /** Persist consent to the profiles row (DB source of truth) and mirror onto the profile state. */
+  // TB-1 (Option B) backfill-heal (REQUIREMENTS §6): for an already-onboarded user whose DB
+  // proficiency_level is still null (pre-existing row, never written by the old flow) but whose
+  // local placement mirror exists, write the mirrored placement to the DB ONCE — mirroring the
+  // consent-heal shape above. The mirror-exists signal is `completedAt !== null`: only a genuine
+  // local completion via complete() records a REAL placement alongside a completedAt timestamp. We
+  // deliberately do NOT key on record.complete — the TB-7 consent-heal synthesizes complete=true
+  // from the DB consent flags WITHOUT a real placement, leaving completedAt null and placementLevel
+  // at its default 0; healing from that would fabricate "complete beginner" for a user who never
+  // placed on this device (§6 forbids inferring a value with no mirror). Runs once per null→heal;
+  // the DB write flips proficiency_level non-null so it never re-fires. NEVER derives from
+  // unlocked_level (separation invariant, §2). Best-effort + logged inside setProficiencyLevel.
+  const proficiencyIsNull = profile?.proficiency_level === null || profile?.proficiency_level === undefined;
+  const hasPlacementMirror = record.completedAt !== null;
+  useEffect(() => {
+    if (!userId || !profile || !hasPlacementMirror || !proficiencyIsNull) return;
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+      void setProficiencyLevel({
+        supabase,
+        userId,
+        level: record.placementLevel,
+        // Adapt useOnboarding's whole-profile setter to the shared writer's SetStateAction shape.
+        setProfile: (update) => {
+          const next = typeof update === 'function' ? update(profile) : update;
+          if (next) setProfile(next);
+        },
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+    // Keyed on identity + the null signal + the mirror signal + the mirrored level; not the whole
+    // profile object (which churns on xp/streak/etc.). Re-runs only when a real heal condition appears.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed to heal signal, not full profile
+  }, [userId, hasPlacementMirror, record.placementLevel, proficiencyIsNull, supabase]);
+
+  /**
+   * Persist consent AND the placement proficiency to the profiles row (DB source of truth) and
+   * mirror both onto the profile state. TB-1 (Option B): placement is written to
+   * profiles.proficiency_level in this SAME single profiles.update — a field wholly separate from
+   * the paywall unlocked_level (separation invariant, REQUIREMENTS §2): this write NEVER touches
+   * unlocked_level. Best-effort: a write failure is logged with correlation IDs and never re-gates
+   * the learner (local completion still stands).
+   */
   const persistConsent = useCallback(
     async (result: OnboardingResult): Promise<void> => {
       if (!user) return;
-      // Optimistic local mirror so the rest of the app sees consent immediately.
+      // Optimistic local mirror so the rest of the app sees consent + proficiency immediately.
       if (profile) {
         setProfile({
           ...profile,
           has_accepted_terms: result.acceptedTerms,
           has_accepted_ai_usage: result.acceptedAiUsage,
+          proficiency_level: result.placementLevel,
         });
       }
       if (!supabase) return;
@@ -191,15 +208,20 @@ export const useOnboarding = ({ supabase, user, profile, setProfile }: Onboardin
           .update({
             has_accepted_terms: result.acceptedTerms,
             has_accepted_ai_usage: result.acceptedAiUsage,
+            proficiency_level: result.placementLevel,
           })
           .eq('id', user.id);
         if (error) throw error;
-        logger.info('ONBOARDING_CONSENT_PERSISTED', 'onboarding consent recorded on the profile', {
+        logger.info('ONBOARDING_CONSENT_PERSISTED', 'onboarding consent + placement proficiency recorded on the profile', {
           category: 'SECURITY',
-          details: { acceptedTerms: result.acceptedTerms, acceptedAiUsage: result.acceptedAiUsage },
+          details: {
+            acceptedTerms: result.acceptedTerms,
+            acceptedAiUsage: result.acceptedAiUsage,
+            proficiencyLevel: result.placementLevel,
+          },
         });
       } catch (error) {
-        logger.error('ONBOARDING_CONSENT_PERSIST_FAILED', 'could not persist onboarding consent to the profile', {
+        logger.error('ONBOARDING_CONSENT_PERSIST_FAILED', 'could not persist onboarding consent + proficiency to the profile', {
           category: 'DATA_PROCESSING',
           error,
         });

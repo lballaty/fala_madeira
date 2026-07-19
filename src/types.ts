@@ -65,6 +65,11 @@ export interface UserProfile {
   last_voice_usage_date?: string;
   has_accepted_terms?: boolean;
   has_accepted_ai_usage?: boolean;
+  // TB-1 (Option B): the learner's self-described practical/placement level (PracticalLevel
+  // 0..5; 0/1/2 written today). WHOLLY SEPARATE from unlocked_level (the paywall) — the
+  // separation invariant proficiency_level ⟂ unlocked_level must never be violated. null =
+  // not yet placed (the honest neutral state). See docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md.
+  proficiency_level?: number | null;
   playback_speed?: number;
   is_sound_enabled?: boolean;
   // Preferred server-side TTS provider (null/undefined = platform default chain azure→gemini).

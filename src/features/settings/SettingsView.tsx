@@ -9,7 +9,7 @@
 // Created: 2026-07-09
 
 import { useEffect, useRef, useState } from 'react';
-import { AlertTriangle, BookOpen, Bot, ChevronRight, Compass, Download, FileText, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
+import { AlertTriangle, BookOpen, Bot, ChevronRight, Compass, Download, FileText, GraduationCap, HardDrive, Inbox, Info, LifeBuoy, Lock, LogOut, Monitor, Moon, Palette, ShieldCheck, Sparkles, Sun, Trash2, User as UserIcon, Users, Volume2, X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { formatDuration } from '../../lib/duration';
 import { useTheme, type ThemePreference } from '../../hooks/useTheme';
@@ -26,7 +26,7 @@ import { BeforeInstallPromptEvent } from '../../hooks/usePwaInstall';
 import { errorMessage, logger, userMessage } from '../../lib/logger';
 import { config } from '../../config';
 import { contentRepository } from '../../content/repository';
-import { Track } from '../../content/schema';
+import { Track, type PracticalLevel } from '../../content/schema';
 import { PATHS, type usePathSelection } from '../../paths';
 import { AuthMode } from '../auth/useAuth';
 import { useSettings } from './useSettings';
@@ -38,6 +38,16 @@ import { MySubmissionsModal } from './MySubmissionsModal';
 
 /** Human-readable megabytes for the offline usage/limit display (1 MB = 1024*1024 B). */
 const formatMb = (bytes: number): string => `${Math.round(bytes / (1024 * 1024))} MB`;
+
+// TB-1 (Option B): the "Your level" placement choices — same three the onboarding placement offers
+// (OnboardingFlow PLACEMENT_OPTIONS), so the Settings control lets the learner set/change their
+// proficiency at any time. Purely the learner's practical level; NO access key, NO paywall — this
+// never touches unlocked_level (separation invariant, REQUIREMENTS §2/§5.4).
+const PROFICIENCY_OPTIONS: { level: PracticalLevel; label: string; detail: string }[] = [
+  { level: 0, label: 'Complete beginner', detail: "I'm starting from zero." },
+  { level: 1, label: 'A few words', detail: 'I know some greetings and basics.' },
+  { level: 2, label: 'Basic conversation', detail: 'I can handle simple everyday talk.' },
+];
 
 interface SettingsViewProps {
   user: User | null;
@@ -95,6 +105,7 @@ export const SettingsView = ({
     showTutorial, setShowTutorial,
     tutorialStep, setTutorialStep,
     handleSelectTutor, handleSetTtsProvider, handleSetTtsByoKeyRef,
+    handleSetProficiencyLevel,
     handleOpenTicket, handleCollectLogs,
     isMySubmissionsOpen, setIsMySubmissionsOpen,
     mySubmissions, isLoadingSubmissions, submissionsError,
@@ -311,6 +322,51 @@ export const SettingsView = ({
             )}
           </div>
         )}
+      </div>
+
+      {/* Your level (TB-1 Option B): the learner's self-service proficiency control — the
+          "can't change it" half of the reporter's complaint. Reads profile.proficiency_level and
+          persists the chosen placement level via the shared setProficiencyLevel writer (DB + local
+          mirror + optimistic profile). NO access key, NO unlocked_level reference — the paywall is
+          a separate concern (separation invariant, REQUIREMENTS §2/§5.4). */}
+      <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4" data-testid="proficiency-card">
+        <div className="flex items-center">
+          <GraduationCap className="w-5 h-5 mr-3 text-ios-blue" />
+          <span className="font-bold">Your level</span>
+        </div>
+        <p className="text-[11px] text-ios-gray leading-snug">
+          How much Portuguese can you already handle? This sets your level label — it never locks or
+          unlocks content, so change it whenever you like.
+        </p>
+        <div className="space-y-2" data-testid="proficiency-chooser">
+          {PROFICIENCY_OPTIONS.map((option) => {
+            const active = profile?.proficiency_level === option.level;
+            return (
+              <button
+                key={option.level}
+                onClick={() => void handleSetProficiencyLevel(option.level)}
+                aria-pressed={active}
+                data-testid={`proficiency-option-${option.level}`}
+                className={cn(
+                  'w-full text-left p-3 rounded-2xl border-2 transition-colors',
+                  active
+                    ? 'border-ios-blue bg-ios-blue/5'
+                    : 'border-transparent bg-ios-bg hover:bg-ios-bg/70',
+                )}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-sm">{option.label}</span>
+                  {active && (
+                    <span className="text-[9px] font-bold uppercase text-ios-blue bg-ios-blue/10 px-2 py-0.5 rounded-full">
+                      current
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] text-ios-gray mt-0.5">{option.detail}</p>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4">
