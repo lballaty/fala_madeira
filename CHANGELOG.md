@@ -4,8 +4,8 @@
 **Description:** Release changelog for fala_madeira. Entries grouped by CalVer `YYYY.MM.DD.N`.
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
-**Last Updated:** 2026-07-18
-**Last Updated By:** claude-orchestrator (2026.07.19.1 — TB-1 proficiency level + EN-23b admin audio panel fixes)
+**Last Updated:** 2026-07-20
+**Last Updated By:** claude-orchestrator (2026.07.20.1 — TB-1a placement-driven start + NAV-1 nav/About + EN-31 audio-failure UX)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,15 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.20.1
+
+- New: **your level now decides where you start learning.** When you begin the structured course or a goal track, your lessons now open at your proficiency level instead of always starting from the very beginning — so a placed learner picks up at the right spot. (Your paid-content access is unchanged and remains a separate setting.) (TB-1a)
+- Improved: **the "Profile" tab is now labelled "Settings"** so the name matches what's inside it. (NAV-1)
+- New (desktop): **"About" is now a direct entry in the sidebar navigation** — you can open app info and release notes without digging through Settings. (On mobile, About stays inside Settings.) (EN-4b / NAV-1)
+- Improved: **tap your level on the Home screen** to jump straight to the "Your level" setting. (NAV-1)
+- Improved: **clearer messages when audio can't play.** Instead of a raw technical error you now see a plain explanation — either "this device can't play spoken audio" or a transient "couldn't play — check your connection or try again" — together with a **Retry** button that replays the same audio. (EN-31)
+- New: **a calm "using your device's voice" notice** appears once per session when the premium voice is unavailable and playback falls back to your device's built-in voice, so a drop in audio quality is never silent. (EN-31)
 
 ## 2026.07.19.1
 
