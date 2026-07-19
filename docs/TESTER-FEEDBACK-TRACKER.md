@@ -954,3 +954,20 @@
 - **Open questions (for the requirements doc):** (a) notification UX — toast vs banner vs modal; dismiss/snooze; force vs optional reload; (b) beta-vs-normal differentiation (do beta testers get a louder/earlier prompt?); (c) release-notes format + where it lives + how it's versioned/anchored; (d) how the running build knows its version + the "last seen" comparison for the reopened-installed case; (e) whether to also cover true background push (out of scope for v1 — the open/installed cases need no push service); (f) staging vs prod behavior (staging updates far more often — avoid nagging beta testers every deploy).
 - **Reuse / relationships:** `vite-plugin-pwa` update lifecycle (already in the build); the version-bump/CHANGELOG release-engineering standard; EN-17 App Capability Registry / manual (a "What's new" surface could live near the user manual); the toast system (`useToast`) + EN-18 take-me-there pattern for the "see what's new" action.
 - **Owner:** Agent E (`feat/*`) + release engineering. **Status:** NEEDS REQUIREMENTS — captured from owner feedback 2026-07-17; no coding until a written spec is drafted AND owner-approved (AGENTS §3 requirements gate).
+
+---
+
+## Reconciliation 2026-07-19 — operator-gated removals (PENDING owner approval)
+
+The repo verification/reconciliation pass flagged stale one-off files for removal. **These were NOT auto-deleted** — deletion of tracked files (and the credential file) is operator-gated. Run each explicit per-file `rm` yourself after confirming (no bulk-delete):
+
+- **`rm /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/.admin-temp-credentials.txt`** — ⚠ **ROTATE the admin password FIRST.** Plaintext admin email + `temp_password` on disk. Gitignored (git history is clean), but it's stale clutter with real credential value.
+- **`rm /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/apply-migrations.js`** — tracked root one-off; confirm it's superseded by the Supabase-CLI / `APPLIED.md` runbook before removing (still referenced by docs as the historical apply method). If keeping, relocate to `scripts/`.
+- **`rm /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/check-user-status.js`** — tracked root one-off DB inspector (oldest file, Apr 7); not wired to package.json/hooks.
+- **`rm /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/scripts/verify-migration-00012.mjs`** — spent one-off EN-8 00012 verifier; unreferenced.
+- **`rm /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/scripts/check-control-crawl-drift.mjs`** — referenced only in historical trackers, not in any live gate.
+- **`rm /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/scripts/crawl-interactive-controls.mjs`** — companion to the above; not in any live gate.
+
+**Owner:** operator. **Status:** PENDING APPROVAL (surfaced by reconciliation pass; not executed autonomously).
+
+_Also noted (no action needed — gitignored, no git impact): `artifacts/*.tgz` (~59 MB of e2e run 18–21 tarballs) and `.llm_sessions/` are local-disk clutter; prune at will. `graphify-out/` is ~10 days stale (regenerable per CLAUDE.md). `.probe-tmp.mjs` is a gitignored scratch file._
