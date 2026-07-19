@@ -12,6 +12,8 @@ export const config = {
   ui: {
     /** Toast auto-dismiss delay (useToast). */
     toastDismissMs: 3000,
+    /** Longer auto-dismiss for actionable toasts (EN-31 WP-C) so the user can hit Retry. */
+    toastActionDismissMs: 8000,
   },
 
   tutor: {
