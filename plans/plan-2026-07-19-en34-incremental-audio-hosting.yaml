@@ -1,0 +1,216 @@
+# File: plans/plan-2026-07-19-en34-incremental-audio-hosting.yaml
+# Description: Executable implementation plan for EN-34 (incremental small-batch audio hosting) +
+#   the versioned-regeneration loop that wires the admin Audio panel's rate/enqueue into hosting
+#   (delivers EN-23b W5/W6). Per docs/EN-34-INCREMENTAL-AUDIO-HOSTING-REQUIREMENTS.md (decisions
+#   locked 2026-07-19: schedule host = Supabase pg_cron -> edge fn; versioning = build now;
+#   contention fix = symlink). Consumed by /execute-plan(-autonomously).
+#
+#   BUILD IS GATED ON OWNER APPROVAL of the requirements (AGENTS §3). AUTONOMY BOUNDARY: only the
+#   code/test/docs steps run autonomously (on develop, behind inert flags). EVERY live step (DB
+#   migration apply, edge deploy, Verpex symlink/cron, flag flip, warm run, prod activation) is
+#   OPERATOR-GATED — those steps are marked operator_gated: true and the executor MUST HALT and
+#   surface them, never perform them (memory: feedback-verpex-no-changes-without-approval).
+# Author: claude-en23b (with owner)
+# Created: 2026-07-19
+
+plan:
+  title: >
+    EN-34 incremental audio hosting: versioned-filename core + hosted manifest, a pg_cron->edge
+    scheduled warm fn that drains the admin regen queue then warms new clips, admin-panel W5/W6
+    integration, and the symlink contention fix — built + gated on develop, HALTing at every live step.
+  approval_gate: >
+    Owner must approve docs/EN-34-INCREMENTAL-AUDIO-HOSTING-REQUIREMENTS.md (Status: decisions locked,
+    awaiting build approval) before execution begins.
+  branch: feat/en34-incremental-audio-hosting   # topic branch off develop, in a dedicated worktree
+  autonomy_boundary: >
+    Steps with operator_gated: true are NOT auto-executed. The executor stops, prints the operator
+    action + why it is gated, and waits. All other steps run autonomously on develop behind inert
+    flags; the corpus stays served-by-provider-fallback until an operator activates.
+  goal_validation:
+    - "Versioned object naming + a tts_audio_hosted manifest exist; generation 1 = today's unversioned objects (no re-host of the ~83 already hosted)."
+    - "Client resolves a key's generation from the manifest and folds it into BOTH the server URL and the device/pinned cache key (so a regenerated clip busts every cache layer)."
+    - "The audio-warm edge fn drains the regen queue first (bump generation + re-host + mark done), then warms new un-hosted clips in priority order; rate-limit-aware stop; heartbeat + stall alert to public.logs."
+    - "Admin panel shows true per-tier presence + current generation (W5); enqueue-for-regeneration is fulfilled end-to-end (W6)."
+    - "Pure cores unit-tested (vitest); edge/Deno glue gets agentic /code-review per the edge-testing policy; admin/13 e2e extended; full CI=1 regression + ship dry-run green."
+    - "No product regression: hosting is additive; with everything inert the app behaves exactly as today (provider fallback)."
+
+  steps:
+    # ---------- setup ----------
+    - id: worktree-setup
+      description: Create the EN-34 topic-branch worktree off develop (NEVER checkout in the shared base — AGENTS §7).
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira worktree add ../fala_madeira-en34 -b feat/en34-incremental-audio-hosting develop
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 rev-parse --abbrev-ref HEAD | grep -qx feat/en34-incremental-audio-hosting
+      depends_on: []
+      fatal_on_failure: true
+
+    # ---------- PHASE V — versioning core (autonomous, inert) ----------
+    - id: v1-hosted-manifest-migration
+      description: >
+        Author migration (NOT applied here) creating public.tts_audio_hosted (build_key text PK,
+        generation int not null default 1, object_name text, hosted_at timestamptz, tiers text[]),
+        admin/service RLS mirroring the tts_audio_* pattern. Records what is hosted + at what
+        generation; decouples "what's hosted" from the transient bucket.
+      command: "IMPLEMENT per §11; add supabase/migrations/000NN_tts_audio_hosted.sql (idempotent, append-only pattern like 00014). DO NOT apply — apply is operator-gated (v-apply-migrations)."
+      validation: test -f /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34/supabase/migrations/*tts_audio_hosted.sql && node -c /dev/null 2>/dev/null; grep -q tts_audio_hosted supabase/migrations/*tts_audio_hosted.sql
+      depends_on: [worktree-setup]
+      fatal_on_failure: true
+
+    - id: v2-versioned-object-naming
+      description: >
+        Pure fn: keyToServerPath(key, generation) — generation 1 => legacy unversioned name (back-compat
+        with the ~83 already-hosted objects), generation >= 2 => <base>.v<gen>.pcm. Traversal-safe as today.
+      command: "IMPLEMENT per §11 in src/lib/audioKey.ts (extend keyToServerPath signature, default generation=1 keeps current output); add vitest for gen=1 legacy + gen>=2 versioned + traversal-safety."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && npx vitest run src/lib/__tests__/audioKey.test.ts && npx tsc --noEmit
+      depends_on: [worktree-setup]
+      fatal_on_failure: true
+
+    - id: v3-client-generation-resolution
+      description: >
+        Client resolves current generation per key from a compact hosted-generation manifest (read of
+        tts_audio_hosted, cached client-side) and folds generation into BOTH the server URL (v2-naming)
+        AND the device/pinned cache key, defaulting to legacy gen=1 when unknown. This is the cache-bust
+        mechanism: a regenerated clip changes URL + cache key so device cache, pinned, SW, Verpex, bucket
+        all miss the stale bytes. Confirm the PWA service-worker audio caching does not pin the old URL.
+      command: "IMPLEMENT per §11: manifest fetch + generation-aware cacheKey/URL in geminiService.synthesizeCached + audioCache.buildKey call sites; default legacy on miss. Unit tests: gen>1 => versioned URL + salted cache key; gen unknown => legacy; regeneration => new cache key (device-cache miss)."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && npx vitest run src/services/__tests__/geminiService.test.ts src/lib/__tests__/audioCache.test.ts && npx tsc --noEmit
+      depends_on: [v2-versioned-object-naming]
+      fatal_on_failure: true
+
+    - id: v4-writer-versioned-upload
+      description: >
+        Writer path (scripts/pregen-audio.mjs + the new edge fn) uploads under the versioned object name
+        and upserts tts_audio_hosted(build_key, generation, object_name, hosted_at, tiers). Idempotency
+        HEAD-checks the DURABLE store (Verpex, content-type guarded) for the CURRENT generation's name.
+      command: "IMPLEMENT per §5/§11: extend pregen-audio.mjs to consult/write the manifest + versioned name; keep --dry-run. Pure selection/naming vitest; the pregen CLI itself remains operator/manual."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && npx vitest run scripts/__tests__/pregen*.test.* 2>/dev/null || true; node scripts/pregen-audio.mjs --level 0 --dry-run
+      depends_on: [v1-hosted-manifest-migration, v3-client-generation-resolution]
+      fatal_on_failure: false
+
+    # ---------- PHASE W — scheduled warm edge fn (autonomous code; deploy gated) ----------
+    - id: w1-warm-edge-fn
+      description: >
+        New Deno edge fn supabase/functions/audio-warm/: per tick it (1) DRAINS N regen-queue rows FIRST
+        — re-synth (text,voice) via the existing tts path, host at generation+1, upsert manifest, mark
+        row done — then (2) warms N new un-hosted clips in priority order (onboarding -> level:0 ->
+        month-N -> remainder), enumerated from the DB content tables + onboarding greeting set, with
+        durable-store HEAD idempotency and a rate-limit-aware clean stop. Extract the pure core
+        (queue-vs-new selection, priority order, N-budget, stop decision) to a sibling module + vitest;
+        the Deno.serve glue is covered by the mandatory agentic /code-review (edge-testing policy).
+      command: "IMPLEMENT per §5 A1-A3 + §11; add supabase/functions/audio-warm/{index.ts, _core.ts} + supabase/functions/audio-warm/__tests__/_core.test.ts (vitest on the pure core). Route errors through the canonical edge error envelope + persistLog."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && npx vitest run supabase/functions/audio-warm/__tests__/_core.test.ts && npx tsc --noEmit
+      depends_on: [v4-writer-versioned-upload]
+      fatal_on_failure: true
+
+    - id: w2-edge-glue-code-review
+      description: Mandatory agentic review of the audio-warm Deno.serve glue (edge-testing policy — no Deno harness) using the TEST_MANUAL §8 edge-glue checklist.
+      command: "/code-review supabase/functions/audio-warm/ — verify: calls the pure tested core, checks {error} on every Supabase call, returns the canonical errorResponse envelope (never a raw string/500, never a leaked dbMessage), persistLogs on error, service-role scoped, regen-queue drain is idempotent (a re-run cannot double-bump generation)."
+      validation: "MANUAL: reviewer confirms the edge-glue checklist passes (recorded in the change's DoD)."
+      depends_on: [w1-warm-edge-fn]
+      fatal_on_failure: true
+
+    - id: w3-pgcron-schedule-migration
+      description: Author (NOT apply) the pg_cron migration that invokes the audio-warm edge fn on the chosen cadence (default every 30 min), with a heartbeat/stall-alert companion (K=3 zero-progress runs).
+      command: "IMPLEMENT per §5 A4(i)/A5; add supabase/migrations/000NN_audio_warm_cron.sql (pg_cron.schedule -> net.http_post to the edge fn; idempotent unschedule-then-schedule). DO NOT apply — operator-gated (v-apply-migrations)."
+      validation: grep -q audio-warm /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34/supabase/migrations/*audio_warm_cron.sql
+      depends_on: [w1-warm-edge-fn]
+      fatal_on_failure: true
+
+    - id: w4-inventory-audit
+      description: Read-only inventory audit (§5 A6) — list tts-audio bucket + Verpex /audio, diff vs the desired corpus, emit a hosted/total-per-tier coverage report. Pure diff unit-tested.
+      command: "IMPLEMENT per §5 A6 as scripts/audit-audio-coverage.mjs (read-only, Management-API/HEAD based like scripts/verify-migration-00012.mjs) + vitest on the pure diff."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && npx vitest run scripts/__tests__/audit*.test.* 2>/dev/null || true; node -c scripts/audit-audio-coverage.mjs 2>/dev/null || true
+      depends_on: [v1-hosted-manifest-migration]
+      fatal_on_failure: false
+
+    # ---------- PHASE C — admin panel W5/W6 integration (autonomous) ----------
+    - id: c1-panel-w6-regen-link
+      description: >
+        W6 — wire the panel's existing Enqueue-for-regeneration to the generation-bump loop: the queue row
+        is the trigger, the warm fn (w1) is the fulfiller. Ensure the enqueue carries the reason/verdict,
+        and that fulfilment bumps generation + updates the manifest (logic already in w1). Unit-test the
+        queue-row -> generation-bump contract.
+      command: "IMPLEMENT per §11; adjust src/features/admin/audio/useAudioReview.ts + ttsAudioReviewRepo as needed so enqueue + fulfilment agree on the generation contract; vitest."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && npx vitest run src/features/admin/audio/__tests__/ && npx tsc --noEmit
+      depends_on: [w1-warm-edge-fn]
+      fatal_on_failure: true
+
+    - id: c2-panel-w5-true-presence
+      description: >
+        W5 — the panel shows true present/missing per tier + the current generation (now the tier is real
+        and the manifest exists). Extend useAudioReview to read hosted generation/tiers from the manifest;
+        render it. Extend tests/e2e/admin/13-admin-audio-panel.spec.ts.
+      command: "IMPLEMENT per §11; extend useAudioReview + AudioPanel to surface manifest generation/tier; vitest + extend admin/13 e2e (stub manifest/probes deterministically as in the EN-23b tests)."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && npx vitest run src/features/admin/audio/__tests__/ && npx tsc --noEmit
+      depends_on: [c1-panel-w6-regen-link]
+      fatal_on_failure: false
+
+    # ---------- PHASE D — contention fix (one code step; infra is gated) ----------
+    - id: d1-deploy-exclude-fix
+      description: >
+        Code-only: change the web-deploy exclude in scripts/deploy-verpex.sh from --exclude 'audio/'
+        to --exclude 'audio' (no slash) so a staging deploy's --delete cannot remove a symlink named
+        'audio'. (Committing is autonomous; DEPLOYING is operator-gated.)
+      command: "IMPLEMENT: edit scripts/deploy-verpex.sh rsync excludes ('audio/' -> 'audio', keep 'audio-sync/'); add a comment referencing the symlink contention fix."
+      validation: grep -q "exclude 'audio'" /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34/scripts/deploy-verpex.sh
+      depends_on: [worktree-setup]
+      fatal_on_failure: true
+
+    # ---------- gate + merge (autonomous) ----------
+    - id: full-gate
+      description: Full release gate for the autonomous work — fresh-server e2e regression (on develop, has creds) + credential-free ship dry-run preflight.
+      command: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && CI=1 npm run test:e2e:regression && npm run deploy -- --dry-run
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira && grep -E '"failed": 0' artifacts/e2e/summary.json && echo gate-green
+      depends_on: [v4-writer-versioned-upload, w2-edge-glue-code-review, w3-pgcron-schedule-migration, c2-panel-w5-true-presence, d1-deploy-exclude-fix]
+      fatal_on_failure: true
+
+    - id: merge-to-develop
+      description: Merge the topic branch into develop (no-ff) once the gate is green; push. All changes remain INERT until operator activation.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira merge --no-ff feat/en34-incremental-audio-hosting -m "Merge feat/en34-incremental-audio-hosting into develop — EN-34 hosting + versioned regen loop (inert)" && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira push origin develop
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira log --oneline -1 | grep -qi en34
+      depends_on: [full-gate]
+      fatal_on_failure: true
+
+    # ---------- PHASE ACTIVATION — OPERATOR-GATED, executor HALTS here ----------
+    - id: op-apply-migrations
+      description: "OPERATOR: apply the tts_audio_hosted + audio_warm_cron migrations to the SHARED Supabase project (staging-first mindset — the bucket is shared prod+staging). Verify live (scripts/verify-migration-00012.mjs pattern)."
+      command: "HALT — operator runs `node apply-migrations.js <file>` for each new migration, then verifies live. Do NOT auto-apply."
+      validation: "OPERATOR confirms both tables/cron live via a read-only verify script."
+      depends_on: [merge-to-develop]
+      fatal_on_failure: true
+      operator_gated: true
+
+    - id: op-deploy-edge-and-build
+      description: "OPERATOR: deploy the audio-warm edge fn + a build carrying the deploy-exclude fix (staging first, verify, then production per the INFRA-4 gate)."
+      command: "HALT — operator deploys the edge fn and cuts/stages the frontend. Do NOT auto-deploy."
+      validation: "OPERATOR confirms audio-warm responds + staged build carries the exclude fix."
+      depends_on: [op-apply-migrations]
+      fatal_on_failure: true
+      operator_gated: true
+
+    - id: op-verpex-symlink-and-puller
+      description: >
+        OPERATOR: (1) test symlink-following (ln -s <prod>/audio <staging>/audio-test; curl -I .../audio-test/<known>.pcm => 200); (2) if OK, point staging /audio -> prod /audio; (3) make prod the SOLE puller (prod pull cron on, staging pull cron OFF). If symlink-following fails, fall back to the rsync-after-pull variant.
+      command: "HALT — operator performs the Verpex symlink + cron changes and the two one-time checks. Do NOT auto-run live Verpex commands."
+      validation: "OPERATOR confirms staging serves prod's audio via the symlink and a staging deploy leaves it intact."
+      depends_on: [op-deploy-edge-and-build]
+      fatal_on_failure: true
+      operator_gated: true
+
+    - id: op-enable-writeback-and-warm
+      description: >
+        OPERATOR: flip TTS_BUFFER_WRITEBACK on (now that the contention fix + single puller are live), let
+        pg_cron warm run, watch coverage climb + the stall alert. Provision TB-13 dedicated provider key
+        to unblock volume. Use the admin panel to rate/enqueue bad clips and confirm the regenerate loop
+        lands a new generation.
+      command: "HALT — operator enables the flag + monitors. Do NOT auto-flip flags or run live warms."
+      validation: "OPERATOR confirms coverage climbs, regen queue drains, no stall; admin panel shows generation bumps."
+      depends_on: [op-verpex-symlink-and-puller]
+      fatal_on_failure: false
+      operator_gated: true
+
+    - id: cleanup-worktree
+      description: Remove the EN-34 worktree once merged + activated (or when pausing).
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira worktree remove --force ../fala_madeira-en34
+      validation: "git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira worktree list | grep -cv en34 >/dev/null"
+      depends_on: [merge-to-develop]
+      fatal_on_failure: false

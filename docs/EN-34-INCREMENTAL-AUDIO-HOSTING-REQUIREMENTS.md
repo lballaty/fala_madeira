@@ -131,16 +131,24 @@ HEAD-skip, already throttled+retried, already emits a JSON summary) and schedule
 - The Deno/edge + cron/Actions glue gets a mandatory agentic `/code-review` (per the
   edge-testing-policy: no Deno harness), plus a dry-run (`--dry-run`) proof per corpus.
 
-## 10. Open decisions for owner (approve or adjust)
+## 10. Decisions (locked 2026-07-19) + remaining defaults
 
-1. **Schedule host** — Supabase `pg_cron` → scheduled edge function (recommended) vs Verpex server cron (PHP, mirrors `pull.php`)? (GitHub Actions is out — project does not use it.)
-2. **Cadence + batch size** — e.g. `--max 15` every 30 min (tune to the provider limit / TB-13 status).
-3. **Priority order** — onboarding → month-1 → month-N → remainder (confirm).
-4. **Stall-alert threshold** — K consecutive zero-progress runs before alerting (e.g. K=3).
-5. **Onboarding stopgap** — run a one-off manual 6-clip batch now, or wait for the schedule?
-6. **TB-13** — provision the dedicated provider key now (unblocks volume) or accept slow trickle initially?
+1. **Schedule host — LOCKED:** Supabase `pg_cron` → scheduled edge function (`audio-warm`). Serverless, always-on, inside the project that owns the provider + bucket; no external Node runner.
+2. **Versioning — LOCKED (new decision):** build **versioned filenames NOW** so a regenerated clip actually replaces the old one across every cache layer. See §11.
+3. **Contention fix — LOCKED:** **symlink** (staging `/audio` → prod `/audio`, prod the sole puller) instead of an rsync sync — fewest ongoing failure modes (no sync process to silently drift), same-origin, always consistent. Two one-time **operator** checks: (i) host follows the symlink (`curl -I` a known object → 200), (ii) the web-deploy exclude is `--exclude 'audio'` (no slash) so `--delete` can't remove the link. See §11.
+4. **Defaults (adjust on approval):** cadence `--max 15` newly-synthesized clips per tick, every 30 min; priority onboarding → `level:0`/month-1 → month-N → remainder; stall alert at **K=3** consecutive zero-`uploaded` non-complete runs.
+5. **Operator/ops (decide at activation):** onboarding one-off stopgap batch — operator's call; **TB-13** dedicated locale-pinned provider key — ops, unblocks volume (without it, steady but slow trickle).
+
+## 11. Admin Audio panel integration + versioning — the regenerate loop (delivers EN-23b W5/W6)
+
+The EN-23 admin Audio tab already lets an admin **rate** a clip (`good`/`bad`/`re_record` → `tts_audio_review`) and **Enqueue for regeneration** (→ `tts_audio_regen_queue`, `pending`). Nothing consumes that queue today — EN-34 is the consumer, and this is EN-23b's deferred **W5/W6**.
+
+- **Two work sources per warm tick:** (1) **drain the regen queue FIRST** (a known-bad clip outranks a new one), then (2) warm new un-hosted clips in priority order. Each regen row → re-synthesize `(text, voice)` → host at **generation + 1** → upsert the hosted manifest → mark the row `done`.
+- **Generation model:** a per-key `generation` integer (default 1 = the current unversioned objects, so the ~83 already-hosted clips need no re-host). Regeneration bumps it. Object name: gen 1 → legacy `…​.pcm`; gen ≥ 2 → `…​.v<gen>.pcm`. Source of truth = a `tts_audio_hosted` manifest table (`build_key`, `generation`, `object_name`, `hosted_at`, tiers).
+- **Cache-bust is the whole point of versioning:** the client resolves a key's current generation from the manifest and folds it into **both** the server URL **and** the device/pinned cache key — so device cache, pinned store, service worker, Verpex, and the bucket all miss the stale bytes and fetch the fresh render. Without this, identical filename + skip-if-exists + stale caches would serve the old bad clip forever.
+- **Why re-synth helps:** most bad clips are transient provider defects (empty/silent/truncated `finishReason=OTHER`); a fresh render fixes them. Persistently-bad output needs a voice/param/text change (alters the key) — future scope.
+- **Panel feedback (W5):** with the manifest + a real tier, the panel shows true present/missing per tier **and the current generation**, so the admin sees the re-record land.
 
 ---
 
-**Status:** DRAFT — awaiting owner approval. On approval this becomes the build spec;
-decomposition into work packages (A1–A6, then B1–B2) follows.
+**Status:** DRAFT — **decisions locked 2026-07-19** (schedule host = pg_cron→edge; versioning = build now; contention = symlink). **AWAITING OWNER BUILD APPROVAL.** Executable plan: `plans/plan-2026-07-19-en34-incremental-audio-hosting.yaml` (gated on this approval; autonomous code/test/docs on `develop` behind inert flags, HALTs at every live/operator step).
