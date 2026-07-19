@@ -93,10 +93,14 @@ plan:
     - id: operator-apply-migration
       description: >
         OPERATOR GATE (manual, operator-gated per no-live-changes-without-approval): apply migration
-        00015 to the cloud-dev + staging Supabase DB (two-pass verify: cloud-dev-restored then local).
-        The e2e runs against LIVE Supabase, so proficiency_level MUST exist before e2e. NOT auto-run.
-      command: "OPERATOR: apply supabase/migrations/00015_profiles_proficiency_level.sql to the Supabase project (dashboard / psql -f), then confirm."
-      validation: "Column exists live: information_schema.columns has profiles.proficiency_level (operator confirms, or a probe query returns the column)."
+        00015 to the SINGLE SHARED Supabase project `gxlrmdfqcqimwwplrdgd` (PortugueseMadeira) — the
+        same live DB that staging (testfalamadeira), production (falamadeira), AND the e2e suite all
+        use. There is NO separate dev/staging DB. SAFE to apply ahead of the release because it is
+        additive/nullable/no-default/idempotent — the column is inert until the TB-1 code that
+        reads/writes it ships (same pattern as 00012, owner-accepted COORD-2). The live e2e needs the
+        column present, so this MUST land before the e2e step. NOT auto-run.
+      command: "OPERATOR: node apply-migrations.js supabase/migrations/00015_profiles_proficiency_level.sql (direct pg, or the Supavisor session pooler aws-1-eu-west-2.pooler.supabase.com:5432 if the direct IPv6 host is unreachable — see APPLIED.md); requires SUPABASE_DB_PASSWORD in .env.local. Then log it in supabase/migrations/APPLIED.md."
+      validation: "Column exists live: information_schema.columns shows public.profiles.proficiency_level on gxlrmdfqcqimwwplrdgd."
       depends_on: [migration-file]
       fatal_on_failure: true
 
@@ -125,5 +129,6 @@ plan:
       fatal_on_failure: true
 
 # NOTE: the release cut (develop->main, bump 2026.07.19.x, staging->approve->production) is a SEPARATE
-# operator-gated step, intentionally NOT in this plan (matches EN-23b). Migration 00015 must also be
-# applied to PRODUCTION Supabase before the production deploy of this release.
+# operator-gated step, intentionally NOT in this plan (matches EN-23b). Because there is ONE shared
+# Supabase DB, applying 00015 in the operator-apply-migration step ALSO covers production — no second
+# apply is needed at prod-deploy time (the column is already live and inert until this code ships).
