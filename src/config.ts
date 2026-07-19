@@ -64,6 +64,13 @@ export const config = {
      * to the next tier / the provider instead of stalling. Worst case on a double hang ≈ 2× this.
      */
     serverTierTimeoutMs: 4000,
+    /**
+     * EN-23b W3: page size for the admin Audio review panel. A scope (e.g. a whole level) can hold
+     * hundreds/thousands of clips; enriching every row does a sequential device-cache read + optional
+     * scoring + server-tier probe PER clip, so the panel loads one bounded page at a time and reveals
+     * the rest via "Load more". Bounds the sequential awaits + network probes on first load.
+     */
+    reviewPageSize: 25,
   },
 
   net: {

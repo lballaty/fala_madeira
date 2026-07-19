@@ -31,7 +31,7 @@ const tierBadge = (tier: AudioReviewItem['deviceTier'], label: string, pendingLa
 };
 
 export const AudioPanel = ({ audio }: AudioPanelProps) => {
-  const { scope, setScope, items, loading, serverTierAvailable, reload, setVerdict, enqueue, getPlaybackUrl } = audio;
+  const { scope, setScope, items, loading, loadingMore, totalCount, hasMore, loadMore, serverTierAvailable, reload, setVerdict, enqueue, getPlaybackUrl } = audio;
   const [tracks, setTracks] = useState<Track[]>([]);
   const [notesDraft, setNotesDraft] = useState<Record<string, string>>({});
   const [playingKey, setPlayingKey] = useState<string | null>(null);
@@ -126,7 +126,10 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
 
       {/* Summary */}
       <div className="flex items-center gap-3 text-xs text-ios-gray" data-testid="audio-summary">
-        <span>{items.length} clip(s)</span>
+        <span data-testid="audio-count">
+          {items.length}
+          {totalCount > items.length ? ` of ${totalCount}` : ''} clip(s)
+        </span>
         {suspiciousCount > 0 && (
           <span className="flex items-center gap-1 text-amber-600">
             <AlertTriangle className="w-3.5 h-3.5" /> {suspiciousCount} suspicious
@@ -221,6 +224,18 @@ export const AudioPanel = ({ audio }: AudioPanelProps) => {
           </li>
         ))}
       </ul>
+
+      {/* W3: reveal the next bounded page on demand instead of enriching the whole scope up front. */}
+      {hasMore && (
+        <button
+          onClick={() => void loadMore()}
+          disabled={loadingMore}
+          data-testid="audio-load-more"
+          className="w-full rounded-xl border border-line bg-card py-2 text-sm font-bold text-ios-blue disabled:opacity-40"
+        >
+          {loadingMore ? 'Loading…' : `Load more (${items.length} of ${totalCount})`}
+        </button>
+      )}
 
       {/* eslint-disable-next-line jsx-a11y/media-has-caption -- TTS preview, no captions available */}
       <audio ref={audioElRef} onEnded={() => setPlayingKey(null)} data-testid="audio-player" hidden />

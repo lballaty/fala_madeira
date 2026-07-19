@@ -7,8 +7,9 @@
 //   verdicts/queue are DB-backed, so a reload restores state. No-ops when !isAdmin (RLS is the real
 //   gate). Author: claude-en23. Created: 2026-07-17.
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { config } from '../../../config';
 import { contentRepository, SituationFilter } from '../../../content/repository';
 import { PracticalLevel } from '../../../content/schema';
 import { linesForSituation } from '../../../lib/audio-download';
@@ -21,6 +22,7 @@ import {
   AudioSignals,
   AudioVerdict,
   EnumeratedClip,
+  ReviewRow,
   TierPresence,
 } from './types';
 import { scoreClip } from './audioSignals';
@@ -43,8 +45,17 @@ interface UseAudioReviewArgs {
 export interface UseAudioReview {
   scope: AudioReviewScope;
   setScope: (scope: AudioReviewScope) => void;
+  /** The enriched rows visible so far (one bounded page at a time — see W3 pagination). */
   items: AudioReviewItem[];
   loading: boolean;
+  /** True while a "load more" page is being enriched (distinct from the initial `loading`). */
+  loadingMore: boolean;
+  /** Total clips enumerated in the current scope (items.length ≤ totalCount). */
+  totalCount: number;
+  /** More clips remain beyond the currently-visible page. */
+  hasMore: boolean;
+  /** Enrich + append the next page of clips. No-op when nothing remains. */
+  loadMore: () => Promise<void>;
   serverTierAvailable: boolean;
   reload: () => void;
   setVerdict: (clip: EnumeratedClip, verdict: AudioVerdict, notes?: string | null) => Promise<void>;
@@ -88,14 +99,78 @@ const enumerateClips = async (scope: AudioReviewScope): Promise<EnumeratedClip[]
   return clips;
 };
 
+/** Map a persisted review row to the panel's AudioSignals shape (empty when there is no review). */
+const signalsFromReview = (review?: ReviewRow): AudioSignals =>
+  review
+    ? {
+        bytes: review.signal_bytes ?? undefined,
+        contentType: review.signal_content_type ?? undefined,
+        durationMs: review.signal_duration_ms ?? undefined,
+        rmsDbfs: review.signal_rms_dbfs ?? undefined,
+        peakDbfs: review.signal_peak_dbfs ?? undefined,
+        silentRatio: review.signal_silent_ratio ?? undefined,
+        silent: review.signal_silent,
+        deadAirMs: review.signal_dead_air_ms ?? undefined,
+        suspicious: review.signal_suspicious,
+        scoredAt: review.signal_scored_at ?? undefined,
+      }
+    : {};
+
 export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAudioReviewArgs): UseAudioReview => {
   const [scope, setScope] = useState<AudioReviewScope>({ level: 0 as PracticalLevel });
   const [items, setItems] = useState<AudioReviewItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
   const [reloadTick, setReloadTick] = useState(0);
   const serverTierAvailable = useMemo(() => isServerTierAvailable(), []);
 
+  // Enumerated clips + batch-fetched review/queue maps for the CURRENT scope, kept in refs so
+  // "load more" can enrich the next page without re-enumerating or re-querying the DB.
+  const clipsRef = useRef<EnumeratedClip[]>([]);
+  const reviewsRef = useRef<Record<string, ReviewRow>>({});
+  const queuedRef = useRef<Set<string>>(new Set());
+  const correlationRef = useRef<string>('');
+
   const reload = useCallback(() => setReloadTick((t) => t + 1), []);
+
+  // Enrich a slice of already-enumerated clips into panel rows: read the device cache (+ score a
+  // cached clip that lacks persisted signals) and probe the server tier. This is the EXPENSIVE,
+  // per-clip work — W3 keeps it bounded to one page at a time (never the whole scope at once).
+  const enrichClips = useCallback(
+    async (slice: EnumeratedClip[]): Promise<AudioReviewItem[]> => {
+      const rows: AudioReviewItem[] = [];
+      for (const clip of slice) {
+        const review = reviewsRef.current[clip.buildKey];
+        let deviceTier: TierPresence = 'missing';
+        let signals = signalsFromReview(review);
+
+        const cached = await audioCache.get(clip.buildKey);
+        if (cached) {
+          deviceTier = 'present';
+          if (!review || review.signal_scored_at == null) {
+            signals = await scoreClip(new Blob([cached]), { scoredAt: new Date().toISOString() });
+          }
+        }
+
+        const serverTier = serverTierAvailable
+          ? await checkServerPresence(clip.buildKey, correlationRef.current)
+          : 'unknown';
+
+        rows.push({
+          ...clip,
+          verdict: review?.verdict ?? 'unreviewed',
+          notes: review?.notes ?? null,
+          deviceTier,
+          serverTier,
+          signals,
+          queued: queuedRef.current.has(clip.buildKey),
+        });
+      }
+      return rows;
+    },
+    [serverTierAvailable],
+  );
 
   useEffect(() => {
     // No-op for non-admins (items stays at its empty initial value; this hook only ever renders
@@ -118,51 +193,20 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
         if (isRepoError(queueResult)) showToast(queueResult.message, 'error');
         const queuedKeys = new Set((isRepoError(queueResult) ? [] : queueResult.data).map((r) => r.build_key));
 
-        // Build rows; probe device cache + score cached clips; probe server tier when available.
-        const rows: AudioReviewItem[] = [];
-        for (const clip of clips) {
-          const review = reviews[clip.buildKey];
-          let deviceTier: TierPresence = 'missing';
-          let signals: AudioSignals = review
-            ? {
-                bytes: review.signal_bytes ?? undefined,
-                contentType: review.signal_content_type ?? undefined,
-                durationMs: review.signal_duration_ms ?? undefined,
-                rmsDbfs: review.signal_rms_dbfs ?? undefined,
-                peakDbfs: review.signal_peak_dbfs ?? undefined,
-                silentRatio: review.signal_silent_ratio ?? undefined,
-                silent: review.signal_silent,
-                deadAirMs: review.signal_dead_air_ms ?? undefined,
-                suspicious: review.signal_suspicious,
-                scoredAt: review.signal_scored_at ?? undefined,
-              }
-            : {};
+        clipsRef.current = clips;
+        reviewsRef.current = reviews;
+        queuedRef.current = queuedKeys;
+        correlationRef.current = correlationId;
 
-          const cached = await audioCache.get(clip.buildKey);
-          if (cached) {
-            deviceTier = 'present';
-            // Score from the device cache if we don't already have persisted signals.
-            if (!review || review.signal_scored_at == null) {
-              signals = await scoreClip(new Blob([cached]), { scoredAt: new Date().toISOString() });
-            }
-          }
+        // W3: enrich only the FIRST page. A scope can hold hundreds/thousands of clips; enriching
+        // every one does a sequential cache read + optional scoring + server probe PER clip, which
+        // is exactly the "loads everything at once" defect. The rest reveal via loadMore().
+        const firstPage = await enrichClips(clips.slice(0, config.audio.reviewPageSize));
 
-          const serverTier = serverTierAvailable
-            ? await checkServerPresence(clip.buildKey, correlationId)
-            : 'unknown';
-
-          rows.push({
-            ...clip,
-            verdict: review?.verdict ?? 'unreviewed',
-            notes: review?.notes ?? null,
-            deviceTier,
-            serverTier,
-            signals,
-            queued: queuedKeys.has(clip.buildKey),
-          });
+        if (!cancelled) {
+          setItems(firstPage);
+          setTotalCount(clips.length);
         }
-
-        if (!cancelled) setItems(rows);
       } catch (error) {
         logger.error('EN23_REVIEW_LOAD_FAILED', 'failed to build the audio review list', {
           category: 'DATA_PROCESSING',
@@ -178,7 +222,22 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
     return () => {
       cancelled = true;
     };
-  }, [isAdmin, scope, supabase, showToast, serverTierAvailable, reloadTick]);
+  }, [isAdmin, scope, supabase, showToast, serverTierAvailable, reloadTick, enrichClips]);
+
+  const loadMore = useCallback(async () => {
+    const from = items.length;
+    const to = Math.min(from + config.audio.reviewPageSize, clipsRef.current.length);
+    if (to <= from) return;
+    setLoadingMore(true);
+    try {
+      const next = await enrichClips(clipsRef.current.slice(from, to));
+      setItems((prev) => [...prev, ...next]);
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [items.length, enrichClips]);
+
+  const hasMore = items.length < totalCount;
 
   const applyLocal = useCallback((buildKey: string, patch: Partial<AudioReviewItem>) => {
     setItems((prev) => prev.map((it) => (it.buildKey === buildKey ? { ...it, ...patch } : it)));
@@ -255,5 +314,19 @@ export const useAudioReview = ({ supabase, isAdmin, actorId, showToast }: UseAud
     [showToast],
   );
 
-  return { scope, setScope, items, loading, serverTierAvailable, reload, setVerdict, enqueue, getPlaybackUrl };
+  return {
+    scope,
+    setScope,
+    items,
+    loading,
+    loadingMore,
+    totalCount,
+    hasMore,
+    loadMore,
+    serverTierAvailable,
+    reload,
+    setVerdict,
+    enqueue,
+    getPlaybackUrl,
+  };
 };
