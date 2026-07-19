@@ -37,6 +37,7 @@ import { usePractice } from './features/practice/usePractice';
 import { PracticeQuiz } from './features/practice/PracticeQuiz';
 import { usePathSelection } from './paths';
 import { usePathContext } from './features/session/usePathContext';
+import type { PracticalLevel } from './content/schema';
 import { useOnboarding } from './features/onboarding';
 import { navigateToCapability } from './features/guidance/navigateToCapability';
 
@@ -187,7 +188,14 @@ export default function App() {
   // First-run onboarding gate (CONTENT-ARCHITECTURE §5). Light + always mounted so we know whether
   // to show the flow before the main shell; the flow itself drives pathSelection + consent.
   const onboarding = useOnboarding({ supabase, user, profile, setProfile });
-  const { context: pathContext, isReady: isPathContextReady } = usePathContext({ supabase, user });
+  // TB-1a/R9: thread the learner's REAL placement into the path layer (was hard-coded 1 via the
+  // usePathContext fallback). null/unknown → 0 (D1/§5.4). This alone makes Adaptive Guided honor
+  // placement (§4.2); Structured/Goal Track consume it in their pure next() (§4.1/§4.3).
+  const { context: pathContext, isReady: isPathContextReady } = usePathContext({
+    supabase,
+    user,
+    placementLevel: (profile?.proficiency_level ?? 0) as PracticalLevel,
+  });
   const pathNextAction = pathSelection.activePath.next(pathContext, pathSelection.selection);
 
   // Act on the path's recommended next step (Home CTA). Adaptive Guided opens the daily-session

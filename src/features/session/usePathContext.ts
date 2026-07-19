@@ -93,7 +93,9 @@ export const usePathContext = ({ supabase, user, placementLevel }: PathContextDe
       situations,
       tracks,
       completedSituationIds: completedIds,
-      placementLevel: placementLevel ?? 1,
+      // TB-1a/D1 (§5.4): null/unknown placement → 0 (complete beginner) — the honest,
+      // non-skipping default. Previously hard-coded 1, which skipped unplaced learners ahead.
+      placementLevel: placementLevel ?? 0,
       mastery,
       dimensionSummary: dimensionSummary(mastery, now),
       now,
