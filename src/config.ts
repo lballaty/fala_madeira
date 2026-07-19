@@ -58,6 +58,17 @@ export const config = {
     verpexBase: (import.meta.env?.VITE_AUDIO_VERPEX_BASE as string | undefined) || '/audio',
     supabaseAudioBucket: 'tts-audio',
     /**
+     * EN-34 versioned regeneration. When true, the client reads the small hosted-generation
+     * manifest (public.tts_audio_hosted rows with generation ≥ 2 — the clips an admin regenerated)
+     * and folds the CURRENT generation into BOTH the server object URL and the device/pinned cache
+     * key, so a re-recorded clip busts every cache layer. OFF by default so the feature is fully
+     * INERT until the operator has applied the manifest migration + is ready to activate: with it
+     * off, resolveGeneration() returns 1 for every clip WITHOUT any manifest query, and playback is
+     * byte-identical to pre-EN-34 (legacy unversioned names). Same optional-chain env guard as
+     * verpexBase so the module stays import-safe in Playwright's Node collection context.
+     */
+    generationManifestEnabled: (import.meta.env?.VITE_AUDIO_GENERATION_MANIFEST as string | undefined) === 'true',
+    /**
      * Per-tier timeout (ms) for a server-audio GET (Verpex, then Supabase). Deliberately SHORT and
      * separate from net.requestTimeoutMs (15s, tuned for slow AI generation): a hosted static PCM
      * file returns in well under this, so a slow/hanging tier aborts fast and playback falls through

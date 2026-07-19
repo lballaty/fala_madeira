@@ -59,3 +59,20 @@ export const keyToServerPath = (key: string, generation = 1): string => {
   const gen = Math.floor(Number(generation) || 1);
   return gen >= 2 ? `${base}.v${gen}.pcm` : `${base}.pcm`;
 };
+
+/**
+ * EN-34 device/pinned cache-key salt. The device LRU cache and the durable pinned store are keyed
+ * by the raw cache key (`tts:<provider>:<voice>:<hash>`); folding the generation into that key is
+ * what busts the LOCAL layers when a clip is regenerated:
+ *   - generation 1 (default) → the UNSALTED legacy key, so clips a user already cached at
+ *     generation 1 keep hitting (no forced re-download of unchanged audio).
+ *   - generation ≥ 2         → `<key>#v<generation>`, a distinct device key, so a regenerated clip
+ *     MISSES the device cache/pinned store and is re-fetched fresh.
+ * Kept in this pure module (unit-tested) so the browser client and offline downloader salt
+ * identically. The `#v<gen>` suffix keeps the `tts:` prefix intact, so prefix-scoped clear() /
+ * clearPinned(prefix) operations are unaffected. Generation is floored to an integer.
+ */
+export const deviceCacheKey = (key: string, generation = 1): string => {
+  const gen = Math.floor(Number(generation) || 1);
+  return gen >= 2 ? `${key}#v${gen}` : key;
+};

@@ -7,7 +7,7 @@
 // Created: 2026-07-15
 
 import { describe, it, expect } from 'vitest';
-import { buildKey, hashText, keyToServerPath, KEY_PREFIX } from '../audioKey';
+import { buildKey, deviceCacheKey, hashText, keyToServerPath, KEY_PREFIX } from '../audioKey';
 
 describe('audioKey.hashText', () => {
   it('is deterministic and an 8-char lowercase hex digest', () => {
@@ -89,5 +89,24 @@ describe('audioKey.keyToServerPath', () => {
         expect(p).toMatch(/^[a-z0-9_]+\.v[0-9]+\.pcm$/i);
       }
     });
+  });
+});
+
+describe('audioKey.deviceCacheKey (EN-34 local cache-bust)', () => {
+  const key = buildKey('default', 'teacher', 'Bom dia!');
+
+  it('generation 1 (and the default) keeps the UNSALTED legacy device key', () => {
+    expect(deviceCacheKey(key, 1)).toBe(key);
+    expect(deviceCacheKey(key)).toBe(key);
+    expect(deviceCacheKey(key, 0)).toBe(key); // < 2 → legacy
+  });
+
+  it('generation ≥ 2 salts with #v<gen> so a regenerated clip uses a distinct device key', () => {
+    expect(deviceCacheKey(key, 2)).toBe(`${key}#v2`);
+    expect(deviceCacheKey(key, 2)).not.toBe(deviceCacheKey(key, 3));
+    expect(deviceCacheKey(key, 2)).not.toBe(deviceCacheKey(key, 1));
+    // the tts: prefix is preserved, so prefix-scoped clear()/clearPinned(prefix) still match
+    expect(deviceCacheKey(key, 2).startsWith(KEY_PREFIX)).toBe(true);
+    expect(deviceCacheKey(key, 5.9 as unknown as number)).toBe(`${key}#v5`); // floored
   });
 });
