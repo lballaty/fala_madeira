@@ -11,7 +11,7 @@ import { readKvByPrefix } from '../support/storage';
 test.describe('settings local controls', () => {
   test('theme, path type, and offline-audio controls respond and persist locally', async ({ page, coverage }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     await page.getByRole('button', { name: 'Dark' }).click();
     await expect(page.getByRole('button', { name: 'Dark' })).toHaveAttribute('aria-pressed', 'true');

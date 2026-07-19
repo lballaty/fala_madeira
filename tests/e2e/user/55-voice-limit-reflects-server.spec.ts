@@ -22,8 +22,8 @@ test.describe('TB-8 voice limit reflects the configured server value', () => {
     expect(serverLimit, 'global_settings.voice_limit must exist').not.toBeNull();
 
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
 
     const shown = page.getByTestId('voice-limit-value');
     await expect(shown).toBeVisible();

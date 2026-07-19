@@ -18,8 +18,10 @@ test.describe('home navigation surfaces', () => {
     await page.getByRole('button', { name: 'Close' }).click();
     await expect(page.getByRole('heading', { name: 'Unlock Level' })).toHaveCount(0);
 
-    await page.getByRole('button', { name: 'Settings' }).click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    // NAV-1 introduced other "Settings"-named controls on Home (the level deep-link + a header gear),
+    // so scope to the nav tab and pin the view heading to the h1 to stay unambiguous.
+    await page.getByRole('navigation').getByTestId('tab-settings').click();
+    await expect(page.getByRole('heading', { name: 'Settings', level: 1 })).toBeVisible();
     coverage.touch('home.settings.open', 'outcome-asserted');
 
     await page.getByRole('button', { name: 'Home' }).first().click();

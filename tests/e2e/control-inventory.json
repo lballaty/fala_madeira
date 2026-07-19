@@ -153,7 +153,7 @@
     {
       "screen": "nav",
       "id": "nav.profile",
-      "selector": { "role": "button", "name": "Profile" },
+      "selector": { "role": "button", "name": "Settings" },
       "covered_by": [
         { "spec": "tests/e2e/user/28-mobile-home-profile-smoke.spec.ts", "depth": "outcome-asserted" }
       ]
@@ -652,6 +652,14 @@
       ]
     },
     {
+      "screen": "home",
+      "id": "home.level.deeplink",
+      "selector": { "css": "[data-testid=\"home-level-deeplink\"]" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/65-home-level-deeplink.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
       "screen": "tutor",
       "id": "tutor.empty.just_chat",
       "selector": { "role": "button", "name": "Just Want to Chat" },
@@ -1126,6 +1134,14 @@
       ]
     },
     {
+      "screen": "home",
+      "id": "home.path.start_cta",
+      "selector": { "css": "[data-testid=\"home-path-cta\"]" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/67-proficiency-behavior.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
       "screen": "session",
       "id": "session.segment.skip",
       "selector": { "role": "button", "name": "Skip" },
@@ -1555,6 +1571,14 @@
       "selector": {"text": "App Guide"},
       "covered_by": [
         { "spec": "tests/e2e/user/58-help-nav-entry.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
+      "screen": "nav",
+      "id": "nav.about",
+      "selector": {"css": "[data-testid=\"nav-about\"]"},
+      "covered_by": [
+        { "spec": "tests/e2e/user/66-sidebar-about.spec.ts", "depth": "outcome-asserted" }
       ]
     },
     {

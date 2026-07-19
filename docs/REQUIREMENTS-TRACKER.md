@@ -4,8 +4,8 @@
 **Description:** Requirements register for the full FalaMadeira product. Each requirement maps to its source (design target section), the plan step(s) that deliver it, and current status. Full-product scope (not MVP) per the 2026-07-09 directive. Keep in sync with docs/PRODUCT-DESIGN-TARGET.md and plans/plan-2026-07-08-production-readiness.yaml.
 **Author:** Libor Ballaty
 **Created:** 2026-07-09
-**Last Updated:** 2026-07-09
-**Last Updated By:** design-enhancement session
+**Last Updated:** 2026-07-19
+**Last Updated By:** claude-reconcile (header refresh; body already current through 2026-07-14)
 
 Status legend: ✅ done · 🔵 in plan (not started) · 🟡 partial · ⬜ needs plan step · ❓ decision needed
 

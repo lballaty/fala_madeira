@@ -131,7 +131,7 @@ test.describe('TB-1 proficiency level (placement → DB → Home → Settings, p
     expect(paywallBefore).toMatch(/Enter your access key to unlock Month \d+/i);
 
     // --- 3. Settings → "Your level": change to the level-1 "A few words" option. --------------
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
     const proficiencyCard = page.getByTestId('proficiency-card');
     await expect(proficiencyCard.getByText('Your level', { exact: true })).toBeVisible();
     // Level 2 is the current selection after onboarding placement.

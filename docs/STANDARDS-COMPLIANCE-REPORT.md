@@ -4,14 +4,14 @@
 **Description:** Item-by-item walk of the `docs/ENGINEERING-STANDARDS.md` §12 compliance checklist (48 items) against the current `src/` + `supabase/` codebase. Each item carries a status (met / partial / not-yet / advisory) and a one-line evidence pointer (file or gate). Produced by the recurring `preflight-and-standards` plan step; re-run alongside `scripts/preflight.sh`. Truthful about documented seams and deferrals — it does not assert coverage the code lacks.
 **Author:** Libor Ballaty
 **Created:** 2026-07-10
-**Last Updated:** 2026-07-10
-**Last Updated By:** preflight-and-standards step
+**Last Updated:** 2026-07-19
+**Last Updated By:** claude-reconcile (reconciliation pass — refreshed test counts + retracted the stale "no e2e suite" claim; item 44 now met)
 
 ---
 
 ## Method
 
-- **Automated gate:** `scripts/preflight.sh` runs eslint → tsc → vitest (154 tests) → vite build → npm audit → `scripts/check-standards.sh`. As of this report all hard stages are **green** and `bash scripts/preflight.sh` exits 0.
+- **Automated gate:** `scripts/preflight.sh` runs eslint → tsc → vitest (616 tests) → vite build → e2e coverage contract → npm audit → `scripts/check-standards.sh` → CORS/help-drift/DB-version/observability contracts. As of this report all hard stages are **green** and `bash scripts/preflight.sh` exits 0. The full Playwright regression (`npm run test:e2e`, `CI=1`) is a separate live gate — latest run 138/141 (3 skipped, 0 failed).
 - **Mechanical enforcement:** `scripts/check-standards.sh` grep-enforces the subset of §12 that is grep-decidable (console gate, key material, `dangerouslySetInnerHTML`, localhost fallbacks, empty catches, unlock literal). All hard checks pass.
 - **Security gate:** `scripts/verify-security.mjs` (`npm run verify:security`) covers the live-network security items (bundle secret scan, anon RLS probes, edge-fn auth). It is a separate live-Supabase gate, invoked from preflight only with `--with-security`.
 - **Manual review:** the remaining judgment items (a11y, retry semantics, offline behavior, e2e) are assessed by inspection below. Where a claim needs a running browser or live DB it is marked as such rather than asserted from source.
@@ -20,7 +20,7 @@
 
 ## Overall posture
 
-Strong and improving. The refactor the standards doc describes as pending (`src/features/*` slices, `src/platform/*` adapters, `src/content/*` data model, `src/paths/*` policies, `src/lib/logger.ts`, `src/config.ts`) is **already in place** — the "pre-refactor" current-state note in ENGINEERING-STANDARDS §0 is now stale. All four hard automated gates (lint, typecheck, tests, build) and the standards grep-gate pass clean; there are **no hard violations**. The material open items are **testing depth** (no Playwright e2e journeys yet; failure-path unit coverage is partial) and **runtime-only a11y verification** (source-level a11y is disciplined but WCAG contrast/keyboard/reflow need a live audit). Two deliberate, documented seams remain: TEXT (not UUID-FK) `lesson_id`/`user_id` columns for static-string lesson ids (DB design §, migration 00008), and the edge-fn envelope keying on `requestId` rather than a separate `correlation_id`. npm audit shows one **low**-severity, dev-server-only, Windows-only transitive advisory (esbuild) — below the ship-block floor, correctly WARN not FAIL.
+Strong and improving. The refactor the standards doc describes as pending (`src/features/*` slices, `src/platform/*` adapters, `src/content/*` data model, `src/paths/*` policies, `src/lib/logger.ts`, `src/config.ts`) is **already in place** — the "pre-refactor" current-state note in ENGINEERING-STANDARDS §0 is now stale. All four hard automated gates (lint, typecheck, tests, build) and the standards grep-gate pass clean; there are **no hard violations**. The material open items are **testing depth** (a Playwright e2e suite with backend-evidence journeys now exists — 101 spec files, 138/141 (3 skipped, 0 failed) in the latest regression; failure-path unit coverage is still partial) and **runtime-only a11y verification** (source-level a11y is disciplined but WCAG contrast/keyboard/reflow need a live audit). Two deliberate, documented seams remain: TEXT (not UUID-FK) `lesson_id`/`user_id` columns for static-string lesson ids (DB design §, migration 00008), and the edge-fn envelope keying on `requestId` rather than a separate `correlation_id`. npm audit shows one **low**-severity, dev-server-only, Windows-only transitive advisory (esbuild) — below the ship-block floor, correctly WARN not FAIL.
 
 ---
 
@@ -79,7 +79,7 @@ Strong and improving. The refactor the standards doc describes as pending (`src/
 
 ## Config (3)
 
-36. **`src/config.ts` owns tunables; no magic literals — met.** `src/config.ts` (**369 lines**) centralizes timeouts/retries/voice maps/cache limits. A grep for stray behavioral literals in features is not automated (advisory sub-check).
+36. **`src/config.ts` owns tunables; no magic literals — met.** `src/config.ts` (**432 lines**) centralizes timeouts/retries/voice maps/cache limits. A grep for stray behavioral literals in features is not automated (advisory sub-check).
 37. **Feature flags via one helper — partial.** Config holds flags; a single-helper guarantee (no ad-hoc booleans anywhere) is manual.
 38. **No secret-like unlock constant in code — met.** `check-standards.sh` HARD check: `MADEIRA2026` absent from `src/` (moved to `global_settings` per migration 00005; `verify-security.mjs` advisory notes its anon-readability by design).
 
@@ -92,8 +92,8 @@ Strong and improving. The refactor the standards doc describes as pending (`src/
 
 ## Testing (3)
 
-43. **New pure-logic modules have vitest tests — partial.** 14 test files / **154 tests** cover schema, srs, coach, paths, retry, validation, search, scenario/drill/prep, Quiz, LegalPage. Some pure-logic modules (e.g. parts of `sync-queue`, `audio-download`) lack dedicated tests.
-44. **Critical journeys have Playwright e2e asserting backend evidence — not-yet.** No `playwright.config.*` / e2e suite present. This is the largest open testing gap; the standard's backend-evidence e2e requirement is unmet.
+43. **New pure-logic modules have vitest tests — partial.** 87 test files / **616 tests** cover schema, srs, coach, paths, retry, validation, search, scenario/drill/prep, Quiz, LegalPage, guidance, admin audio, and edge pure-cores. Some pure-logic modules (e.g. parts of `sync-queue`, `audio-download`) still lack dedicated tests.
+44. **Critical journeys have Playwright e2e asserting backend evidence — met.** `playwright.config.ts` + a 101-spec suite under `tests/e2e/` (75 user + 14 admin + shared) assert backend evidence (Supabase rows/log events, captured correlation/session IDs), run via `scripts/run-e2e-regression.mjs` (`CI=1`). Latest regression 138/141 (3 skipped, 0 failed). _(This item was stale in the 2026-07-10 report, which predated the suite; corrected 2026-07-19.)_
 45. **Failure paths (offline, fallback chain, retry exhaustion, checksum mismatch) tested — partial.** `retry.test.ts` covers retry; offline/fallback-chain/checksum-mismatch failure-path tests are not yet present.
 
 ## Git & release (4)
@@ -119,7 +119,7 @@ Strong and improving. The refactor the standards doc describes as pending (`src/
 
 ## Not-yet / most material gaps
 
-- **Playwright e2e with backend evidence (item 44) — not-yet.** No e2e suite exists.
+- **Playwright e2e with backend evidence (item 44) — met.** 101-spec suite present; latest regression 138/141 (3 skipped, 0 failed). No longer a gap.
 - **Failure-path tests (item 45) — partial.** Offline / fallback-chain / checksum-mismatch tests missing.
 - **Runtime a11y verification (items 30, 33) — not-yet.** Needs a live audit.
 - **Exhaustive retry-coverage + PII-redaction audits (items 24, 22) — partial.** Automated only for Gemini / not field-by-field.

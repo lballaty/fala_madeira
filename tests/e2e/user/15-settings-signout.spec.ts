@@ -16,8 +16,8 @@ test.describe('settings sign-out flow', () => {
     const { context, page } = await createThrowawayUserContext(browser);
     try {
       await landOnHome(page);
-      await page.getByRole('button', { name: 'Profile' }).first().click();
-      await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+      await page.getByRole('button', { name: 'Settings' }).first().click();
+      await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
 
       // Scope to the Profile page's Sign Out — the sidebar now also has one (EN-9), so the bare
       // role+name matches two elements.
@@ -27,7 +27,7 @@ test.describe('settings sign-out flow', () => {
       await expect(page.getByRole('button', { name: 'Sign Up' })).toBeVisible();
       await expect(page.getByRole('heading', { name: 'FalaMadeira' })).toBeVisible();
       await expect(page.getByRole('heading', { name: /Olá,/i })).toHaveCount(0);
-      await expect(page.getByRole('button', { name: 'Profile' })).toHaveCount(0);
+      await expect(page.getByRole('button', { name: 'Settings' })).toHaveCount(0);
     } finally {
       await context.close();
     }

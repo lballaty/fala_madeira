@@ -9,7 +9,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('settings support validation', () => {
   test('Support modal validates blank fields, closes cleanly, and allows Send Logs cancel', async ({ page }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     await page.getByRole('button', { name: 'Support & Feedback' }).click();
     const supportDialog = page.getByRole('dialog', { name: 'Support & Feedback' });

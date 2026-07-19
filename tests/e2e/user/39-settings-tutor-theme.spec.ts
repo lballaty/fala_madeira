@@ -39,7 +39,7 @@ test.describe('settings tutor + theme coverage', () => {
     const targetLabel = tutorLabels[targetId];
 
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     if (originalTutorId === targetId) {
       // Move off Maria first (to João) so switching to Maria below is a genuine value change.
@@ -92,7 +92,7 @@ test.describe('settings tutor + theme coverage', () => {
       page.evaluate(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
 
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     // Capture the starting preference so we can restore it and avoid cross-test pollution.
     const originalPreference = await readStoredPreference();

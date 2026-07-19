@@ -55,6 +55,14 @@ test.describe('admin audio panel (EN-23 / EN-23b)', () => {
     }
   });
 
+  // c2 (W5, Refinement A) — the "gen N" indicator is asserted at the DURABLE UNIT layer
+  // (src/features/admin/audio/__tests__/AudioPanel.generation.test.tsx), NOT here. The manifest read
+  // (public.tts_audio_hosted) is served through the app's PWA service worker, which Playwright's
+  // page.route CANNOT intercept (service-worker fetches bypass page-level routing unless the context
+  // blocks service workers). A browser-level manifest stub therefore never drives a deterministic
+  // gen-2 badge, so the e2e assertion was removed in favour of the AudioPanel render test + the
+  // useAudioReview hook test (generation exposed + threaded into the presence probe).
+
   test('plays any clip via synthesis and shows its size (W2 + W4)', async ({ adminPage }) => {
     await stubServerTierMisses(adminPage);
     // Deterministic W2: intercept the TTS edge call so play never depends on the live provider/quota

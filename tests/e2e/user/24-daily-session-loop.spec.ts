@@ -11,7 +11,7 @@ import { readKvByPrefix } from '../support/storage';
 test.describe('daily session loop', () => {
   test('adaptive-guided path opens the daily session and reaches recap', async ({ page, coverage }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     const learningPathCard = page
       .locator('div')

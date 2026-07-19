@@ -19,8 +19,8 @@ test.describe('mobile viewport smoke', () => {
     await expect(page.getByRole('heading', { name: /^AI / })).toBeVisible();
     coverage.touch('nav.tutor', 'outcome-asserted');
 
-    await page.getByRole('button', { name: 'Profile' }).first().click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
     coverage.touch('nav.profile', 'outcome-asserted');
 
     await page.getByRole('button', { name: 'Home' }).first().click();

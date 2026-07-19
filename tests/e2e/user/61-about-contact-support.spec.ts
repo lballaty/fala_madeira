@@ -10,7 +10,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('about modal contact-support handoff', () => {
   test('Contact Support inside About opens the Support & Feedback modal', async ({ page, coverage }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
     await page.getByRole('button', { name: 'About', exact: true }).click();
 
     const aboutDialog = page.getByRole('dialog', { name: /About FalaMadeira/ });

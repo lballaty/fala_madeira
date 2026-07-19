@@ -11,7 +11,7 @@
 
 ## 1. Status
 
-`APPROVED — BUILD (partial-block sequencing)` — owner approved 2026-07-17 with all §10 open items decided (see §10). Coding may proceed on the **EN-8-independent slice** per the sequencing decision below; the server-tier presence check + `pregen --from-queue` consumer remain gated until EN-8 lands on `develop` (see §9).
+`SHIPPED (MVP)` — merged to develop `b09d31f`, migration 00014 live. The server-tier presence check was later corrected under **EN-23b** (W1). _History:_ `APPROVED — BUILD (partial-block sequencing)`, owner approved 2026-07-17 with all §10 open items decided (see §10); the EN-8-independent slice built first, the server-tier presence check + `pregen --from-queue` consumer gated until EN-8 (see §9).
 
 **★ Sequencing decision (owner 2026-07-17): build the EN-8-independent parts now on `develop`.** EN-8 is not yet on `develop` and its branch (`feat/en8-server-hosted-audio`) is being actively edited by another agent (`claude-en8-audiosave`, device-audio persistence redesign). Rather than branch off a moving base or wait, EN-23 builds the parts that do **not** depend on EN-8 directly on `develop`: the DB migration + tables, clip enumeration, verdict/enqueue reducers + persistence, automated signal derivation (incl. silence scoring), the admin **Audio** tab, and device-cache tier presence. The **server (hosted) tier-presence check** and the `pregen-audio.mjs --from-queue` consumer are **stubbed behind the EN-8 audio-config seam** (feature-detected: shown as "server tier unavailable — pending EN-8" until the config + hosted base exist on `develop`) and wired the moment EN-8 lands. No collision with the active EN-8 agent (disjoint files; EN-23 owns the new admin surface + migration).
 

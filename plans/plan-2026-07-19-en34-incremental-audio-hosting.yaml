@@ -33,6 +33,11 @@ plan:
     - "Admin panel shows true per-tier presence + current generation (W5); enqueue-for-regeneration is fulfilled end-to-end (W6)."
     - "Pure cores unit-tested (vitest); edge/Deno glue gets agentic /code-review per the edge-testing policy; admin/13 e2e extended; full CI=1 regression + ship dry-run green."
     - "No product regression: hosting is additive; with everything inert the app behaves exactly as today (provider fallback)."
+    - "EN-32 ABSORBED: `--corpus onboarding` + the 6-clip corpus capture are built here once (not in a parallel EN-32 track); the manual stopgap = running that entry (operator-gated)."
+    - "Refinement A: panel presence (W5) + admin preview resolve the CURRENT generation via the manifest, never a fixed legacy name."
+    - "Refinement B: the warm fn and the panel enumerate the corpus from ONE contract (parity with linesForSituation verified) — no drift between shown vs hosted."
+    - "Refinement C: the panel re-scores a regenerated clip on the admin's next preview (scoreClip is browser-only; the Deno warm fn cannot)."
+    - "EN-31 (audio-fail notification) is PAIRED but tracked separately (docs/EN-31-...-REQUIREMENTS.md) with its own owner approval — not built by this plan."
 
   steps:
     # ---------- setup ----------
@@ -41,6 +46,19 @@ plan:
       command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira worktree add ../fala_madeira-en34 -b feat/en34-incremental-audio-hosting develop
       validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 rev-parse --abbrev-ref HEAD | grep -qx feat/en34-incremental-audio-hosting
       depends_on: []
+      fatal_on_failure: true
+
+    # ---------- EN-32 ABSORBED — onboarding corpus (autonomous build; manual upload operator-gated) ----------
+    - id: a-onboarding-corpus
+      description: >
+        EN-32 (absorbed): capture the exact 6 onboarding (text, voiceType) pairs (firstWinPhrase is known;
+        the other 5 default_teacher clips are captured empirically from the onboarding flow/preload) and
+        add a `--corpus onboarding` mode to scripts/pregen-audio.mjs fed those texts, keyed by buildKey so
+        pre-gen/live/offline/server tiers agree. This is the SINGLE build of --corpus onboarding (no parallel
+        EN-32 track). The one-off manual 6-clip upload is then just running this entry (operator-gated, op-*).
+      command: "IMPLEMENT per §7 + tracker EN-32 P1: capture the 6 pairs; add --corpus onboarding to pregen-audio.mjs (+ vitest on the corpus selection); keep --dry-run. Do NOT run the live upload here."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-en34 && node scripts/pregen-audio.mjs --corpus onboarding --dry-run
+      depends_on: [worktree-setup]
       fatal_on_failure: true
 
     # ---------- PHASE V — versioning core (autonomous, inert) ----------
@@ -171,6 +189,19 @@ plan:
       fatal_on_failure: true
 
     # ---------- PHASE ACTIVATION — OPERATOR-GATED, executor HALTS here ----------
+    - id: op-onboarding-stopgap-upload
+      description: >
+        EN-32 immediate stopgap (independent of the scheduler): OPERATOR runs
+        `node scripts/pregen-audio.mjs --corpus onboarding` to synth+upload the 6 onboarding clips to
+        the tts-audio bucket (idempotent, throttle-tolerant), after reconciling admin creds
+        (.admin-temp-credentials.txt / E2E_ADMIN_*). Then re-verify onboarding on staging (tier-1/2 hit,
+        no 404/400/503 chain). NOTE: the bucket is SHARED prod+staging — this makes the clips live for prod too.
+      command: "HALT — operator runs the live 6-clip upload + staging re-verify. Do NOT auto-run (bucket write hits shared prod)."
+      validation: "OPERATOR confirms the 6 onboarding clips serve from Verpex/bucket and the onboarding console chain is gone."
+      depends_on: [a-onboarding-corpus]
+      fatal_on_failure: false
+      operator_gated: true
+
     - id: op-apply-migrations
       description: "OPERATOR: apply the tts_audio_hosted + audio_warm_cron migrations to the SHARED Supabase project (staging-first mindset — the bucket is shared prod+staging). Verify live (scripts/verify-migration-00012.mjs pattern)."
       command: "HALT — operator runs `node apply-migrations.js <file>` for each new migration, then verifies live. Do NOT auto-apply."

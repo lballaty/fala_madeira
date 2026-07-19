@@ -45,8 +45,8 @@ test.describe('@clean error-guard smoke', () => {
     await expect(page.getByRole('heading', { name: /^AI / })).toBeVisible();
 
     // Profile / settings
-    await page.getByRole('button', { name: 'Profile' }).first().click();
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
 
     guard.assertClean('Home → Learning(+audio) → Practice → Tutor → Profile');
   });

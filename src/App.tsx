@@ -10,7 +10,7 @@
 
 import React, { Suspense, lazy, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield, HelpCircle } from 'lucide-react';
+import { BookOpen, Headphones, MessageCircle, Home, Settings, Shield, HelpCircle, Info } from 'lucide-react';
 import { cn } from './lib/utils';
 import { getSupabase } from './lib/supabase';
 import { logger } from './lib/logger';
@@ -37,6 +37,9 @@ import { usePractice } from './features/practice/usePractice';
 import { PracticeQuiz } from './features/practice/PracticeQuiz';
 import { usePathSelection } from './paths';
 import { usePathContext } from './features/session/usePathContext';
+import { highestAccessibleMonth } from './lib/access';
+import { MAX_STRUCTURED_MONTH } from './paths/structured-course';
+import type { PracticalLevel } from './content/schema';
 import { useOnboarding } from './features/onboarding';
 import { navigateToCapability } from './features/guidance/navigateToCapability';
 
@@ -70,7 +73,7 @@ const NAV_ITEMS: (NavItem & { id: TabId })[] = [
   { id: 'learning', label: 'Learning', icon: BookOpen },
   { id: 'practice', label: 'Practice', icon: Headphones },
   { id: 'chat', label: 'Tutor', icon: MessageCircle },
-  { id: 'settings', label: 'Profile', icon: Settings },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 /** Admin entry — rendered only for admins; opens the admin overlay rather than switching tabs. */
@@ -78,6 +81,10 @@ const ADMIN_NAV_ITEM: NavItem = { id: 'admin', label: 'Admin', icon: Shield };
 
 /** Help entry (EN-20) — always available; opens the App-Guide chat in help mode (not a tab). */
 const HELP_NAV_ITEM: NavItem = { id: 'help', label: 'Help', icon: HelpCircle };
+
+/** About entry (EN-4b / NAV-1c) — desktop-sidebar only; opens the in-app About modal. Mobile keeps
+ *  About under Settings, so this is intentionally not added to the mobile bottom tab bar. */
+const ABOUT_NAV_ITEM: NavItem = { id: 'about', label: 'About', icon: Info };
 
 export default function App() {
   const supabase = getSupabase();
@@ -89,6 +96,14 @@ export default function App() {
   // Deep-link signal (TB-11b): when Home's "Choose your goal" CTA is tapped, open Settings and
   // scroll/highlight the Learning Path goal chooser so the learner lands directly on the picker.
   const [focusGoalChooser, setFocusGoalChooser] = useState(false);
+  // Deep-link signal (NAV-1b): when Home's proficiency level label is tapped, open Settings and
+  // scroll/highlight the "Your level" proficiency card so the learner lands directly on the control
+  // that changes their level (the reporter had no obvious path from a wrong Home level to the fix).
+  const [focusProficiencyCard, setFocusProficiencyCard] = useState(false);
+  // NAV-1c: About-modal open state lifted here so the desktop sidebar's About entry can open it. The
+  // modal itself is still rendered + wired (legal/support links) by SettingsView; opening it switches
+  // to the Settings tab and raises this signal, which SettingsView consumes to open its About modal.
+  const [openAboutSignal, setOpenAboutSignal] = useState(false);
   const { toast, showToast } = useToast();
   const authDepsRef = useRef<AuthCrossSliceDeps | null>(null);
   const {
@@ -175,7 +190,20 @@ export default function App() {
   // First-run onboarding gate (CONTENT-ARCHITECTURE §5). Light + always mounted so we know whether
   // to show the flow before the main shell; the flow itself drives pathSelection + consent.
   const onboarding = useOnboarding({ supabase, user, profile, setProfile });
-  const { context: pathContext, isReady: isPathContextReady } = usePathContext({ supabase, user });
+  // TB-1a/R9: thread the learner's REAL placement into the path layer (was hard-coded 1 via the
+  // usePathContext fallback). null/unknown → 0 (D1/§5.4). This alone makes Adaptive Guided honor
+  // placement (§4.2); Structured/Goal Track consume it in their pure next() (§4.1/§4.3).
+  // TB-1a/§5.3.2 (R11): compute the highest accessible month as a READ-ONLY paywall query and pass
+  // it as the structured-start CEILING so a placed learner's seeded start is bounded DOWN to
+  // content they can already open — never past the paywall. This is a flow-layer "pick an
+  // accessible start", NOT a paywall re-route: it does not mutate unlocked_level, open the unlock
+  // modal, or restart the flow (the paths layer stays paywall-blind — it only sees a month number).
+  const { context: pathContext, isReady: isPathContextReady } = usePathContext({
+    supabase,
+    user,
+    placementLevel: (profile?.proficiency_level ?? 0) as PracticalLevel,
+    structuredStartCeilingMonth: highestAccessibleMonth(profile, MAX_STRUCTURED_MONTH),
+  });
   const pathNextAction = pathSelection.activePath.next(pathContext, pathSelection.selection);
 
   // Act on the path's recommended next step (Home CTA). Adaptive Guided opens the daily-session
@@ -203,6 +231,15 @@ export default function App() {
     }
     // 'free' (or a situation-less step): send the learner to the Practice hub to self-direct.
     setActiveTab('practice');
+  };
+
+  // NAV-1b: Home's proficiency level label is tappable → deep-link to the Settings "Your level"
+  // card. Set the scroll/highlight signal, then switch to the Settings tab (same guide-and-offer
+  // pattern as the TB-11b goal-chooser deep-link above).
+  const handleOpenProficiency = () => {
+    logger.debug('nav', 'Home level deep-link → Settings proficiency card', { category: 'USER_ACTION' });
+    setFocusProficiencyCard(true);
+    setActiveTab('settings');
   };
 
   // EN-18 reactive guidance: "Take me there" from the help chat. Resolve the capability's target,
@@ -312,6 +349,14 @@ export default function App() {
           logger.debug('nav', 'Sidebar nav: help', { category: 'USER_ACTION' });
           void openHelp();
         }}
+        aboutItem={ABOUT_NAV_ITEM}
+        onOpenAbout={() => {
+          logger.debug('nav', 'Sidebar nav: about', { category: 'USER_ACTION' });
+          // Land on Settings (where the About modal + its legal/support wiring lives) and raise the
+          // open signal; SettingsView opens its About modal and clears the signal.
+          setActiveTab('settings');
+          setOpenAboutSignal(true);
+        }}
         adminItem={profile?.role === 'admin' ? ADMIN_NAV_ITEM : undefined}
         isAdminActive={isAdminViewOpen}
         onOpenAdmin={() => {
@@ -353,6 +398,7 @@ export default function App() {
                   pathSelection={pathSelection.selection}
                   activePath={pathSelection.activePath}
                   openMode={openMode}
+                  onOpenProficiency={handleOpenProficiency}
                 />
               </motion.div>
             )}
@@ -420,6 +466,10 @@ export default function App() {
                   pathSelection={pathSelection}
                   focusGoalChooser={focusGoalChooser}
                   onGoalChooserFocused={() => setFocusGoalChooser(false)}
+                  focusProficiencyCard={focusProficiencyCard}
+                  onProficiencyCardFocused={() => setFocusProficiencyCard(false)}
+                  openAboutSignal={openAboutSignal}
+                  onAboutSignalHandled={() => setOpenAboutSignal(false)}
                 />
               </motion.div>
             )}
@@ -482,7 +532,7 @@ export default function App() {
           className={cn("flex flex-col items-center space-y-1", activeTab === 'settings' ? "text-ios-blue" : "text-ios-gray")}
         >
           <Settings className="w-6 h-6" />
-          <span className="text-[10px] font-bold uppercase">Profile</span>
+          <span className="text-[10px] font-bold uppercase">Settings</span>
         </button>
         {profile?.role === 'admin' && (
           <button

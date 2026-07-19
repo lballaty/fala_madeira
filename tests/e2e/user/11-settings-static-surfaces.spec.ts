@@ -9,7 +9,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('settings static surfaces', () => {
   test('User Manual, App Tutorial, and legal documents open and navigate', async ({ page, coverage }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('navigation').getByTestId('tab-settings').click();
 
     await page.getByRole('button', { name: 'User Manual' }).click();
     await expect(page.getByRole('heading', { name: 'User Manual' })).toBeVisible();
@@ -32,7 +32,7 @@ test.describe('settings static surfaces', () => {
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page.getByRole('button', { name: 'Start Learning' })).toBeVisible();
     await page.getByRole('button', { name: 'Start Learning' }).click();
-    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Settings', level: 1 })).toBeVisible();
 
     await page.getByRole('button', { name: 'Terms of Service' }).click();
     const termsDialog = page.getByRole('dialog', { name: 'Terms of Service' });

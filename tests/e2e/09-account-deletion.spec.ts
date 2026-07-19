@@ -14,7 +14,7 @@ test.describe('account deletion (S7)', () => {
   }) => {
     const { context: userContext, page, session } = await createThrowawayUserContext(browser);
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     // The destructive control is present in Settings.
     const deleteControl = page.getByRole('button', { name: 'Delete Account & Data' });

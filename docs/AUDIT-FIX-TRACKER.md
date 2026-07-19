@@ -53,9 +53,20 @@ Acceptance: coverage gate reports 100% of interactive elements exercised with at
 **Status 2026-07-13 (first live execution + coverage review):** the suite now RUNS on the runner machine — run 1: 25 passed / 12 failed / 1 skipped of 38 tests (spec set has since grown to 51/41 and expansion continues). Every failure is triaged as a discrete item, and the coverage review (gaps CG-1…17 + gate-hardening items CS-1…8 — including "the gate cannot see uninventoried controls" and "covered_by is never verified") lives in **`docs/E2E-LIVE-RUN-TRACKER.md`** — the live worklist for T-COV1/T-COV2 from here. Three REAL product bugs found by the suite are mirrored as LT6–LT8 in REQUIREMENTS-TRACKER (tutor switching broken in prod: `profiles.selected_tutor_id` column missing; admin Requests queue always empty: `lesson_requests` RLS lacks `OR is_admin()`; latent voice-limit clobber race). T-COV1's central claim is now empirically confirmed: the tutor-switch control was "covered" green at render level while 100% broken in production.
 
 ## Reconciliation notes
-- Migrations on disk (`00001`–`00007`) exactly match `supabase/migrations/APPLIED.md`. ✅
+- Migrations on disk (`00001`–`00015`) match `supabase/migrations/APPLIED.md`. ✅ (Extended in the 2026-07-19 reconciliation pass, which added the previously-missing `00010`/`00011` rows to APPLIED.md.)
 - Plan-state statuses that were optimistic at pass 1 (steps marked succeeded while tsc failed) are now consistent — tsc is green at pass 2.
 - Native platform adapters are honest Capacitor stubs with documented iOS Info.plist TODOs (`NSSpeechRecognitionUsageDescription`, `NSMicrophoneUsageDescription`, `AVAudioSession`) — to be handled in the `ios-build` step, not silent breakage.
 
 ## For the executing agent
 Priority order for the remaining defects: **A3** (quick, correctness) → **A2/A4** (verify writes persist) → **A5** (counter RPC, before offline counter sync is trusted) → **A6** (observability). A7 is your `content-enrichment` step. Keep `tsc --noEmit` wired into `preflight-and-standards` so A1 cannot silently return.
+
+## Reconciliation pass 2026-07-19 (claude-reconcile)
+Full verification/reconciliation of docs, trackers, and artifacts against shipped reality (git-verified). Executed via `plans/plan-2026-07-19-repo-reconciliation-remediation.yaml`. All changes doc/archive-only; develop verified green (preflight all hard gates + e2e regression **138/141**, 0 failed) before push.
+
+- **Ticket status headers reconciled (8):** EN-25 (→ SHIPPED prod 2026.07.17.1), SEC-2 (→ SHIPPED 2026.07.15.5), TB-1 (→ SHIPPED, 00015 live), EN-23b (→ W1–W4 SHIPPED), EN-23 (→ MVP SHIPPED), EN-15 (added missing header, SHIPPED), EN-17/18 (→ BUILT+SHIPPED), EN-34 (fixed DRAFT/APPROVED header contradiction).
+- **APPLIED.md gap closed:** added previously-missing `00010`/`00011` rows — both **verified present live** 2026-07-19 via read-only Supabase Management API (logs +7 cols; profiles +4 cols); original apply date/method was unrecorded (noted honestly).
+- **STANDARDS-COMPLIANCE-REPORT refreshed:** retracted the false "no e2e suite" claim (item 44 not-yet → met); counts updated (vitest 154→616, config.ts 369→432, pure-logic 14→87 files).
+- **Minor doc updates:** DATABASE_DESIGN (+proficiency_level), README (test counts), ENGINEERING-STANDARDS (§9 preflight gate inventory), REQUIREMENTS-TRACKER + APPLIED.md headers, TESTER-FEEDBACK-TRACKER (TB-1 label + gemini→ai-gateway historical-ref note).
+- **Archived (history-preserving git mv):** 7 completed plans + 3 checkpoints → `plans/archive/`; 2 session-handoffs → `docs/archive/handoffs/`; 3 UI mockups + EN-21 mockup → `docs/archive/mockups/`; stale `APPLICATION_DOCUMENTATION.html` → `docs/archive/`.
+- **Incidental fixes (NAV-1, found by the green-gate):** eslint `set-state-in-effect` in `SettingsView.tsx` (NAV-1c About deep-link) and 2 e2e specs (01/11) with ambiguous "Settings" selectors after the Profile→Settings relabel (NAV-1a).
+- **Operator-gated (surfaced, NOT executed):** per-file `rm` manifest for stale one-offs + `.admin-temp-credentials.txt` (rotate password first) — see `docs/TESTER-FEEDBACK-TRACKER.md` "Reconciliation 2026-07-19 — operator-gated removals".

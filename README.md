@@ -22,7 +22,7 @@ A language operating system for living in Madeira: correct European Portuguese, 
 
 ## Stack
 
-React 19 · TypeScript · Vite 6 · Tailwind 4 · Supabase (Postgres + RLS + Edge Functions) · Gemini (tutor/content) · vite-plugin-pwa/Workbox · Capacitor 8 (iOS) · Vitest (154 unit) · Playwright (14 e2e slices).
+React 19 · TypeScript · Vite 6 · Tailwind 4 · Supabase (Postgres + RLS + Edge Functions) · Gemini (tutor/content) · vite-plugin-pwa/Workbox · Capacitor 8 (iOS) · Vitest (unit + component) · Playwright (e2e vertical slices — see `docs/TEST-VERTICAL-SLICES.md`).
 
 ## Development
 

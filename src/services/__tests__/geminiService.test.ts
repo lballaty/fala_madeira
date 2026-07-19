@@ -31,10 +31,15 @@ vi.mock('../../platform', () => ({
     },
   },
 }));
+// EN-34: the hosted-generation resolver is mocked so the client tests are hermetic. Default = 1
+// (legacy: unversioned server name + unsalted device key), matching the flag-off / never-regenerated
+// case; the generation-folding describe overrides it to 2.
+vi.mock('../../lib/audioManifest', () => ({ resolveGeneration: vi.fn(async () => 1) }));
 
 import { getSupabase, publicObjectUrl } from '../../lib/supabase';
 import { platform } from '../../platform';
 import { audioCache, saveAudioOnDeviceEnabled } from '../../lib/audioCache';
+import { resolveGeneration } from '../../lib/audioManifest';
 import { logger } from '../../lib/logger';
 import { EdgeFunctionError, OfflineStorageFullError, geminiService, synthesizeCached } from '../geminiService';
 import { config } from '../../config';
@@ -64,6 +69,7 @@ beforeEach(() => {
   vi.mocked(platform.audio.stop).mockClear();
   vi.mocked(platform.audio.playPcm16).mockClear();
   vi.mocked(platform.audio.speak).mockClear();
+  vi.mocked(resolveGeneration).mockClear().mockResolvedValue(1); // EN-34 default: legacy generation
 });
 
 afterEach(() => {
@@ -372,5 +378,66 @@ describe('synthesizeCached device persistence routing (EN-8, owner 2026-07-17)',
     vi.mocked(audioCache.setPinned).mockResolvedValue({ evicted: 0, stored: false }); // full of downloads
     await expect(synthesizeCached('lesson line', { hostable: true, pinned: true }))
       .rejects.toBeInstanceOf(OfflineStorageFullError);
+  });
+});
+
+describe('synthesizeCached generation folding (EN-34 versioned regeneration)', () => {
+  // A regenerated clip (generation ≥ 2) must land at a DIFFERENT server URL AND a DIFFERENT device
+  // cache key, so every cache layer misses the stale bytes and re-fetches the fresh render. The
+  // resolveGeneration boundary is mocked; keyToServerPath + deviceCacheKey run for real.
+  const pcm = (n: number) => new Uint8Array(n).fill(1).buffer;
+  const okPcm = () => ({ ok: true, headers: { get: () => 'application/octet-stream' }, arrayBuffer: async () => pcm(8) });
+  const missPcm = () => ({ ok: false, headers: { get: () => null }, arrayBuffer: async () => pcm(0) });
+  const KEY = 'tts:default:teacher:hash';
+
+  beforeEach(() => {
+    // mockClear() the call history too: mocks are never globally reset, so .mock.calls[0] would
+    // otherwise point at an earlier describe's call rather than this test's first call.
+    vi.mocked(audioCache.buildKey).mockClear().mockReturnValue(KEY);
+    vi.mocked(audioCache.get).mockClear().mockResolvedValue(null);
+    vi.mocked(audioCache.getPinned).mockClear().mockResolvedValue(null);
+    vi.mocked(audioCache.set).mockClear().mockResolvedValue(0);
+    vi.mocked(audioCache.setPinned).mockClear().mockResolvedValue({ evicted: 0, stored: true });
+    vi.mocked(saveAudioOnDeviceEnabled).mockReturnValue(false); // route provider writes to the LRU cache
+    invoke.mockResolvedValue({ data: { audio: 'AAAA' }, error: null });
+    vi.mocked(publicObjectUrl).mockReturnValue(null); // isolate on the Verpex tier
+  });
+
+  it('generation 1 (default) probes the LEGACY unversioned URL and the UNSALTED device key', async () => {
+    const fetchMock = vi.fn(async () => missPcm());
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(audioCache.get).toHaveBeenCalledWith(KEY);                              // unsalted
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringMatching(/\/default_teacher_hash\.pcm$/), expect.anything());
+    expect(fetchMock).not.toHaveBeenCalledWith(expect.stringMatching(/\.v\d+\.pcm/), expect.anything());
+  });
+
+  it('generation 2 probes the VERSIONED .v2.pcm URL (server cache-bust)', async () => {
+    vi.mocked(resolveGeneration).mockResolvedValue(2);
+    const fetchMock = vi.fn(async () => missPcm());
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringMatching(/\/default_teacher_hash\.v2\.pcm$/), expect.anything());
+  });
+
+  it('generation 2 reads AND writes the device tiers under the salted #v2 key (local cache-bust)', async () => {
+    vi.mocked(resolveGeneration).mockResolvedValue(2);
+    const fetchMock = vi.fn(async () => missPcm()); // all server tiers miss → provider → persist
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    // reads: a regenerated clip MISSES the old unsalted entry because it looks up the salted key
+    expect(audioCache.get).toHaveBeenCalledWith(`${KEY}#v2`);
+    expect(audioCache.getPinned).toHaveBeenCalledWith(`${KEY}#v2`);
+    // write: the fresh provider render is cached under the salted key too (save-off → ephemeral LRU)
+    expect(audioCache.set).toHaveBeenCalledWith(`${KEY}#v2`, expect.anything());
+  });
+
+  it('generation 2 server-tier HIT warms the device cache under the salted key', async () => {
+    vi.mocked(resolveGeneration).mockResolvedValue(2);
+    const fetchMock = vi.fn(async () => okPcm()); // verpex .v2 hit
+    vi.stubGlobal('fetch', fetchMock);
+    await synthesizeCached('t', {});
+    expect(invoke).not.toHaveBeenCalled();                                    // served from Verpex
+    expect(audioCache.set).toHaveBeenCalledWith(`${KEY}#v2`, expect.anything()); // warmed salted
   });
 });

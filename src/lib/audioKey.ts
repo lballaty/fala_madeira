@@ -41,10 +41,38 @@ export const buildKey = (provider: string, voice: string, text: string): string 
 /**
  * Map a cache key to a filesystem/URL-safe object name for the server audio tier
  * (EN-8): the client fetches `<verpexBase>/<keyToServerPath(key)>` and the pre-gen /
- * write-back store it under the same name. Deterministic and 1:1 with the key.
+ * write-back store it under the same name. Deterministic and 1:1 with the (key, generation).
  * Strips the `tts:` prefix, collapses every non-[a-z0-9_] run (including the `:`
  * separators) to `_`, and appends `.pcm`. Contains no `/`, `:` or `..`, so it can never
  * traverse outside the audio directory — a hard guarantee the Verpex/Supabase writers rely on.
+ *
+ * EN-34 versioning: `generation` (per-key, from the tts_audio_hosted manifest) selects the
+ * object name so a regenerated clip lands at a DIFFERENT URL and busts every cache layer:
+ *   - generation 1 (default) → legacy unversioned `<base>.pcm` — byte-identical to pre-EN-34
+ *     output, so the ~83 clips already hosted at generation 1 need no re-host.
+ *   - generation ≥ 2         → `<base>.v<generation>.pcm`.
+ * `generation` is floored to an integer, so the `.v<n>` suffix is always purely numeric and
+ * cannot introduce a `/`, `:` or `..` (traversal-safety is preserved for every generation).
  */
-export const keyToServerPath = (key: string): string =>
-  `${key.replace(new RegExp(`^${KEY_PREFIX}`), '').replace(/[^a-z0-9_]+/gi, '_')}.pcm`;
+export const keyToServerPath = (key: string, generation = 1): string => {
+  const base = key.replace(new RegExp(`^${KEY_PREFIX}`), '').replace(/[^a-z0-9_]+/gi, '_');
+  const gen = Math.floor(Number(generation) || 1);
+  return gen >= 2 ? `${base}.v${gen}.pcm` : `${base}.pcm`;
+};
+
+/**
+ * EN-34 device/pinned cache-key salt. The device LRU cache and the durable pinned store are keyed
+ * by the raw cache key (`tts:<provider>:<voice>:<hash>`); folding the generation into that key is
+ * what busts the LOCAL layers when a clip is regenerated:
+ *   - generation 1 (default) → the UNSALTED legacy key, so clips a user already cached at
+ *     generation 1 keep hitting (no forced re-download of unchanged audio).
+ *   - generation ≥ 2         → `<key>#v<generation>`, a distinct device key, so a regenerated clip
+ *     MISSES the device cache/pinned store and is re-fetched fresh.
+ * Kept in this pure module (unit-tested) so the browser client and offline downloader salt
+ * identically. The `#v<gen>` suffix keeps the `tts:` prefix intact, so prefix-scoped clear() /
+ * clearPinned(prefix) operations are unaffected. Generation is floored to an integer.
+ */
+export const deviceCacheKey = (key: string, generation = 1): string => {
+  const gen = Math.floor(Number(generation) || 1);
+  return gen >= 2 ? `${key}#v${gen}` : key;
+};

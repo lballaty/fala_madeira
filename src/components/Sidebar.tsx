@@ -33,6 +33,12 @@ interface SidebarProps {
   helpItem?: NavItem;
   /** Open the App-Guide help chat. */
   onOpenHelp?: () => void;
+  /** Persistent About entry (EN-4b / NAV-1c) — desktop-only. Opens the in-app About modal directly
+   *  from the sidebar so "About" is discoverable in the nav, not only buried under Settings. The
+   *  mobile bottom bar deliberately does NOT get this — mobile keeps About under Settings. */
+  aboutItem?: NavItem;
+  /** Open the About modal. */
+  onOpenAbout?: () => void;
   /** Optional admin entry (rendered pinned to the bottom); omitted for non-admins. */
   adminItem?: NavItem;
   /** Whether the admin overlay is open (for the admin entry's active state). */
@@ -54,6 +60,8 @@ export function Sidebar({
   onSelectTab,
   helpItem,
   onOpenHelp,
+  aboutItem,
+  onOpenAbout,
   adminItem,
   isAdminActive,
   onOpenAdmin,
@@ -95,6 +103,18 @@ export function Sidebar({
           >
             <helpItem.icon className="w-5 h-5 flex-none" />
             <span>{helpItem.label}</span>
+          </button>
+        </div>
+      )}
+      {aboutItem && onOpenAbout && (
+        <div className="px-3 pb-2 pt-2 border-t border-line">
+          <button
+            onClick={onOpenAbout}
+            data-testid="nav-about"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-muted transition-colors hover:bg-brand/5 hover:text-text"
+          >
+            <aboutItem.icon className="w-5 h-5 flex-none" />
+            <span>{aboutItem.label}</span>
           </button>
         </div>
       )}

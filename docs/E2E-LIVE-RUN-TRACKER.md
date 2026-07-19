@@ -16,6 +16,12 @@
 
 ## Run log
 
+### Run 28 — 2026-07-19 — EN-34 (inert) + EN-31 built & merged to develop; ⚠️ NEW pre-existing NAV-1 red surfaced
+- **EN-34 gate (worktree `fala_madeira-en34`, actual build, CI=1):** full e2e **135 passed · 0 failed · 3 skipped** (`summary.json status=passed`, 7.1m) + vitest **577/577** + tsc 0 + ship dry-run all-PASS. Merged **inert** to develop (`d4eb62f`). All EN-34 changes ship behind inert flags (manifest flag off, migrations 00016/00017 authored-not-applied, `audio-warm` edge fn not deployed, `TTS_BUFFER_WRITEBACK` off) → runtime playback byte-identical to pre-EN-34.
+- **EN-31 gate (worktree `fala_madeira-en31`, actual build, CI=1):** vitest **590/590** + tsc 0. Full e2e **135 passed · 2 failed · 3 skipped**. Merged to develop (`9e2c694`).
+- **⚠️ The 2 e2e failures are PRE-EXISTING NAV-1, NOT EN-31/EN-34** — `user/01-home-navigation:11` (`getByRole('button',{name:'Settings'})` → 3 elements) + `user/11-settings-static-surfaces:10` (`getByRole('heading',{name:'Settings'})` → 2 elements). Strict-mode name collisions from the **Profile→Settings relabel** (NAV-1a/b) already on develop. Already tracked as the NAV-1 "Settings name collision — needs fix+re-gate" (`864317f`). Zero audio/toast involvement; EN-31/EN-34 exonerated (all audio specs green, 590 vitest green). **Owner action: NAV-1 owner disambiguates those two specs' `Settings` selectors → re-gate develop to green.** `origin/develop` is currently red on these two until fixed.
+- **Method note:** both worktrees ran e2e against the REAL feature build by symlinking `.env.local` + `.admin-temp-credentials.txt` from the base (creds live with develop). Stale-server footgun hit once (port 4173 held by a prior preview) — killed + re-ran.
+
 ### Deploy — 2026-07-19 — STAGED ✅ 2026.07.19.1 (TB-1 proficiency + EN-23b audio panel) — awaiting production approval
 - **Contents:** TB-1 Option B (placement→`profiles.proficiency_level`; migration 00015 already applied live to the shared DB `gxlrmdfqcqimwwplrdgd`; Home label reads proficiency, Settings "Your level" control; separation invariant `proficiency_level ⟂ unlocked_level` tested) + EN-23b admin Audio panel W1–W4.
 - **Gate (develop, CI=1):** 134 passed · **1 failed = EF-39** (user/04 quiz Next-button flake — documented non-blocker, zero product impact; TB-1/EN-23b don't touch Quiz.tsx) · 3 skipped. TB-1 e2e `user/64-proficiency-level` PASSED. Cut preflight (11 stages) all-PASS (vitest 530/530, coverage-contract incl. new `settings.proficiency.select`).

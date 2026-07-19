@@ -66,6 +66,15 @@ interface SettingsViewProps {
   focusGoalChooser?: boolean;
   /** Called once the goal chooser has been scrolled into view so the parent can reset the signal. */
   onGoalChooserFocused?: () => void;
+  /** NAV-1b deep-link: when true, scroll to + highlight the "Your level" proficiency card (Home level tap). */
+  focusProficiencyCard?: boolean;
+  /** Called once the proficiency card has been scrolled into view so the parent can reset the signal. */
+  onProficiencyCardFocused?: () => void;
+  /** NAV-1c: when true, open the About modal (raised by the desktop sidebar's About entry, which
+   *  lands on Settings and asks this view to open its About modal). */
+  openAboutSignal?: boolean;
+  /** Called once the About modal has been opened so the parent can reset the signal. */
+  onAboutSignalHandled?: () => void;
 }
 
 export const SettingsView = ({
@@ -82,6 +91,10 @@ export const SettingsView = ({
   pathSelection,
   focusGoalChooser = false,
   onGoalChooserFocused,
+  focusProficiencyCard = false,
+  onProficiencyCardFocused,
+  openAboutSignal = false,
+  onAboutSignalHandled,
 }: SettingsViewProps) => {
   // TB-11b: the goal chooser is a deep-link target from Home's "Choose your goal" CTA. When the
   // signal arrives, scroll it into view; the highlight ring is driven off the prop and cleared by
@@ -93,6 +106,17 @@ export const SettingsView = ({
     const timer = setTimeout(() => onGoalChooserFocused?.(), 2200);
     return () => clearTimeout(timer);
   }, [focusGoalChooser, onGoalChooserFocused]);
+  // NAV-1b: the "Your level" proficiency card is a deep-link target from Home's tappable level
+  // label. Same prop-driven pattern as the goal chooser above — scroll it into view when the
+  // signal arrives; the ring highlight is driven off the prop and the parent clears it after a
+  // short delay (no effect-local setState — keeps the render honest).
+  const proficiencyCardRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!focusProficiencyCard) return;
+    proficiencyCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const timer = setTimeout(() => onProficiencyCardFocused?.(), 2200);
+    return () => clearTimeout(timer);
+  }, [focusProficiencyCard, onProficiencyCardFocused]);
   const {
     playbackSpeed, setPlaybackSpeed,
     globalVoiceLimit,
@@ -156,6 +180,17 @@ export const SettingsView = ({
   // open/closed state lives here rather than in useSettings.
   const [openLegalDoc, setOpenLegalDoc] = useState<LegalDocId | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  // NAV-1c: the desktop sidebar's About entry lands here and raises openAboutSignal; open the About
+  // modal (its legal/support links stay wired to this view's state) and clear the signal so a later
+  // manual close doesn't immediately re-open it.
+  useEffect(() => {
+    if (!openAboutSignal) return;
+    // One-shot external signal (sidebar About deep-link); cleared immediately via
+    // onAboutSignalHandled, so this does not trigger cascading renders.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsAboutOpen(true);
+    onAboutSignalHandled?.();
+  }, [openAboutSignal, onAboutSignalHandled]);
 
   // Appearance (light/dark) — three-way preference (System/Light/Dark) applied to
   // <html data-theme> and persisted by the useTheme hook (localStorage 'fm_theme').
@@ -168,7 +203,7 @@ export const SettingsView = ({
 
   return (
     <div className="p-6 space-y-8 overflow-y-auto h-full pb-32">
-      <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
 
       <div className="bg-card p-6 rounded-3xl ios-shadow flex flex-col items-center space-y-4">
         <div className="w-24 h-24 bg-ios-blue/10 rounded-full flex items-center justify-center text-ios-blue">
@@ -329,7 +364,14 @@ export const SettingsView = ({
           persists the chosen placement level via the shared setProficiencyLevel writer (DB + local
           mirror + optimistic profile). NO access key, NO unlocked_level reference — the paywall is
           a separate concern (separation invariant, REQUIREMENTS §2/§5.4). */}
-      <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4" data-testid="proficiency-card">
+      <div
+        ref={proficiencyCardRef}
+        className={cn(
+          'bg-card p-6 rounded-3xl ios-shadow space-y-4 transition-all',
+          focusProficiencyCard && 'ring-2 ring-ios-blue ring-offset-2 ring-offset-card',
+        )}
+        data-testid="proficiency-card"
+      >
         <div className="flex items-center">
           <GraduationCap className="w-5 h-5 mr-3 text-ios-blue" />
           <span className="font-bold">Your level</span>

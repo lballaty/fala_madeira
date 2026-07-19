@@ -1,7 +1,8 @@
 # SEC-2 — Cross-User Data Isolation Fix Plan
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/SEC-2-USER-ISOLATION-FIX-PLAN.md
-**Description:** Requirements + design + work-package plan to fix cross-user data bleed on a shared device (SEC-2). Server-side (Supabase RLS) is verified isolated; this plan fixes the client-side device-storage leak. Awaiting owner approval before any coding (AGENTS §3).
+**Description:** Requirements + design + work-package plan to fix cross-user data bleed on a shared device (SEC-2). Server-side (Supabase RLS) is verified isolated; this plan fixes the client-side device-storage leak.
+**Status:** **SHIPPED 2026.07.15.5** (commit `84a214b` — namespaced device storage + clear-on-logout + sync guard). Extended by **SEC-3** (parallel-multi-user reset + new-user seeding, 2026.07.18.3) — SEC-3 is a follow-on, not a supersession of SEC-2's core fix.
 **Author:** Libor Ballaty
 **Created:** 2026-07-15
 **Last Updated:** 2026-07-15

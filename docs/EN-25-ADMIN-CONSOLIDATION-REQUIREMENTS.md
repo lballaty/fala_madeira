@@ -33,4 +33,4 @@ Two confusing admin entry points existed — the sidebar "Admin" link (`AdminVie
 - e2e (admin session, live DB): `12-admin-single-entry.spec.ts` — single nav reaches all four tabs, per-user `voice_limit` persists to `profiles`; `01`/`02` rerouted off the removed toggle to the Config tab. 4/4 green.
 
 ## 5. Status
-Built + fully gated on `feat/en25-admin-consolidation` (tsc/eslint/276 vitest/build/observability/cors/coverage-gate + admin e2e all green). **Not merged, not deployed** — the develop merge + staging deploy are explicit owner steps.
+**SHIPPED to production 2026.07.17.1** (merged to develop `3371fb0`, deployed). _History:_ built + fully gated on `feat/en25-admin-consolidation` (tsc/eslint/276 vitest/build/observability/cors/coverage-gate + admin e2e all green) before the develop merge + staging deploy.

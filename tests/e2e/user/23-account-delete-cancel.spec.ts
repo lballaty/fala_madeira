@@ -9,7 +9,7 @@ import { test, expect, landOnHome } from '../support/fixtures';
 test.describe('account deletion cancel path', () => {
   test('Delete Account & Data can be canceled with the session preserved', async ({ page }) => {
     await landOnHome(page);
-    await page.getByRole('button', { name: 'Profile' }).first().click();
+    await page.getByRole('button', { name: 'Settings' }).first().click();
 
     const deleteControl = page.getByRole('button', { name: 'Delete Account & Data' });
     await deleteControl.scrollIntoViewIfNeeded();
@@ -20,7 +20,7 @@ test.describe('account deletion cancel path', () => {
     await page.getByRole('button', { name: 'Keep My Account' }).click();
 
     await expect(page.getByRole('heading', { name: 'Delete Account?' })).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Profile' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
     await expect(page.getByRole('main').getByRole('button', { name: 'Sign Out' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Log In' })).toHaveCount(0);
   });

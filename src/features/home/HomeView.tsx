@@ -90,6 +90,12 @@ interface HomeViewProps {
    * EXACT engine + situation the coach surfaced — closing the flagged goal-relevance/routing gap.
    */
   openMode: (modeId: string, situationId?: string | null) => void;
+  /**
+   * NAV-1b: tap the Home proficiency level label → deep-link to the Settings "Your level" card
+   * (switch to Settings + scroll/highlight the proficiency-card). Reuses the App-owned deep-link
+   * signal pattern; guide-and-offer only (it lands the learner on the control, never changes level).
+   */
+  onOpenProficiency: () => void;
 }
 
 export const HomeView = ({
@@ -111,7 +117,8 @@ export const HomeView = ({
   pathContext,
   pathSelection,
   activePath,
-  openMode
+  openMode,
+  onOpenProficiency
 }: HomeViewProps) => {
   const unlockModalRef = useRef<HTMLDivElement>(null);
   const unlockModalTitleId = useId();
@@ -146,7 +153,17 @@ export const HomeView = ({
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Olá, {user?.email?.split('@')[0]}!</h1>
           <div className="flex items-center space-x-2">
-            <p className="text-ios-gray">{proficiencyName}</p>
+            {/* NAV-1b: the level label is tappable → deep-link to the Settings "Your level" card.
+                A user who sees the wrong level on Home now has a one-tap path to change it. */}
+            <button
+              type="button"
+              onClick={onOpenProficiency}
+              data-testid="home-level-deeplink"
+              aria-label={`Your level: ${proficiencyName}. Tap to change in Settings.`}
+              className="text-ios-gray underline decoration-dotted underline-offset-4 hover:text-ios-blue transition-colors"
+            >
+              {proficiencyName}
+            </button>
             {/* EN-15: hide the access-key unlock CTA for full-access (admin/unlimited) users —
                 they already have every level, so there is nothing to unlock. */}
             {!fullAccess && (
@@ -255,13 +272,16 @@ export const HomeView = ({
           {isPathReady ? (
             <>
               <div>
-                <h3 className="text-2xl font-bold">{pathNextAction.label}</h3>
-                <p className="text-blue-50 text-sm">
+                {/* data-testid: the path-driven start label (TB-1a) — e2e asserts WHERE the learner
+                    lands (e.g. "Continue Day 1" vs "Continue Day 57") reflects their placement. */}
+                <h3 className="text-2xl font-bold" data-testid="home-path-cta-label">{pathNextAction.label}</h3>
+                <p className="text-blue-50 text-sm" data-testid="home-path-cta-detail">
                   {pathNextAction.detail ?? 'Same content, shared progress — the app leads.'}
                 </p>
               </div>
               <button
                 onClick={onStartPathNext}
+                data-testid="home-path-cta"
                 className="px-6 py-3 bg-white text-ios-blue rounded-2xl font-bold text-sm shadow-lg flex items-center space-x-2"
               >
                 <Play className="w-4 h-4 fill-current" />

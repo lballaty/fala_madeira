@@ -78,7 +78,7 @@ test.describe('video suggestion roundtrip', () => {
         .toBe('approved');
 
       await landOnHome(page);
-      await page.getByRole('button', { name: 'Profile' }).first().click();
+      await page.getByRole('button', { name: 'Settings' }).first().click();
       await page.getByRole('button', { name: 'My Submissions' }).click();
       coverage.touch('settings.submissions.open', 'outcome-asserted');
       await expect(page.getByRole('heading', { name: 'My Submissions' })).toBeVisible();
