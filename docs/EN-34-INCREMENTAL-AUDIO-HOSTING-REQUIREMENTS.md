@@ -1,7 +1,8 @@
 # EN-34 — Incremental Small-Batch Audio Hosting (Requirements)
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-34-INCREMENTAL-AUDIO-HOSTING-REQUIREMENTS.md
-**Description:** Requirements for hosting curated TTS audio in small batches over time (never stalling on provider limits, never silently forgotten), plus an inventory audit of what is already hosted. Approach **C** (both paths), delivered **A-first**. DRAFT for owner approval — no build until approved (AGENTS §3).
+**Description:** Requirements for hosting curated TTS audio in small batches over time (never stalling on provider limits, never silently forgotten), plus an inventory audit of what is already hosted. Approach **C** (both paths), delivered **A-first**.
+**Status:** **APPROVED 2026-07-19** (see §173) — execute-ready, not yet built. Live activation steps remain operator-gated + staging-first.
 **Author:** claude-opus-runner (with owner)
 **Created:** 2026-07-19
 **Last Updated:** 2026-07-19
