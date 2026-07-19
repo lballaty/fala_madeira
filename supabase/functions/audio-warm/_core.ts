@@ -115,6 +115,8 @@ export interface RegenItem {
   buildKey: string;
   voice: string;
   text: string;
+  /** ISO-8601 tts_audio_regen_queue.enqueued_at — the idempotency guard compares it to hosted_at. */
+  enqueuedAt: string;
 }
 
 /** One un-hosted NEW clip candidate (already enumerated + priority-ordered by the caller). */
@@ -130,6 +132,8 @@ export interface NewCandidate {
 export interface HostedEntry {
   generation: number;
   tiers?: string[];
+  /** ISO-8601 tts_audio_hosted.hosted_at — feeds isAlreadyFulfilled for the regen idempotency guard. */
+  hostedAt?: string | null;
 }
 
 export interface PlanWarmWorkInput {
@@ -181,6 +185,38 @@ export const planWarmWork = ({
   }
 
   return { regenWork, newWork };
+};
+
+// ---------------------------------------------------------------------------
+// isAlreadyFulfilled — idempotency guard for the regen drain (EN-34 double-bump fix).
+// ---------------------------------------------------------------------------
+
+/**
+ * Decide whether a pending regen row was ALREADY (re)hosted after it was enqueued, so a re-run must
+ * NOT synth/host/bump it again — it only needs the mark-done completed.
+ *
+ * The scenario this guards: the drain hosts a clip (manifest upsert lands, setting hosted_at = now,
+ * bumping generation) but then the "mark row done" UPDATE fails. The row stays 'pending'. Without a
+ * guard, the next run reads that still-pending row, sees the now-bumped manifest generation, and
+ * bumps AGAIN — a SECOND generation burned for ONE enqueue (double-bump). Because the manifest upsert
+ * sets hosted_at to "now" (which is necessarily AFTER the row's enqueued_at), a manifest entry whose
+ * hosted_at is strictly newer than the row's enqueued_at is proof the clip was re-hosted to satisfy
+ * THIS enqueue. In that case the row is already fulfilled: skip the synth/host/bump and just mark it
+ * done. hosted_at <= enqueued_at means the manifest reflects an OLDER hosting (or none), so this
+ * enqueue still needs a fresh bump — proceed normally.
+ *
+ * Both timestamps are ISO-8601 strings (Date.toISOString / Postgres timestamptz). A missing/invalid
+ * hosted_at (no manifest entry yet, or unparseable) returns false — never suppress a needed bump.
+ */
+export const isAlreadyFulfilled = (
+  hostedAt: string | null | undefined,
+  enqueuedAt: string | null | undefined,
+): boolean => {
+  if (!hostedAt || !enqueuedAt) return false;
+  const hosted = Date.parse(hostedAt);
+  const enqueued = Date.parse(enqueuedAt);
+  if (Number.isNaN(hosted) || Number.isNaN(enqueued)) return false;
+  return hosted > enqueued;
 };
 
 // ---------------------------------------------------------------------------

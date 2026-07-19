@@ -12,6 +12,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  isAlreadyFulfilled,
   linesForSituationCore,
   mergeTiersCore,
   planWarmWork,
@@ -49,6 +50,7 @@ describe('planWarmWork', () => {
     buildKey: `tts:default:teacher:regen-${id}`,
     voice: 'teacher',
     text: `regen-text-${id}`,
+    enqueuedAt: '2026-07-19T00:00:00.000Z',
   });
 
   it('drains regen FIRST, then fills remaining budget with new candidates', () => {
@@ -151,6 +153,33 @@ describe('shouldStopForRateLimit', () => {
   it('honors an explicit threshold', () => {
     expect(shouldStopForRateLimit(2, 3)).toBe(false);
     expect(shouldStopForRateLimit(3, 3)).toBe(true);
+  });
+});
+
+describe('isAlreadyFulfilled — regen double-bump idempotency guard', () => {
+  const enqueued = '2026-07-19T12:00:00.000Z';
+
+  it('is true when the manifest was hosted AFTER the row was enqueued (already re-hosted)', () => {
+    // The partial-failure scenario: upsert landed (hosted_at newer), mark-done did not.
+    expect(isAlreadyFulfilled('2026-07-19T12:00:01.000Z', enqueued)).toBe(true);
+  });
+
+  it('is false when the manifest was hosted BEFORE the row was enqueued (needs a fresh bump)', () => {
+    expect(isAlreadyFulfilled('2026-07-19T11:59:59.000Z', enqueued)).toBe(false);
+  });
+
+  it('is false when hosted_at EQUALS enqueued_at (strictly-newer required)', () => {
+    expect(isAlreadyFulfilled(enqueued, enqueued)).toBe(false);
+  });
+
+  it('is false when there is no manifest entry yet (hosted_at null/undefined)', () => {
+    expect(isAlreadyFulfilled(null, enqueued)).toBe(false);
+    expect(isAlreadyFulfilled(undefined, enqueued)).toBe(false);
+  });
+
+  it('is false on unparseable timestamps — never suppress a needed bump', () => {
+    expect(isAlreadyFulfilled('not-a-date', enqueued)).toBe(false);
+    expect(isAlreadyFulfilled('2026-07-19T12:00:01.000Z', 'nonsense')).toBe(false);
   });
 });
 

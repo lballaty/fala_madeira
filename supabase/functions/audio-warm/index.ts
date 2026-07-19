@@ -9,9 +9,12 @@
 //   idempotency) instead of hammering a throttled provider. Emits a heartbeat + summary to
 //   public.logs (via persistLog) and returns the canonical errorResponse/jsonResponse envelope.
 //
-//   IDEMPOTENCY: a regen bump is computed from the CURRENT manifest generation and the queue row is
-//   marked done in the same tick, so a re-run cannot double-bump. New clips are skipped when already
-//   present in the manifest. A re-run is therefore safe.
+//   IDEMPOTENCY: host-then-mark-done is NOT atomic, so a re-run after a partial failure (manifest
+//   upsert landed, mark-done did not) must not bump a generation twice. Before re-hosting a still-
+//   pending regen row, the drain checks the manifest entry's hosted_at against the row's enqueued_at
+//   (pure isAlreadyFulfilled): if the clip was already re-hosted AFTER this enqueue, the row is
+//   treated as already fulfilled — no synth/host/bump, just complete the mark-done. New clips are
+//   skipped when already present in the manifest. A re-run is therefore safe (no double-bump).
 //
 //   ALL warm DECISIONS live in the PURE, unit-tested ./_core.ts (linesForSituationCore mirror,
 //   planWarmWork, shouldStopForRateLimit, mergeTiersCore). This file is glue only and is covered by
@@ -28,6 +31,7 @@ import { routeTts } from "../_shared/tts/router.ts";
 import { TtsUnavailableError } from "../_shared/tts/types.ts";
 import {
   type HostedEntry,
+  isAlreadyFulfilled,
   linesForSituationCore,
   mergeTiersCore,
   type NewCandidate,
@@ -69,6 +73,7 @@ interface RegenRow {
   build_key: string;
   voice: string;
   text: string;
+  enqueued_at: string;
 }
 
 interface SituationRow {
@@ -180,7 +185,7 @@ Deno.serve(async (req) => {
     // --- 1. Read pending regen rows (budget-limited) ---
     const { data: regenData, error: regenErr } = await admin
       .from(REGEN_TABLE)
-      .select("id, build_key, voice, text")
+      .select("id, build_key, voice, text, enqueued_at")
       .eq("status", "pending")
       .order("enqueued_at", { ascending: true })
       .limit(maxPerRun);
@@ -193,19 +198,20 @@ Deno.serve(async (req) => {
       buildKey: r.build_key,
       voice: r.voice,
       text: r.text,
+      enqueuedAt: r.enqueued_at,
     }));
 
     // --- 2. Read the hosted manifest into a build_key -> {generation, tiers} map ---
     const { data: hostedData, error: hostedErr } = await admin
       .from(HOSTED_TABLE)
-      .select("build_key, generation, tiers");
+      .select("build_key, generation, tiers, hosted_at");
     if (hostedErr) {
       await noteError("audio_warm_manifest_read_failed", `could not read hosted manifest: ${hostedErr.message}`);
       return errorResponse("MANIFEST_READ_FAILED", "Could not read the hosted-audio manifest.", 500, requestId, { traceId: trace?.traceId });
     }
     const hostedByKey = new Map<string, HostedEntry>();
-    for (const row of (hostedData as { build_key: string; generation: number; tiers: string[] | null }[] | null ?? [])) {
-      hostedByKey.set(row.build_key, { generation: row.generation, tiers: row.tiers ?? [] });
+    for (const row of (hostedData as { build_key: string; generation: number; tiers: string[] | null; hosted_at: string | null }[] | null ?? [])) {
+      hostedByKey.set(row.build_key, { generation: row.generation, tiers: row.tiers ?? [], hostedAt: row.hosted_at });
     }
 
     // --- 3. Enumerate NEW candidates in priority order: onboarding, then level asc ---
@@ -244,6 +250,27 @@ Deno.serve(async (req) => {
     // --- 5a. Drain regen FIRST: re-synthesize -> host at generation+1 -> upsert manifest -> mark done ---
     let consecutiveRateLimited = 0;
     for (const item of regenWork) {
+      // IDEMPOTENCY GUARD (EN-34 double-bump fix). Host-then-mark-done is NOT atomic: if a prior
+      // run's manifest upsert landed (bumping the generation + setting hosted_at=now) but its
+      // "mark row done" UPDATE then failed, the row is still 'pending' and we would re-read it here.
+      // Re-synthesizing + bumping again would burn a SECOND generation for ONE enqueue. The manifest
+      // entry's hosted_at proves the state: if it is NEWER than this row's enqueued_at, the clip was
+      // already re-hosted to satisfy THIS enqueue, so treat the row as already fulfilled — skip the
+      // synth/host/bump and only complete the mark-done. hosted_at <= enqueued_at (or no manifest
+      // entry) means this enqueue still needs a fresh bump, so we fall through to the normal path.
+      const existing = hostedByKey.get(item.buildKey);
+      if (isAlreadyFulfilled(existing?.hostedAt, item.enqueuedAt)) {
+        const { error: doneErr } = await admin
+          .from(REGEN_TABLE)
+          .update({ status: "done", completed_at: new Date().toISOString() })
+          .eq("id", item.id);
+        if (doneErr) {
+          await noteError("audio_warm_regen_mark_done_failed", `could not mark already-hosted regen row done: ${doneErr.message}`, { id: item.id });
+        } else {
+          summary.regen_drained++;
+        }
+        continue;
+      }
       summary.attempted++;
       try {
         const result = await routeTts({
@@ -256,20 +283,22 @@ Deno.serve(async (req) => {
         consecutiveRateLimited = 0;
         summary.synthesized++;
         const current = hostedByKey.get(item.buildKey);
-        const newGen = (current?.generation ?? 1) + 1; // idempotent: derived from CURRENT manifest gen
+        const newGen = (current?.generation ?? 1) + 1; // bump from current gen; guarded above against re-bump
         const objectName = keyToServerPath(item.buildKey, newGen);
         await uploadTtsClip(objectName, result.audioBase64, logCtx);
         summary.uploaded++;
         const tiers = mergeTiersCore(current?.tiers, BUCKET_TIER);
+        const hostedAt = new Date().toISOString();
         const { error: upErr } = await admin
           .from(HOSTED_TABLE)
-          .upsert({ build_key: item.buildKey, generation: newGen, object_name: objectName, hosted_at: new Date().toISOString(), tiers }, { onConflict: "build_key" });
+          .upsert({ build_key: item.buildKey, generation: newGen, object_name: objectName, hosted_at: hostedAt, tiers }, { onConflict: "build_key" });
         if (upErr) {
           await noteError("audio_warm_manifest_upsert_failed", `regen manifest upsert failed: ${upErr.message}`, { build_key: item.buildKey });
           continue; // leave the queue row pending so a later run retries; no double-bump risk (manifest unchanged)
         }
-        // Reflect the bump locally so a duplicate key later in this run is treated as hosted.
-        hostedByKey.set(item.buildKey, { generation: newGen, tiers });
+        // Reflect the bump locally so a duplicate key later in this run is treated as hosted, and so
+        // the idempotency guard sees hosted_at > enqueued_at if this same row is revisited this run.
+        hostedByKey.set(item.buildKey, { generation: newGen, tiers, hostedAt });
         const { error: doneErr } = await admin
           .from(REGEN_TABLE)
           .update({ status: "done", completed_at: new Date().toISOString() })
