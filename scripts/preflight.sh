@@ -159,6 +159,14 @@ run_hard "IndexedDB version drift (app DB_VERSION ↔ e2e helpers)" node "${SCRI
 # return.
 run_hard "observability §9 forbidden patterns (--strict)" node "${SCRIPT_DIR}/check-observability.mjs" --strict
 
+# Release-notes completeness gate (AGENTS.md §4) — WARN-only during rollout. Compares the top
+# CHANGELOG entry against the user-facing feat(/fix( commits shipped since the last release and
+# reports missing tickets, over-collapsed entries, and technical jargon leaking into bullets.
+# The script ALWAYS exits 0 today (a pending prod deploy runs preflight), so this stage never
+# fails the build — findings are advisory. Promote to enforce with CHANGELOG_GATE_ENFORCE=1
+# once the heuristics are tuned.
+run_hard "changelog completeness (release-notes standard, WARN-only)" node "${SCRIPT_DIR}/check-changelog-completeness.mjs"
+
 if [ "${WITH_SECURITY}" -eq 1 ]; then
   run_hard "security probes (scripts/verify-security.mjs)" npm run verify:security
 else

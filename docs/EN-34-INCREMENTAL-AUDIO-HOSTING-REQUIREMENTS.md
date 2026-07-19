@@ -94,6 +94,11 @@ HEAD-skip, already throttled+retried, already emits a JSON summary) and schedule
 
 ### Phase B — Fix buffer contention + enable runtime write-back (follow-on, organic warm)
 
+> **This IS EN-8's unfinished Phase 3 (prod activation), pulled forward under this
+> item.** EN-34 formally absorbs it so it isn't double-tracked; the EN-8 tracker entry
+> now points here. EN-8's remaining role is the shared pipeline (bucket, Verpex cron,
+> client fallback tiers) that Phase A drives.
+
 - **B1 — Contention fix:** make the buffer→Verpex copy multi-env safe (per-env buffer
   namespacing, or copy-without-delete + a separate GC pass) so no environment's cron
   starves another. Prereq for turning write-back on with >1 environment.

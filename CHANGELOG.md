@@ -16,6 +16,7 @@ file is the sole source of truth; embedded literals are declared in
 
 ## 2026.07.19.1
 
+- ⚠️ **One-time action for existing accounts:** after this update your level starts **unset** — your original sign-up placement couldn't be carried over to the new setting. Please open **Settings → "Your level"** and pick your level once; it's saved from then on. New sign-ups keep their placement automatically. (TB-1)
 - Fixed: **your level now reflects what you chose at sign-up.** Home used to show a fixed "Absolute Beginner" no matter what you picked during placement — it now shows your actual proficiency level. (TB-1)
 - New: **you can change your level any time** from the new **Settings → "Your level"** control — no access key needed, and it persists. (This is separate from paid-content access, which is unchanged.) (TB-1)
 - Fixed (admin): **audio clip preview playback now works** for any clip in the Audio management panel — it fetches the clip on demand instead of only replaying already-cached audio. (EN-23b)
