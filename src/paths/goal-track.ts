@@ -88,8 +88,19 @@ export const goalTrackPath: LearningPath = {
       };
     }
     const ordered = orderedTrackSituations(context, track);
-    const nextSituation =
-      ordered.find((s) => !context.completedSituationIds.has(s.id)) ?? ordered[0] ?? null;
+    const uncompleted = ordered.filter((s) => !context.completedSituationIds.has(s.id));
+
+    // TB-1a §4.3 (D-map): for a learner with NO resume signal (no completions yet), prefer the
+    // first uncompleted track situation whose level >= placement — starting a placed learner
+    // further into the track's level progression. SOFT: if none meet the bar (e.g. a high
+    // placement in an all-low-level track) we fall back to the plain first-uncompleted, so a
+    // real next step is always offered and nothing is hard-gated (§5/§12). A resume signal
+    // (≥1 completion) makes the plain first-uncompleted win — placement is not consulted (R12).
+    const isResume = context.completedSituationIds.size > 0;
+    const atLevel = isResume
+      ? undefined
+      : uncompleted.find((s) => s.level >= context.placementLevel);
+    const nextSituation = atLevel ?? uncompleted[0] ?? ordered[0] ?? null;
 
     if (!nextSituation) {
       return { kind: 'free', label: `Browse ${track.name}`, situationId: null, engineId: null };

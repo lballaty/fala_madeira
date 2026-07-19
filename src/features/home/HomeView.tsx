@@ -272,13 +272,16 @@ export const HomeView = ({
           {isPathReady ? (
             <>
               <div>
-                <h3 className="text-2xl font-bold">{pathNextAction.label}</h3>
-                <p className="text-blue-50 text-sm">
+                {/* data-testid: the path-driven start label (TB-1a) — e2e asserts WHERE the learner
+                    lands (e.g. "Continue Day 1" vs "Continue Day 57") reflects their placement. */}
+                <h3 className="text-2xl font-bold" data-testid="home-path-cta-label">{pathNextAction.label}</h3>
+                <p className="text-blue-50 text-sm" data-testid="home-path-cta-detail">
                   {pathNextAction.detail ?? 'Same content, shared progress — the app leads.'}
                 </p>
               </div>
               <button
                 onClick={onStartPathNext}
+                data-testid="home-path-cta"
                 className="px-6 py-3 bg-white text-ios-blue rounded-2xl font-bold text-sm shadow-lg flex items-center space-x-2"
               >
                 <Play className="w-4 h-4 fill-current" />

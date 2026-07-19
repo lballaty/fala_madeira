@@ -71,6 +71,14 @@ export interface PathContext {
   completedSituationIds: ReadonlySet<string>;
   /** Placement level (§5) — a sensible starting point; never a hard gate. */
   placementLevel: PracticalLevel;
+  /**
+   * TB-1a §5.3.2 (R11): the highest structured MONTH the learner can currently access, computed
+   * by the WIRING layer (App / a pure selector) from the paywall predicate (src/lib/access.ts).
+   * The structured policy clamps its placement-derived start DOWN to this so a placed learner is
+   * not stranded on a paywalled CTA. This is a plain month number — the paths layer stays
+   * paywall-blind (it never sees unlocked_level). Undefined ⇒ unbounded (no clamp).
+   */
+  structuredStartCeilingMonth?: number;
   /** SRS mastery rows (mastery_items) for weakness-aware selection. */
   mastery: MasteryItem[];
   /** Per-dimension rollup (srs.dimensionSummary) — the weakness signal (§6). */

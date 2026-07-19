@@ -8,7 +8,7 @@
 
 import { describe, expect, it } from 'vitest';
 import type { UserProfile } from '../../types';
-import { canAccessLevel, hasFullContentAccess } from '../access';
+import { canAccessLevel, hasFullContentAccess, highestAccessibleMonth } from '../access';
 
 // Minimal profile factory: only the three fields the gate reads matter here.
 const profile = (over: Partial<UserProfile>): UserProfile =>
@@ -86,5 +86,28 @@ describe('canAccessLevel', () => {
   it('gates a null profile at level 1 (default)', () => {
     expect(canAccessLevel(null, 1)).toBe(true);
     expect(canAccessLevel(null, 2)).toBe(false);
+  });
+});
+
+describe('highestAccessibleMonth (TB-1a §5.3.2 / R11)', () => {
+  const MAX = 6;
+
+  it('is unbounded (maxMonth) for full-access admin / unlimited profiles', () => {
+    expect(highestAccessibleMonth(profile({ role: 'admin', unlocked_level: 1 }), MAX)).toBe(6);
+    expect(highestAccessibleMonth(profile({ subscription_tier: 'unlimited', unlocked_level: 1 }), MAX)).toBe(6);
+  });
+
+  it('bounds a free user at their unlocked_level (the paywall progression)', () => {
+    expect(highestAccessibleMonth(profile({ subscription_tier: 'free', unlocked_level: 1 }), MAX)).toBe(1);
+    expect(highestAccessibleMonth(profile({ subscription_tier: 'free', unlocked_level: 3 }), MAX)).toBe(3);
+  });
+
+  it('never exceeds the authored ceiling even if unlocked_level runs ahead', () => {
+    expect(highestAccessibleMonth(profile({ subscription_tier: 'free', unlocked_level: 99 }), MAX)).toBe(6);
+  });
+
+  it('defaults a missing unlocked_level / null profile to 1', () => {
+    expect(highestAccessibleMonth(profile({ unlocked_level: undefined as unknown as number }), MAX)).toBe(1);
+    expect(highestAccessibleMonth(null, MAX)).toBe(1);
   });
 });
