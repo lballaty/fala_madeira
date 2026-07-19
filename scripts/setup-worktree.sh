@@ -19,8 +19,12 @@
 #
 # Usage:
 #   bash scripts/setup-worktree.sh <role> [branch] [--no-install] [--print-profile]
+#   bash scripts/setup-worktree.sh --issue <ID> [feat|fix|content] [--no-install] [--print-profile]
 #   bash scripts/setup-worktree.sh --wt <suffix>  [--no-install] [--print-profile]
 #     role   : feat | support | content | release
+#     --issue <ID> [kind] : START NEW WORK — create fala_madeira-<id> FROM develop on
+#                 <kind>/<id> (kind feat|fix|content, default feat), then provision.
+#                 The standard start-work entry point (AGENTS.md §7).
 #     branch : optional topic branch to create/switch (feat/support/content only;
 #              default <prefix>/scratch). Ignored for release (always `main`).
 #     --wt <suffix>   : provision an ARBITRARY, already-existing worktree
@@ -50,19 +54,25 @@ setup-worktree.sh — provision a FalaMadeira agent worktree
 (worktree + node deps + claude-w profile + admin TEST creds)
 
 Usage:
-  bash scripts/setup-worktree.sh <role> [branch] [--no-install] [--print-profile]
-  bash scripts/setup-worktree.sh --wt <suffix>  [--no-install] [--print-profile]
+  bash scripts/setup-worktree.sh <role> [branch]                 [--no-install] [--print-profile]
+  bash scripts/setup-worktree.sh --issue <ID> [feat|fix|content] [--no-install] [--print-profile]
+  bash scripts/setup-worktree.sh --wt <suffix>                   [--no-install] [--print-profile]
 
 Modes:
-  role mode   role = feat | support | content | release
-              Creates fala_madeira-<role> on its default/topic branch if missing.
-              [branch] overrides the default topic branch (feat/support/content only;
-              release is always `main`).
-  --wt mode   Provision an ALREADY-EXISTING, ad-hoc worktree fala_madeira-<suffix>
-              (e.g. the per-issue en18/en23/en27 trees).  <suffix> is whatever
-              follows `fala_madeira-` in the dir name.  The worktree must already
-              exist — no branch is guessed; if missing you get the `git worktree add`
-              line to run first.
+  role mode    role = feat | support | content | release
+               Creates fala_madeira-<role> on its default/topic branch if missing.
+               [branch] overrides the default topic branch (feat/support/content only;
+               release is always `main`).
+  --issue mode --issue <ID> [feat|fix|content]  (kind also settable via --kind)
+               START NEW WORK: CREATES fala_madeira-<id> FROM develop on branch
+               <kind>/<id> (default kind feat), then installs + profiles + provisions
+               creds. <ID> is normalized to lowercase alphanumerics (EN-30 → en30).
+               This is the standard "start new work" entry point (AGENTS.md §7).
+  --wt mode    Provision an ALREADY-EXISTING, ad-hoc worktree fala_madeira-<suffix>
+               (e.g. the per-issue en18/en23/en27 trees).  <suffix> is whatever
+               follows `fala_madeira-` in the dir name.  The worktree must already
+               exist — no branch is guessed; if missing you get the `git worktree add`
+               line to run first.
 
 Flags:
   --no-install     skip `npm install`
@@ -76,10 +86,10 @@ Both modes auto-copy .admin-temp-credentials.txt into the worktree and generate 
 Then launch the agent:  claude-w --profile falamadeira-<role|suffix>-dev
 
 Examples:
+  bash scripts/setup-worktree.sh --issue EN-30 fix   # new work: create fala_madeira-en30 off develop on fix/en30
+  bash scripts/setup-worktree.sh --issue EN-31       # defaults to feat/en31
   bash scripts/setup-worktree.sh feat
-  bash scripts/setup-worktree.sh support fix/en7-download-resilience
-  bash scripts/setup-worktree.sh --wt en23
-  bash scripts/setup-worktree.sh --wt en30 --no-install
+  bash scripts/setup-worktree.sh --wt en23           # provision an existing ad-hoc worktree
 USAGE
 }
 
@@ -87,10 +97,12 @@ USAGE
 [ $# -eq 0 ] && { usage; exit 1; }
 
 # --- args (array-free: macOS bash 3.2 breaks on empty-array refs under set -u) ---
-ROLE=""; WT_SUFFIX=""; BRANCH_ARG=""; NO_INSTALL=0; PRINT_PROFILE=0; POS_COUNT=0
+ROLE=""; WT_SUFFIX=""; ISSUE_ID=""; ISSUE_KIND=""; BRANCH_ARG=""; NO_INSTALL=0; PRINT_PROFILE=0; POS_COUNT=0
 while [ $# -gt 0 ]; do
   case "$1" in
     -h|--help)       usage; exit 0 ;;
+    --issue)         ISSUE_ID="${2:-}"; [ -n "${ISSUE_ID}" ] || die "--issue requires an id (e.g. --issue EN-30 fix)"; shift 2 ;;
+    --kind)          ISSUE_KIND="${2:-}"; [ -n "${ISSUE_KIND}" ] || die "--kind requires feat|fix|content"; shift 2 ;;
     --wt)            WT_SUFFIX="${2:-}"; [ -n "${WT_SUFFIX}" ] || die "--wt requires a worktree suffix (e.g. --wt en23)"; shift 2 ;;
     --no-install)    NO_INSTALL=1; shift ;;
     --print-profile) PRINT_PROFILE=1; shift ;;
@@ -111,7 +123,19 @@ done
 #               (fala_madeira-<suffix>, e.g. the per-issue en18/en23/en27 trees).
 #               It must already exist (we don't guess a branch convention for ad-hoc
 #               worktrees); everything else (install, profile, creds) is identical.
-if [ -n "${WT_SUFFIX}" ]; then
+if [ -n "${ISSUE_ID}" ]; then
+  # --issue mode: create a per-issue worktree fala_madeira-<sfx> FROM develop on <kind>/<sfx>.
+  [ -z "${WT_SUFFIX}" ] || die "use --issue OR --wt, not both"
+  kind="${ISSUE_KIND:-${ROLE:-feat}}"   # --kind flag, else positional, else default feat
+  case "${kind}" in feat|fix|content) ;; *) die "issue kind must be feat|fix|content (got '${kind}')" ;; esac
+  sfx="$(printf '%s' "${ISSUE_ID}" | tr 'A-Z' 'a-z' | tr -cd 'a-z0-9')"   # EN-30 → en30
+  [ -n "${sfx}" ] || die "--issue id '${ISSUE_ID}' has no usable alphanumeric characters"
+  ROLE="${sfx}"; SUFFIX="${sfx}"                       # profile name = falamadeira-<sfx>-dev
+  NEED_LOCAL=1; NEED_DEPLOY=0; SCOPES="src public supabase/functions"
+  WT="${PARENT}/fala_madeira-${SUFFIX}"
+  BRANCH="${kind}/${sfx}"
+  CREATE_FROM="develop"                                # per-issue worktrees branch off develop (AGENTS.md §7)
+elif [ -n "${WT_SUFFIX}" ]; then
   [ -z "${ROLE}" ] || die "--wt <suffix> mode does not take a role positional (got '${ROLE}')"
   ROLE="${WT_SUFFIX}"; SUFFIX="${WT_SUFFIX}"          # profile name = falamadeira-<suffix>-dev
   NEED_LOCAL=1; NEED_DEPLOY=0; SCOPES="src public supabase/functions"
@@ -139,6 +163,8 @@ else
   say "creating worktree ${WT} …"
   if [ "${ROLE}" = "release" ]; then
     git -C "${REPO_ROOT}" worktree add "${WT}" main
+  elif [ -n "${CREATE_FROM:-}" ]; then
+    git -C "${REPO_ROOT}" worktree add "${WT}" -b "${BRANCH}" "${CREATE_FROM}"
   else
     git -C "${REPO_ROOT}" worktree add "${WT}" -b "${BRANCH}"
   fi
@@ -199,7 +225,9 @@ ${scopes_json}
   "autonomous": true,
   "setting_sources": "user,project,local",
   "model": "opus",
-  "allow_rules": [],
+  "allow_rules": [
+    "Bash(bash scripts/setup-worktree.sh:*)"
+  ],
   "deny_rules": [
     "Edit(${WT}/README.md)",
     "Write(${WT}/README.md)",
