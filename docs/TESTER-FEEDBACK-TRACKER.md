@@ -469,6 +469,15 @@
 - **Next action:** design-first — produce a UX design (flows + mockups) for the theme-authoring experience (e.g. `docs/EN-29-CONTENT-STUDIO-UX-DESIGN.md` + mockups under `docs/ui-mockup/`), explicitly deciding the desktop-only posture + responsive fallback. Owner reviews the design BEFORE any build. Ties CONTENT-ARCHITECTURE (themes/situations/packs) + the existing admin Content Studio.
 - **Owner:** design → owner. **Status:** OPEN (NEEDS DESIGN — no build until design approved).
 
+### NAV-1 — Navigation & discoverability polish (owner-raised 2026-07-19, staging .19.1 verify) — `OPEN (small batch)`
+- **Reports (owner, staging .19.1):** (1) the nav tab labelled **"Profile"** actually opens the **Settings** screen — the label is misleading, so "go to Settings" instructions don't help; relabel to **"Settings"** (or "Profile / Settings"). (2) The TB-1 **"Your level"** control is buried in Settings — a user seeing the wrong level on Home has no obvious path to change it. (3) The **About-in-nav** link (EN-4b) is expected but absent — because EN-4b was scoped but never built (still backlog).
+- **Batch (all small, coherent — "nav & discoverability"):**
+  - **NAV-1a** relabel `NAV_ITEMS` `{id:'settings', label:'Profile'}` → "Settings". ⚠ ripple: e2e specs navigate by `name:'Profile'` (09/10/64/etc.) — update them in the same change.
+  - **NAV-1b** = **TB-1 UX polish**: make the level text on Home tappable → deep-link to the Settings "Your level" control (reuse the EN-18 "take me there" pattern).
+  - **NAV-1c** = **EN-4b** (already tracked): build the desktop-sidebar About entry (mobile stays under Profile).
+- **Open (owner):** confirm label wording ("Settings" vs "Profile / Settings"); confirm the TB-1 "Your level" card actually renders on staging (pending owner check — distinguishes findability-gap from a render-bug).
+- **Owner:** Agent E (`feat/*`). **Next action:** requirements note for the batch → approval → build + coverage (incl. updating Profile-named specs). **Status:** OPEN (small batch; requirements/approval gate).
+
 ### EN-5 — Quiz results: persist + admin visibility + regression — `OPEN (backlog; owner-identified gap)`
 - **Gap (confirmed 2026-07-14):** quiz **scores/results are NOT stored** — only pass/fail survives as `profiles.completed_lessons` (score ≥ 3). No score value, per-question data, attempt history, or timestamp; the score doesn't feed the SRS/mastery engine.
 - **What IS covered:** completion persistence is regression-tested against the DB — `user/25-learning-quiz-progression-write.spec.ts` asserts `profiles.completed_lessons` is written after a passing quiz; `user/21-quiz-full-flow` covers the UI/scoring flow.
