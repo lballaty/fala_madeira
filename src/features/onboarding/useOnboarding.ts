@@ -25,41 +25,12 @@ import { useCallback, useEffect, useState } from 'react';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
 import type { PracticalLevel } from '../../content/schema';
 import type { UserProfile } from '../../types';
-import { config } from '../../config';
 import { logger } from '../../lib/logger';
 import { platform } from '../../platform';
+import { DEFAULT_RECORD, coerceRecord, storageKeyFor } from './onboardingRecord';
+import type { OnboardingRecord } from './onboardingRecord';
 
-/** Persisted per-user onboarding record (platform.storage). Consent lives on the profile row. */
-export interface OnboardingRecord {
-  /** True once the learner has finished the first-run flow (App.tsx gates on this). */
-  complete: boolean;
-  /** Placement level chosen at onboarding — a sensible starting point, never a lock (§5). */
-  placementLevel: PracticalLevel;
-  /** ISO timestamp the flow completed (diagnostics only). */
-  completedAt: string | null;
-}
-
-const DEFAULT_RECORD: OnboardingRecord = {
-  complete: false,
-  placementLevel: 0,
-  completedAt: null,
-};
-
-const isPracticalLevel = (value: unknown): value is PracticalLevel =>
-  typeof value === 'number' && Number.isInteger(value) && value >= 0 && value <= 5;
-
-/** Structural guard for a record read back from platform.storage (tolerates corruption). */
-const coerceRecord = (value: unknown): OnboardingRecord => {
-  if (typeof value !== 'object' || value === null) return { ...DEFAULT_RECORD };
-  const v = value as Record<string, unknown>;
-  return {
-    complete: v.complete === true,
-    placementLevel: isPracticalLevel(v.placementLevel) ? v.placementLevel : DEFAULT_RECORD.placementLevel,
-    completedAt: typeof v.completedAt === 'string' ? v.completedAt : null,
-  };
-};
-
-const storageKeyFor = (userId: string): string => `${config.onboarding.recordStorageKeyPrefix}${userId}`;
+export type { OnboardingRecord } from './onboardingRecord';
 
 interface OnboardingDeps {
   supabase: SupabaseClient | null;

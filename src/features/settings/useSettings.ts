@@ -18,6 +18,8 @@ import { audioCache } from '../../lib/audioCache';
 import { downloadForOffline, DownloadScope } from '../../lib/audio-download';
 import { focusControl } from '../../lib/focusControl';
 import { validateText } from '../../lib/validation';
+import type { PracticalLevel } from '../../content/schema';
+import { setProficiencyLevel } from '../onboarding/proficiency';
 
 /**
  * TB-8: decide whether an admin edit of the global voice limit should be persisted to
@@ -464,6 +466,26 @@ export const useSettings = ({
     }
   };
 
+  // TB-1 (Option B): persist the learner's chosen proficiency level through the ONE shared writer
+  // (setProficiencyLevel) that onboarding's mirror + the backfill-heal also use — DB source of
+  // truth + local mirror + optimistic setProfile, all in lock-step. NO access key, NO paywall, and
+  // it NEVER touches unlocked_level (separation invariant, REQUIREMENTS §2/§5.4/§5.5). Best-effort:
+  // failures are logged inside the writer; a failed DB write surfaces a calm toast, never a crash.
+  const handleSetProficiencyLevel = useCallback(
+    async (level: PracticalLevel) => {
+      const ok = await setProficiencyLevel({
+        supabase,
+        userId: user?.id ?? null,
+        level,
+        setProfile,
+      });
+      if (!ok && supabase && user) {
+        showToast('Could not save your level — please try again', 'error');
+      }
+    },
+    [supabase, user, setProfile, showToast],
+  );
+
   const handleOpenTicket = async () => {
     if (!supabase || !user) return;
     // Validate + limit before persisting (ENGINEERING-STANDARDS §4).
@@ -652,6 +674,7 @@ export const useSettings = ({
     handleSelectTutor,
     handleSetTtsProvider,
     handleSetTtsByoKeyRef,
+    handleSetProficiencyLevel,
     handleOpenTicket,
     handleCollectLogs,
     // My submissions (Settings → account; feedback-status-visibility)
