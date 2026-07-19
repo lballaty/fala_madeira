@@ -7,9 +7,13 @@
 --   audio-sync-confirm edge action is the PRIMARY reclaim path — COORD-2 ROBUSTNESS-1). Idempotent.
 -- Author: Libor Ballaty (with assistant)
 -- Created: 2026-07-15
--- NOT YET APPLIED: operator-gated. Lands in the SHARED prod DB (COORD-2 BLOCKING-2, owner-accepted).
---   Safe because runtime write-back is curated-only + env-flag-gated + non-blocking. Apply via the
---   Supabase Dashboard SQL editor (psql fails against cloud) once the Verpex feasibility spike is GO.
+-- APPLIED 2026-07-16 to the SHARED prod DB (gxlrmdfqcqimwwplrdgd) via `node apply-migrations.js`
+--   (owner-approved EN-8 staging trial; COORD-2 BLOCKING-2 accepted). Idempotent; safe because runtime
+--   write-back is curated-only + env-flag-gated (TTS_BUFFER_WRITEBACK=OFF) + non-blocking.
+-- VERIFIED LIVE 2026-07-19 via scripts/verify-migration-00012.mjs (Supabase Management API):
+--   storage.buckets id=tts-audio public=true; policy tts_audio_public_read on storage.objects
+--   (SELECT → anon,authenticated); pg_cron installed; cron.job tts-audio-orphan-backstop
+--   schedule '0 3 * * *' active=true. See supabase/migrations/APPLIED.md (row 00012).
 
 -- 1) Public buffer bucket (a small hot buffer; Verpex is the durable home).
 insert into storage.buckets (id, name, public)
