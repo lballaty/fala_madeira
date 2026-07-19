@@ -28,6 +28,7 @@ Stores user-specific profile information and progress.
 - `is_sound_enabled`: `boolean` (Default: true)
 - `tts_provider`: `text` (NULL = platform default TTS chain azure→gemini; CHECK: 'azure', 'gemini', 'google', 'elevenlabs', 'openai', 'polly' or NULL — migration 00007)
 - `tts_byo_key_ref`: `text` (NULL; reference ONLY — the NAME of an admin-registered edge/Vault secret holding the user's bring-your-own provider key. Raw API keys must NEVER be stored in this column — migration 00007)
+- `proficiency_level`: `smallint` (NULL, no default — learner's self-described practical/placement level (0–5). WHOLLY separate from the paywall `unlocked_level` (separation invariant, TB-1). Owner-writable under the existing profiles self-update RLS — migration 00015)
 
 ### `lessons`
 Stores both static curriculum lessons and user-created custom lessons.
