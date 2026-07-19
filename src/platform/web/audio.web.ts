@@ -171,23 +171,52 @@ export const createWebAudioAdapter = (): AudioAdapter => {
       const utterance = new Utterance(text);
       utterance.lang = options?.lang ?? 'pt-PT';
       utterance.rate = options?.rate ?? 1.0;
-      utterance.onend = () => options?.onEnded?.();
-      // onerror fires after speak() has already resolved (async), so it cannot reject here; the
-      // onEnded contract still fires so callers' spinners clear. EN-27 P0.3: device speech is the
-      // TTS fallback of last resort — a silent onerror meant "silence reported as success". Log it
-      // (SYSTEM_HEALTH) so the failure is visible even though we still clear the caller's spinner.
-      utterance.onerror = (event) => {
-        logger.error('WEB_SPEECH_SYNTHESIS_ERROR', 'Browser speech synthesis (device-voice fallback) failed', {
-          category: 'SYSTEM_HEALTH',
-          details: {
-            error: (event as SpeechSynthesisErrorEvent)?.error ?? 'unknown',
-            lang: utterance.lang,
-            textLength: text.length,
-          },
-        });
-        options?.onEnded?.();
-      };
-      synth.speak(utterance);
+
+      // EN-31 GAP 1: device speech is the TTS fallback of LAST RESORT. Previously speak() resolved
+      // as soon as synth.speak() was queued, and onerror (which fires asynchronously, after that
+      // resolution) could only LOG — so a real failure (no pt-PT voice, autoplay-gesture block,
+      // engine error) was reported to the caller as SUCCESS → the user got silence with NO
+      // notification. Now speak() stays pending and settles on the utterance lifecycle: resolve on
+      // `onend`, REJECT on `onerror` (so the failure propagates geminiService.playSpeech →
+      // useSpeechPlayback → the existing error toast). `onEnded` still fires on EVERY path so the
+      // caller's spinner-clear contract is preserved. A timeout backstop RESOLVES (never rejects —
+      // a timeout is ambiguous, not a definite failure) so a dropped utterance can't hang the await.
+      return new Promise<void>((resolve, reject) => {
+        let settled = false;
+        // Generous cap scaled to text length, bounded so the promise cannot hang forever.
+        const capMs = Math.min(30_000, 4_000 + text.length * 120);
+        const timer = setTimeout(() => {
+          if (settled) return;
+          settled = true;
+          logger.warn('WEB_SPEECH_SYNTHESIS_TIMEOUT', 'device speech neither ended nor errored within the backstop window', {
+            category: 'SYSTEM_HEALTH',
+            details: { lang: utterance.lang, textLength: text.length, capMs },
+          });
+          options?.onEnded?.();
+          resolve();
+        }, capMs);
+
+        utterance.onend = () => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          options?.onEnded?.();
+          resolve();
+        };
+        utterance.onerror = (event) => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          const errKind = (event as SpeechSynthesisErrorEvent)?.error ?? 'unknown';
+          logger.error('WEB_SPEECH_SYNTHESIS_ERROR', 'Browser speech synthesis (device-voice fallback) failed', {
+            category: 'SYSTEM_HEALTH',
+            details: { error: errKind, lang: utterance.lang, textLength: text.length },
+          });
+          options?.onEnded?.(); // preserve the spinner-clear contract on the failure path too
+          reject(new PlatformError('audio', 'playback-failure', 'Device speech synthesis failed.', String(errKind)));
+        };
+        synth.speak(utterance);
+      });
     },
 
     pause() {

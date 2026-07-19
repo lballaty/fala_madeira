@@ -110,22 +110,45 @@ describe('web AudioAdapter.speak() — TTS fallback', () => {
     expect(cancelSpy).toHaveBeenCalled();
   });
 
-  it('logs WEB_SPEECH_SYNTHESIS_ERROR and still fires onEnded when the utterance errors (EN-27 P0.3)', async () => {
+  it('REJECTS (and logs, and still fires onEnded) when the utterance errors — EN-31 GAP 1: the silent device-speech failure now reaches the caller', async () => {
+    // Suppress the default auto-onend so we control the outcome (the engine errors instead).
+    speakSpy.mockImplementation((u: FakeUtterance) => { lastUtterance = u; });
     const adapter = createWebAudioAdapter();
     const onEnded = vi.fn();
-    await adapter.speak('falha', { lang: 'pt-PT', onEnded });
-    await Promise.resolve(); // flush the fake engine's auto-onend microtask
-    onEnded.mockClear(); // isolate the onerror path's onEnded from the auto-onend above
-    // Simulate the engine firing onerror instead of onend — the "silence as success" case.
+    const pending = adapter.speak('falha', { lang: 'pt-PT', onEnded });
+    await Promise.resolve(); // let synth.speak() register the handlers
     expect(lastUtterance?.onerror).toBeTypeOf('function');
+    // Simulate the engine firing onerror — the "silence reported as success" case, now surfaced.
     lastUtterance?.onerror?.({ error: 'synthesis-failed' });
-    // The failure is now visible in the logger...
+    // The promise REJECTS so geminiService.playSpeech → useSpeechPlayback shows the failure toast.
+    await expect(pending).rejects.toMatchObject({ capability: 'audio', code: 'playback-failure' });
+    // The failure is visible in the logger (observability preserved)...
     expect(logger.error).toHaveBeenCalledWith(
       'WEB_SPEECH_SYNTHESIS_ERROR',
       expect.any(String),
       expect.objectContaining({ category: 'SYSTEM_HEALTH' }),
     );
-    // ...and the caller's spinner still clears (onEnded contract preserved).
+    // ...and the caller's spinner still clears on the failure path (onEnded contract preserved).
     expect(onEnded).toHaveBeenCalledTimes(1);
+  });
+
+  it('resolves on the timeout backstop (never rejects) when the engine neither ends nor errors', async () => {
+    vi.useFakeTimers();
+    try {
+      speakSpy.mockImplementation((u: FakeUtterance) => { lastUtterance = u; }); // no onend, no onerror
+      const adapter = createWebAudioAdapter();
+      const onEnded = vi.fn();
+      const pending = adapter.speak('sem fim', { onEnded });
+      await vi.advanceTimersByTimeAsync(31_000); // past the 30s cap
+      await expect(pending).resolves.toBeUndefined(); // timeout resolves, no false error
+      expect(onEnded).toHaveBeenCalledTimes(1);
+      expect(logger.warn).toHaveBeenCalledWith(
+        'WEB_SPEECH_SYNTHESIS_TIMEOUT',
+        expect.any(String),
+        expect.objectContaining({ category: 'SYSTEM_HEALTH' }),
+      );
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
