@@ -4,8 +4,8 @@
 **Description:** Durable tracker for tester-reported bugs, the support-ticket workstream, and every deferred item in it. Standing rule (owner directive 2026-07-14): nothing is closed by declaring it "not our lane" — every deferral is logged here with owner + next action so it cannot get buried.
 **Author:** Libor Ballaty
 **Created:** 2026-07-14
-**Last Updated:** 2026-07-17
-**Last Updated By:** claude-en23 (EN-23 admin audio panel APPROVED + BUILT, EN-8-independent slice)
+**Last Updated:** 2026-07-19
+**Last Updated By:** claude-opus-runner (staging 2026.07.18.4 verify — new TB-30 double-consent; re-confirmed TB-1 proficiency-no-op + EN-4b about-nav-link)
 
 ---
 
@@ -101,6 +101,7 @@
 - **Coordination flags:** DB migration (DB agent). Touches `SettingsView.tsx` (Lane A's goal chooser + Lane B's TB-11b already there) and possibly `App.tsx` (Lane B live for SEC-1) — reserve + sequence before editing. `useOnboarding.ts`/`HomeView.tsx`/`useHome.ts` are currently conflict-free.
 - **Owed:** requirements doc → owner approval → build → **e2e test** (owner asked explicitly). Branch: `develop`.
 - **Status:** DECIDED (Option B); **NEEDS REQUIREMENTS + owner approval before coding** (AGENTS §3) + DB coordination.
+- **↩ Staging re-confirmation (owner, 2026.07.18.4 verify 2026-07-19):** independently re-observed on staging — "it doesn't appear to make any difference what proficiency level I choose as to where the system wants to start my learning — so what is the point of the proficiency choices." Confirms the same defect from a second reporter/session: placement is collected but never drives the learning start. This is the exact symptom Option B fixes (proficiency drives the level label + a Settings control; placement→`proficiency_level`). **No new item — reinforces TB-1's priority.** The requirements doc (`docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md`) + owner approval are still the gate before build. Note: whether placement should also alter the **content start point** (not just the displayed level) is an open product question to resolve in the requirements — the owner's "where the system wants to start my learning" framing implies they expect placement to affect the actual starting curriculum, which is broader than the current Option-B display-field shape.
 
 ### TB-2 — First-words screen speaker/audio button does nothing (reporter: owner) — `DONE (fixed + verified; edge deployed)`
 - **Report:** "In the first words screen the speaker button doesn't seem to work when I click it."
@@ -335,6 +336,14 @@
 - **Gap:** the correction approve→ticket flow (SW-8) has no link to *where the fix is actually applied* (Content Studio). Define how an approved correction/ticket routes an editor to the relevant situation in Content Studio and back to closing the ticket. Depends on SW-8. → Needs a written spec + approval before coding.
 - **Owner/lane:** Agent E + content, after SW-8. **Status:** NEEDS REQUIREMENTS.
 
+### TB-30 — Double consent: new user re-asked Terms of Service + AI security agreement during onboarding after already accepting at registration (reporter: owner, staging 2026.07.18.4 verify 2026-07-19) — `OPEN (needs root-cause code-read)`
+- **Report (owner):** registering a brand-new account presents the Terms of Service + AI security agreement checkboxes **at registration**; then, after the "Bem-vindo" welcome, onboarding presents a **second** Terms of Service + AI security agreement screen — the same boxes must be checked again and "Start Learning" clicked — before Home. Redundant re-consent **within a single new-user flow**.
+- **Distinct from TB-7:** TB-7 was re-consent on **every login** for a *returning* user (fixed, `092605b`, via `isComplete = record.complete || (profile.has_accepted_terms && profile.has_accepted_ai_usage)`). This is a **brand-new user asked twice in one signup flow** — TB-7's skip-on-consent should have fired if registration had persisted the flags.
+- **Root-cause hypothesis (NEEDS code-read confirmation):** registration's consent is **not written to** `profiles.has_accepted_terms` / `has_accepted_ai_usage` (or onboarding renders its consent step before consulting them), so onboarding's terminal consent step re-collects it. Onboarding's `complete()` is the code path that writes those two flags (`useOnboarding.ts:142-148`, per TB-1) — implying registration may not write them at all. If so, the registration checkboxes are **cosmetic/unpersisted**, which is a **consent-integrity smell** (asked-and-recorded should be authoritative and asked once).
+- **Not a .18.4 regression** — pre-existing; does not block the crash-fix release. Fast-follow.
+- **Next action:** confirm whether the registration form persists consent (which columns/table) vs. onboarding; decide the single source of truth (record consent once at registration → onboarding skips the step when `has_accepted_*` already true, reusing TB-7's gate). Ships with a new-user e2e asserting the consent step is shown **exactly once**.
+- **Owner:** Agent S / E (`fix/*`). **Severity:** MEDIUM (UX friction + consent-integrity smell); confirm the persistence gap before sizing. **Status:** OPEN.
+
 ---
 
 ## Infra / process deferrals
@@ -398,6 +407,7 @@
 - **Coverage required (per §3 gate):** extend `user/53` (or a new spec) to assert one-click open from the desktop sidebar entry; add the `nav-about` control id to the interactive-coverage inventory (`check-interactive-coverage.mjs`) + a `data-testid="nav-about"`; add a CHANGELOG line at its cut.
 - **Sequencing:** **deferred out of the `2026.07.18.3` cut** — must NOT be added to the state currently being regression-gated (would invalidate the run). Implement as its own small change after `.18.3` stages.
 - **Owner:** Agent E (`feat/*`). Priority: next release (small). **Next action:** build the desktop-sidebar About entry (mobile unchanged) + coverage, after `.18.3` stages. **Status:** OPEN (backlog; scope confirmed).
+- **↩ Staging re-confirmation (owner, 2026.07.18.4 verify 2026-07-19):** "the about link doesn't show in the navigation bar at all — so that wasn't properly done." Correct as-observed, and **as-tracked**: EN-4b was captured 2026-07-18 as backlog and **deliberately deferred out of the .18.3/.18.4 cuts** (adding a nav control mid-gate would invalidate the regression run), so it was never built — this is a not-yet-done backlog item, **not a regression**. The EN-4 About feature itself IS shipped and reachable via **Settings → About** (that is how the .18.4 version is verifiable on staging). `.18.4` has now staged, so the sequencing blocker is cleared — **EN-4b is buildable next** (desktop-sidebar entry + coverage). Bumping priority given the second owner ask.
 
 ### EN-23b — Admin Audio panel defects (owner-reported 2026-07-18; mostly panel bugs, NOT EN-8-blocked) — `OPEN`
 - **Report (owner):** the admin Audio tab (1) loads all files at once, (2) play button doesn't work, (3) can't tell if a file is present on the server, (4) file size not shown, (5) everything says "pending EN-8".
