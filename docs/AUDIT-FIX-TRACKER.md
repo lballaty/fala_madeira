@@ -59,3 +59,14 @@ Acceptance: coverage gate reports 100% of interactive elements exercised with at
 
 ## For the executing agent
 Priority order for the remaining defects: **A3** (quick, correctness) → **A2/A4** (verify writes persist) → **A5** (counter RPC, before offline counter sync is trusted) → **A6** (observability). A7 is your `content-enrichment` step. Keep `tsc --noEmit` wired into `preflight-and-standards` so A1 cannot silently return.
+
+## Reconciliation pass 2026-07-19 (claude-reconcile)
+Full verification/reconciliation of docs, trackers, and artifacts against shipped reality (git-verified). Executed via `plans/plan-2026-07-19-repo-reconciliation-remediation.yaml`. All changes doc/archive-only; develop verified green (preflight all hard gates + e2e regression **138/141**, 0 failed) before push.
+
+- **Ticket status headers reconciled (8):** EN-25 (→ SHIPPED prod 2026.07.17.1), SEC-2 (→ SHIPPED 2026.07.15.5), TB-1 (→ SHIPPED, 00015 live), EN-23b (→ W1–W4 SHIPPED), EN-23 (→ MVP SHIPPED), EN-15 (added missing header, SHIPPED), EN-17/18 (→ BUILT+SHIPPED), EN-34 (fixed DRAFT/APPROVED header contradiction).
+- **APPLIED.md gap closed:** added previously-missing `00010`/`00011` rows — both **verified present live** 2026-07-19 via read-only Supabase Management API (logs +7 cols; profiles +4 cols); original apply date/method was unrecorded (noted honestly).
+- **STANDARDS-COMPLIANCE-REPORT refreshed:** retracted the false "no e2e suite" claim (item 44 not-yet → met); counts updated (vitest 154→616, config.ts 369→432, pure-logic 14→87 files).
+- **Minor doc updates:** DATABASE_DESIGN (+proficiency_level), README (test counts), ENGINEERING-STANDARDS (§9 preflight gate inventory), REQUIREMENTS-TRACKER + APPLIED.md headers, TESTER-FEEDBACK-TRACKER (TB-1 label + gemini→ai-gateway historical-ref note).
+- **Archived (history-preserving git mv):** 7 completed plans + 3 checkpoints → `plans/archive/`; 2 session-handoffs → `docs/archive/handoffs/`; 3 UI mockups + EN-21 mockup → `docs/archive/mockups/`; stale `APPLICATION_DOCUMENTATION.html` → `docs/archive/`.
+- **Incidental fixes (NAV-1, found by the green-gate):** eslint `set-state-in-effect` in `SettingsView.tsx` (NAV-1c About deep-link) and 2 e2e specs (01/11) with ambiguous "Settings" selectors after the Profile→Settings relabel (NAV-1a).
+- **Operator-gated (surfaced, NOT executed):** per-file `rm` manifest for stale one-offs + `.admin-temp-credentials.txt` (rotate password first) — see `docs/TESTER-FEEDBACK-TRACKER.md` "Reconciliation 2026-07-19 — operator-gated removals".
