@@ -114,11 +114,20 @@ HEAD-skip, already throttled+retried, already emits a JSON summary) and schedule
 - **EN-8 pipeline** — `tts-audio` bucket (migration 00012, live), Verpex pull cron,
   and (for B) the contention fix.
 
-## 7. Consumers
+## 7. Consumers & sibling reconciliation (owner directive 2026-07-19)
 
-- **EN-32** (onboarding 6 greeting clips) — the **first priority batch** of A
-  (`--corpus onboarding`). Optionally a one-off manual stopgap run before the schedule lands.
-- **EN-33** (month-1 content) — the next tranche (`--corpus level:0` / month-1).
+- **EN-32 (onboarding 6 clips) — ABSORBED into EN-34** as its first work package. One owner
+  builds `--corpus onboarding` + the 6-clip corpus capture **once, here** (no parallel build in
+  the EN-32 track). The immediate manual stopgap = "run EN-34's Phase-A `pregen --corpus onboarding`
+  entry" (operator-gated; hits the shared prod bucket). EN-32's tracker entry now points here.
+- **EN-33 (month-1 content)** — the next tranche (`--corpus level:0` / month-1), gated on TB-13.
+- **EN-31 (audio-fail user notification) — PAIRED with EN-34** for a complete reliability story:
+  EN-34 *reduces* audio failures by hosting; EN-31 *surfaces* the ones that remain (the silent
+  device-speech `onerror`-after-resolve gap, `audio.web.ts:159-190`). EN-31 gets its own short
+  requirements (`docs/EN-31-AUDIO-FAIL-NOTIFICATION-REQUIREMENTS.md`) + owner approval before build;
+  sequenced alongside EN-34.
+- **Out of scope / separate tracks:** TB-30 (double-consent — onboarding UX, orthogonal),
+  TB-13 (dedicated provider key — the volume unblock for EN-33).
 
 ## 8. Operator-gating & blast radius
 
@@ -154,6 +163,11 @@ The EN-23 admin Audio tab already lets an admin **rate** a clip (`good`/`bad`/`r
 - **Why re-synth helps:** most bad clips are transient provider defects (empty/silent/truncated `finishReason=OTHER`); a fresh render fixes them. Persistently-bad output needs a voice/param/text change (alters the key) — future scope.
 - **Panel feedback (W5):** with the manifest + a real tier, the panel shows true present/missing per tier **and the current generation**, so the admin sees the re-record land.
 
+**Alignment refinements (folded in 2026-07-19 after the panel↔hosting review):**
+- **A — Presence & preview follow the CURRENT generation.** The panel's server-tier badge (W5) and the admin Play must resolve a clip via the manifest's current `object_name`/generation — never a fixed legacy name — or right after a re-record the panel would HEAD the stale `…pcm` (show "missing") and preview the old clip.
+- **B — ONE enumeration source, panel ↔ warm fn.** The panel (`linesForSituation`) and the `audio-warm` fn must enumerate the corpus from the same definition, or "what the panel shows" drifts from "what gets hosted" (the COORD-1 risk — the app may render from the bundled content pack while the edge reads DB tables). Pin a single enumeration contract; verify parity during build.
+- **C — Re-score the new generation on the panel's next preview.** The quality scorer (`scoreClip`) is Web-Audio/browser-only, so the Deno warm fn cannot re-score; the panel re-scores when the admin previews the regenerated clip (reuses existing code) so the admin can see whether the re-record is actually good.
+
 ---
 
-**Status:** DRAFT — **decisions locked 2026-07-19** (schedule host = pg_cron→edge; versioning = build now; contention = symlink). **AWAITING OWNER BUILD APPROVAL.** Executable plan: `plans/plan-2026-07-19-en34-incremental-audio-hosting.yaml` (gated on this approval; autonomous code/test/docs on `develop` behind inert flags, HALTs at every live/operator step).
+**Status:** **APPROVED to build 2026-07-19** (owner). Decisions locked (schedule host = pg_cron→edge; versioning = build now; contention = symlink); alignment refinements A/B/C folded (§11); **EN-32 absorbed, EN-31 paired** (§7). Executable plan: `plans/plan-2026-07-19-en34-incremental-audio-hosting.yaml` — autonomous code/test/docs on `develop` behind inert flags, HALTs at every live/operator step. Live activation (migrations apply, edge deploy, Verpex symlink/cron, `TTS_BUFFER_WRITEBACK` flip, bucket writes) remains operator-gated + staging-first (the `tts-audio` bucket is shared prod+staging).
