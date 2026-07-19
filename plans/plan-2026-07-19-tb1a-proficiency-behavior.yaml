@@ -1,0 +1,141 @@
+# File: plans/plan-2026-07-19-tb1a-proficiency-behavior.yaml
+# Description: Executable plan for TB-1a — make the platform ACTUALLY BEHAVE per proficiency_level:
+#   placement drives WHERE the curriculum starts (structured start month, adaptive scorer input,
+#   goal-track first-at-level), bounded by accessible content, deferring to a real resume point.
+#   Pure derivation on top of TB-1's proficiency_level — NO new DB column/migration (Decision D3).
+#   The paywall (unlocked_level) stays a SEPARATE CHECK at point-of-open; it never drives/re-routes
+#   the flow (owner principle 2026-07-19). Per docs/TB-1a-PROFICIENCY-BEHAVIOR-REQUIREMENTS.md.
+#   ⚠ Decisions D1–D5 + the §4 per-path mappings (D-map) need OWNER SIGN-OFF before a fully
+#   autonomous run — the plan encodes the RECOMMENDED answers so it CAN run, but the pre-flight
+#   gate below records the sign-off requirement.
+# Author: claude-orchestrator (with owner)
+# Created: 2026-07-19
+
+plan:
+  title: >
+    TB-1a: proficiency_level drives the learning START point (structured start month = clamp(p+1,1,6),
+    adaptive scorer fed real placement, goal-track first-at-level), bounded by accessible content,
+    resume-wins precedence (DF11), paywall stays an orthogonal point-of-open CHECK. Pure derivation,
+    no migration. Separation invariant widened to the start point + tested.
+  branch: feat/tb1a-proficiency-behavior
+  goal_validation:
+    - "PathContext.placementLevel carries the real profiles.proficiency_level (App wiring), not the hard-coded 1."
+    - "A fresh placement-2 learner's structured start is later than Day 1 of Month 1 (bounded by accessible content); placement-0 starts at Month 1 Day 1 — a difference is observable (the reported bug is fixed)."
+    - "Resume wins: a learner with a completion/advanced cursor resumes at their cursor regardless of placement (R12/DF11)."
+    - "Separation invariant widened + proven by test: deriving/changing the start point never writes unlocked_level; raising unlocked_level never moves the proficiency-derived start (R14)."
+    - "Retroactive + non-destructive: changing proficiency in Settings re-bases the recommended start only for a not-yet-advanced learner and never destroys progress (R13)."
+    - "Full gate green: tsc + eslint + vitest + CI=1 e2e regression + ship dry-run; new NN-proficiency-behavior e2e passes."
+
+  steps:
+    - id: owner-signoff-gate
+      description: >
+        OWNER GATE (manual, requirements+approval per AGENTS §3): confirm the §9 decisions and the §4
+        per-path mappings in docs/TB-1a-PROFICIENCY-BEHAVIOR-REQUIREMENTS.md — D1 (null→0 start),
+        D2 (clamp start to accessible month), D3 (no new column; detect resume via cursor-beyond-default
+        OR ≥1 completion), D4 (seed initial cursor inside structured-course.next(), pure), D5 (defer
+        adaptive scorer tuning), and the D-map (structured p→month=p+1 table + goal-track level>=p).
+        The plan encodes the RECOMMENDED answer for each so it can proceed; this gate records explicit
+        sign-off. NOT auto-run.
+      command: "OPERATOR: review docs/TB-1a-PROFICIENCY-BEHAVIOR-REQUIREMENTS.md §4 + §9 and confirm D1–D5 + the per-path mappings (or amend). Record the decision in docs/TESTER-FEEDBACK-TRACKER.md TB-1a."
+      validation: "Owner has recorded sign-off (or amendments) for D1–D5 + §4 mappings in the TB-1a tracker entry."
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: branch-setup
+      description: Provision an isolated worktree on feat/tb1a-proficiency-behavior off origin/develop.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira worktree add /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a -b feat/tb1a-proficiency-behavior origin/develop && bash /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/scripts/setup-worktree.sh --wt tb1a
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a rev-parse --abbrev-ref HEAD | grep -qx feat/tb1a-proficiency-behavior
+      depends_on: [owner-signoff-gate]
+      fatal_on_failure: true
+
+    - id: app-wiring
+      description: >
+        R9: thread the real proficiency into the path context. src/App.tsx:178 —
+        usePathContext({ supabase, user, placementLevel: (profile?.proficiency_level ?? 0) as PracticalLevel }).
+        src/features/session/usePathContext.ts:96 — change the fallback from `?? 1` to `?? 0` (D1/§5.4).
+        This single fix makes Adaptive Guided honor placement (§4.2). Unit-test usePathContext threads the value.
+      command: "IMPLEMENT per REQUIREMENTS §7.1/§7.2; edit src/App.tsx:178 + src/features/session/usePathContext.ts:96 (import PracticalLevel type as needed); add/extend a usePathContext unit test asserting placementLevel is threaded (real value in, 0 on null)."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && npx vitest run src/features/session/ && npx tsc --noEmit
+      depends_on: [branch-setup]
+      fatal_on_failure: true
+
+    - id: structured-start
+      description: >
+        §4.1/§7.3 (Decision D4 = pure, option b): add pure helper initialStructuredMonth(p)=clamp(p+1,1,6)
+        beside structured-course.ts; in structured-course.next(), when the cursor is the untouched default
+        AND no completions exist (D3 resume detection: cursor==(1,1) && completedSituationIds.size===0),
+        treat the effective start month as max(cursorMonth, initialStructuredMonth(context.placementLevel)).
+        Resume (advanced cursor OR ≥1 completion) always wins (R12). Pure/deterministic — unit-testable.
+      command: "IMPLEMENT per §4.1/§7.3; edit src/paths/structured-course.ts (add initialStructuredMonth + seed-when-not-resumed in next()); add src/paths/__tests__ cases: p=2 no-progress → next at/after Month 3 Day 1; advanced-cursor/completion → resume regardless of p; p=0 → Month 1 Day 1."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && npx vitest run src/paths/ && npx tsc --noEmit
+      depends_on: [app-wiring]
+      fatal_on_failure: true
+
+    - id: goal-track-start
+      description: >
+        §4.3/§7.5: in src/paths/goal-track.ts next(), prefer the first uncompleted track situation with
+        level >= context.placementLevel, falling back to the current first-uncompleted behavior when none
+        meet the bar. Pure; soft ordering preserved (never a hard gate). Unit-test the at-level start + fallback.
+      command: "IMPLEMENT per §4.3; edit src/paths/goal-track.ts next(); add src/paths/__tests__ cases: level>=p start; fallback when no situation meets the bar; unchanged when p=0."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && npx vitest run src/paths/ && npx tsc --noEmit
+      depends_on: [app-wiring]
+      fatal_on_failure: true
+
+    - id: accessible-start-clamp
+      description: >
+        §5.3.2/§7.4 (Decision D2 = clamp): in the wiring layer (App / a small pure selector), bound the
+        placement-derived structured start DOWN to the highest accessible month using canAccessLevel/
+        hasFullContentAccess (src/lib/access.ts) as a READ-ONLY predicate — chosenStartMonth =
+        min(initialStructuredMonth(p), highestAccessibleMonth(profile)). MUST NOT mutate unlocked_level,
+        MUST NOT open the unlock modal, MUST NOT restart the flow (flow stays paywall-blind; this is a
+        flow-layer "pick an accessible start", not a paywall re-route). Keep src/paths/* paywall-free.
+      command: "IMPLEMENT per §5.3.2/§7.4; add a pure highestAccessibleMonth(profile) selector (reuse src/lib/access.ts predicates) and clamp the effective structured start in the wiring before it reaches the pure policy; unit-test: p=2 & unlocked_level=1 → start bounded to accessible month (not Month 3); admin/unlimited → unbounded."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && npx vitest run src/lib/ src/paths/ src/features/session/ && npx tsc --noEmit
+      depends_on: [structured-start]
+      fatal_on_failure: true
+
+    - id: invariant-and-retro-test
+      description: >
+        R13/R14 widened invariant tests: (1) deriving/seeding/changing the start performs NO unlocked_level
+        write; (2) raising unlocked_level leaves the derived start month unchanged; (3) changing proficiency
+        for a learner WITH progress does not move the resume point or touch completions, and for a learner
+        WITHOUT progress re-bases the recommended start (retroactivity, non-destructive).
+      command: "IMPLEMENT per §10; add src/**/__tests__ tests asserting the widened separation invariant (start point ⟂ unlocked_level, both directions) and retroactive non-destructive re-base."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && npx vitest run --reporter=dot 2>&1 | grep -qiE "invariant|proficiency|start"
+      depends_on: [structured-start, goal-track-start, accessible-start-clamp]
+      fatal_on_failure: true
+
+    - id: e2e
+      description: >
+        New tests/e2e/user/NN-proficiency-behavior.spec.ts (§10 E2E; pick the next free number): onboard
+        fresh at "Basic conversation" (p=2) → Home CTA starts further in than Month1/Day1 (bounded by
+        access) → capture paywall/unlocked_level before+after (INVARIANT: placement start did not unlock
+        paid content / move the paywall) → change proficiency in Settings with no progress → CTA re-bases →
+        two fresh users p=0 vs p=2 land at DIFFERENT starts (the reported-bug proof) → access-key unlock
+        still raises unlocked_level and does not alter the proficiency-derived start.
+      command: "IMPLEMENT per §10 E2E; author tests/e2e/user/NN-proficiency-behavior.spec.ts on disposable users (per e2e sign-out/session memory), reuse the fresh-user onboarding flow."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && CI=1 npx playwright test tests/e2e/user/*proficiency-behavior*.spec.ts --reporter=list
+      depends_on: [invariant-and-retro-test]
+      fatal_on_failure: true
+
+    - id: full-gate
+      description: >
+        Full release gate on the topic branch — tsc + eslint + full vitest + fresh-server e2e regression
+        (CI=1 so it never reuses a stale dev server) + credential-free ship dry-run. Runs on develop-lineage
+        (has live creds); the release worktree is deploy-only (reference-worktree-roles memory).
+      command: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && npx tsc --noEmit && npm run lint && npx vitest run && CI=1 npm run test:e2e:regression && npm run deploy -- --dry-run
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1a && grep -E '"failed": 0' artifacts/e2e/summary.json && echo "gate green"
+      depends_on: [e2e]
+      fatal_on_failure: true
+
+    - id: merge-to-develop
+      description: Merge feat/tb1a-proficiency-behavior into develop (no-ff) once the gate is green; push.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira checkout develop && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira merge --no-ff feat/tb1a-proficiency-behavior -m "Merge feat/tb1a-proficiency-behavior into develop — TB-1a (placement drives the learning start point)" && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira push origin develop
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira log --oneline -1 | grep -qi tb1a
+      depends_on: [full-gate]
+      fatal_on_failure: true
+
+# NOTE: TB-1a is a CODE-ONLY change — NO migration, NO operator DB gate (Decision D3 = pure derivation on
+# TB-1's proficiency_level + the existing persisted cursor). The only manual gate is owner-signoff-gate
+# (D1–D5 + the §4 per-path mappings). The release cut (develop->main, version bump, staging->approve->
+# production) is a SEPARATE operator-gated step, intentionally NOT in this plan (matches TB-1/EN-23b).
