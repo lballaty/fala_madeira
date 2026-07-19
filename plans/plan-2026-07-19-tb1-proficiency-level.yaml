@@ -1,0 +1,129 @@
+# File: plans/plan-2026-07-19-tb1-proficiency-level.yaml
+# Description: Executable plan for TB-1 (Option B) — persist onboarding placement to a new
+#   profiles.proficiency_level column, show it on Home, let the learner change it in Settings,
+#   fully separate from the paywall unlocked_level. Per docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md
+#   §1-§10 (APPROVED 2026-07-19). TB-1a (platform-acts-per-proficiency) is OUT OF SCOPE here.
+# Author: claude-orchestrator (with owner)
+# Created: 2026-07-19
+
+plan:
+  title: >
+    TB-1 Option B: placement -> profiles.proficiency_level (DB), Home label reads proficiency
+    (not unlocked_level), Settings "Your level" control, separation invariant enforced + tested.
+  branch: feat/tb1-proficiency-level
+  goal_validation:
+    - "profiles.proficiency_level column exists (migration 00015) and is written from onboarding placement."
+    - "Home greeting label derives from proficiency_level (null -> neutral 'Student' fallback), NEVER from unlocked_level."
+    - "Settings has a working 'Your level' control that persists proficiency_level without any paywall/access-key."
+    - "Separation invariant proven by test: changing proficiency leaves unlocked_level unchanged and vice versa (R5)."
+    - "Full gate green: CI=1 e2e regression + ship dry-run; new NN-proficiency-level e2e passes."
+
+  steps:
+    - id: branch-setup
+      description: Provision an isolated worktree on feat/tb1-proficiency-level off origin/develop.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira worktree add /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 -b feat/tb1-proficiency-level origin/develop && bash /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/scripts/setup-worktree.sh --wt tb1
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 rev-parse --abbrev-ref HEAD | grep -qx feat/tb1-proficiency-level
+      depends_on: []
+      fatal_on_failure: true
+
+    - id: migration-file
+      description: >
+        Create supabase/migrations/00015_profiles_proficiency_level.sql — additive, idempotent
+        (ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS proficiency_level smallint;), matching
+        the 00011 house style. Owner-writable under the existing profiles self-update RLS (§4).
+      command: "IMPLEMENT per REQUIREMENTS §4: write supabase/migrations/00015_profiles_proficiency_level.sql (additive smallint, nullable, no default, no unlocked_level change) + header comment."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && grep -q "proficiency_level smallint" supabase/migrations/00015_profiles_proficiency_level.sql
+      depends_on: [branch-setup]
+      fatal_on_failure: true
+
+    - id: types
+      description: Add proficiency_level?:number|null to UserProfile (src/types.ts ~49-67).
+      command: "IMPLEMENT per §5.1: add optional proficiency_level to UserProfile in src/types.ts."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && grep -q "proficiency_level" src/types.ts && npx tsc --noEmit
+      depends_on: [branch-setup]
+      fatal_on_failure: true
+
+    - id: onboarding-write
+      description: >
+        useOnboarding.complete/persistConsent writes placement -> proficiency_level in the single
+        profiles.update + optimistic setProfile (§5.2); best-effort logged via src/lib/logger. Unit test.
+      command: "IMPLEMENT per §5.2; edit src/features/onboarding/useOnboarding.ts; extend src/features/onboarding/__tests__/useOnboarding.test.ts to assert proficiency_level == placement is written."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && npx vitest run src/features/onboarding/__tests__/useOnboarding.test.ts && npx tsc --noEmit
+      depends_on: [types]
+      fatal_on_failure: true
+
+    - id: home-read
+      description: >
+        Home label derives from proficiency_level via a NEW proficiency->name mapping in useHome
+        (0/1/2 -> placement labels; null -> "Student"); HomeView.tsx:151 stops reading unlocked_level.
+        Paywall getLevelName + unlock modal untouched (§5.3). Unit test the derivation incl. null/out-of-range.
+      command: "IMPLEMENT per §5.3; edit src/features/home/useHome.ts (add proficiency-label derivation) + src/features/home/HomeView.tsx:151; add a useHome/home-label unit test."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && npx vitest run src/features/home/ && npx tsc --noEmit
+      depends_on: [types]
+      fatal_on_failure: true
+
+    - id: settings-control
+      description: >
+        Add a "Your level" control in SettingsView (+ useSettings) that reads proficiency_level and
+        persists it (DB + local mirror + setProfile) via a shared setProficiencyLevel writer; NO
+        access-key, NO unlocked_level reference (§5.4-5.5). RESERVE SettingsView.tsx first (shared).
+      command: "IMPLEMENT per §5.4/§5.5; reserve+edit src/features/settings/SettingsView.tsx + useSettings.ts; add shared setProficiencyLevel writer; add unit test for the persist action."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && npx vitest run src/features/settings/ && npx tsc --noEmit
+      depends_on: [types]
+      fatal_on_failure: true
+
+    - id: backfill-heal
+      description: >
+        Client self-heal: on profile load, if proficiency_level is null AND a local placement mirror
+        exists, write it once to the DB (mirror the consent-heal shape, §6). Unit test both branches.
+      command: "IMPLEMENT per §6; add the null+mirror heal effect; unit-test heal-writes-once and no-mirror-stays-null."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && npx vitest run src/features/onboarding/ src/features/home/ && npx tsc --noEmit
+      depends_on: [onboarding-write, home-read]
+      fatal_on_failure: false
+
+    - id: invariant-test
+      description: >
+        Dedicated separation-invariant test (R5): a proficiency write contains NO unlocked_level key;
+        a mocked unlocked_level change leaves proficiency_level untouched.
+      command: "IMPLEMENT per §8; add src/features/**/__tests__ invariant test asserting proficiency_level ⟂ unlocked_level."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && npx vitest run --reporter=dot 2>&1 | grep -qiE "proficiency|invariant"
+      depends_on: [onboarding-write, settings-control]
+      fatal_on_failure: true
+
+    - id: operator-apply-migration
+      description: >
+        OPERATOR GATE (manual, operator-gated per no-live-changes-without-approval): apply migration
+        00015 to the cloud-dev + staging Supabase DB (two-pass verify: cloud-dev-restored then local).
+        The e2e runs against LIVE Supabase, so proficiency_level MUST exist before e2e. NOT auto-run.
+      command: "OPERATOR: apply supabase/migrations/00015_profiles_proficiency_level.sql to the Supabase project (dashboard / psql -f), then confirm."
+      validation: "Column exists live: information_schema.columns has profiles.proficiency_level (operator confirms, or a probe query returns the column)."
+      depends_on: [migration-file]
+      fatal_on_failure: true
+
+    - id: e2e
+      description: >
+        New tests/e2e/user/NN-proficiency-level.spec.ts (§8): onboard at "Basic conversation" ->
+        Home shows the matching label (not "Absolute Beginner") -> change level in Settings ->
+        persists across reload -> INVARIANT: unlocked_level/paywall copy unchanged before/after.
+      command: "IMPLEMENT per §8 E2E; author tests/e2e/user/NN-proficiency-level.spec.ts (pick the next free number); reuse fresh-user onboarding flow."
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && CI=1 npx playwright test tests/e2e/user/*proficiency-level*.spec.ts --reporter=list
+      depends_on: [settings-control, operator-apply-migration]
+      fatal_on_failure: true
+
+    - id: full-gate
+      description: Full release gate on the topic branch — fresh-server e2e regression + credential-free ship dry-run.
+      command: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && CI=1 npm run test:e2e:regression && npm run deploy -- --dry-run
+      validation: cd /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira-tb1 && grep -E '"failed": 0' artifacts/e2e/summary.json && echo "gate green"
+      depends_on: [backfill-heal, invariant-test, e2e]
+      fatal_on_failure: true
+
+    - id: merge-to-develop
+      description: Merge feat/tb1-proficiency-level into develop (no-ff) once the gate is green; push.
+      command: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira checkout develop && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira merge --no-ff feat/tb1-proficiency-level -m "Merge feat/tb1-proficiency-level into develop — TB-1 Option B (proficiency_level)" && git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira push origin develop
+      validation: git -C /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira log --oneline -1 | grep -qi tb1
+      depends_on: [full-gate]
+      fatal_on_failure: true
+
+# NOTE: the release cut (develop->main, bump 2026.07.19.x, staging->approve->production) is a SEPARATE
+# operator-gated step, intentionally NOT in this plan (matches EN-23b). Migration 00015 must also be
+# applied to PRODUCTION Supabase before the production deploy of this release.
