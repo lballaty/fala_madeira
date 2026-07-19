@@ -41,3 +41,22 @@ export const canAccessLevel = (
   profile: AccessProfile | null | undefined,
   level: number,
 ): boolean => hasFullContentAccess(profile) || level <= (profile?.unlocked_level ?? 1);
+
+/**
+ * TB-1a §5.3.2 (R11): the highest structured MONTH the learner can currently access — a READ-ONLY,
+ * side-effect-free query the FLOW layer uses to bound a placement-derived start DOWN to accessible
+ * content (never up, never past the paywall). Full-access profiles (admin / unlimited) are unbounded
+ * (the whole authored curriculum); everyone else is bounded at their paywall progression
+ * `unlocked_level` (default 1 for a fresh profile). This does NOT mutate `unlocked_level`, open the
+ * unlock modal, or re-route the flow — it only reports where the flow may safely begin. The paywall
+ * still gates a later *open* if the learner scrolls ahead (§5.3.1).
+ *
+ * @param profile The user's profile (or null/undefined).
+ * @param maxMonth The number of authored structured months (the unbounded ceiling; seed pack = 6).
+ * @returns the highest month the profile may currently begin at.
+ */
+export const highestAccessibleMonth = (
+  profile: AccessProfile | null | undefined,
+  maxMonth: number,
+): number =>
+  hasFullContentAccess(profile) ? maxMonth : Math.min(profile?.unlocked_level ?? 1, maxMonth);

@@ -56,4 +56,20 @@ describe('usePathContext placement threading (TB-1a R9)', () => {
     await waitFor(() => expect(result.current.isReady).toBe(true));
     expect(result.current.context.placementLevel).toBe(0);
   });
+
+  it('threads the accessible-start ceiling into PathContext (TB-1a §5.3.2)', async () => {
+    const { result } = renderHook(() =>
+      usePathContext({ supabase, user, placementLevel: 2 as PracticalLevel, structuredStartCeilingMonth: 1 }),
+    );
+    await waitFor(() => expect(result.current.isReady).toBe(true));
+    // The wiring computes this from the READ-ONLY paywall query and passes it straight through;
+    // the structured policy clamps its placement-derived start DOWN to it (paths stay paywall-blind).
+    expect(result.current.context.structuredStartCeilingMonth).toBe(1);
+  });
+
+  it('leaves the ceiling undefined (unbounded) when not supplied', async () => {
+    const { result } = renderHook(() => usePathContext({ supabase, user }));
+    await waitFor(() => expect(result.current.isReady).toBe(true));
+    expect(result.current.context.structuredStartCeilingMonth).toBeUndefined();
+  });
 });

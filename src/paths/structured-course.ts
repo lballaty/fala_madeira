@@ -23,7 +23,8 @@ import type {
 
 /** The structured curriculum spans 6 months (seed pack: 6 × 28 days — §2). */
 const MIN_STRUCTURED_MONTH = 1;
-const MAX_STRUCTURED_MONTH = 6;
+/** The number of authored structured months — the unbounded ceiling for the accessible clamp (§5.3.2). */
+export const MAX_STRUCTURED_MONTH = 6;
 
 /**
  * TB-1a §4.1 (D-map): map effective proficiency `p` to the initial structured start MONTH

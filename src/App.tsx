@@ -37,6 +37,8 @@ import { usePractice } from './features/practice/usePractice';
 import { PracticeQuiz } from './features/practice/PracticeQuiz';
 import { usePathSelection } from './paths';
 import { usePathContext } from './features/session/usePathContext';
+import { highestAccessibleMonth } from './lib/access';
+import { MAX_STRUCTURED_MONTH } from './paths/structured-course';
 import type { PracticalLevel } from './content/schema';
 import { useOnboarding } from './features/onboarding';
 import { navigateToCapability } from './features/guidance/navigateToCapability';
@@ -191,10 +193,16 @@ export default function App() {
   // TB-1a/R9: thread the learner's REAL placement into the path layer (was hard-coded 1 via the
   // usePathContext fallback). null/unknown → 0 (D1/§5.4). This alone makes Adaptive Guided honor
   // placement (§4.2); Structured/Goal Track consume it in their pure next() (§4.1/§4.3).
+  // TB-1a/§5.3.2 (R11): compute the highest accessible month as a READ-ONLY paywall query and pass
+  // it as the structured-start CEILING so a placed learner's seeded start is bounded DOWN to
+  // content they can already open — never past the paywall. This is a flow-layer "pick an
+  // accessible start", NOT a paywall re-route: it does not mutate unlocked_level, open the unlock
+  // modal, or restart the flow (the paths layer stays paywall-blind — it only sees a month number).
   const { context: pathContext, isReady: isPathContextReady } = usePathContext({
     supabase,
     user,
     placementLevel: (profile?.proficiency_level ?? 0) as PracticalLevel,
+    structuredStartCeilingMonth: highestAccessibleMonth(profile, MAX_STRUCTURED_MONTH),
   });
   const pathNextAction = pathSelection.activePath.next(pathContext, pathSelection.selection);
 

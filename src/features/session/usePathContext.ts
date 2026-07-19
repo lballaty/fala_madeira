@@ -22,6 +22,14 @@ interface PathContextDeps {
   supabase: SupabaseClient | null;
   user: User | null;
   placementLevel?: PracticalLevel;
+  /**
+   * TB-1a §5.3.2 (R11): the highest structured month the learner may begin at, computed by App
+   * from the READ-ONLY paywall predicate (lib/access.highestAccessibleMonth). Passed straight
+   * through to PathContext so the structured policy can bound its placement-derived start DOWN to
+   * accessible content while staying paywall-blind (it never sees unlocked_level here). Undefined
+   * ⇒ unbounded.
+   */
+  structuredStartCeilingMonth?: number;
 }
 
 /** Load the completed-situation set (any mode with status 'completed'). Best-effort. */
@@ -52,7 +60,12 @@ const loadCompletedSituationIds = async (
  * mastery load); `isReady` flips true once content has loaded at least once, so callers can
  * defer rendering a path CTA until the recommendation is meaningful.
  */
-export const usePathContext = ({ supabase, user, placementLevel }: PathContextDeps) => {
+export const usePathContext = ({
+  supabase,
+  user,
+  placementLevel,
+  structuredStartCeilingMonth,
+}: PathContextDeps) => {
   const { items: mastery } = useDueItems({ supabase, user });
 
   const [situations, setSituations] = useState<Situation[]>([]);
@@ -96,11 +109,13 @@ export const usePathContext = ({ supabase, user, placementLevel }: PathContextDe
       // TB-1a/D1 (§5.4): null/unknown placement → 0 (complete beginner) — the honest,
       // non-skipping default. Previously hard-coded 1, which skipped unplaced learners ahead.
       placementLevel: placementLevel ?? 0,
+      // TB-1a §5.3.2 (R11): paywall-computed accessible ceiling, passed straight through.
+      structuredStartCeilingMonth,
       mastery,
       dimensionSummary: dimensionSummary(mastery, now),
       now,
     };
-  }, [situations, tracks, completedIds, placementLevel, mastery]);
+  }, [situations, tracks, completedIds, placementLevel, structuredStartCeilingMonth, mastery]);
 
   return { context, isReady };
 };
