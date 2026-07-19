@@ -66,6 +66,10 @@ interface SettingsViewProps {
   focusGoalChooser?: boolean;
   /** Called once the goal chooser has been scrolled into view so the parent can reset the signal. */
   onGoalChooserFocused?: () => void;
+  /** NAV-1b deep-link: when true, scroll to + highlight the "Your level" proficiency card (Home level tap). */
+  focusProficiencyCard?: boolean;
+  /** Called once the proficiency card has been scrolled into view so the parent can reset the signal. */
+  onProficiencyCardFocused?: () => void;
 }
 
 export const SettingsView = ({
@@ -82,6 +86,8 @@ export const SettingsView = ({
   pathSelection,
   focusGoalChooser = false,
   onGoalChooserFocused,
+  focusProficiencyCard = false,
+  onProficiencyCardFocused,
 }: SettingsViewProps) => {
   // TB-11b: the goal chooser is a deep-link target from Home's "Choose your goal" CTA. When the
   // signal arrives, scroll it into view; the highlight ring is driven off the prop and cleared by
@@ -93,6 +99,17 @@ export const SettingsView = ({
     const timer = setTimeout(() => onGoalChooserFocused?.(), 2200);
     return () => clearTimeout(timer);
   }, [focusGoalChooser, onGoalChooserFocused]);
+  // NAV-1b: the "Your level" proficiency card is a deep-link target from Home's tappable level
+  // label. Same prop-driven pattern as the goal chooser above — scroll it into view when the
+  // signal arrives; the ring highlight is driven off the prop and the parent clears it after a
+  // short delay (no effect-local setState — keeps the render honest).
+  const proficiencyCardRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!focusProficiencyCard) return;
+    proficiencyCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const timer = setTimeout(() => onProficiencyCardFocused?.(), 2200);
+    return () => clearTimeout(timer);
+  }, [focusProficiencyCard, onProficiencyCardFocused]);
   const {
     playbackSpeed, setPlaybackSpeed,
     globalVoiceLimit,
@@ -329,7 +346,14 @@ export const SettingsView = ({
           persists the chosen placement level via the shared setProficiencyLevel writer (DB + local
           mirror + optimistic profile). NO access key, NO unlocked_level reference — the paywall is
           a separate concern (separation invariant, REQUIREMENTS §2/§5.4). */}
-      <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4" data-testid="proficiency-card">
+      <div
+        ref={proficiencyCardRef}
+        className={cn(
+          'bg-card p-6 rounded-3xl ios-shadow space-y-4 transition-all',
+          focusProficiencyCard && 'ring-2 ring-ios-blue ring-offset-2 ring-offset-card',
+        )}
+        data-testid="proficiency-card"
+      >
         <div className="flex items-center">
           <GraduationCap className="w-5 h-5 mr-3 text-ios-blue" />
           <span className="font-bold">Your level</span>

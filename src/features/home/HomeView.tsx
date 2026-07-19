@@ -90,6 +90,12 @@ interface HomeViewProps {
    * EXACT engine + situation the coach surfaced — closing the flagged goal-relevance/routing gap.
    */
   openMode: (modeId: string, situationId?: string | null) => void;
+  /**
+   * NAV-1b: tap the Home proficiency level label → deep-link to the Settings "Your level" card
+   * (switch to Settings + scroll/highlight the proficiency-card). Reuses the App-owned deep-link
+   * signal pattern; guide-and-offer only (it lands the learner on the control, never changes level).
+   */
+  onOpenProficiency: () => void;
 }
 
 export const HomeView = ({
@@ -111,7 +117,8 @@ export const HomeView = ({
   pathContext,
   pathSelection,
   activePath,
-  openMode
+  openMode,
+  onOpenProficiency
 }: HomeViewProps) => {
   const unlockModalRef = useRef<HTMLDivElement>(null);
   const unlockModalTitleId = useId();
@@ -146,7 +153,17 @@ export const HomeView = ({
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Olá, {user?.email?.split('@')[0]}!</h1>
           <div className="flex items-center space-x-2">
-            <p className="text-ios-gray">{proficiencyName}</p>
+            {/* NAV-1b: the level label is tappable → deep-link to the Settings "Your level" card.
+                A user who sees the wrong level on Home now has a one-tap path to change it. */}
+            <button
+              type="button"
+              onClick={onOpenProficiency}
+              data-testid="home-level-deeplink"
+              aria-label={`Your level: ${proficiencyName}. Tap to change in Settings.`}
+              className="text-ios-gray underline decoration-dotted underline-offset-4 hover:text-ios-blue transition-colors"
+            >
+              {proficiencyName}
+            </button>
             {/* EN-15: hide the access-key unlock CTA for full-access (admin/unlimited) users —
                 they already have every level, so there is nothing to unlock. */}
             {!fullAccess && (

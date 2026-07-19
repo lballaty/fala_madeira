@@ -39,6 +39,7 @@ vi.mock('../useHome', () => ({
     competencePhrases: [],
     reviewDueCount: 0,
     freeze: { displayStreak: 0, freezes: 0, graceApplied: false, spentNow: 0 },
+    proficiencyName: 'Beginner',
   }),
 }));
 
@@ -118,6 +119,7 @@ const makeProps = (lessons: Lesson[]) => ({
   pathSelection,
   activePath,
   openMode: vi.fn(),
+  onOpenProficiency: vi.fn(),
 });
 
 // Import AFTER the vi.mock calls so the mocked module graph is in place.

@@ -89,6 +89,10 @@ export default function App() {
   // Deep-link signal (TB-11b): when Home's "Choose your goal" CTA is tapped, open Settings and
   // scroll/highlight the Learning Path goal chooser so the learner lands directly on the picker.
   const [focusGoalChooser, setFocusGoalChooser] = useState(false);
+  // Deep-link signal (NAV-1b): when Home's proficiency level label is tapped, open Settings and
+  // scroll/highlight the "Your level" proficiency card so the learner lands directly on the control
+  // that changes their level (the reporter had no obvious path from a wrong Home level to the fix).
+  const [focusProficiencyCard, setFocusProficiencyCard] = useState(false);
   const { toast, showToast } = useToast();
   const authDepsRef = useRef<AuthCrossSliceDeps | null>(null);
   const {
@@ -203,6 +207,15 @@ export default function App() {
     }
     // 'free' (or a situation-less step): send the learner to the Practice hub to self-direct.
     setActiveTab('practice');
+  };
+
+  // NAV-1b: Home's proficiency level label is tappable → deep-link to the Settings "Your level"
+  // card. Set the scroll/highlight signal, then switch to the Settings tab (same guide-and-offer
+  // pattern as the TB-11b goal-chooser deep-link above).
+  const handleOpenProficiency = () => {
+    logger.debug('nav', 'Home level deep-link → Settings proficiency card', { category: 'USER_ACTION' });
+    setFocusProficiencyCard(true);
+    setActiveTab('settings');
   };
 
   // EN-18 reactive guidance: "Take me there" from the help chat. Resolve the capability's target,
@@ -353,6 +366,7 @@ export default function App() {
                   pathSelection={pathSelection.selection}
                   activePath={pathSelection.activePath}
                   openMode={openMode}
+                  onOpenProficiency={handleOpenProficiency}
                 />
               </motion.div>
             )}
@@ -420,6 +434,8 @@ export default function App() {
                   pathSelection={pathSelection}
                   focusGoalChooser={focusGoalChooser}
                   onGoalChooserFocused={() => setFocusGoalChooser(false)}
+                  focusProficiencyCard={focusProficiencyCard}
+                  onProficiencyCardFocused={() => setFocusProficiencyCard(false)}
                 />
               </motion.div>
             )}

@@ -652,6 +652,14 @@
       ]
     },
     {
+      "screen": "home",
+      "id": "home.level.deeplink",
+      "selector": { "css": "[data-testid=\"home-level-deeplink\"]" },
+      "covered_by": [
+        { "spec": "tests/e2e/user/65-home-level-deeplink.spec.ts", "depth": "outcome-asserted" }
+      ]
+    },
+    {
       "screen": "tutor",
       "id": "tutor.empty.just_chat",
       "selector": { "role": "button", "name": "Just Want to Chat" },
