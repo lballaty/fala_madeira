@@ -220,6 +220,12 @@ export interface PlaySpeechOptions {
   hostable?: boolean;
   /** Explicit voice_type override (dialogue per-speaker lines); else derived from the tutor. */
   voiceType?: string;
+  /**
+   * EN-31 GAP 2: invoked when SERVER TTS is unavailable and playback degrades to the device's
+   * built-in speech synthesis, so the caller can surface a subtle "using device voice" notice.
+   * Fires ONLY on the degradation path — never on the happy path or a total failure.
+   */
+  onDegraded?: () => void;
 }
 
 export const geminiService = {
@@ -301,6 +307,10 @@ export const geminiService = {
           correlationId: err.ref,
           details: { textLength: text.length, tutorId: tutor?.id },
         });
+        // EN-31 GAP 2: the degradation decision is certain here (edge returned TTS_UNAVAILABLE), so
+        // notify the caller BEFORE the device voice speaks. If device speech then also fails, that
+        // rejection propagates to the caller's error toast (single-slot → the error supersedes this).
+        opts.onDegraded?.();
         await platform.audio.speak(text, { lang: 'pt-PT', rate: speed, onEnded: onEnd });
         return;
       }
