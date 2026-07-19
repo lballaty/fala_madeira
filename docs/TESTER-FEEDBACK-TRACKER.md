@@ -80,7 +80,7 @@
 
 ## Tester-reported bugs
 
-### TB-1 — Placement level not reflected + not changeable (reporter: dancingtoothbrush) — `APPROVED (Option B, owner 2026-07-19) — build the conflation fix; platform-behaves-per-proficiency split out as TB-1a`
+### TB-1 — Placement level not reflected + not changeable (reporter: dancingtoothbrush) — `BUILT + STAGED 2026.07.19.1 (Option B, merge 6808b02) — conflation fix shipped; platform-behaves-per-proficiency split out as TB-1a (NEEDS REQUIREMENTS)`
 - **Report:** "It says I'm Absolute Beginner even though I said I could have a simple conversation, but I can't seem to change it."
 - **Root cause (confirmed, code-read 2026-07-14):**
   - Onboarding `complete()` persists placement (`placementLevel` 0/1/2 from "Complete beginner / A few words / Basic conversation") **only to `platform.storage`** (`useOnboarding.ts` OnboardingRecord).
@@ -100,7 +100,7 @@
   5. **`unlocked_level`** stays exactly as-is (access-key/paywall only).
 - **Coordination flags:** DB migration (DB agent). Touches `SettingsView.tsx` (Lane A's goal chooser + Lane B's TB-11b already there) and possibly `App.tsx` (Lane B live for SEC-1) — reserve + sequence before editing. `useOnboarding.ts`/`HomeView.tsx`/`useHome.ts` are currently conflict-free.
 - **Owed:** requirements doc → owner approval → build → **e2e test** (owner asked explicitly). Branch: `develop`.
-- **Status:** **APPROVED to build (Option B, owner 2026-07-19)** — "fix the whole thing." Requirements = `docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md` §1–§10. Still needs DB migration-number coordination (EN-8 holds `00012`). Build on `develop` per the requirements sequence.
+- **Status:** **BUILT + STAGED 2026.07.19.1 (Option B, owner 2026-07-19)** — "fix the whole thing." Merged to develop `6808b02`; migration **00015** applied live (number coordinated — EN-8's `00012` no longer a conflict). Requirements = `docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md` §1–§10. TB-1a (platform-behaves-per-proficiency) still NEEDS REQUIREMENTS.
 - **↩ Staging re-confirmation (owner, 2026.07.18.4 verify 2026-07-19):** independently re-observed on staging — "it doesn't appear to make any difference what proficiency level I choose as to where the system wants to start my learning — so what is the point of the proficiency choices." Confirms the same defect from a second reporter/session: placement is collected but never drives the learning start. This is the exact symptom Option B fixes (proficiency drives the level label + a Settings control; placement→`proficiency_level`). **No new item — reinforces TB-1's priority.** The requirements doc (`docs/TB-1-PROFICIENCY-LEVEL-REQUIREMENTS.md`) + owner approval are still the gate before build. Note: whether placement should also alter the **content start point** (not just the displayed level) is an open product question to resolve in the requirements — the owner's "where the system wants to start my learning" framing implies they expect placement to affect the actual starting curriculum, which is broader than the current Option-B display-field shape.
 
 ### TB-1a — Platform must ACT per proficiency (placement drives the learning start + progression) — `OPEN (NEEDS REQUIREMENTS/DESIGN — new, owner 2026-07-19)`
@@ -577,6 +577,7 @@
 - **Why (owner, 2026-07-16):** the edge function name `gemini` caused confusion — it's the app's general AI/voice edge (actions: chat, tts, translate, generate-lesson, error-analyst; TTS routes through azure/google/polly/gemini), not Gemini-specific.
 - **Done (commit `2c93143`):** `git mv supabase/functions/gemini → ai-gateway`; updated every caller — `geminiService.ts` (5 `invokeEdgeFunction` targets), `listeningAudio.ts`, the `geminiService` unit assertion, and 11 e2e specs (route mocks + real-call labels + the CORS-preflight function list). Left unchanged (unrelated): the TTS *provider* named `gemini` (`_shared/tts/*`, `types.ts`) and the `geminiService` client class + `_shared/gemini.ts` provider module.
 - **Migration (phased — live prod):** `ai-gateway` deployed to prod; the old `gemini` function is **kept live** so the currently-deployed prod/staging frontends keep working. Verified: real CORS preflight to `ai-gateway` passes (e2e `51`) + `user/59` confirms the client calls `ai-gateway`; full suite 127/130 on the combined tree. Shipped to staging in 2026.07.16.3/.4.
+- **⚠ Historical path refs (reconciliation note, 2026-07-19):** earlier entries in this tracker (e.g. TB-8/TB-10/EN-10/EN-19/QA-2) cite `supabase/functions/gemini/index.ts:NNN` as the source location. Those refs **predate this rename** and are accurate for their commit date; the current source lives at `supabase/functions/ai-gateway/index.ts`. Left as-is (historical diagnosis records), not rewritten.
 - **REMAINING (gated):** **delete the old `gemini` edge function ONLY after** a prod release on `ai-gateway` is approved + verified (else prod, still calling `gemini`, breaks). Also fold the rename into `docs`/`_shared/appHelp` comments on a later pass (generated file, low priority).
 - **Owner:** Lane B (edge/client). **Status:** CODE DONE + `ai-gateway` DEPLOYED; delete-old-`gemini` pending prod rollout.
 
