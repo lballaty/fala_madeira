@@ -1,7 +1,8 @@
 # EN-17(a) + EN-18 — Help & Guidance: shared capability registry (design)
 
 **File:** /Users/liborballaty/LocalProjects/GitHubProjectsDocuments/fala_madeira/docs/EN-17-EN-18-HELP-GUIDANCE-DESIGN.md
-**Description:** Design for a single, reusable "app capability" registry that powers (EN-17a) content sync between the user manual and the chat help prompt, and (EN-18) in-app guidance (reactive "take me there" + proactive surfacing). One source, many thin consumers. Design-phase only — no coding until owner-approved (AGENTS §3).
+**Description:** Design for a single, reusable "app capability" registry that powers (EN-17a) content sync between the user manual and the chat help prompt, and (EN-18) in-app guidance (reactive "take me there" + proactive surfacing). One source, many thin consumers.
+**Status:** **BUILT + SHIPPED** (commit `4b9611b` — EN-17 help sync + EN-18 in-app guidance); the §11 design questions were resolved at build.
 **Author:** Libor Ballaty
 **Created:** 2026-07-15
 **Last Updated:** 2026-07-15
