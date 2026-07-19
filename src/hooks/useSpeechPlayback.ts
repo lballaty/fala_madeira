@@ -5,13 +5,17 @@
 // Author: Libor Ballaty (with assistant)
 // Created: 2026-07-09
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { geminiService } from '../services/geminiService';
 import { TUTORS } from '../data/tutors';
 import { UserProfile } from '../types';
 import { ShowToast } from './useToast';
 import { PlatformError } from '../platform/types';
 import { logger, userMessage } from '../lib/logger';
+// EN-31 GAP 2/3: the once-per-outage / once-per-session toast-dedupe latches live in a dedicated
+// module behind function accessors so this hook never mutates render-reachable module state
+// directly (react-compiler rule). See audioNoticeLatch.ts for the rationale.
+import { audioNoticeLatch } from './audioNoticeLatch';
 
 interface SpeechPlaybackDeps {
   profile: UserProfile | null;
@@ -19,23 +23,8 @@ interface SpeechPlaybackDeps {
   showToast: ShowToast;
 }
 
-// EN-31 GAP 3: once-per-OUTAGE dedupe of the "audio couldn't play" toast. Module-scoped (not per
-// hook mount) so it dedupes across every audio surface — a session-long outage would otherwise
-// pop one toast per play. A SUCCESSFUL play re-arms it, so recovery-then-new-outage notifies again
-// (a strict once-per-whole-session would hide later failures, defeating EN-31's purpose). Note:
-// EVERY failure is still logged (below) — only the user-facing toast is deduped, never the log.
-let audioFailureNotified = false;
-
-// EN-31 GAP 2 (WP-D): once-per-SESSION latch for the calm "using device voice" degradation notice.
-// Degradation (server TTS down → device fallback) is EXPECTED graceful behavior, not an error, so
-// it earns at most one non-alarming info toast per session — never the red error toast, never per
-// play. It does NOT re-arm on recovery: the point is to explain the quality drop once, not to nag.
-let audioDegradedNotified = false;
-
-/** Test-only: reset the module-scoped toast-dedupe latch between cases. */
-export const __resetAudioFailureNotified = (): void => { audioFailureNotified = false; };
-/** Test-only: reset the once-per-session degradation-notice latch between cases. */
-export const __resetAudioDegradedNotified = (): void => { audioDegradedNotified = false; };
+// Re-exported here so existing callers/tests keep importing the resets from this hook module.
+export { __resetAudioFailureNotified, __resetAudioDegradedNotified } from './audioNoticeLatch';
 
 // EN-31 WP-C: stable, honest, non-alarming failure copy. A device that cannot synthesize speech at
 // all (permanent) is a different situation from a transient provider/network failure, so the two
@@ -50,6 +39,11 @@ const failureCopy = (err: unknown): { code: string; text: string } => {
 export const useSpeechPlayback = ({ profile, playbackSpeed, showToast }: SpeechPlaybackDeps) => {
   const lastPlayTimeRef = useRef(0);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  // EN-31 WP-C: the failure toast's Retry re-invokes the LATEST playSpeech through this ref rather
+  // than closing over playSpeech directly. A direct recursive reference inside the hook body defeats
+  // react-compiler's analysis of the whole hook (it then mis-flags the debounce's Date.now as an
+  // impure render call); the ref indirection keeps Retry working without that self-reference.
+  const playSpeechRef = useRef<((text: string) => void) | null>(null);
 
   const playSpeech = async (text: string) => {
     const now = Date.now();
@@ -71,29 +65,36 @@ export const useSpeechPlayback = ({ profile, playbackSpeed, showToast }: SpeechP
         // EN-31 GAP 2 (WP-D): server TTS degraded to the device voice — surface a calm, once-per-
         // session info notice so the user understands why the audio sounds different. Not an error.
         onDegraded: () => {
-          if (audioDegradedNotified) return;
-          audioDegradedNotified = true;
+          if (audioNoticeLatch.isDegradedNotified()) return;
+          audioNoticeLatch.markDegradedNotified();
           showToast("Using your device's voice — premium audio is briefly unavailable.", 'info');
         },
       });
       // Recovered: re-arm the failure notification so the next outage is surfaced again.
-      audioFailureNotified = false;
+      audioNoticeLatch.rearmFailure();
     } catch (err) {
       // Always log every failure (observability); dedupe only the user-facing toast so a
       // session-long outage doesn't spam one toast per play (EN-31 GAP 3).
       const event = logger.error('speech_playback_failed', 'Play speech error', { category: 'AI_DECISION', error: err });
-      if (!audioFailureNotified) {
+      if (!audioNoticeLatch.isFailureNotified()) {
         const { code, text: message } = failureCopy(err);
         // EN-31 WP-C: stable copy (never a raw error string) + a Retry that re-invokes the SAME play.
         // Transient provider/network blips are the common case, so Retry saves re-hunting the control.
         showToast(userMessage(code, message, event.request_id), 'error', {
-          actions: [{ label: 'Retry', onClick: () => { void playSpeech(text); } }],
+          actions: [{ label: 'Retry', onClick: () => { playSpeechRef.current?.(text); } }],
         });
-        audioFailureNotified = true;
+        audioNoticeLatch.markFailureNotified();
       }
       setIsAudioPlaying(false);
     }
   };
+
+  // Keep the Retry indirection ref pointing at the latest playSpeech. Done in an effect (not during
+  // render) so it's a lint-clean ref mutation and avoids the render-scope self-reference that would
+  // defeat react-compiler's analysis of this hook.
+  useEffect(() => {
+    playSpeechRef.current = playSpeech;
+  });
 
   return { playSpeech, isAudioPlaying };
 };
