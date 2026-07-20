@@ -5,7 +5,7 @@
 **Author:** Libor Ballaty <libor@arionetworks.com>
 **Created:** 2026-07-14
 **Last Updated:** 2026-07-20
-**Last Updated By:** claude-orchestrator (2026.07.20.1 — TB-1a placement-driven start + NAV-1 nav/About + EN-31 audio-failure UX)
+**Last Updated By:** claude-orchestrator (2026.07.20.2 — TB-14 per-phrase read-aloud + EN-31 WP-F Voice-settings shortcut)
 
 Versioning follows CalVer `YYYY.MM.DD.N` per the normative Versioning spec
 (`~/.ai-dev-dotfiles/repo-specs/release-engineering/CLAUDE.md` §1). The `VERSION`
@@ -13,6 +13,12 @@ file is the sole source of truth; embedded literals are declared in
 `.versionbump.yaml` and patched by `version-bump.py`.
 
 ---
+
+## 2026.07.20.2
+
+- Improved: **in the tutor, read-aloud now speaks only the Portuguese.** Tap a Portuguese phrase to hear just that phrase — the app no longer reads the English translation and pronunciation notes out loud along with it, so listening practice stays in the target language. (TB-14)
+- Improved: **when audio can't play, the message now offers a "Voice settings" shortcut** that takes you straight to Settings › Voice Provider — the real fix when a particular voice isn't working — alongside the existing Retry. (EN-31)
+- Internal: hardened the automated test suite (removed a flaky quiz-typing test at its source via a test-only fast-transition; no change to the shipped app). (EF-39)
 
 ## 2026.07.20.1
 
