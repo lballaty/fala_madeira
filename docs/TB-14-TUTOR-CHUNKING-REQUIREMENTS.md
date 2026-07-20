@@ -11,7 +11,7 @@
 
 ## 0. Status
 
-**INVESTIGATION COMPLETE — requirements DRAFTED, NEEDS OWNER APPROVAL before any build.**
+**BUILT & MERGED to develop `76513ba` (2026-07-20)** — owner-approved. Investigation confirmed never-built; per-phrase PT-only read-aloud now shipped (tutor-local parser + `TutorMessage` renderer; full preflight PASS). Follow-ups: per-phrase e2e coverage + EN-21 renderer convergence (see tracker TB-14).
 
 Headline: **the requested feature was NEVER BUILT — this is a missing feature, not a regression.** Confirmed against current `develop` (`dd60c97`), re-confirming the prior 2026-07-18 investigation recorded in the tracker.
 
@@ -74,4 +74,4 @@ Per-phrase Portuguese-only read-aloud requires the tutor turn to be **parsed int
 
 ---
 
-**Status:** DRAFT — findings complete; requirements + fix proposal awaiting owner approval (AGENTS §3). No code to be written until approved. Investigation confirmed the never-built root cause on `develop @ dd60c97` (2026-07-20).
+**Status:** BUILT & MERGED to develop `76513ba` (2026-07-20, owner-approved). Investigation confirmed the never-built root cause (`develop @ dd60c97`); the per-phrase PT-only read-aloud is now shipped (pure `tutorMessageParser.ts` + tutor-local `TutorMessage.tsx`, reusing `AudioButton` + `TranslatableText`; whole-message auto-read removed; unlabeled turns fall back to a `Listen` button). Full preflight PASS. Open follow-ups: per-phrase e2e coverage; EN-21 shared-renderer convergence; optional server structured-output upgrade (§4).
