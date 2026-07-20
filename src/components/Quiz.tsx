@@ -4,6 +4,21 @@ import { XCircle, ArrowRight, Volume2 } from 'lucide-react';
 import { Lesson, QuizQuestion } from '../types';
 import { cn } from '../lib/utils';
 
+// Test-only affordance (prod-safe): when an e2e init script sets localStorage['fm:e2e']='1',
+// collapse the per-question enter/exit animation to zero duration. The choice buttons and the
+// typed-answer input live inside the animated motion.div, so under CPU load the AnimatePresence
+// mode="wait" exit-then-enter window makes them a moving target — automated clicks/fills can race
+// the transition and never register (EF-39). Instant transitions remove the moving target
+// deterministically. Never enabled in the shipped app (flag is test-set only); real users keep
+// the full animation.
+const E2E_INSTANT_ANIM = (() => {
+  try {
+    return typeof localStorage !== 'undefined' && localStorage.getItem('fm:e2e') === '1';
+  } catch {
+    return false;
+  }
+})();
+
 interface QuizProps {
   lesson: Lesson;
   onComplete: (score: number) => void;
@@ -108,11 +123,12 @@ export const Quiz: React.FC<QuizProps> = ({ lesson, onComplete, onClose, playSpe
 
       <main className="flex-1 p-6 flex flex-col justify-center max-w-md mx-auto w-full">
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={currentQuestionIndex}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
+            transition={E2E_INSTANT_ANIM ? { duration: 0 } : undefined}
             className="space-y-8"
           >
             <div className="space-y-4 text-center">

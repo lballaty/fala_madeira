@@ -10,6 +10,7 @@ import { geminiService } from '../services/geminiService';
 import { TUTORS } from '../data/tutors';
 import { UserProfile } from '../types';
 import { ShowToast } from './useToast';
+import { ToastAction } from '../components/Toast';
 import { PlatformError } from '../platform/types';
 import { logger, userMessage } from '../lib/logger';
 // EN-31 GAP 2/3: the once-per-outage / once-per-session toast-dedupe latches live in a dedicated
@@ -21,6 +22,10 @@ interface SpeechPlaybackDeps {
   profile: UserProfile | null;
   playbackSpeed: number;
   showToast: ShowToast;
+  /** EN-31 WP-F: open Settings › Voice Provider (deep-link). When provided, the failure toast offers
+   *  a "Voice settings" action so the user can switch provider — the real fix when audio can't play.
+   *  Optional so non-App callers/tests keep the current behavior. */
+  onOpenVoiceSettings?: () => void;
 }
 
 // Re-exported here so existing callers/tests keep importing the resets from this hook module.
@@ -36,7 +41,7 @@ const failureCopy = (err: unknown): { code: string; text: string } => {
   return { code: 'TTS_FAILED', text: "Couldn't play the audio — check your connection or try again." };
 };
 
-export const useSpeechPlayback = ({ profile, playbackSpeed, showToast }: SpeechPlaybackDeps) => {
+export const useSpeechPlayback = ({ profile, playbackSpeed, showToast, onOpenVoiceSettings }: SpeechPlaybackDeps) => {
   const lastPlayTimeRef = useRef(0);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   // EN-31 WP-C: the failure toast's Retry re-invokes the LATEST playSpeech through this ref rather
@@ -78,11 +83,19 @@ export const useSpeechPlayback = ({ profile, playbackSpeed, showToast }: SpeechP
       const event = logger.error('speech_playback_failed', 'Play speech error', { category: 'AI_DECISION', error: err });
       if (!audioNoticeLatch.isFailureNotified()) {
         const { code, text: message } = failureCopy(err);
-        // EN-31 WP-C: stable copy (never a raw error string) + a Retry that re-invokes the SAME play.
-        // Transient provider/network blips are the common case, so Retry saves re-hunting the control.
-        showToast(userMessage(code, message, event.request_id), 'error', {
-          actions: [{ label: 'Retry', onClick: () => { playSpeechRef.current?.(text); } }],
-        });
+        // EN-31 WP-C/WP-F: stable copy (never a raw error string) + per-failure-class actions.
+        const actions: ToastAction[] = [];
+        // Retry re-invokes the SAME play — the common transient provider/network blip. It can't help a
+        // device with no speech synthesis at all (TTS_UNSUPPORTED), so it's omitted for that class.
+        if (code !== 'TTS_UNSUPPORTED') {
+          actions.push({ label: 'Retry', onClick: () => { playSpeechRef.current?.(text); } });
+        }
+        // WP-F: "Voice settings" deep-links to Settings › Voice Provider — the real fix when the
+        // provider/device can't speak (switch provider). Only when the App wired the deep-link.
+        if (onOpenVoiceSettings) {
+          actions.push({ label: 'Voice settings', onClick: () => { onOpenVoiceSettings(); } });
+        }
+        showToast(userMessage(code, message, event.request_id), 'error', { actions });
         audioNoticeLatch.markFailureNotified();
       }
       setIsAudioPlaying(false);

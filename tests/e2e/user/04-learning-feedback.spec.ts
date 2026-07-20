@@ -105,6 +105,17 @@ async function assertQuizTypingWorks(page: Parameters<typeof landOnHome>[0], val
 
 test.describe('learning feedback writes', () => {
   test('requesting a theme, suggesting a video, and reporting a correction all persist', async ({ page, userEvidence, testUser }) => {
+    // EF-39: collapse the Quiz per-question enter/exit animation to zero duration so the choice
+    // buttons / typed-answer input (which live inside the animated motion.div) are not a moving
+    // target under full-suite CPU load. Prod-safe test-only flag (see Quiz.tsx E2E_INSTANT_ANIM).
+    // Must be registered before the first navigation so it applies on initial load.
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem('fm:e2e', '1');
+      } catch {
+        /* ignore */
+      }
+    });
     const nonce = Date.now().toString();
     const requestTheme = `E2E Theme ${nonce}`;
     const requestDescription = `Need a practical lesson for market small talk ${nonce}`;
