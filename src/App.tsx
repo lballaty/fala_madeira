@@ -100,6 +100,10 @@ export default function App() {
   // scroll/highlight the "Your level" proficiency card so the learner lands directly on the control
   // that changes their level (the reporter had no obvious path from a wrong Home level to the fix).
   const [focusProficiencyCard, setFocusProficiencyCard] = useState(false);
+  // Deep-link signal (EN-31 WP-F): when the audio-failure toast's "Voice settings" action is taken,
+  // open Settings and scroll/highlight the Voice Provider card — the real fix when audio can't play
+  // (switch provider). Same prop-driven guide-and-offer pattern as the proficiency deep-link above.
+  const [focusVoiceProvider, setFocusVoiceProvider] = useState(false);
   // NAV-1c: About-modal open state lifted here so the desktop sidebar's About entry can open it. The
   // modal itself is still rendered + wired (legal/support links) by SettingsView; opening it switches
   // to the Settings tab and raises this signal, which SettingsView consumes to open its About modal.
@@ -179,7 +183,15 @@ export default function App() {
     selectedMonth, setSelectedLesson,
   });
 
-  const { playSpeech } = useSpeechPlayback({ profile, playbackSpeed, showToast });
+  const { playSpeech } = useSpeechPlayback({
+    profile, playbackSpeed, showToast,
+    // EN-31 WP-F: the failure toast's "Voice settings" action deep-links here.
+    onOpenVoiceSettings: () => {
+      logger.debug('nav', 'Audio-fail toast → Settings Voice Provider deep-link', { category: 'USER_ACTION' });
+      setFocusVoiceProvider(true);
+      setActiveTab('settings');
+    },
+  });
   const { totalTimeInSeconds, resetTimeTracking } = useTimeTracking({ supabase, user, profile, setProfile, handleSupabaseError });
   const { isQuizOpen, openQuiz, closeQuiz, handleQuizComplete, route: practiceRoute, openMode, closeMode } = usePractice({ supabase, user, profile, setProfile, showToast, handleSupabaseError, selectedLesson });
 
@@ -468,6 +480,8 @@ export default function App() {
                   onGoalChooserFocused={() => setFocusGoalChooser(false)}
                   focusProficiencyCard={focusProficiencyCard}
                   onProficiencyCardFocused={() => setFocusProficiencyCard(false)}
+                  focusVoiceProvider={focusVoiceProvider}
+                  onVoiceProviderFocused={() => setFocusVoiceProvider(false)}
                   openAboutSignal={openAboutSignal}
                   onAboutSignalHandled={() => setOpenAboutSignal(false)}
                 />

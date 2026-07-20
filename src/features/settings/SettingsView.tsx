@@ -75,6 +75,10 @@ interface SettingsViewProps {
   openAboutSignal?: boolean;
   /** Called once the About modal has been opened so the parent can reset the signal. */
   onAboutSignalHandled?: () => void;
+  /** EN-31 WP-F deep-link: when true, scroll to + highlight the Voice Provider card (audio-fail toast "Voice settings"). */
+  focusVoiceProvider?: boolean;
+  /** Called once the Voice Provider card has been scrolled into view so the parent can reset the signal. */
+  onVoiceProviderFocused?: () => void;
 }
 
 export const SettingsView = ({
@@ -95,6 +99,8 @@ export const SettingsView = ({
   onProficiencyCardFocused,
   openAboutSignal = false,
   onAboutSignalHandled,
+  focusVoiceProvider = false,
+  onVoiceProviderFocused,
 }: SettingsViewProps) => {
   // TB-11b: the goal chooser is a deep-link target from Home's "Choose your goal" CTA. When the
   // signal arrives, scroll it into view; the highlight ring is driven off the prop and cleared by
@@ -117,6 +123,16 @@ export const SettingsView = ({
     const timer = setTimeout(() => onProficiencyCardFocused?.(), 2200);
     return () => clearTimeout(timer);
   }, [focusProficiencyCard, onProficiencyCardFocused]);
+  // EN-31 WP-F: the Voice Provider card is a deep-link target from the audio-failure toast's "Voice
+  // settings" action. Same prop-driven pattern — scroll it into view when the signal arrives; the
+  // ring highlight is driven off the prop and the parent clears it after a short delay.
+  const voiceProviderRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!focusVoiceProvider) return;
+    voiceProviderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const timer = setTimeout(() => onVoiceProviderFocused?.(), 2200);
+    return () => clearTimeout(timer);
+  }, [focusVoiceProvider, onVoiceProviderFocused]);
   const {
     playbackSpeed, setPlaybackSpeed,
     globalVoiceLimit,
@@ -436,7 +452,14 @@ export const SettingsView = ({
         </div>
       </div>
 
-      <div className="bg-card p-6 rounded-3xl ios-shadow space-y-4">
+      <div
+        ref={voiceProviderRef}
+        className={cn(
+          'bg-card p-6 rounded-3xl ios-shadow space-y-4 transition-all',
+          focusVoiceProvider && 'ring-2 ring-ios-blue ring-offset-2 ring-offset-card',
+        )}
+        data-testid="voice-provider-card"
+      >
         <div className="flex items-center">
           <Volume2 className="w-5 h-5 mr-3 text-ios-blue" />
           <span className="font-bold">Voice Provider</span>

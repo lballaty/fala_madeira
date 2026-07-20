@@ -37,7 +37,7 @@ beforeEach(() => {
 
 afterEach(() => vi.restoreAllMocks());
 
-const render = () => renderHook(() => useSpeechPlayback({ profile: null, playbackSpeed: 1, showToast: showToast as unknown as ShowToast }));
+const render = (onOpenVoiceSettings?: () => void) => renderHook(() => useSpeechPlayback({ profile: null, playbackSpeed: 1, showToast: showToast as unknown as ShowToast, onOpenVoiceSettings }));
 const advancePastDebounce = () => { nowVal += 400; }; // 300ms debounce window
 
 describe('useSpeechPlayback — audio-failure notification (EN-31)', () => {
@@ -138,5 +138,36 @@ describe('useSpeechPlayback — audio-failure notification (EN-31)', () => {
     expect(showToast).toHaveBeenCalledTimes(2);
     expect(showToast.mock.calls[0][1]).toBe('info');
     expect(showToast.mock.calls[1][1]).toBe('error');
+  });
+
+  // EN-31 WP-F — Voice-settings deep-link action on the failure toast
+  it('adds a "Voice settings" action (with Retry) that opens voice settings on a generic failure', async () => {
+    const onOpenVoiceSettings = vi.fn();
+    vi.mocked(geminiService.playSpeech).mockRejectedValue(new Error('boom'));
+    const { result } = render(onOpenVoiceSettings);
+    await act(async () => { await result.current.playSpeech('a'); });
+    const actions = showToast.mock.calls[0][2].actions as { label: string; onClick: () => void }[];
+    expect(actions.map(a => a.label)).toEqual(['Retry', 'Voice settings']);
+    actions.find(a => a.label === 'Voice settings')!.onClick();
+    expect(onOpenVoiceSettings).toHaveBeenCalledTimes(1);
+  });
+
+  it('omits Retry for an unsupported device (it cannot fix it) but keeps Voice settings', async () => {
+    const onOpenVoiceSettings = vi.fn();
+    vi.mocked(geminiService.playSpeech).mockRejectedValue(
+      new PlatformError('audio', 'unavailable', 'Speech synthesis is not supported in this browser.'),
+    );
+    const { result } = render(onOpenVoiceSettings);
+    await act(async () => { await result.current.playSpeech('a'); });
+    const labels = (showToast.mock.calls[0][2].actions as { label: string }[]).map(a => a.label);
+    expect(labels).toEqual(['Voice settings']);
+  });
+
+  it('has no Voice-settings action when the App did not wire the deep-link (backward compat)', async () => {
+    vi.mocked(geminiService.playSpeech).mockRejectedValue(new Error('boom'));
+    const { result } = render(); // no onOpenVoiceSettings
+    await act(async () => { await result.current.playSpeech('a'); });
+    const labels = (showToast.mock.calls[0][2].actions as { label: string }[]).map(a => a.label);
+    expect(labels).toEqual(['Retry']);
   });
 });
