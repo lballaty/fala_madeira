@@ -28,7 +28,6 @@ interface TutorSessionState {
   session: ChatSession | null;           // active gemini chat session (shared with free chat)
   history: HistoryMessage[];             // practice-modal transcript
   isAiLoading: boolean;                  // tutor reply in flight
-  currentlySpeakingIndex: number | null; // message index being spoken via TTS
 }
 
 type TutorSessionAction =
@@ -39,7 +38,6 @@ type TutorSessionAction =
   | { type: 'APPEND_HISTORY'; message: HistoryMessage }
   | { type: 'SET_AI_LOADING'; isAiLoading: boolean }
   | { type: 'SET_HELP_MODE'; isHelpMode: boolean }
-  | { type: 'SET_SPEAKING_INDEX'; index: number | null }
   | { type: 'CLOSE_PRACTICE' }
   | { type: 'RESET_FOR_LOGOUT' };
 
@@ -49,7 +47,6 @@ const initialSessionState: TutorSessionState = {
   session: null,
   history: [],
   isAiLoading: false,
-  currentlySpeakingIndex: null,
 };
 
 const tutorSessionReducer = (state: TutorSessionState, action: TutorSessionAction): TutorSessionState => {
@@ -68,11 +65,9 @@ const tutorSessionReducer = (state: TutorSessionState, action: TutorSessionActio
       return { ...state, isAiLoading: action.isAiLoading };
     case 'SET_HELP_MODE':
       return { ...state, isHelpMode: action.isHelpMode };
-    case 'SET_SPEAKING_INDEX':
-      return { ...state, currentlySpeakingIndex: action.index };
     case 'CLOSE_PRACTICE':
       // Mirrors the original closeAIPractice state resets.
-      return { ...state, isOpen: false, currentlySpeakingIndex: null, isHelpMode: false, session: null, history: [] };
+      return { ...state, isOpen: false, isHelpMode: false, session: null, history: [] };
     case 'RESET_FOR_LOGOUT':
       // Mirrors the original handleLogout resets (help mode/speaking index untouched).
       return { ...state, isOpen: false, session: null, history: [] };
@@ -102,14 +97,16 @@ export const useTutorSession = ({
   setProfile,
   showToast,
   handleSupabaseError,
-  isSoundEnabled,
-  playbackSpeed,
+  // TB-14: isSoundEnabled / playbackSpeed were consumed only by the removed whole-message auto-play
+  // (playMessageInChunks). Per-phrase play now flows through the App's useSpeechPlayback (which owns
+  // playbackSpeed) and is user-initiated (no isSoundEnabled gate). Kept on TutorSessionDeps so the
+  // App wiring/tests don't churn; intentionally not destructured here.
   globalVoiceLimit,
   selectedMonth,
   setSelectedLesson
 }: TutorSessionDeps) => {
   const [sessionState, dispatch] = useReducer(tutorSessionReducer, initialSessionState);
-  const { isOpen: isAIPracticeOpen, isHelpMode, session: chatSession, history: chatHistory, isAiLoading, currentlySpeakingIndex } = sessionState;
+  const { isOpen: isAIPracticeOpen, isHelpMode, session: chatSession, history: chatHistory, isAiLoading } = sessionState;
 
   // Free-chat tab state
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -228,9 +225,9 @@ export const useTutorSession = ({
             });
             const newMsg = { role: 'model' as const, text: response.text };
             dispatch({ type: 'APPEND_HISTORY', message: newMsg });
-            if (isSoundEnabled) {
-              playMessageInChunks(response.text, chatHistory.length);
-            }
+            // TB-14: the tutor turn is NOT auto-read. The user taps individual Portuguese phrases
+            // (per-phrase, PT-only play via TutorMessage) instead of the whole mixed-language wall
+            // being spoken on receipt.
           } catch (err) {
             // No user surface: the inactivity nudge is a background nicety, not a user-initiated action.
             logger.error('inactivity_prompt_failed', 'Inactivity prompt error', { category: 'AI_DECISION', error: err });
@@ -279,40 +276,11 @@ export const useTutorSession = ({
     }
   };
 
-  const playMessageInChunks = async (text: string, index: number) => {
-    const tutor = TUTORS.find(t => t.id === profile?.selected_tutor_id) || TUTORS[0];
-    dispatch({ type: 'SET_SPEAKING_INDEX', index });
-
-    // Split by sentences or chunks for better pacing
-    const chunks = text.split(/(?<=[.!?])\s+/);
-
-    for (let i = 0; i < chunks.length; i++) {
-      const chunk = chunks[i].trim();
-      if (!chunk) continue;
-
-      // Check if we should still be playing
-      if (!isAIPracticeOpenRef.current) break;
-
-      try {
-        await new Promise<void>((resolve, reject) => {
-          // Tutor replies are AI-generated free-form conversation → hostable:false: the edge
-          // write-back must NEVER host user/AI chat text on the shared server (COORD-2 BLOCKING-1).
-          geminiService.playSpeech(chunk, tutor, playbackSpeed, () => {
-            // Add a small pause between sentences to let it sink in
-            setTimeout(resolve, 600);
-          }, { hostable: false }).catch(reject);
-        });
-      } catch (err) {
-        // Surface voice-limit and service errors instead of hanging the chunk loop
-        const event = logger.error('tts_chunk_failed', 'Chunked TTS playback failed', { category: 'AI_DECISION', error: err });
-        showToast(userMessage('TTS_FAILED', errorMessage(err) || 'Audio playback failed', event.request_id), 'error');
-        break;
-      }
-    }
-
-    dispatch({ type: 'SET_SPEAKING_INDEX', index: null });
-    resetInactivityTimer();
-  };
+  // TB-14: `playMessageInChunks` (whole-message, sentence-paced auto-play that spoke PT + phonetic +
+  // English) was removed. The tutor turn is no longer auto-read; the user taps individual Portuguese
+  // phrases via TutorMessage's per-phrase AudioButton, which calls the App's EN-31-hardened
+  // `playSpeech` (from useSpeechPlayback) with the Portuguese only. Per-phrase play owns its own
+  // loading state (AudioButton), so the message-level `currentlySpeakingIndex` highlight is gone.
 
   const openPracticeModal = () => {
     dispatch({ type: 'OPEN_MODAL' });
@@ -359,10 +327,7 @@ export const useTutorSession = ({
 
         const response = await chat.sendMessage({ message: context });
         dispatch({ type: 'SET_HISTORY', history: [{ role: 'model', text: response.text }] });
-
-        if (isSoundEnabled) {
-          playMessageInChunks(response.text, 0);
-        }
+        // TB-14: no auto-read of the lesson intro — the user taps phrases to hear the Portuguese.
       }
       resetInactivityTimer();
     } catch (err) {
@@ -389,14 +354,10 @@ export const useTutorSession = ({
       const response = await chatSession.sendMessage({
         message: userMsg + "\n\n(Remember to use clear Markdown formatting with double line breaks between sections and separate Portuguese/English clearly.)"
       });
-      const newIndex = chatHistory.length + 1;
       dispatch({ type: 'APPEND_HISTORY', message: { role: 'model', text: response.text } });
-
-      if (isSoundEnabled) {
-        playMessageInChunks(response.text, newIndex);
-      } else {
-        resetInactivityTimer();
-      }
+      // TB-14: the reply is NOT auto-read; the user taps individual Portuguese phrases
+      // (per-phrase, PT-only play) in the transcript. Just re-arm the inactivity re-prompt.
+      resetInactivityTimer();
     } catch (err) {
       const event = logger.error('ai_practice_failed', 'AI Practice error', { category: 'AI_DECISION', error: err });
       showToast(userMessage('AI_PRACTICE_FAILED', 'Failed to connect to AI tutor', event.request_id), 'error');
@@ -494,7 +455,6 @@ export const useTutorSession = ({
     chatSession,
     chatHistory,
     isAiLoading,
-    currentlySpeakingIndex,
     chatMessages, setChatMessages,
     inputText, setInputText,
     isTyping,
@@ -508,7 +468,6 @@ export const useTutorSession = ({
     toggleHelpMode,
     openHelp,
     toggleRecording,
-    playMessageInChunks,
     resetForLogout,
   };
 };
