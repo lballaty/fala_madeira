@@ -43,7 +43,7 @@ export const TutorMessage = ({ text, playSpeech }: TutorMessageProps) => {
         </div>
         <AudioButton
           onPlay={() => playSpeech(only.text)}
-          label="Play message"
+          label="Listen"
           className="mt-1"
         />
       </div>

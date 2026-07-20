@@ -52,9 +52,11 @@ describe('TutorMessage (TB-14)', () => {
     const text = 'Just some plain English guidance with no Portuguese at all.';
     render(<TutorMessage text={text} playSpeech={playSpeech} />);
 
-    // No per-phrase button; one whole-message button that plays the entire text.
+    // No per-phrase button; one whole-message fallback button (kept named "Listen" so the existing
+    // tutor.model.listen e2e coverage — specs 06/13 assert a rendered "Listen" on the App-Guide
+    // greeting, which has no Portuguese — stays valid) that plays the entire text.
     expect(screen.queryByRole('button', { name: 'Play phrase' })).toBeNull();
-    const wholeBtn = screen.getByRole('button', { name: 'Play message' });
+    const wholeBtn = screen.getByRole('button', { name: 'Listen' });
     fireEvent.click(wholeBtn);
     expect(playSpeech).toHaveBeenCalledWith(text);
   });
