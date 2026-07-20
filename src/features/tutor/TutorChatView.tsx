@@ -7,8 +7,8 @@
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Mic, Play, Send, SquarePen, Sparkles, Volume2 } from 'lucide-react';
-import { SafeMarkdown } from '../../components/SafeMarkdown';
+import { BookOpen, Mic, Play, Send, SquarePen, Sparkles } from 'lucide-react';
+import { TutorMessage } from './TutorMessage';
 import { cn } from '../../lib/utils';
 import { TUTORS } from '../../data/tutors';
 import { ChatMessage, Lesson, UserProfile } from '../../types';
@@ -167,18 +167,16 @@ export const TutorChatView = ({
                 ? "bg-ios-blue text-white rounded-tr-none"
                 : "bg-card ios-shadow rounded-tl-none"
             )}>
-              <div className="prose prose-sm max-w-none">
-                <SafeMarkdown>{msg.text}</SafeMarkdown>
-              </div>
+              {/* TB-14: model turns route through the tutor-local TutorMessage renderer, which
+                  parses the PT/EN wall into per-phrase tappable units (PT-only play) and prose.
+                  User turns stay as plain markdown-free text (they're the user's own input). */}
+              {msg.role === 'model' ? (
+                <TutorMessage text={msg.text} playSpeech={playSpeech} />
+              ) : (
+                <div className="prose prose-sm max-w-none">{msg.text}</div>
+              )}
               {msg.role === 'model' && (
                 <div className="flex space-x-2 mt-2">
-                  <button
-                    onClick={() => playSpeech(msg.text)}
-                    className="text-ios-blue flex items-center space-x-1"
-                  >
-                    <Volume2 className="w-4 h-4" />
-                    <span className="text-xs font-bold">Listen</span>
-                  </button>
                   {msg.text.includes('{') && msg.text.includes('}') && (
                     <button
                       onClick={() => {

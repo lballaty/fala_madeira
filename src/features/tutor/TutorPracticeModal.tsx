@@ -9,7 +9,7 @@
 import { useId, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, MapPin, Mic, Send as SendIcon, Sparkles, Volume2, VolumeX, X } from 'lucide-react';
-import { SafeMarkdown } from '../../components/SafeMarkdown';
+import { TutorMessage } from './TutorMessage';
 import { cn } from '../../lib/utils';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { TUTORS } from '../../data/tutors';
@@ -28,8 +28,8 @@ interface TutorPracticeModalProps {
   closeAIPractice: () => void;
   chatHistory: { role: 'user' | 'model', text: string }[];
   isAiLoading: boolean;
-  currentlySpeakingIndex: number | null;
-  playMessageInChunks: (text: string, index: number) => Promise<void>;
+  /** TB-14: speaks a single string (PT only, per phrase) — the App's EN-31-hardened playSpeech. */
+  playSpeech: (text: string) => Promise<void> | void;
   handleAIPractice: (e: React.FormEvent) => Promise<void>;
   aiMessage: string;
   setAiMessage: (text: string) => void;
@@ -51,8 +51,7 @@ export const TutorPracticeModal = ({
   closeAIPractice,
   chatHistory,
   isAiLoading,
-  currentlySpeakingIndex,
-  playMessageInChunks,
+  playSpeech,
   handleAIPractice,
   aiMessage,
   setAiMessage,
@@ -153,23 +152,17 @@ export const TutorPracticeModal = ({
                 )}>
                   <div className={cn(
                     "max-w-[96%] p-5 rounded-2xl text-sm relative group break-words transition-all duration-300",
-                    msg.role === 'user' ? "bg-ios-blue text-white rounded-tr-none" : "bg-ios-bg text-text rounded-tl-none",
-                    currentlySpeakingIndex === i && msg.role === 'model' ? "ring-2 ring-ios-blue ring-offset-2 scale-[1.02] shadow-lg" : ""
+                    msg.role === 'user' ? "bg-ios-blue text-white rounded-tr-none" : "bg-ios-bg text-text rounded-tl-none"
                   )}>
-                    <div className="markdown-body">
-                      <SafeMarkdown>{msg.text}</SafeMarkdown>
-                    </div>
-                    {msg.role === 'model' && (
-                      <button
-                        onClick={() => playMessageInChunks(msg.text, i)}
-                        aria-label={currentlySpeakingIndex === i ? "Playing message audio" : "Play message audio"}
-                        className={cn(
-                          "absolute -right-10 top-0 p-2 bg-ios-bg rounded-full transition-all text-ios-blue shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center",
-                          currentlySpeakingIndex === i ? "opacity-100 scale-110" : "opacity-0 group-hover:opacity-100"
-                        )}
-                      >
-                        <Volume2 className={cn("w-4 h-4", currentlySpeakingIndex === i && "animate-pulse")} />
-                      </button>
+                    {/* TB-14: model turns route through the tutor-local TutorMessage renderer (per-phrase
+                        PT-only play + prose); the whole-message auto-play + speaking-highlight are gone.
+                        User turns are the user's own typed text — render verbatim. */}
+                    {msg.role === 'model' ? (
+                      <div className="markdown-body">
+                        <TutorMessage text={msg.text} playSpeech={playSpeech} />
+                      </div>
+                    ) : (
+                      <div className="markdown-body">{msg.text}</div>
                     )}
                     {/* EN-18 reactive guidance: "Take me there" chips for the capabilities this help
                         answer references — guide-and-offer (one tap; the user stays in control). */}

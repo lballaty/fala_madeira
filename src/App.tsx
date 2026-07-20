@@ -161,7 +161,6 @@ export default function App() {
     isHelpMode,
     chatHistory,
     isAiLoading,
-    currentlySpeakingIndex,
     chatMessages, setChatMessages,
     inputText, setInputText,
     isTyping,
@@ -175,7 +174,6 @@ export default function App() {
     toggleHelpMode,
     openHelp,
     toggleRecording,
-    playMessageInChunks,
     resetForLogout: resetTutorForLogout,
   } = useTutorSession({
     supabase, user, profile, setProfile, showToast, handleSupabaseError,
@@ -575,8 +573,7 @@ export default function App() {
         closeAIPractice={closeAIPractice}
         chatHistory={chatHistory}
         isAiLoading={isAiLoading}
-        currentlySpeakingIndex={currentlySpeakingIndex}
-        playMessageInChunks={playMessageInChunks}
+        playSpeech={playSpeech}
         handleAIPractice={handleAIPractice}
         aiMessage={aiMessage}
         setAiMessage={setAiMessage}
